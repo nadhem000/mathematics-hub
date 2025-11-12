@@ -1,5 +1,5 @@
 // Service Worker for Mathematics Hub
-const CACHE_NAME = 'math-hub-v1.0.0';
+const CACHE_NAME = 'math-hub-v1.0.1';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -9,6 +9,8 @@ const urlsToCache = [
   '/scripts/i18n_en.js',
   '/scripts/i18n_ar.js',
   '/scripts/i18n_fr.js',
+  '/scripts/pwa-install.js',
+  '/manifest.json',
   '/assets/icons/icon-48x48.png',
   '/assets/icons/icon-72x72.png',
   '/assets/icons/icon-96x96.png',
@@ -29,6 +31,9 @@ self.addEventListener('install', event => {
         return cache.addAll(urlsToCache);
       })
       .then(() => self.skipWaiting())
+      .catch(error => {
+        console.error('Cache installation failed:', error);
+      })
   );
 });
 
@@ -45,14 +50,17 @@ self.addEventListener('activate', event => {
           }
         })
       );
-    }).then(() => self.clients.claim())
+    }).then(() => {
+      console.log('Service Worker activated');
+      return self.clients.claim();
+    })
   );
 });
 
 // Fetch event - serve from cache, fallback to network
 self.addEventListener('fetch', event => {
-  // Skip cross-origin requests
-  if (!event.request.url.startsWith(self.location.origin)) {
+  // Skip non-GET requests and cross-origin requests
+  if (event.request.method !== 'GET' || !event.request.url.startsWith(self.location.origin)) {
     return;
   }
 
@@ -60,14 +68,34 @@ self.addEventListener('fetch', event => {
     caches.match(event.request)
       .then(response => {
         // Return cached version or fetch from network
-        return response || fetch(event.request);
-      })
-      .catch(error => {
-        console.log('Fetch failed; returning offline page:', error);
-        // For navigation requests, return the cached index page
-        if (event.request.mode === 'navigate') {
-          return caches.match('/index.html');
+        if (response) {
+          return response;
         }
+        
+        return fetch(event.request)
+          .then(response => {
+            // Check if we received a valid response
+            if (!response || response.status !== 200 || response.type !== 'basic') {
+              return response;
+            }
+
+            // Clone the response
+            const responseToCache = response.clone();
+
+            caches.open(CACHE_NAME)
+              .then(cache => {
+                cache.put(event.request, responseToCache);
+              });
+
+            return response;
+          })
+          .catch(error => {
+            console.log('Fetch failed; returning offline page:', error);
+            // For navigation requests, return the cached index page
+            if (event.request.mode === 'navigate') {
+              return caches.match('/index.html');
+            }
+          });
       })
   );
 });

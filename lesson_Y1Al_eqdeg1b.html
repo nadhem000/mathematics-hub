@@ -4,7 +4,25 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Mathematics Lesson: 1st Degree Equations II - Transposition Method</title>
-    <link rel="stylesheet" href="styles/main.css">
+		<!-- PWA Manifest -->
+		<link rel="manifest" href="manifest.json">
+		
+		<!-- Favicon -->
+		<link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+		<link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+		
+		<!-- Theme Color -->
+		<meta name="theme-color" content="#4a6fa5" media="(prefers-color-scheme: light)">
+		<meta name="theme-color" content="#1a365f" media="(prefers-color-scheme: dark)">
+		
+		<!-- PWA Meta Tags -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="default">
+		<meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="msapplication-TileColor" content="#4a6fa5">
+		<meta name="msapplication-config" content="/browserconfig.xml">
+		<link rel="stylesheet" href="styles/main.css">
 		<style>
 			/* Page-specific color palette - Purple Theme */
 			:root {
@@ -37,10 +55,10 @@
 			<div class="MH-header-grid">
 				<!-- Column 1: Icon -->
 				<div class="MH-header-column MH-header-icon">
-    <a href="index.html" class="MH-logo-link" data-tooltip data-i18n="MH.general.homeTooltip">
-        <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
-    </a>
-</div>
+					<a href="index.html" class="MH-logo-link" data-tooltip data-i18n="MH.general.homeTooltip">
+						<img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+					</a>
+				</div>
 				
 				<!-- Column 2: Title -->
 				<div class="MH-header-column MH-header-title">
@@ -302,25 +320,25 @@
 				</div>
 			</div>
 		</footer>
-    <script src="scripts/i18n_en.js"></script>
-    <script src="scripts/i18n_ar.js"></script>
-    <script src="scripts/i18n_fr.js"></script>
-    <script src="scripts/translation.js"></script>
-<script src="scripts/pwa-install.js"></script>
-<script>
-    // Register service worker
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-            navigator.serviceWorker.register('/sw.js')
-                .then(function(registration) {
-                    console.log('Service Worker registered with scope:', registration.scope);
-                })
-                .catch(function(error) {
-                    console.log('Service Worker registration failed:', error);
-                });
-        });
-    }
-</script>
+		<script src="scripts/i18n_en.js"></script>
+		<script src="scripts/i18n_ar.js"></script>
+		<script src="scripts/i18n_fr.js"></script>
+		<script src="scripts/translation.js"></script>
+		<script src="scripts/pwa-install.js"></script>
+		<script>
+			// Register service worker
+			if ('serviceWorker' in navigator) {
+				window.addEventListener('load', function() {
+					navigator.serviceWorker.register('/sw.js')
+					.then(function(registration) {
+						console.log('Service Worker registered with scope:', registration.scope);
+					})
+					.catch(function(error) {
+						console.log('Service Worker registration failed:', error);
+					});
+				});
+			}
+		</script>
 		<!-- noscript fallback -->
 		<noscript>
 			<style>
