@@ -1,0 +1,9 @@
+
+1. **Practice Mode Toggle** - Switch between learning and practice modes
+2. **Timer/Stopwatch** - For timed practice sessions
+3. **Achievement Badges** - Visual indicators of progress
+4. **Share Progress** - Option to share achievements on social media
+5. **Feedback Button** - Easy way for users to report issues or suggest improvements
+6. **Print Options** - For printing worksheets or formulas
+7. **Audio Controls** - For text-to-speech functionality
+8. **Reset Progress** - Option to start over

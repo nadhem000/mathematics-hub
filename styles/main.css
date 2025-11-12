@@ -1,0 +1,1392 @@
+/* main.css - Mathematics Hub Styles */
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Light theme default variables */
+    --MH-bg-primary: #ffffff;
+    --MH-bg-secondary: #f8f9fa;
+    --MH-text-primary: #2c3e50;
+    --MH-text-secondary: #5a6c7d;
+    --MH-border-color: #e1e8ed;
+    --MH-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    --MH-shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.15);
+    --MH-spacing-xs: 0.5rem;
+    --MH-spacing-sm: 1rem;
+    --MH-spacing-md: 1.5rem;
+    --MH-spacing-lg: 2rem;
+    --MH-spacing-xl: 3rem;
+    
+    /* Default color palette (will be overridden by each page) */
+    --primary: #3498db;
+    --primary-light: #5dade2;
+    --primary-dark: #2471a3;
+    --secondary: #2ecc71;
+    --secondary-light: #58d68d;
+    --secondary-dark: #229954;
+    --accent: #e74c3c;
+    --warning: #f39c12;
+    --info: #9b59b6;
+    
+    /* Header and footer */
+    --header-gradient: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    --footer-gradient: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+    --header-text: white;
+    --footer-text: white;
+}
+
+[data-theme="dark"] {
+    --MH-bg-primary: #1a1a1a;
+    --MH-bg-secondary: #2d2d2d;
+    --MH-text-primary: #ffffff;
+    --MH-text-secondary: #b0b0b0;
+    --MH-border-color: #404040;
+    --MH-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    --MH-shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.4);
+    
+    /* Default dark theme color palette (will be overridden by each page) */
+    --primary: #2980b9;
+    --primary-light: #3498db;
+    --primary-dark: #1c5a85;
+    --secondary: #27ae60;
+    --secondary-light: #2ecc71;
+    --secondary-dark: #1e8449;
+    --accent: #c0392b;
+    --warning: #d35400;
+    --info: #8e44ad;
+    
+    /* Header and footer for dark theme */
+    --header-gradient: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+    --footer-gradient: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    --header-text: white;
+    --footer-text: white;
+}
+
+/* Base styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--MH-text-primary);
+    background-color: var(--MH-bg-primary);
+    transition: all 0.3s ease;
+}
+
+/* Header Grid Layout */
+.MH-header-grid {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.MH-header-column {
+    display: flex;
+    align-items: center;
+}
+
+/* Column 1: Icon */
+
+/* Column 1: Icon */
+.MH-header-icon {
+    justify-content: flex-start;
+}
+
+.MH-header-icon .MH-logo-image {
+    width: 80px; /* Increased from 60px */
+    height: 80px; /* Increased from 60px */
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer; /* Add cursor pointer to indicate it's clickable */
+}
+
+.MH-header-icon .MH-logo-image:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* tooltip styling */
+.MH-logo-link {
+    position: relative;
+    display: inline-block;
+}
+
+.MH-logo-link::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--MH-text-primary);
+    color: var(--MH-bg-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1001;
+    pointer-events: none;
+}
+
+.MH-logo-link:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Column 2: Title */
+.MH-header-title {
+    justify-content: center;
+    text-align: center;
+}
+
+.MH-header-title .MH-logo {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--header-text);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(45deg, #ffffff, #e3f2fd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+/* Column 3: Options */
+.MH-header-options {
+    justify-content: flex-end;
+}
+
+.MH-header-options .MH-header-controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin: 0;
+}
+
+/* Header styles */
+header {
+    background: var(--header-gradient);
+    padding: 1rem 2rem;
+    box-shadow: var(--MH-shadow);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 3px solid var(--primary-light);
+    color: var(--header-text);
+    min-height: 80px;
+}
+
+/* Remove old header styles that are no longer needed */
+.MH-logo-container {
+    display: none;
+}
+
+/* Button styles */
+.MH-theme-toggle, .MH-language-btn {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: var(--header-text);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+.MH-solution-btn {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin: 10px 0;
+    display: inline-block;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.MH-solution-btn:active {
+    transform: translateY(0);
+}
+
+.MH-theme-toggle:hover, .MH-language-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    border-color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--MH-shadow-hover);
+}
+
+/* Language selector */
+.MH-language-selector {
+    position: relative;
+    display: inline-block;
+    z-index: 1002;
+}
+
+.MH-language-btn {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: var(--header-text);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    min-height: 44px;
+}
+
+.MH-language-btn * {
+    pointer-events: none;
+}
+
+.MH-language-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--MH-shadow-hover);
+}
+
+.MH-language-btn:active {
+    transform: translateY(0);
+}
+
+.MH-language-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--MH-bg-primary);
+    min-width: 120px;
+    box-shadow: var(--MH-shadow);
+    border-radius: 8px;
+    border: 1px solid var(--MH-border-color);
+    z-index: 1003;
+    margin-top: 0.5rem;
+}
+
+.MH-language-dropdown.MH-show {
+    display: block;
+    animation: MH-fadeIn 0.2s ease;
+}
+
+.MH-language-option {
+    display: block;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    color: var(--MH-text-primary);
+    border-bottom: 1px solid var(--MH-border-color);
+    transition: background-color 0.3s ease;
+}
+
+.MH-language-option:last-child {
+    border-bottom: none;
+}
+
+.MH-language-option:hover {
+    background-color: var(--MH-bg-secondary);
+    color: var(--primary);
+}
+
+/* Container and layout */
+.MH-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Section styles */
+.MH-section {
+    background-color: var(--MH-bg-secondary);
+    padding: var(--MH-spacing-lg);
+    margin: var(--MH-spacing-lg) 0;
+    border-radius: 12px;
+    box-shadow: var(--MH-shadow);
+    border-left: 4px solid var(--primary);
+    position: relative;
+    overflow: hidden;
+}
+
+.MH-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-light), var(--primary));
+}
+
+.MH-section-title {
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    border-bottom: 2px solid var(--MH-border-color);
+    padding-bottom: 0.5rem;
+}
+
+.MH-lesson-title {
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.MH-lesson-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-light), var(--primary));
+    border-radius: 2px;
+}
+
+/* Definition box */
+.MH-definition {
+    background-color: var(--MH-bg-primary);
+    border: 2px solid var(--info);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    box-shadow: var(--MH-shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.MH-definition::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--info), var(--primary-light));
+}
+
+.MH-definition h3 {
+    color: var(--info);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+/* Important note */
+.MH-important {
+    background-color: var(--MH-bg-primary);
+    border: 2px solid var(--warning);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    box-shadow: var(--MH-shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.MH-important::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--warning), var(--secondary-light));
+}
+
+.MH-important h3 {
+    color: var(--warning);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+/* Step by step */
+.MH-step {
+    background-color: var(--MH-bg-primary);
+    border: 1px solid var(--MH-border-color);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    box-shadow: var(--MH-shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.MH-step::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--secondary-light), var(--secondary));
+}
+
+.MH-step h3 {
+    color: var(--secondary);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+/* Examples */
+.MH-example {
+    background-color: var(--MH-bg-primary);
+    border: 2px solid var(--accent);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    box-shadow: var(--MH-shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.MH-example::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--accent), var(--primary-light));
+}
+
+.MH-example h3 {
+    color: var(--accent);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+/* Equations */
+.MH-equation {
+    font-family: 'Courier New', monospace;
+    background-color: var(--MH-bg-secondary);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--MH-border-color);
+    color: var(--secondary);
+    font-weight: bold;
+}
+
+/* Comparison section */
+.MH-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.MH-method {
+    background-color: var(--MH-bg-primary);
+    border: 2px solid var(--MH-border-color);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: var(--MH-shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.MH-method::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 100%;
+}
+
+.MH-transposition {
+    border-color: var(--primary);
+}
+
+.MH-transposition::before {
+    background: linear-gradient(to bottom, var(--primary-light), var(--primary));
+}
+
+.MH-traditional {
+    border-color: var(--secondary);
+}
+
+.MH-traditional::before {
+    background: linear-gradient(to bottom, var(--secondary-light), var(--secondary));
+}
+
+.MH-method h3 {
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.MH-transposition h3 {
+    color: var(--primary);
+}
+
+.MH-traditional h3 {
+    color: var(--secondary);
+}
+
+/* Practice problems */
+.MH-practice {
+    background-color: var(--MH-bg-primary);
+    border: 2px solid var(--MH-border-color);
+    border-radius: 10px;
+    padding: 2rem;
+    margin: 2rem 0;
+    box-shadow: var(--MH-shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.MH-practice::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--primary-light), var(--primary-dark));
+}
+
+.MH-practice-title {
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.MH-practice-problem {
+    background-color: var(--MH-bg-secondary);
+    border: 1px solid var(--MH-border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.MH-practice-problem::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--secondary-light), var(--secondary));
+}
+
+.MH-practice-problem:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--MH-shadow-hover);
+    border-color: var(--primary);
+}
+
+/* Solutions */
+.MH-solution {
+    display: none;
+    background-color: var(--MH-bg-primary);
+    border: 1px solid var(--info);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 1rem;
+    animation: MH-fadeIn 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.MH-solution::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--info), var(--primary-light));
+}
+
+.MH-solution.MH-show {
+    display: block;
+}
+.MH-solution-btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes MH-fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Footer */
+footer {
+    background: var(--footer-gradient);
+    padding: 2.5rem 2rem;
+    margin-top: 3rem;
+    border-top: 3px solid var(--primary-light);
+    color: var(--footer-text);
+}
+
+.MH-footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    align-items: center;
+}
+
+.MH-footer-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1rem;
+}
+
+.MH-footer-column:nth-child(2) {
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+    border-right: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.MH-footer-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.MH-footer-text {
+    font-size: 0.95rem;
+    opacity: 0.9;
+    line-height: 1.5;
+}
+
+.MH-footer-links {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.MH-footer-link {
+    color: var(--footer-text);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.MH-footer-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Lists */
+ul, ol {
+    margin: 1rem 0;
+    padding-left: 2rem;
+}
+
+li {
+    margin: 0.5rem 0;
+}
+
+/* RTL Support for Arabic */
+
+/* RTL support for footer */
+[dir="rtl"] .MH-footer-column:nth-child(2) {
+    border-left: none;
+    border-right: none;
+    border-inline: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+[dir="rtl"] {
+    text-align: right;
+}
+
+[dir="rtl"] body {
+    direction: rtl;
+    text-align: right;
+}
+
+/* RTL support for the new header layout */
+[dir="rtl"] .MH-header-icon {
+    justify-content: flex-end;
+}
+
+[dir="rtl"] .MH-header-options {
+    justify-content: flex-start;
+}
+
+[dir="rtl"] .MH-header-options .MH-header-controls {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .MH-language-dropdown {
+    right: auto;
+    left: 0;
+}
+
+[dir="rtl"] .MH-section {
+    border-left: none;
+    border-right: 4px solid var(--primary);
+    text-align: right;
+}
+
+[dir="rtl"] .MH-section::before {
+    left: auto;
+    right: 0;
+}
+
+[dir="rtl"] .MH-definition::before,
+[dir="rtl"] .MH-important::before,
+[dir="rtl"] .MH-step::before,
+[dir="rtl"] .MH-example::before,
+[dir="rtl"] .MH-practice::before,
+[dir="rtl"] .MH-solution::before {
+    left: auto;
+    right: 0;
+}
+
+[dir="rtl"] .MH-method::before,
+[dir="rtl"] .MH-practice-problem::before {
+    left: auto;
+    right: 0;
+}
+
+[dir="rtl"] .MH-equation {
+    direction: ltr;
+    unicode-bidi: embed;
+    display: inline-block;
+}
+
+[dir="rtl"] ul,
+[dir="rtl"] ol {
+    padding-right: 2rem;
+    padding-left: 0;
+    text-align: right;
+}
+
+[dir="rtl"] .MH-lesson-title::after {
+    left: auto;
+    right: 50%;
+    transform: translateX(50%);
+}
+
+[dir="rtl"] .MH-section-title {
+    text-align: right;
+}
+
+[dir="rtl"] .MH-practice-title {
+    text-align: center;
+}
+
+/* Keep equations LTR in RTL context */
+[dir="rtl"] .MH-equation,
+[dir="rtl"] .MH-step .MH-equation,
+[dir="rtl"] .MH-example .MH-equation,
+[dir="rtl"] .MH-definition .MH-equation,
+[dir="rtl"] .MH-important .MH-equation,
+[dir="rtl"] .MH-practice-problem .MH-equation {
+    direction: ltr;
+    text-align: left;
+    unicode-bidi: embed;
+}
+
+/* Responsive design for the new header */
+@media (max-width: 768px) {
+    .MH-header-grid {
+        grid-template-columns: auto 1fr;
+        grid-template-rows: auto auto;
+        gap: 1rem;
+    }
+    
+    .MH-header-icon {
+        grid-column: 1;
+        grid-row: 1;
+    }
+    
+    .MH-header-title {
+        grid-column: 2;
+        grid-row: 1;
+        justify-content: flex-start;
+        text-align: left;
+    }
+    
+    .MH-header-options {
+        grid-column: 1 / span 2;
+        grid-row: 2;
+        justify-content: center;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        padding-top: 1rem;
+    }
+    
+    .MH-header-title .MH-logo {
+        font-size: 2rem;
+        text-align: left;
+    }
+    
+    .MH-header-icon .MH-logo-image {
+        width: 70px; /* Adjusted for mobile */
+        height: 70px; /* Adjusted for mobile */
+    }
+    
+    [dir="rtl"] .MH-header-title {
+        text-align: right;
+        justify-content: flex-end;
+    }
+    
+    /* General responsive design */
+    header {
+        padding: 1rem;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .MH-container {
+        padding: 1rem;
+    }
+    
+    .MH-section {
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+    }
+    
+    .MH-lesson-title {
+        font-size: 2rem;
+    }
+    
+    .MH-comparison {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .MH-header-options .MH-header-controls {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .MH-theme-toggle, .MH-language-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 0.75rem 1rem;
+    }
+    
+    .MH-header-grid {
+        gap: 0.75rem;
+    }
+    
+    .MH-header-title .MH-logo {
+        font-size: 1.7rem;
+    }
+    
+    .MH-header-icon .MH-logo-image {
+        width: 60px; /* Adjusted for small mobile */
+        height: 60px; /* Adjusted for small mobile */
+    }
+    
+    .MH-header-options .MH-header-controls {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .MH-theme-toggle, .MH-language-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    /* General responsive design */
+    .MH-container {
+        padding: 0.5rem;
+    }
+    
+    .MH-section {
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+    
+    .MH-lesson-title {
+        font-size: 1.8rem;
+    }
+    
+    .MH-section-title {
+        font-size: 1.5rem;
+    }
+}
+
+/* Responsive design for enhanced header/footer */
+@media (max-width: 768px) {
+    header {
+        padding: 1rem;
+        min-height: 70px;
+    }
+    
+    .MH-footer-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .MH-footer-column:nth-child(2) {
+        border-left: none;
+        border-right: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.3);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 1rem 0;
+    }
+    
+    .MH-footer-links {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .MH-header-title .MH-logo {
+        font-size: 1.3rem;
+    }
+    
+    .MH-header-icon .MH-logo-image {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+/* Print styles */
+@media print {
+    .MH-header-controls, .MH-solution-btn {
+        display: none;
+    }
+    
+    .MH-solution {
+        display: block !important;
+    }
+    
+    body {
+        background-color: white;
+        color: black;
+    }
+    
+    .MH-section {
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+}
+
+/* Accessibility Enhancements */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* focus styles for better keyboard navigation */
+.MH-theme-toggle:focus,
+.MH-language-btn:focus,
+.MH-solution-btn:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Loading States */
+.MH-loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.MH-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--MH-border-color);
+  border-radius: 50%;
+  border-top-color: var(--primary);
+  animation: MH-spin 1s ease-in-out infinite;
+}
+
+@keyframes MH-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Enhance print styles */
+@media print {
+  .MH-practice-problem {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  
+  .MH-solution {
+    display: block !important;
+    background: white !important;
+    border: 1px solid #000 !important;
+  }
+  
+  footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+}
+
+/* Ensure touch targets are adequate */
+@media (max-width: 768px) {
+  .MH-theme-toggle,
+  .MH-language-btn,
+  .MH-solution-btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  .MH-language-option {
+    padding: 1rem 1.25rem;
+  }
+}
+
+/* reduce repaints on theme switch */
+.MH-section, .MH-practice-problem, .MH-solution {
+    will-change: transform;
+    contain: layout style paint;
+}
+
+/* Reduce initial paint time */
+.MH-container {
+    content-visibility: auto;
+}
+
+.MH-section, .MH-practice-problem {
+    will-change: transform;
+    contain: layout style paint;
+}
+
+/* main */
+:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* High contrast support */
+@media (prefers-contrast: high) {
+    .MH-equation {
+        border: 2px solid currentColor;
+    }
+}
+
+/* no-js */
+.no-js .MH-header-controls {
+    display: none;
+}
+
+.no-js .MH-solution {
+    display: block !important;
+}
+
+.js-enabled .MH-solution {
+    display: none;
+}
+
+/* Skip link for accessibility */
+.MH-skip-link {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: var(--primary);
+    color: white;
+    padding: 8px 12px;
+    z-index: 10000;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: top 0.2s ease;
+}
+
+.MH-skip-link:focus {
+    top: 6px;
+}
+
+/* Ensure header controls maintain proper touch targets */
+.MH-header-options .MH-theme-toggle,
+.MH-header-options .MH-language-btn {
+    min-height: 44px;
+    min-width: 44px;
+}
+
+/* Smooth transitions for header elements */
+.MH-header-grid > * {
+    transition: all 0.3s ease;
+}
+
+/* Responsive design for RTL */
+@media (max-width: 768px) {
+    [dir="rtl"] header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    [dir="rtl"] .MH-header-controls {
+        flex-direction: column;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    [dir="rtl"] ul,
+    [dir="rtl"] ol {
+        padding-right: 1.5rem;
+    }
+}
+
+/* Add these graph styles to the existing main.css file */
+
+/* Graph styles */
+.MH-graph-container {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: var(--MH-bg-secondary);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.MH-graph {
+    width: 100%;
+    height: 300px;
+    background: var(--MH-bg-primary);
+    border: 1px solid var(--MH-border-color);
+    border-radius: 4px;
+    position: relative;
+}
+
+.MH-coordinate-system {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.MH-axis {
+    position: absolute;
+    background: var(--MH-text-primary);
+}
+
+.MH-x-axis {
+    width: 100%;
+    height: 2px;
+    top: 50%;
+    left: 0;
+}
+
+.MH-y-axis {
+    width: 2px;
+    height: 100%;
+    top: 0;
+    left: 50%;
+}
+
+.MH-axis-label {
+    position: absolute;
+    font-size: 0.8rem;
+    color: var(--MH-text-secondary);
+}
+
+.MH-x-label {
+    bottom: 5px;
+}
+
+.MH-y-label {
+    left: 5px;
+}
+
+.MH-grid-line {
+    position: absolute;
+    background: var(--MH-border-color);
+}
+
+.MH-grid-x {
+    width: 100%;
+    height: 1px;
+}
+
+.MH-grid-y {
+    width: 1px;
+    height: 100%;
+}
+
+.MH-point {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.MH-line {
+    position: absolute;
+    height: 2px;
+    background: var(--primary);
+    transform-origin: 0 0;
+}
+
+.MH-intersection {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: var(--warning);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid var(--MH-bg-primary);
+    box-shadow: 0 0 0 2px var(--warning);
+}
+
+.MH-graph-legend {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.MH-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.MH-legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+.MH-legend-line {
+    width: 20px;
+    height: 2px;
+}
+
+@media (max-width: 768px) {
+    .MH-graph {
+        height: 250px;
+    }
+    
+    .MH-graph-legend {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* Install button styles */
+.MH-install-btn {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: var(--header-text);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    min-height: 44px;
+}
+
+.MH-install-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    border-color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--MH-shadow-hover);
+}
+
+.MH-install-btn:active {
+    transform: translateY(0);
+}
+
+.MH-install-btn:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* Install success notification */
+.MH-install-success {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    background: var(--primary);
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: var(--MH-shadow-hover);
+    z-index: 10000;
+    animation: MH-slideInRight 0.3s ease;
+}
+
+.MH-install-success-content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+@keyframes MH-slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* RTL support for install button */
+[dir="rtl"] .MH-install-btn {
+    direction: rtl;
+}
+
+/* Responsive design for install button */
+@media (max-width: 768px) {
+    .MH-install-btn {
+        width: 100%;
+        justify-content: center;
+        margin-top: 0.5rem;
+    }
+    
+    .MH-install-success {
+        right: 10px;
+        left: 10px;
+        top: 80px;
+    }
+}
+

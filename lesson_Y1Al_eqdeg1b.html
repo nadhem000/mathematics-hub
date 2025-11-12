@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Mathematics Lesson: 1st Degree Equations II - Transposition Method</title>
+    <link rel="stylesheet" href="styles/main.css">
+		<style>
+			/* Page-specific color palette - Purple Theme */
+			:root {
+			--primary: #9b59b6;
+			--primary-light: #af7ac5;
+			--primary-dark: #7d3c98;
+			--secondary: #e74c3c;
+			--secondary-light: #ec7063;
+			--secondary-dark: #b03a2e;
+			--accent: #3498db;
+			--warning: #f39c12;
+			--info: #2ecc71;
+			}
+			
+			[data-theme="dark"] {
+			--primary: #8e44ad;
+			--primary-light: #9b59b6;
+			--primary-dark: #6c3483;
+			--secondary: #c0392b;
+			--secondary-light: #e74c3c;
+			--secondary-dark: #922b21;
+			--accent: #2980b9;
+			--warning: #d35400;
+			--info: #27ae60;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<div class="MH-header-grid">
+				<!-- Column 1: Icon -->
+				<div class="MH-header-column MH-header-icon">
+    <a href="index.html" class="MH-logo-link" data-tooltip data-i18n="MH.general.homeTooltip">
+        <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+    </a>
+</div>
+				
+				<!-- Column 2: Title -->
+				<div class="MH-header-column MH-header-title">
+					<div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+				</div>
+				
+				<!-- Column 3: Options -->
+				<div class="MH-header-column MH-header-options">
+					<div class="MH-header-controls">
+						<button class="MH-theme-toggle" id="themeToggle">
+							<span data-i18n="MH.general.theme">Theme</span>
+							<span>🌙</span>
+						</button>
+						<div class="MH-language-selector">
+							<button class="MH-language-btn" id="languageBtn">
+								<span data-i18n="MH.general.language">Language</span>
+								<span>▼</span>
+							</button>
+							<div class="MH-language-dropdown" id="languageDropdown">
+								<a href="#" class="MH-language-option" data-lang="en">English</a>
+								<a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+								<a href="#" class="MH-language-option" data-lang="fr">Français</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		
+		<main id="main-content" class="MH-container" tabindex="-1">
+			
+			<h1 class="MH-lesson-title" data-i18n="MH.lesson_Y1Al_eqdeg1b.title">1st Degree Equations II: Transposition Method</h1>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_eqdeg1b.introduction">Introduction to Transposition Method</h2>
+				<p data-i18n="MH.lesson_Y1Al_eqdeg1b.introText1">The transposition method is an alternative technique for solving first-degree equations. It involves directly moving terms from one side to the other of the equation by changing their sign.</p>
+				
+				<div class="MH-definition">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1b.definitionTitle">What is Transposition?</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.definitionText">Transposition is a rule that allows moving a term from one side to the other of the equal sign by changing its operation:</p>
+					<ul>
+						<li data-i18n="MH.lesson_Y1Al_eqdeg1b.definitionList1">A positive term becomes negative when transposed</li>
+						<li data-i18n="MH.lesson_Y1Al_eqdeg1b.definitionList2">A negative term becomes positive when transposed</li>
+						<li data-i18n="MH.lesson_Y1Al_eqdeg1b.definitionList3">A multiplicative factor becomes a divisor when transposed</li>
+						<li data-i18n="MH.lesson_Y1Al_eqdeg1b.definitionList4">A divisor becomes a multiplicative factor when transposed</li>
+					</ul>
+				</div>
+				
+				<p data-i18n="MH.lesson_Y1Al_eqdeg1b.introText2">This method is particularly effective for simple equations and often allows arriving at the solution more quickly.</p>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_eqdeg1b.comparison">Method Comparison</h2>
+				
+				<div class="MH-comparison">
+					<div class="MH-method MH-transposition">
+						<h3 data-i18n="MH.lesson_Y1Al_eqdeg1b.transpositionMethod">Transposition Method</h3>
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1b.transpositionDesc">This method involves directly moving terms from one side to the other by changing their sign.</p>
+						<div class="MH-example">
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1b.transpositionExample">Example: <span class="MH-equation">3x + 5 = 14</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1b.transpositionStep1">Transpose +5: <span class="MH-equation">3x = 14 - 5</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1b.transpositionStep2">Simplify: <span class="MH-equation">3x = 9</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1b.transpositionStep3">Transpose ×3: <span class="MH-equation">x = 9 ÷ 3</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1b.transpositionStep4">Solution: <span class="MH-equation">x = 3</span></p>
+						</div>
+					</div>
+					
+					<div class="MH-method MH-traditional">
+						<h3 data-i18n="MH.lesson_Y1Al_eqdeg1b.traditionalMethod">Traditional Method</h3>
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1b.traditionalDesc">This method involves performing the same operation on both sides of the equation.</p>
+						<div class="MH-example">
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1b.traditionalExample">Example: <span class="MH-equation">3x + 5 = 14</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1b.traditionalStep1">Subtract 5 from both sides: <span class="MH-equation">3x + 5 - 5 = 14 - 5</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1b.traditionalStep2">Simplify: <span class="MH-equation">3x = 9</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1b.traditionalStep3">Divide both sides by 3: <span class="MH-equation">3x ÷ 3 = 9 ÷ 3</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1b.traditionalStep4">Solution: <span class="MH-equation">x = 3</span></p>
+						</div>
+					</div>
+				</div>
+				
+				<div class="MH-important">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1b.importantNote">Important Note</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.importantText">Both methods are mathematically equivalent. The transposition method is simply a mental shortcut of the traditional method. The choice between the two depends on your personal preferences.</p>
+				</div>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_eqdeg1b.rules">Transposition Rules</h2>
+				
+				<div class="MH-step">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1b.rule1Title">Rule 1: Transposition of Additive/Subtractive Terms</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.rule1Text">When transposing a term from one side to the other of the equation, we change its sign:</p>
+					<div class="MH-example">
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1b.rule1Example1">If <span class="MH-equation">x + a = b</span>, then <span class="MH-equation">x = b - a</span></p>
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1b.rule1Example2">If <span class="MH-equation">x - a = b</span>, then <span class="MH-equation">x = b + a</span></p>
+					</div>
+				</div>
+				
+				<div class="MH-step">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1b.rule2Title">Rule 2: Transposition of Multiplicative/Divisive Terms</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.rule2Text">When transposing a multiplicative factor or a divisor, we change its operation:</p>
+					<div class="MH-example">
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1b.rule2Example1">If <span class="MH-equation">a × x = b</span>, then <span class="MH-equation">x = b ÷ a</span></p>
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1b.rule2Example2">If <span class="MH-equation">x ÷ a = b</span>, then <span class="MH-equation">x = b × a</span></p>
+					</div>
+				</div>
+				
+				<div class="MH-step">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1b.rule3Title">Rule 3: Transposition of Multiple Terms</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.rule3Text">We can transpose multiple terms in a single step:</p>
+					<div class="MH-example">
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1b.rule3Example1">If <span class="MH-equation">ax + b = cx + d</span>, then <span class="MH-equation">ax - cx = d - b</span></p>
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1b.rule3Example2">Which gives <span class="MH-equation">(a - c)x = d - b</span></p>
+					</div>
+				</div>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_eqdeg1b.examples">Detailed Examples</h2>
+				
+				<div class="MH-example">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1b.example1Title">Example 1: Simple Equation</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.example1Equation">Solve: <span class="MH-equation">5x - 7 = 13</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.example1Step1">Transpose -7: <span class="MH-equation">5x = 13 + 7</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.example1Step2">Simplify: <span class="MH-equation">5x = 20</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.example1Step3">Transpose ×5: <span class="MH-equation">x = 20 ÷ 5</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.example1Step4">Solution: <span class="MH-equation">x = 4</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.example1Check">Verification: <span class="MH-equation">5(4) - 7 = 20 - 7 = 13</span> ✓</p>
+				</div>
+				
+				<div class="MH-example">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1b.example2Title">Example 2: Equation with Fractions</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.example2Equation">Solve: <span class="MH-equation">x/4 + 3 = 7</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.example2Step1">Transpose +3: <span class="MH-equation">x/4 = 7 - 3</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.example2Step2">Simplify: <span class="MH-equation">x/4 = 4</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.example2Step3">Transpose ÷4: <span class="MH-equation">x = 4 × 4</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.example2Step4">Solution: <span class="MH-equation">x = 16</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.example2Check">Verification: <span class="MH-equation">16/4 + 3 = 4 + 3 = 7</span> ✓</p>
+				</div>
+				
+				<div class="MH-example">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1b.example3Title">Example 3: Equation with Variables on Both Sides</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.example3Equation">Solve: <span class="MH-equation">3x + 4 = 2x + 10</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.example3Step1">Transpose 2x and 4: <span class="MH-equation">3x - 2x = 10 - 4</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.example3Step2">Simplify: <span class="MH-equation">x = 6</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.example3Step3">Solution: <span class="MH-equation">x = 6</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.example3Check">Verification: <span class="MH-equation">3(6) + 4 = 18 + 4 = 22</span> and <span class="MH-equation">2(6) + 10 = 12 + 10 = 22</span> ✓</p>
+				</div>
+				
+				<div class="MH-example">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1b.example4Title">Example 4: Equation with Parentheses</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.example4Equation">Solve: <span class="MH-equation">2(x - 3) = 10</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.example4Step1">Distribute: <span class="MH-equation">2x - 6 = 10</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.example4Step2">Transpose -6: <span class="MH-equation">2x = 10 + 6</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.example4Step3">Simplify: <span class="MH-equation">2x = 16</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.example4Step4">Transpose ×2: <span class="MH-equation">x = 16 ÷ 2</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.example4Step5">Solution: <span class="MH-equation">x = 8</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1b.example4Check">Verification: <span class="MH-equation">2(8 - 3) = 2(5) = 10</span> ✓</p>
+				</div>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_eqdeg1b.practice">Practice Problems</h2>
+				
+				<div class="MH-practice">
+					<h3 class="MH-practice-title" data-i18n="MH.lesson_Y1Al_eqdeg1b.tryYourself">Try Solving These Equations by Transposition</h3>
+					
+					<div class="MH-practice-problem">
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1b.problem1">1. Solve: <span class="MH-equation">4x + 5 = 21</span></p>
+						<button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_eqdeg1b.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+						<div class="MH-solution" id="solution1">
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1b.problem1Step1">Transpose +5: <span class="MH-equation">4x = 21 - 5</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1b.problem1Step2">Simplify: <span class="MH-equation">4x = 16</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1b.problem1Step3">Transpose ×4: <span class="MH-equation">x = 16 ÷ 4</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1b.problem1Step4">Solution: <span class="MH-equation">x = 4</span></p>
+						</div>
+					</div>
+					
+					<div class="MH-practice-problem">
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1b.problem2">2. Solve: <span class="MH-equation">3(x + 2) = 15</span></p>
+						<button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_eqdeg1b.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+						<div class="MH-solution" id="solution2">
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1b.problem2Step1">Distribute: <span class="MH-equation">3x + 6 = 15</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1b.problem2Step2">Transpose +6: <span class="MH-equation">3x = 15 - 6</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1b.problem2Step3">Simplify: <span class="MH-equation">3x = 9</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1b.problem2Step4">Transpose ×3: <span class="MH-equation">x = 9 ÷ 3</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1b.problem2Step5">Solution: <span class="MH-equation">x = 3</span></p>
+						</div>
+					</div>
+					
+					<div class="MH-practice-problem">
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1b.problem3">3. Solve: <span class="MH-equation">x/5 - 2 = 3</span></p>
+						<button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_eqdeg1b.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+						<div class="MH-solution" id="solution3">
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1b.problem3Step1">Transpose -2: <span class="MH-equation">x/5 = 3 + 2</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1b.problem3Step2">Simplify: <span class="MH-equation">x/5 = 5</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1b.problem3Step3">Transpose ÷5: <span class="MH-equation">x = 5 × 5</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1b.problem3Step4">Solution: <span class="MH-equation">x = 25</span></p>
+						</div>
+					</div>
+					
+					<div class="MH-practice-problem">
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1b.problem4">4. Solve: <span class="MH-equation">5x - 3 = 2x + 9</span></p>
+						<button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_eqdeg1b.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+						<div class="MH-solution" id="solution4">
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1b.problem4Step1">Transpose 2x and -3: <span class="MH-equation">5x - 2x = 9 + 3</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1b.problem4Step2">Simplify: <span class="MH-equation">3x = 12</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1b.problem4Step3">Transpose ×3: <span class="MH-equation">x = 12 ÷ 3</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1b.problem4Step4">Solution: <span class="MH-equation">x = 4</span></p>
+						</div>
+					</div>
+				</div>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_eqdeg1b.whenToUse">When to Use the Transposition Method?</h2>
+				
+				<div class="MH-important">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1b.advantagesTitle">Advantages of the transposition method</h3>
+					<ul>
+						<li data-i18n="MH.lesson_Y1Al_eqdeg1b.advantage1">Faster for simple equations</li>
+						<li data-i18n="MH.lesson_Y1Al_eqdeg1b.advantage2">Allows direct visualization of the solving process</li>
+						<li data-i18n="MH.lesson_Y1Al_eqdeg1b.advantage3">Reduces the number of intermediate steps</li>
+					</ul>
+				</div>
+				
+				<div class="MH-definition">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1b.limitationsTitle">Limitations of the transposition method</h3>
+					<ul>
+						<li data-i18n="MH.lesson_Y1Al_eqdeg1b.limitation1">Can be less intuitive for beginners</li>
+						<li data-i18n="MH.lesson_Y1Al_eqdeg1b.limitation2">Requires good understanding of inverse operations</li>
+						<li data-i18n="MH.lesson_Y1Al_eqdeg1b.limitation3">Can be more difficult to apply for complex equations</li>
+					</ul>
+				</div>
+				
+				<p data-i18n="MH.lesson_Y1Al_eqdeg1b.conclusion">In practice, many students and professionals use a combination of both methods, choosing the one that seems most appropriate for each equation.</p>
+			</section>
+			
+			
+		</main>
+		<footer>
+			<div class="MH-footer-content">
+				<div class="MH-footer-column">
+					<div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+					<div class="MH-footer-text">Mejri Ziad</div>
+				</div>
+				
+				<div class="MH-footer-column">
+					<div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+					<div class="MH-footer-text">v0.0.1</div>
+				</div>
+				
+				<div class="MH-footer-column">
+					<div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+					<div class="MH-footer-links">
+						<a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+						<a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+					</div>
+				</div>
+			</div>
+		</footer>
+    <script src="scripts/i18n_en.js"></script>
+    <script src="scripts/i18n_ar.js"></script>
+    <script src="scripts/i18n_fr.js"></script>
+    <script src="scripts/translation.js"></script>
+<script src="scripts/pwa-install.js"></script>
+<script>
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                })
+                .catch(function(error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+        });
+    }
+</script>
+		<!-- noscript fallback -->
+		<noscript>
+			<style>
+				.MH-header-controls { display: none; }
+				.MH-solution { display: block; }
+			</style>
+			<div class="MH-warning">
+				JavaScript is recommended for the full experience, but content is still accessible.
+			</div>
+		</noscript>
+	</body>
+</html>

@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Mathematics Hub</title>
+		<link rel="stylesheet" href="styles/main.css">
+		<style>
+			/* Page-specific color palette - Green Theme for index */
+			:root {
+            --primary: #27ae60;
+            --primary-light: #2ecc71;
+            --primary-dark: #229954;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --warning: #f39c12;
+            --info: #9b59b6;
+			}
+			
+			[data-theme="dark"] {
+            --primary: #27ae60;
+            --primary-light: #2ecc71;
+            --primary-dark: #229954;
+            --secondary: #2980b9;
+            --accent: #c0392b;
+            --warning: #d35400;
+            --info: #8e44ad;
+			}
+			
+			/* Index page specific styles */
+			.MH-index-hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+			}
+			
+			.MH-index-hero-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--MH-text-primary);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+			}
+			
+			.MH-index-hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--MH-text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+			}
+			
+			/* Categories grid */
+			.MH-index-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+			}
+			
+			.MH-index-category {
+            background: var(--MH-bg-secondary);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--MH-shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border-left: 4px solid var(--primary);
+			}
+			
+			.MH-index-category:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--MH-shadow-hover);
+			}
+			
+			.MH-index-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-light), var(--primary));
+			}
+			
+			.MH-index-category-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+			}
+			
+			.MH-index-category-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--MH-text-primary);
+			}
+			
+			.MH-index-category-description {
+            color: var(--MH-text-secondary);
+            margin-bottom: 1.5rem;
+			}
+			
+			.MH-index-category-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+			}
+			
+			.MH-index-category-button:hover {
+            background: var(--primary-dark);
+			}
+			
+			/* Year selection modal */
+			.MH-index-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+			}
+			
+			.MH-index-modal-content {
+            background: var(--MH-bg-primary);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            box-shadow: var(--MH-shadow);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+			}
+			
+			.MH-index-modal-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+			}
+			
+			.MH-index-modal-title {
+            font-size: 1.5rem;
+            margin: 0;
+			}
+			
+			.MH-index-modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+			}
+			
+			.MH-index-modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+            flex: 1;
+			}
+			
+			.MH-index-year-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+			}
+			
+			.MH-index-year-button {
+            flex: 1;
+            padding: 1rem;
+            background: var(--MH-bg-secondary);
+            border: 2px solid var(--MH-border-color);
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--MH-text-primary);
+			}
+			
+			.MH-index-year-button:hover {
+            background: var(--primary-light);
+            border-color: var(--primary);
+            color: white;
+			}
+			
+			.MH-index-year-button.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+			}
+			
+			.MH-index-lessons-list {
+            display: none;
+			}
+			
+			.MH-index-lessons-list.active {
+            display: block;
+			}
+			
+			.MH-index-lesson-item {
+            padding: 1rem;
+            border-bottom: 1px solid var(--MH-border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+			}
+			
+			.MH-index-lesson-item:last-child {
+            border-bottom: none;
+			}
+			
+			.MH-index-lesson-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+			}
+			
+			.MH-index-lesson-link:hover {
+            text-decoration: underline;
+			}
+			
+			.MH-index-coming-soon {
+            color: var(--MH-text-secondary);
+            font-style: italic;
+			}
+			
+			/* Responsive design for index page */
+			@media (max-width: 768px) {
+            .MH-index-hero-title {
+			font-size: 2.2rem;
+            }
+            
+            .MH-index-categories {
+			grid-template-columns: 1fr;
+            }
+            
+            .MH-index-year-buttons {
+			flex-direction: column;
+            }
+			}
+			
+			/* RTL support for index page */
+			[dir="rtl"] .MH-index-category {
+            border-left: none;
+            border-right: 4px solid var(--primary);
+			}
+			/* Lesson grouping styles */
+			.MH-index-lesson-group {
+			margin: 0.5rem 0;
+			border: 1px solid var(--MH-border-color);
+			border-radius: 8px;
+			overflow: hidden;
+			}
+			
+			.MH-index-lesson-group-header {
+			padding: 1rem;
+			background: var(--MH-bg-secondary);
+			border-bottom: 1px solid var(--MH-border-color);
+			font-weight: 600;
+			color: var(--MH-text-primary);
+			}
+			
+			.MH-index-lesson-group-title {
+			font-size: 1rem;
+			}
+			
+			.MH-index-lesson-subitems {
+			background: var(--MH-bg-primary);
+			}
+			
+			.MH-index-lesson-subitem {
+			padding-left: 2rem;
+			border-bottom: 1px solid var(--MH-border-color);
+			}
+			
+			.MH-index-lesson-subitem:last-child {
+			border-bottom: none;
+			}
+			
+			.MH-index-lesson-subitem .MH-index-lesson-link {
+			font-size: 0.9rem;
+			color: var(--primary-light);
+			}
+			
+			.MH-index-lesson-subitem .MH-index-lesson-link:hover {
+			color: var(--primary);
+			}
+			
+			/* RTL support for lesson groups */
+			[dir="rtl"] .MH-index-lesson-subitem {
+			padding-left: 0;
+			padding-right: 2rem;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<div class="MH-header-grid">
+				<!-- Column 1: Icon -->
+				<div class="MH-header-column MH-header-icon">
+					<a href="index.html" class="MH-logo-link" data-tooltip data-i18n="MH.general.homeTooltip">
+						<img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+					</a>
+				</div>
+				
+				<!-- Column 2: Title -->
+				<div class="MH-header-column MH-header-title">
+					<div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+				</div>
+				
+				<!-- Column 3: Options -->
+				<div class="MH-header-column MH-header-options">
+					<div class="MH-header-controls">
+						<button class="MH-theme-toggle" id="themeToggle">
+							<span data-i18n="MH.general.theme">Theme</span>
+							<span>🌙</span>
+						</button>
+						<div class="MH-language-selector">
+							<button class="MH-language-btn" id="languageBtn">
+								<span data-i18n="MH.general.language">Language</span>
+								<span>▼</span>
+							</button>
+							<div class="MH-language-dropdown" id="languageDropdown">
+								<a href="#" class="MH-language-option" data-lang="en">English</a>
+								<a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+								<a href="#" class="MH-language-option" data-lang="fr">Français</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		
+		<main class="MH-container">
+			<section class="MH-index-hero">
+				<h1 class="MH-index-hero-title" data-i18n="MH.index.heroTitle">Explore Mathematics</h1>
+				<p class="MH-index-hero-subtitle" data-i18n="MH.index.heroSubtitle">Your comprehensive resource for learning algebra, geometry, and mathematical calculations. Dive into our interactive lessons and tools.</p>
+			</section>
+			
+			<section class="MH-index-categories">
+				<div class="MH-index-category">
+					<div class="MH-index-category-icon">ƒ(x)</div>
+					<h2 class="MH-index-category-title" data-i18n="MH.index.algebraTitle">Algebra</h2>
+					<p class="MH-index-category-description" data-i18n="MH.index.algebraDescription">Master equations, functions, and algebraic structures with our comprehensive lessons and practice problems.</p>
+					<button class="MH-index-category-button" data-i18n="MH.index.exploreAlgebra" onclick="openCategoryModal('algebra')">Explore Algebra</button>
+				</div>
+				
+				<div class="MH-index-category">
+					<div class="MH-index-category-icon">△</div>
+					<h2 class="MH-index-category-title" data-i18n="MH.index.geometryTitle">Geometry</h2>
+					<p class="MH-index-category-description" data-i18n="MH.index.geometryDescription">Discover shapes, angles, theorems, and spatial relationships through interactive visualizations.</p>
+					<button class="MH-index-category-button" data-i18n="MH.index.exploreGeometry" onclick="openCategoryModal('geometry')">Explore Geometry</button>
+				</div>
+				
+				<div class="MH-index-category">
+					<div class="MH-index-category-icon">=</div>
+					<h2 class="MH-index-category-title" data-i18n="MH.index.calculatorsTitle">Calculators</h2>
+					<p class="MH-index-category-description" data-i18n="MH.index.calculatorsDescription">Access a variety of mathematical tools and calculators to solve problems and check your work.</p>
+					<button class="MH-index-category-button" data-i18n="MH.index.exploreCalculators" onclick="openCategoryModal('calculators')">Explore Calculators</button>
+				</div>
+			</section>
+		</main>
+		
+		<!-- Algebra Modal -->
+		<div id="algebraModal" class="MH-index-modal">
+			<div class="MH-index-modal-content">
+				<div class="MH-index-modal-header">
+					<h2 class="MH-index-modal-title" data-i18n="MH.index.algebraModalTitle">Algebra Lessons</h2>
+					<button class="MH-index-modal-close" onclick="closeModal('algebraModal')">&times;</button>
+				</div>
+				<div class="MH-index-modal-body">
+					<div class="MH-index-year-buttons">
+						<button class="MH-index-year-button active" data-i18n="MH.index.firstYear" onclick="showYear('algebra', 'first')">1st Year Secondary</button>
+						<button class="MH-index-year-button" data-i18n="MH.index.secondYear" onclick="showYear('algebra', 'second')">2nd Year Secondary</button>
+					</div>
+					
+					<div id="algebra-first-year" class="MH-index-lessons-list active">
+						<!-- 1st Year Algebra Lessons -->
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.algebra.first.1">Upgrading Activities</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.algebra.first.2">Numerical Activities I</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.algebra.first.3">Numerical Activities II</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.algebra.first.4">Algebraic Activities</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						
+						<!-- First-Degree Equations and Inequalities with One Unknown - Grouped Lesson -->
+						<div class="MH-index-lesson-group">
+							<div class="MH-index-lesson-group-header">
+								<span class="MH-index-lesson-group-title" data-i18n="MH.index.algebra.first.5">First-Degree Equations and Inequalities with One Unknown</span>
+							</div>
+							<div class="MH-index-lesson-subitems">
+								<div class="MH-index-lesson-item MH-index-lesson-subitem">
+									<a href="lesson_Y1Al_eqdeg1a.html" class="MH-index-lesson-link" data-i18n="MH.index.algebra.first.5a">1st Degree Equations I: Algebraic Manipulation</a>
+								</div>
+								<div class="MH-index-lesson-item MH-index-lesson-subitem">
+									<a href="lesson_Y1Al_eqdeg1b.html" class="MH-index-lesson-link" data-i18n="MH.index.algebra.first.5b">1st Degree Equations II: Transposition Method</a>
+								</div>
+							</div>
+						</div>
+						
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.algebra.first.6">Linear Functions</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.algebra.first.7">Affine Functions</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.algebra.first.8">System of Two Equations with Two Unknowns</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.algebra.first.9">Information Exploitation</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+					</div>
+					
+					<div id="algebra-second-year" class="MH-index-lessons-list">
+						<!-- 2nd Year Algebra Lessons (unchanged) -->
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.algebra.second.1">First and Second Degree Problems</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.algebra.second.2">Notion of Polynomials</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.algebra.second.3">Arithmetic</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.algebra.second.4">Arithmetic Sequences</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.algebra.second.5">Geometric Sequences</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.algebra.second.6">Statistics</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.algebra.second.7">General Functions</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.algebra.second.8">Reference Functions</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Geometry Modal -->
+		<div id="geometryModal" class="MH-index-modal">
+			<div class="MH-index-modal-content">
+				<div class="MH-index-modal-header">
+					<h2 class="MH-index-modal-title" data-i18n="MH.index.geometryModalTitle">Geometry Lessons</h2>
+					<button class="MH-index-modal-close" onclick="closeModal('geometryModal')">&times;</button>
+				</div>
+				<div class="MH-index-modal-body">
+					<div class="MH-index-year-buttons">
+						<button class="MH-index-year-button active" data-i18n="MH.index.firstYear" onclick="showYear('geometry', 'first')">1st Year Secondary</button>
+						<button class="MH-index-year-button" data-i18n="MH.index.secondYear" onclick="showYear('geometry', 'second')">2nd Year Secondary</button>
+					</div>
+					
+					<div id="geometry-first-year" class="MH-index-lessons-list active">
+						<!-- 1st Year Geometry Lessons -->
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.geometry.first.1">Angles</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.geometry.first.2">Thales Theorem and Its Converse</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.geometry.first.3">Trigonometric Ratios of an Acute Angle. Metric Relations in a Right Triangle</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.geometry.first.4">Vectors and Translations</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.geometry.first.5">Sum of Two Vectors - Collinear Vectors</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.geometry.first.6">Activities in a Coordinate System</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.geometry.first.7">Quarter Turn</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.geometry.first.8">Plane Sections of a Solid</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+					</div>
+					
+					<div id="geometry-second-year" class="MH-index-lessons-list">
+						<!-- 2nd Year Geometry Lessons -->
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.geometry.second.1">Vector Calculus</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.geometry.second.2">Barycenter</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.geometry.second.3">Translations</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.geometry.second.4">Homotheties</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.geometry.second.5">Rotations</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.geometry.second.6">Trigonometry and Measurement of Magnitude</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.geometry.second.7">Analytic Geometry</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.geometry.second.8">Lines and Planes in Space</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.geometry.second.9">Orthogonality in Space</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Calculators Modal -->
+		<div id="calculatorsModal" class="MH-index-modal">
+			<div class="MH-index-modal-content">
+				<div class="MH-index-modal-header">
+					<h2 class="MH-index-modal-title" data-i18n="MH.index.calculatorsModalTitle">Calculators</h2>
+					<button class="MH-index-modal-close" onclick="closeModal('calculatorsModal')">&times;</button>
+				</div>
+				<div class="MH-index-modal-body">
+					<div class="MH-index-lessons-list active">
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.calculators.1">Basic Calculator</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.calculators.2">Scientific Calculator</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.calculators.3">Graphing Calculator</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.calculators.4">Statistics Calculator</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.calculators.5">Matrix Calculator</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+						<div class="MH-index-lesson-item">
+							<span data-i18n="MH.index.calculators.6">Equation Solver</span>
+							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<footer>
+			<div class="MH-footer-content">
+				<div class="MH-footer-column">
+					<div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+					<div class="MH-footer-text">Mejri Ziad</div>
+				</div>
+				
+				<div class="MH-footer-column">
+					<div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+					<div class="MH-footer-text">v0.0.1</div>
+				</div>
+				
+				<div class="MH-footer-column">
+					<div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+					<div class="MH-footer-links">
+						<a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+						<a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+					</div>
+				</div>
+			</div>
+		</footer>
+		
+		<!-- Translation Scripts -->
+		<script src="scripts/i18n_en.js"></script>
+		<script src="scripts/i18n_ar.js"></script>
+		<script src="scripts/i18n_fr.js"></script>
+		<script src="scripts/translation.js"></script>
+		
+		<script>
+			// Modal functions
+			function openCategoryModal(category) {
+				document.getElementById(category + 'Modal').style.display = 'flex';
+				// Reset to first year when opening
+				showYear(category, 'first');
+			}
+			
+			function closeModal(modalId) {
+				document.getElementById(modalId).style.display = 'none';
+			}
+			
+			function showYear(category, year) {
+				// Hide all year lists for this category
+				const lists = document.querySelectorAll(`#${category}Modal .MH-index-lessons-list`);
+				lists.forEach(list => {
+					list.classList.remove('active');
+				});
+				
+				// Show selected year
+				document.getElementById(`${category}-${year}-year`).classList.add('active');
+				
+				// Update active buttons
+				const buttons = document.querySelectorAll(`#${category}Modal .MH-index-year-button`);
+				buttons.forEach(button => {
+					button.classList.remove('active');
+				});
+				
+				event.target.classList.add('active');
+			}
+			
+			// Close modal when clicking outside
+			window.onclick = function(event) {
+				if (event.target.classList.contains('MH-index-modal')) {
+					event.target.style.display = 'none';
+				}
+			}
+		</script>
+		<script src="scripts/pwa-install.js"></script>
+		<script>
+			// Register service worker
+			if ('serviceWorker' in navigator) {
+				window.addEventListener('load', function() {
+					navigator.serviceWorker.register('/sw.js')
+					.then(function(registration) {
+						console.log('Service Worker registered with scope:', registration.scope);
+					})
+					.catch(function(error) {
+						console.log('Service Worker registration failed:', error);
+					});
+				});
+			}
+		</script>
+	</body>
+</html>

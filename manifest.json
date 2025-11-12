@@ -1,0 +1,142 @@
+{
+	"name": "Mathematics Hub",
+	"short_name": "MathHub",
+	"id": "MathHub",
+	"description": "A platform for Mathematics lessons and exercices",
+	"start_url": "/index.html",
+	"scope": "/",
+	"display": "standalone",
+	"background_color": "#4a6fa5",
+	"theme_color": "#4a6fa5",
+	"orientation": "portrait-primary",
+	"edge_side_panel": {
+		"preferred_width": 400
+	},
+	"display_override": [
+		"window-controls-overlay",
+		"standalone",
+		"minimal-ui",
+		"browser"
+	],
+	"launch_handler": {
+		"client_mode": "focus-existing"
+	},
+	"categories": ["education", "kids"],
+	"dir": "auto",
+	"iarc_rating_id": "e58c174a-81d2-5c3c-32cc-34b8de4a52e9",
+	"lang": "en",
+	"prefer_related_applications": false,
+	"screenshots": [
+		{
+			"src": "assets/screenshots/screenshot1.png",
+			"sizes": "1280x720",
+			"type": "image/png",
+			"form_factor": "wide",
+			"label": "Mathematics Hub main page showing algebra, geometry, and calculators sections"
+		},
+		{
+			"src": "assets/screenshots/screenshot2.png",
+			"sizes": "750x1334",
+			"type": "image/png",
+			"form_factor": "narrow",
+			"label": "Mobile view of algebra lessons with dark theme enabled"
+		}
+	],
+	"shortcuts": [
+		{
+			"name": "Algebra Lessons",
+			"short_name": "Algebra",
+			"description": "Access algebra lessons and practice problems",
+			"url": "/index.html#algebra",
+			"icons": [
+				{
+					"src": "assets/icons/icon-96x96.png",
+					"sizes": "96x96",
+					"type": "image/png"
+				}
+			]
+		},
+		{
+			"name": "Geometry Lessons",
+			"short_name": "Geometry",
+			"description": "Explore geometry concepts and theorems",
+			"url": "/index.html#geometry",
+			"icons": [
+				{
+					"src": "assets/icons/icon-96x96.png",
+					"sizes": "96x96",
+					"type": "image/png"
+				}
+			]
+		},
+		{
+			"name": "Calculators",
+			"short_name": "Calc",
+			"description": "Use mathematical calculators and tools",
+			"url": "/index.html#calculators",
+			"icons": [
+				{
+					"src": "assets/icons/icon-96x96.png",
+					"sizes": "96x96",
+					"type": "image/png"
+				}
+			]
+		}
+	],
+	"icons": [
+		{
+			"src": "assets/icons/icon-48x48.png",
+			"sizes": "48x48",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "assets/icons/icon-72x72.png",
+			"sizes": "72x72",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "assets/icons/icon-96x96.png",
+			"sizes": "96x96",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "assets/icons/icon-128x128.png",
+			"sizes": "128x128",
+			"type": "image/png",
+			"purpose": "maskable"
+		},
+		{
+			"src": "assets/icons/icon-144x144.png",
+			"sizes": "144x144",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"icon-152x152.png",
+			"sizes": "152x152",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "assets/icons/icon-192x192.png",
+			"sizes": "192x192",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "assets/icons/icon-384x384.png",
+			"sizes": "384x384",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "assets/icons/icon-512x512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "maskable"
+		}
+	]
+}
