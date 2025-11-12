@@ -1306,6 +1306,71 @@ li {
     }
 }
 
+/* table styles */
+.MH-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    background-color: var(--MH-bg-primary);
+    border: 1px solid var(--MH-border-color);
+    box-shadow: var(--MH-shadow);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.MH-table th {
+    background-color: var(--primary);
+    color: white;
+    padding: 0.75rem;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 2px solid var(--primary-dark);
+}
+
+.MH-table td {
+    padding: 0.75rem;
+    text-align: center;
+    border-bottom: 1px solid var(--MH-border-color);
+    transition: background-color 0.3s ease;
+}
+
+.MH-table tr:last-child td {
+    border-bottom: none;
+}
+
+.MH-table tr:hover td {
+    background-color: var(--MH-bg-secondary);
+}
+
+/* RTL support for tables */
+[dir="rtl"] .MH-table th,
+[dir="rtl"] .MH-table td {
+    text-align: center;
+}
+
+/* Responsive tables */
+@media (max-width: 768px) {
+    .MH-table {
+        font-size: 0.9rem;
+    }
+    
+    .MH-table th,
+    .MH-table td {
+        padding: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .MH-table {
+        font-size: 0.8rem;
+    }
+    
+    .MH-table th,
+    .MH-table td {
+        padding: 0.4rem;
+    }
+}
+
 /* Install button styles */
 .MH-install-btn {
     background-color: rgba(255, 255, 255, 0.2);

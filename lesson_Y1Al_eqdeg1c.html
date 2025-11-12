@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Mathematics Lesson: 1st Degree Equations III - Graphical Method</title>
+		<!-- PWA Manifest -->
+		<link rel="manifest" href="manifest.json">
+		
+		<!-- Favicon -->
+		<link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+		<link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+		
+		<!-- Theme Color -->
+		<meta name="theme-color" content="#4a6fa5" media="(prefers-color-scheme: light)">
+		<meta name="theme-color" content="#1a365f" media="(prefers-color-scheme: dark)">
+		
+		<!-- PWA Meta Tags -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="default">
+		<meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="msapplication-TileColor" content="#4a6fa5">
+		<meta name="msapplication-config" content="/browserconfig.xml">
+		<link rel="stylesheet" href="styles/main.css">
+		<style>
+			/* Page-specific color palette - Green Theme */
+			:root {
+			--primary: #27ae60;
+			--primary-light: #58d68d;
+			--primary-dark: #229954;
+			--secondary: #e67e22;
+			--secondary-light: #f39c12;
+			--secondary-dark: #d35400;
+			--accent: #8e44ad;
+			--warning: #e74c3c;
+			--info: #3498db;
+			}
+			
+			[data-theme="dark"] {
+			--primary: #229954;
+			--primary-light: #27ae60;
+			--primary-dark: #1e8449;
+			--secondary: #d35400;
+			--secondary-light: #e67e22;
+			--secondary-dark: #a04000;
+			--accent: #7d3c98;
+			--warning: #c0392b;
+			--info: #2980b9;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<div class="MH-header-grid">
+				<!-- Column 1: Icon -->
+				<div class="MH-header-column MH-header-icon">
+					<a href="index.html" class="MH-logo-link" data-tooltip>
+						<img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+					</a>
+				</div>
+				
+				<!-- Column 2: Title -->
+				<div class="MH-header-column MH-header-title">
+					<div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+				</div>
+				
+				<!-- Column 3: Options -->
+				<div class="MH-header-column MH-header-options">
+					<div class="MH-header-controls">
+						<button class="MH-theme-toggle" id="themeToggle">
+							<span data-i18n="MH.general.theme">Theme</span>
+							<span>🌙</span>
+						</button>
+						<div class="MH-language-selector">
+							<button class="MH-language-btn" id="languageBtn">
+								<span data-i18n="MH.general.language">Language</span>
+								<span>▼</span>
+							</button>
+							<div class="MH-language-dropdown" id="languageDropdown">
+								<a href="#" class="MH-language-option" data-lang="en">English</a>
+								<a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+								<a href="#" class="MH-language-option" data-lang="fr">Français</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		
+		<main id="main-content" class="MH-container" tabindex="-1">
+			
+			<h1 class="MH-lesson-title" data-i18n="MH.lesson_Y1Al_eqdeg1c.title">1st Degree Equations III: Graphical Method</h1>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_eqdeg1c.introduction">Introduction to Graphical Method</h2>
+				<p data-i18n="MH.lesson_Y1Al_eqdeg1c.introText1">The graphical method is a visual approach to solving first-degree equations by representing them as lines on a coordinate plane and finding their intersection points.</p>
+				
+				<div class="MH-definition">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1c.definitionTitle">What is the Graphical Method?</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.definitionText">In the graphical method, we represent each side of the equation as a linear function and plot both lines on the same coordinate system. The solution to the equation is the x-coordinate of the point where the two lines intersect.</p>
+				</div>
+				
+				<p data-i18n="MH.lesson_Y1Al_eqdeg1c.introText2">This method provides an intuitive understanding of equations and helps visualize the relationship between algebraic expressions and their geometric representations.</p>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_eqdeg1c.basicConcept">Basic Concept</h2>
+				
+				<div class="MH-step">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1c.conceptTitle">Equations as Lines</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.conceptText">Any first-degree equation can be written in the form: <span class="MH-equation">ax + b = cx + d</span>. We can rewrite this as two separate functions:</p>
+					<ul>
+						<li data-i18n="MH.lesson_Y1Al_eqdeg1c.function1">Left side: <span class="MH-equation">y = ax + b</span></li>
+						<li data-i18n="MH.lesson_Y1Al_eqdeg1c.function2">Right side: <span class="MH-equation">y = cx + d</span></li>
+					</ul>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.conceptText2">The solution to the original equation is the x-value where these two lines intersect.</p>
+				</div>
+				
+				<div class="MH-step">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1c.intersectionTitle">Finding the Intersection</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.intersectionText">When two lines intersect, they share the same x and y coordinates at that point. This means:</p>
+					<div class="MH-equation">ax + b = cx + d</div>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.intersectionText2">Which is exactly our original equation!</p>
+				</div>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_eqdeg1c.steps">Graphical Method Steps</h2>
+				
+				<div class="MH-step">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1c.step1Title">Step 1: Rewrite the Equation</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.step1Text">Transform the equation into two separate linear functions:</p>
+					<div class="MH-example">
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1c.step1Example">For <span class="MH-equation">2x + 3 = x + 5</span>:</p>
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1c.step1Example1">Function 1: <span class="MH-equation">y = 2x + 3</span></p>
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1c.step1Example2">Function 2: <span class="MH-equation">y = x + 5</span></p>
+					</div>
+				</div>
+				
+				<div class="MH-step">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1c.step2Title">Step 2: Create a Table of Values</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.step2Text">Choose several x-values and calculate the corresponding y-values for both functions:</p>
+					<div class="MH-example">
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1c.step2Example">For <span class="MH-equation">y = 2x + 3</span> and <span class="MH-equation">y = x + 5</span>:</p>
+						<table class="MH-table">
+							<tr>
+								<th data-i18n="MH.lesson_Y1Al_eqdeg1c.xValue">x</th>
+								<th data-i18n="MH.lesson_Y1Al_eqdeg1c.y1Value">y = 2x + 3</th>
+								<th data-i18n="MH.lesson_Y1Al_eqdeg1c.y2Value">y = x + 5</th>
+							</tr>
+							<tr>
+								<td>-1</td>
+								<td>1</td>
+								<td>4</td>
+							</tr>
+							<tr>
+								<td>0</td>
+								<td>3</td>
+								<td>5</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td>6</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>7</td>
+								<td>7</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>9</td>
+								<td>8</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				
+				<div class="MH-step">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1c.step3Title">Step 3: Plot the Points and Draw Lines</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.step3Text">Plot the points from your table on a coordinate plane and draw straight lines through them:</p>
+					<div class="MH-graph-container">
+						<canvas id="example1Graph" width="600" height="400"></canvas>
+					</div>
+				</div>
+				
+				<div class="MH-step">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1c.step4Title">Step 4: Find the Intersection Point</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.step4Text">Identify the point where the two lines intersect. The x-coordinate of this point is the solution to the equation:</p>
+					<div class="MH-example">
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1c.step4Example">In our example, the lines intersect at (2, 7), so the solution is <span class="MH-equation">x = 2</span>.</p>
+					</div>
+				</div>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_eqdeg1c.detailedExamples">Detailed Examples</h2>
+				
+				<div class="MH-example">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1c.example1Title">Example 1: Simple Equation</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.example1Equation">Solve graphically: <span class="MH-equation">3x - 2 = x + 4</span></p>
+					
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.example1Step1">Step 1: Write as two functions:</p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.example1Step1a">Function 1: <span class="MH-equation">y = 3x - 2</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.example1Step1b">Function 2: <span class="MH-equation">y = x + 4</span></p>
+					
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.example1Step2">Step 2: Create table of values:</p>
+					<table class="MH-table">
+						<tr>
+							<th data-i18n="MH.lesson_Y1Al_eqdeg1c.xValue">x</th>
+							<th data-i18n="MH.lesson_Y1Al_eqdeg1c.y1Value">y = 3x - 2</th>
+							<th data-i18n="MH.lesson_Y1Al_eqdeg1c.y2Value">y = x + 4</th>
+						</tr>
+						<tr>
+							<td>-1</td>
+							<td>-5</td>
+							<td>3</td>
+						</tr>
+						<tr>
+							<td>0</td>
+							<td>-2</td>
+							<td>4</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>1</td>
+							<td>5</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>4</td>
+							<td>6</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>7</td>
+							<td>7</td>
+						</tr>
+					</table>
+					
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.example1Step3">Step 3: Plot the graphs:</p>
+					<div class="MH-graph-container">
+						<canvas id="example2Graph" width="600" height="400"></canvas>
+					</div>
+					
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.example1Step4">Step 4: The lines intersect at (3, 7), so the solution is <span class="MH-equation">x = 3</span>.</p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.example1Check">Verification: <span class="MH-equation">3(3) - 2 = 9 - 2 = 7</span> and <span class="MH-equation">3 + 4 = 7</span> ✓</p>
+				</div>
+				
+				<div class="MH-example">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1c.example2Title">Example 2: Equation with Same Slope</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.example2Equation">Solve graphically: <span class="MH-equation">2x + 1 = 2x - 3</span></p>
+					
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.example2Step1">Step 1: Write as two functions:</p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.example2Step1a">Function 1: <span class="MH-equation">y = 2x + 1</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.example2Step1b">Function 2: <span class="MH-equation">y = 2x - 3</span></p>
+					
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.example2Step2">Step 2: The lines have the same slope (2) but different y-intercepts (1 and -3).</p>
+					
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.example2Step3">Step 3: Plot the graphs:</p>
+					<div class="MH-graph-container">
+						<canvas id="example3Graph" width="600" height="400"></canvas>
+					</div>
+					
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.example2Step4">Step 4: The lines are parallel and never intersect, so there is no solution.</p>
+				</div>
+				
+				<div class="MH-example">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1c.example3Title">Example 3: Equation with Same Line</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.example3Equation">Solve graphically: <span class="MH-equation">4x - 2 = 2(2x - 1)</span></p>
+					
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.example3Step1">Step 1: Write as two functions:</p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.example3Step1a">Function 1: <span class="MH-equation">y = 4x - 2</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.example3Step1b">Function 2: <span class="MH-equation">y = 4x - 2</span> (after simplifying)</p>
+					
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.example3Step2">Step 2: Both functions are identical.</p>
+					
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.example3Step3">Step 3: Plot the graphs:</p>
+					<div class="MH-graph-container">
+						<canvas id="example4Graph" width="600" height="400"></canvas>
+					</div>
+					
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.example3Step4">Step 4: The lines coincide (are the same line), so there are infinitely many solutions.</p>
+				</div>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_eqdeg1c.practice">Practice Problems</h2>
+				
+				<div class="MH-practice">
+					<h3 class="MH-practice-title" data-i18n="MH.lesson_Y1Al_eqdeg1c.tryYourself">Try Solving These Equations Graphically</h3>
+					
+					<div class="MH-practice-problem">
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1c.problem1">1. Solve graphically: <span class="MH-equation">x + 3 = 2x - 1</span></p>
+						<button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_eqdeg1c.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+						<div class="MH-solution" id="solution1">
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1c.problem1Step1">Step 1: Write as two functions:</p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1c.problem1Step1a">Function 1: <span class="MH-equation">y = x + 3</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1c.problem1Step1b">Function 2: <span class="MH-equation">y = 2x - 1</span></p>
+							
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1c.problem1Step2">Step 2: Create table of values:</p>
+							<table class="MH-table">
+								<tr>
+									<th data-i18n="MH.lesson_Y1Al_eqdeg1c.xValue">x</th>
+									<th data-i18n="MH.lesson_Y1Al_eqdeg1c.y1Value">y = x + 3</th>
+									<th data-i18n="MH.lesson_Y1Al_eqdeg1c.y2Value">y = 2x - 1</th>
+								</tr>
+								<tr>
+									<td>-1</td>
+									<td>2</td>
+									<td>-3</td>
+								</tr>
+								<tr>
+									<td>0</td>
+									<td>3</td>
+									<td>-1</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>4</td>
+									<td>1</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>5</td>
+									<td>3</td>
+								</tr>
+								<tr>
+									<td>3</td>
+									<td>6</td>
+									<td>5</td>
+								</tr>
+								<tr>
+									<td>4</td>
+									<td>7</td>
+									<td>7</td>
+								</tr>
+							</table>
+							
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1c.problem1Step3">Step 3: Plot the graphs:</p>
+							<div class="MH-graph-container">
+								<canvas id="problem1Graph" width="600" height="400"></canvas>
+							</div>
+							
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1c.problem1Step4">Step 4: The lines intersect at (4, 7), so the solution is <span class="MH-equation">x = 4</span>.</p>
+						</div>
+					</div>
+					
+					<div class="MH-practice-problem">
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1c.problem2">2. Solve graphically: <span class="MH-equation">3x + 2 = 5x - 4</span></p>
+						<button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_eqdeg1c.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+						<div class="MH-solution" id="solution2">
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1c.problem2Step1">Step 1: Write as two functions:</p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1c.problem2Step1a">Function 1: <span class="MH-equation">y = 3x + 2</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1c.problem2Step1b">Function 2: <span class="MH-equation">y = 5x - 4</span></p>
+							
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1c.problem2Step2">Step 2: Create table of values:</p>
+							<table class="MH-table">
+								<tr>
+									<th data-i18n="MH.lesson_Y1Al_eqdeg1c.xValue">x</th>
+									<th data-i18n="MH.lesson_Y1Al_eqdeg1c.y1Value">y = 3x + 2</th>
+									<th data-i18n="MH.lesson_Y1Al_eqdeg1c.y2Value">y = 5x - 4</th>
+								</tr>
+								<tr>
+									<td>-1</td>
+									<td>-1</td>
+									<td>-9</td>
+								</tr>
+								<tr>
+									<td>0</td>
+									<td>2</td>
+									<td>-4</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>5</td>
+									<td>1</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>8</td>
+									<td>6</td>
+								</tr>
+								<tr>
+									<td>3</td>
+									<td>11</td>
+									<td>11</td>
+								</tr>
+							</table>
+							
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1c.problem2Step3">Step 3: Plot the graphs:</p>
+							<div class="MH-graph-container">
+								<canvas id="problem2Graph" width="600" height="400"></canvas>
+							</div>
+							
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1c.problem2Step4">Step 4: The lines intersect at (3, 11), so the solution is <span class="MH-equation">x = 3</span>.</p>
+						</div>
+					</div>
+					
+					<div class="MH-practice-problem">
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1c.problem3">3. Solve graphically: <span class="MH-equation">2(x + 1) = 2x + 3</span></p>
+						<button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_eqdeg1c.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+						<div class="MH-solution" id="solution3">
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1c.problem3Step1">Step 1: Write as two functions:</p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1c.problem3Step1a">Function 1: <span class="MH-equation">y = 2x + 2</span> (after distributing)</p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1c.problem3Step1b">Function 2: <span class="MH-equation">y = 2x + 3</span></p>
+							
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1c.problem3Step2">Step 2: The lines have the same slope (2) but different y-intercepts (2 and 3).</p>
+							
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1c.problem3Step3">Step 3: Plot the graphs:</p>
+							<div class="MH-graph-container">
+								<canvas id="problem3Graph" width="600" height="400"></canvas>
+							</div>
+							
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1c.problem3Step4">Step 4: The lines are parallel and never intersect, so there is no solution.</p>
+						</div>
+					</div>
+				</div>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_eqdeg1c.advantages">Advantages and Limitations</h2>
+				
+				<div class="MH-comparison">
+					<div class="MH-method">
+						<h3 data-i18n="MH.lesson_Y1Al_eqdeg1c.advantagesTitle">Advantages</h3>
+						<ul>
+							<li data-i18n="MH.lesson_Y1Al_eqdeg1c.advantage1">Provides visual understanding of equations</li>
+							<li data-i18n="MH.lesson_Y1Al_eqdeg1c.advantage2">Helps understand the relationship between algebra and geometry</li>
+							<li data-i18n="MH.lesson_Y1Al_eqdeg1c.advantage3">Useful for estimating solutions when exact calculation is difficult</li>
+							<li data-i18n="MH.lesson_Y1Al_eqdeg1c.advantage4">Clearly shows when equations have no solution or infinite solutions</li>
+						</ul>
+					</div>
+					
+					<div class="MH-method">
+						<h3 data-i18n="MH.lesson_Y1Al_eqdeg1c.limitationsTitle">Limitations</h3>
+						<ul>
+							<li data-i18n="MH.lesson_Y1Al_eqdeg1c.limitation1">Less precise than algebraic methods</li>
+							<li data-i18n="MH.lesson_Y1Al_eqdeg1c.limitation2">Time-consuming for complex equations</li>
+							<li data-i18n="MH.lesson_Y1Al_eqdeg1c.limitation3">Requires graph paper or graphing tools</li>
+							<li data-i18n="MH.lesson_Y1Al_eqdeg1c.limitation4">May be difficult to read exact values from graphs</li>
+						</ul>
+					</div>
+				</div>
+				
+				<div class="MH-important">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1c.importantNote">Important Note</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1c.importantText">The graphical method is excellent for understanding and visualizing equations, but for precise solutions, algebraic methods are generally preferred. The best approach often combines both methods: using graphs to understand the problem and algebra to find the exact solution.</p>
+				</div>
+			</section>
+			
+		</main>
+		<footer>
+			<div class="MH-footer-content">
+				<div class="MH-footer-column">
+					<div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+					<div class="MH-footer-text">Mejri Ziad</div>
+				</div>
+				
+				<div class="MH-footer-column">
+					<div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+					<div class="MH-footer-text">v0.0.1</div>
+				</div>
+				
+				<div class="MH-footer-column">
+					<div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+					<div class="MH-footer-links">
+						<a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+						<a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+					</div>
+				</div>
+			</div>
+		</footer>
+		
+		<script src="scripts/mathematics_utils.js"></script>
+		<script src="scripts/i18n_en.js"></script>
+		<script src="scripts/i18n_ar.js"></script>
+		<script src="scripts/i18n_fr.js"></script>
+		<script src="scripts/translation.js"></script>
+		<script src="scripts/pwa-install.js"></script>
+		<script>
+			// Register service worker
+			if ('serviceWorker' in navigator) {
+				window.addEventListener('load', function() {
+					navigator.serviceWorker.register('/sw.js')
+					.then(function(registration) {
+						console.log('Service Worker registered with scope:', registration.scope);
+					})
+					.catch(function(error) {
+						console.log('Service Worker registration failed:', error);
+					});
+				});
+			}
+
+			// Graph drawing functions
+			function drawExampleGraphs() {
+				// Example 1: 2x + 3 = x + 5
+				try {
+					// Draw both lines on the same canvas
+					const canvas1 = document.getElementById('example1Graph');
+					if (canvas1) {
+						const ctx = canvas1.getContext('2d');
+						ctx.clearRect(0, 0, canvas1.width, canvas1.height);
+						
+						// Set up coordinate system
+						const width = canvas1.width;
+						const height = canvas1.height;
+						const centerX = width / 2;
+						const centerY = height / 2;
+						const scale = 20;
+						
+						// Draw grid and axes
+						mathUtils.drawGrid(ctx, width, height, centerX, centerY, scale);
+						mathUtils.drawAxes(ctx, width, height, centerX, centerY);
+						
+						// Draw first line: y = 2x + 3
+						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 2, 3);
+						
+						// Draw second line: y = x + 5
+						ctx.strokeStyle = 'red';
+						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 1, 5);
+						
+						// Highlight intersection point (2, 7)
+						mathUtils.highlightPoint(2, 7, 'green', 'example1Graph');
+						
+						// Add legend
+						ctx.fillStyle = 'blue';
+						ctx.fillText('y = 2x + 3', 20, 30);
+						ctx.fillStyle = 'red';
+						ctx.fillText('y = x + 5', 20, 50);
+						ctx.fillStyle = 'green';
+						ctx.fillText('Intersection: (2, 7)', 20, 70);
+					}
+				} catch (error) {
+					console.error('Error drawing example 1 graph:', error);
+				}
+
+				// Example 2: 3x - 2 = x + 4
+				try {
+					const canvas2 = document.getElementById('example2Graph');
+					if (canvas2) {
+						const ctx = canvas2.getContext('2d');
+						ctx.clearRect(0, 0, canvas2.width, canvas2.height);
+						
+						const width = canvas2.width;
+						const height = canvas2.height;
+						const centerX = width / 2;
+						const centerY = height / 2;
+						const scale = 20;
+						
+						mathUtils.drawGrid(ctx, width, height, centerX, centerY, scale);
+						mathUtils.drawAxes(ctx, width, height, centerX, centerY);
+						
+						// Draw first line: y = 3x - 2
+						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 3, -2);
+						
+						// Draw second line: y = x + 4
+						ctx.strokeStyle = 'red';
+						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 1, 4);
+						
+						// Highlight intersection point (3, 7)
+						mathUtils.highlightPoint(3, 7, 'green', 'example2Graph');
+						
+						// Add legend
+						ctx.fillStyle = 'blue';
+						ctx.fillText('y = 3x - 2', 20, 30);
+						ctx.fillStyle = 'red';
+						ctx.fillText('y = x + 4', 20, 50);
+						ctx.fillStyle = 'green';
+						ctx.fillText('Intersection: (3, 7)', 20, 70);
+					}
+				} catch (error) {
+					console.error('Error drawing example 2 graph:', error);
+				}
+
+				// Example 3: 2x + 1 = 2x - 3 (parallel lines)
+				try {
+					const canvas3 = document.getElementById('example3Graph');
+					if (canvas3) {
+						const ctx = canvas3.getContext('2d');
+						ctx.clearRect(0, 0, canvas3.width, canvas3.height);
+						
+						const width = canvas3.width;
+						const height = canvas3.height;
+						const centerX = width / 2;
+						const centerY = height / 2;
+						const scale = 20;
+						
+						mathUtils.drawGrid(ctx, width, height, centerX, centerY, scale);
+						mathUtils.drawAxes(ctx, width, height, centerX, centerY);
+						
+						// Draw first line: y = 2x + 1
+						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 2, 1);
+						
+						// Draw second line: y = 2x - 3
+						ctx.strokeStyle = 'red';
+						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 2, -3);
+						
+						// Add legend
+						ctx.fillStyle = 'blue';
+						ctx.fillText('y = 2x + 1', 20, 30);
+						ctx.fillStyle = 'red';
+						ctx.fillText('y = 2x - 3', 20, 50);
+						ctx.fillStyle = 'black';
+						ctx.fillText('Parallel lines - No intersection', 20, 70);
+					}
+				} catch (error) {
+					console.error('Error drawing example 3 graph:', error);
+				}
+
+				// Example 4: 4x - 2 = 2(2x - 1) (same line)
+				try {
+					const canvas4 = document.getElementById('example4Graph');
+					if (canvas4) {
+						const ctx = canvas4.getContext('2d');
+						ctx.clearRect(0, 0, canvas4.width, canvas4.height);
+						
+						const width = canvas4.width;
+						const height = canvas4.height;
+						const centerX = width / 2;
+						const centerY = height / 2;
+						const scale = 20;
+						
+						mathUtils.drawGrid(ctx, width, height, centerX, centerY, scale);
+						mathUtils.drawAxes(ctx, width, height, centerX, centerY);
+						
+						// Draw the line: y = 4x - 2
+						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 4, -2);
+						
+						// Add legend
+						ctx.fillStyle = 'blue';
+						ctx.fillText('y = 4x - 2', 20, 30);
+						ctx.fillStyle = 'black';
+						ctx.fillText('Same line - Infinite solutions', 20, 50);
+					}
+				} catch (error) {
+					console.error('Error drawing example 4 graph:', error);
+				}
+			}
+
+			function drawPracticeGraphs() {
+				// Problem 1: x + 3 = 2x - 1
+				try {
+					const canvas1 = document.getElementById('problem1Graph');
+					if (canvas1) {
+						const ctx = canvas1.getContext('2d');
+						ctx.clearRect(0, 0, canvas1.width, canvas1.height);
+						
+						const width = canvas1.width;
+						const height = canvas1.height;
+						const centerX = width / 2;
+						const centerY = height / 2;
+						const scale = 20;
+						
+						mathUtils.drawGrid(ctx, width, height, centerX, centerY, scale);
+						mathUtils.drawAxes(ctx, width, height, centerX, centerY);
+						
+						// Draw first line: y = x + 3
+						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 1, 3);
+						
+						// Draw second line: y = 2x - 1
+						ctx.strokeStyle = 'red';
+						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 2, -1);
+						
+						// Highlight intersection point (4, 7)
+						mathUtils.highlightPoint(4, 7, 'green', 'problem1Graph');
+						
+						// Add legend
+						ctx.fillStyle = 'blue';
+						ctx.fillText('y = x + 3', 20, 30);
+						ctx.fillStyle = 'red';
+						ctx.fillText('y = 2x - 1', 20, 50);
+						ctx.fillStyle = 'green';
+						ctx.fillText('Intersection: (4, 7)', 20, 70);
+					}
+				} catch (error) {
+					console.error('Error drawing problem 1 graph:', error);
+				}
+
+				// Problem 2: 3x + 2 = 5x - 4
+				try {
+					const canvas2 = document.getElementById('problem2Graph');
+					if (canvas2) {
+						const ctx = canvas2.getContext('2d');
+						ctx.clearRect(0, 0, canvas2.width, canvas2.height);
+						
+						const width = canvas2.width;
+						const height = canvas2.height;
+						const centerX = width / 2;
+						const centerY = height / 2;
+						const scale = 20;
+						
+						mathUtils.drawGrid(ctx, width, height, centerX, centerY, scale);
+						mathUtils.drawAxes(ctx, width, height, centerX, centerY);
+						
+						// Draw first line: y = 3x + 2
+						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 3, 2);
+						
+						// Draw second line: y = 5x - 4
+						ctx.strokeStyle = 'red';
+						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 5, -4);
+						
+						// Highlight intersection point (3, 11)
+						mathUtils.highlightPoint(3, 11, 'green', 'problem2Graph');
+						
+						// Add legend
+						ctx.fillStyle = 'blue';
+						ctx.fillText('y = 3x + 2', 20, 30);
+						ctx.fillStyle = 'red';
+						ctx.fillText('y = 5x - 4', 20, 50);
+						ctx.fillStyle = 'green';
+						ctx.fillText('Intersection: (3, 11)', 20, 70);
+					}
+				} catch (error) {
+					console.error('Error drawing problem 2 graph:', error);
+				}
+
+				// Problem 3: 2(x + 1) = 2x + 3 (parallel lines)
+				try {
+					const canvas3 = document.getElementById('problem3Graph');
+					if (canvas3) {
+						const ctx = canvas3.getContext('2d');
+						ctx.clearRect(0, 0, canvas3.width, canvas3.height);
+						
+						const width = canvas3.width;
+						const height = canvas3.height;
+						const centerX = width / 2;
+						const centerY = height / 2;
+						const scale = 20;
+						
+						mathUtils.drawGrid(ctx, width, height, centerX, centerY, scale);
+						mathUtils.drawAxes(ctx, width, height, centerX, centerY);
+						
+						// Draw first line: y = 2x + 2
+						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 2, 2);
+						
+						// Draw second line: y = 2x + 3
+						ctx.strokeStyle = 'red';
+						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 2, 3);
+						
+						// Add legend
+						ctx.fillStyle = 'blue';
+						ctx.fillText('y = 2x + 2', 20, 30);
+						ctx.fillStyle = 'red';
+						ctx.fillText('y = 2x + 3', 20, 50);
+						ctx.fillStyle = 'black';
+						ctx.fillText('Parallel lines - No solution', 20, 70);
+					}
+				} catch (error) {
+					console.error('Error drawing problem 3 graph:', error);
+				}
+			}
+
+			// Initialize graphs when page loads
+			document.addEventListener('DOMContentLoaded', function() {
+				drawExampleGraphs();
+				
+				// Redraw graphs when solutions are shown
+				window.addEventListener('solutionToggled', function(event) {
+					if (event.detail.isVisible) {
+						setTimeout(drawPracticeGraphs, 100);
+					}
+				});
+			});
+
+			// Redraw graphs when language changes (for RTL support)
+			window.addEventListener('languageChanged', function() {
+				setTimeout(function() {
+					drawExampleGraphs();
+					// Redraw practice graphs if solutions are visible
+					document.querySelectorAll('.MH-solution.MH-show').forEach(function(solution) {
+						const id = solution.id.replace('solution', '');
+						if (id && !isNaN(id)) {
+							drawPracticeGraphs();
+						}
+					});
+				}, 300);
+			});
+		</script>
+		
+		<!-- noscript fallback -->
+		<noscript>
+			<style>
+				.MH-header-controls { display: none; }
+				.MH-solution { display: block; }
+			</style>
+			<div class="MH-warning">
+				JavaScript is recommended for the full experience, but content is still accessible.
+			</div>
+		</noscript>
+	</body>
+</html>
