@@ -1,7 +1,7 @@
 // Service Worker for Mathematics Hub - Enhanced Version
-const CACHE_NAME = 'math-hub-v1.1.0';
-const API_CACHE_NAME = 'math-hub-api-v1.1.0';
-const IMAGE_CACHE_NAME = 'math-hub-images-v1.1.0';
+const CACHE_NAME = 'math-hub-v1.1.1';
+const API_CACHE_NAME = 'math-hub-api-v1.1.1';
+const IMAGE_CACHE_NAME = 'math-hub-images-v1.1.1';
 
 // Core app files - critical for basic functionality
 const CORE_FILES = [
