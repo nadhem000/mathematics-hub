@@ -1,34 +1,20 @@
 // Service Worker for Mathematics Hub - Enhanced Version
-const CACHE_NAME = 'math-hub-v1.1.1';
-const API_CACHE_NAME = 'math-hub-api-v1.1.1';
-const IMAGE_CACHE_NAME = 'math-hub-images-v1.1.1';
-
-// Core app files - critical for basic functionality
-const CORE_FILES = [
+const CACHE_NAME = 'math-hub-v1.0.2';
+const urlsToCache = [
   '/',
   '/index.html',
+  '/lesson_Y1Al_eqdeg1a.html',
+  '/lesson_Y1Al_eqdeg1b.html',
   '/manifest.json',
   '/styles/main.css',
   '/scripts/translation.js',
   '/scripts/pwa-install.js',
-  '/scripts/pwa-detection.js'
-];
-
-// Script files
-const SCRIPT_FILES = [
+  '/scripts/pwa-detection.js',
   '/scripts/i18n_en.js',
   '/scripts/i18n_ar.js',
-  '/scripts/i18n_fr.js'
-];
-
-// Lesson files - add existing lesson files
-const LESSON_FILES = [
-  '/lesson_Y1Al_eqdeg1a.html',
-  '/lesson_Y1Al_eqdeg1b.html'
-];
-
-// Icon files - all app icons
-const ICON_FILES = [
+  '/scripts/i18n_fr.js',
+  '/assets/screenshots/screenshot1.png',
+  '/assets/screenshots/screenshot2.png',
   '/assets/icons/icon-48x48.png',
   '/assets/icons/icon-72x72.png',
   '/assets/icons/icon-96x96.png',
@@ -40,405 +26,231 @@ const ICON_FILES = [
   '/assets/icons/icon-512x512.png'
 ];
 
-// External resources (with fallbacks)
-const EXTERNAL_RESOURCES = [
-  'https://fonts.googleapis.com/css?family=Segoe+UI:300,400,600,700&display=swap'
-];
+// Background sync queue
+const BACKGROUND_SYNC_QUEUE = 'math-hub-sync-queue';
 
-// Install event - cache essential resources with improved strategy
+// Install event - cache essential resources
 self.addEventListener('install', event => {
   console.log('Service Worker installing...');
-  
   event.waitUntil(
-    Promise.all([
-      // Cache core files immediately
-      caches.open(CACHE_NAME)
-        .then(cache => {
-          console.log('Caching core files...');
-          return cache.addAll(CORE_FILES);
-        }),
-      
-      // Cache scripts
-      caches.open(CACHE_NAME)
-        .then(cache => {
-          console.log('Caching script files...');
-          return cache.addAll(SCRIPT_FILES);
-        }),
-      
-      // Cache lesson files
-      caches.open(CACHE_NAME)
-        .then(cache => {
-          console.log('Caching lesson files...');
-          return cache.addAll(LESSON_FILES);
-        }),
-      
-      // Cache icons in separate cache
-      caches.open(IMAGE_CACHE_NAME)
-        .then(cache => {
-          console.log('Caching icon files...');
-          return cache.addAll(ICON_FILES);
-        })
-    ])
-    .then(() => {
-      console.log('All caches populated successfully');
-      return self.skipWaiting();
-    })
-    .catch(error => {
-      console.error('Cache installation failed:', error);
-    })
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        console.log('Opened cache');
+        return cache.addAll(urlsToCache);
+      })
+      .then(() => {
+        console.log('All resources cached successfully');
+        return self.skipWaiting();
+      })
+      .catch(error => {
+        console.error('Cache installation failed:', error);
+      })
   );
 });
 
-// Activate event - clean up old caches with improved cleanup
+// Activate event - clean up old caches
 self.addEventListener('activate', event => {
   console.log('Service Worker activating...');
-  
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
-          // Delete old caches that don't match current version
-          if (![CACHE_NAME, API_CACHE_NAME, IMAGE_CACHE_NAME].includes(cacheName)) {
+          if (cacheName !== CACHE_NAME) {
             console.log('Deleting old cache:', cacheName);
             return caches.delete(cacheName);
           }
         })
       );
-    })
-    .then(() => {
-      console.log('Service Worker activated and old caches cleaned');
+    }).then(() => {
+      console.log('Service Worker activated');
+      
+      // Register periodic sync for content updates
+      if ('periodicSync' in self.registration) {
+        self.registration.periodicSync.register('content-update', {
+          minInterval: 24 * 60 * 60 * 1000, // 24 hours
+        }).then(() => {
+          console.log('Periodic sync registered');
+        }).catch(error => {
+          console.log('Periodic sync could not be registered:', error);
+        });
+      }
+      
       return self.clients.claim();
     })
   );
 });
 
-// Enhanced fetch event with multiple caching strategies
+// Fetch event - serve from cache, fallback to network
 self.addEventListener('fetch', event => {
-  const { request } = event;
-  const url = new URL(request.url);
-
-  // Skip non-GET requests
-  if (request.method !== 'GET') {
+  // Skip non-GET requests and cross-origin requests
+  if (event.request.method !== 'GET' || !event.request.url.startsWith(self.location.origin)) {
     return;
   }
 
-  // Handle different types of requests with appropriate strategies
-  if (url.origin === self.location.origin) {
-    // Same-origin requests
-    if (request.url.includes('/assets/icons/') || request.url.includes('/assets/images/')) {
-      // Images: Cache First strategy
-      event.respondWith(serveImage(request));
-    } else if (request.url.includes('/api/')) {
-      // API calls: Network First strategy
-      event.respondWith(serveApi(request));
-    } else {
-      // HTML, CSS, JS: Stale While Revalidate strategy
-      event.respondWith(serveCoreFiles(request));
-    }
-  } else {
-    // Cross-origin requests (CDNs, fonts, etc.)
-    if (request.url.includes('fonts.googleapis.com') || request.url.includes('fonts.gstatic.com')) {
-      // Fonts: Cache First strategy
-      event.respondWith(serveExternalResource(request));
-    } else {
-      // Other external resources: Network First strategy
-      event.respondWith(fetch(request));
-    }
+  // Handle API requests with network-first strategy
+  if (event.request.url.includes('/api/')) {
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          // Cache successful API responses
+          if (response.status === 200) {
+            const responseClone = response.clone();
+            caches.open(CACHE_NAME)
+              .then(cache => {
+                cache.put(event.request, responseClone);
+              });
+          }
+          return response;
+        })
+        .catch(() => {
+          // Fallback to cache when offline
+          return caches.match(event.request);
+        })
+    );
+    return;
   }
+
+  // For regular resources, use cache-first strategy
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        // Return cached version or fetch from network
+        if (response) {
+          return response;
+        }
+        
+        return fetch(event.request)
+          .then(response => {
+            // Check if we received a valid response
+            if (!response || response.status !== 200 || response.type !== 'basic') {
+              return response;
+            }
+
+            // Clone the response
+            const responseToCache = response.clone();
+
+            caches.open(CACHE_NAME)
+              .then(cache => {
+                cache.put(event.request, responseToCache);
+              });
+
+            return response;
+          })
+          .catch(error => {
+            console.log('Fetch failed; returning offline page:', error);
+            // For navigation requests, return the cached index page
+            if (event.request.mode === 'navigate') {
+              return caches.match('/index.html');
+            }
+          });
+      })
+  );
 });
 
-// Cache First strategy for images
-async function serveImage(request) {
-  const cache = await caches.open(IMAGE_CACHE_NAME);
-  const cachedResponse = await cache.match(request);
+// Enhanced Background Sync
+self.addEventListener('sync', event => {
+  console.log('Background sync event:', event.tag);
   
-  if (cachedResponse) {
-    return cachedResponse;
-  }
-  
-  try {
-    const networkResponse = await fetch(request);
-    if (networkResponse.ok) {
-      cache.put(request, networkResponse.clone());
-    }
-    return networkResponse;
-  } catch (error) {
-    // If both cache and network fail, return a fallback
-    return new Response('', {
-      status: 408,
-      statusText: 'Offline - Image not available'
-    });
-  }
-}
-
-// Network First strategy for API calls
-async function serveApi(request) {
-  const cache = await caches.open(API_CACHE_NAME);
-  
-  try {
-    const networkResponse = await fetch(request);
-    
-    if (networkResponse.ok) {
-      // Cache successful API responses
-      cache.put(request, networkResponse.clone());
-    }
-    
-    return networkResponse;
-  } catch (error) {
-    // Fall back to cache when offline
-    const cachedResponse = await cache.match(request);
-    if (cachedResponse) {
-      return cachedResponse;
-    }
-    
-    // Return offline response for API calls
-    return new Response(
-      JSON.stringify({ error: 'You are offline and no cached data is available' }),
-      {
-        status: 503,
-        headers: { 'Content-Type': 'application/json' }
-      }
+  if (event.tag === 'math-hub-sync') {
+    event.waitUntil(
+      syncPendingData()
+        .then(() => {
+          console.log('Background sync completed successfully');
+          // Show notification on success
+          self.registration.showNotification('Mathematics Hub', {
+            body: 'Your data has been synchronized',
+            icon: '/assets/icons/icon-96x96.png',
+            badge: '/assets/icons/icon-96x96.png'
+          });
+        })
+        .catch(error => {
+          console.error('Background sync failed:', error);
+        })
     );
   }
-}
+});
 
-// Stale While Revalidate strategy for core files
-async function serveCoreFiles(request) {
-  const cache = await caches.open(CACHE_NAME);
-  const cachedResponse = await cache.match(request);
-  
-  // Always try to fetch from network in background
-  const fetchPromise = fetch(request).then(networkResponse => {
-    if (networkResponse.ok) {
-      cache.put(request, networkResponse.clone());
-    }
-    return networkResponse;
-  }).catch(() => {
-    // Network request failed - we'll use cached version if available
-    console.log('Network request failed for:', request.url);
-  });
-  
-  // Return cached version immediately, then update cache
-  if (cachedResponse) {
-    return cachedResponse;
-  }
-  
-  // If no cache, wait for network
-  return fetchPromise;
-}
-
-// Cache First strategy for external resources
-async function serveExternalResource(request) {
-  const cache = await caches.open(CACHE_NAME);
-  const cachedResponse = await cache.match(request);
-  
-  if (cachedResponse) {
-    return cachedResponse;
-  }
-  
-  try {
-    const networkResponse = await fetch(request);
-    if (networkResponse.ok) {
-      cache.put(request, networkResponse.clone());
-    }
-    return networkResponse;
-  } catch (error) {
-    // Return appropriate fallback for external resources
-    if (request.url.includes('fonts.googleapis.com')) {
-      return new Response(
-        '/* Fallback font CSS */ body { font-family: Arial, sans-serif; }',
-        { headers: { 'Content-Type': 'text/css' } }
-      );
-    }
-    
-    return new Response('', { status: 408 });
-  }
-}
-
-// Enhanced background sync for offline actions
-self.addEventListener('sync', event => {
-  console.log('Background sync triggered:', event.tag);
-  
-  switch (event.tag) {
-    case 'sync-lesson-progress':
-      event.waitUntil(syncLessonProgress());
-      break;
-    case 'sync-user-data':
-      event.waitUntil(syncUserData());
-      break;
-    default:
-      console.log('Unknown sync event:', event.tag);
+// Periodic Sync for content updates
+self.addEventListener('periodicsync', event => {
+  if (event.tag === 'content-update') {
+    console.log('Periodic sync for content updates');
+    event.waitUntil(
+      checkForUpdates()
+        .then(updated => {
+          if (updated) {
+            self.registration.showNotification('Mathematics Hub', {
+              body: 'New content is available!',
+              icon: '/assets/icons/icon-96x96.png',
+              badge: '/assets/icons/icon-96x96.png',
+              tag: 'content-update'
+            });
+          }
+        })
+    );
   }
 });
 
-// Background sync implementations
-async function syncLessonProgress() {
-  try {
-    // Get any pending progress updates from IndexedDB
-    const db = await openProgressDB();
-    const pendingUpdates = await getPendingUpdates(db);
-    
-    for (const update of pendingUpdates) {
-      try {
-        const response = await fetch('/api/lesson-progress', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(update.data)
-        });
-        
-        if (response.ok) {
-          await markUpdateAsSynced(db, update.id);
-        }
-      } catch (error) {
-        console.error('Failed to sync lesson progress:', error);
-      }
-    }
-    
-    await db.close();
-  } catch (error) {
-    console.error('Background sync failed:', error);
-  }
-}
-
-async function syncUserData() {
-  try {
-    // Sync user preferences, bookmarks, etc.
-    const userData = await getUserDataFromStorage();
-    
-    if (userData) {
-      const response = await fetch('/api/user-data', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userData)
-      });
-      
-      if (response.ok) {
-        console.log('User data synced successfully');
-        await clearPendingUserData();
-      }
-    }
-  } catch (error) {
-    console.error('User data sync failed:', error);
-  }
-}
-
-// Helper functions for background sync
-function openProgressDB() {
-  return new Promise((resolve, reject) => {
-    const request = indexedDB.open('MathHubProgress', 1);
-    
-    request.onerror = () => reject(request.error);
-    request.onsuccess = () => resolve(request.result);
-    
-    request.onupgradeneeded = (event) => {
-      const db = event.target.result;
-      if (!db.objectStoreNames.contains('pendingUpdates')) {
-        const store = db.createObjectStore('pendingUpdates', { keyPath: 'id', autoIncrement: true });
-        store.createIndex('timestamp', 'timestamp', { unique: false });
-      }
-    };
-  });
-}
-
-function getPendingUpdates(db) {
-  return new Promise((resolve, reject) => {
-    const transaction = db.transaction(['pendingUpdates'], 'readonly');
-    const store = transaction.objectStore('pendingUpdates');
-    const request = store.getAll();
-    
-    request.onerror = () => reject(request.error);
-    request.onsuccess = () => resolve(request.result);
-  });
-}
-
-function markUpdateAsSynced(db, id) {
-  return new Promise((resolve, reject) => {
-    const transaction = db.transaction(['pendingUpdates'], 'readwrite');
-    const store = transaction.objectStore('pendingUpdates');
-    const request = store.delete(id);
-    
-    request.onerror = () => reject(request.error);
-    request.onsuccess = () => resolve();
-  });
-}
-
-// Simple storage helpers (would be expanded in a real implementation)
-async function getUserDataFromStorage() {
-  // This would typically get data from IndexedDB or localStorage
-  return new Promise((resolve) => {
-    // Simulate getting user data
-    setTimeout(() => resolve({
-      preferences: {},
-      bookmarks: [],
-      progress: {}
-    }), 100);
-  });
-}
-
-async function clearPendingUserData() {
-  // Clear any pending user data after successful sync
-  return Promise.resolve();
-}
-
-// Enhanced push notification handling
+// Enhanced Push Notifications
 self.addEventListener('push', event => {
   console.log('Push notification received');
   
-  if (!event.data) {
-    console.log('Push event but no data');
-    return;
-  }
-  
-  let data;
+  let data = {};
   try {
-    data = event.data.json();
+    data = event.data ? event.data.json() : {};
   } catch (error) {
-    console.log('Push data is not JSON, using text:', event.data.text());
-    data = { title: 'Mathematics Hub', body: event.data.text() };
+    console.log('Push data parsing error:', error);
+    data = {
+      title: 'Mathematics Hub',
+      body: 'New notification',
+      icon: '/assets/icons/icon-96x96.png'
+    };
   }
-  
+
   const options = {
-    body: data.body || 'New update available',
-    icon: '/assets/icons/icon-192x192.png',
+    body: data.body || 'New content available',
+    icon: data.icon || '/assets/icons/icon-96x96.png',
     badge: '/assets/icons/icon-96x96.png',
     image: data.image,
-    data: data.url ? { url: data.url } : {},
+    data: data.data || { url: '/' },
     actions: [
       {
         action: 'open',
-        title: 'Open App',
-        icon: '/assets/icons/icon-72x72.png'
+        title: 'Open App'
       },
       {
         action: 'dismiss',
-        title: 'Dismiss',
-        icon: '/assets/icons/icon-72x72.png'
+        title: 'Dismiss'
       }
     ],
     tag: data.tag || 'math-hub-notification',
     requireInteraction: data.requireInteraction || false,
-    silent: data.silent || false
+    vibrate: [200, 100, 200]
   };
-  
+
   event.waitUntil(
     self.registration.showNotification(data.title || 'Mathematics Hub', options)
   );
 });
 
-// Handle notification clicks
+// Notification click handler
 self.addEventListener('notificationclick', event => {
-  console.log('Notification click received');
+  console.log('Notification clicked:', event.action);
   
   event.notification.close();
-  
+
   if (event.action === 'dismiss') {
     return;
   }
-  
+
+  const urlToOpen = event.notification.data?.url || '/';
+
   event.waitUntil(
-    clients.matchAll({ type: 'window' }).then(windowClients => {
-      // Check if there's already a window open
-      for (const client of windowClients) {
+    clients.matchAll({
+      type: 'window',
+      includeUncontrolled: true
+    }).then(windowClients => {
+      // Check if there's already a window/tab open with the target URL
+      for (let client of windowClients) {
         if (client.url.includes(self.location.origin) && 'focus' in client) {
           return client.focus();
         }
@@ -446,127 +258,149 @@ self.addEventListener('notificationclick', event => {
       
       // If no window is open, open a new one
       if (clients.openWindow) {
-        const urlToOpen = event.notification.data.url || '/';
         return clients.openWindow(urlToOpen);
       }
     })
   );
 });
 
-// Handle notification close
-self.addEventListener('notificationclose', event => {
-  console.log('Notification closed:', event.notification.tag);
-});
-
-// Periodic sync for background updates (if supported)
-self.addEventListener('periodicsync', event => {
-  if (event.tag === 'update-content') {
-    console.log('Periodic sync for content updates');
-    event.waitUntil(updateCachedContent());
-  }
-});
-
-async function updateCachedContent() {
+// Background sync functions
+async function syncPendingData() {
   try {
-    // Update lesson content in background
-    const cache = await caches.open(CACHE_NAME);
-    const requestsToUpdate = [
-      '/index.html',
-      '/styles/main.css'
-    ];
+    // Get pending data from IndexedDB or localStorage
+    const pendingData = await getPendingData();
     
-    for (const url of requestsToUpdate) {
+    if (pendingData && pendingData.length > 0) {
+      console.log(`Syncing ${pendingData.length} pending items`);
+      
+      // Process each pending item
+      for (const item of pendingData) {
+        await syncDataItem(item);
+      }
+      
+      // Clear pending data after successful sync
+      await clearPendingData();
+    }
+    
+    return true;
+  } catch (error) {
+    console.error('Error in syncPendingData:', error);
+    throw error;
+  }
+}
+
+async function getPendingData() {
+  return new Promise((resolve) => {
+    // In a real app, you would get this from IndexedDB
+    // For now, return empty array
+    resolve([]);
+  });
+}
+
+async function syncDataItem(item) {
+  // Simulate API call to sync data
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      console.log('Synced item:', item);
+      resolve(true);
+    }, 1000);
+  });
+}
+
+async function clearPendingData() {
+  return new Promise((resolve) => {
+    // Clear pending data from storage
+    console.log('Cleared pending data');
+    resolve();
+  });
+}
+
+// Periodic sync functions
+async function checkForUpdates() {
+  try {
+    // Check for updated content
+    const response = await fetch('/api/check-updates', {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
+    
+    if (response.ok) {
+      const data = await response.json();
+      
+      if (data.updated) {
+        // Update cache with new content
+        await updateCachedContent(data.updates);
+        return true;
+      }
+    }
+    
+    return false;
+  } catch (error) {
+    console.log('No updates available or offline:', error);
+    return false;
+  }
+}
+
+async function updateCachedContent(updates) {
+  try {
+    const cache = await caches.open(CACHE_NAME);
+    
+    for (const url of updates) {
       try {
         const response = await fetch(url);
         if (response.ok) {
           await cache.put(url, response);
-          console.log('Updated cached file:', url);
+          console.log('Updated cache for:', url);
         }
       } catch (error) {
-        console.log('Failed to update:', url, error);
+        console.error('Failed to update cache for:', url, error);
       }
     }
   } catch (error) {
-    console.error('Periodic sync failed:', error);
+    console.error('Error updating cached content:', error);
   }
 }
 
-// Message handling for communication with client pages
+// Message handler for communication with clients
 self.addEventListener('message', event => {
-  const { data } = event;
+  console.log('Service Worker received message:', event.data);
   
-  switch (data.type) {
+  const { type, payload } = event.data;
+  
+  switch (type) {
     case 'SKIP_WAITING':
       self.skipWaiting();
       break;
       
+    case 'TRIGGER_SYNC':
+      if ('sync' in self.registration) {
+        self.registration.sync.register('math-hub-sync')
+          .then(() => {
+            event.ports[0].postMessage({ success: true });
+          })
+          .catch(error => {
+            event.ports[0].postMessage({ success: false, error: error.message });
+          });
+      } else {
+        event.ports[0].postMessage({ success: false, error: 'Background sync not supported' });
+      }
+      break;
+      
     case 'GET_VERSION':
-      event.ports[0].postMessage({ version: '1.1.0' });
-      break;
-      
-    case 'CACHE_URLS':
-      event.waitUntil(cacheUrls(data.urls));
-      break;
-      
-    case 'GET_CACHE_STATUS':
-      event.waitUntil(getCacheStatus(event.ports[0]));
+      event.ports[0].postMessage({ version: CACHE_NAME });
       break;
       
     default:
-      console.log('Unknown message received:', data);
+      console.log('Unknown message type:', type);
   }
 });
 
-async function cacheUrls(urls) {
-  const cache = await caches.open(CACHE_NAME);
-  return Promise.all(
-    urls.map(url => 
-      fetch(url).then(response => {
-        if (response.ok) {
-          return cache.put(url, response);
-        }
-        throw new Error(`Failed to cache: ${url}`);
-      })
-    )
-  );
-}
+// Enhanced error handling
+self.addEventListener('error', event => {
+  console.error('Service Worker error:', event.error);
+});
 
-async function getCacheStatus(port) {
-  const cache = await caches.open(CACHE_NAME);
-  const keys = await cache.keys();
-  const cacheSize = keys.reduce((total, request) => {
-    return total + (request.headers.get('content-length') || 0);
-  }, 0);
-  
-  port.postMessage({
-    cacheName: CACHE_NAME,
-    cachedItems: keys.length,
-    estimatedSize: cacheSize
-  });
-}
-
-// Precache additional lesson files when they're accessed
-self.addEventListener('fetch', event => {
-  // This is a secondary fetch handler for lesson files pattern
-  if (event.request.url.includes('/lesson_') && event.request.url.endsWith('.html')) {
-    event.respondWith(
-      caches.open(CACHE_NAME).then(cache => {
-        return cache.match(event.request).then(response => {
-          // If not in cache, fetch and cache it
-          if (!response) {
-            return fetch(event.request).then(networkResponse => {
-              if (networkResponse.ok) {
-                cache.put(event.request, networkResponse.clone());
-              }
-              return networkResponse;
-            }).catch(error => {
-              console.log('Failed to fetch lesson:', error);
-              return new Response('', { status: 404 });
-            });
-          }
-          return response;
-        });
-      })
-    );
-  }
+self.addEventListener('unhandledrejection', event => {
+  console.error('Service Worker unhandled rejection:', event.reason);
 });
