@@ -3,12 +3,14 @@ class PWAInstallManager {
     constructor() {
         this.deferredPrompt = null;
         this.installButton = null;
+        this.notificationButton = null;
         this.isInstalled = false;
         this.init();
     }
 
     init() {
         this.createInstallButton();
+        this.createNotificationButton();
         this.setupEventListeners();
         this.checkInstallStatus();
     }
@@ -27,6 +29,23 @@ class PWAInstallManager {
         const headerControls = document.querySelector('.MH-header-controls');
         if (headerControls) {
             headerControls.appendChild(this.installButton);
+        }
+    }
+
+    createNotificationButton() {
+        // Create notification permission button
+        this.notificationButton = document.createElement('button');
+        this.notificationButton.className = 'MH-notification-btn';
+        this.notificationButton.innerHTML = `
+            <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+            <span>🔔</span>
+        `;
+        this.notificationButton.style.display = 'none';
+
+        // Add to header controls
+        const headerControls = document.querySelector('.MH-header-controls');
+        if (headerControls) {
+            headerControls.appendChild(this.notificationButton);
         }
     }
 
@@ -54,10 +73,29 @@ class PWAInstallManager {
             });
         }
 
+        // Notification button click handler
+        if (this.notificationButton) {
+            this.notificationButton.addEventListener('click', () => {
+                this.requestNotificationPermission();
+            });
+        }
+
+        // Check notification permission status
+        this.checkNotificationPermission();
+
         // Check if user has already installed the app
         window.addEventListener('load', () => {
             this.checkInstallStatus();
         });
+
+        // Listen for service worker messages
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.addEventListener('message', (event) => {
+                if (event.data && event.data.type === 'REQUEST_NOTIFICATION_PERMISSION') {
+                    this.requestNotificationPermission();
+                }
+            });
+        }
     }
 
     showInstallButton() {
@@ -70,6 +108,18 @@ class PWAInstallManager {
     hideInstallButton() {
         if (this.installButton) {
             this.installButton.style.display = 'none';
+        }
+    }
+
+    showNotificationButton() {
+        if (this.notificationButton && Notification.permission === 'default') {
+            this.notificationButton.style.display = 'flex';
+        }
+    }
+
+    hideNotificationButton() {
+        if (this.notificationButton) {
+            this.notificationButton.style.display = 'none';
         }
     }
 
@@ -99,6 +149,49 @@ class PWAInstallManager {
         }
     }
 
+    async requestNotificationPermission() {
+        if (!('Notification' in window)) {
+            console.log('This browser does not support notifications');
+            return;
+        }
+
+        try {
+            const permission = await Notification.requestPermission();
+            console.log('Notification permission:', permission);
+            
+            if (permission === 'granted') {
+                this.hideNotificationButton();
+                this.showNotificationSuccess();
+                
+                // Notify service worker that permission was granted
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.controller.postMessage({
+                        type: 'NOTIFICATION_PERMISSION_GRANTED'
+                    });
+                }
+            } else if (permission === 'denied') {
+                console.log('Notification permission denied');
+                this.hideNotificationButton();
+            }
+        } catch (error) {
+            console.error('Error requesting notification permission:', error);
+        }
+    }
+
+    checkNotificationPermission() {
+        if (!('Notification' in window)) {
+            return;
+        }
+
+        if (Notification.permission === 'granted') {
+            this.hideNotificationButton();
+        } else if (Notification.permission === 'default') {
+            this.showNotificationButton();
+        } else {
+            this.hideNotificationButton();
+        }
+    }
+
     checkInstallStatus() {
         // Check if the app is already installed
         if (window.matchMedia('(display-mode: standalone)').matches) {
@@ -115,37 +208,40 @@ class PWAInstallManager {
     }
 
     showInstallSuccess() {
-        // Could show a toast notification here
         console.log('App installed successfully!');
         
-        // Optional: Show a success message to the user
-        const successMsg = document.createElement('div');
-        successMsg.className = 'MH-install-success';
-        successMsg.innerHTML = `
-            <div class="MH-install-success-content">
-                <span>🎉 </span>
-                <span data-i18n="MH.general.installSuccess">Mathematics Hub installed successfully!</span>
+        // Show success message
+        this.showMessage(
+            '🎉 ' + (window.translationManager ? 
+                window.translationManager.getTranslationText(window.translationManager.getCurrentLanguage(), 'MH.general.installSuccess') : 
+                'Mathematics Hub installed successfully!'
+            ),
+            'success'
+        );
+    }
+
+    showNotificationSuccess() {
+        this.showMessage(
+            '🔔 Notifications enabled! You will now receive updates.',
+            'success'
+        );
+    }
+
+    showMessage(text, type = 'info') {
+        const message = document.createElement('div');
+        message.className = `MH-message MH-message-${type}`;
+        message.innerHTML = `
+            <div class="MH-message-content">
+                <span>${text}</span>
             </div>
         `;
-        successMsg.style.cssText = `
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            background: var(--primary);
-            color: white;
-            padding: 1rem;
-            border-radius: 8px;
-            box-shadow: var(--MH-shadow-hover);
-            z-index: 10000;
-            animation: MH-slideInRight 0.3s ease;
-        `;
         
-        document.body.appendChild(successMsg);
+        document.body.appendChild(message);
         
         // Remove after 3 seconds
         setTimeout(() => {
-            if (successMsg.parentNode) {
-                successMsg.parentNode.removeChild(successMsg);
+            if (message.parentNode) {
+                message.parentNode.removeChild(message);
             }
         }, 3000);
     }
@@ -173,7 +269,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Add CSS for install button and animations
 const installStyles = `
-.MH-install-btn {
+.MH-install-btn,
+.MH-notification-btn {
     background-color: rgba(255, 255, 255, 0.2);
     color: var(--header-text);
     border: 2px solid rgba(255, 255, 255, 0.5);
@@ -188,7 +285,8 @@ const installStyles = `
     min-height: 44px;
 }
 
-.MH-install-btn:hover {
+.MH-install-btn:hover,
+.MH-notification-btn:hover {
     background-color: rgba(255, 255, 255, 0.3);
     color: white;
     border-color: white;
@@ -196,13 +294,36 @@ const installStyles = `
     box-shadow: var(--MH-shadow-hover);
 }
 
-.MH-install-btn:active {
+.MH-install-btn:active,
+.MH-notification-btn:active {
     transform: translateY(0);
 }
 
-.MH-install-btn:focus {
+.MH-install-btn:focus,
+.MH-notification-btn:focus {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
+}
+
+.MH-message {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: var(--MH-shadow-hover);
+    z-index: 10000;
+    animation: MH-slideInRight 0.3s ease;
+    max-width: 300px;
+}
+
+.MH-message-success {
+    background: var(--primary);
+}
+
+.MH-message-info {
+    background: var(--info);
 }
 
 @keyframes MH-slideInRight {
@@ -216,17 +337,25 @@ const installStyles = `
     }
 }
 
-/* RTL support for install button */
-[dir="rtl"] .MH-install-btn {
+/* RTL support for buttons */
+[dir="rtl"] .MH-install-btn,
+[dir="rtl"] .MH-notification-btn {
     direction: rtl;
 }
 
 /* Responsive design */
 @media (max-width: 768px) {
-    .MH-install-btn {
+    .MH-install-btn,
+    .MH-notification-btn {
         width: 100%;
         justify-content: center;
         margin-top: 0.5rem;
+    }
+    
+    .MH-message {
+        right: 10px;
+        left: 10px;
+        max-width: none;
     }
 }
 `;

@@ -4,6 +4,7 @@ window.translations_fr = {
 'MH.general.homeTooltip': 'Aller à la page d\'accueil',
 'MH.general.install': 'Installer l\'App',
 'MH.general.installSuccess': 'Mathematics Hub installé avec succès!',
+'MH.general.enableNotifications': 'Activer les notifications'
     'MH.general.theme': 'Thème',
     'MH.general.language': 'Langue',
     'MH.footer.developer': 'Développeur',

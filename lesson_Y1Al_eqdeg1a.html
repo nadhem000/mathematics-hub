@@ -247,19 +247,29 @@
 		<script src="scripts/translation.js"></script>
 		<script src="scripts/pwa-install.js"></script>
 		<script>
-			// Register service worker
-			if ('serviceWorker' in navigator) {
-				window.addEventListener('load', function() {
-					navigator.serviceWorker.register('/sw.js')
-					.then(function(registration) {
-						console.log('Service Worker registered with scope:', registration.scope);
-					})
-					.catch(function(error) {
-						console.log('Service Worker registration failed:', error);
-					});
-				});
-			}
-		</script>
+    // Register service worker with better error handling
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+                
+                // Check if we need to request notification permission
+                if (Notification.permission === 'default') {
+                    // Wait a bit then ask for permission via service worker
+                    setTimeout(() => {
+                        registration.active.postMessage({
+                            type: 'REQUEST_NOTIFICATION_PERMISSION'
+                        });
+                    }, 5000);
+                }
+            })
+            .catch(function(error) {
+                console.log('Service Worker registration failed:', error);
+            });
+        });
+    }
+</script>
 		
 		<!-- noscript fallback -->
 		<noscript>

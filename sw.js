@@ -1,5 +1,5 @@
 // Service Worker for Mathematics Hub - Enhanced Version
-const CACHE_NAME = 'math-hub-v1.0.2';
+const CACHE_NAME = 'math-hub-v1.0.3';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -25,9 +25,6 @@ const urlsToCache = [
   '/assets/icons/icon-384x384.png',
   '/assets/icons/icon-512x512.png'
 ];
-
-// Background sync queue
-const BACKGROUND_SYNC_QUEUE = 'math-hub-sync-queue';
 
 // Install event - cache essential resources
 self.addEventListener('install', event => {
@@ -64,14 +61,21 @@ self.addEventListener('activate', event => {
     }).then(() => {
       console.log('Service Worker activated');
       
-      // Register periodic sync for content updates
+      // Only register periodic sync if supported and permission might be available
       if ('periodicSync' in self.registration) {
-        self.registration.periodicSync.register('content-update', {
-          minInterval: 24 * 60 * 60 * 1000, // 24 hours
-        }).then(() => {
-          console.log('Periodic sync registered');
-        }).catch(error => {
-          console.log('Periodic sync could not be registered:', error);
+        // Check if we have permission first
+        self.registration.periodicSync.getTags().then(tags => {
+          if (tags.includes('content-update')) {
+            console.log('Periodic sync already registered');
+          } else {
+            self.registration.periodicSync.register('content-update', {
+              minInterval: 24 * 60 * 60 * 1000, // 24 hours
+            }).then(() => {
+              console.log('Periodic sync registered');
+            }).catch(error => {
+              console.log('Periodic sync could not be registered (might need user permission):', error);
+            });
+          }
         });
       }
       
@@ -156,11 +160,18 @@ self.addEventListener('sync', event => {
       syncPendingData()
         .then(() => {
           console.log('Background sync completed successfully');
-          // Show notification on success
-          self.registration.showNotification('Mathematics Hub', {
-            body: 'Your data has been synchronized',
-            icon: '/assets/icons/icon-96x96.png',
-            badge: '/assets/icons/icon-96x96.png'
+          // Only show notification if we have permission
+          self.registration.getNotifications().then(notifications => {
+            if (notifications.length === 0) {
+              // Try to show notification, but catch error if no permission
+              self.registration.showNotification('Mathematics Hub', {
+                body: 'Your data has been synchronized',
+                icon: '/assets/icons/icon-96x96.png',
+                badge: '/assets/icons/icon-96x96.png'
+              }).catch(error => {
+                console.log('Cannot show notification (no permission):', error);
+              });
+            }
           });
         })
         .catch(error => {
@@ -178,19 +189,25 @@ self.addEventListener('periodicsync', event => {
       checkForUpdates()
         .then(updated => {
           if (updated) {
+            // Only show notification if we have permission
             self.registration.showNotification('Mathematics Hub', {
               body: 'New content is available!',
               icon: '/assets/icons/icon-96x96.png',
               badge: '/assets/icons/icon-96x96.png',
               tag: 'content-update'
+            }).catch(error => {
+              console.log('Cannot show update notification (no permission):', error);
             });
           }
+        })
+        .catch(error => {
+          console.log('Update check failed:', error);
         })
     );
   }
 });
 
-// Enhanced Push Notifications
+// Enhanced Push Notifications with permission check
 self.addEventListener('push', event => {
   console.log('Push notification received');
   
@@ -198,10 +215,12 @@ self.addEventListener('push', event => {
   try {
     data = event.data ? event.data.json() : {};
   } catch (error) {
-    console.log('Push data parsing error:', error);
+    console.log('Push data parsing error, using text:', error);
+    // Try to get text content if JSON parsing fails
+    const text = event.data ? event.data.text() : 'Test push notification';
     data = {
       title: 'Mathematics Hub',
-      body: 'New notification',
+      body: text,
       icon: '/assets/icons/icon-96x96.png'
     };
   }
@@ -228,7 +247,11 @@ self.addEventListener('push', event => {
   };
 
   event.waitUntil(
+    // Show notification and catch permission errors
     self.registration.showNotification(data.title || 'Mathematics Hub', options)
+      .catch(error => {
+        console.error('Failed to show push notification (permission denied):', error);
+      })
   );
 });
 
@@ -389,6 +412,17 @@ self.addEventListener('message', event => {
       
     case 'GET_VERSION':
       event.ports[0].postMessage({ version: CACHE_NAME });
+      break;
+
+    case 'REQUEST_NOTIFICATION_PERMISSION':
+      // Forward permission request to clients
+      self.clients.matchAll().then(clients => {
+        clients.forEach(client => {
+          client.postMessage({
+            type: 'REQUEST_NOTIFICATION_PERMISSION'
+          });
+        });
+      });
       break;
       
     default:
