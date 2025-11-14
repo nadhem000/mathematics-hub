@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: 2nd Degree Inequations III - Canonical Form Method</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#3498db" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1c5a85" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#3498db">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        /* Page-specific color palette - Blue Theme */
+        :root {
+            --primary: #3498db;
+            --primary-light: #5dade2;
+            --primary-dark: #2980b9;
+            --secondary: #e67e22;
+            --secondary-light: #f39c12;
+            --secondary-dark: #d35400;
+            --accent: #9b59b6;
+            --warning: #e74c3c;
+            --info: #2ecc71;
+        }
+        
+        [data-theme="dark"] {
+            --primary: #2980b9;
+            --primary-light: #3498db;
+            --primary-dark: #1c5a85;
+            --secondary: #d35400;
+            --secondary-light: #e67e22;
+            --secondary-dark: #a04000;
+            --accent: #8e44ad;
+            --warning: #c0392b;
+            --info: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Al_eqdeg2f.title">2nd Degree Inequations III: Canonical Form Method</h1>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2f.introduction">Introduction to Canonical Form Method</h2>
+            <p data-i18n="MH.lesson_Y2Al_eqdeg2f.introText1">The canonical form method provides an alternative approach to solving quadratic inequalities by rewriting them in vertex form. This method is particularly useful for understanding the geometric properties of quadratic functions and their graphs.</p>
+            
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2f.definitionTitle">What is Canonical Form?</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.definitionText1">The canonical form (also called vertex form) of a quadratic function is:</p>
+                <div class="MH-equation">f(x) = a(x - α)² + β</div>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.definitionText2">where (α, β) is the vertex of the parabola, and a determines the direction of opening.</p>
+            </div>
+            
+            <p data-i18n="MH.lesson_Y2Al_eqdeg2f.introText2">In this lesson, we'll learn how to convert quadratic expressions to canonical form and use this form to solve inequalities efficiently.</p>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2f.convertingTitle">Converting to Canonical Form</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2f.completingSquareTitle">Completing the Square Method</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.completingSquareText">To convert ax² + bx + c to canonical form a(x - α)² + β, we use the method of completing the square.</p>
+                
+                <div class="MH-step">
+                    <h4 data-i18n="MH.lesson_Y2Al_eqdeg2f.step1Title">Step 1: Factor out the coefficient of x²</h4>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.step1Text">If a ≠ 1, factor a from the first two terms.</p>
+                    <div class="MH-example">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.step1Example">For 2x² + 8x + 5:</p>
+                        <div class="MH-equation">2(x² + 4x) + 5</div>
+                    </div>
+                </div>
+                
+                <div class="MH-step">
+                    <h4 data-i18n="MH.lesson_Y2Al_eqdeg2f.step2Title">Step 2: Complete the square</h4>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.step2Text">Add and subtract (b/2a)² inside the parentheses.</p>
+                    <div class="MH-example">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.step2Example">For x² + 4x:</p>
+                        <div class="MH-equation">x² + 4x = (x² + 4x + 4) - 4 = (x + 2)² - 4</div>
+                    </div>
+                </div>
+                
+                <div class="MH-step">
+                    <h4 data-i18n="MH.lesson_Y2Al_eqdeg2f.step3Title">Step 3: Simplify to canonical form</h4>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.step3Text">Distribute and combine constant terms.</p>
+                    <div class="MH-example">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.step3Example">Complete example for 2x² + 8x + 5:</p>
+                        <div class="MH-equation">2(x² + 4x) + 5 = 2[(x + 2)² - 4] + 5 = 2(x + 2)² - 8 + 5 = 2(x + 2)² - 3</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2f.formulaTitle">Using the Vertex Formula</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.formulaText">The vertex (α, β) can be found using:</p>
+                <div class="MH-equation">α = -b/(2a)</div>
+                <div class="MH-equation">β = f(α) = c - b²/(4a)</div>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.formulaText2">Then the canonical form is a(x - α)² + β.</p>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2f.solvingSteps">Solving Steps Using Canonical Form</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2f.step1Title">Step 1: Convert to Canonical Form</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.step1Text">Rewrite the quadratic inequality in the form a(x - α)² + β [inequality] 0.</p>
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.step1Example">For x² - 4x + 3 > 0:</p>
+                    <div class="MH-equation">x² - 4x + 3 = (x - 2)² - 1</div>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.step1ExampleText">So the inequality becomes (x - 2)² - 1 > 0</p>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2f.step2Title">Step 2: Isolate the Square Term</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.step2Text">Rearrange the inequality to isolate the squared term.</p>
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.step2Example">For (x - 2)² - 1 > 0:</p>
+                    <div class="MH-equation">(x - 2)² > 1</div>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2f.step3Title">Step 3: Analyze Based on Vertex Properties</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.step3Text">Use the properties of the vertex and the direction of the parabola to determine the solution.</p>
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.step3Example">For (x - 2)² > 1:</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.step3ExampleText">This means the distance from x to 2 is greater than 1.</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.step3ExampleText2">So x - 2 > 1 or x - 2 < -1</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.step3ExampleText3">Which gives x > 3 or x < 1</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2f.specialCases">Special Cases Based on Vertex Position</h2>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2f.case1Title">Case 1: Vertex Above/Below x-axis</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.case1Text">When the vertex is above the x-axis (β > 0) for a > 0, or below the x-axis (β < 0) for a < 0.</p>
+                
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.case1Example">Example: (x - 1)² + 2 > 0</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.case1Step1">Since a = 1 > 0 and β = 2 > 0, the expression is always positive.</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.case1Solution">Solution: All real numbers (x ∈ ℝ)</p>
+                </div>
+                
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.case1Example2">Example: -2(x + 3)² - 1 < 0</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.case1Step2">Since a = -2 < 0 and β = -1 < 0, the expression is always negative.</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.case1Solution2">Solution: All real numbers (x ∈ ℝ)</p>
+                </div>
+            </div>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2f.case2Title">Case 2: Vertex on x-axis</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.case2Text">When the vertex lies on the x-axis (β = 0).</p>
+                
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.case2Example">Example: 3(x - 2)² ≥ 0</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.case2Step1">A square is always ≥ 0, and multiplied by positive 3.</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.case2Step2">The expression equals 0 only at x = 2.</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.case2Solution">Solution: All real numbers (x ∈ ℝ)</p>
+                </div>
+                
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.case2Example2">Example: -2(x + 1)² ≤ 0</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.case2Step3">A square is always ≥ 0, multiplied by negative -2 gives ≤ 0.</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.case2Step4">The expression equals 0 only at x = -1.</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.case2Solution2">Solution: All real numbers (x ∈ ℝ)</p>
+                </div>
+            </div>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2f.case3Title">Case 3: Inequality with Square > or < Positive Number</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.case3Text">When we have (x - α)² > k or (x - α)² < k with k > 0.</p>
+                
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.case3Example">Example: (x - 3)² > 4</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.case3Step1">This means |x - 3| > 2</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.case3Step2">So x - 3 > 2 or x - 3 < -2</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.case3Solution">Solution: x > 5 or x < 1</p>
+                </div>
+                
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.case3Example2">Example: (x + 2)² < 9</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.case3Step3">This means |x + 2| < 3</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.case3Step4">So -3 < x + 2 < 3</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.case3Solution2">Solution: -5 < x < 1</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2f.detailedExamples">Detailed Examples</h2>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2f.example1Title">Example 1: Simple Canonical Form</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example1Equation">Solve: x² - 6x + 8 > 0</p>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example1Step1">Step 1: Convert to canonical form</p>
+                <div class="MH-equation">x² - 6x + 8 = (x - 3)² - 1</div>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example1Step1Text">So the inequality becomes (x - 3)² - 1 > 0</p>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example1Step2">Step 2: Isolate the square term</p>
+                <div class="MH-equation">(x - 3)² > 1</div>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example1Step3">Step 3: Solve the inequality</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example1Step3Text">This means |x - 3| > 1</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example1Step3Text2">So x - 3 > 1 or x - 3 < -1</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example1Step3Text3">Which gives x > 4 or x < 2</p>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example1Solution">Solution: x ∈ (-∞, 2) ∪ (4, +∞)</p>
+            </div>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2f.example2Title">Example 2: Negative Coefficient</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example2Equation">Solve: -x² + 4x - 3 ≤ 0</p>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example2Step1">Step 1: Multiply by -1 (reverse inequality)</p>
+                <div class="MH-equation">x² - 4x + 3 ≥ 0</div>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example2Step2">Step 2: Convert to canonical form</p>
+                <div class="MH-equation">x² - 4x + 3 = (x - 2)² - 1</div>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example2Step2Text">So the inequality becomes (x - 2)² - 1 ≥ 0</p>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example2Step3">Step 3: Isolate the square term</p>
+                <div class="MH-equation">(x - 2)² ≥ 1</div>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example2Step4">Step 4: Solve the inequality</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example2Step4Text">This means |x - 2| ≥ 1</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example2Step4Text2">So x - 2 ≥ 1 or x - 2 ≤ -1</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example2Step4Text3">Which gives x ≥ 3 or x ≤ 1</p>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example2Solution">Solution: x ∈ (-∞, 1] ∪ [3, +∞)</p>
+            </div>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2f.example3Title">Example 3: Always Positive Case</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example3Equation">Solve: 2x² - 4x + 5 > 0</p>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example3Step1">Step 1: Convert to canonical form</p>
+                <div class="MH-equation">2x² - 4x + 5 = 2(x² - 2x) + 5 = 2[(x - 1)² - 1] + 5 = 2(x - 1)² + 3</div>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example3Step2">Step 2: Analyze the expression</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example3Step2Text">Since a = 2 > 0 and β = 3 > 0, the expression is always positive.</p>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example3Solution">Solution: All real numbers (x ∈ ℝ)</p>
+            </div>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2f.example4Title">Example 4: Always Negative Case</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example4Equation">Solve: -x² + 2x - 3 ≥ 0</p>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example4Step1">Step 1: Multiply by -1 (reverse inequality)</p>
+                <div class="MH-equation">x² - 2x + 3 ≤ 0</div>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example4Step2">Step 2: Convert to canonical form</p>
+                <div class="MH-equation">x² - 2x + 3 = (x - 1)² + 2</div>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example4Step3">Step 3: Analyze the expression</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example4Step3Text">Since a = 1 > 0 and β = 2 > 0, the expression is always positive.</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example4Step3Text2">It can never be ≤ 0.</p>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example4Solution">No solution in ℝ</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.example4Note">Possible solutions with complex numbers</p>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2f.practice">Practice Problems</h2>
+            
+            <div class="MH-practice">
+                <h3 class="MH-practice-title" data-i18n="MH.lesson_Y2Al_eqdeg2f.tryYourself">Try Solving These Using Canonical Form</h3>
+                
+                <div class="MH-practice-problem">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem1">1. Solve:</p>
+                    <div class="MH-equation">x² - 8x + 15 > 0</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_eqdeg2f.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                    <div class="MH-solution" id="solution1">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem1Step1">Convert to canonical form: x² - 8x + 15 = (x - 4)² - 1</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem1Step2">Inequality: (x - 4)² - 1 > 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem1Step3">Isolate square: (x - 4)² > 1</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem1Step4">Solve: |x - 4| > 1</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem1Step5">So x - 4 > 1 or x - 4 < -1</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem1Step6">Which gives x > 5 or x < 3</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem1Solution">Solution: x ∈ (-∞, 3) ∪ (5, +∞)</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem2">2. Solve:</p>
+                    <div class="MH-equation">-2x² + 12x - 16 ≥ 0</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_eqdeg2f.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                    <div class="MH-solution" id="solution2">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem2Step1">Multiply by -1: 2x² - 12x + 16 ≤ 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem2Step2">Divide by 2: x² - 6x + 8 ≤ 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem2Step3">Convert to canonical form: x² - 6x + 8 = (x - 3)² - 1</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem2Step4">Inequality: (x - 3)² - 1 ≤ 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem2Step5">Isolate square: (x - 3)² ≤ 1</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem2Step6">Solve: |x - 3| ≤ 1</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem2Step7">So -1 ≤ x - 3 ≤ 1</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem2Step8">Which gives 2 ≤ x ≤ 4</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem2Solution">Solution: x ∈ [2, 4]</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem3">3. Solve:</p>
+                    <div class="MH-equation">3x² - 6x + 7 > 0</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_eqdeg2f.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                    <div class="MH-solution" id="solution3">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem3Step1">Convert to canonical form: 3x² - 6x + 7 = 3(x² - 2x) + 7 = 3[(x - 1)² - 1] + 7 = 3(x - 1)² + 4</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem3Step2">Since a = 3 > 0 and β = 4 > 0, the expression is always positive</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem3Solution">Solution: All real numbers (x ∈ ℝ)</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem4">4. Solve:</p>
+                    <div class="MH-equation">-x² + 4x - 6 > 0</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_eqdeg2f.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+                    <div class="MH-solution" id="solution4">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem4Step1">Multiply by -1: x² - 4x + 6 < 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem4Step2">Convert to canonical form: x² - 4x + 6 = (x - 2)² + 2</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem4Step3">Since a = 1 > 0 and β = 2 > 0, the expression is always positive</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem4Step4">It can never be < 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem4Solution">No solution in ℝ</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2f.problem4Note">Possible solutions with complex numbers</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2f.advantages">Advantages and Limitations</h2>
+            
+            <div class="MH-comparison">
+                <div class="MH-method">
+                    <h3 data-i18n="MH.lesson_Y2Al_eqdeg2f.advantagesTitle">Advantages</h3>
+                    <ul>
+                        <li data-i18n="MH.lesson_Y2Al_eqdeg2f.advantage1">Provides geometric insight through vertex position</li>
+                        <li data-i18n="MH.lesson_Y2Al_eqdeg2f.advantage2">Efficient for inequalities involving perfect squares</li>
+                        <li data-i18n="MH.lesson_Y2Al_eqdeg2f.advantage3">Clearly shows the role of the vertex in determining solution sets</li>
+                        <li data-i18n="MH.lesson_Y2Al_eqdeg2f.advantage4">Useful for understanding transformations of quadratic functions</li>
+                    </ul>
+                </div>
+                
+                <div class="MH-method">
+                    <h3 data-i18n="MH.lesson_Y2Al_eqdeg2f.limitationsTitle">Limitations</h3>
+                    <ul>
+                        <li data-i18n="MH.lesson_Y2Al_eqdeg2f.limitation1">Can be computationally intensive for complex coefficients</li>
+                        <li data-i18n="MH.lesson_Y2Al_eqdeg2f.limitation2">Requires careful handling of completing the square</li>
+                        <li data-i18n="MH.lesson_Y2Al_eqdeg2f.limitation3">May be less intuitive for students unfamiliar with absolute value inequalities</li>
+                        <li data-i18n="MH.lesson_Y2Al_eqdeg2f.limitation4">Not always the most efficient method for simple factorable quadratics</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2f.importantNote">Important Note</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2f.importantText">The canonical form method provides a powerful geometric perspective on quadratic inequalities. While it may not always be the fastest method, it offers deep insight into the behavior of quadratic functions and their graphs. Mastering this method will help you better understand the relationship between algebraic expressions and their geometric representations.</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="scripts/i18n_en.js"></script>
+    <script src="scripts/i18n_ar.js"></script>
+    <script src="scripts/i18n_fr.js"></script>
+    <script src="scripts/translation.js"></script>
+    <script src="scripts/pwa-install.js"></script>
+    <script>
+        // Register service worker with better error handling
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                    
+                    // Check if we need to request notification permission
+                    if (Notification.permission === 'default') {
+                        // Wait a bit then ask for permission via service worker
+                        setTimeout(() => {
+                            registration.active.postMessage({
+                                type: 'REQUEST_NOTIFICATION_PERMISSION'
+                            });
+                        }, 5000);
+                    }
+                })
+                .catch(function(error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+            });
+        }
+        
+        // Toggle solution visibility
+        function toggleSolution(problemNumber) {
+            const solution = document.getElementById(`solution${problemNumber}`);
+            const button = solution.previousElementSibling;
+            
+            if (solution.style.display === 'block') {
+                solution.style.display = 'none';
+                button.setAttribute('data-i18n', 'MH.lesson_Y2Al_eqdeg2f.showSolution');
+                button.textContent = getTranslation('MH.lesson_Y2Al_eqdeg2f.showSolution');
+            } else {
+                solution.style.display = 'block';
+                button.setAttribute('data-i18n', 'MH.lesson_Y2Al_eqdeg2f.hideSolution');
+                button.textContent = getTranslation('MH.lesson_Y2Al_eqdeg2f.hideSolution');
+            }
+        }
+        
+        // Initialize solutions as hidden
+        document.addEventListener('DOMContentLoaded', function() {
+            for (let i = 1; i <= 4; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+            }
+        });
+    </script>
+    
+    <!-- noscript fallback -->
+    <noscript>
+        <style>
+            .MH-header-controls { display: none; }
+            .MH-solution { display: block; }
+        </style>
+        <div class="MH-warning">
+            JavaScript is recommended for the full experience, but content is still accessible.
+        </div>
+    </noscript>
+</body>
+</html>

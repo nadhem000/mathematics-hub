@@ -463,26 +463,32 @@
 					
 					<div id="algebra-second-year" class="MH-index-lessons-list">
 						<!-- 2nd Year Algebra Lessons (unchanged) -->
-    <!-- Second-Degree Equations - Grouped Lesson -->
-    <div class="MH-index-lesson-group">
-        <div class="MH-index-lesson-group-header">
-            <span class="MH-index-lesson-group-title" data-i18n="MH.index.algebra.second.1">First and Second Degree Problems</span>
-        </div>
-        <div class="MH-index-lesson-subitems">
-            <div class="MH-index-lesson-item MH-index-lesson-subitem">
-                <a href="lesson_Y2Al_eqdeg2a.html" class="MH-index-lesson-link" data-i18n="MH.index.algebra.second.1a">2nd Degree Equations I: Factorization Method</a>
-            </div>
-            <div class="MH-index-lesson-item MH-index-lesson-subitem">
-                <a href="lesson_Y2Al_eqdeg2b.html" class="MH-index-lesson-link" data-i18n="MH.index.algebra.second.1b">2nd Degree Equations II: Discriminant Method</a>
-            </div>
-            <div class="MH-index-lesson-item MH-index-lesson-subitem">
-                <a href="lesson_Y2Al_eqdeg2c.html" class="MH-index-lesson-link" data-i18n="MH.index.algebra.second.1c">2nd Degree Equations III: Completing the Square Method</a>
-            </div>
-            <div class="MH-index-lesson-item MH-index-lesson-subitem">
-                <a href="lesson_Y2Al_eqdeg2d.html" class="MH-index-lesson-link" data-i18n="MH.index.algebra.second.1d">2nd Degree Inequations I: Algebraic Method</a>
-            </div>
-        </div>
-    </div>
+						<!-- Second-Degree Equations - Grouped Lesson -->
+						<div class="MH-index-lesson-group">
+							<div class="MH-index-lesson-group-header">
+								<span class="MH-index-lesson-group-title" data-i18n="MH.index.algebra.second.1">First and Second Degree Problems</span>
+							</div>
+							<div class="MH-index-lesson-subitems">
+								<div class="MH-index-lesson-item MH-index-lesson-subitem">
+									<a href="lesson_Y2Al_eqdeg2a.html" class="MH-index-lesson-link" data-i18n="MH.index.algebra.second.1a">2nd Degree Equations I: Factorization Method</a>
+								</div>
+								<div class="MH-index-lesson-item MH-index-lesson-subitem">
+									<a href="lesson_Y2Al_eqdeg2b.html" class="MH-index-lesson-link" data-i18n="MH.index.algebra.second.1b">2nd Degree Equations II: Discriminant Method</a>
+								</div>
+								<div class="MH-index-lesson-item MH-index-lesson-subitem">
+									<a href="lesson_Y2Al_eqdeg2c.html" class="MH-index-lesson-link" data-i18n="MH.index.algebra.second.1c">2nd Degree Equations III: Completing the Square Method</a>
+								</div>
+								<div class="MH-index-lesson-item MH-index-lesson-subitem">
+									<a href="lesson_Y2Al_eqdeg2d.html" class="MH-index-lesson-link" data-i18n="MH.index.algebra.second.1d">2nd Degree Inequations I: Algebraic Method</a>
+								</div>
+								<div class="MH-index-lesson-item MH-index-lesson-subitem">
+									<a href="lesson_Y2Al_eqdeg2e.html" class="MH-index-lesson-link" data-i18n="MH.index.algebra.second.1e">2nd Degree Inequations II: Advanced Algebraic Method</a>
+								</div>
+								<div class="MH-index-lesson-item MH-index-lesson-subitem">
+									<a href="lesson_Y2Al_eqdeg2f.html" class="MH-index-lesson-link" data-i18n="MH.index.algebra.second.1f">2nd Degree Inequations III: Canonical Form Method</a>
+								</div>
+							</div>
+						</div>
 						<div class="MH-index-lesson-item">
 							<span data-i18n="MH.index.algebra.second.2">Notion of Polynomials</span>
 							<span class="MH-index-coming-soon" data-i18n="MH.index.comingSoon">Coming Soon</span>
@@ -714,28 +720,28 @@
 		</script>
 		<script src="scripts/pwa-install.js"></script>
 		<script>
-    // Register service worker with better error handling
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-            navigator.serviceWorker.register('/sw.js')
-            .then(function(registration) {
-                console.log('Service Worker registered with scope:', registration.scope);
-                
-                // Check if we need to request notification permission
-                if (Notification.permission === 'default') {
-                    // Wait a bit then ask for permission via service worker
-                    setTimeout(() => {
-                        registration.active.postMessage({
-                            type: 'REQUEST_NOTIFICATION_PERMISSION'
-                        });
-                    }, 5000);
-                }
-            })
-            .catch(function(error) {
-                console.log('Service Worker registration failed:', error);
-            });
-        });
-    }
-</script>
+			// Register service worker with better error handling
+			if ('serviceWorker' in navigator) {
+				window.addEventListener('load', function() {
+					navigator.serviceWorker.register('/sw.js')
+					.then(function(registration) {
+						console.log('Service Worker registered with scope:', registration.scope);
+						
+						// Check if we need to request notification permission
+						if (Notification.permission === 'default') {
+							// Wait a bit then ask for permission via service worker
+							setTimeout(() => {
+								registration.active.postMessage({
+									type: 'REQUEST_NOTIFICATION_PERMISSION'
+								});
+							}, 5000);
+						}
+					})
+					.catch(function(error) {
+						console.log('Service Worker registration failed:', error);
+					});
+				});
+			}
+		</script>
 	</body>
 </html>

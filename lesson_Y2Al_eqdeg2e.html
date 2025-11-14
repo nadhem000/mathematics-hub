@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: 2nd Degree Inequations II - Advanced Algebraic Method</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#e67e22" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#a04000" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#e67e22">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        /* Page-specific color palette - Orange Theme */
+        :root {
+            --primary: #e67e22;
+            --primary-light: #f39c12;
+            --primary-dark: #d35400;
+            --secondary: #3498db;
+            --secondary-light: #5dade2;
+            --secondary-dark: #2980b9;
+            --accent: #9b59b6;
+            --warning: #e74c3c;
+            --info: #2ecc71;
+        }
+        
+        [data-theme="dark"] {
+            --primary: #d35400;
+            --primary-light: #e67e22;
+            --primary-dark: #a04000;
+            --secondary: #2980b9;
+            --secondary-light: #3498db;
+            --secondary-dark: #1c5a85;
+            --accent: #8e44ad;
+            --warning: #c0392b;
+            --info: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Al_eqdeg2e.title">2nd Degree Inequations II: Advanced Algebraic Method</h1>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2e.introduction">Advanced Algebraic Approach</h2>
+            <p data-i18n="MH.lesson_Y2Al_eqdeg2e.introText1">In this lesson, we'll explore more advanced techniques for solving quadratic inequalities using algebraic methods. We'll focus on systematic approaches that work for all cases.</p>
+            
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2e.definitionTitle">Review: Quadratic Inequality Forms</h3>
+                <div class="MH-equation">ax² + bx + c > 0</div>
+                <div class="MH-equation">ax² + bx + c < 0</div>
+                <div class="MH-equation">ax² + bx + c ≥ 0</div>
+                <div class="MH-equation">ax² + bx + c ≤ 0</div>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.definitionText">where a, b, and c are real numbers, with a ≠ 0.</p>
+            </div>
+            
+            <p data-i18n="MH.lesson_Y2Al_eqdeg2e.introText2">We'll learn how to handle special cases, factor complex expressions, and use sign analysis systematically.</p>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2e.factoringTitle">Factoring Quadratic Expressions</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2e.factoringImportance">Why Factoring Matters</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.factoringText1">Factoring quadratic expressions is crucial for solving inequalities because it helps us identify the roots and analyze the sign changes.</p>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y2Al_eqdeg2e.factoringExample">Example: Factoring x² - 5x + 6</h4>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.factoringStep1">We look for two numbers that multiply to 6 and add to -5:</p>
+                    <div class="MH-equation">-2 × -3 = 6 and -2 + (-3) = -5</div>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.factoringStep2">Therefore:</p>
+                    <div class="MH-equation">x² - 5x + 6 = (x - 2)(x - 3)</div>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2e.factoringMethods">Common Factoring Methods</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2e.factoringMethod1">Simple trinomial factoring</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2e.factoringMethod2">Difference of squares</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2e.factoringMethod3">Perfect square trinomials</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2e.factoringMethod4">Quadratic formula for roots</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2e.signAnalysisTitle">Systematic Sign Analysis</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2e.signTableTitle">Creating Sign Tables</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.signTableText1">Sign tables help us visualize how the expression behaves in different intervals.</p>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y2Al_eqdeg2e.signTableExample">Example: (x - 2)(x - 3) > 0</h4>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.signTableStep1">Roots: x = 2 and x = 3</p>
+                    
+                    <table class="MH-table">
+                        <tr>
+                            <th data-i18n="MH.lesson_Y2Al_eqdeg2e.xValue">x</th>
+                            <td>-∞</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>+∞</td>
+                        </tr>
+                        <tr>
+                            <th data-i18n="MH.lesson_Y2Al_eqdeg2e.signXminus2">Sign of (x-2)</th>
+                            <td>-</td>
+                            <td>0</td>
+                            <td>+</td>
+                            <td>+</td>
+                        </tr>
+                        <tr>
+                            <th data-i18n="MH.lesson_Y2Al_eqdeg2e.signXminus3">Sign of (x-3)</th>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>0</td>
+                            <td>+</td>
+                        </tr>
+                        <tr>
+                            <th data-i18n="MH.lesson_Y2Al_eqdeg2e.signProduct">Sign of product</th>
+                            <td>+</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>+</td>
+                        </tr>
+                    </table>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.signTableConclusion">The product is positive when x < 2 or x > 3.</p>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2e.signRulesTitle">Sign Analysis Rules</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2e.signRule1">A linear factor (x - r) changes sign at x = r</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2e.signRule2">The product sign is positive when an even number of factors are negative</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2e.signRule3">The product sign is negative when an odd number of factors are negative</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2e.specialCasesTitle">Special Cases and Techniques</h2>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2e.case1Title">Case 1: Perfect Square Trinomials</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.case1Text">When the quadratic is a perfect square, it never changes sign except at the double root.</p>
+                
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.case1Example">Example: x² - 6x + 9 ≥ 0</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.case1Step1">Factor: (x - 3)² ≥ 0</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.case1Step2">A square is always non-negative</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.case1Solution">Solution: All real numbers (x ∈ ℝ)</p>
+                </div>
+            </div>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2e.case2Title">Case 2: Difference of Squares</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.case2Text">Difference of squares can be factored into linear factors for easy sign analysis.</p>
+                
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.case2Example">Example: x² - 4 < 0</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.case2Step1">Factor: (x - 2)(x + 2) < 0</p>
+                    
+                    <table class="MH-table">
+                        <tr>
+                            <th data-i18n="MH.lesson_Y2Al_eqdeg2e.xValue">x</th>
+                            <td>-∞</td>
+                            <td>-2</td>
+                            <td>2</td>
+                            <td>+∞</td>
+                        </tr>
+                        <tr>
+                            <th data-i18n="MH.lesson_Y2Al_eqdeg2e.signXplus2">Sign of (x+2)</th>
+                            <td>-</td>
+                            <td>0</td>
+                            <td>+</td>
+                            <td>+</td>
+                        </tr>
+                        <tr>
+                            <th data-i18n="MH.lesson_Y2Al_eqdeg2e.signXminus2">Sign of (x-2)</th>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>0</td>
+                            <td>+</td>
+                        </tr>
+                        <tr>
+                            <th data-i18n="MH.lesson_Y2Al_eqdeg2e.signProduct">Sign of product</th>
+                            <td>+</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>+</td>
+                        </tr>
+                    </table>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.case2Solution">The product is negative between -2 and 2.</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.case2Final">Solution: -2 < x < 2</p>
+                </div>
+            </div>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2e.case3Title">Case 3: No Real Roots</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.case3Text">When the discriminant is negative, the quadratic maintains a constant sign.</p>
+                
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.case3Example">Example: x² + 2x + 5 > 0</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.case3Step1">Discriminant: Δ = 4 - 20 = -16 < 0</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.case3Step2">Since a = 1 > 0, the expression is always positive</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.case3Solution">Solution: All real numbers (x ∈ ℝ)</p>
+                </div>
+                
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.case3Example2">Example: -x² + x - 3 > 0</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.case3Step3">Multiply by -1: x² - x + 3 < 0</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.case3Step4">Discriminant: Δ = 1 - 12 = -11 < 0</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.case3Step5">Since a = 1 > 0, x² - x + 3 is always positive</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.case3Solution2">No solution in ℝ</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.case3Note">Possible solutions with complex numbers</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2e.stepByStepTitle">Step-by-Step Solution Method</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2e.step1Title">Step 1: Standard Form and Factorization</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.step1Text">Write the inequality with zero on one side and factor the quadratic expression.</p>
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.step1Example">Example: Solve x² - 3x > 4</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.step1Example1">Rewrite: x² - 3x - 4 > 0</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.step1Example2">Factor: (x - 4)(x + 1) > 0</p>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2e.step2Title">Step 2: Identify Critical Points</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.step2Text">Find the roots where each factor equals zero.</p>
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.step2Example">Critical points: x = -1 and x = 4</p>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2e.step3Title">Step 3: Create Sign Table</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.step3Text">Analyze the sign of each factor in the intervals determined by the critical points.</p>
+                <div class="MH-example">
+                    <table class="MH-table">
+                        <tr>
+                            <th data-i18n="MH.lesson_Y2Al_eqdeg2e.xValue">x</th>
+                            <td>-∞</td>
+                            <td>-1</td>
+                            <td>4</td>
+                            <td>+∞</td>
+                        </tr>
+                        <tr>
+                            <th data-i18n="MH.lesson_Y2Al_eqdeg2e.signXplus1">Sign of (x+1)</th>
+                            <td>-</td>
+                            <td>0</td>
+                            <td>+</td>
+                            <td>+</td>
+                        </tr>
+                        <tr>
+                            <th data-i18n="MH.lesson_Y2Al_eqdeg2e.signXminus4">Sign of (x-4)</th>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>0</td>
+                            <td>+</td>
+                        </tr>
+                        <tr>
+                            <th data-i18n="MH.lesson_Y2Al_eqdeg2e.signProduct">Sign of product</th>
+                            <td>+</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>+</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2e.step4Title">Step 4: Determine Solution Intervals</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.step4Text">Based on the inequality sign and the sign analysis, identify the solution intervals.</p>
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.step4Example">For (x - 4)(x + 1) > 0, we need positive values</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.step4Solution">Solution: x < -1 or x > 4</p>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2e.step5Title">Step 5: Check Boundary Points</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.step5Text">Determine whether to include or exclude the critical points based on the inequality sign.</p>
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.step5Example">For > (strict inequality), exclude boundary points</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.step5Solution">Final solution: x ∈ (-∞, -1) ∪ (4, +∞)</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2e.detailedExamples">Detailed Examples</h2>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2e.example1Title">Example 1: Complex Factorization</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.example1Equation">Solve: 2x² + 5x - 3 ≤ 0</p>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.example1Step1">Step 1: Factor the quadratic</p>
+                <div class="MH-equation">2x² + 5x - 3 = (2x - 1)(x + 3)</div>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.example1Step2">Step 2: Critical points: x = -3 and x = 1/2</p>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.example1Step3">Step 3: Sign analysis</p>
+                <table class="MH-table">
+                    <tr>
+                        <th data-i18n="MH.lesson_Y2Al_eqdeg2e.xValue">x</th>
+                        <td>-∞</td>
+                        <td>-3</td>
+                        <td>1/2</td>
+                        <td>+∞</td>
+                    </tr>
+                    <tr>
+                        <th data-i18n="MH.lesson_Y2Al_eqdeg2e.sign2Xminus1">Sign of (2x-1)</th>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>0</td>
+                        <td>+</td>
+                    </tr>
+                    <tr>
+                        <th data-i18n="MH.lesson_Y2Al_eqdeg2e.signXplus3">Sign of (x+3)</th>
+                        <td>-</td>
+                        <td>0</td>
+                        <td>+</td>
+                        <td>+</td>
+                    </tr>
+                    <tr>
+                        <th data-i18n="MH.lesson_Y2Al_eqdeg2e.signProduct">Sign of product</th>
+                        <td>+</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>+</td>
+                    </tr>
+                </table>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.example1Step4">Step 4: We need ≤ 0 (non-positive)</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.example1Step5">Step 5: Include boundary points for ≤</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.example1Solution">Solution: x ∈ [-3, 1/2]</p>
+            </div>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2e.example2Title">Example 2: Perfect Square</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.example2Equation">Solve: 4x² - 12x + 9 > 0</p>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.example2Step1">Step 1: Recognize perfect square</p>
+                <div class="MH-equation">4x² - 12x + 9 = (2x - 3)²</div>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.example2Step2">Step 2: A square is always ≥ 0</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.example2Step3">Step 3: For > 0, we exclude where it equals 0</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.example2Step4">The expression equals 0 only at x = 3/2</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.example2Solution">Solution: x ∈ (-∞, 3/2) ∪ (3/2, +∞)</p>
+            </div>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2e.example3Title">Example 3: Always Positive Case</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.example3Equation">Solve: x² + 4x + 7 > 0</p>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.example3Step1">Step 1: Check discriminant</p>
+                <div class="MH-equation">Δ = 16 - 28 = -12 < 0</div>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.example3Step2">Step 2: Since a = 1 > 0 and Δ < 0, always positive</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.example3Solution">Solution: All real numbers (x ∈ ℝ)</p>
+            </div>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2e.example4Title">Example 4: Always Negative Case</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.example4Equation">Solve: -2x² + 3x - 5 ≥ 0</p>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.example4Step1">Step 1: Multiply by -1 (reverse inequality)</p>
+                <div class="MH-equation">2x² - 3x + 5 ≤ 0</div>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.example4Step2">Step 2: Check discriminant</p>
+                <div class="MH-equation">Δ = 9 - 40 = -31 < 0</div>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.example4Step3">Step 3: Since a = 2 > 0 and Δ < 0, always positive</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.example4Step4">Step 4: 2x² - 3x + 5 is always positive, never ≤ 0</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.example4Solution">No solution in ℝ</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2e.example4Note">Possible solutions with complex numbers</p>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2e.practice">Practice Problems</h2>
+            
+            <div class="MH-practice">
+                <h3 class="MH-practice-title" data-i18n="MH.lesson_Y2Al_eqdeg2e.tryYourself">Try Solving These Advanced Inequalities</h3>
+                
+                <div class="MH-practice-problem">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.problem1">1. Solve:</p>
+                    <div class="MH-equation">3x² - 10x + 3 > 0</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_eqdeg2e.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                    <div class="MH-solution" id="solution1">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2e.problem1Step1">Factor: (3x - 1)(x - 3) > 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2e.problem1Step2">Critical points: x = 1/3 and x = 3</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2e.problem1Step3">Sign analysis:</p>
+                        <table class="MH-table">
+                            <tr>
+                                <th data-i18n="MH.lesson_Y2Al_eqdeg2e.xValue">x</th>
+                                <td>-∞</td>
+                                <td>1/3</td>
+                                <td>3</td>
+                                <td>+∞</td>
+                            </tr>
+                            <tr>
+                                <th data-i18n="MH.lesson_Y2Al_eqdeg2e.sign3Xminus1">Sign of (3x-1)</th>
+                                <td>-</td>
+                                <td>0</td>
+                                <td>+</td>
+                                <td>+</td>
+                            </tr>
+                            <tr>
+                                <th data-i18n="MH.lesson_Y2Al_eqdeg2e.signXminus3">Sign of (x-3)</th>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>0</td>
+                                <td>+</td>
+                            </tr>
+                            <tr>
+                                <th data-i18n="MH.lesson_Y2Al_eqdeg2e.signProduct">Sign of product</th>
+                                <td>+</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>+</td>
+                            </tr>
+                        </table>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2e.problem1Step4">We need > 0 (positive)</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2e.problem1Solution">Solution: x < 1/3 or x > 3</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.problem2">2. Solve:</p>
+                    <div class="MH-equation">x² - 6x + 9 ≤ 0</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_eqdeg2e.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                    <div class="MH-solution" id="solution2">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2e.problem2Step1">Factor: (x - 3)² ≤ 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2e.problem2Step2">A square is always ≥ 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2e.problem2Step3">For ≤ 0, we need exactly 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2e.problem2Step4">The expression equals 0 only at x = 3</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2e.problem2Solution">Solution: x = 3</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.problem3">3. Solve:</p>
+                    <div class="MH-equation">-x² + 2x - 5 > 0</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_eqdeg2e.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                    <div class="MH-solution" id="solution3">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2e.problem3Step1">Multiply by -1: x² - 2x + 5 < 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2e.problem3Step2">Discriminant: Δ = 4 - 20 = -16 < 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2e.problem3Step3">Since a = 1 > 0 and Δ < 0, always positive</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2e.problem3Step4">x² - 2x + 5 is always positive, never < 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2e.problem3Solution">No solution in ℝ</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2e.problem3Note">Possible solutions with complex numbers</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2e.problem4">4. Solve:</p>
+                    <div class="MH-equation">4x² - 1 ≥ 0</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_eqdeg2e.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+                    <div class="MH-solution" id="solution4">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2e.problem4Step1">Factor as difference of squares: (2x - 1)(2x + 1) ≥ 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2e.problem4Step2">Critical points: x = -1/2 and x = 1/2</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2e.problem4Step3">Sign analysis:</p>
+                        <table class="MH-table">
+                            <tr>
+                                <th data-i18n="MH.lesson_Y2Al_eqdeg2e.xValue">x</th>
+                                <td>-∞</td>
+                                <td>-1/2</td>
+                                <td>1/2</td>
+                                <td>+∞</td>
+                            </tr>
+                            <tr>
+                                <th data-i18n="MH.lesson_Y2Al_eqdeg2e.sign2Xplus1">Sign of (2x+1)</th>
+                                <td>-</td>
+                                <td>0</td>
+                                <td>+</td>
+                                <td>+</td>
+                            </tr>
+                            <tr>
+                                <th data-i18n="MH.lesson_Y2Al_eqdeg2e.sign2Xminus1">Sign of (2x-1)</th>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>0</td>
+                                <td>+</td>
+                            </tr>
+                            <tr>
+                                <th data-i18n="MH.lesson_Y2Al_eqdeg2e.signProduct">Sign of product</th>
+                                <td>+</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>+</td>
+                            </tr>
+                        </table>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2e.problem4Step4">We need ≥ 0 (non-negative)</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2e.problem4Solution">Solution: x ≤ -1/2 or x ≥ 1/2</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2e.summary">Summary and Key Points</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2e.keyPointsTitle">Key Points to Remember</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2e.keyPoint1">Always start by writing the inequality in standard form</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2e.keyPoint2">Factor the quadratic expression when possible</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2e.keyPoint3">Use sign tables for systematic analysis</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2e.keyPoint4">Pay attention to strict vs. non-strict inequalities</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2e.keyPoint5">Check special cases (perfect squares, no real roots)</li>
+                </ul>
+            </div>
+            
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2e.commonMistakesTitle">Common Mistakes to Avoid</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2e.mistake1">Forgetting to reverse inequality when multiplying by negative</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2e.mistake2">Incorrectly identifying critical points</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2e.mistake3">Mishandling boundary points</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2e.mistake4">Not checking special cases</li>
+                </ul>
+            </div>
+            
+            <p data-i18n="MH.lesson_Y2Al_eqdeg2e.finalThought">With practice, solving quadratic inequalities algebraically becomes a systematic process that you can apply confidently to any problem.</p>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="scripts/i18n_en.js"></script>
+    <script src="scripts/i18n_ar.js"></script>
+    <script src="scripts/i18n_fr.js"></script>
+    <script src="scripts/translation.js"></script>
+    <script src="scripts/pwa-install.js"></script>
+    <script>
+        // Register service worker with better error handling
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                    
+                    // Check if we need to request notification permission
+                    if (Notification.permission === 'default') {
+                        // Wait a bit then ask for permission via service worker
+                        setTimeout(() => {
+                            registration.active.postMessage({
+                                type: 'REQUEST_NOTIFICATION_PERMISSION'
+                            });
+                        }, 5000);
+                    }
+                })
+                .catch(function(error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+            });
+        }
+        
+        // Toggle solution visibility
+        function toggleSolution(problemNumber) {
+            const solution = document.getElementById(`solution${problemNumber}`);
+            const button = solution.previousElementSibling;
+            
+            if (solution.style.display === 'block') {
+                solution.style.display = 'none';
+                button.setAttribute('data-i18n', 'MH.lesson_Y2Al_eqdeg2e.showSolution');
+                button.textContent = getTranslation('MH.lesson_Y2Al_eqdeg2e.showSolution');
+            } else {
+                solution.style.display = 'block';
+                button.setAttribute('data-i18n', 'MH.lesson_Y2Al_eqdeg2e.hideSolution');
+                button.textContent = getTranslation('MH.lesson_Y2Al_eqdeg2e.hideSolution');
+            }
+        }
+        
+        // Initialize solutions as hidden
+        document.addEventListener('DOMContentLoaded', function() {
+            for (let i = 1; i <= 4; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+            }
+        });
+    </script>
+    
+    <!-- noscript fallback -->
+    <noscript>
+        <style>
+            .MH-header-controls { display: none; }
+            .MH-solution { display: block; }
+        </style>
+        <div class="MH-warning">
+            JavaScript is recommended for the full experience, but content is still accessible.
+        </div>
+    </noscript>
+</body>
+</html>

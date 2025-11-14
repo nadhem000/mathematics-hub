@@ -157,13 +157,33 @@
             </div>
             
             <div class="MH-step">
-                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2d.step3Title">Step 3: Determine the Sign Intervals</h3>
-                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.step3Text">The roots divide the number line into intervals. Determine the sign of the quadratic expression in each interval.</p>
-                <div class="MH-example">
-                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.step3Example">For roots -1 and 4, the intervals are:</p>
-                    <div class="MH-equation">(-∞, -1), (-1, 4), (4, +∞)</div>
-                </div>
-            </div>
+    <h3 data-i18n="MH.lesson_Y2Al_eqdeg2d.step3Title">Step 3: Determine the Sign Intervals</h3>
+    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.step3Text">The roots divide the number line into intervals. Determine the sign of the quadratic expression in each interval using a sign table.</p>
+    <div class="MH-example">
+        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.step3Example">For roots -1 and 4, the intervals are:</p>
+        <div class="MH-equation">(-∞, -1), (-1, 4), (4, +∞)</div>
+        
+        <!-- Added sign table using existing styles -->
+        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.signTableExample">Sign table for x² - 3x - 4:</p>
+        <table class="MH-table">
+            <tr>
+                <th data-i18n="MH.lesson_Y2Al_eqdeg1d.xValue">x</th>
+                <td>-∞</td>
+                <td>-1</td>
+                <td>4</td>
+                <td>+∞</td>
+            </tr>
+            <tr>
+                <th data-i18n="MH.lesson_Y2Al_eqdeg2d.signExpression">Sign of x²-3x-4</th>
+                <td>+</td>
+                <td>0</td>
+                <td>0</td>
+                <td>+</td>
+            </tr>
+        </table>
+        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.signTableExplanation">The expression is positive outside the roots and negative between them.</p>
+    </div>
+</div>
             
             <div class="MH-step">
                 <h3 data-i18n="MH.lesson_Y2Al_eqdeg2d.step4Title">Step 4: Test Each Interval</h3>
@@ -191,20 +211,56 @@
             
             <div class="MH-example">
                 <h3 data-i18n="MH.lesson_Y2Al_eqdeg2d.case1Title">Case 1: Positive Discriminant (Δ > 0)</h3>
-                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.case1Text">When the discriminant is positive, the quadratic equation has two distinct real roots. The sign of the quadratic expression changes at each root.</p>
-                <div class="MH-example">
-                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.case1Example">Example: x² - 3x - 4 > 0</p>
-                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.case1Solution">Solution: x ∈ (-∞, -1) ∪ (4, +∞)</p>
-                </div>
+    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.case1Text">When the discriminant is positive, the quadratic equation has two distinct real roots. The sign of the quadratic expression changes at each root.</p>
+    <div class="MH-example">
+        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.case1Example">Example: x² - 3x - 4 > 0</p>
+        
+        <!-- Added sign table using existing styles -->
+        <table class="MH-table">
+            <tr>
+                <th data-i18n="MH.lesson_Y2Al_eqdeg1d.xValue">x</th>
+                <td>-∞</td>
+                <td>-1</td>
+                <td>4</td>
+                <td>+∞</td>
+            </tr>
+            <tr>
+                <th data-i18n="MH.lesson_Y2Al_eqdeg2d.signExpression">Sign of x²-3x-4</th>
+                <td>+</td>
+                <td>0</td>
+                <td>0</td>
+                <td>+</td>
+            </tr>
+        </table>
+        
+        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.case1Solution">Solution: x ∈ (-∞, -1) ∪ (4, +∞)</p>
+    </div>
             </div>
             
             <div class="MH-example">
                 <h3 data-i18n="MH.lesson_Y2Al_eqdeg2d.case2Title">Case 2: Zero Discriminant (Δ = 0)</h3>
-                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.case2Text">When the discriminant is zero, the quadratic equation has one real root (a double root). The quadratic expression has the same sign on both sides of the root, except at the root itself where it equals zero.</p>
-                <div class="MH-example">
-                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.case2Example">Example: x² - 4x + 4 > 0</p>
-                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.case2Solution">Solution: x ∈ (-∞, 2) ∪ (2, +∞)</p>
-                </div>
+    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.case2Text">When the discriminant is zero, the quadratic equation has one real root (a double root). The quadratic expression has the same sign on both sides of the root, except at the root itself where it equals zero.</p>
+    <div class="MH-example">
+        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.case2Example">Example: x² - 4x + 4 > 0</p>
+        
+        <!-- Added sign table using existing styles -->
+        <table class="MH-table">
+            <tr>
+                <th data-i18n="MH.lesson_Y2Al_eqdeg1d.xValue">x</th>
+                <td>-∞</td>
+                <td>2</td>
+                <td>+∞</td>
+            </tr>
+            <tr>
+                <th data-i18n="MH.lesson_Y2Al_eqdeg2d.signExpression">Sign of x²-4x+4</th>
+                <td>+</td>
+                <td>0</td>
+                <td>+</td>
+            </tr>
+        </table>
+        
+        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.case2Solution">Solution: x ∈ (-∞, 2) ∪ (2, +∞)</p>
+    </div>
             </div>
             
             <div class="MH-example">
@@ -228,35 +284,65 @@
             
             <div class="MH-example">
                 <h3 data-i18n="MH.lesson_Y2Al_eqdeg2d.example1Title">Example 1: Inequality with > 0</h3>
-                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example1Equation">Solve:</p>
-                <div class="MH-equation">x² - 5x + 6 > 0</div>
-                
-                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example1Step1">Step 1: Find roots of x² - 5x + 6 = 0</p>
-                <div class="MH-equation">x = 2 and x = 3</div>
-                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example1Step2">Step 2: Intervals: (-∞, 2), (2, 3), (3, +∞)</p>
-                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example1Step3">Step 3: Test signs:</p>
-                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example1Step3a">For x = 0 (in (-∞, 2)): 0² - 5(0) + 6 = 6 > 0 → positive</p>
-                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example1Step3b">For x = 2.5 (in (2, 3)): (2.5)² - 5(2.5) + 6 = -0.25 < 0 → negative</p>
-                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example1Step3c">For x = 4 (in (3, +∞)): 4² - 5(4) + 6 = 2 > 0 → positive</p>
-                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example1Step4">Step 4: We want > 0 (positive values)</p>
-                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example1Solution">Solution: x ∈ (-∞, 2) ∪ (3, +∞)</p>
+    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example1Equation">Solve:</p>
+    <div class="MH-equation">x² - 5x + 6 > 0</div>
+    
+    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example1Step1">Step 1: Find roots of x² - 5x + 6 = 0</p>
+    <div class="MH-equation">x = 2 and x = 3</div>
+    
+    <!-- Added sign table using existing styles -->
+    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.signTableExample">Sign table:</p>
+    <table class="MH-table">
+        <tr>
+            <th data-i18n="MH.lesson_Y2Al_eqdeg1d.xValue">x</th>
+            <td>-∞</td>
+            <td>2</td>
+            <td>3</td>
+            <td>+∞</td>
+        </tr>
+        <tr>
+            <th data-i18n="MH.lesson_Y2Al_eqdeg2d.signExpression">Sign of x²-5x+6</th>
+            <td>+</td>
+            <td>0</td>
+            <td>0</td>
+            <td>+</td>
+        </tr>
+    </table>
+    
+    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example1Step4">Step 4: We want > 0 (positive values)</p>
+    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example1Solution">Solution: x ∈ (-∞, 2) ∪ (3, +∞)</p>
             </div>
             
             <div class="MH-example">
                 <h3 data-i18n="MH.lesson_Y2Al_eqdeg2d.example2Title">Example 2: Inequality with ≤ 0</h3>
-                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example2Equation">Solve:</p>
-                <div class="MH-equation">-x² + x + 6 ≤ 0</div>
-                
-                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example2Step1">Step 1: Multiply by -1 (reverse inequality): x² - x - 6 ≥ 0</p>
-                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example2Step2">Step 2: Find roots of x² - x - 6 = 0</p>
-                <div class="MH-equation">x = -2 and x = 3</div>
-                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example2Step3">Step 3: Intervals: (-∞, -2), (-2, 3), (3, +∞)</p>
-                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example2Step4">Step 4: Test signs:</p>
-                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example2Step4a">For x = -3: (-3)² - (-3) - 6 = 6 > 0 → positive</p>
-                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example2Step4b">For x = 0: 0² - 0 - 6 = -6 < 0 → negative</p>
-                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example2Step4c">For x = 4: 4² - 4 - 6 = 6 > 0 → positive</p>
-                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example2Step5">Step 5: We want ≥ 0 (non-negative values)</p>
-                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example2Solution">Solution: x ∈ (-∞, -2] ∪ [3, +∞)</p>
+    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example2Equation">Solve:</p>
+    <div class="MH-equation">-x² + x + 6 ≤ 0</div>
+    
+    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example2Step1">Step 1: Multiply by -1 (reverse inequality): x² - x - 6 ≥ 0</p>
+    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example2Step2">Step 2: Find roots of x² - x - 6 = 0</p>
+    <div class="MH-equation">x = -2 and x = 3</div>
+    
+    <!-- Added sign table -->
+    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.signTableExample">Sign table:</p>
+    <table class="MH-table">
+        <tr>
+            <th data-i18n="MH.lesson_Y2Al_eqdeg1d.xValue">x</th>
+            <td>-∞</td>
+            <td>-2</td>
+            <td>3</td>
+            <td>+∞</td>
+        </tr>
+        <tr>
+            <th data-i18n="MH.lesson_Y2Al_eqdeg2d.signExpression">Sign of x²-x-6</th>
+            <td>+</td>
+            <td>0</td>
+            <td>0</td>
+            <td>+</td>
+        </tr>
+    </table>
+    
+    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example2Step5">Step 5: We want ≥ 0 (non-negative values)</p>
+    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example2Solution">Solution: x ∈ (-∞, -2] ∪ [3, +∞)</p>
             </div>
             
             <div class="MH-example">
