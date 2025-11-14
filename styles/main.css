@@ -49,6 +49,17 @@
     --graph-intersection-color: #00ff00;
 --graph-legend-bg: rgba(30, 30, 30, 0.95);  /* Darker background for legend */
 --graph-legend-border: #555;  /* Slightly lighter border */
+    /* Geometry colors - Light theme (for geometry_utils) */
+    --MH-geo-bg: #ffffff;
+    --MH-geo-grid-color: #e0e0e0;
+    --MH-geo-axis-color: #000000;
+    --MH-geo-text-color: #333333;
+    --MH-geo-line1-color: #0066cc;
+    --MH-geo-line2-color: #cc0000;
+    --MH-geo-point-color: #ff0000;
+    --MH-geo-intersection-color: #00ff00;
+    --MH-geo-legend-bg: rgba(30, 30, 30, 0.95);
+    --MH-geo-legend-border: #555;
 }
 
 [data-theme="dark"] {
@@ -88,6 +99,18 @@
     --graph-intersection-color: #00ff00;
 --graph-legend-bg: rgba(30, 30, 30, 0.95);  /* Darker background for legend */
 --graph-legend-border: #00ff00;  /* Slightly lighter border */
+    
+    /* Geometry colors - Dark theme (new variables for geometry_utils) */
+    --MH-geo-bg: #1a1a1a;
+    --MH-geo-grid-color: #444;
+    --MH-geo-axis-color: #e0e0e0;
+    --MH-geo-text-color: #e0e0e0;
+    --MH-geo-line1-color: #4CAF50;
+    --MH-geo-line2-color: #ff5252;
+    --MH-geo-point-color: #ff5252;
+    --MH-geo-intersection-color: #00ff00;
+    --MH-geo-legend-bg: rgba(30, 30, 30, 0.95);
+    --MH-geo-legend-border: #00ff00;
 }
 
 /* Base styles */
@@ -1479,3 +1502,143 @@ li {
     }
 }
 
+
+
+/* Geometry-specific styles */
+.MH-geometry-container {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: var(--MH-bg-secondary);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.MH-geometry-canvas {
+    width: 100%;
+    height: 300px;
+    background: var(--MH-geo-bg);
+    border: 1px solid var(--MH-border-color);
+    border-radius: 4px;
+    position: relative;
+}
+
+.MH-geometry-controls {
+    display: flex;
+    gap: 1rem;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.MH-geometry-control {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 120px;
+}
+
+.MH-geometry-control label {
+    font-size: 0.9rem;
+    color: var(--MH-text-secondary);
+    font-weight: bold;
+}
+
+.MH-geometry-control input {
+    padding: 0.5rem;
+    border: 1px solid var(--MH-border-color);
+    border-radius: 4px;
+    background: var(--MH-bg-primary);
+    color: var(--MH-text-primary);
+    font-size: 0.9rem;
+}
+
+.MH-geometry-control input:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 1px;
+}
+
+.MH-geometry-legend {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.MH-geometry-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--MH-text-secondary);
+}
+
+.MH-geometry-legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+.MH-geometry-legend-line {
+    width: 20px;
+    height: 2px;
+}
+
+/* Geometry examples and demonstrations */
+.MH-geometry-demo {
+    background-color: var(--MH-bg-primary);
+    border: 2px solid var(--primary);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    box-shadow: var(--MH-shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.MH-geometry-demo::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--primary-light), var(--primary));
+}
+
+.MH-geometry-demo h3 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+/* Responsive design for geometry elements */
+@media (max-width: 768px) {
+    .MH-geometry-canvas {
+        height: 250px;
+    }
+    
+    .MH-geometry-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .MH-geometry-control {
+        min-width: auto;
+    }
+    
+    .MH-geometry-legend {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .MH-geometry-canvas {
+        height: 200px;
+    }
+    
+    .MH-geometry-demo {
+        padding: 1rem;
+    }
+}
