@@ -35,6 +35,11 @@
 			--accent: #8e44ad;
 			--warning: #e74c3c;
 			--info: #3498db;
+			
+			/* Graph colors for this page - Light theme */
+			--graph-line1-color: #27ae60;  /* Green for first line */
+			--graph-line2-color: #e67e22;  /* Orange for second line */
+			--graph-intersection-color: #e74c3c; /* Red for intersection */
 			}
 			
 			[data-theme="dark"] {
@@ -47,6 +52,11 @@
 			--accent: #7d3c98;
 			--warning: #c0392b;
 			--info: #2980b9;
+			
+			/* Graph colors for this page - Dark theme */
+			--graph-line1-color: #58d68d;  /* Light green for first line */
+			--graph-line2-color: #f39c12;  /* Light orange for second line */
+			--graph-intersection-color: #e74c3c; /* Red for intersection */
 			}
 		</style>
 	</head>
@@ -481,19 +491,6 @@
 		<script src="scripts/translation.js"></script>
 		<script src="scripts/pwa-install.js"></script>
 		<script>
-			// Register service worker
-			if ('serviceWorker' in navigator) {
-				window.addEventListener('load', function() {
-					navigator.serviceWorker.register('/sw.js')
-					.then(function(registration) {
-						console.log('Service Worker registered with scope:', registration.scope);
-					})
-					.catch(function(error) {
-						console.log('Service Worker registration failed:', error);
-					});
-				});
-			}
-
 			// Graph drawing functions
 			function drawExampleGraphs() {
 				// Example 1: 2x + 3 = x + 5
@@ -516,27 +513,30 @@
 						mathUtils.drawAxes(ctx, width, height, centerX, centerY);
 						
 						// Draw first line: y = 2x + 3
-						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 2, 3);
+						const line1Color = mathUtils.getCssVariable('--graph-line1-color');
+						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 2, 3, line1Color);
 						
 						// Draw second line: y = x + 5
-						ctx.strokeStyle = 'red';
-						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 1, 5);
+						const line2Color = mathUtils.getCssVariable('--graph-line2-color');
+						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 1, 5, line2Color);
 						
 						// Highlight intersection point (2, 7)
-						mathUtils.highlightPoint(2, 7, 'green', 'example1Graph');
+						const intersectionColor = mathUtils.getCssVariable('--graph-intersection-color');
+						mathUtils.highlightPoint(2, 7, intersectionColor, 'example1Graph');
 						
-						// Add legend
-						ctx.fillStyle = 'blue';
+						// Add legend using CSS variables for colors
+						const textColor = mathUtils.getCssVariable('--graph-text-color');
+						ctx.fillStyle = line1Color;
 						ctx.fillText('y = 2x + 3', 20, 30);
-						ctx.fillStyle = 'red';
+						ctx.fillStyle = line2Color;
 						ctx.fillText('y = x + 5', 20, 50);
-						ctx.fillStyle = 'green';
+						ctx.fillStyle = intersectionColor;
 						ctx.fillText('Intersection: (2, 7)', 20, 70);
 					}
-				} catch (error) {
+					} catch (error) {
 					console.error('Error drawing example 1 graph:', error);
 				}
-
+				
 				// Example 2: 3x - 2 = x + 4
 				try {
 					const canvas2 = document.getElementById('example2Graph');
@@ -554,27 +554,30 @@
 						mathUtils.drawAxes(ctx, width, height, centerX, centerY);
 						
 						// Draw first line: y = 3x - 2
-						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 3, -2);
+						const line1Color = mathUtils.getCssVariable('--graph-line1-color');
+						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 3, -2, line1Color);
 						
 						// Draw second line: y = x + 4
-						ctx.strokeStyle = 'red';
-						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 1, 4);
+						const line2Color = mathUtils.getCssVariable('--graph-line2-color');
+						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 1, 4, line2Color);
 						
 						// Highlight intersection point (3, 7)
-						mathUtils.highlightPoint(3, 7, 'green', 'example2Graph');
+						const intersectionColor = mathUtils.getCssVariable('--graph-intersection-color');
+						mathUtils.highlightPoint(3, 7, intersectionColor, 'example2Graph');
 						
 						// Add legend
-						ctx.fillStyle = 'blue';
+						const textColor = mathUtils.getCssVariable('--graph-text-color');
+						ctx.fillStyle = line1Color;
 						ctx.fillText('y = 3x - 2', 20, 30);
-						ctx.fillStyle = 'red';
+						ctx.fillStyle = line2Color;
 						ctx.fillText('y = x + 4', 20, 50);
-						ctx.fillStyle = 'green';
+						ctx.fillStyle = intersectionColor;
 						ctx.fillText('Intersection: (3, 7)', 20, 70);
 					}
-				} catch (error) {
+					} catch (error) {
 					console.error('Error drawing example 2 graph:', error);
 				}
-
+				
 				// Example 3: 2x + 1 = 2x - 3 (parallel lines)
 				try {
 					const canvas3 = document.getElementById('example3Graph');
@@ -592,24 +595,26 @@
 						mathUtils.drawAxes(ctx, width, height, centerX, centerY);
 						
 						// Draw first line: y = 2x + 1
-						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 2, 1);
+						const line1Color = mathUtils.getCssVariable('--graph-line1-color');
+						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 2, 1, line1Color);
 						
 						// Draw second line: y = 2x - 3
-						ctx.strokeStyle = 'red';
-						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 2, -3);
+						const line2Color = mathUtils.getCssVariable('--graph-line2-color');
+						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 2, -3, line2Color);
 						
 						// Add legend
-						ctx.fillStyle = 'blue';
+						const textColor = mathUtils.getCssVariable('--graph-text-color');
+						ctx.fillStyle = line1Color;
 						ctx.fillText('y = 2x + 1', 20, 30);
-						ctx.fillStyle = 'red';
+						ctx.fillStyle = line2Color;
 						ctx.fillText('y = 2x - 3', 20, 50);
-						ctx.fillStyle = 'black';
+						ctx.fillStyle = textColor;
 						ctx.fillText('Parallel lines - No intersection', 20, 70);
 					}
-				} catch (error) {
+					} catch (error) {
 					console.error('Error drawing example 3 graph:', error);
 				}
-
+				
 				// Example 4: 4x - 2 = 2(2x - 1) (same line)
 				try {
 					const canvas4 = document.getElementById('example4Graph');
@@ -627,19 +632,21 @@
 						mathUtils.drawAxes(ctx, width, height, centerX, centerY);
 						
 						// Draw the line: y = 4x - 2
-						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 4, -2);
+						const line1Color = mathUtils.getCssVariable('--graph-line1-color');
+						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 4, -2, line1Color);
 						
 						// Add legend
-						ctx.fillStyle = 'blue';
+						const textColor = mathUtils.getCssVariable('--graph-text-color');
+						ctx.fillStyle = line1Color;
 						ctx.fillText('y = 4x - 2', 20, 30);
-						ctx.fillStyle = 'black';
+						ctx.fillStyle = textColor;
 						ctx.fillText('Same line - Infinite solutions', 20, 50);
 					}
-				} catch (error) {
+					} catch (error) {
 					console.error('Error drawing example 4 graph:', error);
 				}
 			}
-
+			
 			function drawPracticeGraphs() {
 				// Problem 1: x + 3 = 2x - 1
 				try {
@@ -658,27 +665,30 @@
 						mathUtils.drawAxes(ctx, width, height, centerX, centerY);
 						
 						// Draw first line: y = x + 3
-						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 1, 3);
+						const line1Color = mathUtils.getCssVariable('--graph-line1-color');
+						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 1, 3, line1Color);
 						
 						// Draw second line: y = 2x - 1
-						ctx.strokeStyle = 'red';
-						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 2, -1);
+						const line2Color = mathUtils.getCssVariable('--graph-line2-color');
+						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 2, -1, line2Color);
 						
 						// Highlight intersection point (4, 7)
-						mathUtils.highlightPoint(4, 7, 'green', 'problem1Graph');
+						const intersectionColor = mathUtils.getCssVariable('--graph-intersection-color');
+						mathUtils.highlightPoint(4, 7, intersectionColor, 'problem1Graph');
 						
 						// Add legend
-						ctx.fillStyle = 'blue';
+						const textColor = mathUtils.getCssVariable('--graph-text-color');
+						ctx.fillStyle = line1Color;
 						ctx.fillText('y = x + 3', 20, 30);
-						ctx.fillStyle = 'red';
+						ctx.fillStyle = line2Color;
 						ctx.fillText('y = 2x - 1', 20, 50);
-						ctx.fillStyle = 'green';
+						ctx.fillStyle = intersectionColor;
 						ctx.fillText('Intersection: (4, 7)', 20, 70);
 					}
-				} catch (error) {
+					} catch (error) {
 					console.error('Error drawing problem 1 graph:', error);
 				}
-
+				
 				// Problem 2: 3x + 2 = 5x - 4
 				try {
 					const canvas2 = document.getElementById('problem2Graph');
@@ -696,27 +706,30 @@
 						mathUtils.drawAxes(ctx, width, height, centerX, centerY);
 						
 						// Draw first line: y = 3x + 2
-						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 3, 2);
+						const line1Color = mathUtils.getCssVariable('--graph-line1-color');
+						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 3, 2, line1Color);
 						
 						// Draw second line: y = 5x - 4
-						ctx.strokeStyle = 'red';
-						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 5, -4);
+						const line2Color = mathUtils.getCssVariable('--graph-line2-color');
+						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 5, -4, line2Color);
 						
 						// Highlight intersection point (3, 11)
-						mathUtils.highlightPoint(3, 11, 'green', 'problem2Graph');
+						const intersectionColor = mathUtils.getCssVariable('--graph-intersection-color');
+						mathUtils.highlightPoint(3, 11, intersectionColor, 'problem2Graph');
 						
 						// Add legend
-						ctx.fillStyle = 'blue';
+						const textColor = mathUtils.getCssVariable('--graph-text-color');
+						ctx.fillStyle = line1Color;
 						ctx.fillText('y = 3x + 2', 20, 30);
-						ctx.fillStyle = 'red';
+						ctx.fillStyle = line2Color;
 						ctx.fillText('y = 5x - 4', 20, 50);
-						ctx.fillStyle = 'green';
+						ctx.fillStyle = intersectionColor;
 						ctx.fillText('Intersection: (3, 11)', 20, 70);
 					}
-				} catch (error) {
+					} catch (error) {
 					console.error('Error drawing problem 2 graph:', error);
 				}
-
+				
 				// Problem 3: 2(x + 1) = 2x + 3 (parallel lines)
 				try {
 					const canvas3 = document.getElementById('problem3Graph');
@@ -734,51 +747,122 @@
 						mathUtils.drawAxes(ctx, width, height, centerX, centerY);
 						
 						// Draw first line: y = 2x + 2
-						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 2, 2);
+						const line1Color = mathUtils.getCssVariable('--graph-line1-color');
+						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 2, 2, line1Color);
 						
 						// Draw second line: y = 2x + 3
-						ctx.strokeStyle = 'red';
-						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 2, 3);
+						const line2Color = mathUtils.getCssVariable('--graph-line2-color');
+						mathUtils.drawFunctionLine(ctx, width, height, centerX, centerY, scale, 2, 3, line2Color);
 						
 						// Add legend
-						ctx.fillStyle = 'blue';
+						const textColor = mathUtils.getCssVariable('--graph-text-color');
+						ctx.fillStyle = line1Color;
 						ctx.fillText('y = 2x + 2', 20, 30);
-						ctx.fillStyle = 'red';
+						ctx.fillStyle = line2Color;
 						ctx.fillText('y = 2x + 3', 20, 50);
-						ctx.fillStyle = 'black';
+						ctx.fillStyle = textColor;
 						ctx.fillText('Parallel lines - No solution', 20, 70);
 					}
-				} catch (error) {
+					} catch (error) {
 					console.error('Error drawing problem 3 graph:', error);
 				}
 			}
+			
+			// Initialize graphs when page loads - FIXED VERSION
+document.addEventListener('DOMContentLoaded', function() {
+    // Wait for theme and translations to be fully applied
+    setTimeout(function() {
+        drawExampleGraphs();
+        
+        // Set up solution toggling for practice graphs
+        window.addEventListener('solutionToggled', function(event) {
+            if (event.detail.isVisible) {
+                setTimeout(drawPracticeGraphs, 100);
+            }
+        });
+    }, 300); // Increased delay to ensure everything is initialized
+});
+			
+			// Redraw graphs when language changes (for RTL support) - FIXED VERSION
+let languageChangeTimeout;
+window.addEventListener('languageChanged', function() {
+    console.log('Language changed - redrawing graphs...');
+    
+    // Clear any pending redraw
+    if (languageChangeTimeout) {
+        clearTimeout(languageChangeTimeout);
+    }
+    
+    languageChangeTimeout = setTimeout(function() {
+        drawExampleGraphs();
+        // Redraw practice graphs if solutions are visible
+        document.querySelectorAll('.MH-solution.MH-show').forEach(function(solution) {
+            const id = solution.id.replace('solution', '');
+            if (id && !isNaN(id)) {
+                drawPracticeGraphs();
+            }
+        });
+    }, 200);
+});
+			
+			// Theme change listener to redraw graphs - FIXED VERSION
+let themeChangeTimeout;
+document.addEventListener('themeChanged', function() {
+    console.log('Theme changed detected - redrawing all graphs...');
+    
+    // Clear any pending redraw
+    if (themeChangeTimeout) {
+        clearTimeout(themeChangeTimeout);
+    }
+    
+    // Use a slightly longer delay to ensure CSS variables are fully updated
+    themeChangeTimeout = setTimeout(function() {
+        console.log('Executing graph redraw...');
+        
+        // Force CSS variable refresh
+        const dummy = getComputedStyle(document.documentElement).getPropertyValue('--graph-line1-color');
+        
+        // Redraw ALL graphs
+        drawExampleGraphs();
+        drawPracticeGraphs();
+        
+        console.log('Graph redraw completed');
+    }, 200);
+});
 
-			// Initialize graphs when page loads
-			document.addEventListener('DOMContentLoaded', function() {
-				drawExampleGraphs();
-				
-				// Redraw graphs when solutions are shown
-				window.addEventListener('solutionToggled', function(event) {
-					if (event.detail.isVisible) {
-						setTimeout(drawPracticeGraphs, 100);
-					}
-				});
-			});
-
-			// Redraw graphs when language changes (for RTL support)
-			window.addEventListener('languageChanged', function() {
-				setTimeout(function() {
-					drawExampleGraphs();
-					// Redraw practice graphs if solutions are visible
-					document.querySelectorAll('.MH-solution.MH-show').forEach(function(solution) {
-						const id = solution.id.replace('solution', '');
-						if (id && !isNaN(id)) {
-							drawPracticeGraphs();
-						}
-					});
-				}, 300);
-			});
+// Also listen for theme toggle clicks directly as a backup
+document.getElementById('themeToggle')?.addEventListener('click', function() {
+    setTimeout(function() {
+        drawExampleGraphs();
+        drawPracticeGraphs();
+    }, 300);
+});
 		</script>
+		
+		<script>
+    // Register service worker with better error handling
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+                
+                // Check if we need to request notification permission
+                if (Notification.permission === 'default') {
+                    // Wait a bit then ask for permission via service worker
+                    setTimeout(() => {
+                        registration.active.postMessage({
+                            type: 'REQUEST_NOTIFICATION_PERMISSION'
+                        });
+                    }, 5000);
+                }
+            })
+            .catch(function(error) {
+                console.log('Service Worker registration failed:', error);
+            });
+        });
+    }
+</script>
 		
 		<!-- noscript fallback -->
 		<noscript>

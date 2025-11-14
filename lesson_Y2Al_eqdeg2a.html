@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: 2nd Degree Equations I - Factorization Method</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#4a6fa5" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1a365f" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#4a6fa5">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        /* Page-specific color palette - Teal Theme */
+        :root {
+            --primary: #1abc9c;
+            --primary-light: #48c9b0;
+            --primary-dark: #16a085;
+            --secondary: #e74c3c;
+            --secondary-light: #ec7063;
+            --secondary-dark: #c0392b;
+            --accent: #3498db;
+            --warning: #f39c12;
+            --info: #9b59b6;
+        }
+        
+        [data-theme="dark"] {
+            --primary: #16a085;
+            --primary-light: #1abc9c;
+            --primary-dark: #117a65;
+            --secondary: #c0392b;
+            --secondary-light: #e74c3c;
+            --secondary-dark: #922b21;
+            --accent: #2980b9;
+            --warning: #d35400;
+            --info: #8e44ad;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Al_eqdeg2a.title">2nd Degree Equations I: Factorization Method</h1>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2a.introduction">Introduction to 2nd Degree Equations</h2>
+            <p data-i18n="MH.lesson_Y2Al_eqdeg2a.introText1">A quadratic equation, also known as a second-degree equation, is a polynomial equation of degree 2. It can be written in the general form:</p>
+            
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2a.definitionTitle">General Form of a Quadratic Equation</h3>
+                <div class="MH-equation">ax² + bx + c = 0</div>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.definitionText">where a, b, and c are real constants, with a ≠ 0.</p>
+            </div>
+            
+            <p data-i18n="MH.lesson_Y2Al_eqdeg2a.introText2">There are three main methods to solve these equations: factorization, the discriminant method (quadratic formula), and completing the square. In this lesson, we will focus on the factorization method.</p>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2a.comparison">Method Comparison</h2>
+            
+            <div class="MH-comparison">
+                <div class="MH-method MH-factoring">
+                    <h3 data-i18n="MH.lesson_Y2Al_eqdeg2a.factoringMethod">Factorization Method</h3>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2a.factoringDesc">This method involves factoring the quadratic expression into a product of linear factors, then applying the zero product property.</p>
+                    <div class="MH-example">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2a.factoringExample">Example: <span class="MH-equation">x² + 5x + 6 = 0</span></p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2a.factoringStep1">Factor: <span class="MH-equation">(x + 2)(x + 3) = 0</span></p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2a.factoringStep2">Solutions: <span class="MH-equation">x = -2</span> or <span class="MH-equation">x = -3</span></p>
+                    </div>
+                </div>
+                
+                <div class="MH-method MH-quadratic">
+                    <h3 data-i18n="MH.lesson_Y2Al_eqdeg2a.quadraticMethod">Discriminant Method</h3>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2a.quadraticDesc">This method uses the quadratic formula to directly find the solutions.</p>
+                    <div class="MH-example">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2a.quadraticExample">Example: <span class="MH-equation">x² + 5x + 6 = 0</span></p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2a.quadraticStep1">Formula: <span class="MH-equation">x = [-b ± √(b² - 4ac)] / 2a</span></p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2a.quadraticStep2">Solutions: <span class="MH-equation">x = -2</span> or <span class="MH-equation">x = -3</span></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2a.importantNote">Important Note</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.importantText">The factorization method is generally the fastest when applicable, but it only works for certain equations. The discriminant method works for all quadratic equations.</p>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2a.steps">Factorization Method Steps</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2a.step1Title">Step 1: Check if the equation is factorable</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.step1Text">For a quadratic equation to be factorable, there must exist two numbers p and q such that:</p>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2a.step1List1">p × q = a × c</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2a.step1List2">p + q = b</li>
+                </ul>
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2a.step1Example">For <span class="MH-equation">x² + 5x + 6 = 0</span>:</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2a.step1Example1">a = 1, b = 5, c = 6</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2a.step1Example2">We look for p and q such that p × q = 6 and p + q = 5</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2a.step1Example3">The numbers 2 and 3 work: 2 × 3 = 6 and 2 + 3 = 5</p>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2a.step2Title">Step 2: Factor the expression</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.step2Text">Once we find numbers p and q, we can factor the expression:</p>
+                <div class="MH-equation">ax² + bx + c = a(x + p/a)(x + q/a)</div>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.step2Text2">When a = 1, the factorization is simpler:</p>
+                <div class="MH-equation">x² + bx + c = (x + p)(x + q)</div>
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2a.step2Example">For <span class="MH-equation">x² + 5x + 6 = 0</span>:</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2a.step2Example1">We found p = 2 and q = 3</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2a.step2Example2">So: <span class="MH-equation">x² + 5x + 6 = (x + 2)(x + 3)</span></p>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2a.step3Title">Step 3: Apply the zero product property</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.step3Text">If a product of factors equals zero, then at least one of the factors must be zero:</p>
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2a.step3Example">For <span class="MH-equation">(x + 2)(x + 3) = 0</span>:</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2a.step3Example1">We have either <span class="MH-equation">x + 2 = 0</span> or <span class="MH-equation">x + 3 = 0</span></p>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2a.step4Title">Step 4: Solve the linear equations</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.step4Text">Solve each linear equation to find the solutions:</p>
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2a.step4Example1">For <span class="MH-equation">x + 2 = 0</span>: <span class="MH-equation">x = -2</span></p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2a.step4Example2">For <span class="MH-equation">x + 3 = 0</span>: <span class="MH-equation">x = -3</span></p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2a.step4Example3">Solutions: <span class="MH-equation">x = -2</span> or <span class="MH-equation">x = -3</span></p>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2a.step5Title">Step 5: Verify the solutions</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.step5Text">Substitute each solution into the original equation to verify it's correct:</p>
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2a.step5Example1">For x = -2: <span class="MH-equation">(-2)² + 5(-2) + 6 = 4 - 10 + 6 = 0</span> ✓</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2a.step5Example2">For x = -3: <span class="MH-equation">(-3)² + 5(-3) + 6 = 9 - 15 + 6 = 0</span> ✓</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2a.specialCases">Special Factorization Cases</h2>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2a.case1Title">Case 1: Equation with a = 1</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.case1Equation">Solve: <span class="MH-equation">x² - 3x - 10 = 0</span></p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.case1Step1">We look for p and q such that p × q = -10 and p + q = -3</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.case1Step2">The numbers -5 and 2 work: (-5) × 2 = -10 and (-5) + 2 = -3</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.case1Step3">Factorization: <span class="MH-equation">(x - 5)(x + 2) = 0</span></p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.case1Step4">Solutions: <span class="MH-equation">x = 5</span> or <span class="MH-equation">x = -2</span></p>
+            </div>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2a.case2Title">Case 2: Equation with a ≠ 1</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.case2Equation">Solve: <span class="MH-equation">2x² + 7x + 3 = 0</span></p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.case2Step1">We look for p and q such that p × q = 2 × 3 = 6 and p + q = 7</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.case2Step2">The numbers 6 and 1 work: 6 × 1 = 6 and 6 + 1 = 7</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.case2Step3">Rewrite the equation: <span class="MH-equation">2x² + 6x + x + 3 = 0</span></p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.case2Step4">Factor by grouping: <span class="MH-equation">2x(x + 3) + 1(x + 3) = 0</span></p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.case2Step5">Factorization: <span class="MH-equation">(2x + 1)(x + 3) = 0</span></p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.case2Step6">Solutions: <span class="MH-equation">x = -1/2</span> or <span class="MH-equation">x = -3</span></p>
+            </div>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2a.case3Title">Case 3: Equation with common factor</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.case3Equation">Solve: <span class="MH-equation">3x² - 12x = 0</span></p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.case3Step1">Factor out 3x: <span class="MH-equation">3x(x - 4) = 0</span></p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.case3Step2">Solutions: <span class="MH-equation">x = 0</span> or <span class="MH-equation">x = 4</span></p>
+            </div>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2a.case4Title">Case 4: Difference of squares</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.case4Equation">Solve: <span class="MH-equation">x² - 9 = 0</span></p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.case4Step1">Recognize a difference of squares: <span class="MH-equation">x² - 3² = 0</span></p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.case4Step2">Factorization: <span class="MH-equation">(x - 3)(x + 3) = 0</span></p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.case4Step3">Solutions: <span class="MH-equation">x = 3</span> or <span class="MH-equation">x = -3</span></p>
+            </div>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2a.case5Title">Case 5: Perfect square trinomial</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.case5Equation">Solve: <span class="MH-equation">x² + 6x + 9 = 0</span></p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.case5Step1">Recognize a perfect square trinomial: <span class="MH-equation">(x + 3)² = 0</span></p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2a.case5Step2">Single solution: <span class="MH-equation">x = -3</span></p>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2a.practice">Practice Problems</h2>
+            
+            <div class="MH-practice">
+                <h3 class="MH-practice-title" data-i18n="MH.lesson_Y2Al_eqdeg2a.tryYourself">Try Solving These Equations by Factorization</h3>
+                
+                <div class="MH-practice-problem">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2a.problem1">1. Solve: <span class="MH-equation">x² + 7x + 12 = 0</span></p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_eqdeg2a.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                    <div class="MH-solution" id="solution1">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2a.problem1Step1">We look for p and q such that p × q = 12 and p + q = 7</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2a.problem1Step2">The numbers 3 and 4 work: 3 × 4 = 12 and 3 + 4 = 7</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2a.problem1Step3">Factorization: <span class="MH-equation">(x + 3)(x + 4) = 0</span></p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2a.problem1Step4">Solutions: <span class="MH-equation">x = -3</span> or <span class="MH-equation">x = -4</span></p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2a.problem2">2. Solve: <span class="MH-equation">x² - 5x + 6 = 0</span></p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_eqdeg2a.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                    <div class="MH-solution" id="solution2">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2a.problem2Step1">We look for p and q such that p × q = 6 and p + q = -5</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2a.problem2Step2">The numbers -2 and -3 work: (-2) × (-3) = 6 and (-2) + (-3) = -5</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2a.problem2Step3">Factorization: <span class="MH-equation">(x - 2)(x - 3) = 0</span></p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2a.problem2Step4">Solutions: <span class="MH-equation">x = 2</span> or <span class="MH-equation">x = 3</span></p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2a.problem3">3. Solve: <span class="MH-equation">2x² + 5x - 3 = 0</span></p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_eqdeg2a.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                    <div class="MH-solution" id="solution3">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2a.problem3Step1">We look for p and q such that p × q = 2 × (-3) = -6 and p + q = 5</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2a.problem3Step2">The numbers 6 and -1 work: 6 × (-1) = -6 and 6 + (-1) = 5</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2a.problem3Step3">Rewrite the equation: <span class="MH-equation">2x² + 6x - x - 3 = 0</span></p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2a.problem3Step4">Factor by grouping: <span class="MH-equation">2x(x + 3) - 1(x + 3) = 0</span></p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2a.problem3Step5">Factorization: <span class="MH-equation">(2x - 1)(x + 3) = 0</span></p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2a.problem3Step6">Solutions: <span class="MH-equation">x = 1/2</span> or <span class="MH-equation">x = -3</span></p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2a.problem4">4. Solve: <span class="MH-equation">4x² - 9 = 0</span></p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_eqdeg2a.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+                    <div class="MH-solution" id="solution4">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2a.problem4Step1">Recognize a difference of squares: <span class="MH-equation">(2x)² - 3² = 0</span></p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2a.problem4Step2">Factorization: <span class="MH-equation">(2x - 3)(2x + 3) = 0</span></p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2a.problem4Step3">Solutions: <span class="MH-equation">x = 3/2</span> or <span class="MH-equation">x = -3/2</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2a.whenToUse">When to Use the Factorization Method?</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2a.advantagesTitle">Advantages of the factorization method</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2a.advantage1">Fast and direct method when applicable</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2a.advantage2">Doesn't require complex calculations</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2a.advantage3">Helps understand the structure of the equation</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2a.advantage4">Useful for solving quadratic inequalities</li>
+                </ul>
+            </div>
+            
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2a.limitationsTitle">Limitations of the factorization method</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2a.limitation1">Doesn't work for all quadratic equations</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2a.limitation2">Can be difficult to apply with large or complex coefficients</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2a.limitation3">Requires recognizing specific patterns</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2a.limitation4">May not work for equations with irrational roots</li>
+                </ul>
+            </div>
+            
+            <p data-i18n="MH.lesson_Y2Al_eqdeg2a.conclusion">In practice, the factorization method is particularly useful when the equation has simple integer coefficients and when we can easily find two numbers whose product is a×c and sum is b.</p>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="scripts/i18n_en.js"></script>
+    <script src="scripts/i18n_ar.js"></script>
+    <script src="scripts/i18n_fr.js"></script>
+    <script src="scripts/translation.js"></script>
+    <script src="scripts/pwa-install.js"></script>
+    <script>
+        // Register service worker with better error handling
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                    
+                    // Check if we need to request notification permission
+                    if (Notification.permission === 'default') {
+                        // Wait a bit then ask for permission via service worker
+                        setTimeout(() => {
+                            registration.active.postMessage({
+                                type: 'REQUEST_NOTIFICATION_PERMISSION'
+                            });
+                        }, 5000);
+                    }
+                })
+                .catch(function(error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+            });
+        }
+    </script>
+    
+    <!-- noscript fallback -->
+    <noscript>
+        <style>
+            .MH-header-controls { display: none; }
+            .MH-solution { display: block; }
+        </style>
+        <div class="MH-warning">
+            JavaScript is recommended for the full experience, but content is still accessible.
+        </div>
+    </noscript>
+</body>
+</html>

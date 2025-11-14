@@ -5,6 +5,11 @@ class LinearFunctionUtils {
         this.currentM = 2;
         this.currentB = -3;
     }
+    
+    // Get CSS variable value
+    getCssVariable(varName) {
+        return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+    }
 
     // Calculate y from x using y = mx + b
     calculateY(m, b, x) {
@@ -41,71 +46,71 @@ class LinearFunctionUtils {
         return `y = ${this.formatNumber(m)}x ${b >= 0 ? '+' : ''} ${this.formatNumber(b)}`;
     }
 
-    // Draw grid lines with visible numbers - FIXED VERSION
-    drawGrid(ctx, width, height, centerX, centerY, scale) {
-        // Use theme-aware colors
-        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-        ctx.strokeStyle = isDark ? '#444' : '#e0e0e0';
-        ctx.lineWidth = 1;
-        ctx.fillStyle = isDark ? '#ccc' : '#333';
-        ctx.font = '12px Arial';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
+    // Draw grid lines with visible numbers - USING CSS VARIABLES
+    // Draw grid lines with visible numbers - USING CSS VARIABLES
+drawGrid(ctx, width, height, centerX, centerY, scale) {
+    const gridColor = this.getCssVariable('--graph-grid-color');
+    const textColor = this.getCssVariable('--graph-text-color');
+    
+    ctx.strokeStyle = gridColor;
+    ctx.lineWidth = 1;
+    ctx.fillStyle = textColor; // CRITICAL: Use CSS variable for text color
+    ctx.font = '12px Arial';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    
+    // Calculate visible range
+    const xMin = -centerX / scale;
+    const xMax = (width - centerX) / scale;
+    const yMin = -centerY / scale;
+    const yMax = (height - centerY) / scale;
+    
+    // Draw vertical grid lines and numbers
+    for (let x = Math.ceil(xMin); x <= Math.floor(xMax); x++) {
+        if (x === 0) continue;
         
-        // Calculate visible range
-        const xMin = -centerX / scale;
-        const xMax = (width - centerX) / scale;
-        const yMin = -centerY / scale;
-        const yMax = (height - centerY) / scale;
+        const pixelX = centerX + (x * scale);
         
-        // Draw vertical grid lines and numbers
-        for (let x = Math.ceil(xMin); x <= Math.floor(xMax); x++) {
-            if (x === 0) continue; // Skip 0 for x-axis (we'll handle it separately)
-            
-            const pixelX = centerX + (x * scale);
-            
-            // Draw grid line
-            ctx.beginPath();
-            ctx.moveTo(pixelX, 0);
-            ctx.lineTo(pixelX, height);
-            ctx.stroke();
-            
-            // Draw number
-            ctx.fillText(this.formatNumber(x), pixelX, centerY + 15);
-        }
+        ctx.beginPath();
+        ctx.moveTo(pixelX, 0);
+        ctx.lineTo(pixelX, height);
+        ctx.stroke();
         
-        // Draw horizontal grid lines and numbers
-        for (let y = Math.ceil(yMin); y <= Math.floor(yMax); y++) {
-            if (y === 0) continue; // Skip 0 for y-axis (we'll handle it separately)
-            
-            const pixelY = centerY - (y * scale);
-            
-            // Draw grid line
-            ctx.beginPath();
-            ctx.moveTo(0, pixelY);
-            ctx.lineTo(width, pixelY);
-            ctx.stroke();
-            
-            // Draw number
-            ctx.textAlign = 'right';
-            ctx.fillText(this.formatNumber(y), centerX - 8, pixelY);
-            ctx.textAlign = 'center';
-        }
-        
-        // Draw origin (0,0)
-        ctx.textAlign = 'right';
-        ctx.textBaseline = 'top';
-        ctx.fillText('0', centerX - 5, centerY + 5);
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
+        // Draw number - text color is now set by ctx.fillStyle above
+        ctx.fillText(this.formatNumber(x), pixelX, centerY + 15);
     }
+    
+    // Draw horizontal grid lines and numbers
+    for (let y = Math.ceil(yMin); y <= Math.floor(yMax); y++) {
+        if (y === 0) continue;
+        
+        const pixelY = centerY - (y * scale);
+        
+        ctx.beginPath();
+        ctx.moveTo(0, pixelY);
+        ctx.lineTo(width, pixelY);
+        ctx.stroke();
+        
+        ctx.textAlign = 'right';
+        ctx.fillText(this.formatNumber(y), centerX - 8, pixelY);
+        ctx.textAlign = 'center';
+    }
+    
+    // Draw origin (0,0)
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'top';
+    ctx.fillText('0', centerX - 5, centerY + 5);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+}
 
-    // Draw coordinate axes with better visibility
+    // Draw coordinate axes with better visibility - USING CSS VARIABLES
     drawAxes(ctx, width, height, centerX, centerY) {
-        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-        ctx.strokeStyle = isDark ? '#ccc' : '#000000';
+        const axisColor = this.getCssVariable('--graph-axis-color');
+        
+        ctx.strokeStyle = axisColor;
         ctx.lineWidth = 2;
-        ctx.fillStyle = isDark ? '#ccc' : '#000000';
+        ctx.fillStyle = axisColor;
         ctx.font = '14px Arial';
         
         // X-axis
@@ -130,12 +135,12 @@ class LinearFunctionUtils {
         ctx.fillText('y', centerX + 10, 10);
         
         // Draw arrowheads
-        this.drawArrowhead(ctx, width, centerY, Math.PI, isDark); // x-axis arrow
-        this.drawArrowhead(ctx, centerX, 0, -Math.PI/2, isDark); // y-axis arrow
+        this.drawArrowhead(ctx, width, centerY, Math.PI, axisColor); // x-axis arrow
+        this.drawArrowhead(ctx, centerX, 0, -Math.PI/2, axisColor); // y-axis arrow
     }
 
     // Draw arrowhead for axes
-    drawArrowhead(ctx, x, y, angle, isDark = false) {
+    drawArrowhead(ctx, x, y, angle, color) {
         const size = 8;
         ctx.save();
         ctx.translate(x, y);
@@ -145,14 +150,15 @@ class LinearFunctionUtils {
         ctx.lineTo(-size, -size/2);
         ctx.lineTo(-size, size/2);
         ctx.closePath();
-        ctx.fillStyle = isDark ? '#ccc' : '#000000';
+        ctx.fillStyle = color;
         ctx.fill();
         ctx.restore();
     }
 
-    // Draw the linear function line
-    drawFunctionLine(ctx, width, height, centerX, centerY, scale, m, b, color = '#0066cc') {
-        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    // Draw the linear function line - USING CSS VARIABLES
+    drawFunctionLine(ctx, width, height, centerX, centerY, scale, m, b, lineColor = null) {
+        // Use provided color or default from CSS variables
+        const color = lineColor || this.getCssVariable('--graph-line1-color');
         ctx.strokeStyle = color;
         ctx.lineWidth = 3;
         ctx.beginPath();
@@ -172,6 +178,8 @@ class LinearFunctionUtils {
         ctx.moveTo(pixelStartX, pixelStartY);
         ctx.lineTo(pixelEndX, pixelEndY);
         ctx.stroke();
+        
+        return color;
     }
 
     // Main function to draw the linear graph
@@ -182,10 +190,10 @@ class LinearFunctionUtils {
         }
         
         const ctx = canvas.getContext('2d');
-        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
         
         // Clear canvas with theme-aware background
-        ctx.fillStyle = isDark ? '#1a1a1a' : '#ffffff';
+        const bgColor = this.getCssVariable('--graph-bg');
+        ctx.fillStyle = bgColor;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
         // Set up coordinate system
@@ -200,17 +208,17 @@ class LinearFunctionUtils {
         this.drawAxes(ctx, width, height, centerX, centerY);
         
         // Draw the function line
-        this.drawFunctionLine(ctx, width, height, centerX, centerY, scale, m, b);
+        const lineColor = this.drawFunctionLine(ctx, width, height, centerX, centerY, scale, m, b);
         
         // Update current values
         this.currentM = m;
         this.currentB = b;
         
-        return this.getEquationString(m, b);
+        return { equation: this.getEquationString(m, b), color: lineColor };
     }
 
-    // Highlight a point on the graph
-    highlightPoint(x, y, color = 'red', canvasId = 'graphCanvas') {
+    // Highlight a point on the graph - USING CSS VARIABLES
+    highlightPoint(x, y, color = null, canvasId = 'graphCanvas') {
         const canvas = document.getElementById(canvasId);
         if (!canvas) {
             throw new Error(`Canvas with id '${canvasId}' not found`);
@@ -220,49 +228,56 @@ class LinearFunctionUtils {
         const centerX = canvas.width / 2;
         const centerY = canvas.height / 2;
         const scale = 30;
-        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
         
         const pixelX = centerX + (x * scale);
         const pixelY = centerY - (y * scale);
         
+        // Use provided color or default from CSS variables
+        const pointColor = color || this.getCssVariable('--graph-point-color');
+        const bgColor = this.getCssVariable('--graph-bg');
+        const textColor = this.getCssVariable('--graph-text-color');
+        
         // Draw point
-        ctx.fillStyle = color;
+        ctx.fillStyle = pointColor;
         ctx.beginPath();
         ctx.arc(pixelX, pixelY, 6, 0, 2 * Math.PI);
         ctx.fill();
         
         // Draw a border for better visibility
-        ctx.strokeStyle = isDark ? '#1a1a1a' : '#ffffff';
+        ctx.strokeStyle = bgColor;
         ctx.lineWidth = 2;
         ctx.stroke();
         
-        // Draw coordinates label
-        ctx.fillStyle = color;
+        // Draw coordinates label with proper contrast
+        ctx.fillStyle = textColor;
         ctx.font = 'bold 12px Arial';
         ctx.textAlign = 'left';
         ctx.textBaseline = 'bottom';
         ctx.fillText(`(${this.formatNumber(x)}, ${this.formatNumber(y)})`, pixelX + 8, pixelY - 8);
     }
 
-    // Draw legend for equations
+    // Draw legend for equations - USING CSS VARIABLES
     drawLegend(ctx, equations, colors, width) {
-        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        const textColor = this.getCssVariable('--graph-text-color');
+        const legendBg = this.getCssVariable('--graph-legend-bg');
+        const legendBorder = this.getCssVariable('--graph-legend-border');
+        
         ctx.textAlign = 'left';
         ctx.textBaseline = 'top';
         ctx.font = 'bold 14px Arial';
         
         // Draw semi-transparent background for legend
-        ctx.fillStyle = isDark ? 'rgba(45, 45, 45, 0.9)' : 'rgba(255, 255, 255, 0.9)';
+        ctx.fillStyle = legendBg;
         ctx.fillRect(10, 10, 200, equations.length * 25 + 10);
         
         // Draw border
-        ctx.strokeStyle = isDark ? '#666' : '#ccc';
+        ctx.strokeStyle = legendBorder;
         ctx.lineWidth = 1;
         ctx.strokeRect(10, 10, 200, equations.length * 25 + 10);
         
-        // Draw equations
+        // Draw equations with proper contrast
         equations.forEach((equation, index) => {
-            ctx.fillStyle = colors[index];
+            ctx.fillStyle = textColor;
             ctx.fillText(equation, 30, 20 + index * 25);
             
             // Draw color indicator

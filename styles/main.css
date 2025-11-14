@@ -37,6 +37,18 @@
     --footer-gradient: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
     --header-text: white;
     --footer-text: white;
+    
+    /* Graph colors - Light theme */
+    --graph-bg: #ffffff;
+    --graph-grid-color: #e0e0e0;
+    --graph-axis-color: #000000;
+    --graph-text-color: #333333;
+    --graph-line1-color: #0066cc;
+    --graph-line2-color: #cc0000;
+    --graph-point-color: #ff0000;
+    --graph-intersection-color: #00ff00;
+--graph-legend-bg: rgba(30, 30, 30, 0.95);  /* Darker background for legend */
+--graph-legend-border: #555;  /* Slightly lighter border */
 }
 
 [data-theme="dark"] {
@@ -64,6 +76,18 @@
     --footer-gradient: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
     --header-text: white;
     --footer-text: white;
+    
+    /* Graph colors - Dark theme */
+    --graph-bg: #1a1a1a;
+    --graph-grid-color: #444;
+    --graph-axis-color: #e0e0e0;
+    --graph-text-color: #e0e0e0;
+    --graph-line1-color: #4CAF50;
+    --graph-line2-color: #ff5252;
+    --graph-point-color: #ff5252;
+    --graph-intersection-color: #00ff00;
+--graph-legend-bg: rgba(30, 30, 30, 0.95);  /* Darker background for legend */
+--graph-legend-border: #00ff00;  /* Slightly lighter border */
 }
 
 /* Base styles */

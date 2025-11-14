@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Mathematics Lesson: 2nd Degree Equations II - Discriminant Method</title>
+		<!-- PWA Manifest -->
+		<link rel="manifest" href="manifest.json">
+		
+		<!-- Favicon -->
+		<link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+		<link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+		
+		<!-- Theme Color -->
+		<meta name="theme-color" content="#e67e22" media="(prefers-color-scheme: light)">
+		<meta name="theme-color" content="#a04000" media="(prefers-color-scheme: dark)">
+		
+		<!-- PWA Meta Tags -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="default">
+		<meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="msapplication-TileColor" content="#e67e22">
+		<meta name="msapplication-config" content="/browserconfig.xml">
+		<link rel="stylesheet" href="styles/main.css">
+		<style>
+			/* Page-specific color palette - Orange Theme */
+			:root {
+			--primary: #e67e22;
+			--primary-light: #f39c12;
+			--primary-dark: #d35400;
+			--secondary: #3498db;
+			--secondary-light: #5dade2;
+			--secondary-dark: #2980b9;
+			--accent: #9b59b6;
+			--warning: #e74c3c;
+			--info: #2ecc71;
+			}
+			
+			[data-theme="dark"] {
+			--primary: #d35400;
+			--primary-light: #e67e22;
+			--primary-dark: #a04000;
+			--secondary: #2980b9;
+			--secondary-light: #3498db;
+			--secondary-dark: #1f618d;
+			--accent: #8e44ad;
+			--warning: #c0392b;
+			--info: #27ae60;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<div class="MH-header-grid">
+				<!-- Column 1: Icon -->
+				<div class="MH-header-column MH-header-icon">
+					<a href="index.html" class="MH-logo-link" data-tooltip>
+						<img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+					</a>
+				</div>
+				
+				<!-- Column 2: Title -->
+				<div class="MH-header-column MH-header-title">
+					<div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+				</div>
+				
+				<!-- Column 3: Options -->
+				<div class="MH-header-column MH-header-options">
+					<div class="MH-header-controls">
+						<button class="MH-theme-toggle" id="themeToggle">
+							<span data-i18n="MH.general.theme">Theme</span>
+							<span>🌙</span>
+						</button>
+						<div class="MH-language-selector">
+							<button class="MH-language-btn" id="languageBtn">
+								<span data-i18n="MH.general.language">Language</span>
+								<span>▼</span>
+							</button>
+							<div class="MH-language-dropdown" id="languageDropdown">
+								<a href="#" class="MH-language-option" data-lang="en">English</a>
+								<a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+								<a href="#" class="MH-language-option" data-lang="fr">Français</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		
+		<main id="main-content" class="MH-container" tabindex="-1">
+			
+			<h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Al_eqdeg2b.title">2nd Degree Equations II: Discriminant Method</h1>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2b.introduction">Introduction to Discriminant Method</h2>
+				<p data-i18n="MH.lesson_Y2Al_eqdeg2b.introText1">The discriminant method is a powerful algebraic technique for solving second-degree equations. It provides a systematic way to determine the number and nature of solutions based on the value of the discriminant.</p>
+				
+				<div class="MH-definition">
+					<h3 data-i18n="MH.lesson_Y2Al_eqdeg2b.definitionTitle">What is the Discriminant?</h3>
+					<p><span data-i18n="MH.lesson_Y2Al_eqdeg2b.definitionText1">For a quadratic equation in the form</span> <span class="MH-equation">ax² + bx + c = 0</span>, <span data-i18n="MH.lesson_Y2Al_eqdeg2b.definitionText2">the discriminant is defined as:</span></p>
+					<div class="MH-equation">Δ = b² - 4ac</div>
+					<p data-i18n="MH.lesson_Y2Al_eqdeg2b.definitionText3">The value of the discriminant determines the nature of the roots of the equation.</p>
+				</div>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2b.discriminantCases">Discriminant Cases</h2>
+				
+				<div class="MH-step">
+					<h3 data-i18n="MH.lesson_Y2Al_eqdeg2b.case1Title">Case 1: Positive Discriminant (Δ > 0)</h3>
+					<p data-i18n="MH.lesson_Y2Al_eqdeg2b.case1Text">When the discriminant is positive, the equation has two distinct real solutions:</p>
+					<div class="MH-equation">x₁ = (-b + √Δ)/(2a)</div>
+					<div class="MH-equation">x₂ = (-b - √Δ)/(2a)</div>
+				</div>
+				
+				<div class="MH-step">
+					<h3 data-i18n="MH.lesson_Y2Al_eqdeg2b.case2Title">Case 2: Zero Discriminant (Δ = 0)</h3>
+					<p data-i18n="MH.lesson_Y2Al_eqdeg2b.case2Text">When the discriminant is zero, the equation has exactly one real solution (a double root):</p>
+					<div class="MH-equation">x = -b/(2a)</div>
+				</div>
+				
+				<div class="MH-step">
+					<h3 data-i18n="MH.lesson_Y2Al_eqdeg2b.case3Title">Case 3: Negative Discriminant (Δ < 0)</h3>
+					<p data-i18n="MH.lesson_Y2Al_eqdeg2b.case3Text">When the discriminant is negative, the equation has no real solutions (possible solutions with complex numbers, but not in the real number system).</p>
+				</div>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2b.solvingSteps">Solving Steps Using Discriminant</h2>
+				
+				<div class="MH-step">
+					<h3 data-i18n="MH.lesson_Y2Al_eqdeg2b.step1Title">Step 1: Identify Coefficients</h3>
+					<p data-i18n="MH.lesson_Y2Al_eqdeg2b.step1Text">Identify the values of a, b, and c from the quadratic equation in standard form:</p>
+					<div class="MH-equation">ax² + bx + c = 0</div>
+				</div>
+				
+				<div class="MH-step">
+					<h3 data-i18n="MH.lesson_Y2Al_eqdeg2b.step2Title">Step 2: Calculate Discriminant</h3>
+					<p data-i18n="MH.lesson_Y2Al_eqdeg2b.step2Text">Compute the discriminant using the formula:</p>
+					<div class="MH-equation">Δ = b² - 4ac</div>
+				</div>
+				
+				<div class="MH-step">
+					<h3 data-i18n="MH.lesson_Y2Al_eqdeg2b.step3Title">Step 3: Determine Nature of Roots</h3>
+					<p data-i18n="MH.lesson_Y2Al_eqdeg2b.step3Text">Based on the value of Δ, determine how many real solutions exist and their nature.</p>
+				</div>
+				
+				<div class="MH-step">
+					<h3 data-i18n="MH.lesson_Y2Al_eqdeg2b.step4Title">Step 4: Apply Appropriate Formula</h3>
+					<p data-i18n="MH.lesson_Y2Al_eqdeg2b.step4Text">Use the quadratic formula with the discriminant to find the solution(s):</p>
+					<div class="MH-equation">x = (-b ± √Δ)/(2a)</div>
+				</div>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2b.detailedExamples">Detailed Examples</h2>
+				
+				<div class="MH-example">
+					<h3 data-i18n="MH.lesson_Y2Al_eqdeg2b.example1Title">Example 1: Two Real Solutions</h3>
+					<p><span data-i18n="MH.lesson_Y2Al_eqdeg2b.example1Equation">Solve:</span> <span class="MH-equation">x² - 5x + 6 = 0</span></p>
+					
+					<p data-i18n="MH.lesson_Y2Al_eqdeg2b.example1Step1">Step 1: Identify coefficients: a = 1, b = -5, c = 6</p>
+					<p data-i18n="MH.lesson_Y2Al_eqdeg2b.example1Step2">Step 2: Calculate discriminant: Δ = (-5)² - 4(1)(6) = 25 - 24 = 1</p>
+					<p data-i18n="MH.lesson_Y2Al_eqdeg2b.example1Step3">Step 3: Since Δ > 0, there are two distinct real solutions</p>
+					<p data-i18n="MH.lesson_Y2Al_eqdeg2b.example1Step4">Step 4: Apply quadratic formula:</p>
+					<div class="MH-equation">x = (5 ± √1)/(2×1) = (5 ± 1)/2</div>
+					<p><span data-i18n="MH.lesson_Y2Al_eqdeg2b.example1Solution1">Solution 1:</span> <span class="MH-equation">x₁ = (5 + 1)/2 = 3</span></p>
+					<p><span data-i18n="MH.lesson_Y2Al_eqdeg2b.example1Solution2">Solution 2:</span> <span class="MH-equation">x₂ = (5 - 1)/2 = 2</span></p>
+				</div>
+				
+				<div class="MH-example">
+					<h3 data-i18n="MH.lesson_Y2Al_eqdeg2b.example2Title">Example 2: One Real Solution</h3>
+					<p><span data-i18n="MH.lesson_Y2Al_eqdeg2b.example2Equation">Solve:</span> <span class="MH-equation">x² - 6x + 9 = 0</span></p>
+					
+					<p data-i18n="MH.lesson_Y2Al_eqdeg2b.example2Step1">Step 1: Identify coefficients: a = 1, b = -6, c = 9</p>
+					<p data-i18n="MH.lesson_Y2Al_eqdeg2b.example2Step2">Step 2: Calculate discriminant: Δ = (-6)² - 4(1)(9) = 36 - 36 = 0</p>
+					<p data-i18n="MH.lesson_Y2Al_eqdeg2b.example2Step3">Step 3: Since Δ = 0, there is exactly one real solution</p>
+					<p data-i18n="MH.lesson_Y2Al_eqdeg2b.example2Step4">Step 4: Apply formula for double root:</p>
+					<div class="MH-equation">x = -(-6)/(2×1) = 6/2 = 3</div>
+					<p><span data-i18n="MH.lesson_Y2Al_eqdeg2b.example2Solution">Solution:</span> <span class="MH-equation">x = 3</span></p>
+				</div>
+				
+				<div class="MH-example">
+					<h3 data-i18n="MH.lesson_Y2Al_eqdeg2b.example3Title">Example 3: No Real Solution</h3>
+					<p><span data-i18n="MH.lesson_Y2Al_eqdeg2b.example3Equation">Solve:</span> <span class="MH-equation">x² + 2x + 5 = 0</span></p>
+					
+					<p data-i18n="MH.lesson_Y2Al_eqdeg2b.example3Step1">Step 1: Identify coefficients: a = 1, b = 2, c = 5</p>
+					<p data-i18n="MH.lesson_Y2Al_eqdeg2b.example3Step2">Step 2: Calculate discriminant: Δ = (2)² - 4(1)(5) = 4 - 20 = -16</p>
+					<p data-i18n="MH.lesson_Y2Al_eqdeg2b.example3Step3">Step 3: Since Δ < 0, there are no real solutions (possible solutions with complex numbers)</p>
+					<p data-i18n="MH.lesson_Y2Al_eqdeg2b.example3Step4">Step 4: No real solutions in R</p>
+				</div>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2b.practice">Practice Problems</h2>
+				
+				<div class="MH-practice">
+					<h3 class="MH-practice-title" data-i18n="MH.lesson_Y2Al_eqdeg2b.tryYourself">Try Solving These Using Discriminant Method</h3>
+					
+					<div class="MH-practice-problem">
+						<p><span data-i18n="MH.lesson_Y2Al_eqdeg2b.problem1">1. Solve:</span> <span class="MH-equation">2x² - 7x + 3 = 0</span></p>
+						<button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_eqdeg2b.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+						<div class="MH-solution" id="solution1">
+							<p data-i18n="MH.lesson_Y2Al_eqdeg2b.problem1Step1">Step 1: a = 2, b = -7, c = 3</p>
+							<p data-i18n="MH.lesson_Y2Al_eqdeg2b.problem1Step2">Step 2: Δ = (-7)² - 4(2)(3) = 49 - 24 = 25</p>
+							<p data-i18n="MH.lesson_Y2Al_eqdeg2b.problem1Step3">Step 3: Δ > 0, two real solutions</p>
+							<p data-i18n="MH.lesson_Y2Al_eqdeg2b.problem1Step4">Step 4: x = (7 ± √25)/(2×2) = (7 ± 5)/4</p>
+							<p><span data-i18n="MH.lesson_Y2Al_eqdeg2b.problem1Solution1">x₁ =</span> <span class="MH-equation">(7 + 5)/4 = 3</span></p>
+							<p><span data-i18n="MH.lesson_Y2Al_eqdeg2b.problem1Solution2">x₂ =</span> <span class="MH-equation">(7 - 5)/4 = 0.5</span></p>
+						</div>
+					</div>
+					
+					<div class="MH-practice-problem">
+						<p><span data-i18n="MH.lesson_Y2Al_eqdeg2b.problem2">2. Solve:</span> <span class="MH-equation">x² - 4x + 4 = 0</span></p>
+						<button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_eqdeg2b.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+						<div class="MH-solution" id="solution2">
+							<p data-i18n="MH.lesson_Y2Al_eqdeg2b.problem2Step1">Step 1: a = 1, b = -4, c = 4</p>
+							<p data-i18n="MH.lesson_Y2Al_eqdeg2b.problem2Step2">Step 2: Δ = (-4)² - 4(1)(4) = 16 - 16 = 0</p>
+							<p data-i18n="MH.lesson_Y2Al_eqdeg2b.problem2Step3">Step 3: Δ = 0, one real solution</p>
+							<p data-i18n="MH.lesson_Y2Al_eqdeg2b.problem2Step4">Step 4: x = -(-4)/(2×1) = 4/2 = 2</p>
+							<p><span data-i18n="MH.lesson_Y2Al_eqdeg2b.problem2Solution">x =</span> <span class="MH-equation">2</span></p>
+						</div>
+					</div>
+					
+					<div class="MH-practice-problem">
+						<p><span data-i18n="MH.lesson_Y2Al_eqdeg2b.problem3">3. Solve:</span> <span class="MH-equation">3x² + 2x + 1 = 0</span></p>
+						<button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_eqdeg2b.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+						<div class="MH-solution" id="solution3">
+							<p data-i18n="MH.lesson_Y2Al_eqdeg2b.problem3Step1">Step 1: a = 3, b = 2, c = 1</p>
+							<p data-i18n="MH.lesson_Y2Al_eqdeg2b.problem3Step2">Step 2: Δ = (2)² - 4(3)(1) = 4 - 12 = -8</p>
+							<p data-i18n="MH.lesson_Y2Al_eqdeg2b.problem3Step3">Step 3: Δ < 0, no real solutions in R (possible solutions with complex numbers)</p>
+							<p data-i18n="MH.lesson_Y2Al_eqdeg2b.problem3Step4">Step 4: No real solutions</p>
+						</div>
+					</div>
+				</div>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2b.advantages">Advantages and Limitations</h2>
+				
+				<div class="MH-comparison">
+					<div class="MH-method">
+						<h3 data-i18n="MH.lesson_Y2Al_eqdeg2b.advantagesTitle">Advantages</h3>
+						<ul>
+							<li data-i18n="MH.lesson_Y2Al_eqdeg2b.advantage1">Provides exact solutions for quadratic equations</li>
+							<li data-i18n="MH.lesson_Y2Al_eqdeg2b.advantage2">Works for all types of quadratic equations</li>
+							<li data-i18n="MH.lesson_Y2Al_eqdeg2b.advantage3">Clearly shows the nature of roots before calculating them</li>
+							<li data-i18n="MH.lesson_Y2Al_eqdeg2b.advantage4">Systematic approach that always works</li>
+						</ul>
+					</div>
+					
+					<div class="MH-method">
+						<h3 data-i18n="MH.lesson_Y2Al_eqdeg2b.limitationsTitle">Limitations</h3>
+						<ul>
+							<li data-i18n="MH.lesson_Y2Al_eqdeg2b.limitation1">Can be computationally intensive for large coefficients</li>
+							<li data-i18n="MH.lesson_Y2Al_eqdeg2b.limitation2">Requires careful handling of square roots</li>
+							<li data-i18n="MH.lesson_Y2Al_eqdeg2b.limitation3">Doesn't provide intuitive understanding of the relationship between coefficients and roots</li>
+							<li data-i18n="MH.lesson_Y2Al_eqdeg2b.limitation4">May give complex solutions that are not always needed</li>
+						</ul>
+					</div>
+				</div>
+				
+				<div class="MH-important">
+					<h3 data-i18n="MH.lesson_Y2Al_eqdeg2b.importantNote">Important Note</h3>
+					<p data-i18n="MH.lesson_Y2Al_eqdeg2b.importantText">The discriminant method is the most reliable technique for solving quadratic equations. While other methods like factoring or completing the square might be faster for simple equations, the discriminant method works for all quadratic equations and provides information about the nature of the roots.</p>
+				</div>
+			</section>
+			
+		</main>
+		<footer>
+			<div class="MH-footer-content">
+				<div class="MH-footer-column">
+					<div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+					<div class="MH-footer-text">Mejri Ziad</div>
+				</div>
+				
+				<div class="MH-footer-column">
+					<div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+					<div class="MH-footer-text">v0.0.1</div>
+				</div>
+				
+				<div class="MH-footer-column">
+					<div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+					<div class="MH-footer-links">
+						<a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+						<a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<script src="scripts/i18n_en.js"></script>
+		<script src="scripts/i18n_ar.js"></script>
+		<script src="scripts/i18n_fr.js"></script>
+		<script src="scripts/translation.js"></script>
+		<script src="scripts/pwa-install.js"></script>
+		<script>
+    // Register service worker with better error handling
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+                
+                // Check if we need to request notification permission
+                if (Notification.permission === 'default') {
+                    // Wait a bit then ask for permission via service worker
+                    setTimeout(() => {
+                        registration.active.postMessage({
+                            type: 'REQUEST_NOTIFICATION_PERMISSION'
+                        });
+                    }, 5000);
+                }
+            })
+            .catch(function(error) {
+                console.log('Service Worker registration failed:', error);
+            });
+        });
+    }
+</script>
+		
+		<!-- noscript fallback -->
+		<noscript>
+			<style>
+				.MH-header-controls { display: none; }
+				.MH-solution { display: block; }
+			</style>
+			<div class="MH-warning">
+				JavaScript is recommended for the full experience, but content is still accessible.
+			</div>
+		</noscript>
+	</body>
+</html>

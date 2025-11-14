@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: 2nd Degree Inequations I - Algebraic Method</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#27ae60" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1e8449" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#27ae60">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        /* Page-specific color palette - Green Theme */
+        :root {
+            --primary: #27ae60;
+            --primary-light: #2ecc71;
+            --primary-dark: #229954;
+            --secondary: #e67e22;
+            --secondary-light: #f39c12;
+            --secondary-dark: #d35400;
+            --accent: #3498db;
+            --warning: #e74c3c;
+            --info: #9b59b6;
+        }
+        
+        [data-theme="dark"] {
+            --primary: #1e8449;
+            --primary-light: #27ae60;
+            --primary-dark: #196f3d;
+            --secondary: #d35400;
+            --secondary-light: #e67e22;
+            --secondary-dark: #a04000;
+            --accent: #2980b9;
+            --warning: #c0392b;
+            --info: #8e44ad;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Al_eqdeg2d.title">2nd Degree Inequations I: Algebraic Method</h1>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2d.introduction">Introduction to 2nd Degree Inequations</h2>
+            <p data-i18n="MH.lesson_Y2Al_eqdeg2d.introText1">A quadratic inequality, also known as a second-degree inequality, is an inequality that can be written in one of the following forms:</p>
+            
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2d.definitionTitle">General Forms of Quadratic Inequalities</h3>
+                <div class="MH-equation">ax² + bx + c > 0</div>
+                <div class="MH-equation">ax² + bx + c < 0</div>
+                <div class="MH-equation">ax² + bx + c ≥ 0</div>
+                <div class="MH-equation">ax² + bx + c ≤ 0</div>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.definitionText">where a, b, and c are real constants, with a ≠ 0.</p>
+            </div>
+            
+            <p data-i18n="MH.lesson_Y2Al_eqdeg2d.introText2">Solving quadratic inequalities involves finding the range of x values that satisfy the inequality. The algebraic method uses the properties of quadratic functions and their graphs to determine these solution sets.</p>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2d.basicConcept">Basic Concept</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2d.conceptTitle">Quadratic Function Behavior</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.conceptText1">The graph of a quadratic function y = ax² + bx + c is a parabola. The sign of the coefficient a determines the direction of the parabola:</p>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2d.conceptList1">If a > 0, the parabola opens upward</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2d.conceptList2">If a < 0, the parabola opens downward</li>
+                </ul>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.conceptText2">The roots of the equation ax² + bx + c = 0 divide the x-axis into intervals where the quadratic expression maintains a constant sign.</p>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2d.importantNoteTitle">Important Note</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.importantNoteText">The solution to a quadratic inequality depends on:</p>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2d.importantNoteList1">The direction of the parabola (sign of a)</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2d.importantNoteList2">The position of the roots (if they exist)</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2d.importantNoteList3">The type of inequality (>, <, ≥, ≤)</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2d.solvingSteps">Solving Steps Using Algebraic Method</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2d.step1Title">Step 1: Write in Standard Form</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.step1Text">Make sure the inequality is in one of the standard forms with zero on one side.</p>
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.step1Example">For example, transform:</p>
+                    <div class="MH-equation">x² - 3x > 4</div>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.step1Example1">to:</p>
+                    <div class="MH-equation">x² - 3x - 4 > 0</div>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2d.step2Title">Step 2: Find the Roots</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.step2Text">Solve the corresponding quadratic equation ax² + bx + c = 0 to find the roots.</p>
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.step2Example">For:</p>
+                    <div class="MH-equation">x² - 3x - 4 = 0</div>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.step2Example1">The roots are:</p>
+                    <div class="MH-equation">x = -1 and x = 4</div>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2d.step3Title">Step 3: Determine the Sign Intervals</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.step3Text">The roots divide the number line into intervals. Determine the sign of the quadratic expression in each interval.</p>
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.step3Example">For roots -1 and 4, the intervals are:</p>
+                    <div class="MH-equation">(-∞, -1), (-1, 4), (4, +∞)</div>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2d.step4Title">Step 4: Test Each Interval</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.step4Text">Choose a test value from each interval and substitute it into the quadratic expression to determine its sign.</p>
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.step4Example">For x² - 3x - 4:</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.step4Example1">In (-∞, -1): test x = -2 → positive</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.step4Example2">In (-1, 4): test x = 0 → negative</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.step4Example3">In (4, +∞): test x = 5 → positive</p>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2d.step5Title">Step 5: Write the Solution</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.step5Text">Based on the inequality sign and the sign analysis, determine which intervals satisfy the inequality.</p>
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.step5Example">For x² - 3x - 4 > 0:</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.step5Example1">Solution: x ∈ (-∞, -1) ∪ (4, +∞)</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2d.specialCases">Special Cases Based on Discriminant</h2>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2d.case1Title">Case 1: Positive Discriminant (Δ > 0)</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.case1Text">When the discriminant is positive, the quadratic equation has two distinct real roots. The sign of the quadratic expression changes at each root.</p>
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.case1Example">Example: x² - 3x - 4 > 0</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.case1Solution">Solution: x ∈ (-∞, -1) ∪ (4, +∞)</p>
+                </div>
+            </div>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2d.case2Title">Case 2: Zero Discriminant (Δ = 0)</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.case2Text">When the discriminant is zero, the quadratic equation has one real root (a double root). The quadratic expression has the same sign on both sides of the root, except at the root itself where it equals zero.</p>
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.case2Example">Example: x² - 4x + 4 > 0</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.case2Solution">Solution: x ∈ (-∞, 2) ∪ (2, +∞)</p>
+                </div>
+            </div>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2d.case3Title">Case 3: Negative Discriminant (Δ < 0)</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.case3Text">When the discriminant is negative, the quadratic equation has no real roots. The quadratic expression always has the same sign as the coefficient a.</p>
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.case3Example">Example: x² + 2x + 5 > 0</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.case3Solution">Since a = 1 > 0, the expression is always positive.</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.case3Solution2">Solution: x ∈ ℝ (all real numbers)</p>
+                </div>
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.case3Example2">Example: -x² + 2x - 3 > 0</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.case3Solution3">Since a = -1 < 0, the expression is always negative.</p>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.case3Solution4">Solution: No solution in ℝ (possible solutions with complex numbers)</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2d.detailedExamples">Detailed Examples</h2>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2d.example1Title">Example 1: Inequality with > 0</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example1Equation">Solve:</p>
+                <div class="MH-equation">x² - 5x + 6 > 0</div>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example1Step1">Step 1: Find roots of x² - 5x + 6 = 0</p>
+                <div class="MH-equation">x = 2 and x = 3</div>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example1Step2">Step 2: Intervals: (-∞, 2), (2, 3), (3, +∞)</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example1Step3">Step 3: Test signs:</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example1Step3a">For x = 0 (in (-∞, 2)): 0² - 5(0) + 6 = 6 > 0 → positive</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example1Step3b">For x = 2.5 (in (2, 3)): (2.5)² - 5(2.5) + 6 = -0.25 < 0 → negative</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example1Step3c">For x = 4 (in (3, +∞)): 4² - 5(4) + 6 = 2 > 0 → positive</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example1Step4">Step 4: We want > 0 (positive values)</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example1Solution">Solution: x ∈ (-∞, 2) ∪ (3, +∞)</p>
+            </div>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2d.example2Title">Example 2: Inequality with ≤ 0</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example2Equation">Solve:</p>
+                <div class="MH-equation">-x² + x + 6 ≤ 0</div>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example2Step1">Step 1: Multiply by -1 (reverse inequality): x² - x - 6 ≥ 0</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example2Step2">Step 2: Find roots of x² - x - 6 = 0</p>
+                <div class="MH-equation">x = -2 and x = 3</div>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example2Step3">Step 3: Intervals: (-∞, -2), (-2, 3), (3, +∞)</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example2Step4">Step 4: Test signs:</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example2Step4a">For x = -3: (-3)² - (-3) - 6 = 6 > 0 → positive</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example2Step4b">For x = 0: 0² - 0 - 6 = -6 < 0 → negative</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example2Step4c">For x = 4: 4² - 4 - 6 = 6 > 0 → positive</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example2Step5">Step 5: We want ≥ 0 (non-negative values)</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example2Solution">Solution: x ∈ (-∞, -2] ∪ [3, +∞)</p>
+            </div>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2d.example3Title">Example 3: Inequality with No Real Roots</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example3Equation">Solve:</p>
+                <div class="MH-equation">x² + 2x + 5 > 0</div>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example3Step1">Step 1: Discriminant Δ = 2² - 4(1)(5) = 4 - 20 = -16 < 0</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example3Step2">Step 2: Since a = 1 > 0 and Δ < 0, the expression is always positive</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.example3Solution">Solution: x ∈ ℝ (all real numbers)</p>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2d.practice">Practice Problems</h2>
+            
+            <div class="MH-practice">
+                <h3 class="MH-practice-title" data-i18n="MH.lesson_Y2Al_eqdeg2d.tryYourself">Try Solving These Inequalities</h3>
+                
+                <div class="MH-practice-problem">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem1">1. Solve:</p>
+                    <div class="MH-equation">x² - 4x - 5 > 0</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_eqdeg2d.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                    <div class="MH-solution" id="solution1">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem1Step1">Find roots: x² - 4x - 5 = 0 → x = -1 and x = 5</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem1Step2">Intervals: (-∞, -1), (-1, 5), (5, +∞)</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem1Step3">Test signs:</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem1Step3a">x = -2: positive</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem1Step3b">x = 0: negative</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem1Step3c">x = 6: positive</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem1Step4">We want > 0 (positive)</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem1Solution">Solution: x ∈ (-∞, -1) ∪ (5, +∞)</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem2">2. Solve:</p>
+                    <div class="MH-equation">2x² + 5x - 3 ≤ 0</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_eqdeg2d.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                    <div class="MH-solution" id="solution2">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem2Step1">Find roots: 2x² + 5x - 3 = 0 → x = -3 and x = 1/2</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem2Step2">Intervals: (-∞, -3), (-3, 1/2), (1/2, +∞)</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem2Step3">Test signs:</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem2Step3a">x = -4: positive</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem2Step3b">x = 0: negative</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem2Step3c">x = 1: positive</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem2Step4">We want ≤ 0 (non-positive)</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem2Solution">Solution: x ∈ [-3, 1/2]</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem3">3. Solve:</p>
+                    <div class="MH-equation">-x² + 4x - 4 ≥ 0</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_eqdeg2d.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                    <div class="MH-solution" id="solution3">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem3Step1">Multiply by -1: x² - 4x + 4 ≤ 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem3Step2">Find roots: x² - 4x + 4 = 0 → x = 2 (double root)</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem3Step3">Since a = 1 > 0 and we have a double root, the expression is:</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem3Step3a">Positive for x ≠ 2, zero at x = 2</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem3Step4">We want ≤ 0 (non-positive)</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem3Solution">Solution: x = 2</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem4">4. Solve:</p>
+                    <div class="MH-equation">x² + x + 1 < 0</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_eqdeg2d.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+                    <div class="MH-solution" id="solution4">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem4Step1">Discriminant Δ = 1² - 4(1)(1) = 1 - 4 = -3 < 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem4Step2">Since a = 1 > 0 and Δ < 0, the expression is always positive</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem4Step3">We want < 0 (negative)</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2d.problem4Solution">Solution: No solution in ℝ (possible solutions with complex numbers)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2d.advantages">Advantages and Limitations</h2>
+            
+            <div class="MH-comparison">
+                <div class="MH-method">
+                    <h3 data-i18n="MH.lesson_Y2Al_eqdeg2d.advantagesTitle">Advantages</h3>
+                    <ul>
+                        <li data-i18n="MH.lesson_Y2Al_eqdeg2d.advantage1">Works for all quadratic inequalities</li>
+                        <li data-i18n="MH.lesson_Y2Al_eqdeg2d.advantage2">Provides exact solution sets</li>
+                        <li data-i18n="MH.lesson_Y2Al_eqdeg2d.advantage3">Systematic approach that always works</li>
+                        <li data-i18n="MH.lesson_Y2Al_eqdeg2d.advantage4">Helps understand the relationship between equations and inequalities</li>
+                    </ul>
+                </div>
+                
+                <div class="MH-method">
+                    <h3 data-i18n="MH.lesson_Y2Al_eqdeg2d.limitationsTitle">Limitations</h3>
+                    <ul>
+                        <li data-i18n="MH.lesson_Y2Al_eqdeg2d.limitation1">Can be time-consuming for complex coefficients</li>
+                        <li data-i18n="MH.lesson_Y2Al_eqdeg2d.limitation2">Requires careful handling of inequality signs</li>
+                        <li data-i18n="MH.lesson_Y2Al_eqdeg2d.limitation3">May be less intuitive than graphical methods for some students</li>
+                        <li data-i18n="MH.lesson_Y2Al_eqdeg2d.limitation4">Requires solving the corresponding quadratic equation first</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2d.importantNote">Important Note</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2d.importantText">The algebraic method for solving quadratic inequalities is the most reliable technique. While graphical methods can provide visual intuition, the algebraic method gives precise solution sets and works for all cases, including those with no real roots.</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="scripts/i18n_en.js"></script>
+    <script src="scripts/i18n_ar.js"></script>
+    <script src="scripts/i18n_fr.js"></script>
+    <script src="scripts/translation.js"></script>
+    <script src="scripts/pwa-install.js"></script>
+    <script>
+        // Register service worker with better error handling
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                    
+                    // Check if we need to request notification permission
+                    if (Notification.permission === 'default') {
+                        // Wait a bit then ask for permission via service worker
+                        setTimeout(() => {
+                            registration.active.postMessage({
+                                type: 'REQUEST_NOTIFICATION_PERMISSION'
+                            });
+                        }, 5000);
+                    }
+                })
+                .catch(function(error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+            });
+        }
+        
+        // Toggle solution visibility
+        function toggleSolution(problemNumber) {
+            const solution = document.getElementById(`solution${problemNumber}`);
+            const button = solution.previousElementSibling;
+            
+            if (solution.style.display === 'block') {
+                solution.style.display = 'none';
+                button.setAttribute('data-i18n', 'MH.lesson_Y2Al_eqdeg2d.showSolution');
+                button.textContent = getTranslation('MH.lesson_Y2Al_eqdeg2d.showSolution');
+            } else {
+                solution.style.display = 'block';
+                button.setAttribute('data-i18n', 'MH.lesson_Y2Al_eqdeg2d.hideSolution');
+                button.textContent = getTranslation('MH.lesson_Y2Al_eqdeg2d.hideSolution');
+            }
+        }
+        
+        // Initialize solutions as hidden
+        document.addEventListener('DOMContentLoaded', function() {
+            for (let i = 1; i <= 4; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+            }
+        });
+    </script>
+    
+    <!-- noscript fallback -->
+    <noscript>
+        <style>
+            .MH-header-controls { display: none; }
+            .MH-solution { display: block; }
+        </style>
+        <div class="MH-warning">
+            JavaScript is recommended for the full experience, but content is still accessible.
+        </div>
+    </noscript>
+</body>
+</html>

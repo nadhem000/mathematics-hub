@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: 2nd Degree Equations III - Completing the Square Method</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#8e44ad" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#6c3483" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#8e44ad">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        /* Page-specific color palette - Purple Theme */
+        :root {
+            --primary: #8e44ad;
+            --primary-light: #9b59b6;
+            --primary-dark: #7d3c98;
+            --secondary: #e67e22;
+            --secondary-light: #f39c12;
+            --secondary-dark: #d35400;
+            --accent: #3498db;
+            --warning: #e74c3c;
+            --info: #2ecc71;
+        }
+        
+        [data-theme="dark"] {
+            --primary: #6c3483;
+            --primary-light: #8e44ad;
+            --primary-dark: #5b2c6f;
+            --secondary: #d35400;
+            --secondary-light: #e67e22;
+            --secondary-dark: #a04000;
+            --accent: #2980b9;
+            --warning: #c0392b;
+            --info: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Al_eqdeg2c.title">2nd Degree Equations III: Completing the Square Method</h1>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2c.introduction">Introduction to Completing the Square Method</h2>
+            <p data-i18n="MH.lesson_Y2Al_eqdeg2c.introText1">The completing the square method is an algebraic technique that transforms a quadratic equation into a perfect square. This method is particularly useful for solving quadratic equations and for understanding the derivation of the quadratic formula.</p>
+            
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2c.definitionTitle">What is Completing the Square?</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.definitionText1">Completing the square is a process that transforms a quadratic expression of the form</p>
+                <div class="MH-equation">ax² + bx + c</div>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.definitionText2">into an expression of the form</p>
+                <div class="MH-equation">a(x + p)² + q</div>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.definitionText3">where (x + p)² is a perfect square.</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.definitionText4">This method is based on the perfect square identity:</p>
+                <div class="MH-equation">(x + m)² = x² + 2mx + m²</div>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.definitionText5">By manipulating the quadratic equation, we aim to create a perfect square binomial.</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.definitionText6">This method is particularly useful when factoring is not obvious and when we want to avoid using the quadratic formula directly.</p>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2c.comparison">Method Comparison</h2>
+            
+            <div class="MH-comparison">
+                <div class="MH-method">
+                    <h3 data-i18n="MH.lesson_Y2Al_eqdeg2c.completingMethod">Completing the Square Method</h3>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2c.completingDesc">This method transforms the equation into a perfect square.</p>
+                    <div class="MH-example">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.completingExample">Example:</p>
+                        <div class="MH-equation">x² + 6x + 5 = 0</div>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.completingStep1">Complete the square:</p>
+                        <div class="MH-equation">(x + 3)² - 4 = 0</div>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.completingStep2">Solutions:</p>
+                        <div class="MH-equation">x = -1 or x = -5</div>
+                    </div>
+                </div>
+                
+                <div class="MH-method">
+                    <h3 data-i18n="MH.lesson_Y2Al_eqdeg2c.factoringMethod">Factoring Method</h3>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2c.factoringDesc">This method factors the expression into a product of factors.</p>
+                    <div class="MH-example">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.factoringExample">Example:</p>
+                        <div class="MH-equation">x² + 6x + 5 = 0</div>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.factoringStep1">Factor:</p>
+                        <div class="MH-equation">(x + 1)(x + 5) = 0</div>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.factoringStep2">Solutions:</p>
+                        <div class="MH-equation">x = -1 or x = -5</div>
+                    </div>
+                </div>
+                
+                <div class="MH-method">
+                    <h3 data-i18n="MH.lesson_Y2Al_eqdeg2c.discriminantMethod">Discriminant Method</h3>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2c.discriminantDesc">This method uses the quadratic formula.</p>
+                    <div class="MH-example">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.discriminantExample">Example:</p>
+                        <div class="MH-equation">x² + 6x + 5 = 0</div>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.discriminantStep1">Formula:</p>
+                        <div class="MH-equation">x = [-6 ± √(36-20)] / 2</div>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.discriminantStep2">Solutions:</p>
+                        <div class="MH-equation">x = -1 or x = -5</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2c.importantNote">Important Note</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.importantText">The completing the square method is particularly useful for understanding the derivation of the quadratic formula. It works for all quadratic equations, but may be longer than the discriminant method for some equations.</p>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2c.steps">Completing the Square Method Steps</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2c.step1Title">Step 1: Prepare the Equation</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.step1Text">Make sure the equation is in the form ax² + bx + c = 0. If necessary, divide the entire equation by a so that the coefficient of x² is 1.</p>
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2c.step1Example">For:</p>
+                    <div class="MH-equation">2x² + 8x + 6 = 0</div>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2c.step1Example1">Divide by 2:</p>
+                    <div class="MH-equation">x² + 4x + 3 = 0</div>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2c.step2Title">Step 2: Isolate the Constant Terms</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.step2Text">Move the constant term to the other side of the equation.</p>
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2c.step2Example">For:</p>
+                    <div class="MH-equation">x² + 4x + 3 = 0</div>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2c.step2Example1">Subtract 3:</p>
+                    <div class="MH-equation">x² + 4x = -3</div>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2c.step3Title">Step 3: Complete the Square</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.step3Text">Take half of the coefficient of x, square it, and add this term to both sides of the equation.</p>
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2c.step3Example">For:</p>
+                    <div class="MH-equation">x² + 4x = -3</div>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2c.step3Example1">Half of 4: 2, square: 4</div>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2c.step3Example2">Add 4 to both sides:</p>
+                    <div class="MH-equation">x² + 4x + 4 = -3 + 4</div>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2c.step3Example3">Simplify:</p>
+                    <div class="MH-equation">x² + 4x + 4 = 1</div>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2c.step4Title">Step 4: Form the Perfect Square</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.step4Text">The left side of the equation is now a perfect square. Write it in the form (x + m)².</p>
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2c.step4Example">For:</p>
+                    <div class="MH-equation">x² + 4x + 4 = 1</div>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2c.step4Example1">Perfect square:</p>
+                    <div class="MH-equation">(x + 2)² = 1</div>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2c.step5Title">Step 5: Solve the Equation</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.step5Text">Take the square root of both sides and solve for x.</p>
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2c.step5Example">For:</p>
+                    <div class="MH-equation">(x + 2)² = 1</div>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2c.step5Example1">Square root:</p>
+                    <div class="MH-equation">x + 2 = ±1</div>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2c.step5Example2">Solutions:</p>
+                    <div class="MH-equation">x = -2 + 1 = -1</div>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2c.step5Example3">or</p>
+                    <div class="MH-equation">x = -2 - 1 = -3</div>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2c.step6Title">Step 6: Verify the Solutions</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.step6Text">Substitute each solution into the original equation to verify it's correct.</p>
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2c.step6Example1">For x = -1:</p>
+                    <div class="MH-equation">(-1)² + 4(-1) + 3 = 1 - 4 + 3 = 0 ✓</div>
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2c.step6Example2">For x = -3:</p>
+                    <div class="MH-equation">(-3)² + 4(-3) + 3 = 9 - 12 + 3 = 0 ✓</div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2c.detailedExamples">Detailed Examples</h2>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2c.example1Title">Example 1: Equation with a = 1</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example1Equation">Solve:</p>
+                <div class="MH-equation">x² - 6x + 8 = 0</div>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example1Step1">Step 1: The equation is already in the appropriate form (a = 1).</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example1Step2">Step 2: Isolate constant terms:</p>
+                <div class="MH-equation">x² - 6x = -8</div>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example1Step3">Step 3: Complete the square: half of -6 = -3, square = 9</p>
+                <div class="MH-equation">x² - 6x + 9 = -8 + 9</div>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example1Step4">Step 4: Form the perfect square:</p>
+                <div class="MH-equation">(x - 3)² = 1</div>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example1Step5">Step 5: Solve:</p>
+                <div class="MH-equation">x - 3 = ±1</div>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example1Solution1">x = 3 + 1 = 4</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example1Solution2">or x = 3 - 1 = 2</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example1Check">Verification:</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example1Check1">For x = 4: 4² - 6(4) + 8 = 16 - 24 + 8 = 0 ✓</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example1Check2">For x = 2: 2² - 6(2) + 8 = 4 - 12 + 8 = 0 ✓</p>
+            </div>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2c.example2Title">Example 2: Equation with a ≠ 1</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example2Equation">Solve:</p>
+                <div class="MH-equation">2x² + 12x + 10 = 0</div>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example2Step1">Step 1: Divide by 2:</p>
+                <div class="MH-equation">x² + 6x + 5 = 0</div>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example2Step2">Step 2: Isolate constant terms:</p>
+                <div class="MH-equation">x² + 6x = -5</div>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example2Step3">Step 3: Complete the square: half of 6 = 3, square = 9</p>
+                <div class="MH-equation">x² + 6x + 9 = -5 + 9</div>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example2Step4">Step 4: Form the perfect square:</p>
+                <div class="MH-equation">(x + 3)² = 4</div>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example2Step5">Step 5: Solve:</p>
+                <div class="MH-equation">x + 3 = ±2</div>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example2Solution1">x = -3 + 2 = -1</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example2Solution2">or x = -3 - 2 = -5</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example2Check">Verification:</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example2Check1">For x = -1: 2(-1)² + 12(-1) + 10 = 2 - 12 + 10 = 0 ✓</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example2Check2">For x = -5: 2(-5)² + 12(-5) + 10 = 50 - 60 + 10 = 0 ✓</p>
+            </div>
+            
+            <div class="MH-example">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2c.example3Title">Example 3: Equation with Fractional Coefficients</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example3Equation">Solve:</p>
+                <div class="MH-equation">x² + (3/2)x - 1 = 0</div>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example3Step1">Step 1: The equation is already in the appropriate form (a = 1).</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example3Step2">Step 2: Isolate constant terms:</p>
+                <div class="MH-equation">x² + (3/2)x = 1</div>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example3Step3">Step 3: Complete the square: half of 3/2 = 3/4, square = 9/16</p>
+                <div class="MH-equation">x² + (3/2)x + 9/16 = 1 + 9/16</div>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example3Step4">Step 4: Form the perfect square:</p>
+                <div class="MH-equation">(x + 3/4)² = 25/16</div>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example3Step5">Step 5: Solve:</p>
+                <div class="MH-equation">x + 3/4 = ±5/4</div>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example3Solution1">x = -3/4 + 5/4 = 2/4 = 1/2</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example3Solution2">or x = -3/4 - 5/4 = -8/4 = -2</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example3Check">Verification:</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example3Check1">For x = 1/2: (1/2)² + (3/2)(1/2) - 1 = 1/4 + 3/4 - 1 = 1 - 1 = 0 ✓</p>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.example3Check2">For x = -2: (-2)² + (3/2)(-2) - 1 = 4 - 3 - 1 = 0 ✓</p>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2c.derivation">Derivation of the Quadratic Formula</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2c.derivationTitle">How Completing the Square Leads to the Quadratic Formula</h3>
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.derivationText1">The completing the square method can be used to derive the general quadratic formula.</p>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.derivationStep1">Step 1: General equation:</p>
+                <div class="MH-equation">ax² + bx + c = 0</div>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.derivationStep2">Step 2: Divide by a:</p>
+                <div class="MH-equation">x² + (b/a)x + c/a = 0</div>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.derivationStep3">Step 3: Isolate constant terms:</p>
+                <div class="MH-equation">x² + (b/a)x = -c/a</div>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.derivationStep4">Step 4: Complete the square:</p>
+                <div class="MH-equation">x² + (b/a)x + (b/2a)² = -c/a + (b/2a)²</div>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.derivationStep5">Step 5: Form the perfect square:</p>
+                <div class="MH-equation">(x + b/2a)² = (b² - 4ac)/(4a²)</div>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.derivationStep6">Step 6: Take the square root:</p>
+                <div class="MH-equation">x + b/2a = ±√(b² - 4ac)/(2a)</div>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.derivationStep7">Step 7: Isolate x:</p>
+                <div class="MH-equation">x = [-b ± √(b² - 4ac)] / (2a)</div>
+                
+                <p data-i18n="MH.lesson_Y2Al_eqdeg2c.derivationText2">This process shows how the quadratic formula is derived from the completing the square method.</p>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2c.practice">Practice Problems</h2>
+            
+            <div class="MH-practice">
+                <h3 class="MH-practice-title" data-i18n="MH.lesson_Y2Al_eqdeg2c.tryYourself">Try Solving These Equations by Completing the Square</h3>
+                
+                <div class="MH-practice-problem">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem1">1. Solve:</p>
+                    <div class="MH-equation">x² + 8x + 12 = 0</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_eqdeg2c.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                    <div class="MH-solution" id="solution1">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem1Step1">x² + 8x = -12</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem1Step2">Half of 8 = 4, square = 16</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem1Step3">x² + 8x + 16 = -12 + 16</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem1Step4">(x + 4)² = 4</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem1Step5">x + 4 = ±2</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem1Step6">x = -4 + 2 = -2 or x = -4 - 2 = -6</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem1Step7">Solutions: x = -2 or x = -6</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem2">2. Solve:</p>
+                    <div class="MH-equation">x² - 4x - 5 = 0</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_eqdeg2c.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                    <div class="MH-solution" id="solution2">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem2Step1">x² - 4x = 5</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem2Step2">Half of -4 = -2, square = 4</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem2Step3">x² - 4x + 4 = 5 + 4</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem2Step4">(x - 2)² = 9</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem2Step5">x - 2 = ±3</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem2Step6">x = 2 + 3 = 5 or x = 2 - 3 = -1</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem2Step7">Solutions: x = 5 or x = -1</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem3">3. Solve:</p>
+                    <div class="MH-equation">3x² - 12x + 9 = 0</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_eqdeg2c.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                    <div class="MH-solution" id="solution3">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem3Step1">Divide by 3: x² - 4x + 3 = 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem3Step2">x² - 4x = -3</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem3Step3">Half of -4 = -2, square = 4</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem3Step4">x² - 4x + 4 = -3 + 4</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem3Step5">(x - 2)² = 1</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem3Step6">x - 2 = ±1</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem3Step7">x = 2 + 1 = 3 or x = 2 - 1 = 1</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem3Step8">Solutions: x = 3 or x = 1</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem4">4. Solve:</p>
+                    <div class="MH-equation">2x² + 6x - 8 = 0</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_eqdeg2c.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+                    <div class="MH-solution" id="solution4">
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem4Step1">Divide by 2: x² + 3x - 4 = 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem4Step2">x² + 3x = 4</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem4Step3">Half of 3 = 3/2, square = 9/4</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem4Step4">x² + 3x + 9/4 = 4 + 9/4</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem4Step5">(x + 3/2)² = 25/4</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem4Step6">x + 3/2 = ±5/2</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem4Step7">x = -3/2 + 5/2 = 2/2 = 1 or x = -3/2 - 5/2 = -8/2 = -4</p>
+                        <p data-i18n="MH.lesson_Y2Al_eqdeg2c.problem4Step8">Solutions: x = 1 or x = -4</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_eqdeg2c.whenToUse">When to Use the Completing the Square Method?</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2c.advantagesTitle">Advantages of the completing the square method</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2c.advantage1">Works for all quadratic equations</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2c.advantage2">Helps understand the derivation of the quadratic formula</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2c.advantage3">Useful for writing quadratic equations in vertex form</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2c.advantage4">Essential for some applications in differential calculus</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2c.advantage5">Allows solving equations that are not easily factorable</li>
+                </ul>
+            </div>
+            
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Al_eqdeg2c.limitationsTitle">Limitations of the completing the square method</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2c.limitation1">Can be longer than the discriminant method</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2c.limitation2">Requires calculations with fractions for some equations</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2c.limitation3">Less direct than factoring for simple equations</li>
+                    <li data-i18n="MH.lesson_Y2Al_eqdeg2c.limitation4">Can be more prone to calculation errors</li>
+                </ul>
+            </div>
+            
+            <p data-i18n="MH.lesson_Y2Al_eqdeg2c.conclusion">In practice, the completing the square method is particularly useful when we want to understand the structure of a quadratic equation, when working with vertex form, or when preparing the ground for the study of quadratic functions and their properties.</p>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="scripts/i18n_en.js"></script>
+    <script src="scripts/i18n_ar.js"></script>
+    <script src="scripts/i18n_fr.js"></script>
+    <script src="scripts/translation.js"></script>
+    <script src="scripts/pwa-install.js"></script>
+    <script>
+        // Register service worker with better error handling
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                    
+                    // Check if we need to request notification permission
+                    if (Notification.permission === 'default') {
+                        // Wait a bit then ask for permission via service worker
+                        setTimeout(() => {
+                            registration.active.postMessage({
+                                type: 'REQUEST_NOTIFICATION_PERMISSION'
+                            });
+                        }, 5000);
+                    }
+                })
+                .catch(function(error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+            });
+        }
+        
+        // Toggle solution visibility
+        function toggleSolution(problemNumber) {
+            const solution = document.getElementById(`solution${problemNumber}`);
+            const button = solution.previousElementSibling;
+            
+            if (solution.style.display === 'block') {
+                solution.style.display = 'none';
+                button.setAttribute('data-i18n', 'MH.lesson_Y2Al_eqdeg2c.showSolution');
+                button.textContent = getTranslation('MH.lesson_Y2Al_eqdeg2c.showSolution');
+            } else {
+                solution.style.display = 'block';
+                button.setAttribute('data-i18n', 'MH.lesson_Y2Al_eqdeg2c.hideSolution');
+                button.textContent = getTranslation('MH.lesson_Y2Al_eqdeg2c.hideSolution');
+            }
+        }
+        
+        // Initialize solutions as hidden
+        document.addEventListener('DOMContentLoaded', function() {
+            for (let i = 1; i <= 4; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+            }
+        });
+    </script>
+    
+    <!-- noscript fallback -->
+    <noscript>
+        <style>
+            .MH-header-controls { display: none; }
+            .MH-solution { display: block; }
+        </style>
+        <div class="MH-warning">
+            JavaScript is recommended for the full experience, but content is still accessible.
+        </div>
+    </noscript>
+</body>
+</html>

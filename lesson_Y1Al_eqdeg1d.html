@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Mathematics Lesson: 1st Degree Inequations</title>
+		<!-- PWA Manifest -->
+		<link rel="manifest" href="manifest.json">
+		
+		<!-- Favicon -->
+		<link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+		<link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+		
+		<!-- Theme Color -->
+		<meta name="theme-color" content="#4a6fa5" media="(prefers-color-scheme: light)">
+		<meta name="theme-color" content="#1a365f" media="(prefers-color-scheme: dark)">
+		
+		<!-- PWA Meta Tags -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="default">
+		<meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="msapplication-TileColor" content="#4a6fa5">
+		<meta name="msapplication-config" content="/browserconfig.xml">
+		<link rel="stylesheet" href="styles/main.css">
+		<style>
+			/* Page-specific color palette - Orange/Red Theme */
+			:root {
+			--primary: #e67e22;
+			--primary-light: #f39c12;
+			--primary-dark: #d35400;
+			--secondary: #c0392b;
+			--secondary-light: #e74c3c;
+			--secondary-dark: #a93226;
+			--accent: #16a085;
+			--warning: #f1c40f;
+			--info: #3498db;
+			}
+			
+			[data-theme="dark"] {
+			--primary: #d35400;
+			--primary-light: #e67e22;
+			--primary-dark: #a04000;
+			--secondary: #a93226;
+			--secondary-light: #c0392b;
+			--secondary-dark: #7b241c;
+			--accent: #1abc9c;
+			--warning: #f39c12;
+			--info: #2980b9;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<div class="MH-header-grid">
+				<!-- Column 1: Icon -->
+				<div class="MH-header-column MH-header-icon">
+					<a href="index.html" class="MH-logo-link" data-tooltip>
+						<img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+					</a>
+				</div>
+				
+				<!-- Column 2: Title -->
+				<div class="MH-header-column MH-header-title">
+					<div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+				</div>
+				
+				<!-- Column 3: Options -->
+				<div class="MH-header-column MH-header-options">
+					<div class="MH-header-controls">
+						<button class="MH-theme-toggle" id="themeToggle">
+							<span data-i18n="MH.general.theme">Theme</span>
+							<span>🌙</span>
+						</button>
+						<div class="MH-language-selector">
+							<button class="MH-language-btn" id="languageBtn">
+								<span data-i18n="MH.general.language">Language</span>
+								<span>▼</span>
+							</button>
+							<div class="MH-language-dropdown" id="languageDropdown">
+								<a href="#" class="MH-language-option" data-lang="en">English</a>
+								<a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+								<a href="#" class="MH-language-option" data-lang="fr">Français</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		
+		<main id="main-content" class="MH-container" tabindex="-1">
+			
+			<h1 class="MH-lesson-title" data-i18n="MH.lesson_Y1Al_eqdeg1d.title">1st Degree Inequations</h1>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_eqdeg1d.introduction">Introduction to Inequations</h2>
+				<p data-i18n="MH.lesson_Y1Al_eqdeg1d.introText1">Inequations are mathematical statements that express an inequality relationship between two expressions. Unlike equations which use equality (=), inequations use inequality symbols: > (greater than), < (less than), ≥ (greater than or equal to), ≤ (less than or equal to).</p>
+				
+				<div class="MH-definition">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1d.definitionTitle">Definition</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.definitionText">A first degree inequation in one unknown x is an inequality that can be written in one of the forms:</p>
+					<ul>
+						<li data-i18n="MH.lesson_Y1Al_eqdeg1d.definitionList1"><span class="MH-equation">ax + b > 0</span></li>
+						<li data-i18n="MH.lesson_Y1Al_eqdeg1d.definitionList2"><span class="MH-equation">ax + b ≥ 0</span></li>
+						<li data-i18n="MH.lesson_Y1Al_eqdeg1d.definitionList3"><span class="MH-equation">ax + b < 0</span></li>
+						<li data-i18n="MH.lesson_Y1Al_eqdeg1d.definitionList4"><span class="MH-equation">ax + b ≤ 0</span></li>
+					</ul>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.definitionText2">where a and b are real numbers, with a ≠ 0.</p>
+				</div>
+				
+				<p data-i18n="MH.lesson_Y1Al_eqdeg1d.introText2">Solving inequations involves finding all values of the variable that make the inequality true.</p>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_eqdeg1d.solving">Solving 1st Degree Inequations</h2>
+				
+				<div class="MH-step">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1d.solvingTitle">Basic Solving Method</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.solvingText">To solve an inequation of type <span class="MH-equation">ax + b > 0</span>:</p>
+					<ul>
+						<li data-i18n="MH.lesson_Y1Al_eqdeg1d.solvingList1">If <span class="MH-equation">a > 0</span>: <span class="MH-equation">x > -b/a</span></li>
+						<li data-i18n="MH.lesson_Y1Al_eqdeg1d.solvingList2">If <span class="MH-equation">a < 0</span>: <span class="MH-equation">x < -b/a</span></li>
+					</ul>
+					
+					<div class="MH-important">
+						<h3 data-i18n="MH.lesson_Y1Al_eqdeg1d.importantTitle">Important Rule</h3>
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1d.importantText">When multiplying or dividing both sides of an inequation by a negative number, the direction of the inequality symbol must be reversed.</p>
+					</div>
+				</div>
+				
+				<div class="MH-step">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1d.stepsTitle">Step-by-Step Solving</h3>
+					
+					<div class="MH-example">
+						<h4 data-i18n="MH.lesson_Y1Al_eqdeg1d.example1Title">Example 1: <span class="MH-equation">3x + 6 > 0</span></h4>
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1d.example1Step1">Step 1: Subtract 6 from both sides: <span class="MH-equation">3x > -6</span></p>
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1d.example1Step2">Step 2: Divide by 3 (positive number): <span class="MH-equation">x > -2</span></p>
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1d.example1Step3">Solution: <span class="MH-equation">x > -2</span></p>
+					</div>
+					
+					<div class="MH-example">
+						<h4 data-i18n="MH.lesson_Y1Al_eqdeg1d.example2Title">Example 2: <span class="MH-equation">-2x + 4 ≤ 0</span></h4>
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1d.example2Step1">Step 1: Subtract 4 from both sides: <span class="MH-equation">-2x ≤ -4</span></p>
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1d.example2Step2">Step 2: Divide by -2 (negative number, reverse inequality): <span class="MH-equation">x ≥ 2</span></p>
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1d.example2Step3">Solution: <span class="MH-equation">x ≥ 2</span></p>
+					</div>
+				</div>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_eqdeg1d.signTable">Sign Table of a Binomial</h2>
+				
+				<div class="MH-step">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1d.signTableTitle">Studying the Sign of ax + b</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.signTableText">To study the sign of a binomial expression <span class="MH-equation">ax + b</span>:</p>
+					
+					<div class="MH-example">
+						<table class="MH-table">
+							<caption data-i18n="MH.lesson_Y1Al_eqdeg1d.signTableCaption">Sign table for ax + b</caption>
+							<tr>
+								<th data-i18n="MH.lesson_Y1Al_eqdeg1d.xValue">x</th>
+								<td data-i18n="MH.lesson_Y1Al_eqdeg1d.negativeInfinity">-∞</td>
+								<td data-i18n="MH.lesson_Y1Al_eqdeg1d.criticalPoint">-b/a</td>
+								<td data-i18n="MH.lesson_Y1Al_eqdeg1d.positiveInfinity">+∞</td>
+							</tr>
+							<tr>
+								<th data-i18n="MH.lesson_Y1Al_eqdeg1d.signAxB">Sign of ax+b</th>
+								<td data-i18n="MH.lesson_Y1Al_eqdeg1d.oppositeSign">Opposite sign of a</td>
+								<td data-i18n="MH.lesson_Y1Al_eqdeg1d.zero">0</td>
+								<td data-i18n="MH.lesson_Y1Al_eqdeg1d.sameSign">Same sign as a</td>
+							</tr>
+						</table>
+					</div>
+					
+					<div class="MH-example">
+						<h4 data-i18n="MH.lesson_Y1Al_eqdeg1d.signExampleTitle">Example: Sign of <span class="MH-equation">2x - 4</span></h4>
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1d.signExampleText">Critical point: <span class="MH-equation">x = 2</span></p>
+						<table class="MH-table">
+							<tr>
+								<th data-i18n="MH.lesson_Y1Al_eqdeg1d.xValue">x</th>
+								<td>-∞</td>
+								<td>2</td>
+								<td>+∞</td>
+							</tr>
+							<tr>
+								<th data-i18n="MH.lesson_Y1Al_eqdeg1d.signAxB">Sign of 2x-4</th>
+								<td>-</td>
+								<td>0</td>
+								<td>+</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_eqdeg1d.productFactors">Product of Factors</h2>
+				
+				<div class="MH-step">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1d.productTitle">Studying the Sign of a Product</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.productText">To study the sign of a product of first-degree factors, we create a combined sign table that shows the sign of each factor and the resulting product.</p>
+					
+					<div class="MH-example">
+						<h4 data-i18n="MH.lesson_Y1Al_eqdeg1d.productExampleTitle">Example: Sign of <span class="MH-equation">(x - 1)(x + 2)</span></h4>
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1d.productExampleText">Critical points: <span class="MH-equation">x = 1</span> and <span class="MH-equation">x = -2</span></p>
+						<table class="MH-table">
+							<tr>
+								<th data-i18n="MH.lesson_Y1Al_eqdeg1d.xValue">x</th>
+								<td>-∞</td>
+								<td>-2</td>
+								<td>1</td>
+								<td>+∞</td>
+							</tr>
+							<tr>
+								<th data-i18n="MH.lesson_Y1Al_eqdeg1d.signX2">Sign of (x+2)</th>
+								<td>-</td>
+								<td>0</td>
+								<td>+</td>
+								<td>+</td>
+							</tr>
+							<tr>
+								<th data-i18n="MH.lesson_Y1Al_eqdeg1d.signX1">Sign of (x-1)</th>
+								<td>-</td>
+								<td>-</td>
+								<td>0</td>
+								<td>+</td>
+							</tr>
+							<tr>
+								<th data-i18n="MH.lesson_Y1Al_eqdeg1d.signProduct">Sign of product</th>
+								<td>+</td>
+								<td>0</td>
+								<td>0</td>
+								<td>+</td>
+							</tr>
+						</table>
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1d.productExampleSolution">The product is positive when <span class="MH-equation">x < -2</span> or <span class="MH-equation">x > 1</span>, and zero when <span class="MH-equation">x = -2</span> or <span class="MH-equation">x = 1</span>.</p>
+					</div>
+				</div>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_eqdeg1d.detailedExamples">Detailed Examples</h2>
+				
+				<div class="MH-example">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1d.example3Title">Example 3: Simple Inequation</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.example3Equation">Solve: <span class="MH-equation">5x - 7 < 13</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.example3Step1">Add 7 to both sides: <span class="MH-equation">5x < 20</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.example3Step2">Divide by 5: <span class="MH-equation">x < 4</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.example3Step3">Solution: <span class="MH-equation">x < 4</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.example3Check">Verification: For x = 3, <span class="MH-equation">5(3) - 7 = 15 - 7 = 8 < 13</span> ✓</p>
+				</div>
+				
+				<div class="MH-example">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1d.example4Title">Example 4: Inequation with Negative Coefficient</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.example4Equation">Solve: <span class="MH-equation">-3x + 6 ≥ 0</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.example4Step1">Subtract 6 from both sides: <span class="MH-equation">-3x ≥ -6</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.example4Step2">Divide by -3 (reverse inequality): <span class="MH-equation">x ≤ 2</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.example4Step3">Solution: <span class="MH-equation">x ≤ 2</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.example4Check">Verification: For x = 1, <span class="MH-equation">-3(1) + 6 = -3 + 6 = 3 ≥ 0</span> ✓</p>
+				</div>
+				
+				<div class="MH-example">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1d.example5Title">Example 5: Product Inequation</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.example5Equation">Solve: <span class="MH-equation">(x - 3)(x + 1) > 0</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.example5Step1">Critical points: <span class="MH-equation">x = 3</span> and <span class="MH-equation">x = -1</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.example5Step2">Create sign table:</p>
+					<table class="MH-table">
+						<tr>
+							<th data-i18n="MH.lesson_Y1Al_eqdeg1d.xValue">x</th>
+							<td>-∞</td>
+							<td>-1</td>
+							<td>3</td>
+							<td>+∞</td>
+						</tr>
+						<tr>
+							<th data-i18n="MH.lesson_Y1Al_eqdeg1d.signX1">Sign of (x+1)</th>
+							<td>-</td>
+							<td>0</td>
+							<td>+</td>
+							<td>+</td>
+						</tr>
+						<tr>
+							<th data-i18n="MH.lesson_Y1Al_eqdeg1d.signX3">Sign of (x-3)</th>
+							<td>-</td>
+							<td>-</td>
+							<td>0</td>
+							<td>+</td>
+						</tr>
+						<tr>
+							<th data-i18n="MH.lesson_Y1Al_eqdeg1d.signProduct">Sign of product</th>
+							<td>+</td>
+							<td>0</td>
+							<td>0</td>
+							<td>+</td>
+						</tr>
+					</table>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.example5Step3">The product is positive when <span class="MH-equation">x < -1</span> or <span class="MH-equation">x > 3</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.example5Step4">Solution: <span class="MH-equation">x < -1</span> or <span class="MH-equation">x > 3</span></p>
+				</div>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_eqdeg1d.practice">Practice Problems</h2>
+				
+				<div class="MH-practice">
+					<h3 class="MH-practice-title" data-i18n="MH.lesson_Y1Al_eqdeg1d.tryYourself">Try Solving These Inequations</h3>
+					
+					<div class="MH-practice-problem">
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1d.problem1">1. Solve: <span class="MH-equation">4x + 5 > 21</span></p>
+						<button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_eqdeg1d.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+						<div class="MH-solution" id="solution1">
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1d.problem1Step1">Subtract 5 from both sides: <span class="MH-equation">4x > 16</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1d.problem1Step2">Divide by 4: <span class="MH-equation">x > 4</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1d.problem1Step3">Solution: <span class="MH-equation">x > 4</span></p>
+						</div>
+					</div>
+					
+					<div class="MH-practice-problem">
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1d.problem2">2. Solve: <span class="MH-equation">-2x + 8 ≤ 0</span></p>
+						<button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_eqdeg1d.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+						<div class="MH-solution" id="solution2">
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1d.problem2Step1">Subtract 8 from both sides: <span class="MH-equation">-2x ≤ -8</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1d.problem2Step2">Divide by -2 (reverse inequality): <span class="MH-equation">x ≥ 4</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1d.problem2Step3">Solution: <span class="MH-equation">x ≥ 4</span></p>
+						</div>
+					</div>
+					
+					<div class="MH-practice-problem">
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1d.problem3">3. Solve: <span class="MH-equation">(x - 2)(x + 3) < 0</span></p>
+						<button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_eqdeg1d.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+						<div class="MH-solution" id="solution3">
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1d.problem3Step1">Critical points: <span class="MH-equation">x = 2</span> and <span class="MH-equation">x = -3</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1d.problem3Step2">Create sign table:</p>
+							<table class="MH-table">
+								<tr>
+									<th data-i18n="MH.lesson_Y1Al_eqdeg1d.xValue">x</th>
+									<td>-∞</td>
+									<td>-3</td>
+									<td>2</td>
+									<td>+∞</td>
+								</tr>
+								<tr>
+									<th data-i18n="MH.lesson_Y1Al_eqdeg1d.signX3">Sign of (x+3)</th>
+									<td>-</td>
+									<td>0</td>
+									<td>+</td>
+									<td>+</td>
+								</tr>
+								<tr>
+									<th data-i18n="MH.lesson_Y1Al_eqdeg1d.signX2">Sign of (x-2)</th>
+									<td>-</td>
+									<td>-</td>
+									<td>0</td>
+									<td>+</td>
+								</tr>
+								<tr>
+									<th data-i18n="MH.lesson_Y1Al_eqdeg1d.signProduct">Sign of product</th>
+									<td>+</td>
+									<td>0</td>
+									<td>0</td>
+									<td>+</td>
+								</tr>
+							</table>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1d.problem3Step3">The product is negative between the critical points</p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1d.problem3Step4">Solution: <span class="MH-equation">-3 < x < 2</span></p>
+						</div>
+					</div>
+					
+					<div class="MH-practice-problem">
+						<p data-i18n="MH.lesson_Y1Al_eqdeg1d.problem4">4. Solve: <span class="MH-equation">3(x - 1) ≥ 2x + 5</span></p>
+						<button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_eqdeg1d.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+						<div class="MH-solution" id="solution4">
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1d.problem4Step1">Distribute: <span class="MH-equation">3x - 3 ≥ 2x + 5</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1d.problem4Step2">Subtract 2x from both sides: <span class="MH-equation">x - 3 ≥ 5</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1d.problem4Step3">Add 3 to both sides: <span class="MH-equation">x ≥ 8</span></p>
+							<p data-i18n="MH.lesson_Y1Al_eqdeg1d.problem4Step4">Solution: <span class="MH-equation">x ≥ 8</span></p>
+						</div>
+					</div>
+				</div>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_eqdeg1d.applications">Practical Applications</h2>
+				
+				<div class="MH-step">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1d.methodologyTitle">Problem-Solving Methodology</h3>
+					<ol>
+						<li data-i18n="MH.lesson_Y1Al_eqdeg1d.methodology1">Choice of the unknown</li>
+						<li data-i18n="MH.lesson_Y1Al_eqdeg1d.methodology2">Setting up the equation/inequation</li>
+						<li data-i18n="MH.lesson_Y1Al_eqdeg1d.methodology3">Solving</li>
+						<li data-i18n="MH.lesson_Y1Al_eqdeg1d.methodology4">Verification and interpretation of results</li>
+					</ol>
+				</div>
+				
+				<div class="MH-example">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1d.application1Title">Application 1: Proportionality Problems</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.application1Text">A phone plan costs $20 per month plus $0.10 per minute. For how many minutes will the cost be less than $50?</p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.application1Solution">Let m = number of minutes</p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.application1Equation">Inequation: <span class="MH-equation">20 + 0.10m < 50</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.application1Step1">Subtract 20: <span class="MH-equation">0.10m < 30</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.application1Step2">Divide by 0.10: <span class="MH-equation">m < 300</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.application1Answer">The cost will be less than $50 for fewer than 300 minutes.</p>
+				</div>
+				
+				<div class="MH-example">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1d.application2Title">Application 2: Geometry Problems</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.application2Text">The length of a rectangle is 5 cm more than its width. If the perimeter is less than 30 cm, what are the possible dimensions?</p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.application2Solution">Let w = width, then length = w + 5</p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.application2Equation">Perimeter: <span class="MH-equation">2(w + w + 5) < 30</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.application2Step1">Simplify: <span class="MH-equation">2(2w + 5) < 30</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.application2Step2">Distribute: <span class="MH-equation">4w + 10 < 30</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.application2Step3">Subtract 10: <span class="MH-equation">4w < 20</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.application2Step4">Divide by 4: <span class="MH-equation">w < 5</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.application2Answer">The width must be less than 5 cm, and the length less than 10 cm.</p>
+				</div>
+				
+				<div class="MH-example">
+					<h3 data-i18n="MH.lesson_Y1Al_eqdeg1d.application3Title">Application 3: Price Comparison</h3>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.application3Text">Company A charges $50 plus $0.20 per unit. Company B charges $30 plus $0.30 per unit. For how many units is Company A cheaper?</p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.application3Solution">Let x = number of units</p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.application3Equation">Inequation: <span class="MH-equation">50 + 0.20x < 30 + 0.30x</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.application3Step1">Subtract 30: <span class="MH-equation">20 + 0.20x < 0.30x</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.application3Step2">Subtract 0.20x: <span class="MH-equation">20 < 0.10x</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.application3Step3">Divide by 0.10: <span class="MH-equation">200 < x</span></p>
+					<p data-i18n="MH.lesson_Y1Al_eqdeg1d.application3Answer">Company A is cheaper for more than 200 units.</p>
+				</div>
+			</section>
+			
+		</main>
+		<footer>
+			<div class="MH-footer-content">
+				<div class="MH-footer-column">
+					<div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+					<div class="MH-footer-text">Mejri Ziad</div>
+				</div>
+				
+				<div class="MH-footer-column">
+					<div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+					<div class="MH-footer-text">v0.0.1</div>
+				</div>
+				
+				<div class="MH-footer-column">
+					<div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+					<div class="MH-footer-links">
+						<a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+						<a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<script src="scripts/i18n_en.js"></script>
+		<script src="scripts/i18n_ar.js"></script>
+		<script src="scripts/i18n_fr.js"></script>
+		<script src="scripts/translation.js"></script>
+		<script src="scripts/pwa-install.js"></script>
+		<script>
+    // Register service worker with better error handling
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+                
+                // Check if we need to request notification permission
+                if (Notification.permission === 'default') {
+                    // Wait a bit then ask for permission via service worker
+                    setTimeout(() => {
+                        registration.active.postMessage({
+                            type: 'REQUEST_NOTIFICATION_PERMISSION'
+                        });
+                    }, 5000);
+                }
+            })
+            .catch(function(error) {
+                console.log('Service Worker registration failed:', error);
+            });
+        });
+    }
+</script>
+		<!-- noscript fallback -->
+		<noscript>
+			<style>
+				.MH-header-controls { display: none; }
+				.MH-solution { display: block; }
+			</style>
+			<div class="MH-warning">
+				JavaScript is recommended for the full experience, but content is still accessible.
+			</div>
+		</noscript>
+	</body>
+</html>
