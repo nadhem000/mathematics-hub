@@ -12,41 +12,41 @@
     <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
     
     <!-- Theme Color -->
-    <meta name="theme-color" content="#4a6fa5" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#1a365f" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#9b59b6" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#8e44ad" media="(prefers-color-scheme: dark)">
     
     <!-- PWA Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="msapplication-TileColor" content="#4a6fa5">
+    <meta name="msapplication-TileColor" content="#9b59b6">
     <meta name="msapplication-config" content="/browserconfig.xml">
     <link rel="stylesheet" href="styles/main.css">
     <style>
-        /* Page-specific color palette - Blue/Purple Theme */
+        /* Page-specific color palette - Purple Theme */
         :root {
-            --primary: #3498db;
-            --primary-light: #5dade2;
-            --primary-dark: #2980b9;
-            --secondary: #8e44ad;
-            --secondary-light: #a569bd;
-            --secondary-dark: #7d3c98;
-            --accent: #16a085;
-            --warning: #f1c40f;
-            --info: #e74c3c;
+            --primary: #9b59b6;
+            --primary-light: #af7ac5;
+            --primary-dark: #8e44ad;
+            --secondary: #3498db;
+            --secondary-light: #5dade2;
+            --secondary-dark: #2980b9;
+            --accent: #e67e22;
+            --warning: #e74c3c;
+            --info: #2ecc71;
         }
         
         [data-theme="dark"] {
-            --primary: #2980b9;
-            --primary-light: #3498db;
-            --primary-dark: #1c5a7a;
-            --secondary: #7d3c98;
-            --secondary-light: #8e44ad;
-            --secondary-dark: #5e2a7a;
-            --accent: #1abc9c;
-            --warning: #f39c12;
-            --info: #c0392b;
+            --primary: #8e44ad;
+            --primary-light: #9b59b6;
+            --primary-dark: #7d3c98;
+            --secondary: #2980b9;
+            --secondary-light: #3498db;
+            --secondary-dark: #1c5a85;
+            --accent: #d35400;
+            --warning: #c0392b;
+            --info: #27ae60;
         }
     </style>
 </head>
@@ -89,236 +89,241 @@
     </header>
     
     <main id="main-content" class="MH-container" tabindex="-1">
-        
         <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Geo_barycenter1.title">Barycenter I: Generality</h1>
         
         <section class="MH-section">
             <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_barycenter1.introduction">Introduction to Barycenter</h2>
-            <p data-i18n="MH.lesson_Y2Geo_barycenter1.introText1">The barycenter, also known as the center of mass or centroid, is a fundamental concept in geometry that helps us understand the balance point of a system of points with assigned weights.</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter1.introText1">The barycenter (or center of mass) is a fundamental concept in geometry that helps us understand the balance point of a system of weighted points. It has applications in physics, engineering, and computer graphics.</p>
             
             <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.weightedPointTitle">Weighted Point</h3>
+                <p data-i18n="MH.lesson_Y2Geo_barycenter1.weightedPointText">A weighted point is a pair (A, a) where A is a point and a is a real number called the weight or coefficient.</p>
+            </div>
+            
+            <p data-i18n="MH.lesson_Y2Geo_barycenter1.introText2">In this lesson, we'll explore the barycenter of two and three weighted points, learning step by step how to calculate and visualize them.</p>
+        </section>
+
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_barycenter1.twoPointsTitle">1. Barycenter of Two Weighted Points</h2>
+            
+            <div class="MH-step">
                 <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.definitionTitle">Definition</h3>
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.definitionText">Given n points A₁, A₂, ..., Aₙ in space, and n real numbers α₁, α₂, ..., αₙ (called coefficients or weights) such that α₁ + α₂ + ... + αₙ ≠ 0, there exists a unique point G such that:</p>
-                <div class="MH-equation">α₁GA₁ + α₂GA₂ + ... + αₙGAₙ = 0</div>
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.definitionText2">This point G is called the barycenter of the system {(A₁, α₁), (A₂, α₂), ..., (Aₙ, αₙ)}.</p>
+                <p data-i18n="MH.lesson_Y2Geo_barycenter1.definitionText1">Let A and B be two points in the plane, and a, b be two real numbers such that a + b ≠ 0.</p>
+                <p data-i18n="MH.lesson_Y2Geo_barycenter1.definitionText2">There exists a unique point G satisfying:</p>
+                <div class="MH-equation">a·GA⃗ + b·GB⃗ = 0⃗</div>
+                <p data-i18n="MH.lesson_Y2Geo_barycenter1.definitionText3">This point G is called the barycenter of the weighted points (A, a) and (B, b).</p>
             </div>
-            
-            <p data-i18n="MH.lesson_Y2Geo_barycenter1.introText2">In simpler terms, the barycenter is the balance point where the weighted positions of all points average out to zero.</p>
-        </section>
-        
-        <section class="MH-section">
-            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_barycenter1.basicConcept">Basic Concept</h2>
-            
-            <div class="MH-step">
-                <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.conceptTitle">What is a Barycenter?</h3>
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.conceptText1">Imagine you have several objects with different weights placed at different positions. The barycenter is the point where you could balance the entire system on a single finger.</p>
-                
+
+            <div class="MH-geometry-demo">
+                <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.visualizationTitle">Visual Demonstration</h3>
                 <div class="MH-geometry-container">
-                    <canvas id="barycenterConceptGraph" width="600" height="400" class="MH-geometry-canvas"></canvas>
+                    <canvas id="barycenter2Points" class="MH-geometry-canvas"></canvas>
                 </div>
-                
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.conceptText2">In mathematics, we extend this physical concept to any set of points with assigned weights, even if the weights are negative (though this gives us points outside the segment between the original points).</p>
-            </div>
-            
-            <div class="MH-step">
-                <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.vectorDefinitionTitle">Vector Definition</h3>
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.vectorDefinitionText">Using vectors, the barycenter G of points A₁, A₂, ..., Aₙ with weights α₁, α₂, ..., αₙ is defined by:</p>
-                <div class="MH-equation">(α₁ + α₂ + ... + αₙ)OG = α₁OA₁ + α₂OA₂ + ... + αₙOAₙ</div>
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.vectorDefinitionText2">Where O is any reference point in space. This formula is very useful for calculations.</p>
-            </div>
-        </section>
-        
-        <section class="MH-section">
-            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_barycenter1.twoPoints">Barycenter of Two Points</h2>
-            
-            <div class="MH-step">
-                <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.twoPointsTitle">Special Case: Two Points</h3>
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.twoPointsText">For two points A and B with weights α and β (with α + β ≠ 0), the barycenter G lies on line AB and satisfies:</p>
-                <div class="MH-equation">αGA + βGB = 0</div>
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.twoPointsText2">Using the vector formula with reference point A, we get:</p>
-                <div class="MH-equation">(α + β)AG = βAB</div>
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.twoPointsText3">Which means G divides AB in the ratio β:α.</p>
-                
-                <div class="MH-geometry-container">
-                    <canvas id="twoPointsGraph" width="600" height="400" class="MH-geometry-canvas"></canvas>
+                <div class="MH-geometry-controls">
+                    <div class="MH-geometry-control">
+                        <label data-i18n="MH.lesson_Y2Geo_barycenter1.weightA">Weight a</label>
+                        <input type="number" id="weightA" value="2" min="-5" max="5">
+                    </div>
+                    <div class="MH-geometry-control">
+                        <label data-i18n="MH.lesson_Y2Geo_barycenter1.weightB">Weight b</label>
+                        <input type="number" id="weightB" value="3" min="-5" max="5">
+                    </div>
                 </div>
+                <p data-i18n="MH.lesson_Y2Geo_barycenter1.visualizationText">Move the sliders to see how the barycenter position changes with different weights. Notice how it always lies on line AB.</p>
             </div>
-            
+
             <div class="MH-step">
-                <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.equalWeightsTitle">Equal Weights</h3>
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.equalWeightsText">When α = β (equal weights), the barycenter is exactly the midpoint of segment AB:</p>
-                <div class="MH-equation">G = midpoint of AB</div>
-                
-                <div class="MH-geometry-container">
-                    <canvas id="equalWeightsGraph" width="600" height="400" class="MH-geometry-canvas"></canvas>
-                </div>
-            </div>
-            
-            <div class="MH-step">
-                <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.differentWeightsTitle">Different Weights</h3>
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.differentWeightsText">When weights are different, the barycenter is closer to the point with the larger weight:</p>
-                <ul>
-                    <li data-i18n="MH.lesson_Y2Geo_barycenter1.differentWeights1">If α > β, G is closer to A</li>
-                    <li data-i18n="MH.lesson_Y2Geo_barycenter1.differentWeights2">If α < β, G is closer to B</li>
-                </ul>
-                
-                <div class="MH-geometry-container">
-                    <canvas id="differentWeightsGraph" width="600" height="400" class="MH-geometry-canvas"></canvas>
-                </div>
+                <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.proofTitle">Proof of Existence and Uniqueness</h3>
+                <p data-i18n="MH.lesson_Y2Geo_barycenter1.proofStep1">Starting from the definition:</p>
+                <div class="MH-equation">a·GA⃗ + b·GB⃗ = 0⃗</div>
+                <p data-i18n="MH.lesson_Y2Geo_barycenter1.proofStep2">Using Chasles relation: GB⃗ = GA⃗ + AB⃗</p>
+                <div class="MH-equation">a·GA⃗ + b·(GA⃗ + AB⃗) = 0⃗</div>
+                <div class="MH-equation">(a + b)·GA⃗ + b·AB⃗ = 0⃗</div>
+                <div class="MH-equation">(a + b)·AG⃗ = b·AB⃗</div>
+                <div class="MH-equation">AG⃗ = [b/(a + b)]·AB⃗</div>
+                <p data-i18n="MH.lesson_Y2Geo_barycenter1.proofConclusion">Since a + b ≠ 0, there exists a unique point G satisfying this vector relation.</p>
             </div>
         </section>
-        
+
         <section class="MH-section">
-            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_barycenter1.properties">Properties of Barycenter</h2>
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_barycenter1.propertiesTitle">Properties of Barycenter</h2>
             
             <div class="MH-step">
                 <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.homogeneityTitle">Homogeneity Property</h3>
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.homogeneityText">If we multiply all weights by the same non-zero constant k, the barycenter remains the same:</p>
-                <div class="MH-equation">Barycenter of {(A₁, kα₁), (A₂, kα₂), ..., (Aₙ, kαₙ)} = Barycenter of {(A₁, α₁), (A₂, α₂), ..., (Aₙ, αₙ)}</div>
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.homogeneityText2">This means we can simplify weights by dividing by a common factor.</p>
+                <p data-i18n="MH.lesson_Y2Geo_barycenter1.homogeneityText">If G is the barycenter of (A, a), (B, b), then for any non-zero real number k, G is also the barycenter of (A, k·a), (B, k·b).</p>
+                <div class="MH-equation">a·GA⃗ + b·GB⃗ = 0⃗ ⇒ k·a·GA⃗ + k·b·GB⃗ = 0⃗</div>
             </div>
+
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.positionTitle">Position on Line AB</h3>
+                <p data-i18n="MH.lesson_Y2Geo_barycenter1.positionText1">The barycenter G always lies on the line (AB).</p>
+                <p data-i18n="MH.lesson_Y2Geo_barycenter1.positionText2">From the proof we have: AG⃗ = [b/(a + b)]·AB⃗</p>
+                <p data-i18n="MH.lesson_Y2Geo_barycenter1.positionText3">This shows that vector AG⃗ is collinear with AB⃗, so G is on line (AB).</p>
+            </div>
+
+            <div class="MH-geometry-demo">
+                <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.specialCasesTitle">Special Cases</h3>
+                <div class="MH-geometry-container">
+                    <canvas id="specialCases" class="MH-geometry-canvas"></canvas>
+                </div>
+                <div class="MH-geometry-legend">
+                    <div class="MH-geometry-legend-item">
+                        <div class="MH-geometry-legend-color" style="background-color: var(--primary);"></div>
+                        <span data-i18n="MH.lesson_Y2Geo_barycenter1.sameSign">Same sign weights</span>
+                    </div>
+                    <div class="MH-geometry-legend-item">
+                        <div class="MH-geometry-legend-color" style="background-color: var(--warning);"></div>
+                        <span data-i18n="MH.lesson_Y2Geo_barycenter1.oppositeSign">Opposite sign weights</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.fundamentalPropertyTitle">Fundamental Property</h3>
+                <p data-i18n="MH.lesson_Y2Geo_barycenter1.fundamentalPropertyText">If G is the barycenter of (A, a), (B, b), then for any point M in the plane:</p>
+                <div class="MH-equation">a·MA⃗ + b·MB⃗ = (a + b)·MG⃗</div>
+                
+                <div class="MH-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_barycenter1.proofFundamentalTitle">Proof</h4>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter1.proofFundamentalStep1">We know: a·GA⃗ + b·GB⃗ = 0⃗</p>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter1.proofFundamentalStep2">Using Chasles relation for any point M:</p>
+                    <div class="MH-equation">a·(GM⃗ + MA⃗) + b·(GM⃗ + MB⃗) = 0⃗</div>
+                    <div class="MH-equation">(a + b)·GM⃗ + a·MA⃗ + b·MB⃗ = 0⃗</div>
+                    <div class="MH-equation">a·MA⃗ + b·MB⃗ = (a + b)·MG⃗</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_barycenter1.coordinatesTitle">Coordinates of Barycenter</h2>
             
             <div class="MH-step">
-                <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.associativityTitle">Associativity Property</h3>
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.associativityText">We can compute the barycenter in steps by grouping points:</p>
-                <ol>
-                    <li data-i18n="MH.lesson_Y2Geo_barycenter1.associativity1">Find the barycenter G₁ of some points with their weights</li>
-                    <li data-i18n="MH.lesson_Y2Geo_barycenter1.associativity2">Assign to G₁ the sum of weights of those points</li>
-                    <li data-i18n="MH.lesson_Y2Geo_barycenter1.associativity3">Find the barycenter of G₁ (with its weight) and the remaining points</li>
-                </ol>
-                
-                <div class="MH-geometry-container">
-                    <canvas id="associativityGraph" width="600" height="400" class="MH-geometry-canvas"></canvas>
-                </div>
+                <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.coordinatesFormulaTitle">Coordinate Formulas</h3>
+                <p data-i18n="MH.lesson_Y2Geo_barycenter1.coordinatesText1">In a coordinate system (O; i, j), if A(x_A, y_A) and B(x_B, y_B), then the barycenter G of (A, a), (B, b) has coordinates:</p>
+                <div class="MH-equation">x_G = (a·x_A + b·x_B)/(a + b)</div>
+                <div class="MH-equation">y_G = (a·y_A + b·y_B)/(a + b)</div>
+                <p data-i18n="MH.lesson_Y2Geo_barycenter1.coordinatesText2">These are weighted averages of the coordinates of A and B.</p>
+            </div>
+
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.coordinatesProofTitle">Proof of Coordinate Formulas</h3>
+                <p data-i18n="MH.lesson_Y2Geo_barycenter1.coordinatesProofText">From the fundamental property with M = O:</p>
+                <div class="MH-equation">a·OA⃗ + b·OB⃗ = (a + b)·OG⃗</div>
+                <p data-i18n="MH.lesson_Y2Geo_barycenter1.coordinatesProofText2">In coordinates:</p>
+                <div class="MH-equation">OG⃗ = [1/(a + b)]·(a·OA⃗ + b·OB⃗)</div>
+                <div class="MH-equation">OG⃗ = [1/(a + b)]·[(a·x_A + b·x_B)·i + (a·y_A + b·y_B)·j]</div>
+                <p data-i18n="MH.lesson_Y2Geo_barycenter1.coordinatesProofConclusion">Which gives the coordinate formulas above.</p>
             </div>
         </section>
-        
+
         <section class="MH-section">
-            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_barycenter1.detailedExamples">Detailed Examples</h2>
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_barycenter1.threePointsTitle">2. Barycenter of Three Weighted Points</h2>
             
-            <div class="MH-example">
-                <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.example1Title">Example 1: Two Points with Different Weights</h3>
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.example1Text">Find the barycenter G of points A and B with weights α = 2 and β = 3.</p>
-                
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.example1Step1">Step 1: Verify α + β ≠ 0: 2 + 3 = 5 ≠ 0 ✓</p>
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.example1Step2">Step 2: Use the vector formula with reference point A:</p>
-                <div class="MH-equation">(2 + 3)AG = 3AB</div>
-                <div class="MH-equation">5AG = 3AB</div>
-                <div class="MH-equation">AG = (3/5)AB</div>
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.example1Step3">Step 3: Interpretation: G is on segment AB, 3/5 of the way from A to B.</p>
-                
-                <div class="MH-geometry-container">
-                    <canvas id="example1Graph" width="600" height="400" class="MH-geometry-canvas"></canvas>
-                </div>
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.threePointsDefinitionTitle">Definition</h3>
+                <p data-i18n="MH.lesson_Y2Geo_barycenter1.threePointsDefinitionText">Let A, B, C be three points in the plane, and a, b, c be three real numbers such that a + b + c ≠ 0.</p>
+                <p data-i18n="MH.lesson_Y2Geo_barycenter1.threePointsDefinitionText2">There exists a unique point G satisfying:</p>
+                <div class="MH-equation">a·GA⃗ + b·GB⃗ + c·GC⃗ = 0⃗</div>
+                <p data-i18n="MH.lesson_Y2Geo_barycenter1.threePointsDefinitionText3">This point G is called the barycenter of (A, a), (B, b), (C, c).</p>
             </div>
-            
-            <div class="MH-example">
-                <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.example2Title">Example 2: Three Points with Equal Weights</h3>
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.example2Text">Find the barycenter G of points A, B, and C with equal weights α = β = γ = 1.</p>
-                
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.example2Step1">Step 1: Verify sum ≠ 0: 1 + 1 + 1 = 3 ≠ 0 ✓</p>
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.example2Step2">Step 2: Use the vector formula with reference point O:</p>
-                <div class="MH-equation">(1 + 1 + 1)OG = 1OA + 1OB + 1OC</div>
-                <div class="MH-equation">3OG = OA + OB + OC</div>
-                <div class="MH-equation">OG = (1/3)(OA + OB + OC)</div>
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.example2Step3">Step 3: This is the centroid (center of mass) of triangle ABC.</p>
-                
+
+            <div class="MH-geometry-demo">
+                <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.threePointsVisualTitle">Three Points Barycenter</h3>
                 <div class="MH-geometry-container">
-                    <canvas id="example2Graph" width="600" height="400" class="MH-geometry-canvas"></canvas>
+                    <canvas id="barycenter3Points" class="MH-geometry-canvas"></canvas>
                 </div>
+                <p data-i18n="MH.lesson_Y2Geo_barycenter1.threePointsVisualText">The barycenter of three points lies inside the triangle when all weights are positive.</p>
             </div>
-            
-            <div class="MH-example">
-                <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.example3Title">Example 3: Using Associativity Property</h3>
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.example3Text">Find the barycenter of points A(weight 2), B(weight 3), and C(weight 1) using associativity.</p>
-                
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.example3Step1">Step 1: First find G₁, barycenter of A and B:</p>
-                <div class="MH-equation">(2 + 3)AG₁ = 3AB ⇒ AG₁ = (3/5)AB</div>
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.example3Step2">Step 2: Assign weight 5 to G₁ (sum of weights of A and B)</p>
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.example3Step3">Step 3: Find barycenter G of G₁(weight 5) and C(weight 1):</p>
-                <div class="MH-equation">(5 + 1)G₁G = 1G₁C ⇒ G₁G = (1/6)G₁C</div>
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.example3Step4">Step 4: Final barycenter G is on segment G₁C, 1/6 of the way from G₁ to C.</p>
-                
-                <div class="MH-geometry-container">
-                    <canvas id="example3Graph" width="600" height="400" class="MH-geometry-canvas"></canvas>
-                </div>
+
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.threePointsPropertiesTitle">Properties</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Geo_barycenter1.propertyHomogeneity">Homogeneity: Multiplying all coefficients by k ≠ 0 doesn't change G</li>
+                    <li data-i18n="MH.lesson_Y2Geo_barycenter1.propertyIsobarycenter">Isobarycenter: When a = b = c ≠ 0, G is the centroid (center of gravity) of triangle ABC</li>
+                    <li data-i18n="MH.lesson_Y2Geo_barycenter1.propertyFundamental">Fundamental property: For any point M, a·MA⃗ + b·MB⃗ + c·MC⃗ = (a + b + c)·MG⃗</li>
+                </ul>
+            </div>
+
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.threePointsCoordinatesTitle">Coordinates for Three Points</h3>
+                <p data-i18n="MH.lesson_Y2Geo_barycenter1.threePointsCoordinatesText">If A(x_A, y_A), B(x_B, y_B), C(x_C, y_C), then:</p>
+                <div class="MH-equation">x_G = (a·x_A + b·x_B + c·x_C)/(a + b + c)</div>
+                <div class="MH-equation">y_G = (a·y_A + b·y_B + c·y_C)/(a + b + c)</div>
+            </div>
+
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.partialBarycenterTitle">Partial Barycenter</h3>
+                <p data-i18n="MH.lesson_Y2Geo_barycenter1.partialBarycenterText">If we replace two weighted points (A, a) and (B, b) (with a + b ≠ 0) by their barycenter H with coefficient (a + b), then the barycenter of (A, a), (B, b), (C, c) is the same as the barycenter of (C, c), (H, a + b).</p>
+                <p data-i18n="MH.lesson_Y2Geo_barycenter1.partialBarycenterApplication">This allows us to reduce the construction of barycenter of multiple points to successive barycenters of two points.</p>
             </div>
         </section>
-        
+
         <section class="MH-section">
             <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_barycenter1.practice">Practice Problems</h2>
             
             <div class="MH-practice">
-                <h3 class="MH-practice-title" data-i18n="MH.lesson_Y2Geo_barycenter1.tryYourself">Try Solving These Problems</h3>
+                <h3 class="MH-practice-title" data-i18n="MH.lesson_Y2Geo_barycenter1.tryYourself">Practice Calculating Barycenters</h3>
                 
                 <div class="MH-practice-problem">
-                    <p data-i18n="MH.lesson_Y2Geo_barycenter1.problem1">1. Find the barycenter of points A and B with weights 4 and 1 respectively.</p>
-                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_eqdeg1a.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter1.problem1">1. Find the barycenter of (A, 2), (B, 3) where A(1, 2) and B(4, 6)</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_barycenter1.showSolution" onclick="toggleSolution(1)">Show Solution</button>
                     <div class="MH-solution" id="solution1">
-                        <p data-i18n="MH.lesson_Y2Geo_barycenter1.problem1Step1">Step 1: Sum of weights = 4 + 1 = 5 ≠ 0 ✓</p>
-                        <p data-i18n="MH.lesson_Y2Geo_barycenter1.problem1Step2">Step 2: Using vector formula with reference point A:</p>
-                        <div class="MH-equation">(4 + 1)AG = 1AB ⇒ 5AG = AB ⇒ AG = (1/5)AB</div>
-                        <p data-i18n="MH.lesson_Y2Geo_barycenter1.problem1Step3">Step 3: G is on AB, 1/5 of the way from A to B (closer to A since weight of A is larger).</p>
+                        <p data-i18n="MH.lesson_Y2Geo_barycenter1.problem1Step1">Using coordinate formulas:</p>
+                        <div class="MH-equation">x_G = (2×1 + 3×4)/(2 + 3) = (2 + 12)/5 = 14/5 = 2.8</div>
+                        <div class="MH-equation">y_G = (2×2 + 3×6)/(2 + 3) = (4 + 18)/5 = 22/5 = 4.4</div>
+                        <p data-i18n="MH.lesson_Y2Geo_barycenter1.problem1Solution">G(2.8, 4.4)</p>
                     </div>
                 </div>
                 
                 <div class="MH-practice-problem">
-                    <p data-i18n="MH.lesson_Y2Geo_barycenter1.problem2">2. Points A, B, C have weights 2, 3, and 5 respectively. Find the barycenter using associativity.</p>
-                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_eqdeg1a.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter1.problem2">2. Find the barycenter of (A, 1), (B, 1), (C, 1) where A(0, 0), B(4, 0), C(2, 3)</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_barycenter1.showSolution" onclick="toggleSolution(2)">Show Solution</button>
                     <div class="MH-solution" id="solution2">
-                        <p data-i18n="MH.lesson_Y2Geo_barycenter1.problem2Step1">Step 1: Find G₁, barycenter of A and B:</p>
-                        <div class="MH-equation">(2 + 3)AG₁ = 3AB ⇒ 5AG₁ = 3AB ⇒ AG₁ = (3/5)AB</div>
-                        <p data-i18n="MH.lesson_Y2Geo_barycenter1.problem2Step2">Step 2: G₁ has weight 5 (2 + 3)</p>
-                        <p data-i18n="MH.lesson_Y2Geo_barycenter1.problem2Step3">Step 3: Find G, barycenter of G₁(weight 5) and C(weight 5):</p>
-                        <div class="MH-equation">(5 + 5)G₁G = 5G₁C ⇒ 10G₁G = 5G₁C ⇒ G₁G = (1/2)G₁C</div>
-                        <p data-i18n="MH.lesson_Y2Geo_barycenter1.problem2Step4">Step 4: G is the midpoint of G₁C.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_barycenter1.problem2Step1">This is the isobarycenter (centroid) of triangle ABC:</p>
+                        <div class="MH-equation">x_G = (1×0 + 1×4 + 1×2)/(1 + 1 + 1) = 6/3 = 2</div>
+                        <div class="MH-equation">y_G = (1×0 + 1×0 + 1×3)/(1 + 1 + 1) = 3/3 = 1</div>
+                        <p data-i18n="MH.lesson_Y2Geo_barycenter1.problem2Solution">G(2, 1)</p>
                     </div>
                 </div>
                 
                 <div class="MH-practice-problem">
-                    <p data-i18n="MH.lesson_Y2Geo_barycenter1.problem3">3. Show that if all weights are equal, the barycenter of three points is the centroid of the triangle formed by them.</p>
-                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_eqdeg1a.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter1.problem3">3. Show that if G is barycenter of (A, a), (B, b), then AG/GB = |b|/|a|</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_barycenter1.showSolution" onclick="toggleSolution(3)">Show Solution</button>
                     <div class="MH-solution" id="solution3">
-                        <p data-i18n="MH.lesson_Y2Geo_barycenter1.problem3Step1">Step 1: Let weights be α = β = γ = k</p>
-                        <p data-i18n="MH.lesson_Y2Geo_barycenter1.problem3Step2">Step 2: Using vector formula with reference point O:</p>
-                        <div class="MH-equation">(k + k + k)OG = kOA + kOB + kOC</div>
-                        <div class="MH-equation">3kOG = k(OA + OB + OC)</div>
-                        <div class="MH-equation">OG = (1/3)(OA + OB + OC)</div>
-                        <p data-i18n="MH.lesson_Y2Geo_barycenter1.problem3Step3">Step 3: This is exactly the formula for the centroid of triangle ABC.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_barycenter1.problem3Step1">From the definition: a·GA⃗ + b·GB⃗ = 0⃗</p>
+                        <div class="MH-equation">a·GA⃗ = -b·GB⃗</div>
+                        <div class="MH-equation">|a|·GA = |b|·GB</div>
+                        <div class="MH-equation">GA/GB = |b|/|a|</div>
+                        <p data-i18n="MH.lesson_Y2Geo_barycenter1.problem3Solution">This shows that the barycenter divides the segment in the ratio of the absolute values of the weights.</p>
                     </div>
                 </div>
             </div>
         </section>
-        
+
         <section class="MH-section">
-            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_barycenter1.applications">Practical Applications</h2>
-            
-            <div class="MH-step">
-                <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.physicsTitle">Physics Applications</h3>
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.physicsText">The barycenter concept is crucial in physics for:</p>
-                <ul>
-                    <li data-i18n="MH.lesson_Y2Geo_barycenter1.physics1">Finding center of mass of objects</li>
-                    <li data-i18n="MH.lesson_Y2Geo_barycenter1.physics2">Calculating balance points in structures</li>
-                    <li data-i18n="MH.lesson_Y2Geo_barycenter1.physics3">Understanding orbital mechanics (Earth-Moon system barycenter)</li>
-                </ul>
-            </div>
-            
-            <div class="MH-step">
-                <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.engineeringTitle">Engineering Applications</h3>
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.engineeringText">Engineers use barycenters for:</p>
-                <ul>
-                    <li data-i18n="MH.lesson_Y2Geo_barycenter1.engineering1">Designing stable structures</li>
-                    <li data-i18n="MH.lesson_Y2Geo_barycenter1.engineering2">Aircraft and vehicle design</li>
-                    <li data-i18n="MH.lesson_Y2Geo_barycenter1.engineering3">Robotics and balance systems</li>
-                </ul>
-            </div>
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_barycenter1.summary">Summary</h2>
             
             <div class="MH-important">
-                <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.importantNote">Important Note</h3>
-                <p data-i18n="MH.lesson_Y2Geo_barycenter1.importantText">The barycenter is a powerful concept that connects geometry with physics and engineering. Understanding it helps solve real-world problems involving balance, stability, and distribution of mass.</p>
+                <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.keyPointsTitle">Key Points to Remember</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Geo_barycenter1.keyPoint1">Barycenter exists only when the sum of coefficients is not zero</li>
+                    <li data-i18n="MH.lesson_Y2Geo_barycenter1.keyPoint2">For two points, barycenter always lies on the line joining them</li>
+                    <li data-i18n="MH.lesson_Y2Geo_barycenter1.keyPoint3">Coordinates are weighted averages of the points' coordinates</li>
+                    <li data-i18n="MH.lesson_Y2Geo_barycenter1.keyPoint4">Homogeneity property allows scaling coefficients</li>
+                    <li data-i18n="MH.lesson_Y2Geo_barycenter1.keyPoint5">Partial barycenter helps reduce complex systems</li>
+                </ul>
+            </div>
+            
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Geo_barycenter1.applicationsTitle">Applications</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Geo_barycenter1.application1">Physics: Center of mass of objects</li>
+                    <li data-i18n="MH.lesson_Y2Geo_barycenter1.application2">Computer graphics: Object transformations and animations</li>
+                    <li data-i18n="MH.lesson_Y2Geo_barycenter1.application3">Engineering: Balance and stability calculations</li>
+                    <li data-i18n="MH.lesson_Y2Geo_barycenter1.application4">Statistics: Weighted averages</li>
+                </ul>
             </div>
         </section>
-        
     </main>
     
     <footer>
@@ -350,236 +355,6 @@
     <script src="scripts/translation.js"></script>
     <script src="scripts/pwa-install.js"></script>
     <script>
-        // Solution toggle function
-        function toggleSolution(num) {
-            const solution = document.getElementById(`solution${num}`);
-            solution.classList.toggle('MH-show');
-        }
-
-        // Graph drawing functions for barycenter lesson
-        function drawBarycenterGraphs() {
-            // Concept graph - basic barycenter visualization
-            try {
-                const { ctx, width, height, centerX, centerY, scale } = geometryUtils.initializeGeometryCanvas('barycenterConceptGraph');
-                
-                // Draw points with different weights
-                const pointA = { x: -3, y: 1 };
-                const pointB = { x: 2, y: -1 };
-                const pointC = { x: 0, y: 2 };
-                
-                // Draw points with labels
-                geometryUtils.drawPoint(ctx, pointA, centerX, centerY, scale, { 
-                    color: geometryUtils.getCssVariable('--primary'),
-                    label: 'A',
-                    showCoordinates: true
-                });
-                
-                geometryUtils.drawPoint(ctx, pointB, centerX, centerY, scale, { 
-                    color: geometryUtils.getCssVariable('--primary'),
-                    label: 'B',
-                    showCoordinates: true
-                });
-                
-                geometryUtils.drawPoint(ctx, pointC, centerX, centerY, scale, { 
-                    color: geometryUtils.getCssVariable('--primary'),
-                    label: 'C',
-                    showCoordinates: true
-                });
-                
-                // Draw barycenter (calculated roughly)
-                const barycenter = { x: -0.3, y: 0.7 };
-                geometryUtils.drawPoint(ctx, barycenter, centerX, centerY, scale, { 
-                    color: geometryUtils.getCssVariable('--secondary'),
-                    label: 'G',
-                    radius: 6,
-                    showCoordinates: true
-                });
-                
-                // Add description
-                ctx.fillStyle = geometryUtils.getCssVariable('--MH-geo-text-color');
-                ctx.font = '14px Arial';
-                ctx.textAlign = 'left';
-                ctx.fillText('Barycenter G is the balance point', 20, 30);
-                ctx.fillText('of the system of points A, B, C', 20, 50);
-            } catch (error) {
-                console.error('Error drawing concept graph:', error);
-            }
-            
-            // Two points graph
-            try {
-                const { ctx, width, height, centerX, centerY, scale } = geometryUtils.initializeGeometryCanvas('twoPointsGraph');
-                
-                const pointA = { x: -4, y: 0 };
-                const pointB = { x: 4, y: 0 };
-                
-                // Draw line AB
-                ctx.strokeStyle = geometryUtils.getCssVariable('--MH-geo-grid-color');
-                ctx.lineWidth = 1;
-                const pixelA = geometryUtils.mathToPixel(pointA.x, pointA.y, centerX, centerY, scale);
-                const pixelB = geometryUtils.mathToPixel(pointB.x, pointB.y, centerX, centerY, scale);
-                ctx.beginPath();
-                ctx.moveTo(pixelA.pixelX, pixelA.pixelY);
-                ctx.lineTo(pixelB.pixelX, pixelB.pixelY);
-                ctx.stroke();
-                
-                // Draw points
-                geometryUtils.drawPoint(ctx, pointA, centerX, centerY, scale, { 
-                    color: geometryUtils.getCssVariable('--primary'),
-                    label: 'A'
-                });
-                
-                geometryUtils.drawPoint(ctx, pointB, centerX, centerY, scale, { 
-                    color: geometryUtils.getCssVariable('--primary'),
-                    label: 'B'
-                });
-                
-                // Draw barycenter positions for different weight ratios
-                const ratios = [
-                    { alpha: 1, beta: 1, label: '1:1', x: 0 },
-                    { alpha: 2, beta: 1, label: '2:1', x: -1.33 },
-                    { alpha: 1, beta: 2, label: '1:2', x: 1.33 },
-                    { alpha: 3, beta: 1, label: '3:1', x: -2 },
-                    { alpha: 1, beta: 3, label: '1:3', x: 2 }
-                ];
-                
-                const colors = [
-                    geometryUtils.getCssVariable('--secondary'),
-                    geometryUtils.getCssVariable('--accent'),
-                    geometryUtils.getCssVariable('--warning'),
-                    geometryUtils.getCssVariable('--info'),
-                    geometryUtils.getCssVariable('--primary-dark')
-                ];
-                
-                ratios.forEach((ratio, index) => {
-                    const pointG = { x: ratio.x, y: 0 };
-                    geometryUtils.drawPoint(ctx, pointG, centerX, centerY, scale, { 
-                        color: colors[index],
-                        label: `G${ratio.label}`,
-                        radius: 4
-                    });
-                });
-                
-                // Add legend
-                ctx.fillStyle = geometryUtils.getCssVariable('--MH-geo-text-color');
-                ctx.font = '12px Arial';
-                ctx.textAlign = 'left';
-                ctx.fillText('Barycenter positions for different weight ratios:', 20, 30);
-                ctx.fillText('G lies on line AB and divides it in ratio β:α', 20, 50);
-            } catch (error) {
-                console.error('Error drawing two points graph:', error);
-            }
-            
-            // Equal weights graph
-            try {
-                const { ctx, width, height, centerX, centerY, scale } = geometryUtils.initializeGeometryCanvas('equalWeightsGraph');
-                
-                const pointA = { x: -3, y: 0 };
-                const pointB = { x: 3, y: 0 };
-                const midpoint = { x: 0, y: 0 };
-                
-                // Draw line AB
-                ctx.strokeStyle = geometryUtils.getCssVariable('--MH-geo-grid-color');
-                ctx.lineWidth = 1;
-                const pixelA = geometryUtils.mathToPixel(pointA.x, pointA.y, centerX, centerY, scale);
-                const pixelB = geometryUtils.mathToPixel(pointB.x, pointB.y, centerX, centerY, scale);
-                ctx.beginPath();
-                ctx.moveTo(pixelA.pixelX, pixelA.pixelY);
-                ctx.lineTo(pixelB.pixelX, pixelB.pixelY);
-                ctx.stroke();
-                
-                // Draw points
-                geometryUtils.drawPoint(ctx, pointA, centerX, centerY, scale, { 
-                    color: geometryUtils.getCssVariable('--primary'),
-                    label: 'A'
-                });
-                
-                geometryUtils.drawPoint(ctx, pointB, centerX, centerY, scale, { 
-                    color: geometryUtils.getCssVariable('--primary'),
-                    label: 'B'
-                });
-                
-                geometryUtils.drawPoint(ctx, midpoint, centerX, centerY, scale, { 
-                    color: geometryUtils.getCssVariable('--secondary'),
-                    label: 'G',
-                    radius: 6
-                });
-                
-                // Add description
-                ctx.fillStyle = geometryUtils.getCssVariable('--MH-geo-text-color');
-                ctx.font = '14px Arial';
-                ctx.textAlign = 'center';
-                ctx.fillText('Equal weights: G is the midpoint of AB', centerX, centerY - 40);
-            } catch (error) {
-                console.error('Error drawing equal weights graph:', error);
-            }
-            
-            // Different weights graph
-            try {
-                const { ctx, width, height, centerX, centerY, scale } = geometryUtils.initializeGeometryCanvas('differentWeightsGraph');
-                
-                const pointA = { x: -3, y: 0 };
-                const pointB = { x: 3, y: 0 };
-                
-                // Draw line AB
-                ctx.strokeStyle = geometryUtils.getCssVariable('--MH-geo-grid-color');
-                ctx.lineWidth = 1;
-                const pixelA = geometryUtils.mathToPixel(pointA.x, pointA.y, centerX, centerY, scale);
-                const pixelB = geometryUtils.mathToPixel(pointB.x, pointB.y, centerX, centerY, scale);
-                ctx.beginPath();
-                ctx.moveTo(pixelA.pixelX, pixelA.pixelY);
-                ctx.lineTo(pixelB.pixelX, pixelB.pixelY);
-                ctx.stroke();
-                
-                // Draw points
-                geometryUtils.drawPoint(ctx, pointA, centerX, centerY, scale, { 
-                    color: geometryUtils.getCssVariable('--primary'),
-                    label: 'A (α=3)'
-                });
-                
-                geometryUtils.drawPoint(ctx, pointB, centerX, centerY, scale, { 
-                    color: geometryUtils.getCssVariable('--primary'),
-                    label: 'B (β=1)'
-                });
-                
-                // Draw barycenter closer to A
-                const barycenter = { x: -1.5, y: 0 };
-                geometryUtils.drawPoint(ctx, barycenter, centerX, centerY, scale, { 
-                    color: geometryUtils.getCssVariable('--secondary'),
-                    label: 'G',
-                    radius: 6
-                });
-                
-                // Add description
-                ctx.fillStyle = geometryUtils.getCssVariable('--MH-geo-text-color');
-                ctx.font = '14px Arial';
-                ctx.textAlign = 'center';
-                ctx.fillText('Different weights: G is closer to the heavier point', centerX, centerY - 40);
-            } catch (error) {
-                console.error('Error drawing different weights graph:', error);
-            }
-            
-            // Continue with other graphs as needed...
-        }
-        
-        // Initialize graphs when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                drawBarycenterGraphs();
-            }, 300);
-        });
-        
-        // Redraw graphs when theme changes
-        document.addEventListener('themeChanged', function() {
-            setTimeout(drawBarycenterGraphs, 200);
-        });
-        
-        // Redraw graphs when language changes
-        window.addEventListener('languageChanged', function() {
-            setTimeout(drawBarycenterGraphs, 200);
-        });
-    </script>
-    
-    <script>
         // Register service worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
@@ -592,6 +367,265 @@
                 });
             });
         }
+
+        // Geometry demonstrations
+        function initBarycenterDemonstrations() {
+            // Two points barycenter demonstration
+            const canvas2Points = document.getElementById('barycenter2Points');
+            const ctx2Points = canvas2Points.getContext('2d');
+            const { width, height, centerX, centerY, scale } = geometryUtils.initializeGeometryCanvas('barycenter2Points', 600, 300);
+            
+            function drawTwoPointsBarycenter(a, b) {
+                geometryUtils.clearCanvas('barycenter2Points');
+                geometryUtils.drawCoordinateSystem(ctx2Points, width, height, centerX, centerY, scale);
+                
+                // Points A and B
+                const pointA = { x: -3, y: 0 };
+                const pointB = { x: 3, y: 0 };
+                
+                // Calculate barycenter G
+                const xG = (a * pointA.x + b * pointB.x) / (a + b);
+                const yG = (a * pointA.y + b * pointB.y) / (a + b);
+                const pointG = { x: xG, y: yG };
+                
+                // Draw line AB
+                ctx2Points.strokeStyle = geometryUtils.getCssVariable('--MH-geo-grid-color');
+                ctx2Points.lineWidth = 1;
+                ctx2Points.setLineDash([5, 3]);
+                ctx2Points.beginPath();
+                const pixelA = geometryUtils.mathToPixel(pointA.x, pointA.y, centerX, centerY, scale);
+                const pixelB = geometryUtils.mathToPixel(pointB.x, pointB.y, centerX, centerY, scale);
+                ctx2Points.moveTo(pixelA.pixelX, pixelA.pixelY);
+                ctx2Points.lineTo(pixelB.pixelX, pixelB.pixelY);
+                ctx2Points.stroke();
+                ctx2Points.setLineDash([]);
+                
+                // Draw points
+                geometryUtils.drawPoint(ctx2Points, pointA, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--primary'),
+                    radius: 6,
+                    label: 'A',
+                    showCoordinates: true
+                });
+                
+                geometryUtils.drawPoint(ctx2Points, pointB, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--primary'),
+                    radius: 6,
+                    label: 'B',
+                    showCoordinates: true
+                });
+                
+                geometryUtils.drawPoint(ctx2Points, pointG, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--warning'),
+                    radius: 8,
+                    label: 'G',
+                    showCoordinates: true
+                });
+                
+                // Draw vectors
+                geometryUtils.drawVector(ctx2Points, pointG, pointA, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--primary-light'),
+                    label: `a = ${a}`,
+                    showMagnitude: true
+                });
+                
+                geometryUtils.drawVector(ctx2Points, pointG, pointB, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--secondary-light'),
+                    label: `b = ${b}`,
+                    showMagnitude: true
+                });
+            }
+            
+            // Three points barycenter demonstration
+            const canvas3Points = document.getElementById('barycenter3Points');
+            const ctx3Points = canvas3Points.getContext('2d');
+            geometryUtils.initializeGeometryCanvas('barycenter3Points', 600, 300);
+            
+            function drawThreePointsBarycenter() {
+    geometryUtils.clearCanvas('barycenter3Points');
+    
+    // Get canvas context and dimensions
+    const canvas3Points = document.getElementById('barycenter3Points');
+    const ctx3Points = canvas3Points.getContext('2d');
+    const { width, height, centerX, centerY, scale } = geometryUtils.initializeGeometryCanvas('barycenter3Points', 600, 300);
+    
+    // Clear with background color but NO coordinate system
+    geometryUtils.clearCanvasWithoutCoordSystem(ctx3Points, width, height);
+    
+    // Points A, B, C forming a triangle
+    const pointA = { x: -3, y: -1 };
+    const pointB = { x: 3, y: -1 };
+    const pointC = { x: 0, y: 2 };
+    
+    // Weights (all positive for demonstration)
+    const a = 2, b = 3, c = 1;
+    
+    // Calculate barycenter G
+    const xG = (a * pointA.x + b * pointB.x + c * pointC.x) / (a + b + c);
+    const yG = (a * pointA.y + b * pointB.y + c * pointC.y) / (a + b + c);
+    const pointG = { x: xG, y: yG };
+    
+    // Draw triangle
+    geometryUtils.drawTriangle(ctx3Points, pointA, pointB, pointC, centerX, centerY, scale, {
+        fillColor: geometryUtils.getCssVariable('--primary-light') + '40',
+        strokeColor: geometryUtils.getCssVariable('--primary'),
+        labelPoints: true,
+        pointLabels: ['A', 'B', 'C'],
+        showSides: true
+    });
+    
+    // Draw barycenter
+    geometryUtils.drawPoint(ctx3Points, pointG, centerX, centerY, scale, {
+        color: geometryUtils.getCssVariable('--warning'),
+        radius: 8,
+        label: 'G',
+        showCoordinates: false // Changed to false since we don't have coordinate system
+    });
+    
+    // Draw lines from vertices to barycenter (medians)
+    [pointA, pointB, pointC].forEach(point => {
+        ctx3Points.strokeStyle = geometryUtils.getCssVariable('--MH-geo-grid-color');
+        ctx3Points.lineWidth = 1;
+        ctx3Points.setLineDash([5, 3]);
+        ctx3Points.beginPath();
+        const pixelStart = geometryUtils.mathToPixel(point.x, point.y, centerX, centerY, scale);
+        const pixelEnd = geometryUtils.mathToPixel(pointG.x, pointG.y, centerX, centerY, scale);
+        ctx3Points.moveTo(pixelStart.pixelX, pixelStart.pixelY);
+        ctx3Points.lineTo(pixelEnd.pixelX, pixelEnd.pixelY);
+        ctx3Points.stroke();
+        ctx3Points.setLineDash([]);
+    });
+    
+    // Add a title or label for the triangle
+    ctx3Points.fillStyle = geometryUtils.getCssVariable('--MH-geo-text-color');
+    ctx3Points.font = '14px Arial';
+    ctx3Points.textAlign = 'center';
+    ctx3Points.fillText('Triangle with Barycenter (Centroid)', width / 2, 20);
+}
+            
+            // Special cases demonstration
+            const canvasSpecial = document.getElementById('specialCases');
+            const ctxSpecial = canvasSpecial.getContext('2d');
+            geometryUtils.initializeGeometryCanvas('specialCases', 600, 300);
+            
+            function drawSpecialCases() {
+                geometryUtils.clearCanvas('specialCases');
+                geometryUtils.drawCoordinateSystem(ctxSpecial, width, height, centerX, centerY, scale);
+                
+                const pointA = { x: -4, y: 0 };
+                const pointB = { x: 4, y: 0 };
+                
+                // Case 1: Same sign weights (both positive)
+                const a1 = 2, b1 = 3;
+                const xG1 = (a1 * pointA.x + b1 * pointB.x) / (a1 + b1);
+                const pointG1 = { x: xG1, y: 1 };
+                
+                // Case 2: Opposite sign weights
+                const a2 = 2, b2 = -1;
+                const xG2 = (a2 * pointA.x + b2 * pointB.x) / (a2 + b2);
+                const pointG2 = { x: xG2, y: -1 };
+                
+                // Draw line AB
+                ctxSpecial.strokeStyle = geometryUtils.getCssVariable('--MH-geo-grid-color');
+                ctxSpecial.lineWidth = 1;
+                ctxSpecial.setLineDash([5, 3]);
+                const pixelA = geometryUtils.mathToPixel(pointA.x, pointA.y, centerX, centerY, scale);
+                const pixelB = geometryUtils.mathToPixel(pointB.x, pointB.y, centerX, centerY, scale);
+                ctxSpecial.beginPath();
+                ctxSpecial.moveTo(pixelA.pixelX, pixelA.pixelY);
+                ctxSpecial.lineTo(pixelB.pixelX, pixelB.pixelY);
+                ctxSpecial.stroke();
+                ctxSpecial.setLineDash([]);
+                
+                // Draw points and barycenters
+                geometryUtils.drawPoint(ctxSpecial, pointA, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--primary'),
+                    radius: 5,
+                    label: 'A'
+                });
+                
+                geometryUtils.drawPoint(ctxSpecial, pointB, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--primary'),
+                    radius: 5,
+                    label: 'B'
+                });
+                
+                geometryUtils.drawPoint(ctxSpecial, pointG1, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--primary'),
+                    radius: 6,
+                    label: 'G₁'
+                });
+                
+                geometryUtils.drawPoint(ctxSpecial, pointG2, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--warning'),
+                    radius: 6,
+                    label: 'G₂'
+                });
+                
+                // Add labels for cases
+                ctxSpecial.fillStyle = geometryUtils.getCssVariable('--MH-geo-text-color');
+                ctxSpecial.font = '12px Arial';
+                ctxSpecial.textAlign = 'center';
+                const pixelG1 = geometryUtils.mathToPixel(pointG1.x, pointG1.y, centerX, centerY, scale);
+                const pixelG2 = geometryUtils.mathToPixel(pointG2.x, pointG2.y, centerX, centerY, scale);
+                ctxSpecial.fillText('Same sign: G between A and B', pixelG1.pixelX, pixelG1.pixelY - 20);
+                ctxSpecial.fillText('Opposite signs: G outside AB', pixelG2.pixelX, pixelG2.pixelY + 20);
+            }
+            
+            // Initial drawings
+            drawTwoPointsBarycenter(2, 3);
+            drawThreePointsBarycenter();
+            drawSpecialCases();
+            
+            // Event listeners for weight controls
+            const weightA = document.getElementById('weightA');
+            const weightB = document.getElementById('weightB');
+            
+            function updateTwoPointsBarycenter() {
+                const a = parseFloat(weightA.value);
+                const b = parseFloat(weightB.value);
+                
+                if (a + b === 0) {
+                    alert('Sum of weights cannot be zero!');
+                    return;
+                }
+                
+                drawTwoPointsBarycenter(a, b);
+            }
+            
+            weightA.addEventListener('input', updateTwoPointsBarycenter);
+            weightB.addEventListener('input', updateTwoPointsBarycenter);
+        }
+        
+        // Toggle solution visibility
+        function toggleSolution(problemNumber) {
+            const solution = document.getElementById(`solution${problemNumber}`);
+            const button = solution.previousElementSibling;
+            
+            if (solution.style.display === 'block') {
+                solution.style.display = 'none';
+                button.setAttribute('data-i18n', 'MH.lesson_Y2Geo_barycenter1.showSolution');
+                button.textContent = getTranslation('MH.lesson_Y2Geo_barycenter1.showSolution');
+            } else {
+                solution.style.display = 'block';
+                button.setAttribute('data-i18n', 'MH.lesson_Y2Geo_barycenter1.hideSolution');
+                button.textContent = getTranslation('MH.lesson_Y2Geo_barycenter1.hideSolution');
+            }
+        }
+        
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize solutions as hidden
+            for (let i = 1; i <= 3; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+            }
+            
+            // Initialize geometry demonstrations
+            initBarycenterDemonstrations();
+        });
     </script>
     
     <!-- noscript fallback -->

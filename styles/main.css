@@ -370,6 +370,9 @@ header {
     border-left: 4px solid var(--primary);
     position: relative;
     overflow: hidden;
+    text-rendering: optimizeLegibility;
+    -webkit-font-feature-settings: "kern" 1;
+    font-feature-settings: "kern" 1;
 }
 
 .MH-section::before {
@@ -529,15 +532,22 @@ header {
 
 /* Equations */
 .MH-equation {
-    font-family: 'Courier New', monospace;
     background-color: var(--MH-bg-secondary);
     padding: 0.2rem 0.5rem;
     border-radius: 4px;
     border: 1px solid var(--MH-border-color);
     color: var(--secondary);
     font-weight: bold;
+    font-family: "Cambria Math", "STIX", "DejaVu Math", "Arial Unicode MS", sans-serif;
+    font-size: 1.1em;
+    line-height: 1.4;
+    margin: 0.5em 0;
 }
-
+/* Add this to main.css - Quick fix for mathematical symbols */
+.MH-section *:not(.MH-equation) {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, 'Cambria Math', 'Arial Unicode MS', 'DejaVu Sans', sans-serif;
+    unicode-bidi: plaintext;
+}
 /* Comparison section */
 .MH-comparison {
     display: grid;
