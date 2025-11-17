@@ -71,6 +71,8 @@ window.translations_fr = {
     // Geometry lessons - Second Year
     'MH.index.geometry.second.1': 'Calcul Vectoriel',
     'MH.index.geometry.second.2': 'Barycentre',
+'MH.index.geometry.second.2a': 'Barycentre I : Généralités',
+'MH.index.geometry.second.2b': 'Barycentre II : Exercices',
     'MH.index.geometry.second.3': 'Translations',
     'MH.index.geometry.second.4': 'Homothéties',
     'MH.index.geometry.second.5': 'Rotations',

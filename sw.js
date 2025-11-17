@@ -1,5 +1,5 @@
 // Service Worker for Mathematics Hub - Enhanced Version
-const CACHE_NAME = 'math-hub-v1.0.9';
+const CACHE_NAME = 'math-hub-v1.2.0';
 const urlsToCache = [
   '/',
   '/index.html',

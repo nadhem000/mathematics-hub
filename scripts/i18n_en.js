@@ -70,7 +70,9 @@ window.translations_en = {
     'MH.index.geometry.first.8': 'Plane Sections of a Solid',
     // Geometry lessons - Second Year
     'MH.index.geometry.second.1': 'Vector Calculus',
-    'MH.index.geometry.second.2': 'Barycenter',
+'MH.index.geometry.second.2': 'Barycenter',
+'MH.index.geometry.second.2a': 'Barycenter I: Generality',
+'MH.index.geometry.second.2b': 'Barycenter II: Exercises',
     'MH.index.geometry.second.3': 'Translations',
     'MH.index.geometry.second.4': 'Homotheties',
     'MH.index.geometry.second.5': 'Rotations',

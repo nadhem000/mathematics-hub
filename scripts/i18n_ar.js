@@ -70,7 +70,9 @@ window.translations_ar = {
     'MH.index.geometry.first.8': 'مقاطع مستوية لمجسم',
     // Geometry lessons - Second Year
     'MH.index.geometry.second.1': 'الحساب المتجهي',
-    'MH.index.geometry.second.2': 'مركز الثقل',
+	'MH.index.geometry.second.2': 'مركز الثقل',
+'MH.index.geometry.second.2a': 'مركز الثقل I: العام',
+'MH.index.geometry.second.2b': 'مركز الثقل II: تمارين',
     'MH.index.geometry.second.3': 'الانسحابات',
     'MH.index.geometry.second.4': 'التماثلات',
     'MH.index.geometry.second.5': 'الدورانات',
