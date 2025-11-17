@@ -1497,7 +1497,7 @@ window.translations_en = {
 'MH.lesson_Y2Geo_barycenter2.exercise6.solution.part3step1text': 'MA + 3MB + MC = (MA + MC) + 3MB',
 'MH.lesson_Y2Geo_barycenter2.exercise6.solution.part3step1text2': 'Using barycenter properties, this can be related to known points and distances.',
 'MH.lesson_Y2Geo_barycenter2.exercise6.solution.part3step2': 'Step 2: Identify the geometric locus',
-'MH.lesson_Y2Geo_barycenter2.exercise6.solution.part3step2text': 'The equation represents a circle with center at a specific point and radius determined by the given ratio.'
+'MH.lesson_Y2Geo_barycenter2.exercise6.solution.part3step2text': 'The equation represents a circle with center at a specific point and radius determined by the given ratio.',
 
 // Exercise 7
 'MH.lesson_Y2Geo_barycenter2.exercise7.title': 'Exercise 7: Right Triangle Barycenter',
@@ -1702,4 +1702,5 @@ window.translations_en = {
 'MH.lesson_Y2Geo_barycenter2.strategy4': 'Use partial barycenters to break down complex systems',
 'MH.lesson_Y2Geo_barycenter2.strategy5': 'Verify results with geometric constructions',
 'MH.lesson_Y2Geo_barycenter2.finalThought': 'Practice these exercises regularly to master barycenter concepts. The more problems you solve, the more intuitive these techniques will become.'
+
 };
