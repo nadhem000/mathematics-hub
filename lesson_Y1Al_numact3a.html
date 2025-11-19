@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Mathematics Lesson: Numerical Activities II - Part 1</title>
+		<!-- PWA Manifest -->
+		<link rel="manifest" href="manifest.json">
+		
+		<!-- Favicon -->
+		<link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+		<link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+		
+		<!-- Theme Color -->
+		<meta name="theme-color" content="#4a6fa5" media="(prefers-color-scheme: light)">
+		<meta name="theme-color" content="#1a365f" media="(prefers-color-scheme: dark)">
+		
+		<!-- PWA Meta Tags -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="default">
+		<meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="msapplication-TileColor" content="#4a6fa5">
+		<meta name="msapplication-config" content="/browserconfig.xml">
+		<link rel="stylesheet" href="styles/main.css">
+		<style>
+			/* Page-specific color palette - Cadet Blue + Light Pink Theme */
+			:root {
+            --primary: #5f9ea0;        /* Cadet Blue */
+            --primary-light: #8fbcbc;   /* Light Cadet Blue */
+            --primary-dark: #4a7b7d;    /* Dark Cadet Blue */
+            --secondary: #f4acb7;       /* Light Pink */
+            --secondary-light: #f8c8d4; /* Very Light Pink */
+            --secondary-dark: #d48a96;  /* Dark Pink */
+            --accent: #9b59b6;
+            --warning: #e74c3c;
+            --info: #3498db;
+			}
+			
+			[data-theme="dark"] {
+            --primary: #4a7b7d;
+            --primary-light: #5f9ea0;
+            --primary-dark: #3a6163;
+            --secondary: #d48a96;
+            --secondary-light: #f4acb7;
+            --secondary-dark: #b36a76;
+            --accent: #8e44ad;
+            --warning: #c0392b;
+            --info: #2980b9;
+			}
+			.MH-activity-visualization {
+			margin: 2rem 0;
+			border: 1px solid var(--primary-light);
+			border-radius: 8px;
+			padding: 1rem;
+			background: var(--secondary-light);
+			}
+			
+			.MH-visualization-container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 1rem;
+			}
+			
+			#activity1Canvas {
+			border: 1px solid var(--primary);
+			border-radius: 4px;
+			background: white;
+			}
+			
+			.MH-visualization-legend {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 1rem;
+			}
+			
+			.MH-legend-item {
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+			}
+			
+			.MH-legend-color {
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			border: 1px solid var(--primary);
+			border-radius: 3px;
+			}
+			
+			.MH-legend-label {
+			font-size: 0.9rem;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<div class="MH-header-grid">
+				<!-- Column 1: Icon -->
+				<div class="MH-header-column MH-header-icon">
+					<a href="index.html" class="MH-logo-link" data-tooltip>
+						<img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+					</a>
+				</div>
+				
+				<!-- Column 2: Title -->
+				<div class="MH-header-column MH-header-title">
+					<div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+				</div>
+				
+				<!-- Column 3: Options -->
+				<div class="MH-header-column MH-header-options">
+					<div class="MH-header-controls">
+						<button class="MH-theme-toggle" id="themeToggle">
+							<span data-i18n="MH.general.theme">Theme</span>
+							<span>🌙</span>
+						</button>
+						<div class="MH-language-selector">
+							<button class="MH-language-btn" id="languageBtn">
+								<span data-i18n="MH.general.language">Language</span>
+								<span>▼</span>
+							</button>
+							<div class="MH-language-dropdown" id="languageDropdown">
+								<a href="#" class="MH-language-option" data-lang="en">English</a>
+								<a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+								<a href="#" class="MH-language-option" data-lang="fr">Français</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		
+		<main id="main-content" class="MH-container" tabindex="-1">
+			
+			<h1 class="MH-lesson-title" data-i18n="MH.lesson_Y1Al_numact2a.title">Numerical Activities II: Part 1</h1>
+			<h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y1Al_numact2a.subtitle">Calculation Rules and Powers</h2>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2a.calculationRules">Calculation Rules</h2>
+				
+				<div class="MH-step">
+					<h3 data-i18n="MH.lesson_Y1Al_numact2a.rulesTitle">Fundamental Rules for Fractions</h3>
+					<p data-i18n="MH.lesson_Y1Al_numact2a.rulesText1">Let a, b, c, d, and k be real numbers such that b ≠ 0 and d ≠ 0. We have the following properties:</p>
+					
+					<div class="MH-example">
+						<h4 data-i18n="MH.lesson_Y1Al_numact2a.equalityRule">Equality Rule</h4>
+						<p><span class="MH-equation">a/b = c/d</span> <span data-i18n="MH.lesson_Y1Al_numact2a.equalityRuleText1">is equivalent to</span> <span class="MH-equation">ad = bc</span></p>
+						
+						<h4 data-i18n="MH.lesson_Y1Al_numact2a.additionRule">Addition Rule</h4>
+						<p><span class="MH-equation">(a/b) + (c/d) = (ad + bc)/(bd)</span></p>
+						
+						<h4 data-i18n="MH.lesson_Y1Al_numact2a.multiplicationRule">Multiplication Rules</h4>
+						<p><span class="MH-equation">k × (a/b) = (ka)/b</span></p>
+						<p><span class="MH-equation">(a/b) × (c/d) = (ac)/(bd)</span></p>
+					</div>
+					
+					<div class="MH-step">
+						<h3 data-i18n="MH.lesson_Y1Al_numact2a.divisionRules">Division Rules</h3>
+						<p data-i18n="MH.lesson_Y1Al_numact2a.divisionRulesText">Let a, b, c, and d be nonzero real numbers. We have:</p>
+						
+						<div class="MH-example">
+							<p><span class="MH-equation">1/(a/b) = b/a</span></p>
+							<p><span class="MH-equation">(a/b) ÷ (c/d) = (a/b) × (d/c) = (ad)/(bc)</span></p>
+						</div>
+					</div>
+				</div>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2a.powers">Working with Powers</h2>
+				
+				<div class="MH-step">
+					<h3 data-i18n="MH.lesson_Y1Al_numact2a.powerRulesTitle">Rules of Exponents</h3>
+					<p data-i18n="MH.lesson_Y1Al_numact2a.powerRulesText">For all nonzero real numbers a and b and all integers m and n, we have:</p>
+					
+					<div class="MH-example">
+						<table class="MH-table">
+							<tr>
+								<th data-i18n="MH.lesson_Y1Al_numact2a.ruleColumn">Rule</th>
+								<th data-i18n="MH.lesson_Y1Al_numact2a.expressionColumn">Expression</th>
+							</tr>
+							<tr>
+								<td data-i18n="MH.lesson_Y1Al_numact2a.productRule">Product Rule</td>
+								<td><span class="MH-equation">a<sup>m</sup> × a<sup>n</sup> = a<sup>m+n</sup></span></td>
+							</tr>
+							<tr>
+								<td data-i18n="MH.lesson_Y1Al_numact2a.powerRule">Power of a Power</td>
+								<td><span class="MH-equation">(a<sup>m</sup>)<sup>n</sup> = a<sup>mn</sup></span></td>
+							</tr>
+							<tr>
+								<td data-i18n="MH.lesson_Y1Al_numact2a.quotientRule">Quotient Rule</td>
+								<td><span class="MH-equation">a<sup>m</sup> ÷ a<sup>n</sup> = a<sup>m-n</sup></span></td>
+							</tr>
+							<tr>
+								<td data-i18n="MH.lesson_Y1Al_numact2a.negativeExponent">Negative Exponent</td>
+								<td><span class="MH-equation">(1/a)<sup>n</sup> = a<sup>-n</sup></span></td>
+							</tr>
+							<tr>
+								<td data-i18n="MH.lesson_Y1Al_numact2a.productPower">Power of a Product</td>
+								<td><span class="MH-equation">(a × b)<sup>n</sup> = a<sup>n</sup> × b<sup>n</sup></span></td>
+							</tr>
+							<tr>
+								<td data-i18n="MH.lesson_Y1Al_numact2a.quotientPower">Power of a Quotient</td>
+								<td><span class="MH-equation">(a/b)<sup>n</sup> = a<sup>n</sup> ÷ b<sup>n</sup></span></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2a.activity1">Activity 1: Area Comparison</h2>
+				
+				<div class="MH-step">
+					<h3 data-i18n="MH.lesson_Y1Al_numact2a.activity1Title">Understanding the Problem</h3>
+					<p data-i18n="MH.lesson_Y1Al_numact2a.activity1Text1">In the accompanying figure, we denote by a, b, c, d, and e the respective areas of the colored parts A, B, C, D, and E.</p>
+					
+					<!-- Added visualization for the half-circles -->
+					<div class="MH-activity-visualization">
+						<div class="MH-visualization-container">
+							<canvas id="activity1Canvas" width="600" height="400"></canvas>
+							<div class="MH-visualization-legend">
+								<div class="MH-legend-item">
+									<span class="MH-legend-color" style="background-color: #FF6B6B;"></span>
+									<span class="MH-legend-label" data-i18n="MH.lesson_Y1Al_numact2a.legendA">A (diameter 1cm)</span>
+								</div>
+								<div class="MH-legend-item">
+									<span class="MH-legend-color" style="background-color: #4ECDC4;"></span>
+									<span class="MH-legend-label" data-i18n="MH.lesson_Y1Al_numact2a.legendB">B (diameter 2cm)</span>
+								</div>
+								<div class="MH-legend-item">
+									<span class="MH-legend-color" style="background-color: #45B7D1;"></span>
+									<span class="MH-legend-label" data-i18n="MH.lesson_Y1Al_numact2a.legendC">C (diameter 3cm)</span>
+								</div>
+								<div class="MH-legend-item">
+									<span class="MH-legend-color" style="background-color: #96CEB4;"></span>
+									<span class="MH-legend-label" data-i18n="MH.lesson_Y1Al_numact2a.legendD">D (diameter 4cm)</span>
+								</div>
+								<div class="MH-legend-item">
+									<span class="MH-legend-color" style="background-color: #FFEAA7;"></span>
+									<span class="MH-legend-label" data-i18n="MH.lesson_Y1Al_numact2a.legendE">E (diameter 5cm)</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="MH-example">
+						<h4 data-i18n="MH.lesson_Y1Al_numact2a.activity1Step1">Step 1: Calculate a, b, c, d, and e</h4>
+						<p data-i18n="MH.lesson_Y1Al_numact2a.activity1Step1Text">Calculate the areas of each colored region:</p>
+						
+						
+						<h4 data-i18n="MH.lesson_Y1Al_numact2a.activity1Step2">Step 2: Compare c - b, d - c, and e - d</h4>
+						<p data-i18n="MH.lesson_Y1Al_numact2a.activity1Step2Text">Calculate the differences between consecutive areas:</p>
+						
+						<h4 data-i18n="MH.lesson_Y1Al_numact2a.activity1Step3">Step 3: Find the proportion of S relative to e</h4>
+						<p data-i18n="MH.lesson_Y1Al_numact2a.activity1Step3Text">Let S = b + c + d. Calculate S ÷ e:</p>
+						
+					</div>
+    <div class="MH-practice-problem">
+        <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2a.showAnswer" onclick="toggleSolution(10)">Show Answer</button>
+        <div class="MH-solution" id="solution10">
+            <h4 data-i18n="MH.lesson_Y1Al_numact2a.activity1Solution">Activity 1 Solution</h4>
+            <p data-i18n="MH.lesson_Y1Al_numact2a.activity1Step1Solution">Step 1: Areas are proportional to the square of diameters. a = π/8, b = π/2, c = 9π/8, d = 2π, e = 25π/8</p>
+            <p data-i18n="MH.lesson_Y1Al_numact2a.activity1Step2Solution">Step 2: c - b = 5π/8, d - c = 7π/8, e - d = 9π/8. The differences increase by π/4 each time.</p>
+            <p data-i18n="MH.lesson_Y1Al_numact2a.activity1Step3Solution">Step 3: S = b + c + d = π/2 + 9π/8 + 2π = 29π/8, S ÷ e = (29π/8) ÷ (25π/8) = 29/25</p>
+        </div>
+    </div>
+				</div>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2a.activity2">Activity 2: Series Calculations</h2>
+				
+				<div class="MH-step">
+					<h3 data-i18n="MH.lesson_Y1Al_numact2a.activity2Title">Calculating Products and Sums</h3>
+					
+					<div class="MH-example">
+						<h4 data-i18n="MH.lesson_Y1Al_numact2a.activity2Part1">Part 1: Calculate the following expressions</h4>
+						
+						<p><span class="MH-equation">E = (1 - 1/50) × (1 - 2/50) × … × (1 - 100/50)</span></p>
+						<p><span class="MH-equation">F = 1/2 × 2/3 × 3/4 × … × 9/10</span></p>
+						<p><span class="MH-equation">G = (1 + 1/2) × (1 + 1/3) × (1 + 1/4) × … × (1 + 1/10)</span></p>
+						
+						<div class="MH-step">
+							<h4 data-i18n="MH.lesson_Y1Al_numact2a.activity2Part2">Part 2: Summation calculations</h4>
+							
+							<p data-i18n="MH.lesson_Y1Al_numact2a.part2a">a) Let U = 1+2+…+10. Calculate U.</p>
+							<p data-i18n="MH.lesson_Y1Al_numact2a.part2b">b) Let V = 11+12+…+20. Express V in terms of U, then calculate V.</p>
+							<p data-i18n="MH.lesson_Y1Al_numact2a.part2c">c) Let W = 1+2+…+100. Express W in terms of U, then calculate W.</p>
+						</div>
+					</div>
+					
+					<div class="MH-important">
+						<h3 data-i18n="MH.lesson_Y1Al_numact2a.orderOfOperations">Order of Operations</h3>
+						<p data-i18n="MH.lesson_Y1Al_numact2a.orderOfOperationsText">In a sequence of calculations, operations inside parentheses must be performed first.</p>
+					</div>
+    <div class="MH-practice-problem">
+        <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2a.showAnswer" onclick="toggleSolution(20)">Show Answer</button>
+        <div class="MH-solution" id="solution20">
+            <h4 data-i18n="MH.lesson_Y1Al_numact2a.activity2Solution">Activity 2 Solution</h4>
+            <p data-i18n="MH.lesson_Y1Al_numact2a.activity2Part1Solution">Part 1: E = 0 (since 1 - 2 = -1 appears in the product), F = 1/10, G = 11/2</p>
+            <p data-i18n="MH.lesson_Y1Al_numact2a.activity2Part2aSolution">Part 2a: U = 1+2+...+10 = 55</p>
+            <p data-i18n="MH.lesson_Y1Al_numact2a.activity2Part2bSolution">Part 2b: V = (1+2+...+20) - U = 210 - 55 = 155</p>
+            <p data-i18n="MH.lesson_Y1Al_numact2a.activity2Part2cSolution">Part 2c: W = 1+2+...+100 = 100×101/2 = 5050</p>
+        </div>
+    </div>
+				</div>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2a.activity3">Activity 3: Calculator-Free Calculations</h2>
+				
+				<div class="MH-step">
+					<h3 data-i18n="MH.lesson_Y1Al_numact2a.activity3Title">Mental Math and Estimation</h3>
+					<p data-i18n="MH.lesson_Y1Al_numact2a.activity3Text">Calculate each of the following expressions without using a calculator:</p>
+					
+					<div class="MH-example">
+						<p><span class="MH-equation">A = (2/11)<sup>11</sup> × (5.5)<sup>10</sup></span></p>
+						<p><span class="MH-equation">B = (1/6)<sup>5</sup> × (0.8 × (0.03 × 10<sup>-3</sup>)<sup>2</sup>) ÷ ((4 × 10<sup>-4</sup>)<sup>2</sup>)</span></p>
+						<p><span class="MH-equation">C = -3/4 × (125 × 10<sup>-3</sup>) ÷ 500 + (0.5 × 10<sup>3</sup>) ÷ 250</span></p>
+					</div>
+					
+					<div class="MH-important">
+						<h3 data-i18n="MH.lesson_Y1Al_numact2a.operationOrder">Operation Order</h3>
+						<p data-i18n="MH.lesson_Y1Al_numact2a.operationOrderText">In the absence of parentheses, multiplication and division are performed before addition and subtraction.</p>
+					</div>
+    <div class="MH-practice-problem">
+        <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2a.showAnswer" onclick="toggleSolution(30)">Show Answer</button>
+        <div class="MH-solution" id="solution30">
+            <h4 data-i18n="MH.lesson_Y1Al_numact2a.activity3Solution">Activity 3 Solution</h4>
+            <p data-i18n="MH.lesson_Y1Al_numact2a.activity3ASolution">A = (2/11)¹¹ × (5.5)¹⁰ = (2/11)¹¹ × (11/2)¹⁰ = 2/11</p>
+            <p data-i18n="MH.lesson_Y1Al_numact2a.activity3BSolution">B = (1/6)⁵ × (0.8 × (0.03 × 10⁻³)²) ÷ ((4 × 10⁻⁴)²) = 1/7776 × (0.8 × 9×10⁻¹⁰) ÷ (16×10⁻⁸) = 1/7776 × 0.00045 = 5.787×10⁻⁸</p>
+            <p data-i18n="MH.lesson_Y1Al_numact2a.activity3CSolution">C = -3/4 × (125 × 10⁻³) ÷ 500 + (0.5 × 10³) ÷ 250 = -0.0001875 + 2 = 1.9998125</p>
+        </div>
+    </div>
+				</div>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2a.activity4">Activity 4: Scientific Calculator Usage</h2>
+				
+				<div class="MH-step">
+					<h3 data-i18n="MH.lesson_Y1Al_numact2a.activity4Title">Calculator Techniques</h3>
+					<p data-i18n="MH.lesson_Y1Al_numact2a.activity4Text1">We want to calculate <span class="MH-equation">A = (4.3 × 10<sup>-3</sup>)<sup>2</sup> ÷ 5</span> using a scientific calculator.</p>
+					
+					<div class="MH-example">
+						<h4 data-i18n="MH.lesson_Y1Al_numact2a.calculationSequence">Calculation Sequence</h4>
+						<p data-i18n="MH.lesson_Y1Al_numact2a.sequenceText">We can organize the calculation by typing the following sequence:</p>
+						<p><span class="MH-equation">( 4.3 ) 10<sup>y</sup> -3 x<sup>2</sup> ÷ 5 = 0.0000036</span></p>
+					</div>
+					
+					<div class="MH-step">
+						<h3 data-i18n="MH.lesson_Y1Al_numact2a.discoverSection">Discover: Calculator Practice</h3>
+						<p data-i18n="MH.lesson_Y1Al_numact2a.discoverText">Use a calculator to calculate each of the following numbers, describing the sequence used:</p>
+						
+						<div class="MH-example">
+							<p><span class="MH-equation">3.5 × 10<sup>4</sup> + 0.2 × 10<sup>3</sup></span></p>
+							<p><span class="MH-equation">(2 × 5<sup>-3</sup> + 10<sup>-5</sup>) [ (4 × 0.00025 + 2) ÷ (8 × 1.25 × 10<sup>4</sup>) ] × 10<sup>6</sup></span></p>
+							<p><span class="MH-equation">1.25 × 8 × 10<sup>-3</sup></span></p>
+						</div>
+					</div>
+    <div class="MH-practice-problem">
+        <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2a.showAnswer" onclick="toggleSolution(40)">Show Answer</button>
+        <div class="MH-solution" id="solution40">
+            <h4 data-i18n="MH.lesson_Y1Al_numact2a.activity4Solution">Activity 4 Solution</h4>
+            <p data-i18n="MH.lesson_Y1Al_numact2a.activity4MainSolution">Main calculation: A = (4.3 × 10⁻³)² ÷ 5 = 3.698×10⁻⁶</p>
+            <p data-i18n="MH.lesson_Y1Al_numact2a.activity4Discover1">Discover 1: 3.5×10⁴ + 0.2×10³ = 35000 + 200 = 35200</p>
+            <p data-i18n="MH.lesson_Y1Al_numact2a.activity4Discover2">Discover 2: (2×5⁻³ + 10⁻⁵)[(4×0.00025 + 2) ÷ (8×1.25×10⁴)] × 10⁶ = 0.04001</p>
+            <p data-i18n="MH.lesson_Y1Al_numact2a.activity4Discover3">Discover 3: 1.25 × 8 × 10⁻³ = 0.01</p>
+        </div>
+    </div>
+				</div>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2a.practice">Practice Problems</h2>
+				
+				<div class="MH-practice">
+					<h3 class="MH-practice-title" data-i18n="MH.lesson_Y1Al_numact2a.tryYourself">Try Solving These Problems</h3>
+					
+					<div class="MH-practice-problem">
+						<p><span class="MH-equation" data-i18n="MH.lesson_Y1Al_numact2a.problem1">1. Simplify: (3/4 + 2/5) ÷ (1/2 - 1/3)</span></p>
+						<button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2a.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+						<div class="MH-solution" id="solution1">
+							<p data-i18n="MH.lesson_Y1Al_numact2a.problem1Step1">Step 1: Calculate numerator: 3/4 + 2/5 = (15 + 8)/20 = 23/20</p>
+							<p data-i18n="MH.lesson_Y1Al_numact2a.problem1Step2">Step 2: Calculate denominator: 1/2 - 1/3 = (3 - 2)/6 = 1/6</p>
+							<p data-i18n="MH.lesson_Y1Al_numact2a.problem1Step3">Step 3: Divide: (23/20) ÷ (1/6) = (23/20) × 6 = 138/20 = 69/10</p>
+							<p data-i18n="MH.lesson_Y1Al_numact2a.problem1Step4">Solution: 69/10 or 6.9</p>
+						</div>
+					</div>
+					
+					<div class="MH-practice-problem">
+						<p><span class="MH-equation" data-i18n="MH.lesson_Y1Al_numact2a.problem2">2. Simplify: (2<sup>3</sup> × 2<sup>5</sup>) ÷ (2<sup>4</sup>)<sup>2</sup></span></p>
+						<button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2a.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+						<div class="MH-solution" id="solution2">
+							<p data-i18n="MH.lesson_Y1Al_numact2a.problem2Step1">Step 1: Apply product rule: 2<sup>3</sup> × 2<sup>5</sup> = 2<sup>3+5</sup> = 2<sup>8</sup></p>
+							<p data-i18n="MH.lesson_Y1Al_numact2a.problem2Step2">Step 2: Apply power of a power: (2<sup>4</sup>)<sup>2</sup> = 2<sup>4×2</sup> = 2<sup>8</sup></p>
+							<p data-i18n="MH.lesson_Y1Al_numact2a.problem2Step3">Step 3: Divide: 2<sup>8</sup> ÷ 2<sup>8</sup> = 2<sup>8-8</sup> = 2<sup>0</sup> = 1</p>
+							<p data-i18n="MH.lesson_Y1Al_numact2a.problem2Step4">Solution: 1</p>
+						</div>
+					</div>
+					
+					<div class="MH-practice-problem">
+						<p><span class="MH-equation" data-i18n="MH.lesson_Y1Al_numact2a.problem3">3. Calculate without calculator: (0.25 × 10<sup>2</sup>) ÷ (5 × 10<sup>-1</sup>)</span></p>
+						<button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2a.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+						<div class="MH-solution" id="solution3">
+							<p data-i18n="MH.lesson_Y1Al_numact2a.problem3Step1">Step 1: Write 0.25 as 25/100 = 1/4</p>
+							<p data-i18n="MH.lesson_Y1Al_numact2a.problem3Step2">Step 2: Expression becomes: (1/4 × 10<sup>2</sup>) ÷ (5 × 10<sup>-1</sup>)</p>
+							<p data-i18n="MH.lesson_Y1Al_numact2a.problem3Step3">Step 3: Simplify: (100/4) ÷ (5/10) = 25 ÷ 0.5 = 50</p>
+							<p data-i18n="MH.lesson_Y1Al_numact2a.problem3Step4">Solution: 50</p>
+						</div>
+					</div>
+				</div>
+			</section>
+			
+			<section class="MH-section">
+				<h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2a.summary">Summary</h2>
+				
+				<div class="MH-important">
+					<h3 data-i18n="MH.lesson_Y1Al_numact2a.keyConcepts">Key Concepts</h3>
+					<ul>
+						<li data-i18n="MH.lesson_Y1Al_numact2a.concept1">Fraction operations follow specific rules for equality, addition, multiplication, and division</li>
+						<li data-i18n="MH.lesson_Y1Al_numact2a.concept2">Exponent rules simplify calculations with powers</li>
+						<li data-i18n="MH.lesson_Y1Al_numact2a.concept3">Order of operations is crucial for accurate calculations</li>
+						<li data-i18n="MH.lesson_Y1Al_numact2a.concept4">Scientific calculators can handle complex expressions with proper input sequences</li>
+					</ul>
+				</div>
+				
+				<p data-i18n="MH.lesson_Y1Al_numact2a.finalThought">Mastering these fundamental algebraic skills will provide a solid foundation for more advanced mathematical concepts you'll encounter in your studies.</p>
+			</section>
+			
+		</main>
+		<footer>
+			<div class="MH-footer-content">
+				<div class="MH-footer-column">
+					<div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+					<div class="MH-footer-text">Mejri Ziad</div>
+				</div>
+				
+				<div class="MH-footer-column">
+					<div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+					<div class="MH-footer-text">v0.0.1</div>
+				</div>
+				
+				<div class="MH-footer-column">
+					<div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+					<div class="MH-footer-links">
+						<a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+						<a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+					</div>
+				</div>
+			</div>
+		</footer>
+		
+		<script src="scripts/i18n_en.js"></script>
+		<script src="scripts/i18n_ar.js"></script>
+		<script src="scripts/i18n_fr.js"></script>
+		<script src="scripts/translation.js"></script>
+		<script src="scripts/pwa-install.js"></script>
+		<script>
+			// Draw the half-circles visualization when the page loads
+			document.addEventListener('DOMContentLoaded', function() {
+				const canvas = document.getElementById('activity1Canvas');
+				if (canvas) {
+					const ctx = canvas.getContext('2d');
+					drawHalfCircles(ctx, canvas.width, canvas.height);
+				}
+			});
+			
+			// Modified drawing function
+			// Updated drawing function for Activity 1
+			function drawHalfCircles(ctx, width, height) {
+				// Clear canvas
+				ctx.clearRect(0, 0, width, height);
+				
+				// Set up coordinate system
+				const centerY = height / 2;
+				const axisStartX = width * 0.1;
+				const axisEndX = width * 0.9;
+				const axisLength = axisEndX - axisStartX;
+				
+				// Draw the axis line
+				ctx.beginPath();
+				ctx.moveTo(axisStartX, centerY);
+				ctx.lineTo(axisEndX, centerY);
+				ctx.strokeStyle = '#333';
+				ctx.lineWidth = 2;
+				ctx.stroke();
+				
+				// Draw tick marks and labels for diameters
+				for (let i = 0; i <= 5; i++) {
+					const x = axisStartX + (i / 5) * axisLength;
+					ctx.beginPath();
+					ctx.moveTo(x, centerY - 8);
+					ctx.lineTo(x, centerY + 8);
+					ctx.strokeStyle = '#333';
+					ctx.lineWidth = 2;
+					ctx.stroke();
+					
+					ctx.fillStyle = '#333';
+					ctx.font = '14px Arial';
+					ctx.textAlign = 'center';
+					ctx.fillText(i.toString(), x, centerY + 25);
+				}
+				
+				// Define new clearer colors for each half-circle
+				const colors = [
+				'rgba(255, 107, 107, 0.6)',   // A - Bright Red (diameter 1cm)
+				'rgba(78, 205, 196, 0.6)',    // B - Teal (diameter 2cm)
+				'rgba(69, 183, 209, 0.6)',    // C - Blue (diameter 3cm)
+				'rgba(150, 206, 180, 0.6)',   // D - Green (diameter 4cm)
+				'rgba(255, 234, 167, 0.6)'    // E - Yellow (diameter 5cm)
+				];
+				
+				const strokeColors = [
+				'rgb(255, 107, 107)',   // A - Bright Red
+				'rgb(78, 205, 196)',    // B - Teal
+				'rgb(69, 183, 209)',    // C - Blue
+				'rgb(150, 206, 180)',   // D - Green
+				'rgb(255, 234, 167)'    // E - Yellow
+				];
+				
+				// Draw the half-circles with diameters 1cm, 2cm, 3cm, 4cm, 5cm
+				for (let i = 0; i < 5; i++) {
+					const diameter = i + 1; // Diameters: 1, 2, 3, 4, 5 cm
+					const radius = (diameter / 5) * (axisLength / 2);
+					const centerX = axisStartX + radius; // Center is at midpoint of diameter
+					
+					// Draw filled half-circle
+					ctx.beginPath();
+					ctx.arc(centerX, centerY, radius, 0, Math.PI, true); // Top half-circle
+					ctx.closePath();
+					ctx.fillStyle = colors[i];
+					ctx.fill();
+					
+					// Draw outline
+					ctx.beginPath();
+					ctx.arc(centerX, centerY, radius, 0, Math.PI, true);
+					ctx.strokeStyle = strokeColors[i];
+					ctx.lineWidth = 2;
+					ctx.stroke();
+					
+					// Add label at the arc midpoint
+					ctx.fillStyle = strokeColors[i];
+					ctx.font = 'bold 16px Arial';
+					ctx.textAlign = 'center';
+					const labelX = centerX;
+					const labelY = centerY - radius * 0.7;
+					ctx.fillText(String.fromCharCode(65 + i), labelX, labelY);
+					
+					// Draw the diameter line for this half-circle
+					ctx.beginPath();
+					ctx.moveTo(centerX - radius, centerY);
+					ctx.lineTo(centerX + radius, centerY);
+					ctx.strokeStyle = strokeColors[i];
+					ctx.lineWidth = 1;
+					ctx.setLineDash([2, 2]);
+					ctx.stroke();
+					ctx.setLineDash([]);
+				}
+				
+				// Add title and labels with translation support
+				ctx.fillStyle = '#333';
+				ctx.font = 'bold 16px Arial';
+				ctx.textAlign = 'center';
+				ctx.fillText(getTranslation('MH.lesson_Y1Al_numact2a.visualizationTitle'), width / 2, 30);
+				
+				// Add axis label
+				ctx.font = '14px Arial';
+				ctx.fillText(getTranslation('MH.lesson_Y1Al_numact2a.axisLabel'), width / 2, centerY + 50);
+				
+				// Add explanation
+				ctx.font = '12px Arial';
+				ctx.textAlign = 'left';
+				ctx.fillText(getTranslation('MH.lesson_Y1Al_numact2a.visualizationNote'), axisStartX, centerY + 80);
+				
+				// Add legend text
+				const legendText = [
+				getTranslation('MH.lesson_Y1Al_numact2a.legendA'),
+				getTranslation('MH.lesson_Y1Al_numact2a.legendB'),
+				getTranslation('MH.lesson_Y1Al_numact2a.legendC'),
+				getTranslation('MH.lesson_Y1Al_numact2a.legendD'),
+				getTranslation('MH.lesson_Y1Al_numact2a.legendE')
+				].join(', ');
+				
+				ctx.fillText(legendText, axisStartX, centerY + 100);
+			}
+			// Register service worker with better error handling
+			if ('serviceWorker' in navigator) {
+				window.addEventListener('load', function() {
+					navigator.serviceWorker.register('/sw.js')
+					.then(function(registration) {
+						console.log('Service Worker registered with scope:', registration.scope);
+						
+						// Check if we need to request notification permission
+						if (Notification.permission === 'default') {
+							// Wait a bit then ask for permission via service worker
+							setTimeout(() => {
+								registration.active.postMessage({
+									type: 'REQUEST_NOTIFICATION_PERMISSION'
+								});
+							}, 5000);
+						}
+					})
+					.catch(function(error) {
+						console.log('Service Worker registration failed:', error);
+					});
+				});
+			}
+		</script>
+		
+		<!-- noscript fallback -->
+		<noscript>
+			<style>
+				.MH-header-controls { display: none; }
+				.MH-solution { display: block; }
+			</style>
+			<div class="MH-warning">
+				JavaScript is recommended for the full experience, but content is still accessible.
+			</div>
+		</noscript>
+	</body>
+</html>

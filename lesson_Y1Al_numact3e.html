@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Numerical Activities V - Part 5</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#3CB371" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#2E8B57" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#3CB371">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        /* Page-specific color palette - Medium Sea Green + Dark Gray Theme */
+        :root {
+            --primary: #3CB371;        /* Medium Sea Green */
+            --primary-light: #66CDAA;   /* Light Sea Green */
+            --primary-dark: #2E8B57;    /* Dark Sea Green */
+            --secondary: #A9A9A9;       /* Dark Gray */
+            --secondary-light: #D3D3D3; /* Light Gray */
+            --secondary-dark: #696969;  /* Dim Gray */
+            --accent: #9b59b6;
+            --warning: #e74c3c;
+            --info: #3498db;
+        }
+        
+        [data-theme="dark"] {
+            --primary: #2E8B57;
+            --primary-light: #3CB371;
+            --primary-dark: #1E6B47;
+            --secondary: #696969;
+            --secondary-light: #A9A9A9;
+            --secondary-dark: #505050;
+            --accent: #8e44ad;
+            --warning: #c0392b;
+            --info: #2980b9;
+        }
+        
+        .MH-activity-visualization {
+            margin: 2rem 0;
+            border: 1px solid var(--primary-light);
+            border-radius: 8px;
+            padding: 1rem;
+            background: var(--secondary-light);
+        }
+        
+        .MH-visualization-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .MH-triangle-canvas {
+            border: 1px solid var(--primary);
+            border-radius: 4px;
+            background: white;
+        }
+        
+        .MH-visualization-legend {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .MH-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .MH-legend-color {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 1px solid var(--primary);
+            border-radius: 3px;
+        }
+        
+        .MH-legend-label {
+            font-size: 0.9rem;
+        }
+        
+        .MH-solution-image {
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y1Al_numact3e.title">Numerical Activities V: Part 5</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y1Al_numact3e.subtitle">Applications</h2>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact3e.mobilizeSkills">Mobilizing Your Skills</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y1Al_numact3e.orderMagnitudeTitle">Order of Magnitude and Scientific Notation</h3>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y1Al_numact3e.situation1">Situation 1: Astronomical Unit</h4>
+                    <p data-i18n="MH.lesson_Y1Al_numact3e.situation1Text">An astronomical unit (1 AU) represents the Earth-Sun distance. It's a unit used to calculate distances in space. 1 AU is approximately 1.496 × 10^8 km. A probe travels at a speed of 20,000 m/s.</p>
+                    
+                    <div class="MH-step">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact3e.question1a">1- How many seconds does it take for the probe to travel 1 AU? Give the result in scientific notation.</h4>
+                        
+                        <h4 data-i18n="MH.lesson_Y1Al_numact3e.question1b">2- Give the order of magnitude of the result.</h4>
+                    </div>
+                    
+                    <div class="MH-step">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact3e.resolutionStrategy">Resolution Strategy</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.strategyStep1">1- Let V be the speed of the probe. Express V in km/s. Then find the time taken by the probe to travel 1 AU.</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.strategyStep2">2- The order of magnitude of the result is 7 × 10^6 s.</p>
+                    </div>
+                    
+                    <div class="MH-step">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact3e.detailedSolution">Detailed Solution</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.solutionStep1">Step 1: Convert the speed from m/s to km/s</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.solutionStep1Text">20,000 m/s = 20,000 × (1/1000) km/s = 20 km/s</p>
+                        
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.solutionStep2">Step 2: Calculate the time using the formula: time = distance ÷ speed</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.solutionStep2Text">Time = (1.496 × 10^8 km) ÷ (20 km/s) = 7.48 × 10^6 s</p>
+                        
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.solutionStep3">Step 3: Determine the order of magnitude</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.solutionStep3Text">7.48 × 10^6 s has an order of magnitude of 10^7 (since 7.48 > 5, we round up to the next power of 10)</p>
+                    </div>
+                </div>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y1Al_numact3e.situation2">Situation 2: Light-Year</h4>
+                    <p data-i18n="MH.lesson_Y1Al_numact3e.situation2Text">A light-year is the distance traveled in vacuum by light in one year. Light travels at approximately 300,000 km per second in vacuum.</p>
+                    
+                    <div class="MH-step">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact3e.question2a">1- Express in km the value of one light-year. Give the result in scientific notation.</h4>
+                        
+                        <h4 data-i18n="MH.lesson_Y1Al_numact3e.question2b">2- Give the order of magnitude of the value found.</h4>
+                    </div>
+                    
+                    <div class="MH-step">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact3e.detailedSolution">Detailed Solution</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.solution2Step1">Step 1: Calculate the number of seconds in one year</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.solution2Step1Text">1 year = 365 days × 24 hours × 60 minutes × 60 seconds = 31,536,000 s ≈ 3.1536 × 10^7 s</p>
+                        
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.solution2Step2">Step 2: Calculate the distance light travels in one year</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.solution2Step2Text">Distance = speed × time = (3 × 10^5 km/s) × (3.1536 × 10^7 s) = 9.4608 × 10^12 km</p>
+                        
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.solution2Step3">Step 3: Determine the order of magnitude</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.solution2Step3Text">9.4608 × 10^12 km has an order of magnitude of 10^13 (since 9.4608 > 5, we round up to the next power of 10)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact3e.enlargementReduction">Enlargement and Reduction</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y1Al_numact3e.triangleSituation">Situation: Triangle Enlargement</h3>
+                <p data-i18n="MH.lesson_Y1Al_numact3e.situationText">In the adjacent figure, triangle OBC is an enlargement of triangle OAB at a certain scale denoted k.</p>
+                
+                <!-- Visualization for triangles - EXERCISE VERSION (2 triangles) -->
+                <div class="MH-activity-visualization">
+                    <div class="MH-visualization-container">
+                        <canvas id="triangleCanvasExercise" width="600" height="400" class="MH-triangle-canvas"></canvas>
+                        <div class="MH-visualization-legend">
+                            <div class="MH-legend-item">
+                                <span class="MH-legend-color" style="background-color: #3CB371;"></span>
+                                <span class="MH-legend-label" data-i18n="MH.lesson_Y1Al_numact3e.legendOAB">Triangle OAB</span>
+                            </div>
+                            <div class="MH-legend-item">
+                                <span class="MH-legend-color" style="background-color: #66CDAA;"></span>
+                                <span class="MH-legend-label" data-i18n="MH.lesson_Y1Al_numact3e.legendOBC">Triangle OBC</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y1Al_numact3e.part1">Part 1</h4>
+                    
+                    <div class="MH-step">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact3e.question1a">a) Find k.</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.question1aText">Given: OB = 2.7 cm, OA = 1.8 cm, ∠BOC = 60°, ∠AOB = 60°</p>
+                        
+                        <h4 data-i18n="MH.lesson_Y1Al_numact3e.question1b">b) What is the ratio of the perimeter of OBC to the perimeter of OAB?</h4>
+                        
+                        <h4 data-i18n="MH.lesson_Y1Al_numact3e.question1c">c) What is the ratio of the area of OBC to the area of OAB?</h4>
+                    </div>
+                    
+                    <div class="MH-step">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact3e.part2">Part 2</h4>
+                        
+                        <h4 data-i18n="MH.lesson_Y1Al_numact3e.question2a">a) Reproduce the figure and continue it by marking point D so that triangle OCD is an enlargement of triangle OBC at scale k.</h4>
+                        
+                        <h4 data-i18n="MH.lesson_Y1Al_numact3e.question2b">b) Continue the process until obtaining a 4th triangle ODE.</h4>
+                    </div>
+                    
+                    <div class="MH-step">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact3e.part3">Part 3</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.part3Text">Triangle OAB is a reduction of triangle ODE at a certain scale.</p>
+                        
+                        <h4 data-i18n="MH.lesson_Y1Al_numact3e.question3a">a) Determine this scale.</h4>
+                        
+                        <h4 data-i18n="MH.lesson_Y1Al_numact3e.question3b">b) What is the ratio of the perimeter of OAB to the perimeter of ODE?</h4>
+                        
+                        <h4 data-i18n="MH.lesson_Y1Al_numact3e.question3c">c) What is the ratio of the area of OAB to the area of ODE?</h4>
+                    </div>
+                </div>
+                
+                <div class="MH-important">
+                    <h3 data-i18n="MH.lesson_Y1Al_numact3e.scaleProperties">Properties of Scale Factors</h3>
+                    <p data-i18n="MH.lesson_Y1Al_numact3e.lengthProperty">Lengths are multiplied by the scale factor k</p>
+                    <p data-i18n="MH.lesson_Y1Al_numact3e.perimeterProperty">Perimeters are multiplied by the scale factor k</p>
+                    <p data-i18n="MH.lesson_Y1Al_numact3e.areaProperty">Areas are multiplied by the square of the scale factor (k²)</p>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact3e.showAnswer" onclick="toggleSolution(70)">Show Answer</button>
+                    <div class="MH-solution" id="solution70">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact3e.situationSolution">Situation Solution</h4>
+                        
+                        <!-- Visualization for triangles - SOLUTION VERSION (all triangles) -->
+                        <div class="MH-activity-visualization MH-solution-image">
+                            <div class="MH-visualization-container">
+                                <canvas id="triangleCanvasSolution" width="600" height="400" class="MH-triangle-canvas"></canvas>
+                                <div class="MH-visualization-legend">
+                                    <div class="MH-legend-item">
+                                        <span class="MH-legend-color" style="background-color: #3CB371;"></span>
+                                        <span class="MH-legend-label" data-i18n="MH.lesson_Y1Al_numact3e.legendOAB">Triangle OAB</span>
+                                    </div>
+                                    <div class="MH-legend-item">
+                                        <span class="MH-legend-color" style="background-color: #66CDAA;"></span>
+                                        <span class="MH-legend-label" data-i18n="MH.lesson_Y1Al_numact3e.legendOBC">Triangle OBC</span>
+                                    </div>
+                                    <div class="MH-legend-item">
+                                        <span class="MH-legend-color" style="background-color: #2E8B57;"></span>
+                                        <span class="MH-legend-label" data-i18n="MH.lesson_Y1Al_numact3e.legendOCD">Triangle OCD</span>
+                                    </div>
+                                    <div class="MH-legend-item">
+                                        <span class="MH-legend-color" style="background-color: #1E6B47;"></span>
+                                        <span class="MH-legend-label" data-i18n="MH.lesson_Y1Al_numact3e.legendODE">Triangle ODE</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.solutionPart1a">Part 1a: k = OB/OA = 2.7/1.8 = 1.5</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.solutionPart1b">Part 1b: Perimeter ratio = k = 1.5</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.solutionPart1c">Part 1c: Area ratio = k² = (1.5)² = 2.25</p>
+                        
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.solutionPart2">Part 2: To find point D, extend line OC so that OD = k × OC = 1.5 × OC. Similarly, extend line BC to find point D such that CD = k × BC.</p>
+                        
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.solutionPart3a">Part 3a: The scale from ODE to OAB is 1/k³ = 1/(1.5)³ = 1/3.375 ≈ 0.296</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.solutionPart3b">Part 3b: Perimeter ratio = 1/k³ = 1/3.375 ≈ 0.296</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.solutionPart3c">Part 3c: Area ratio = 1/k⁶ = 1/(1.5)⁶ = 1/11.39 ≈ 0.0878</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact3e.practice">Practice Problems</h2>
+            
+            <div class="MH-practice">
+                <h3 class="MH-practice-title" data-i18n="MH.lesson_Y1Al_numact3e.tryYourself">Try Solving These Problems</h3>
+                
+                <div class="MH-practice-problem">
+                    <p><span class="MH-equation" data-i18n="MH.lesson_Y1Al_numact3e.problem1">1. A rectangle has dimensions 4 cm by 6 cm. If it is enlarged by a scale factor of 2.5, what are the new dimensions, perimeter, and area?</span></p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact3e.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                    <div class="MH-solution" id="solution1">
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.problem1Step1">Step 1: New dimensions = original dimensions × scale factor</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.problem1Step1Text">Length: 4 cm × 2.5 = 10 cm, Width: 6 cm × 2.5 = 15 cm</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.problem1Step2">Step 2: New perimeter = original perimeter × scale factor</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.problem1Step2Text">Original perimeter = 2(4+6) = 20 cm, New perimeter = 20 × 2.5 = 50 cm</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.problem1Step3">Step 3: New area = original area × (scale factor)²</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.problem1Step3Text">Original area = 4 × 6 = 24 cm², New area = 24 × (2.5)² = 24 × 6.25 = 150 cm²</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.problem1Step4">Solution: Dimensions: 10 cm × 15 cm, Perimeter: 50 cm, Area: 150 cm²</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <p><span class="MH-equation" data-i18n="MH.lesson_Y1Al_numact3e.problem2">2. The distance from Earth to Mars is approximately 7.83 × 10^7 km. If a spacecraft travels at 25 km/s, how many days would it take to reach Mars?</span></p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact3e.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                    <div class="MH-solution" id="solution2">
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.problem2Step1">Step 1: Calculate time in seconds</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.problem2Step1Text">Time = distance ÷ speed = (7.83 × 10^7 km) ÷ (25 km/s) = 3.132 × 10^6 s</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.problem2Step2">Step 2: Convert seconds to days</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.problem2Step2Text">1 day = 24 × 60 × 60 = 86,400 seconds</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.problem2Step3">Step 3: Days = (3.132 × 10^6) ÷ (8.64 × 10^4) = 36.25 days</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.problem2Step4">Solution: Approximately 36.25 days</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <p><span class="MH-equation" data-i18n="MH.lesson_Y1Al_numact3e.problem3">3. A triangle has an area of 24 cm². If it is reduced by a scale factor of 0.4, what is the area of the new triangle?</span></p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact3e.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                    <div class="MH-solution" id="solution3">
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.problem3Step1">Step 1: Area changes by the square of the scale factor</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.problem3Step2">Step 2: New area = original area × (scale factor)²</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.problem3Step3">Step 3: New area = 24 × (0.4)² = 24 × 0.16 = 3.84 cm²</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact3e.problem3Step4">Solution: 3.84 cm²</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact3e.summary">Summary</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Al_numact3e.keyConcepts">Key Concepts</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y1Al_numact3e.concept1">Scientific notation helps represent very large or very small numbers</li>
+                    <li data-i18n="MH.lesson_Y1Al_numact3e.concept2">Order of magnitude gives a rough estimate of a number's size</li>
+                    <li data-i18n="MH.lesson_Y1Al_numact3e.concept3">Scale factors determine how dimensions change in enlargements and reductions</li>
+                    <li data-i18n="MH.lesson_Y1Al_numact3e.concept4">Lengths and perimeters scale linearly with the scale factor</li>
+                    <li data-i18n="MH.lesson_Y1Al_numact3e.concept5">Areas scale with the square of the scale factor</li>
+                </ul>
+            </div>
+            
+            <p data-i18n="MH.lesson_Y1Al_numact3e.finalThought">Understanding scale factors and scientific notation is essential for solving real-world problems in science, engineering, and everyday life. These concepts help us comprehend and work with measurements across vastly different scales.</p>
+        </section>
+        
+    </main>
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="scripts/i18n_en.js"></script>
+    <script src="scripts/i18n_ar.js"></script>
+    <script src="scripts/i18n_fr.js"></script>
+    <script src="scripts/translation.js"></script>
+    <script src="scripts/pwa-install.js"></script>
+    <script src="scripts/geometry_utils.js"></script>
+    <script>
+        // Function to toggle solution visibility
+        function toggleSolution(id) {
+            const solution = document.getElementById('solution' + id);
+            if (solution.style.display === 'block') {
+                solution.style.display = 'none';
+            } else {
+                solution.style.display = 'block';
+            }
+        }
+        
+        // Draw the triangles visualizations when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Draw exercise version (2 triangles)
+            const canvasExercise = document.getElementById('triangleCanvasExercise');
+            if (canvasExercise) {
+                const ctx = canvasExercise.getContext('2d');
+                drawTwoTriangles(ctx, canvasExercise.width, canvasExercise.height);
+            }
+            
+            // Draw solution version (all triangles)
+            const canvasSolution = document.getElementById('triangleCanvasSolution');
+            if (canvasSolution) {
+                const ctx = canvasSolution.getContext('2d');
+                drawAllTriangles(ctx, canvasSolution.width, canvasSolution.height);
+            }
+        });
+        
+        // Drawing function for TWO triangles (exercise version)
+        // Fixed drawing function for TWO triangles (exercise version)
+function drawTwoTriangles(ctx, width, height) {
+    // Clear canvas with white background
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, width, height);
+    
+    // Set up coordinate system
+    const centerX = width / 2;
+    const centerY = height / 2;
+    const scale = 40;
+    
+    // Draw point O at origin
+    ctx.fillStyle = '#333';
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, 5, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.fillText('O', centerX - 15, centerY + 15);
+    
+    // Define points based on given measurements
+    // OA = 1.8 cm, OB = 2.7 cm, scale factor k = 1.5
+    const OA = 1.8 * scale;
+    const OB = 2.7 * scale;
+    const k = OB / OA; // Scale factor = 1.5
+    
+    const angleIncrement = 60 * Math.PI / 180; // 60 degrees in radians
+    
+    // FIXED: Point A and Point B should be at DIFFERENT angles
+    // Point A
+    const angleA = angleIncrement;
+    const Ax = centerX + OA * Math.cos(angleA);
+    const Ay = centerY - OA * Math.sin(angleA);
+    
+    // Point B - FIXED: Use different angle for B
+    const angleB = angleA + angleIncrement; // Now 120° instead of 60°
+    const Bx = centerX + OB * Math.cos(angleB);
+    const By = centerY - OB * Math.sin(angleB);
+    
+    // Point C
+    const angleC = angleB + angleIncrement; // 180°
+    const OC = OB * k; // 2.7 × 1.5 = 4.05 cm
+    const Cx = centerX + OC * Math.cos(angleC);
+    const Cy = centerY - OC * Math.sin(angleC);
+    
+    // Draw triangle OAB (Medium Sea Green)
+    ctx.strokeStyle = '#3CB371';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY);
+    ctx.lineTo(Ax, Ay);
+    ctx.lineTo(Bx, By);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(60, 179, 113, 0.3)';
+    ctx.fill();
+    ctx.fillStyle = '#333';
+    ctx.fillText('A', Ax + 5, Ay - 5);
+    ctx.fillText('B', Bx + 5, By - 5);
+    
+    // Draw triangle OBC (Light Sea Green) - NOW VISIBLE!
+    ctx.strokeStyle = '#66CDAA';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY);
+    ctx.lineTo(Bx, By);
+    ctx.lineTo(Cx, Cy);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(102, 205, 170, 0.3)';
+    ctx.fill();
+    ctx.fillStyle = '#333';
+    ctx.fillText('C', Cx + 5, Cy - 5);
+    
+    // Add title
+    ctx.fillStyle = '#333';
+    ctx.font = 'bold 16px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('Triangle Enlargement (Exercise)', width / 2, 30);
+    
+    // Add angle markers
+    drawAngleMarker(ctx, centerX, centerY, 0, angleA, 30, '60°');
+    drawAngleMarker(ctx, centerX, centerY, angleA, angleB, 30, '60°');
+    drawAngleMarker(ctx, centerX, centerY, angleB, angleC, 30, '60°');
+    
+    // Add length labels
+    ctx.fillStyle = '#333';
+    ctx.font = '12px Arial';
+    
+    // OA length
+    const midOAx = centerX + (OA/2) * Math.cos(angleA/2);
+    const midOAy = centerY - (OA/2) * Math.sin(angleA/2);
+    ctx.fillText('OA = 1.8 cm', midOAx, midOAy - 10);
+    
+    // OB length
+    const midOBx = centerX + (OB/2) * Math.cos((angleA + angleB)/2);
+    const midOBy = centerY - (OB/2) * Math.sin((angleA + angleB)/2);
+    ctx.fillText('OB = 2.7 cm', midOBx, midOBy - 10);
+    
+    // OC length
+    const midOCx = centerX + (OC/2) * Math.cos((angleB + angleC)/2);
+    const midOCy = centerY - (OC/2) * Math.sin((angleB + angleC)/2);
+    ctx.fillText(`OC = ${(OC/scale).toFixed(1)} cm`, midOCx, midOCy - 10);
+}
+
+// Fixed drawing function for ALL triangles (solution version)
+function drawAllTriangles(ctx, width, height) {
+    // Clear canvas with white background
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, width, height);
+    
+    // Set up coordinate system
+    const centerX = width / 2;
+    const centerY = height / 2;
+    const scale = 40;
+    
+    // Draw point O at origin
+    ctx.fillStyle = '#333';
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, 5, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.fillText('O', centerX - 15, centerY + 15);
+    
+    // Define points based on given measurements
+    // OA = 1.8 cm, OB = 2.7 cm, scale factor k = 1.5
+    const OA = 1.8 * scale;
+    const OB = 2.7 * scale;
+    const k = OB / OA; // Scale factor = 1.5
+    
+    // Calculate subsequent lengths using the scale factor
+    const OC = OB * k; // 2.7 × 1.5 = 4.05 cm
+    const OD = OC * k; // 4.05 × 1.5 = 6.075 cm
+    const OE = OD * k; // 6.075 × 1.5 = 9.1125 cm
+    
+    const angleIncrement = 60 * Math.PI / 180; // 60 degrees in radians
+    
+    // FIXED: All points at different angles
+    // Point A
+    const angleA = angleIncrement;
+    const Ax = centerX + OA * Math.cos(angleA);
+    const Ay = centerY - OA * Math.sin(angleA);
+    
+    // Point B - FIXED: Different angle
+    const angleB = angleA + angleIncrement; // 120°
+    const Bx = centerX + OB * Math.cos(angleB);
+    const By = centerY - OB * Math.sin(angleB);
+    
+    // Point C
+    const angleC = angleB + angleIncrement; // 180°
+    const Cx = centerX + OC * Math.cos(angleC);
+    const Cy = centerY - OC * Math.sin(angleC);
+    
+    // Point D
+    const angleD = angleC + angleIncrement; // 240°
+    const Dx = centerX + OD * Math.cos(angleD);
+    const Dy = centerY - OD * Math.sin(angleD);
+    
+    // Point E
+    const angleE = angleD + angleIncrement; // 300°
+    const Ex = centerX + OE * Math.cos(angleE);
+    const Ey = centerY - OE * Math.sin(angleE);
+    
+    // Draw triangle OAB (Medium Sea Green)
+    ctx.strokeStyle = '#3CB371';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY);
+    ctx.lineTo(Ax, Ay);
+    ctx.lineTo(Bx, By);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(60, 179, 113, 0.3)';
+    ctx.fill();
+    ctx.fillStyle = '#333';
+    ctx.fillText('A', Ax + 5, Ay - 5);
+    ctx.fillText('B', Bx + 5, By - 5);
+    
+    // Draw triangle OBC (Light Sea Green) - NOW VISIBLE!
+    ctx.strokeStyle = '#66CDAA';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY);
+    ctx.lineTo(Bx, By);
+    ctx.lineTo(Cx, Cy);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(102, 205, 170, 0.3)';
+    ctx.fill();
+    ctx.fillStyle = '#333';
+    ctx.fillText('C', Cx + 5, Cy - 5);
+    
+    // Draw triangle OCD (Dark Sea Green)
+    ctx.strokeStyle = '#2E8B57';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY);
+    ctx.lineTo(Cx, Cy);
+    ctx.lineTo(Dx, Dy);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(46, 139, 87, 0.3)';
+    ctx.fill();
+    ctx.fillStyle = '#333';
+    ctx.fillText('D', Dx + 5, Dy - 5);
+    
+    // Draw triangle ODE (Darker Sea Green)
+    ctx.strokeStyle = '#1E6B47';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY);
+    ctx.lineTo(Dx, Dy);
+    ctx.lineTo(Ex, Ey);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(30, 107, 71, 0.3)';
+    ctx.fill();
+    ctx.fillStyle = '#333';
+    ctx.fillText('E', Ex + 5, Ey - 5);
+    
+    // Add title
+    ctx.fillStyle = '#333';
+    ctx.font = 'bold 16px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('Triangle Enlargement Sequence (Solution)', width / 2, 30);
+    
+    // Add angle markers
+    drawAngleMarker(ctx, centerX, centerY, 0, angleA, 30, '60°');
+    drawAngleMarker(ctx, centerX, centerY, angleA, angleB, 30, '60°');
+    drawAngleMarker(ctx, centerX, centerY, angleB, angleC, 30, '60°');
+    drawAngleMarker(ctx, centerX, centerY, angleC, angleD, 30, '60°');
+    drawAngleMarker(ctx, centerX, centerY, angleD, angleE, 30, '60°');
+    
+    // Add length labels
+    ctx.fillStyle = '#333';
+    ctx.font = '12px Arial';
+    
+    // OA length
+    const midOAx = centerX + (OA/2) * Math.cos(angleA/2);
+    const midOAy = centerY - (OA/2) * Math.sin(angleA/2);
+    ctx.fillText('OA = 1.8 cm', midOAx, midOAy - 10);
+    
+    // OB length
+    const midOBx = centerX + (OB/2) * Math.cos((angleA + angleB)/2);
+    const midOBy = centerY - (OB/2) * Math.sin((angleA + angleB)/2);
+    ctx.fillText('OB = 2.7 cm', midOBx, midOBy - 10);
+    
+    // OC length
+    const midOCx = centerX + (OC/2) * Math.cos((angleB + angleC)/2);
+    const midOCy = centerY - (OC/2) * Math.sin((angleB + angleC)/2);
+    ctx.fillText(`OC = ${(OC/scale).toFixed(1)} cm`, midOCx, midOCy - 10);
+    
+    // OD length
+    const midODx = centerX + (OD/2) * Math.cos((angleC + angleD)/2);
+    const midODy = centerY - (OD/2) * Math.sin((angleC + angleD)/2);
+    ctx.fillText(`OD = ${(OD/scale).toFixed(1)} cm`, midODx, midODy - 10);
+    
+    // OE length
+    const midOEx = centerX + (OE/2) * Math.cos((angleD + angleE)/2);
+    const midOEy = centerY - (OE/2) * Math.sin((angleD + angleE)/2);
+    ctx.fillText(`OE = ${(OE/scale).toFixed(1)} cm`, midOEx, midOEy - 10);
+}
+        
+        // Helper function to draw angle markers
+        function drawAngleMarker(ctx, centerX, centerY, startAngle, endAngle, radius, label) {
+            ctx.strokeStyle = '#FF6B6B';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+            ctx.stroke();
+            
+            // Add angle label
+            const midAngle = (startAngle + endAngle) / 2;
+            const labelX = centerX + (radius + 15) * Math.cos(midAngle);
+            const labelY = centerY - (radius + 15) * Math.sin(midAngle);
+            
+            ctx.fillStyle = '#FF6B6B';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(label, labelX, labelY);
+        }
+        
+        // Register service worker with better error handling
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                    
+                    // Check if we need to request notification permission
+                    if (Notification.permission === 'default') {
+                        // Wait a bit then ask for permission via service worker
+                        setTimeout(() => {
+                            registration.active.postMessage({
+                                type: 'REQUEST_NOTIFICATION_PERMISSION'
+                            });
+                        }, 5000);
+                    }
+                })
+                .catch(function(error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+            });
+        }
+    </script>
+    
+    <!-- noscript fallback -->
+    <noscript>
+        <style>
+            .MH-header-controls { display: none; }
+            .MH-solution { display: block; }
+        </style>
+        <div class="MH-warning">
+            JavaScript is recommended for the full experience, but content is still accessible.
+        </div>
+    </noscript>
+</body>
+</html>

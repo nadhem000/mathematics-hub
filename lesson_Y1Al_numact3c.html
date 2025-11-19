@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Numerical Activities III - Part 3</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#8B0000" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#5A0000" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#8B0000">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        /* Page-specific color palette - Dark Red + Light Green Theme */
+        :root {
+            --primary: #8B0000;        /* Dark Red */
+            --primary-light: #B22222;  /* Firebrick Red */
+            --primary-dark: #5A0000;   /* Darker Red */
+            --secondary: #90EE90;      /* Light Green */
+            --secondary-light: #C1FFC1; /* Very Light Green */
+            --secondary-dark: #6B8E23; /* Olive Drab */
+            --accent: #9b59b6;
+            --warning: #e74c3c;
+            --info: #3498db;
+        }
+        
+        [data-theme="dark"] {
+            --primary: #5A0000;
+            --primary-light: #8B0000;
+            --primary-dark: #3A0000;
+            --secondary: #6B8E23;
+            --secondary-light: #90EE90;
+            --secondary-dark: #556B2F;
+            --accent: #8e44ad;
+            --warning: #c0392b;
+            --info: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y1Al_numact2c.title">Numerical Activities III: Part 3</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y1Al_numact2c.subtitle">Comparing Real Numbers</h2>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2c.comparisonRules">Comparison Rules</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y1Al_numact2c.rulesTitle">Fundamental Rules for Comparing Real Numbers</h3>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y1Al_numact2c.signRules">Sign Rules for Products and Quotients</h4>
+                    <p data-i18n="MH.lesson_Y1Al_numact2c.signRule1">The product of two real numbers is positive if both numbers have the same sign.</p>
+                    <p data-i18n="MH.lesson_Y1Al_numact2c.signRule2">The product of two real numbers is negative if the two numbers have opposite signs.</p>
+                    <p data-i18n="MH.lesson_Y1Al_numact2c.signRule3">The quotient of two nonzero real numbers is positive if both numbers have the same sign.</p>
+                    <p data-i18n="MH.lesson_Y1Al_numact2c.signRule4">The quotient of two nonzero real numbers is negative if the two numbers have opposite signs.</p>
+                    
+                    <h4 data-i18n="MH.lesson_Y1Al_numact2c.inequalityRules">Inequality Rules</h4>
+                    <p data-i18n="MH.lesson_Y1Al_numact2c.inequalityRule1">For all real numbers a, b, and c:</p>
+                    <p data-i18n="MH.lesson_Y1Al_numact2c.inequalityRule2">a ≥ b is equivalent to a - b ≥ 0</p>
+                    <p data-i18n="MH.lesson_Y1Al_numact2c.inequalityRule3">If a ≤ b and b ≤ c then a ≤ c (transitivity)</p>
+                    <p data-i18n="MH.lesson_Y1Al_numact2c.inequalityRule4">If a ≤ b then a + c ≤ b + c</p>
+                    <p data-i18n="MH.lesson_Y1Al_numact2c.inequalityRule5">If a ≤ b and c ≥ 0 then ac ≤ bc</p>
+                    <p data-i18n="MH.lesson_Y1Al_numact2c.inequalityRule6">If a ≤ b and c ≤ 0 then ac ≥ bc</p>
+                    <p data-i18n="MH.lesson_Y1Al_numact2c.inequalityRule7">If a and b are nonzero and have the same sign, and if a ≥ b then 1/a ≤ 1/b</p>
+                    
+                    <h4 data-i18n="MH.lesson_Y1Al_numact2c.squareRootRules">Rules for Squares and Square Roots</h4>
+                    <p data-i18n="MH.lesson_Y1Al_numact2c.squareRule1">If a > 0, b > 0 and a ≥ b then a² ≥ b²</p>
+                    <p data-i18n="MH.lesson_Y1Al_numact2c.squareRule2">If a > 0, b > 0 and a ≥ b then √a ≥ √b</p>
+                    <p data-i18n="MH.lesson_Y1Al_numact2c.squareRule3">If a ≥ 1 then √a ≤ a ≤ a²</p>
+                    <p data-i18n="MH.lesson_Y1Al_numact2c.squareRule4">If 0 ≤ a ≤ 1 then a² ≤ a ≤ √a</p>
+                    
+                    <h4 data-i18n="MH.lesson_Y1Al_numact2c.absoluteValueTitle">Absolute Value</h4>
+                    <p data-i18n="MH.lesson_Y1Al_numact2c.absoluteValueDefinition">The absolute value of a real number a is the distance from this number to 0 on the number line.</p>
+                    <p data-i18n="MH.lesson_Y1Al_numact2c.absoluteValueRule1">|a| = a if a is positive</p>
+                    <p data-i18n="MH.lesson_Y1Al_numact2c.absoluteValueRule2">|a| = -a if a is negative</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2c.activity7">Activity 7: Determining Signs</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y1Al_numact2c.activity7Title">Finding Signs Without Calculation</h3>
+                
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y1Al_numact2c.activity7Instruction">Without performing calculations, determine the sign of each of the following numbers:</p>
+                    
+                    <div class="MH-step">
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity7A">A = (-1) × (-2) × (-3) × (-4) × ... × (-10)</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity7B">B = (-1) + (-2) + (-3) + (-4) + ... + (-10)</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity7C">C = -1 - (-2) - (-3) - (-4) - ... - (-10)</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2c.showAnswer" onclick="toggleSolution(70)">Show Answer</button>
+                    <div class="MH-solution" id="solution70">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2c.activity7Solution">Activity 7 Solution</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity7ASolution">A: There are 10 negative factors. Since 10 is even, the product is positive.</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity7BSolution">B: This is the sum of negative numbers from -1 to -10. The sum of negative numbers is negative.</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity7CSolution">C: -1 - (-2) - (-3) - (-4) - ... - (-10) = -1 + 2 + 3 + 4 + ... + 10. This equals (-1) + (2+3+...+10). Since the positive sum (2+3+...+10) is larger than 1, the result is positive.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2c.activity8">Activity 8: Determining Signs of Expressions</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y1Al_numact2c.activity8Title">Sign Analysis of Various Expressions</h3>
+                
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y1Al_numact2c.activity8Instruction">Determine the sign of each of the following numbers:</p>
+                    
+                    <div class="MH-step">
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity8Expression1">12/4551 - 1300/213</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity8Expression2">(√2-1)² - (√2+1)²</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity8Expression3">(√2 - √3)/2</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity8Expression4">12√5 - 5√12</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2c.showAnswer" onclick="toggleSolution(80)">Show Answer</button>
+                    <div class="MH-solution" id="solution80">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2c.activity8Solution">Activity 8 Solution</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity8Expression1Solution">12/4551 - 1300/213: 12/4551 is approximately 0.0026, 1300/213 is approximately 6.1, so the difference is negative.</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity8Expression2Solution">(√2-1)² - (√2+1)²: Using difference of squares: [(√2-1)-(√2+1)][(√2-1)+(√2+1)] = [-2][2√2] = -4√2, which is negative.</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity8Expression3Solution">(√2 - √3)/2: Since √2 ≈ 1.414 and √3 ≈ 1.732, √2 - √3 is negative, so the expression is negative.</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity8Expression4Solution">12√5 - 5√12 = 12√5 - 10√3. 12√5 ≈ 26.83, 10√3 ≈ 17.32, so the expression is positive.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2c.activity9">Activity 9: Ordering Numbers</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y1Al_numact2c.activity9Title">Arranging Numbers in Increasing Order</h3>
+                
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y1Al_numact2c.activity9Instruction">In each of the following cases, arrange the numbers in increasing order:</p>
+                    
+                    <div class="MH-step">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2c.activity9PartA">Part A</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity9PartANumbers">4.004; 40.04; 404 × 10⁻³; -4004</p>
+                        
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2c.activity9PartB">Part B</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity9PartBNumbers">-2 × 10⁻⁴; 32 × 10⁻⁵; 0.000025 × 10³; 3.4 × 10⁻⁴</p>
+                        
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2c.activity9PartC">Part C</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity9PartCNumbers">17/4; 5.25; -5.3; -57/8; -100/22</p>
+                        
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2c.activity9PartD">Part D</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity9PartDNumbers">√2/3; -1/33; 2√3; √11; 1/4; -1/√3; -5 × 10⁻²</p>
+                        
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2c.activity9PartE">Part E</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity9PartENumbers">(√2 - 1); √2; 12√5 - 5√12; (√2 + 1)</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2c.showAnswer" onclick="toggleSolution(90)">Show Answer</button>
+                    <div class="MH-solution" id="solution90">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2c.activity9Solution">Activity 9 Solution</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity9PartASolution">Part A: -4004 < 404 × 10⁻³ (0.404) < 4.004 < 40.04</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity9PartBSolution">Part B: -2 × 10⁻⁴ (-0.0002) < 32 × 10⁻⁵ (0.00032) < 0.000025 × 10³ (0.025) < 3.4 × 10⁻⁴ (0.00034)</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity9PartCSolution">Part C: -57/8 (-7.125) < -5.3 < -100/22 (-4.545) < 17/4 (4.25) < 5.25</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity9PartDSolution">Part D: -1/√3 (-0.577) < -1/33 (-0.0303) < -5 × 10⁻² (-0.05) < 1/4 (0.25) < √2/3 (0.471) < √11 (3.317) < 2√3 (3.464)</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity9PartESolution">Part E: 12√5 - 5√12 (0.534) < (√2 - 1) (0.414) < √2 (1.414) < (√2 + 1) (2.414)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2c.activity10">Activity 10: Advanced Comparisons</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y1Al_numact2c.activity10Title">Comparing Numbers with Scientific Notation</h3>
+                
+                <div class="MH-example">
+                    <div class="MH-step">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2c.activity10Part1">Part 1</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity10Part1Instruction">Compare the numbers:</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity10Part1Numbers">1 + 1/(2 × 10⁻¹⁰) and 1 - 4/(3 × 10⁻¹⁰)</p>
+                        
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2c.activity10Part2">Part 2</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity10Part2Instruction">Consider the numbers:</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity10Part2ANumbers">A = 1 + 10⁻¹⁰</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity10Part2BNumbers">B = (1 + 10⁻¹⁰)²</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity10Part2CNumbers">C = √(1 + 10⁻¹⁰)</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity10Part2Question">Arrange the numbers A, B, and C in increasing order.</p>
+                        
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2c.activity10Part3">Part 3</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity10Part3Instruction">Consider the numbers:</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity10Part3ENumbers">E = 1 - 10⁻¹⁰</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity10Part3FNumbers">F = (1 - 10⁻¹⁰)²</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity10Part3GNumbers">G = √(1 - 10⁻¹⁰)</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity10Part3Question">Arrange the numbers E, F, and G in increasing order.</p>
+                    </div>
+                </div>
+                
+                <div class="MH-important">
+                    <h3 data-i18n="MH.lesson_Y1Al_numact2c.importantNote">Important Note</h3>
+                    <p data-i18n="MH.lesson_Y1Al_numact2c.importantNoteText1">For two real numbers a and b:</p>
+                    <p data-i18n="MH.lesson_Y1Al_numact2c.importantNoteText2">a ≤ b is equivalent to a - b ≤ 0</p>
+                    <p data-i18n="MH.lesson_Y1Al_numact2c.importantNoteText3">Let a be a positive real number:</p>
+                    <p data-i18n="MH.lesson_Y1Al_numact2c.importantNoteText4">If a ≥ 1 then √a ≤ a ≤ a²</p>
+                    <p data-i18n="MH.lesson_Y1Al_numact2c.importantNoteText5">If 0 ≤ a ≤ 1 then a² ≤ a ≤ √a</p>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2c.showAnswer" onclick="toggleSolution(100)">Show Answer</button>
+                    <div class="MH-solution" id="solution100">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2c.activity10Solution">Activity 10 Solution</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity10Part1Solution">Part 1: 1 + 1/(2 × 10⁻¹⁰) = 1 + 5 × 10⁹, 1 - 4/(3 × 10⁻¹⁰) = 1 - 1.333 × 10¹⁰. Since 5 × 10⁹ > -1.333 × 10¹⁰, the first number is greater.</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity10Part2Solution">Part 2: Since 1 + 10⁻¹⁰ > 1, we have √(1 + 10⁻¹⁰) < 1 + 10⁻¹⁰ < (1 + 10⁻¹⁰)². So C < A < B.</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity10Part3Solution">Part 3: Since 1 - 10⁻¹⁰ < 1, we have (1 - 10⁻¹⁰)² < 1 - 10⁻¹⁰ < √(1 - 10⁻¹⁰). So F < E < G.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2c.activity11">Activity 11: Absolute Value on the Number Line</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y1Al_numact2c.activity11Title">Understanding Absolute Value Geometrically</h3>
+                
+                <div class="MH-example">
+                    <div class="MH-step">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2c.activity11Part1">Part 1</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity11Part1Instruction">Draw a line D and mark it with the coordinate system (O, I) where OI = 1.</p>
+                        
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2c.activity11Part2">Part 2</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity11Part2Instruction">Plot the following points:</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity11PointA">Point A with coordinate 3/2</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity11PointAprime">Point A' with coordinate -3/2</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity11PointB">Point B with coordinate √2</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity11PointBprime">Point B' with coordinate -√2</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity11PointC">Point C with coordinate √5</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity11PointCprime">Point C' with coordinate -√5</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity11PointE">Point E with coordinate 3√2 - 2√5</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity11PointEprime">Point E' with coordinate 2√5 - 3√2</p>
+                        
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2c.activity11Part3">Part 3</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity11Part3Instruction">Compare:</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity11ComparisonA">a) OA and OA'</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity11ComparisonB">b) OB and OB'</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity11ComparisonC">c) OC and OC'</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity11ComparisonD">d) OE and OE'</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2c.showAnswer" onclick="toggleSolution(110)">Show Answer</button>
+                    <div class="MH-solution" id="solution110">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2c.activity11Solution">Activity 11 Solution</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity11ComparisonASolution">a) OA = |3/2| = 3/2, OA' = |-3/2| = 3/2, so OA = OA'</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity11ComparisonBSolution">b) OB = |√2| = √2, OB' = |-√2| = √2, so OB = OB'</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity11ComparisonCSolution">c) OC = |√5| = √5, OC' = |-√5| = √5, so OC = OC'</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity11ComparisonDSolution">d) OE = |3√2 - 2√5|, OE' = |2√5 - 3√2|. Since |3√2 - 2√5| = |-(2√5 - 3√2)| = |2√5 - 3√2|, we have OE = OE'</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity11Conclusion">Conclusion: For any point M with coordinate x and its symmetric point M' with coordinate -x, we always have OM = OM' because |x| = |-x|.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2c.activity12">Activity 12: Finding Absolute Values</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y1Al_numact2c.activity12Title">Determining Absolute Values Without Calculation</h3>
+                
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y1Al_numact2c.activity12Instruction">Without performing calculations, give the absolute value of each of the following numbers:</p>
+                    
+                    <div class="MH-step">
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity12Expression1">(-0.005+1)²</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity12Expression2">-2/3 + 1450/215</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity12Expression3">-3/2 - 2√3</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity12Expression4">5√3 - 2√20</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2c.showAnswer" onclick="toggleSolution(120)">Show Answer</button>
+                    <div class="MH-solution" id="solution120">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2c.activity12Solution">Activity 12 Solution</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity12Expression1Solution">(-0.005+1)² = (0.995)². Since it's a square, it's positive, so |(0.995)²| = (0.995)²</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity12Expression2Solution">-2/3 + 1450/215 ≈ -0.667 + 6.744 = 6.077, which is positive, so the absolute value is the number itself</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity12Expression3Solution">-3/2 - 2√3 ≈ -1.5 - 3.464 = -4.964, which is negative, so the absolute value is -(-3/2 - 2√3) = 3/2 + 2√3</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity12Expression4Solution">5√3 - 2√20 ≈ 8.66 - 8.944 = -0.284, which is negative, so the absolute value is -(5√3 - 2√20) = 2√20 - 5√3</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2c.activity13">Activity 13: Intervals</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y1Al_numact2c.activity13Title">Working with Intervals on the Real Line</h3>
+                
+                <div class="MH-example">
+                    <div class="MH-step">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2c.activity13Part1">Part 1</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity13Part1a">a) Represent on the number line each of the following sets:</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity13SetA">A = { x∈ℝ and 2 ≤ x ≤ 5 }</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity13SetB">B = { x∈ℝ and 0 ≤ x < 3 }</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity13SetC">C = { x∈ℝ and -1 < x < 1 }</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity13SetD">D = [ 2, +∞ [</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity13SetE">E = ] -∞, -5 ]</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity13Note">Note: 3.1 ≤ x ≤ 3.2 is an interval of x with amplitude 0.1.</p>
+                        
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity13Part1b">b) Translate the notation x ∈ [-2, 7/2 [ into inequalities.</p>
+                        
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2c.activity13Part2">Part 2</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity13Part2Instruction">Let a be a real number such that -1/2 < 2a-1 < √2</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity13Part2a">a) Find an interval for a and then for a²-10.</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity13Part2b">b) Find an interval for | a - 2 |.</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2c.showAnswer" onclick="toggleSolution(130)">Show Answer</button>
+                    <div class="MH-solution" id="solution130">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2c.activity13Solution">Activity 13 Solution</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity13Part1bSolution">Part 1b: x ∈ [-2, 7/2 [ means -2 ≤ x < 7/2</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity13Part2aSolution1">Part 2a: From -1/2 < 2a-1 < √2, we add 1 to all parts: 1/2 < 2a < 1+√2, then divide by 2: 1/4 < a < (1+√2)/2</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity13Part2aSolution2">For a²-10: The minimum occurs at a=1/4: (1/4)²-10 = 1/16-10 = -159/16 = -9.9375. The maximum occurs at a=(1+√2)/2 ≈ 1.207: (1.207)²-10 = 1.457-10 = -8.543. So -9.9375 < a²-10 < -8.543</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.activity13Part2bSolution">Part 2b: |a-2|: Since a < (1+√2)/2 ≈ 1.207 < 2, we have a-2 < 0, so |a-2| = 2-a. The minimum occurs at a=(1+√2)/2: 2-(1+√2)/2 = (3-√2)/2 ≈ 0.793. The maximum occurs at a=1/4: 2-1/4 = 7/4 = 1.75. So 0.793 < |a-2| < 1.75</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2c.practice">Practice Problems</h2>
+            
+            <div class="MH-practice">
+                <h3 class="MH-practice-title" data-i18n="MH.lesson_Y1Al_numact2c.tryYourself">Try Solving These Problems</h3>
+                
+                <div class="MH-practice-problem">
+                    <p><span class="MH-equation" data-i18n="MH.lesson_Y1Al_numact2c.problem1">1. Determine the sign of: (-3) × 4 × (-5) × 6 × (-7)</span></p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2c.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                    <div class="MH-solution" id="solution1">
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.problem1Step1">Step 1: Count the negative factors: (-3), (-5), (-7) → 3 negative factors</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.problem1Step2">Step 2: Since 3 is odd, the product is negative</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.problem1Step3">Solution: Negative</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <p><span class="MH-equation" data-i18n="MH.lesson_Y1Al_numact2c.problem2">2. Arrange in increasing order: √3, 1.7, 5/3, 1.73, 1.732</span></p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2c.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                    <div class="MH-solution" id="solution2">
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.problem2Step1">Step 1: Convert all to decimals: √3 ≈ 1.732, 5/3 ≈ 1.667</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.problem2Step2">Step 2: Compare: 1.667 < 1.7 < 1.73 < 1.732</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.problem2Step3">Solution: 5/3 < 1.7 < 1.73 < √3</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <p><span class="MH-equation" data-i18n="MH.lesson_Y1Al_numact2c.problem3">3. If -2 < x < 3, find the interval for |x-1|</span></p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2c.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                    <div class="MH-solution" id="solution3">
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.problem3Step1">Step 1: From -2 < x < 3, subtract 1: -3 < x-1 < 2</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.problem3Step2">Step 2: The absolute value |x-1| will be between 0 and the maximum of |-3| and |2|, which is 3</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.problem3Step3">Step 3: Since x-1 can be negative or positive, |x-1| ranges from 0 to 3</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2c.problem3Step4">Solution: 0 ≤ |x-1| < 3</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2c.summary">Summary</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Al_numact2c.keyConcepts">Key Concepts</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y1Al_numact2c.concept1">Real numbers follow specific rules for comparison based on their signs and magnitudes</li>
+                    <li data-i18n="MH.lesson_Y1Al_numact2c.concept2">The product or quotient of two numbers is positive if they have the same sign, negative if they have opposite signs</li>
+                    <li data-i18n="MH.lesson_Y1Al_numact2c.concept3">Inequalities follow transitivity and can be manipulated by adding or multiplying (with attention to sign changes)</li>
+                    <li data-i18n="MH.lesson_Y1Al_numact2c.concept4">Absolute value represents distance from zero on the number line and follows specific algebraic rules</li>
+                    <li data-i18n="MH.lesson_Y1Al_numact2c.concept5">Intervals provide a way to represent sets of real numbers with specific boundaries</li>
+                </ul>
+            </div>
+            
+            <p data-i18n="MH.lesson_Y1Al_numact2c.finalThought">Mastering the comparison of real numbers is fundamental to advancing in algebra and will be particularly important when working with functions, inequalities, and calculus concepts.</p>
+        </section>
+        
+    </main>
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="scripts/i18n_en.js"></script>
+    <script src="scripts/i18n_ar.js"></script>
+    <script src="scripts/i18n_fr.js"></script>
+    <script src="scripts/translation.js"></script>
+    <script src="scripts/pwa-install.js"></script>
+    <script>
+        // Function to toggle solution visibility
+        function toggleSolution(id) {
+            const solution = document.getElementById('solution' + id);
+            if (solution.style.display === 'block') {
+                solution.style.display = 'none';
+            } else {
+                solution.style.display = 'block';
+            }
+        }
+        
+        // Register service worker with better error handling
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                    
+                    // Check if we need to request notification permission
+                    if (Notification.permission === 'default') {
+                        // Wait a bit then ask for permission via service worker
+                        setTimeout(() => {
+                            registration.active.postMessage({
+                                type: 'REQUEST_NOTIFICATION_PERMISSION'
+                            });
+                        }, 5000);
+                    }
+                })
+                .catch(function(error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+            });
+        }
+    </script>
+    
+    <!-- noscript fallback -->
+    <noscript>
+        <style>
+            .MH-header-controls { display: none; }
+            .MH-solution { display: block; }
+        </style>
+        <div class="MH-warning">
+            JavaScript is recommended for the full experience, but content is still accessible.
+        </div>
+    </noscript>
+</body>
+</html>

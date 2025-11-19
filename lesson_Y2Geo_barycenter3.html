@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Barycenter III - Exercises</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#3498db" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#2980b9" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#3498db">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        /* Page-specific color palette - Blue Theme */
+        :root {
+            --primary: #3498db;
+            --primary-light: #5dade2;
+            --primary-dark: #2980b9;
+            --secondary: #e74c3c;
+            --secondary-light: #ec7063;
+            --secondary-dark: #c0392b;
+            --accent: #f39c12;
+            --warning: #e67e22;
+            --info: #9b59b6;
+            --success: #27ae60;
+        }
+        
+        [data-theme="dark"] {
+            --primary: #2980b9;
+            --primary-light: #3498db;
+            --primary-dark: #1c5a85;
+            --secondary: #c0392b;
+            --secondary-light: #e74c3c;
+            --secondary-dark: #922b21;
+            --accent: #e67e22;
+            --warning: #d35400;
+            --info: #8e44ad;
+            --success: #229954;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Geo_barycenter3.title">Barycenter III: Exercises</h1>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_barycenter3.introduction">Introduction to Barycenter Exercises</h2>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.introText1">In this third lesson on barycenters, we'll practice more complex problems involving weighted points, vector relations, and geometric constructions. These exercises will help you master advanced barycenter concepts.</p>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Geo_barycenter3.importantTitle">Important Reminder</h3>
+                <p data-i18n="MH.lesson_Y2Geo_barycenter3.importantText">Remember the fundamental barycenter property: For weighted points (A, α), (B, β), the barycenter G satisfies: α·GA⃗ + β·GB⃗ = 0⃗, and exists only when α + β ≠ 0.</p>
+            </div>
+            
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.introText2">Work through each exercise step by step, and check your solutions by revealing the detailed explanations. Use the geometric visualizations to better understand the concepts.</p>
+        </section>
+        
+        <!-- Exercise 1 -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.title">Exercise 1: Barycenter Construction and Locus</h2>
+            
+            <div class="MH-exercise">
+                <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.statement">Let ABC be a triangle.</p>
+                
+                <div class="MH-exercise-part">
+                    <h3 data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.part1.title">Part 1: Construction</h3>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.part1a">a) Construct point I, the barycenter of weighted points (A, 1) and (B, 3).</p>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.part1b">b) Construct point K defined by:</p>
+                    <div class="MH-equation">(3·KI⃗ - 2·KC⃗)/2 = 0⃗</div>
+                </div>
+                
+                <div class="MH-exercise-part">
+                    <h3 data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.part2.title">Part 2: Geometric Locus</h3>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.part2">Determine and construct the set of points M in the plane such that:</p>
+                    <div class="MH-equation">∥MA⃗ + 3·MB⃗∥ = 4·∥3·MI⃗ - 2·MC⃗∥</div>
+                </div>
+                
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_barycenter3.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                <div class="MH-solution" id="solution1">
+                    <h3 data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.solution.part1title">Part 1: Construction of Points I and K</h3>
+                    
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.solution.part1astep1">Step 1: Construction of point I</p>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.solution.part1astep1text">I is the barycenter of (A, 1) and (B, 3). This means:</p>
+                    <div class="MH-equation">IA⃗ + 3·IB⃗ = 0⃗</div>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.solution.part1astep1text2">Using the barycenter formula, I divides segment AB in the ratio:</p>
+                    <div class="MH-equation">AI:IB = 3:1</div>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.solution.part1astep1text3">So to construct I, divide AB into 4 equal parts (1+3=4) and locate I such that AI is 3/4 of AB.</p>
+                    
+                    <div class="MH-geometry-demo">
+                        <div class="MH-geometry-container">
+                            <canvas id="exercise1_part1a" class="MH-geometry-canvas"></canvas>
+                        </div>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.solution.part1bstep1">Step 2: Construction of point K</p>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.solution.part1bstep1text">We have the equation:</p>
+                    <div class="MH-equation">(3·KI⃗ - 2·KC⃗)/2 = 0⃗ ⇒ 3·KI⃗ - 2·KC⃗ = 0⃗</div>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.solution.part1bstep1text2">This means K is the barycenter of (I, 3) and (C, -2).</p>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.solution.part1bstep1text3">Since one coefficient is negative, K lies on the extension of IC beyond I.</p>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.solution.part1bstep1text4">The ratio IK:KC = |-2|:3 = 2:3</p>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.solution.part1bstep1text5">So K is located such that IK = (2/5)IC and on the opposite side of I from C.</p>
+                    
+                    <div class="MH-geometry-demo">
+                        <div class="MH-geometry-container">
+                            <canvas id="exercise1_part1b" class="MH-geometry-canvas"></canvas>
+                        </div>
+                    </div>
+                    
+                    <h3 data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.solution.part2title">Part 2: Geometric Locus of Points M</h3>
+                    
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.solution.part2step1">Step 1: Simplify the left side</p>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.solution.part2step1text">MA⃗ + 3·MB⃗ = (1+3)·MI⃗ = 4·MI⃗</p>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.solution.part2step1text2">So ∥MA⃗ + 3·MB⃗∥ = ∥4·MI⃗∥ = 4·∥MI⃗∥</p>
+                    
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.solution.part2step2">Step 2: Simplify the right side</p>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.solution.part2step2text">3·MI⃗ - 2·MC⃗ = (3-2)·MK⃗ = MK⃗</p>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.solution.part2step2text2">So ∥3·MI⃗ - 2·MC⃗∥ = ∥MK⃗∥</p>
+                    
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.solution.part2step3">Step 3: Rewrite the equation</p>
+                    <div class="MH-equation">4·∥MI⃗∥ = 4·∥MK⃗∥ ⇒ ∥MI⃗∥ = ∥MK⃗∥</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.solution.part2step4">Step 4: Geometric interpretation</p>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.solution.part2step4text">The equation ∥MI⃗∥ = ∥MK⃗∥ means M is equidistant from I and K.</p>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise1.solution.part2step4text2">Therefore, the set of points M is the perpendicular bisector of segment IK.</p>
+                    
+                    <div class="MH-geometry-demo">
+                        <div class="MH-geometry-container">
+                            <canvas id="exercise1_part2" class="MH-geometry-canvas"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Exercise 2 -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.title">Exercise 2: Triangle with Midpoint and Barycenter</h2>
+            
+            <div class="MH-exercise">
+                <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.statement">Let ABC be a triangle.</p>
+                
+                <div class="MH-exercise-part">
+                    <h3 data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.part1.title">Part 1: Construction</h3>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.part1">Construct point H, the barycenter of weighted points (B, 1) and (C, 1).</p>
+                </div>
+                
+                <div class="MH-exercise-part">
+                    <h3 data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.part2.title">Part 2: Point K</h3>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.part2a">a) Show that K is the barycenter of weighted points (A, 3) and (H, 2).</p>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.part2b">b) Construct point K.</p>
+                </div>
+                
+                <div class="MH-exercise-part">
+                    <h3 data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.part3.title">Part 3: Geometric Locus</h3>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.part3">Determine and construct the set of points M in the plane such that:</p>
+                    <div class="MH-equation">∥3·MA⃗ + 2·MH⃗∥ = 3·∥MH⃗ - MA⃗∥</div>
+                </div>
+                
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_barycenter3.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                <div class="MH-solution" id="solution2">
+                    <h3 data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.solution.part1title">Part 1: Construction of Point H</h3>
+                    
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.solution.part1step1">Step 1: Understanding point H</p>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.solution.part1step1text">H is the barycenter of (B, 1) and (C, 1).</p>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.solution.part1step1text2">Since the weights are equal, H is the midpoint of segment BC.</p>
+                    
+                    <div class="MH-geometry-demo">
+                        <div class="MH-geometry-container">
+                            <canvas id="exercise2_part1" class="MH-geometry-canvas"></canvas>
+                        </div>
+                    </div>
+                    
+                    <h3 data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.solution.part2title">Part 2: Point K</h3>
+                    
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.solution.part2astep1">Step 1: Show K is barycenter of (A,3) and (H,2)</p>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.solution.part2astep1text">From the given relation:</p>
+                    <div class="MH-equation">(3·KA⃗ + KB⃗ + KC⃗)/2 = 0⃗ ⇒ 3·KA⃗ + KB⃗ + KC⃗ = 0⃗</div>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.solution.part2astep1text2">This means K is the barycenter of (A,3), (B,1), (C,1).</p>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.solution.part2astep1text3">But H is the barycenter of (B,1) and (C,1), so by the partial barycenter property:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.solution.barycenterK2">K = barycenter of (A,3), (H,1+1) = barycenter of (A,3), (H,2)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.solution.part2bstep1">Step 2: Construction of point K</p>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.solution.part2bstep1text">Since K = barycenter of (A,3), (H,2), K divides segment AH in the ratio:</p>
+                    <div class="MH-equation">AK:KH = 2:3</div>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.solution.part2bstep1text2">So to construct K, divide AH into 5 equal parts (3+2=5) and locate K such that AK = 2/5 of AH.</p>
+                    
+                    <div class="MH-geometry-demo">
+                        <div class="MH-geometry-container">
+                            <canvas id="exercise2_part2" class="MH-geometry-canvas"></canvas>
+                        </div>
+                    </div>
+                    
+                    <h3 data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.solution.part3title">Part 3: Geometric Locus of Points M</h3>
+                    
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.solution.part3step1">Step 1: Simplify the left side</p>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.solution.part3step1text">3·MA⃗ + 2·MH⃗ = (3+2)·MK⃗ = 5·MK⃗</p>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.solution.part3step1text2">So ∥3·MA⃗ + 2·MH⃗∥ = ∥5·MK⃗∥ = 5·∥MK⃗∥</p>
+                    
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.solution.part3step2">Step 2: Simplify the right side</p>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.solution.part3step2text">MH⃗ - MA⃗ = AH⃗ (a constant vector)</p>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.solution.part3step2text2">So ∥MH⃗ - MA⃗∥ = ∥AH⃗∥ = AH (a constant length)</p>
+                    
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.solution.part3step3">Step 3: Rewrite the equation</p>
+                    <div class="MH-equation">5·∥MK⃗∥ = 3·AH ⇒ ∥MK⃗∥ = (3/5)·AH</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.solution.part3step4">Step 4: Geometric interpretation</p>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.solution.part3step4text">The equation ∥MK⃗∥ = (3/5)·AH means M is at a fixed distance from K.</p>
+                    <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise2.solution.part3step4text2">Therefore, the set of points M is a circle with center K and radius (3/5)·AH.</p>
+                    
+                    <div class="MH-geometry-demo">
+                        <div class="MH-geometry-container">
+                            <canvas id="exercise2_part3" class="MH-geometry-canvas"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Exercise 3 -->
+        <section class="MH-section">
+    <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.title">Exercise 3: Multiple Barycenter Relations</h2>
+    
+    <div class="MH-exercise">
+        <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.statement">Let ABC be a triangle. Let points E, F, K be defined by:</p>
+        <div class="MH-equation">EB⃗ = -½·EC⃗</div>
+        <div class="MH-equation">FA⃗ = -⅔·FC⃗</div>
+        <div class="MH-equation">KB⃗ = -¾·KA⃗</div>
+        
+        <div class="MH-exercise-part">
+            <h3 data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.part1.title">Part 1: Barycenter Expressions</h3>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.part1">Express E, F, K as barycenters of two weighted points.</p>
+        </div>
+        
+        <div class="MH-exercise-part">
+            <h3 data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.part2.title">Part 2: Point G</h3>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.part2">Let point G be defined by:</p>
+            <div class="MH-equation">3·GA⃗ + 4·GB⃗ + 2·GC⃗ = 0⃗</div>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.part2a">a) Show that G ∈ (KC).</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.part2b">b) Show that lines (KC), (FB), (EA) are concurrent at G.</p>
+        </div>
+        
+        <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_barycenter3.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+        <div class="MH-solution" id="solution3">
+            <h3 data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part1title">Part 1: Express E, F, K as Barycenters</h3>
+            
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part1step1">Step 1: Express E as a barycenter</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part1step1text">From EB⃗ = -½·EC⃗, we have:</p>
+            <div class="MH-equation">EB⃗ + ½·EC⃗ = 0⃗</div>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part1step1text2">This means E is the barycenter of (B,1) and (C,½).</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part1step1text3">Multiply all coefficients by 2 to get integer weights:</p>
+            <div class="MH-equation">E = <span data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.barycenterOf">barycenter of</span> (B,2), (C,1)</div>
+            
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part1step2">Step 2: Express F as a barycenter</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part1step2text">From FA⃗ = -⅔·FC⃗, we have:</p>
+            <div class="MH-equation">FA⃗ + ⅔·FC⃗ = 0⃗</div>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part1step2text2">This means F is the barycenter of (A,1) and (C,⅔).</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part1step2text3">Multiply all coefficients by 3 to get integer weights:</p>
+            <div class="MH-equation">F = <span data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.barycenterOf">barycenter of</span> (A,3), (C,2)</div>
+            
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part1step3">Step 3: Express K as a barycenter</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part1step3text">From KB⃗ = -¾·KA⃗, we have:</p>
+            <div class="MH-equation">KB⃗ + ¾·KA⃗ = 0⃗</div>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part1step3text2">This means K is the barycenter of (B,1) and (A,¾).</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part1step3text3">Multiply all coefficients by 4 to get integer weights:</p>
+            <div class="MH-equation">K = <span data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.barycenterOf">barycenter of</span> (B,4), (A,3)</div>
+            
+            <div class="MH-geometry-demo">
+                <div class="MH-geometry-container">
+                    <canvas id="exercise3_part1" class="MH-geometry-canvas"></canvas>
+                </div>
+            </div>
+            
+            <h3 data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part2title">Part 2: Point G and Concurrency</h3>
+            
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part2astep1">Step 1: Show G ∈ (KC)</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part2astep1text">From the given relation:</p>
+            <div class="MH-equation">3·GA⃗ + 4·GB⃗ + 2·GC⃗ = 0⃗</div>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part2astep1text2">This means G is the barycenter of (A,3), (B,4), (C,2).</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part2astep1text3">We need to show that G lies on line KC.</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part2astep1text4">From Part 1, we know K = barycenter of (A,3), (B,4).</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part2astep1text5">By the partial barycenter property:</p>
+            <div class="MH-equation">G = <span data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.barycenterOf">barycenter of</span> (K,3+4), (C,2) = <span data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.barycenterOf">barycenter of</span> (K,7), (C,2)</div>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part2astep1text6">This shows that G lies on line KC and divides it in the ratio KG:GC = 2:7.</p>
+            
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part2bstep1">Step 2: Show lines (KC), (FB), (EA) are concurrent at G</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part2bstep1text">We already showed G ∈ (KC).</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part2bstep1text2">Now let's show G ∈ (FB):</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part2bstep1text3">From Part 1, F = barycenter of (A,3), (C,2).</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part2bstep1text4">By the partial barycenter property with G = barycenter of (A,3), (B,4), (C,2):</p>
+            <div class="MH-equation">G = <span data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.barycenterOf">barycenter of</span> (F,3+2), (B,4) = <span data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.barycenterOf">barycenter of</span> (F,5), (B,4)</div>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part2bstep1text5">This shows that G lies on line FB and divides it in the ratio FG:GB = 4:5.</p>
+            
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part2bstep2">Step 3: Show G ∈ (EA)</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part2bstep2text">From Part 1, E = barycenter of (B,2), (C,1).</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part2bstep2text2">By the partial barycenter property with G = barycenter of (A,3), (B,4), (C,2):</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part2bstep2text3">Group (B,4) and (C,2): their barycenter is point H such that BH:HC = 2:4 = 1:2.</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part2bstep2text4">But E = barycenter of (B,2), (C,1) which gives BE:EC = 1:2, so H = E.</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part2bstep2text5">Therefore:</p>
+            <div class="MH-equation">G = <span data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.barycenterOf">barycenter of</span> (A,3), (E,4+2) = <span data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.barycenterOf">barycenter of</span> (A,3), (E,6)</div>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part2bstep2text6">This shows that G lies on line EA and divides it in the ratio EG:GA = 3:6 = 1:2.</p>
+            
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part2bstep3">Step 4: Conclusion</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise3.solution.part2bstep3text">Since G lies on all three lines (KC), (FB), and (EA), these lines are concurrent at G.</p>
+            
+            <div class="MH-geometry-demo">
+                <div class="MH-geometry-container">
+                    <canvas id="exercise3_part2" class="MH-geometry-canvas"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+        
+        <!-- Exercise 4 -->
+        <section class="MH-section">
+    <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.title">Exercise 4: Parallelogram with Barycenters</h2>
+    
+    <div class="MH-exercise">
+        <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.statement">Let ABCD be a parallelogram with center O.</p>
+        
+        <div class="MH-exercise-part">
+            <h3 data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.part1.title">Part 1: Construction</h3>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.part1a">- S is the barycenter of weighted points (A, -3) and (B, 1).</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.part1b">- T is the barycenter of weighted points (B, 1) and (C, -3).</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.part1c">Construct points S and T.</p>
+        </div>
+        
+        <div class="MH-exercise-part">
+            <h3 data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.part2.title">Part 2: Parallel Lines</h3>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.part2">Show that (ST) ∥ (AC).</p>
+        </div>
+        
+        <div class="MH-exercise-part">
+            <h3 data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.part3.title">Part 3: Point E</h3>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.part3">Let E be the barycenter of weighted points (A, -3), (B, 2), and (C, -3).</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.part3a">a) Show that E is the barycenter of weighted points (O, -3) and (B, 1).</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.part3b">b) Show that E = S * T.</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.part3c">c) Deduce that (ST) and (BD) intersect at E.</p>
+        </div>
+        
+        <div class="MH-exercise-part">
+            <h3 data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.part4.title">Part 4: Geometric Loci</h3>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.part4">Determine the set of points M in the plane in each of the following cases:</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.part4a">a) ∥-3·MA⃗ + MB⃗∥ = ∥MS⃗ + MT⃗∥</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.part4b">b) ∥-3·MA⃗ + 2·MB⃗ - 3·MC⃗∥ = ∥2·MS⃗ - 2·MT⃗∥</p>
+        </div>
+        
+        <div class="MH-exercise-part">
+            <h3 data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.part5.title">Part 5: Point K</h3>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.part5">Let K be the point defined by:</p>
+            <div class="MH-equation">AD⃗ = SK⃗</div>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.part5a">Show that D is the barycenter of weighted points (C, 1) and (K, 2).</p>
+        </div>
+        
+        <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_barycenter3.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+        <div class="MH-solution" id="solution4">
+            <h3 data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part1title">Part 1: Construction of Points S and T</h3>
+            
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part1step1">Step 1: Construction of point S</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part1step1text">S is the barycenter of (A,-3) and (B,1).</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part1step1text2">Since one coefficient is negative, S lies on the extension of AB beyond B.</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part1step1text3">The ratio AS:SB = |1|:|-3| = 1:3</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part1step1text4">So S is located such that BS = (1/4)BA and on the opposite side of B from A.</p>
+            
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part1step2">Step 2: Construction of point T</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part1step2text">T is the barycenter of (B,1) and (C,-3).</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part1step2text2">Since one coefficient is negative, T lies on the extension of BC beyond C.</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part1step2text3">The ratio BT:TC = |-3|:|1| = 3:1</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part1step2text4">So T is located such that CT = (1/4)CB and on the opposite side of C from B.</p>
+            
+            <div class="MH-geometry-demo">
+                <div class="MH-geometry-container">
+                    <canvas id="exercise4_part1" class="MH-geometry-canvas"></canvas>
+                </div>
+            </div>
+            
+            <h3 data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part2title">Part 2: Show (ST) ∥ (AC)</h3>
+            
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part2step1">Step 1: Calculate vectors ST and AC</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part2step1text">Using the barycenter formulas:</p>
+            <div class="MH-equation">S = <span data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.barycenterOf">barycenter of</span> (A,-3), (B,1) ⇒ AS⃗ = [1/(-3+1)]·AB⃗ = (1/-2)·AB⃗ = -½·AB⃗</div>
+            <div class="MH-equation">T = <span data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.barycenterOf">barycenter of</span> (B,1), (C,-3) ⇒ BT⃗ = [-3/(1-3)]·BC⃗ = (-3/-2)·BC⃗ = (3/2)·BC⃗</div>
+            
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part2step2">Step 2: Express ST⃗ in terms of AC⃗</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part2step2text">Using vector relations and the fact that ABCD is a parallelogram (so AB⃗ = DC⃗ and BC⃗ = AD⃗), we can show that ST⃗ is parallel to AC⃗.</p>
+            
+            <div class="MH-geometry-demo">
+                <div class="MH-geometry-container">
+                    <canvas id="exercise4_part2" class="MH-geometry-canvas"></canvas>
+                </div>
+            </div>
+            
+            <h3 data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part3title">Part 3: Point E</h3>
+            
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part3astep1">Step 1: Show E is barycenter of (O,-3) and (B,1)</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part3astep1text">E is the barycenter of (A,-3), (B,2), (C,-3).</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part3astep1text2">Since O is the center of the parallelogram, O = barycenter of (A,1), (B,1), (C,1), (D,1).</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part3astep1text3">By the partial barycenter property with (A,-3) and (C,-3), their barycenter is point F such that AF:FC = |-3|:|-3| = 1:1, so F is the midpoint of AC.</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part3astep1text4">But in a parallelogram, the midpoint of AC is O.</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part3astep1text5">Therefore:</p>
+            <div class="MH-equation">E = <span data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.barycenterOf">barycenter of</span> (O,-3-3), (B,2) = <span data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.barycenterOf">barycenter of</span> (O,-6), (B,2)</div>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part3astep1text6">Divide all coefficients by 2: E = barycenter of (O,-3), (B,1)</p>
+            
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part3bstep1">Step 2: Show E = S * T</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part3bstep1text">S = barycenter of (A,-3), (B,1)</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part3bstep1text2">T = barycenter of (B,1), (C,-3)</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part3bstep1text3">The barycenter of S and T with equal weights (1,1) is:</p>
+            <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.barycenterE2">E' = barycenter of (S,1), (T,1) = barycenter of (A,-3), (B,1+1), (C,-3) = barycenter of (A,-3), (B,2), (C,-3)</div>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part3bstep1text4">This is exactly E, so E is the midpoint of S and T, denoted E = S * T.</p>
+            
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part3cstep1">Step 3: Deduce that (ST) and (BD) intersect at E</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part3cstep1text">Since E is the midpoint of S and T, E lies on line ST.</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part3cstep1text2">From part 3a, E = barycenter of (O,-3), (B,1), so E lies on line OB.</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part3cstep1text3">But in a parallelogram, O is the midpoint of BD, so line OB is part of diagonal BD.</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part3cstep1text4">Therefore, E is the intersection of ST and BD.</p>
+            
+            <div class="MH-geometry-demo">
+                <div class="MH-geometry-container">
+                    <canvas id="exercise4_part3" class="MH-geometry-canvas"></canvas>
+                </div>
+            </div>
+            
+            <h3 data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part4title">Part 4: Geometric Loci</h3>
+            
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part4astep1">Part 4a: ∥-3·MA⃗ + MB⃗∥ = ∥MS⃗ + MT⃗∥</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part4astep1text">Left side: -3·MA⃗ + MB⃗ = (1-3)·MS⃗? Let's find the barycenter:</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part4astep1text2">S = barycenter of (A,-3), (B,1), so -3·MA⃗ + MB⃗ = (1-3)·MS⃗ = -2·MS⃗</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part4astep1text3">So ∥-3·MA⃗ + MB⃗∥ = ∥-2·MS⃗∥ = 2·∥MS⃗∥</p>
+            
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part4astep2">Right side: MS⃗ + MT⃗ = (1+1)·ME⃗ = 2·ME⃗ (since E is midpoint of S and T)</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part4astep2text">So ∥MS⃗ + MT⃗∥ = ∥2·ME⃗∥ = 2·∥ME⃗∥</p>
+            
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part4astep3">Equation becomes: 2·∥MS⃗∥ = 2·∥ME⃗∥ ⇒ ∥MS⃗∥ = ∥ME⃗∥</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part4aconclusion">This means M is equidistant from S and E, so the locus is the perpendicular bisector of SE.</p>
+            
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part4bstep1">Part 4b: ∥-3·MA⃗ + 2·MB⃗ - 3·MC⃗∥ = ∥2·MS⃗ - 2·MT⃗∥</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part4bstep1text">Left side: -3·MA⃗ + 2·MB⃗ - 3·MC⃗ = (2-3-3)·ME⃗? Let's find the barycenter:</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part4bstep1text2">E = barycenter of (A,-3), (B,2), (C,-3), so -3·MA⃗ + 2·MB⃗ - 3·MC⃗ = (2-3-3)·ME⃗ = -4·ME⃗</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part4bstep1text3">So ∥-3·MA⃗ + 2·MB⃗ - 3·MC⃗∥ = ∥-4·ME⃗∥ = 4·∥ME⃗∥</p>
+            
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part4bstep2">Right side: 2·MS⃗ - 2·MT⃗ = 2(MS⃗ - MT⃗) = 2·TS⃗ (a constant vector)</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part4bstep2text">So ∥2·MS⃗ - 2·MT⃗∥ = 2·∥TS⃗∥ (a constant)</p>
+            
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part4bstep3">Equation becomes: 4·∥ME⃗∥ = 2·∥TS⃗∥ ⇒ ∥ME⃗∥ = (1/2)·∥TS⃗∥</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part4bconclusion">This means M is at a fixed distance from E, so the locus is a circle with center E and radius (1/2)·∥TS⃗∥.</p>
+            
+            <div class="MH-geometry-demo">
+                <div class="MH-geometry-container">
+                    <canvas id="exercise4_part4" class="MH-geometry-canvas"></canvas>
+                </div>
+            </div>
+            
+            <h3 data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part5title">Part 5: Point K</h3>
+            
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part5step1">Step 1: Show D is barycenter of (C,1) and (K,2)</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part5step1text">Given: AD⃗ = SK⃗</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part5step1text2">Since S = barycenter of (A,-3), (B,1), we have AS⃗ = [1/(-3+1)]·AB⃗ = -½·AB⃗</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part5step1text3">So SK⃗ = AD⃗ ⇒ K = S + AD⃗</p>
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.exercise4.solution.part5step1text4">Using vector relations in parallelogram ABCD, we can show that D = barycenter of (C,1), (K,2).</p>
+            
+            <div class="MH-geometry-demo">
+                <div class="MH-geometry-container">
+                    <canvas id="exercise4_part5" class="MH-geometry-canvas"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_barycenter3.summary">Summary</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Geo_barycenter3.keyPointsTitle">Key Problem-Solving Strategies</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Geo_barycenter3.strategy1">Always identify barycenters from vector relations</li>
+                    <li data-i18n="MH.lesson_Y2Geo_barycenter3.strategy2">Use coordinate systems for complex problems</li>
+                    <li data-i18n="MH.lesson_Y2Geo_barycenter3.strategy3">Apply the homogeneity property to simplify coefficients</li>
+                    <li data-i18n="MH.lesson_Y2Geo_barycenter3.strategy4">Use partial barycenters to break down complex systems</li>
+                    <li data-i18n="MH.lesson_Y2Geo_barycenter3.strategy5">Verify results with geometric constructions</li>
+                </ul>
+            </div>
+            
+            <p data-i18n="MH.lesson_Y2Geo_barycenter3.finalThought">Practice these exercises regularly to master barycenter concepts. The more problems you solve, the more intuitive these techniques will become.</p>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="scripts/geometry_utils.js"></script>
+    <script src="scripts/i18n_en.js"></script>
+    <script src="scripts/i18n_ar.js"></script>
+    <script src="scripts/i18n_fr.js"></script>
+    <script src="scripts/translation.js"></script>
+    <script src="scripts/pwa-install.js"></script>
+    <script>
+        // Register service worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                })
+                .catch(function(error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+            });
+        }
+
+        // Geometry demonstrations for exercises
+        function initExerciseDemonstrations() {
+            // Exercise 1 demonstrations
+            const canvas1a = document.getElementById('exercise1_part1a');
+            const ctx1a = canvas1a.getContext('2d');
+            const { width, height, centerX, centerY, scale } = geometryUtils.initializeGeometryCanvas('exercise1_part1a', 600, 300);
+            
+            function drawExercise1_part1a() {
+                geometryUtils.clearCanvas('exercise1_part1a');
+                
+                // Points A, B, C forming a triangle
+                const pointA = { x: -4, y: -1 };
+                const pointB = { x: 4, y: -1 };
+                const pointC = { x: 0, y: 3 };
+                
+                // Calculate I: barycenter of (A,1), (B,3)
+                const xI = (1*pointA.x + 3*pointB.x) / (1+3);
+                const yI = (1*pointA.y + 3*pointB.y) / (1+3);
+                const pointI = { x: xI, y: yI };
+                
+                // Draw triangle
+                geometryUtils.drawTriangle(ctx1a, pointA, pointB, pointC, centerX, centerY, scale, {
+                    fillColor: geometryUtils.getCssVariable('--primary-light') + '40',
+                    strokeColor: geometryUtils.getCssVariable('--primary'),
+                    labelPoints: true,
+                    pointLabels: ['A', 'B', 'C'],
+                    showSides: true
+                });
+                
+                // Draw point I
+                geometryUtils.drawPoint(ctx1a, pointI, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--secondary'),
+                    radius: 6,
+                    label: 'I'
+                });
+                
+                // Draw division markers on AB
+                ctx1a.strokeStyle = geometryUtils.getCssVariable('--MH-geo-grid-color');
+                ctx1a.lineWidth = 1;
+                
+                // Mark the 1:3 division on AB
+                const divisionPoint = {
+                    x: pointA.x + 0.75 * (pointB.x - pointA.x),
+                    y: pointA.y + 0.75 * (pointB.y - pointA.y)
+                };
+                
+                const pixelDivision = geometryUtils.mathToPixel(divisionPoint.x, divisionPoint.y, centerX, centerY, scale);
+                
+                ctx1a.fillStyle = geometryUtils.getCssVariable('--secondary');
+                ctx1a.beginPath();
+                ctx1a.arc(pixelDivision.pixelX, pixelDivision.pixelY, 4, 0, 2 * Math.PI);
+                ctx1a.fill();
+                
+                // Add title
+                ctx1a.fillStyle = geometryUtils.getCssVariable('--MH-geo-text-color');
+                ctx1a.font = '14px Arial';
+                ctx1a.textAlign = 'center';
+                ctx1a.fillText('I is barycenter of (A,1), (B,3) - AI:IB = 3:1', width / 2, 20);
+            }
+            
+            // Exercise 1 part 1b
+            const canvas1b = document.getElementById('exercise1_part1b');
+            const ctx1b = canvas1b.getContext('2d');
+            geometryUtils.initializeGeometryCanvas('exercise1_part1b', 600, 300);
+            
+            function drawExercise1_part1b() {
+                geometryUtils.clearCanvas('exercise1_part1b');
+                
+                // Points A, B, C forming a triangle
+                const pointA = { x: -4, y: -1 };
+                const pointB = { x: 4, y: -1 };
+                const pointC = { x: 0, y: 3 };
+                
+                // Calculate I: barycenter of (A,1), (B,3)
+                const xI = (1*pointA.x + 3*pointB.x) / (1+3);
+                const yI = (1*pointA.y + 3*pointB.y) / (1+3);
+                const pointI = { x: xI, y: yI };
+                
+                // Calculate K: barycenter of (I,3), (C,-2)
+                const xK = (3*pointI.x + (-2)*pointC.x) / (3 + (-2));
+                const yK = (3*pointI.y + (-2)*pointC.y) / (3 + (-2));
+                const pointK = { x: xK, y: yK };
+                
+                // Draw triangle
+                geometryUtils.drawTriangle(ctx1b, pointA, pointB, pointC, centerX, centerY, scale, {
+                    fillColor: geometryUtils.getCssVariable('--primary-light') + '40',
+                    strokeColor: geometryUtils.getCssVariable('--primary'),
+                    labelPoints: true,
+                    pointLabels: ['A', 'B', 'C'],
+                    showSides: true
+                });
+                
+                // Draw points I and K
+                geometryUtils.drawPoint(ctx1b, pointI, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--secondary'),
+                    radius: 6,
+                    label: 'I'
+                });
+                
+                geometryUtils.drawPoint(ctx1b, pointK, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--warning'),
+                    radius: 6,
+                    label: 'K'
+                });
+                
+                // Draw line IC (extended for K)
+                ctx1b.strokeStyle = geometryUtils.getCssVariable('--info');
+                ctx1b.lineWidth = 2;
+                ctx1b.setLineDash([5, 3]);
+                
+                const pixelI = geometryUtils.mathToPixel(pointI.x, pointI.y, centerX, centerY, scale);
+                const pixelC = geometryUtils.mathToPixel(pointC.x, pointC.y, centerX, centerY, scale);
+                const pixelK = geometryUtils.mathToPixel(pointK.x, pointK.y, centerX, centerY, scale);
+                
+                // Extend line beyond I for K
+                const directionX = pointI.x - pointC.x;
+                const directionY = pointI.y - pointC.y;
+                const length = Math.sqrt(directionX*directionX + directionY*directionY);
+                const unitX = directionX / length;
+                const unitY = directionY / length;
+                
+                const extendedPoint = {
+                    x: pointI.x + unitX * 8,
+                    y: pointI.y + unitY * 8
+                };
+                
+                const pixelExtended = geometryUtils.mathToPixel(extendedPoint.x, extendedPoint.y, centerX, centerY, scale);
+                
+                ctx1b.beginPath();
+                ctx1b.moveTo(pixelC.pixelX, pixelC.pixelY);
+                ctx1b.lineTo(pixelExtended.pixelX, pixelExtended.pixelY);
+                ctx1b.stroke();
+                
+                ctx1b.setLineDash([]);
+                
+                // Mark division ratio
+                ctx1b.fillStyle = geometryUtils.getCssVariable('--MH-geo-text-color');
+                ctx1b.font = '12px Arial';
+                ctx1b.textAlign = 'center';
+                ctx1b.fillText('IK:KC = 2:3', (pixelI.pixelX + pixelK.pixelX)/2, (pixelI.pixelY + pixelK.pixelY)/2 - 10);
+                
+                // Add title
+                ctx1b.fillStyle = geometryUtils.getCssVariable('--MH-geo-text-color');
+                ctx1b.font = '14px Arial';
+                ctx1b.textAlign = 'center';
+                ctx1b.fillText('K is barycenter of (I,3), (C,-2)', width / 2, 20);
+            }
+            
+            // Exercise 1 part 2
+            const canvas1c = document.getElementById('exercise1_part2');
+            const ctx1c = canvas1c.getContext('2d');
+            geometryUtils.initializeGeometryCanvas('exercise1_part2', 600, 300);
+            
+            function drawExercise1_part2() {
+                geometryUtils.clearCanvas('exercise1_part2');
+                
+                // Points A, B, C forming a triangle
+                const pointA = { x: -4, y: -1 };
+                const pointB = { x: 4, y: -1 };
+                const pointC = { x: 0, y: 3 };
+                
+                // Calculate I: barycenter of (A,1), (B,3)
+                const xI = (1*pointA.x + 3*pointB.x) / (1+3);
+                const yI = (1*pointA.y + 3*pointB.y) / (1+3);
+                const pointI = { x: xI, y: yI };
+                
+                // Calculate K: barycenter of (I,3), (C,-2)
+                const xK = (3*pointI.x + (-2)*pointC.x) / (3 + (-2));
+                const yK = (3*pointI.y + (-2)*pointC.y) / (3 + (-2));
+                const pointK = { x: xK, y: yK };
+                
+                // Draw triangle
+                geometryUtils.drawTriangle(ctx1c, pointA, pointB, pointC, centerX, centerY, scale, {
+                    fillColor: geometryUtils.getCssVariable('--primary-light') + '40',
+                    strokeColor: geometryUtils.getCssVariable('--primary'),
+                    labelPoints: true,
+                    pointLabels: ['A', 'B', 'C'],
+                    showSides: true
+                });
+                
+                // Draw points I and K
+                geometryUtils.drawPoint(ctx1c, pointI, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--secondary'),
+                    radius: 6,
+                    label: 'I'
+                });
+                
+                geometryUtils.drawPoint(ctx1c, pointK, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--warning'),
+                    radius: 6,
+                    label: 'K'
+                });
+                
+                // Draw perpendicular bisector of IK
+                const pixelI = geometryUtils.mathToPixel(pointI.x, pointI.y, centerX, centerY, scale);
+                const pixelK = geometryUtils.mathToPixel(pointK.x, pointK.y, centerX, centerY, scale);
+                
+                const midPointIK = {
+                    x: (pointI.x + pointK.x) / 2,
+                    y: (pointI.y + pointK.y) / 2
+                };
+                
+                const pixelMid = geometryUtils.mathToPixel(midPointIK.x, midPointIK.y, centerX, centerY, scale);
+                
+                // Calculate perpendicular direction
+                const dx = pointK.x - pointI.x;
+                const dy = pointK.y - pointI.y;
+                const perpendicularSlope = -dx / dy;
+                
+                // Draw perpendicular bisector
+                ctx1c.strokeStyle = geometryUtils.getCssVariable('--info');
+                ctx1c.lineWidth = 2;
+                ctx1c.setLineDash([5, 3]);
+                
+                // Calculate two points on the perpendicular bisector
+                const length = 10;
+                
+                const point1 = {
+                    x: midPointIK.x - length,
+                    y: midPointIK.y - length * perpendicularSlope
+                };
+                
+                const point2 = {
+                    x: midPointIK.x + length,
+                    y: midPointIK.y + length * perpendicularSlope
+                };
+                
+                const pixel1 = geometryUtils.mathToPixel(point1.x, point1.y, centerX, centerY, scale);
+                const pixel2 = geometryUtils.mathToPixel(point2.x, point2.y, centerX, centerY, scale);
+                
+                ctx1c.beginPath();
+                ctx1c.moveTo(pixel1.pixelX, pixel1.pixelY);
+                ctx1c.lineTo(pixel2.pixelX, pixel2.pixelY);
+                ctx1c.stroke();
+                
+                ctx1c.setLineDash([]);
+                
+                // Add title
+                ctx1c.fillStyle = geometryUtils.getCssVariable('--MH-geo-text-color');
+                ctx1c.font = '14px Arial';
+                ctx1c.textAlign = 'center';
+                ctx1c.fillText('Perpendicular bisector of IK (set of points M)', width / 2, 20);
+            }
+            
+            // Exercise 2 part 1
+            const canvas2a = document.getElementById('exercise2_part1');
+            const ctx2a = canvas2a.getContext('2d');
+            geometryUtils.initializeGeometryCanvas('exercise2_part1', 600, 300);
+            
+            function drawExercise2_part1() {
+                geometryUtils.clearCanvas('exercise2_part1');
+                
+                // Points A, B, C forming a triangle
+                const pointA = { x: -4, y: -1 };
+                const pointB = { x: 4, y: -1 };
+                const pointC = { x: 0, y: 3 };
+                
+                // Calculate H: midpoint of BC
+                const pointH = {
+                    x: (pointB.x + pointC.x) / 2,
+                    y: (pointB.y + pointC.y) / 2
+                };
+                
+                // Draw triangle
+                geometryUtils.drawTriangle(ctx2a, pointA, pointB, pointC, centerX, centerY, scale, {
+                    fillColor: geometryUtils.getCssVariable('--primary-light') + '40',
+                    strokeColor: geometryUtils.getCssVariable('--primary'),
+                    labelPoints: true,
+                    pointLabels: ['A', 'B', 'C'],
+                    showSides: true
+                });
+                
+                // Draw point H
+                geometryUtils.drawPoint(ctx2a, pointH, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--secondary'),
+                    radius: 6,
+                    label: 'H'
+                });
+                
+                // Mark H as midpoint
+                const pixelB = geometryUtils.mathToPixel(pointB.x, pointB.y, centerX, centerY, scale);
+                const pixelC = geometryUtils.mathToPixel(pointC.x, pointC.y, centerX, centerY, scale);
+                const pixelH = geometryUtils.mathToPixel(pointH.x, pointH.y, centerX, centerY, scale);
+                
+                ctx2a.strokeStyle = geometryUtils.getCssVariable('--secondary');
+                ctx2a.lineWidth = 1;
+                ctx2a.setLineDash([2, 2]);
+                ctx2a.beginPath();
+                ctx2a.moveTo(pixelB.pixelX, pixelB.pixelY);
+                ctx2a.lineTo(pixelC.pixelX, pixelC.pixelY);
+                ctx2a.stroke();
+                ctx2a.setLineDash([]);
+                
+                // Add title
+                ctx2a.fillStyle = geometryUtils.getCssVariable('--MH-geo-text-color');
+                ctx2a.font = '14px Arial';
+                ctx2a.textAlign = 'center';
+                ctx2a.fillText('H is midpoint of BC', width / 2, 20);
+            }
+            
+            // Exercise 2 part 2
+            const canvas2b = document.getElementById('exercise2_part2');
+            const ctx2b = canvas2b.getContext('2d');
+            geometryUtils.initializeGeometryCanvas('exercise2_part2', 600, 300);
+            
+            function drawExercise2_part2() {
+                geometryUtils.clearCanvas('exercise2_part2');
+                
+                // Points A, B, C forming a triangle
+                const pointA = { x: -4, y: -1 };
+                const pointB = { x: 4, y: -1 };
+                const pointC = { x: 0, y: 3 };
+                
+                // Calculate H: midpoint of BC
+                const pointH = {
+                    x: (pointB.x + pointC.x) / 2,
+                    y: (pointB.y + pointC.y) / 2
+                };
+                
+                // Calculate K: barycenter of (A,3), (H,2)
+                const xK = (3*pointA.x + 2*pointH.x) / (3+2);
+                const yK = (3*pointA.y + 2*pointH.y) / (3+2);
+                const pointK = { x: xK, y: yK };
+                
+                // Draw triangle
+                geometryUtils.drawTriangle(ctx2b, pointA, pointB, pointC, centerX, centerY, scale, {
+                    fillColor: geometryUtils.getCssVariable('--primary-light') + '40',
+                    strokeColor: geometryUtils.getCssVariable('--primary'),
+                    labelPoints: true,
+                    pointLabels: ['A', 'B', 'C'],
+                    showSides: true
+                });
+                
+                // Draw points H and K
+                geometryUtils.drawPoint(ctx2b, pointH, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--secondary'),
+                    radius: 6,
+                    label: 'H'
+                });
+                
+                geometryUtils.drawPoint(ctx2b, pointK, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--warning'),
+                    radius: 6,
+                    label: 'K'
+                });
+                
+                // Draw line AH and mark division
+                ctx2b.strokeStyle = geometryUtils.getCssVariable('--info');
+                ctx2b.lineWidth = 2;
+                
+                const pixelA = geometryUtils.mathToPixel(pointA.x, pointA.y, centerX, centerY, scale);
+                const pixelH = geometryUtils.mathToPixel(pointH.x, pointH.y, centerX, centerY, scale);
+                const pixelK = geometryUtils.mathToPixel(pointK.x, pointK.y, centerX, centerY, scale);
+                
+                ctx2b.beginPath();
+                ctx2b.moveTo(pixelA.pixelX, pixelA.pixelY);
+                ctx2b.lineTo(pixelH.pixelX, pixelH.pixelY);
+                ctx2b.stroke();
+                
+                // Mark division ratio
+                ctx2b.fillStyle = geometryUtils.getCssVariable('--MH-geo-text-color');
+                ctx2b.font = '12px Arial';
+                ctx2b.textAlign = 'center';
+                ctx2b.fillText('AK:KH = 2:3', (pixelA.pixelX + pixelK.pixelX)/2, (pixelA.pixelY + pixelK.pixelY)/2 - 10);
+                
+                // Add title
+                ctx2b.fillStyle = geometryUtils.getCssVariable('--MH-geo-text-color');
+                ctx2b.font = '14px Arial';
+                ctx2b.textAlign = 'center';
+                ctx2b.fillText('K is barycenter of (A,3), (H,2)', width / 2, 20);
+            }
+            
+            // Exercise 2 part 3
+            const canvas2c = document.getElementById('exercise2_part3');
+            const ctx2c = canvas2c.getContext('2d');
+            geometryUtils.initializeGeometryCanvas('exercise2_part3', 600, 300);
+            
+            function drawExercise2_part3() {
+                geometryUtils.clearCanvas('exercise2_part3');
+                
+                // Points A, B, C forming a triangle
+                const pointA = { x: -4, y: -1 };
+                const pointB = { x: 4, y: -1 };
+                const pointC = { x: 0, y: 3 };
+                
+                // Calculate H: midpoint of BC
+                const pointH = {
+                    x: (pointB.x + pointC.x) / 2,
+                    y: (pointB.y + pointC.y) / 2
+                };
+                
+                // Calculate K: barycenter of (A,3), (H,2)
+                const xK = (3*pointA.x + 2*pointH.x) / (3+2);
+                const yK = (3*pointA.y + 2*pointH.y) / (3+2);
+                const pointK = { x: xK, y: yK };
+                
+                // Draw triangle
+                geometryUtils.drawTriangle(ctx2c, pointA, pointB, pointC, centerX, centerY, scale, {
+                    fillColor: geometryUtils.getCssVariable('--primary-light') + '40',
+                    strokeColor: geometryUtils.getCssVariable('--primary'),
+                    labelPoints: true,
+                    pointLabels: ['A', 'B', 'C'],
+                    showSides: true
+                });
+                
+                // Draw points H and K
+                geometryUtils.drawPoint(ctx2c, pointH, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--secondary'),
+                    radius: 6,
+                    label: 'H'
+                });
+                
+                geometryUtils.drawPoint(ctx2c, pointK, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--warning'),
+                    radius: 6,
+                    label: 'K'
+                });
+                
+                // Calculate AH length
+                const AH = Math.sqrt((pointH.x - pointA.x)**2 + (pointH.y - pointA.y)**2);
+                
+                // Draw circle with center K and radius (3/5)·AH
+                const radius = (3/5) * AH;
+                
+                const pixelK = geometryUtils.mathToPixel(pointK.x, pointK.y, centerX, centerY, scale);
+                
+                ctx2c.strokeStyle = geometryUtils.getCssVariable('--info');
+                ctx2c.lineWidth = 2;
+                ctx2c.beginPath();
+                ctx2c.arc(pixelK.pixelX, pixelK.pixelY, radius * scale, 0, 2 * Math.PI);
+                ctx2c.stroke();
+                
+                // Add title
+                ctx2c.fillStyle = geometryUtils.getCssVariable('--MH-geo-text-color');
+                ctx2c.font = '14px Arial';
+                ctx2c.textAlign = 'center';
+                ctx2c.fillText('Circle with center K and radius (3/5)·AH (set of points M)', width / 2, 20);
+            }
+            
+            // Exercise 3 part 1
+            const canvas3a = document.getElementById('exercise3_part1');
+            const ctx3a = canvas3a.getContext('2d');
+            geometryUtils.initializeGeometryCanvas('exercise3_part1', 600, 300);
+            
+            function drawExercise3_part1() {
+                geometryUtils.clearCanvas('exercise3_part1');
+                
+                // Points A, B, C forming a triangle
+                const pointA = { x: -4, y: -1 };
+                const pointB = { x: 4, y: -1 };
+                const pointC = { x: 0, y: 3 };
+                
+                // Calculate E: barycenter of (B,2), (C,1)
+                const xE = (2*pointB.x + 1*pointC.x) / (2+1);
+                const yE = (2*pointB.y + 1*pointC.y) / (2+1);
+                const pointE = { x: xE, y: yE };
+                
+                // Calculate F: barycenter of (A,3), (C,2)
+                const xF = (3*pointA.x + 2*pointC.x) / (3+2);
+                const yF = (3*pointA.y + 2*pointC.y) / (3+2);
+                const pointF = { x: xF, y: yF };
+                
+                // Calculate K: barycenter of (B,4), (A,3)
+                const xK = (4*pointB.x + 3*pointA.x) / (4+3);
+                const yK = (4*pointB.y + 3*pointA.y) / (4+3);
+                const pointK = { x: xK, y: yK };
+                
+                // Draw triangle
+                geometryUtils.drawTriangle(ctx3a, pointA, pointB, pointC, centerX, centerY, scale, {
+                    fillColor: geometryUtils.getCssVariable('--primary-light') + '40',
+                    strokeColor: geometryUtils.getCssVariable('--primary'),
+                    labelPoints: true,
+                    pointLabels: ['A', 'B', 'C'],
+                    showSides: true
+                });
+                
+                // Draw points E, F, K
+                geometryUtils.drawPoint(ctx3a, pointE, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--secondary'),
+                    radius: 6,
+                    label: 'E'
+                });
+                
+                geometryUtils.drawPoint(ctx3a, pointF, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--info'),
+                    radius: 6,
+                    label: 'F'
+                });
+                
+                geometryUtils.drawPoint(ctx3a, pointK, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--warning'),
+                    radius: 6,
+                    label: 'K'
+                });
+                
+                // Add title
+                ctx3a.fillStyle = geometryUtils.getCssVariable('--MH-geo-text-color');
+                ctx3a.font = '14px Arial';
+                ctx3a.textAlign = 'center';
+                ctx3a.fillText('E, F, K as barycenters of weighted points', width / 2, 20);
+            }
+            
+            // Exercise 3 part 2
+            const canvas3b = document.getElementById('exercise3_part2');
+            const ctx3b = canvas3b.getContext('2d');
+            geometryUtils.initializeGeometryCanvas('exercise3_part2', 600, 300);
+            
+            function drawExercise3_part2() {
+                geometryUtils.clearCanvas('exercise3_part2');
+                
+                // Points A, B, C forming a triangle
+                const pointA = { x: -4, y: -1 };
+                const pointB = { x: 4, y: -1 };
+                const pointC = { x: 0, y: 3 };
+                
+                // Calculate E: barycenter of (B,2), (C,1)
+                const xE = (2*pointB.x + 1*pointC.x) / (2+1);
+                const yE = (2*pointB.y + 1*pointC.y) / (2+1);
+                const pointE = { x: xE, y: yE };
+                
+                // Calculate F: barycenter of (A,3), (C,2)
+                const xF = (3*pointA.x + 2*pointC.x) / (3+2);
+                const yF = (3*pointA.y + 2*pointC.y) / (3+2);
+                const pointF = { x: xF, y: yF };
+                
+                // Calculate K: barycenter of (B,4), (A,3)
+                const xK = (4*pointB.x + 3*pointA.x) / (4+3);
+                const yK = (4*pointB.y + 3*pointA.y) / (4+3);
+                const pointK = { x: xK, y: yK };
+                
+                // Calculate G: barycenter of (A,3), (B,4), (C,2)
+                const xG = (3*pointA.x + 4*pointB.x + 2*pointC.x) / (3+4+2);
+                const yG = (3*pointA.y + 4*pointB.y + 2*pointC.y) / (3+4+2);
+                const pointG = { x: xG, y: yG };
+                
+                // Draw triangle
+                geometryUtils.drawTriangle(ctx3b, pointA, pointB, pointC, centerX, centerY, scale, {
+                    fillColor: geometryUtils.getCssVariable('--primary-light') + '40',
+                    strokeColor: geometryUtils.getCssVariable('--primary'),
+                    labelPoints: true,
+                    pointLabels: ['A', 'B', 'C'],
+                    showSides: true
+                });
+                
+                // Draw points E, F, K, G
+                geometryUtils.drawPoint(ctx3b, pointE, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--secondary'),
+                    radius: 6,
+                    label: 'E'
+                });
+                
+                geometryUtils.drawPoint(ctx3b, pointF, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--info'),
+                    radius: 6,
+                    label: 'F'
+                });
+                
+                geometryUtils.drawPoint(ctx3b, pointK, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--warning'),
+                    radius: 6,
+                    label: 'K'
+                });
+                
+                geometryUtils.drawPoint(ctx3b, pointG, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--accent'),
+                    radius: 8,
+                    label: 'G'
+                });
+                
+                // Draw lines KC, FB, EA
+                ctx3b.strokeStyle = geometryUtils.getCssVariable('--warning');
+                ctx3b.lineWidth = 2;
+                const pixelK = geometryUtils.mathToPixel(pointK.x, pointK.y, centerX, centerY, scale);
+                const pixelC = geometryUtils.mathToPixel(pointC.x, pointC.y, centerX, centerY, scale);
+                ctx3b.beginPath();
+                ctx3b.moveTo(pixelK.pixelX, pixelK.pixelY);
+                ctx3b.lineTo(pixelC.pixelX, pixelC.pixelY);
+                ctx3b.stroke();
+                
+                ctx3b.strokeStyle = geometryUtils.getCssVariable('--info');
+                const pixelF = geometryUtils.mathToPixel(pointF.x, pointF.y, centerX, centerY, scale);
+                const pixelB = geometryUtils.mathToPixel(pointB.x, pointB.y, centerX, centerY, scale);
+                ctx3b.beginPath();
+                ctx3b.moveTo(pixelF.pixelX, pixelF.pixelY);
+                ctx3b.lineTo(pixelB.pixelX, pixelB.pixelY);
+                ctx3b.stroke();
+                
+                ctx3b.strokeStyle = geometryUtils.getCssVariable('--secondary');
+                const pixelE = geometryUtils.mathToPixel(pointE.x, pointE.y, centerX, centerY, scale);
+                const pixelA = geometryUtils.mathToPixel(pointA.x, pointA.y, centerX, centerY, scale);
+                ctx3b.beginPath();
+                ctx3b.moveTo(pixelE.pixelX, pixelE.pixelY);
+                ctx3b.lineTo(pixelA.pixelX, pixelA.pixelY);
+                ctx3b.stroke();
+                
+                // Highlight intersection point G
+                const pixelG = geometryUtils.mathToPixel(pointG.x, pointG.y, centerX, centerY, scale);
+                ctx3b.fillStyle = geometryUtils.getCssVariable('--accent');
+                ctx3b.beginPath();
+                ctx3b.arc(pixelG.pixelX, pixelG.pixelY, 10, 0, 2 * Math.PI);
+                ctx3b.fill();
+                
+                // Add title
+                ctx3b.fillStyle = geometryUtils.getCssVariable('--MH-geo-text-color');
+                ctx3b.font = '14px Arial';
+                ctx3b.textAlign = 'center';
+                ctx3b.fillText('Lines (KC), (FB), (EA) are concurrent at G', width / 2, 20);
+            }
+            
+            // Exercise 4 part 1
+            const canvas4a = document.getElementById('exercise4_part1');
+            const ctx4a = canvas4a.getContext('2d');
+            geometryUtils.initializeGeometryCanvas('exercise4_part1', 600, 300);
+            
+            function drawExercise4_part1() {
+                geometryUtils.clearCanvas('exercise4_part1');
+                
+                // Points A, B, C, D forming a parallelogram
+                const pointA = { x: -3, y: -1 };
+                const pointB = { x: 3, y: -1 };
+                const pointC = { x: 5, y: 2 };
+                const pointD = { x: -1, y: 2 };
+                
+                // Calculate O: center of parallelogram
+                const pointO = {
+                    x: (pointA.x + pointC.x) / 2,
+                    y: (pointA.y + pointC.y) / 2
+                };
+                
+                // Calculate S: barycenter of (A,-3), (B,1)
+                const xS = ((-3)*pointA.x + 1*pointB.x) / (-3+1);
+                const yS = ((-3)*pointA.y + 1*pointB.y) / (-3+1);
+                const pointS = { x: xS, y: yS };
+                
+                // Calculate T: barycenter of (B,1), (C,-3)
+                const xT = (1*pointB.x + (-3)*pointC.x) / (1-3);
+                const yT = (1*pointB.y + (-3)*pointC.y) / (1-3);
+                const pointT = { x: xT, y: yT };
+                
+                // Draw parallelogram
+                geometryUtils.drawPolygon(ctx4a, [pointA, pointB, pointC, pointD], centerX, centerY, scale, {
+                    fillColor: geometryUtils.getCssVariable('--primary-light') + '40',
+                    strokeColor: geometryUtils.getCssVariable('--primary'),
+                    labelPoints: true,
+                    pointLabels: ['A', 'B', 'C', 'D'],
+                    showSides: true
+                });
+                
+                // Draw points O, S, T
+                geometryUtils.drawPoint(ctx4a, pointO, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--info'),
+                    radius: 6,
+                    label: 'O'
+                });
+                
+                geometryUtils.drawPoint(ctx4a, pointS, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--secondary'),
+                    radius: 6,
+                    label: 'S'
+                });
+                
+                geometryUtils.drawPoint(ctx4a, pointT, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--warning'),
+                    radius: 6,
+                    label: 'T'
+                });
+                
+                // Add title
+                ctx4a.fillStyle = geometryUtils.getCssVariable('--MH-geo-text-color');
+                ctx4a.font = '14px Arial';
+                ctx4a.textAlign = 'center';
+                ctx4a.fillText('Construction of points S and T', width / 2, 20);
+            }
+            
+            // Exercise 4 part 2
+            const canvas4b = document.getElementById('exercise4_part2');
+            const ctx4b = canvas4b.getContext('2d');
+            geometryUtils.initializeGeometryCanvas('exercise4_part2', 600, 300);
+            
+            function drawExercise4_part2() {
+                geometryUtils.clearCanvas('exercise4_part2');
+                
+                // Points A, B, C, D forming a parallelogram
+                const pointA = { x: -3, y: -1 };
+                const pointB = { x: 3, y: -1 };
+                const pointC = { x: 5, y: 2 };
+                const pointD = { x: -1, y: 2 };
+                
+                // Calculate O: center of parallelogram
+                const pointO = {
+                    x: (pointA.x + pointC.x) / 2,
+                    y: (pointA.y + pointC.y) / 2
+                };
+                
+                // Calculate S: barycenter of (A,-3), (B,1)
+                const xS = ((-3)*pointA.x + 1*pointB.x) / (-3+1);
+                const yS = ((-3)*pointA.y + 1*pointB.y) / (-3+1);
+                const pointS = { x: xS, y: yS };
+                
+                // Calculate T: barycenter of (B,1), (C,-3)
+                const xT = (1*pointB.x + (-3)*pointC.x) / (1-3);
+                const yT = (1*pointB.y + (-3)*pointC.y) / (1-3);
+                const pointT = { x: xT, y: yT };
+                
+                // Draw parallelogram
+                geometryUtils.drawPolygon(ctx4b, [pointA, pointB, pointC, pointD], centerX, centerY, scale, {
+                    fillColor: geometryUtils.getCssVariable('--primary-light') + '40',
+                    strokeColor: geometryUtils.getCssVariable('--primary'),
+                    labelPoints: true,
+                    pointLabels: ['A', 'B', 'C', 'D'],
+                    showSides: true
+                });
+                
+                // Draw points O, S, T
+                geometryUtils.drawPoint(ctx4b, pointO, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--info'),
+                    radius: 6,
+                    label: 'O'
+                });
+                
+                geometryUtils.drawPoint(ctx4b, pointS, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--secondary'),
+                    radius: 6,
+                    label: 'S'
+                });
+                
+                geometryUtils.drawPoint(ctx4b, pointT, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--warning'),
+                    radius: 6,
+                    label: 'T'
+                });
+                
+                // Draw lines ST and AC
+                ctx4b.strokeStyle = geometryUtils.getCssVariable('--secondary');
+                ctx4b.lineWidth = 2;
+                const pixelS = geometryUtils.mathToPixel(pointS.x, pointS.y, centerX, centerY, scale);
+                const pixelT = geometryUtils.mathToPixel(pointT.x, pointT.y, centerX, centerY, scale);
+                ctx4b.beginPath();
+                ctx4b.moveTo(pixelS.pixelX, pixelS.pixelY);
+                ctx4b.lineTo(pixelT.pixelX, pixelT.pixelY);
+                ctx4b.stroke();
+                
+                ctx4b.strokeStyle = geometryUtils.getCssVariable('--info');
+                const pixelA = geometryUtils.mathToPixel(pointA.x, pointA.y, centerX, centerY, scale);
+                const pixelC = geometryUtils.mathToPixel(pointC.x, pointC.y, centerX, centerY, scale);
+                ctx4b.beginPath();
+                ctx4b.moveTo(pixelA.pixelX, pixelA.pixelY);
+                ctx4b.lineTo(pixelC.pixelX, pixelC.pixelY);
+                ctx4b.stroke();
+                
+                // Add title
+                ctx4b.fillStyle = geometryUtils.getCssVariable('--MH-geo-text-color');
+                ctx4b.font = '14px Arial';
+                ctx4b.textAlign = 'center';
+                ctx4b.fillText('ST ∥ AC', width / 2, 20);
+            }
+            
+            // Exercise 4 part 3
+            const canvas4c = document.getElementById('exercise4_part3');
+            const ctx4c = canvas4c.getContext('2d');
+            geometryUtils.initializeGeometryCanvas('exercise4_part3', 600, 300);
+            
+            function drawExercise4_part3() {
+                geometryUtils.clearCanvas('exercise4_part3');
+                
+                // Points A, B, C, D forming a parallelogram
+                const pointA = { x: -3, y: -1 };
+                const pointB = { x: 3, y: -1 };
+                const pointC = { x: 5, y: 2 };
+                const pointD = { x: -1, y: 2 };
+                
+                // Calculate O: center of parallelogram
+                const pointO = {
+                    x: (pointA.x + pointC.x) / 2,
+                    y: (pointA.y + pointC.y) / 2
+                };
+                
+                // Calculate S: barycenter of (A,-3), (B,1)
+                const xS = ((-3)*pointA.x + 1*pointB.x) / (-3+1);
+                const yS = ((-3)*pointA.y + 1*pointB.y) / (-3+1);
+                const pointS = { x: xS, y: yS };
+                
+                // Calculate T: barycenter of (B,1), (C,-3)
+                const xT = (1*pointB.x + (-3)*pointC.x) / (1-3);
+                const yT = (1*pointB.y + (-3)*pointC.y) / (1-3);
+                const pointT = { x: xT, y: yT };
+                
+                // Calculate E: midpoint of S and T
+                const pointE = {
+                    x: (pointS.x + pointT.x) / 2,
+                    y: (pointS.y + pointT.y) / 2
+                };
+                
+                // Draw parallelogram
+                geometryUtils.drawPolygon(ctx4c, [pointA, pointB, pointC, pointD], centerX, centerY, scale, {
+                    fillColor: geometryUtils.getCssVariable('--primary-light') + '40',
+                    strokeColor: geometryUtils.getCssVariable('--primary'),
+                    labelPoints: true,
+                    pointLabels: ['A', 'B', 'C', 'D'],
+                    showSides: true
+                });
+                
+                // Draw points O, S, T, E
+                geometryUtils.drawPoint(ctx4c, pointO, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--info'),
+                    radius: 6,
+                    label: 'O'
+                });
+                
+                geometryUtils.drawPoint(ctx4c, pointS, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--secondary'),
+                    radius: 6,
+                    label: 'S'
+                });
+                
+                geometryUtils.drawPoint(ctx4c, pointT, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--warning'),
+                    radius: 6,
+                    label: 'T'
+                });
+                
+                geometryUtils.drawPoint(ctx4c, pointE, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--accent'),
+                    radius: 8,
+                    label: 'E'
+                });
+                
+                // Draw lines ST and BD
+                ctx4c.strokeStyle = geometryUtils.getCssVariable('--secondary');
+                ctx4c.lineWidth = 2;
+                const pixelS = geometryUtils.mathToPixel(pointS.x, pointS.y, centerX, centerY, scale);
+                const pixelT = geometryUtils.mathToPixel(pointT.x, pointT.y, centerX, centerY, scale);
+                ctx4c.beginPath();
+                ctx4c.moveTo(pixelS.pixelX, pixelS.pixelY);
+                ctx4c.lineTo(pixelT.pixelX, pixelT.pixelY);
+                ctx4c.stroke();
+                
+                ctx4c.strokeStyle = geometryUtils.getCssVariable('--info');
+                const pixelB = geometryUtils.mathToPixel(pointB.x, pointB.y, centerX, centerY, scale);
+                const pixelD = geometryUtils.mathToPixel(pointD.x, pointD.y, centerX, centerY, scale);
+                ctx4c.beginPath();
+                ctx4c.moveTo(pixelB.pixelX, pixelB.pixelY);
+                ctx4c.lineTo(pixelD.pixelX, pixelD.pixelY);
+                ctx4c.stroke();
+                
+                // Highlight intersection point E
+                const pixelE = geometryUtils.mathToPixel(pointE.x, pointE.y, centerX, centerY, scale);
+                ctx4c.fillStyle = geometryUtils.getCssVariable('--accent');
+                ctx4c.beginPath();
+                ctx4c.arc(pixelE.pixelX, pixelE.pixelY, 10, 0, 2 * Math.PI);
+                ctx4c.fill();
+                
+                // Add title
+                ctx4c.fillStyle = geometryUtils.getCssVariable('--MH-geo-text-color');
+                ctx4c.font = '14px Arial';
+                ctx4c.textAlign = 'center';
+                ctx4c.fillText('ST and BD intersect at E', width / 2, 20);
+            }
+            
+            // Exercise 4 part 4
+            const canvas4d = document.getElementById('exercise4_part4');
+            const ctx4d = canvas4d.getContext('2d');
+            geometryUtils.initializeGeometryCanvas('exercise4_part4', 600, 300);
+            
+            function drawExercise4_part4() {
+                geometryUtils.clearCanvas('exercise4_part4');
+                
+                // Points A, B, C, D forming a parallelogram
+                const pointA = { x: -3, y: -1 };
+                const pointB = { x: 3, y: -1 };
+                const pointC = { x: 5, y: 2 };
+                const pointD = { x: -1, y: 2 };
+                
+                // Calculate O: center of parallelogram
+                const pointO = {
+                    x: (pointA.x + pointC.x) / 2,
+                    y: (pointA.y + pointC.y) / 2
+                };
+                
+                // Calculate S: barycenter of (A,-3), (B,1)
+                const xS = ((-3)*pointA.x + 1*pointB.x) / (-3+1);
+                const yS = ((-3)*pointA.y + 1*pointB.y) / (-3+1);
+                const pointS = { x: xS, y: yS };
+                
+                // Calculate T: barycenter of (B,1), (C,-3)
+                const xT = (1*pointB.x + (-3)*pointC.x) / (1-3);
+                const yT = (1*pointB.y + (-3)*pointC.y) / (1-3);
+                const pointT = { x: xT, y: yT };
+                
+                // Calculate E: midpoint of S and T
+                const pointE = {
+                    x: (pointS.x + pointT.x) / 2,
+                    y: (pointS.y + pointT.y) / 2
+                };
+                
+                // Draw parallelogram
+                geometryUtils.drawPolygon(ctx4d, [pointA, pointB, pointC, pointD], centerX, centerY, scale, {
+                    fillColor: geometryUtils.getCssVariable('--primary-light') + '40',
+                    strokeColor: geometryUtils.getCssVariable('--primary'),
+                    labelPoints: true,
+                    pointLabels: ['A', 'B', 'C', 'D'],
+                    showSides: true
+                });
+                
+                // Draw points S, T, E
+                geometryUtils.drawPoint(ctx4d, pointS, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--secondary'),
+                    radius: 6,
+                    label: 'S'
+                });
+                
+                geometryUtils.drawPoint(ctx4d, pointT, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--warning'),
+                    radius: 6,
+                    label: 'T'
+                });
+                
+                geometryUtils.drawPoint(ctx4d, pointE, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--accent'),
+                    radius: 6,
+                    label: 'E'
+                });
+                
+                // Draw perpendicular bisector of SE
+                const pixelS = geometryUtils.mathToPixel(pointS.x, pointS.y, centerX, centerY, scale);
+                const pixelE = geometryUtils.mathToPixel(pointE.x, pointE.y, centerX, centerY, scale);
+                
+                const midPointSE = {
+                    x: (pointS.x + pointE.x) / 2,
+                    y: (pointS.y + pointE.y) / 2
+                };
+                
+                // Calculate perpendicular direction
+                const dx = pointE.x - pointS.x;
+                const dy = pointE.y - pointS.y;
+                const perpendicularSlope = -dx / dy;
+                
+                // Draw perpendicular bisector
+                ctx4d.strokeStyle = geometryUtils.getCssVariable('--info');
+                ctx4d.lineWidth = 2;
+                ctx4d.setLineDash([5, 3]);
+                
+                // Calculate two points on the perpendicular bisector
+                const length = 8;
+                
+                const point1 = {
+                    x: midPointSE.x - length,
+                    y: midPointSE.y - length * perpendicularSlope
+                };
+                
+                const point2 = {
+                    x: midPointSE.x + length,
+                    y: midPointSE.y + length * perpendicularSlope
+                };
+                
+                const pixel1 = geometryUtils.mathToPixel(point1.x, point1.y, centerX, centerY, scale);
+                const pixel2 = geometryUtils.mathToPixel(point2.x, point2.y, centerX, centerY, scale);
+                
+                ctx4d.beginPath();
+                ctx4d.moveTo(pixel1.pixelX, pixel1.pixelY);
+                ctx4d.lineTo(pixel2.pixelX, pixel2.pixelY);
+                ctx4d.stroke();
+                
+                // Draw circle with center E
+                const TS = Math.sqrt((pointT.x - pointS.x)**2 + (pointT.y - pointS.y)**2);
+                const radius = (1/2) * TS;
+                
+                const pixelE2 = geometryUtils.mathToPixel(pointE.x, pointE.y, centerX, centerY, scale);
+                
+                ctx4d.strokeStyle = geometryUtils.getCssVariable('--warning');
+                ctx4d.lineWidth = 2;
+                ctx4d.beginPath();
+                ctx4d.arc(pixelE2.pixelX, pixelE2.pixelY, radius * scale, 0, 2 * Math.PI);
+                ctx4d.stroke();
+                
+                ctx4d.setLineDash([]);
+                
+                // Add legend
+                ctx4d.fillStyle = geometryUtils.getCssVariable('--MH-geo-text-color');
+                ctx4d.font = '12px Arial';
+                ctx4d.textAlign = 'left';
+                ctx4d.fillText('Blue dashed: Perpendicular bisector of SE', 20, 30);
+                ctx4d.fillText('Red circle: Circle with center E', 20, 50);
+                
+                // Add title
+                ctx4d.fillStyle = geometryUtils.getCssVariable('--MH-geo-text-color');
+                ctx4d.font = '14px Arial';
+                ctx4d.textAlign = 'center';
+                ctx4d.fillText('Geometric loci for parts 4a and 4b', width / 2, 20);
+            }
+            
+            // Exercise 4 part 5
+            const canvas4e = document.getElementById('exercise4_part5');
+            const ctx4e = canvas4e.getContext('2d');
+            geometryUtils.initializeGeometryCanvas('exercise4_part5', 600, 300);
+            
+            function drawExercise4_part5() {
+                geometryUtils.clearCanvas('exercise4_part5');
+                
+                // Points A, B, C, D forming a parallelogram
+                const pointA = { x: -3, y: -1 };
+                const pointB = { x: 3, y: -1 };
+                const pointC = { x: 5, y: 2 };
+                const pointD = { x: -1, y: 2 };
+                
+                // Calculate S: barycenter of (A,-3), (B,1)
+                const xS = ((-3)*pointA.x + 1*pointB.x) / (-3+1);
+                const yS = ((-3)*pointA.y + 1*pointB.y) / (-3+1);
+                const pointS = { x: xS, y: yS };
+                
+                // Calculate K: such that AD⃗ = SK⃗
+                const xK = pointS.x + (pointD.x - pointA.x);
+                const yK = pointS.y + (pointD.y - pointA.y);
+                const pointK = { x: xK, y: yK };
+                
+                // Draw parallelogram
+                geometryUtils.drawPolygon(ctx4e, [pointA, pointB, pointC, pointD], centerX, centerY, scale, {
+                    fillColor: geometryUtils.getCssVariable('--primary-light') + '40',
+                    strokeColor: geometryUtils.getCssVariable('--primary'),
+                    labelPoints: true,
+                    pointLabels: ['A', 'B', 'C', 'D'],
+                    showSides: true
+                });
+                
+                // Draw points S, K
+                geometryUtils.drawPoint(ctx4e, pointS, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--secondary'),
+                    radius: 6,
+                    label: 'S'
+                });
+                
+                geometryUtils.drawPoint(ctx4e, pointK, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--warning'),
+                    radius: 6,
+                    label: 'K'
+                });
+                
+                // Draw vectors AD and SK
+                ctx4e.strokeStyle = geometryUtils.getCssVariable('--info');
+                ctx4e.lineWidth = 2;
+                ctx4e.setLineDash([5, 3]);
+                
+                const pixelA = geometryUtils.mathToPixel(pointA.x, pointA.y, centerX, centerY, scale);
+                const pixelD = geometryUtils.mathToPixel(pointD.x, pointD.y, centerX, centerY, scale);
+                const pixelS = geometryUtils.mathToPixel(pointS.x, pointS.y, centerX, centerY, scale);
+                const pixelK = geometryUtils.mathToPixel(pointK.x, pointK.y, centerX, centerY, scale);
+                
+                // Draw vector AD
+                ctx4e.beginPath();
+                ctx4e.moveTo(pixelA.pixelX, pixelA.pixelY);
+                ctx4e.lineTo(pixelD.pixelX, pixelD.pixelY);
+                ctx4e.stroke();
+                
+                // Draw vector SK
+                ctx4e.beginPath();
+                ctx4e.moveTo(pixelS.pixelX, pixelS.pixelY);
+                ctx4e.lineTo(pixelK.pixelX, pixelK.pixelY);
+                ctx4e.stroke();
+                
+                ctx4e.setLineDash([]);
+                
+                // Add title
+                ctx4e.fillStyle = geometryUtils.getCssVariable('--MH-geo-text-color');
+                ctx4e.font = '14px Arial';
+                ctx4e.textAlign = 'center';
+                ctx4e.fillText('AD⃗ = SK⃗', width / 2, 20);
+            }
+            
+            // Initial drawings
+            drawExercise1_part1a();
+            drawExercise1_part1b();
+            drawExercise1_part2();
+            drawExercise2_part1();
+            drawExercise2_part2();
+            drawExercise2_part3();
+            drawExercise3_part1();
+            drawExercise3_part2();
+            drawExercise4_part1();
+            drawExercise4_part2();
+            drawExercise4_part3();
+            drawExercise4_part4();
+            drawExercise4_part5();
+        }
+        
+        // Toggle solution visibility
+        function toggleSolution(exerciseNumber) {
+            const solution = document.getElementById(`solution${exerciseNumber}`);
+            const button = solution.previousElementSibling;
+            
+            if (solution.style.display === 'block') {
+                solution.style.display = 'none';
+                button.setAttribute('data-i18n', 'MH.lesson_Y2Geo_barycenter3.showSolution');
+                button.textContent = getTranslation('MH.lesson_Y2Geo_barycenter3.showSolution');
+            } else {
+                solution.style.display = 'block';
+                button.setAttribute('data-i18n', 'MH.lesson_Y2Geo_barycenter3.hideSolution');
+                button.textContent = getTranslation('MH.lesson_Y2Geo_barycenter3.hideSolution');
+            }
+        }
+        
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize solutions as hidden
+            for (let i = 1; i <= 4; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+            }
+            
+            // Initialize geometry demonstrations
+            initExerciseDemonstrations();
+        });
+    </script>
+    
+    <!-- noscript fallback -->
+    <noscript>
+        <style>
+            .MH-header-controls { display: none; }
+            .MH-solution { display: block; }
+        </style>
+        <div class="MH-warning">
+            JavaScript is recommended for the full experience, but content is still accessible.
+        </div>
+    </noscript>
+</body>
+</html>

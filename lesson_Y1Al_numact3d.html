@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Numerical Activities IV - Part 4</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#008B8B" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#006666" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#008B8B">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        /* Page-specific color palette - Dark Cyan + Light Sky Blue Theme */
+        :root {
+            --primary: #008B8B;        /* Dark Cyan */
+            --primary-light: #20B2AA;  /* Light Sea Green */
+            --primary-dark: #006666;   /* Darker Cyan */
+            --secondary: #87CEFA;      /* Light Sky Blue */
+            --secondary-light: #B0E2FF; /* Very Light Sky Blue */
+            --secondary-dark: #6CA6CD;  /* Darker Light Sky Blue */
+            --accent: #9b59b6;
+            --warning: #e74c3c;
+            --info: #3498db;
+        }
+        
+        [data-theme="dark"] {
+            --primary: #006666;
+            --primary-light: #008B8B;
+            --primary-dark: #004C4C;
+            --secondary: #6CA6CD;
+            --secondary-light: #87CEFA;
+            --secondary-dark: #4A708B;
+            --accent: #8e44ad;
+            --warning: #c0392b;
+            --info: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y1Al_numact2d.title">Numerical Activities IV: Part 4</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y1Al_numact2d.subtitle">Estimation and Order of Magnitude</h2>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2d.calculationRules">Calculation Rules</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y1Al_numact2d.rulesTitle">Fundamental Rules for Fractions</h3>
+                <p data-i18n="MH.lesson_Y1Al_numact2d.rulesText1">Let a, b, c, d, and k be real numbers such that b ≠ 0 and d ≠ 0. We have the following properties:</p>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y1Al_numact2d.equalityRule">Equality Rule</h4>
+                    <p><span class="MH-equation">a/b = c/d</span> <span data-i18n="MH.lesson_Y1Al_numact2d.equalityRuleText1">is equivalent to</span> <span class="MH-equation">ad = bc</span></p>
+                    
+                    <h4 data-i18n="MH.lesson_Y1Al_numact2d.additionRule">Addition Rule</h4>
+                    <p><span class="MH-equation">(a/b) + (c/d) = (ad + bc)/(bd)</span></p>
+                    
+                    <h4 data-i18n="MH.lesson_Y1Al_numact2d.multiplicationRule">Multiplication Rules</h4>
+                    <p><span class="MH-equation">k × (a/b) = (ka)/b</span></p>
+                    <p><span class="MH-equation">(a/b) × (c/d) = (ac)/(bd)</span></p>
+                </div>
+                
+                <div class="MH-step">
+                    <h3 data-i18n="MH.lesson_Y1Al_numact2d.divisionRules">Division Rules</h3>
+                    <p data-i18n="MH.lesson_Y1Al_numact2d.divisionRulesText">Let a, b, c, and d be nonzero real numbers. We have:</p>
+                    
+                    <div class="MH-example">
+                        <p><span class="MH-equation">1/(a/b) = b/a</span></p>
+                        <p><span class="MH-equation">(a/b) ÷ (c/d) = (a/b) × (d/c) = (ad)/(bc)</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2d.powers">Working with Powers</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y1Al_numact2d.powerRulesTitle">Rules of Exponents</h3>
+                <p data-i18n="MH.lesson_Y1Al_numact2d.powerRulesText">For all nonzero real numbers a and b and all integers m and n, we have:</p>
+                
+                <div class="MH-example">
+                    <table class="MH-table">
+                        <tr>
+                            <th data-i18n="MH.lesson_Y1Al_numact2d.ruleColumn">Rule</th>
+                            <th data-i18n="MH.lesson_Y1Al_numact2d.expressionColumn">Expression</th>
+                        </tr>
+                        <tr>
+                            <td data-i18n="MH.lesson_Y1Al_numact2d.productRule">Product Rule</td>
+                            <td><span class="MH-equation">a<sup>m</sup> × a<sup>n</sup> = a<sup>m+n</sup></span></td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="MH.lesson_Y1Al_numact2d.powerRule">Power of a Power</td>
+                            <td><span class="MH-equation">(a<sup>m</sup>)<sup>n</sup> = a<sup>mn</sup></span></td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="MH.lesson_Y1Al_numact2d.quotientRule">Quotient Rule</td>
+                            <td><span class="MH-equation">a<sup>m</sup> ÷ a<sup>n</sup> = a<sup>m-n</sup></span></td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="MH.lesson_Y1Al_numact2d.negativeExponent">Negative Exponent</td>
+                            <td><span class="MH-equation">(1/a)<sup>n</sup> = a<sup>-n</sup></span></td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="MH.lesson_Y1Al_numact2d.productPower">Power of a Product</td>
+                            <td><span class="MH-equation">(a × b)<sup>n</sup> = a<sup>n</sup> × b<sup>n</sup></span></td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="MH.lesson_Y1Al_numact2d.quotientPower">Power of a Quotient</td>
+                            <td><span class="MH-equation">(a/b)<sup>n</sup> = a<sup>n</sup> ÷ b<sup>n</sup></span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2d.estimation">Estimation and Order of Magnitude</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y1Al_numact2d.estimationTitle">Understanding Estimation and Order of Magnitude</h3>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y1Al_numact2d.orderOfMagnitudeDefinition">Definition of Order of Magnitude</h4>
+                    <p data-i18n="MH.lesson_Y1Al_numact2d.orderOfMagnitudeText1">To obtain the order of magnitude of a number b, we consider the scientific notation a × 10<sup>n</sup> of the number b and we round a to the nearest unit.</p>
+                    <p data-i18n="MH.lesson_Y1Al_numact2d.orderOfMagnitudeText2">This gives us an approximate value that helps us quickly understand the scale or size of the number without needing precise calculations.</p>
+                    
+                    <h4 data-i18n="MH.lesson_Y1Al_numact2d.estimationProcess">The Estimation Process</h4>
+                    <p data-i18n="MH.lesson_Y1Al_numact2d.estimationProcessText1">Estimation involves finding approximate values that are close enough to the exact values for practical purposes. This skill is particularly useful when:</p>
+                    <ul>
+                        <li data-i18n="MH.lesson_Y1Al_numact2d.estimationUse1">Checking the reasonableness of calculator results</li>
+                        <li data-i18n="MH.lesson_Y1Al_numact2d.estimationUse2">Making quick mental calculations</li>
+                        <li data-i18n="MH.lesson_Y1Al_numact2d.estimationUse3">Understanding the scale of very large or very small numbers</li>
+                        <li data-i18n="MH.lesson_Y1Al_numact2d.estimationUse4">Comparing different quantities</li>
+                    </ul>
+                </div>
+                
+                <div class="MH-important">
+                    <h3 data-i18n="MH.lesson_Y1Al_numact2d.importantNote">Important Note</h3>
+                    <p data-i18n="MH.lesson_Y1Al_numact2d.importantNoteText">Estimation and order of magnitude calculations are not about finding exact answers, but about understanding the approximate scale of numbers. This is a crucial skill in scientific and mathematical reasoning.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2d.activity14">Activity 14: Determining Values Without Calculation</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y1Al_numact2d.activity14Title">Finding the Correct Value Through Reasoning</h3>
+                
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y1Al_numact2d.activity14Instruction">Given P = 314.2 × 497 × (-94).</p>
+                    <p data-i18n="MH.lesson_Y1Al_numact2d.activity14Values">The exact value of P is one of the following three numbers: 14678795.6; -467879516 and -14678795.6.</p>
+                    <p data-i18n="MH.lesson_Y1Al_numact2d.activity14Question">Find the value of P without performing calculations. Explain your reasoning.</p>
+                    
+                    <div class="MH-step">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2d.activity14Step1">Step 1: Analyze the Signs</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.activity14Step1Text">Look at the signs of the factors in the expression P = 314.2 × 497 × (-94).</p>
+                        
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2d.activity14Step2">Step 2: Estimate the Magnitude</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.activity14Step2Text">Make a rough estimation of the magnitude by rounding each number.</p>
+                        
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2d.activity14Step3">Step 3: Compare with Given Options</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.activity14Step3Text">Compare your estimation with the three given options to eliminate impossible answers.</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2d.showAnswer" onclick="toggleSolution(140)">Show Answer</button>
+                    <div class="MH-solution" id="solution140">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2d.activity14Solution">Activity 14 Solution</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.activity14Step1Solution">Step 1: The product has two positive numbers and one negative number, so the result must be negative. This eliminates 14678795.6.</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.activity14Step2Solution">Step 2: Round the numbers: 314.2 ≈ 300, 497 ≈ 500, 94 ≈ 100. The approximate product is 300 × 500 × 100 = 15,000,000. Since we rounded down, the actual product should be larger, around 14-15 million.</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.activity14Step3Solution">Step 3: Between -467879516 and -14678795.6, the number -14678795.6 is approximately -14.7 million, which matches our estimation. The other number is about -467 million, which is too large.</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.activity14FinalAnswer">Therefore, P = -14678795.6</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2d.activity15">Activity 15: Powers and Orders of Magnitude</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y1Al_numact2d.activity15Title">Working with Powers of 2</h3>
+                
+                <div class="MH-example">
+                    <div class="MH-step">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2d.activity15Part1">Part 1: Scientific Notation</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.activity15Part1Question">Give the scientific notation of 2<sup>10</sup>.</p>
+                        
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2d.activity15Part2">Part 2: Order of Magnitude</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.activity15Part2Question">Give an order of magnitude of 2<sup>10</sup>.</p>
+                        
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2d.activity15Part3">Part 3: Larger Power</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.activity15Part3Question">Give an order of magnitude of 2<sup>100</sup>.</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2d.showAnswer" onclick="toggleSolution(150)">Show Answer</button>
+                    <div class="MH-solution" id="solution150">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2d.activity15Solution">Activity 15 Solution</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.activity15Part1Solution">Part 1: 2<sup>10</sup> = 1024. In scientific notation, this is 1.024 × 10<sup>3</sup>.</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.activity15Part2Solution">Part 2: For the order of magnitude, we round 1.024 to 1, so the order of magnitude is 1 × 10<sup>3</sup> or simply 10<sup>3</sup>.</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.activity15Part3Solution">Part 3: 2<sup>100</sup> = (2<sup>10</sup>)<sup>10</sup> ≈ (10<sup>3</sup>)<sup>10</sup> = 10<sup>30</sup>. So the order of magnitude is 10<sup>30</sup>.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2d.activity16">Activity 16: Microscopic Measurements</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y1Al_numact2d.activity16Title">Working with Very Small Units</h3>
+                
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y1Al_numact2d.activity16Instruction1">The angstrom is a unit of length used to measure atomic distances. 1 angstrom equals 10<sup>-10</sup> meters.</p>
+                    <p data-i18n="MH.lesson_Y1Al_numact2d.activity16Instruction2">The proton is a particle with a diameter of 10<sup>-5</sup> angstrom.</p>
+                    <p data-i18n="MH.lesson_Y1Al_numact2d.activity16Question">How many protons placed side by side would make a length of 1 decimeter? Give an order of magnitude of the result.</p>
+                    
+                    <div class="MH-step">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2d.activity16Step1">Step 1: Convert All Measurements to Meters</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.activity16Step1Text">Convert all measurements to the same unit (meters) to make calculations easier.</p>
+                        
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2d.activity16Step2">Step 2: Calculate the Number of Protons</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.activity16Step2Text">Divide the total length by the diameter of one proton.</p>
+                        
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2d.activity16Step3">Step 3: Find the Order of Magnitude</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.activity16Step3Text">Express the result in scientific notation and round to find the order of magnitude.</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2d.showAnswer" onclick="toggleSolution(160)">Show Answer</button>
+                    <div class="MH-solution" id="solution160">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2d.activity16Solution">Activity 16 Solution</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.activity16Step1Solution">Step 1: Convert to meters:</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.activity16Step1a">1 angstrom = 10<sup>-10</sup> m</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.activity16Step1b">Proton diameter = 10<sup>-5</sup> angstrom = 10<sup>-5</sup> × 10<sup>-10</sup> m = 10<sup>-15</sup> m</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.activity16Step1c">1 decimeter = 0.1 m = 10<sup>-1</sup> m</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.activity16Step2Solution">Step 2: Number of protons = Total length ÷ Proton diameter = 10<sup>-1</sup> ÷ 10<sup>-15</sup> = 10<sup>14</sup></p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.activity16Step3Solution">Step 3: The number is already in scientific notation: 1 × 10<sup>14</sup>. The order of magnitude is 10<sup>14</sup>.</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.activity16FinalAnswer">Therefore, we would need 10<sup>14</sup> protons placed side by side to make a length of 1 decimeter.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2d.practice">Practice Problems</h2>
+            
+            <div class="MH-practice">
+                <h3 class="MH-practice-title" data-i18n="MH.lesson_Y1Al_numact2d.tryYourself">Try Solving These Problems</h3>
+                
+                <div class="MH-practice-problem">
+                    <p><span class="MH-equation" data-i18n="MH.lesson_Y1Al_numact2d.problem1">1. Estimate: 47.8 × 52.1 ÷ 9.9</span></p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2d.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                    <div class="MH-solution" id="solution1">
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.problem1Step1">Step 1: Round the numbers: 47.8 ≈ 50, 52.1 ≈ 50, 9.9 ≈ 10</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.problem1Step2">Step 2: Calculate: 50 × 50 ÷ 10 = 2500 ÷ 10 = 250</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.problem1Step3">Step 3: The exact calculation is 47.8 × 52.1 ÷ 9.9 ≈ 251.6, so our estimate is reasonable.</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.problem1Step4">Solution: Approximately 250</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <p><span class="MH-equation" data-i18n="MH.lesson_Y1Al_numact2d.problem2">2. Find the order of magnitude of 7<sup>5</sup></span></p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2d.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                    <div class="MH-solution" id="solution2">
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.problem2Step1">Step 1: Calculate 7<sup>5</sup> = 7 × 7 × 7 × 7 × 7 = 16807</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.problem2Step2">Step 2: Write in scientific notation: 1.6807 × 10<sup>4</sup></p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.problem2Step3">Step 3: Round the coefficient to the nearest unit: 2 × 10<sup>4</sup></p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.problem2Step4">Solution: Order of magnitude is 10<sup>4</sup></p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <p><span class="MH-equation" data-i18n="MH.lesson_Y1Al_numact2d.problem3">3. A virus has a diameter of 90 nanometers. How many viruses placed side by side would make 1 millimeter? Give the order of magnitude.</span></p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2d.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                    <div class="MH-solution" id="solution3">
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.problem3Step1">Step 1: Convert to meters: 90 nm = 90 × 10<sup>-9</sup> m = 9 × 10<sup>-8</sup> m</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.problem3Step2">Step 2: Convert 1 mm to meters: 1 mm = 10<sup>-3</sup> m</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.problem3Step3">Step 3: Number of viruses = 10<sup>-3</sup> ÷ (9 × 10<sup>-8</sup>) ≈ 1.11 × 10<sup>4</sup></p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.problem3Step4">Step 4: Order of magnitude: 10<sup>4</sup></p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2d.problem3Step5">Solution: Order of magnitude is 10<sup>4</sup></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2d.summary">Summary</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Al_numact2d.keyConcepts">Key Concepts</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y1Al_numact2d.concept1">Fraction operations follow specific rules for equality, addition, multiplication, and division</li>
+                    <li data-i18n="MH.lesson_Y1Al_numact2d.concept2">Exponent rules simplify calculations with powers</li>
+                    <li data-i18n="MH.lesson_Y1Al_numact2d.concept3">Estimation helps verify the reasonableness of calculations</li>
+                    <li data-i18n="MH.lesson_Y1Al_numact2d.concept4">Order of magnitude gives an approximate scale of numbers using scientific notation</li>
+                    <li data-i18n="MH.lesson_Y1Al_numact2d.concept5">Working with very large or very small numbers requires careful unit conversion</li>
+                </ul>
+            </div>
+            
+            <p data-i18n="MH.lesson_Y1Al_numact2d.finalThought">Mastering estimation and understanding orders of magnitude are essential skills for scientific reasoning and for developing intuition about the scale of numbers in real-world contexts.</p>
+        </section>
+        
+    </main>
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="scripts/i18n_en.js"></script>
+    <script src="scripts/i18n_ar.js"></script>
+    <script src="scripts/i18n_fr.js"></script>
+    <script src="scripts/translation.js"></script>
+    <script src="scripts/pwa-install.js"></script>
+    <script>
+        // Function to toggle solution visibility
+        function toggleSolution(id) {
+            const solution = document.getElementById('solution' + id);
+            if (solution.style.display === 'block') {
+                solution.style.display = 'none';
+            } else {
+                solution.style.display = 'block';
+            }
+        }
+        
+        // Register service worker with better error handling
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                    
+                    // Check if we need to request notification permission
+                    if (Notification.permission === 'default') {
+                        // Wait a bit then ask for permission via service worker
+                        setTimeout(() => {
+                            registration.active.postMessage({
+                                type: 'REQUEST_NOTIFICATION_PERMISSION'
+                            });
+                        }, 5000);
+                    }
+                })
+                .catch(function(error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+            });
+        }
+    </script>
+    
+    <!-- noscript fallback -->
+    <noscript>
+        <style>
+            .MH-header-controls { display: none; }
+            .MH-solution { display: block; }
+        </style>
+        <div class="MH-warning">
+            JavaScript is recommended for the full experience, but content is still accessible.
+        </div>
+    </noscript>
+</body>
+</html>

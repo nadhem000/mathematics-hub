@@ -537,7 +537,70 @@ class GeometryUtils {
         
         ctx.fillText(`|v| = ${this.formatNumber(magnitude)}`, labelX, labelY);
 	}
-	
+
+// DRAW POLYGON
+// Draw polygon from array of points
+drawPolygon(ctx, points, centerX, centerY, scale, options = {}) {
+    const defaultOptions = {
+        fillColor: this.getCssVariable('--primary-light') + '40', // Semi-transparent
+        strokeColor: this.getCssVariable('--primary'),
+        lineWidth: 2,
+        fill: true,
+        stroke: true,
+        labelPoints: false,
+        pointLabels: [], // Array of labels for each point
+        showSides: false
+    };
+
+    const opts = { ...defaultOptions, ...options };
+
+    // Convert math coordinates to pixel coordinates
+    const pixelPoints = points.map(point => 
+        this.mathToPixel(point.x, point.y, centerX, centerY, scale)
+    );
+
+    // Draw filled polygon
+    if (opts.fill && pixelPoints.length >= 3) {
+        ctx.fillStyle = opts.fillColor;
+        ctx.beginPath();
+        ctx.moveTo(pixelPoints[0].pixelX, pixelPoints[0].pixelY);
+        for (let i = 1; i < pixelPoints.length; i++) {
+            ctx.lineTo(pixelPoints[i].pixelX, pixelPoints[i].pixelY);
+        }
+        ctx.closePath();
+        ctx.fill();
+    }
+
+    // Draw polygon outline
+    if (opts.stroke && pixelPoints.length >= 3) {
+        ctx.strokeStyle = opts.strokeColor;
+        ctx.lineWidth = opts.lineWidth;
+        ctx.beginPath();
+        ctx.moveTo(pixelPoints[0].pixelX, pixelPoints[0].pixelY);
+        for (let i = 1; i < pixelPoints.length; i++) {
+            ctx.lineTo(pixelPoints[i].pixelX, pixelPoints[i].pixelY);
+        }
+        ctx.closePath();
+        ctx.stroke();
+    }
+
+    // Label points
+    if (opts.labelPoints && opts.pointLabels.length >= points.length) {
+        for (let i = 0; i < points.length; i++) {
+            this.drawPointLabel(ctx, pixelPoints[i].pixelX, pixelPoints[i].pixelY, opts.pointLabels[i]);
+        }
+    }
+
+    // Show side lengths
+    if (opts.showSides) {
+        for (let i = 0; i < points.length; i++) {
+            const nextIndex = (i + 1) % points.length;
+            this.drawSideLength(ctx, points[i], points[nextIndex], centerX, centerY, scale);
+        }
+    }
+
+    return { points: points, pixels: pixelPoints };
+}
     // HELPER FUNCTIONS
 	
     // Draw a point

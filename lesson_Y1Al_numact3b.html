@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Numerical Activities II - Part 2</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#483D8B" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#2F2552" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#483D8B">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        /* Page-specific color palette - Dark Slate Blue + Light Coral Theme */
+        :root {
+            --primary: #483D8B;        /* Dark Slate Blue */
+            --primary-light: #6A5ACD;   /* Slate Blue */
+            --primary-dark: #2F2552;    /* Darker Slate Blue */
+            --secondary: #F08080;       /* Light Coral */
+            --secondary-light: #F8C8C8; /* Very Light Coral */
+            --secondary-dark: #D87070;  /* Dark Coral */
+            --accent: #9b59b6;
+            --warning: #e74c3c;
+            --info: #3498db;
+        }
+        
+        [data-theme="dark"] {
+            --primary: #2F2552;
+            --primary-light: #483D8B;
+            --primary-dark: #1E1838;
+            --secondary: #D87070;
+            --secondary-light: #F08080;
+            --secondary-dark: #B85C5C;
+            --accent: #8e44ad;
+            --warning: #c0392b;
+            --info: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y1Al_numact2b.title">Numerical Activities II: Part 2</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y1Al_numact2b.subtitle">Square Roots</h2>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2b.squareRoots">Square Roots</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y1Al_numact2b.rulesTitle">Fundamental Rules for Square Roots</h3>
+                <p data-i18n="MH.lesson_Y1Al_numact2b.rulesText1">For all positive real numbers a and b, we have the following properties:</p>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y1Al_numact2b.basicProperties">Basic Properties</h4>
+                    <p><span class="MH-equation">(√a)² = a</span></p>
+                    <p><span class="MH-equation">√(ab) = √a × √b</span></p>
+                    <p><span class="MH-equation">For any integer n > 0, √(aⁿ) = (√a)ⁿ</span></p>
+                    <p><span class="MH-equation">For b ≠ 0, √(a/b) = √a / √b</span></p>
+                    
+                    <h4 data-i18n="MH.lesson_Y1Al_numact2b.absoluteValueProperty">Absolute Value Property</h4>
+                    <p><span class="MH-equation">For any real number a, √(a²) = |a|</span></p>
+                </div>
+                
+                <div class="MH-important">
+                    <h3 data-i18n="MH.lesson_Y1Al_numact2b.importantNote">Important Note</h3>
+                    <p data-i18n="MH.lesson_Y1Al_numact2b.importantText">Square roots are only defined for non-negative numbers in the set of real numbers. The square root of a negative number is not a real number.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2b.activity5">Activity 5: Square Root Operations</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y1Al_numact2b.activity5Title">Simplifying and Calculating with Square Roots</h3>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y1Al_numact2b.activity5Part1">Part 1: Summation of Like Terms</h4>
+                    <p data-i18n="MH.lesson_Y1Al_numact2b.activity5Part1Text">Let S = √3 + 2√3 + 3√3 + 4√3 + … + 10√3</p>
+                    
+                    <div class="MH-step">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2b.part1a">a) Write S in the form a√3</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.part1aText">To write S in the form a√3, we need to factor out the common term √3.</p>
+                        
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2b.part1b">b) Calculate the following sums</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.part1bU">U = 2√3 + 4√3 + 6√3 + … + 20√3</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.part1bV">V = -5√3 - 10√3 - 15√3 - 20√3 - … - 50√3</p>
+                    </div>
+                    
+                    <div class="MH-step">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2b.activity5Part2">Part 2: Simplifying Square Root Expressions</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.part2Instruction">Write each of the following numbers in the form a√b, where a is an integer and b is the smallest possible integer.</p>
+                        
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.part2a">a) 3√44 + 4√99 - √1100</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.part2b">b) √27 - 5√363 + 12√12</p>
+                    </div>
+                    
+                    <div class="MH-step">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2b.activity5Part3">Part 3: Removing Radicals</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.part3Instruction">Write without radicals:</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.part3a">√(123)²</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.part3b">√(x - 4)²</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.part3c">√2987⁸</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2b.showAnswer" onclick="toggleSolution(50)">Show Answer</button>
+                    <div class="MH-solution" id="solution50">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2b.activity5Solution">Activity 5 Solution</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.activity5Part1aSolution">Part 1a: S = (1+2+3+...+10)√3 = 55√3</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.activity5Part1bUSolution">Part 1b U: U = (2+4+6+...+20)√3 = 110√3</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.activity5Part1bVSolution">Part 1b V: V = -5(1+2+3+...+10)√3 = -275√3</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.activity5Part2aSolution">Part 2a: 3√44 + 4√99 - √1100 = 3×2√11 + 4×3√11 - 10√11 = 6√11 + 12√11 - 10√11 = 8√11</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.activity5Part2bSolution">Part 2b: √27 - 5√363 + 12√12 = 3√3 - 5×11√3 + 12×2√3 = 3√3 - 55√3 + 24√3 = -28√3</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.activity5Part3aSolution">Part 3a: √(123)² = |123| = 123</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.activity5Part3bSolution">Part 3b: √(x-4)² = |x-4|</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.activity5Part3cSolution">Part 3c: √2987⁸ = (2987⁸)^(1/2) = 2987⁴</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2b.activity6">Activity 6: Rationalizing Denominators</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y1Al_numact2b.activity6Title">Working with Rational Expressions</h3>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y1Al_numact2b.activity6Part1">Part 1: Finding Inverses</h4>
+                    
+                    <div class="MH-step">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2b.part1a">a) Find the inverses</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.part1aInstruction">Find the inverses of the following numbers and write them so that the denominator is an integer:</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.part1a1">√2 - √1</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.part1a2">√3 - √2</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.part1a3">√4 - √3</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.part1a4">√6 - √5</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.part1a5">√23 - √22</p>
+                        
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2b.part1b">b) Make a conjecture</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.part1bInstruction">What can you conjecture? Prove your conjecture.</p>
+                    </div>
+                    
+                    <div class="MH-step">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2b.activity6Part2">Part 2: Sum Calculation</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.part2Instruction">Calculate:</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.part2Expression">1/(√2 + 1) + 1/(√3 + √2) + 1/(√4 + √3)</p>
+                    </div>
+                </div>
+                
+                <div class="MH-important">
+                    <h3 data-i18n="MH.lesson_Y1Al_numact2b.conjugateRule">Conjugate Rule</h3>
+                    <p data-i18n="MH.lesson_Y1Al_numact2b.conjugateRuleText">For all positive real numbers a and b, (√a - √b)(√a + √b) = a - b.</p>
+                    <p data-i18n="MH.lesson_Y1Al_numact2b.inverseDefinition">The inverse of a non-zero real number a is the real number 1/a.</p>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2b.showAnswer" onclick="toggleSolution(60)">Show Answer</button>
+                    <div class="MH-solution" id="solution60">
+                        <h4 data-i18n="MH.lesson_Y1Al_numact2b.activity6Solution">Activity 6 Solution</h4>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.activity6Part1a1Solution">Part 1a1: 1/(√2 - 1) = (√2 + 1)/((√2 - 1)(√2 + 1)) = (√2 + 1)/(2-1) = √2 + 1</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.activity6Part1a2Solution">Part 1a2: 1/(√3 - √2) = (√3 + √2)/((√3 - √2)(√3 + √2)) = (√3 + √2)/(3-2) = √3 + √2</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.activity6Part1a3Solution">Part 1a3: 1/(√4 - √3) = (√4 + √3)/((√4 - √3)(√4 + √3)) = (2 + √3)/(4-3) = 2 + √3</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.activity6Part1a4Solution">Part 1a4: 1/(√6 - √5) = (√6 + √5)/((√6 - √5)(√6 + √5)) = (√6 + √5)/(6-5) = √6 + √5</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.activity6Part1a5Solution">Part 1a5: 1/(√23 - √22) = (√23 + √22)/((√23 - √22)(√23 + √22)) = (√23 + √22)/(23-22) = √23 + √22</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.activity6Part1bSolution">Part 1b: Conjecture: 1/(√(n+1) - √n) = √(n+1) + √n. Proof: Multiply numerator and denominator by the conjugate (√(n+1) + √n), then simplify.</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.activity6Part2Solution">Part 2: 1/(√2+1) + 1/(√3+√2) + 1/(√4+√3) = (√2-1) + (√3-√2) + (2-√3) = 1</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2b.practice">Practice Problems</h2>
+            
+            <div class="MH-practice">
+                <h3 class="MH-practice-title" data-i18n="MH.lesson_Y1Al_numact2b.tryYourself">Try Solving These Problems</h3>
+                
+                <div class="MH-practice-problem">
+                    <p><span class="MH-equation" data-i18n="MH.lesson_Y1Al_numact2b.problem1">1. Simplify: √75 + √12 - √27</span></p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2b.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                    <div class="MH-solution" id="solution1">
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.problem1Step1">Step 1: Simplify each square root: √75 = √(25×3) = 5√3</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.problem1Step2">Step 2: √12 = √(4×3) = 2√3</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.problem1Step3">Step 3: √27 = √(9×3) = 3√3</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.problem1Step4">Step 4: Combine like terms: 5√3 + 2√3 - 3√3 = 4√3</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.problem1Step5">Solution: 4√3</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <p><span class="MH-equation" data-i18n="MH.lesson_Y1Al_numact2b.problem2">2. Rationalize: 1/(√5 - 2)</span></p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2b.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                    <div class="MH-solution" id="solution2">
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.problem2Step1">Step 1: Multiply numerator and denominator by the conjugate: (√5 + 2)</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.problem2Step2">Step 2: 1/(√5 - 2) × (√5 + 2)/(√5 + 2) = (√5 + 2)/((√5)² - 2²)</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.problem2Step3">Step 3: Simplify denominator: (√5 + 2)/(5 - 4) = (√5 + 2)/1</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.problem2Step4">Solution: √5 + 2</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <p><span class="MH-equation" data-i18n="MH.lesson_Y1Al_numact2b.problem3">3. Simplify: √(16x⁴)</span></p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Al_numact2b.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                    <div class="MH-solution" id="solution3">
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.problem3Step1">Step 1: Apply the property √(ab) = √a × √b: √16 × √(x⁴)</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.problem3Step2">Step 2: Simplify: 4 × √(x⁴)</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.problem3Step3">Step 3: Apply the property √(a²) = |a|: 4 × |x²|</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.problem3Step4">Step 4: Since x² is always non-negative: 4x²</p>
+                        <p data-i18n="MH.lesson_Y1Al_numact2b.problem3Step5">Solution: 4x²</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Al_numact2b.summary">Summary</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Al_numact2b.keyConcepts">Key Concepts</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y1Al_numact2b.concept1">Square roots follow specific rules for multiplication, division, and simplification</li>
+                    <li data-i18n="MH.lesson_Y1Al_numact2b.concept2">The square root of a squared number equals the absolute value of that number</li>
+                    <li data-i18n="MH.lesson_Y1Al_numact2b.concept3">Rationalizing denominators eliminates radicals from the denominator of fractions</li>
+                    <li data-i18n="MH.lesson_Y1Al_numact2b.concept4">Like terms with square roots can be combined when they have the same radicand</li>
+                </ul>
+            </div>
+            
+            <p data-i18n="MH.lesson_Y1Al_numact2b.finalThought">Understanding square roots and their properties is essential for solving more complex algebraic problems and will be particularly important when working with quadratic equations.</p>
+        </section>
+        
+    </main>
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="scripts/i18n_en.js"></script>
+    <script src="scripts/i18n_ar.js"></script>
+    <script src="scripts/i18n_fr.js"></script>
+    <script src="scripts/translation.js"></script>
+    <script src="scripts/pwa-install.js"></script>
+    <script>
+        // Function to toggle solution visibility
+        function toggleSolution(id) {
+            const solution = document.getElementById('solution' + id);
+            if (solution.style.display === 'block') {
+                solution.style.display = 'none';
+            } else {
+                solution.style.display = 'block';
+            }
+        }
+        
+        // Register service worker with better error handling
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                    
+                    // Check if we need to request notification permission
+                    if (Notification.permission === 'default') {
+                        // Wait a bit then ask for permission via service worker
+                        setTimeout(() => {
+                            registration.active.postMessage({
+                                type: 'REQUEST_NOTIFICATION_PERMISSION'
+                            });
+                        }, 5000);
+                    }
+                })
+                .catch(function(error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+            });
+        }
+    </script>
+    
+    <!-- noscript fallback -->
+    <noscript>
+        <style>
+            .MH-header-controls { display: none; }
+            .MH-solution { display: block; }
+        </style>
+        <div class="MH-warning">
+            JavaScript is recommended for the full experience, but content is still accessible.
+        </div>
+    </noscript>
+</body>
+</html>
