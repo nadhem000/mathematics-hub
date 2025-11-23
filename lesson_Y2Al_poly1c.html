@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Polynomials Part 3 - Factorisation</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#66CDAA" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#BA55D3" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#66CDAA">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        /* Page-specific color palette - Medium Aquamarine + Medium Orchid Theme */
+        :root {
+            --primary: #66CDAA;        /* Medium Aquamarine */
+            --primary-light: #AFEEEE;  /* Pale Turquoise */
+            --primary-dark: #20B2AA;   /* Light Sea Green */
+            --secondary: #BA55D3;      /* Medium Orchid */
+            --secondary-light: #DDA0DD; /* Plum */
+            --secondary-dark: #9932CC;  /* Dark Orchid */
+            --accent: #FF69B4;
+            --warning: #FF6347;
+            --info: #4682B4;
+        }
+        
+        [data-theme="dark"] {
+            --primary: #20B2AA;
+            --primary-light: #66CDAA;
+            --primary-dark: #008B8B;
+            --secondary: #9932CC;
+            --secondary-light: #BA55D3;
+            --secondary-dark: #8A2BE2;
+            --accent: #FF1493;
+            --warning: #FF4500;
+            --info: #4169E1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Al_poly1c.title">Polynomials: Part 3</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y2Al_poly1c.subtitle">Factorisation of Polynomials</h2>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_poly1c.introduction">Introduction to Polynomial Factorisation</h2>
+            <p data-i18n="MH.lesson_Y2Al_poly1c.introText1">In this lesson, we'll explore the concept of polynomial roots and learn how to factor polynomials. Factorisation is a powerful technique that allows us to rewrite polynomials as products of simpler polynomials, which is essential for solving polynomial equations and understanding their properties.</p>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Al_poly1c.levelNoteTitle">Level Note</h3>
+                <p data-i18n="MH.lesson_Y2Al_poly1c.levelNoteText">This lesson builds upon your knowledge of polynomial operations and equality. We're advancing to more complex algebraic concepts that will be fundamental for solving higher-degree equations.</p>
+            </div>
+        </section>
+        
+        <!-- Roots of Polynomials - Factorisation -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_poly1c.rootsTitle">Roots of Polynomials and Factorisation</h2>
+            
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Al_poly1c.rootDefinitionTitle">Definition: Root of a Polynomial</h3>
+                <p data-i18n="MH.lesson_Y2Al_poly1c.rootDefinitionText">A real number α is called a root or zero of a polynomial f if f(α) = 0.</p>
+            </div>
+            
+            <!-- Activity 11 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_poly1c.activity11Title">Activity 11: Evaluating Polynomials</h3>
+                <p data-i18n="MH.lesson_Y2Al_poly1c.activity11Description">Let f(x) = x² + 2x - 3, g(x) = x³ + 2x² - 1, and h(x) = 3x³ - x² - 6x + 2.</p>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity11PartA">Part A: Calculate f(-1), f(1), and f(-3)</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1c.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                    <div class="MH-solution" id="solution1">
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartAStep1">Step 1: Calculate f(-1)</p>
+                        <div class="MH-equation">f(-1) = (-1)² + 2(-1) - 3 = 1 - 2 - 3 = -4</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartAStep2">Step 2: Calculate f(1)</p>
+                        <div class="MH-equation">f(1) = (1)² + 2(1) - 3 = 1 + 2 - 3 = 0</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartAStep3">Step 3: Calculate f(-3)</p>
+                        <div class="MH-equation">f(-3) = (-3)² + 2(-3) - 3 = 9 - 6 - 3 = 0</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartAConclusion">Conclusion: f(1) = 0 and f(-3) = 0, so 1 and -3 are roots of f.</p>
+                    </div>
+                </div>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity11PartB">Part B: Calculate g(-1), g(0), and g(√2)</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1c.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                    <div class="MH-solution" id="solution2">
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartBStep1">Step 1: Calculate g(-1)</p>
+                        <div class="MH-equation">g(-1) = (-1)³ + 2(-1)² - 1 = -1 + 2 - 1 = 0</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartBStep2">Step 2: Calculate g(0)</p>
+                        <div class="MH-equation">g(0) = (0)³ + 2(0)² - 1 = -1</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartBStep3">Step 3: Calculate g(√2)</p>
+                        <div class="MH-equation">g(√2) = (√2)³ + 2(√2)² - 1 = 2√2 + 4 - 1 = 2√2 + 3</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartBConclusion">Conclusion: g(-1) = 0, so -1 is a root of g.</p>
+                    </div>
+                </div>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity11PartC">Part C: Calculate h(0), h(1/3), and h(2)</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1c.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                    <div class="MH-solution" id="solution3">
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartCStep1">Step 1: Calculate h(0)</p>
+                        <div class="MH-equation">h(0) = 3(0)³ - (0)² - 6(0) + 2 = 2</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartCStep2">Step 2: Calculate h(1/3)</p>
+                        <div class="MH-equation">h(1/3) = 3(1/3)³ - (1/3)² - 6(1/3) + 2 = 3(1/27) - 1/9 - 2 + 2 = 1/9 - 1/9 = 0</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartCStep3">Step 3: Calculate h(2)</p>
+                        <div class="MH-equation">h(2) = 3(2)³ - (2)² - 6(2) + 2 = 24 - 4 - 12 + 2 = 10</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartCConclusion">Conclusion: h(1/3) = 0, so 1/3 is a root of h.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Activity 12 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_poly1c.activity12Title">Activity 12: Verifying Roots</h3>
+                <p data-i18n="MH.lesson_Y2Al_poly1c.activity12Description">Show that the real number α is a root of the given polynomial.</p>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity12PartA">Part A: f(x) = 5x² + x - 6; α = 1</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1c.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+                    <div class="MH-solution" id="solution4">
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity12PartAStep1">Step 1: Substitute α = 1 into f(x)</p>
+                        <div class="MH-equation">f(1) = 5(1)² + 1 - 6 = 5 + 1 - 6 = 0</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity12PartAStep2">Step 2: Conclusion</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity12PartAConclusion">Since f(1) = 0, α = 1 is indeed a root of f(x).</p>
+                    </div>
+                </div>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity12PartB">Part B: g(x) = 4x⁴ + 5x³ - 14x² - 9x + 14; α = -2</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1c.showSolution" onclick="toggleSolution(5)">Show Solution</button>
+                    <div class="MH-solution" id="solution5">
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity12PartBStep1">Step 1: Substitute α = -2 into g(x)</p>
+                        <div class="MH-equation">g(-2) = 4(-2)⁴ + 5(-2)³ - 14(-2)² - 9(-2) + 14</div>
+                        <div class="MH-equation">= 4(16) + 5(-8) - 14(4) + 18 + 14</div>
+                        <div class="MH-equation">= 64 - 40 - 56 + 18 + 14 = 0</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity12PartBStep2">Step 2: Conclusion</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity12PartBConclusion">Since g(-2) = 0, α = -2 is indeed a root of g(x).</p>
+                    </div>
+                </div>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity12PartC">Part C: h(x) = 8x⁵ + 3x² - 1; α = 1/2</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1c.showSolution" onclick="toggleSolution(6)">Show Solution</button>
+                    <div class="MH-solution" id="solution6">
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity12PartCStep1">Step 1: Substitute α = 1/2 into h(x)</p>
+                        <div class="MH-equation">h(1/2) = 8(1/2)⁵ + 3(1/2)² - 1</div>
+                        <div class="MH-equation">= 8(1/32) + 3(1/4) - 1</div>
+                        <div class="MH-equation">= 1/4 + 3/4 - 1 = 1 - 1 = 0</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity12PartCStep2">Step 2: Conclusion</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity12PartCConclusion">Since h(1/2) = 0, α = 1/2 is indeed a root of h(x).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Continue with remaining activities... -->
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_poly1c.summary">Summary</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Al_poly1c.keyConcepts">Key Concepts</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Al_poly1c.concept1">A root of a polynomial is a value that makes the polynomial equal to zero</li>
+                    <li data-i18n="MH.lesson_Y2Al_poly1c.concept2">If α is a root of polynomial P(x), then (x - α) is a factor of P(x)</li>
+                    <li data-i18n="MH.lesson_Y2Al_poly1c.concept3">A polynomial of degree n has at most n real roots</li>
+                    <li data-i18n="MH.lesson_Y2Al_poly1c.concept4">Factorisation allows us to rewrite polynomials as products of simpler polynomials</li>
+                    <li data-i18n="MH.lesson_Y2Al_poly1c.concept5">Finding roots is essential for solving polynomial equations</li>
+                </ul>
+            </div>
+            
+            <p data-i18n="MH.lesson_Y2Al_poly1c.finalThought">Understanding polynomial roots and factorisation is crucial for solving polynomial equations and analyzing polynomial functions. These concepts form the foundation for more advanced algebraic techniques you'll encounter in your mathematical journey.</p>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="scripts/i18n_en.js"></script>
+    <script src="scripts/i18n_ar.js"></script>
+    <script src="scripts/i18n_fr.js"></script>
+    <script src="scripts/translation.js"></script>
+    <script src="scripts/pwa-install.js"></script>
+    <script>
+        // Register service worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                })
+                .catch(function(error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+            });
+        }
+
+        // Toggle solution visibility
+        function toggleSolution(problemNumber) {
+            const solution = document.getElementById(`solution${problemNumber}`);
+            const button = solution.previousElementSibling;
+            
+            if (solution.style.display === 'block') {
+                solution.style.display = 'none';
+                button.setAttribute('data-i18n', 'MH.lesson_Y2Al_poly1c.showSolution');
+                button.textContent = getTranslation('MH.lesson_Y2Al_poly1c.showSolution');
+            } else {
+                solution.style.display = 'block';
+                button.setAttribute('data-i18n', 'MH.lesson_Y2Al_poly1c.hideSolution');
+                button.textContent = getTranslation('MH.lesson_Y2Al_poly1c.hideSolution');
+            }
+        }
+        
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize solutions as hidden
+            for (let i = 1; i <= 25; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+            }
+        });
+    </script>
+    
+    <!-- noscript fallback -->
+    <noscript>
+        <style>
+            .MH-header-controls { display: none; }
+            .MH-solution { display: block; }
+        </style>
+        <div class="MH-warning">
+            JavaScript is recommended for the full experience, but content is still accessible.
+        </div>
+    </noscript>
+</body>
+</html>

@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Polynomials Part 2 - Equality of Polynomial Functions</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#66CDAA" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#BA55D3" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#66CDAA">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        /* Page-specific color palette - Medium Aquamarine + Medium Orchid Theme */
+        :root {
+            --primary: #66CDAA;        /* Medium Aquamarine */
+            --primary-light: #AFEEEE;  /* Pale Turquoise */
+            --primary-dark: #20B2AA;   /* Light Sea Green */
+            --secondary: #BA55D3;      /* Medium Orchid */
+            --secondary-light: #DDA0DD; /* Plum */
+            --secondary-dark: #9932CC;  /* Dark Orchid */
+            --accent: #FF69B4;
+            --warning: #FF6347;
+            --info: #4682B4;
+        }
+        
+        [data-theme="dark"] {
+            --primary: #20B2AA;
+            --primary-light: #66CDAA;
+            --primary-dark: #008B8B;
+            --secondary: #9932CC;
+            --secondary-light: #BA55D3;
+            --secondary-dark: #8A2BE2;
+            --accent: #FF1493;
+            --warning: #FF4500;
+            --info: #4169E1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Al_poly1b.title">Polynomials: Part 2</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y2Al_poly1b.subtitle">Equality of Polynomial Functions</h2>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_poly1b.introduction">Introduction to Polynomial Equality</h2>
+            <p data-i18n="MH.lesson_Y2Al_poly1b.introText1">In this lesson, we'll explore the concept of polynomial equality and learn how to determine when two polynomials are equal. This is a fundamental concept that will help us solve more complex polynomial equations and understand polynomial identities.</p>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Al_poly1b.importantTitle">Important Note</h3>
+                <p data-i18n="MH.lesson_Y2Al_poly1b.importantText">Two polynomials are equal if and only if all their corresponding coefficients are equal. This principle forms the basis for solving many polynomial problems.</p>
+            </div>
+        </section>
+        
+        <!-- Activity 6 -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_poly1b.activity6Title">Activity 6: Zero Polynomial and Coefficients</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_poly1b.activity6Part1Title">Part 1: Evaluating a Polynomial</h3>
+                <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part1Question">Consider the polynomial f defined by f(x) = x² - 5x + 6.</p>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1b.activity6Part1A">Part 1a: Calculate f(2) and f(3)</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1b.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                    <div class="MH-solution" id="solution1">
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part1AStep1">Step 1: Calculate f(2)</p>
+                        <div class="MH-equation">f(2) = (2)² - 5(2) + 6 = 4 - 10 + 6 = 0</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part1AStep2">Step 2: Calculate f(3)</p>
+                        <div class="MH-equation">f(3) = (3)² - 5(3) + 6 = 9 - 15 + 6 = 0</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part1AStep3">Conclusion: f(2) = 0 and f(3) = 0</p>
+                    </div>
+                </div>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1b.activity6Part1B">Part 1b: Is f the zero polynomial?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1b.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                    <div class="MH-solution" id="solution2">
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part1BStep1">Step 1: Understanding the zero polynomial</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part1BStep1Text">The zero polynomial is the polynomial where all coefficients are zero: 0x² + 0x + 0 = 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part1BStep2">Step 2: Check if f(x) = 0 for all x</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part1BStep2Text">Let's test a value different from 2 and 3, for example x = 0:</p>
+                        <div class="MH-equation">f(0) = (0)² - 5(0) + 6 = 6 ≠ 0</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part1BStep3">Conclusion: f is not the zero polynomial</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part1BStep3Text">Even though f(2) = 0 and f(3) = 0, f is not identically zero for all x.</p>
+                    </div>
+                </div>
+                
+                <h3 data-i18n="MH.lesson_Y2Al_poly1b.activity6Part2Title">Part 2: General Quadratic Polynomial</h3>
+                <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part2Question">Let g be the polynomial defined by g(x) = a₂x² + a₁x + a₀.</p>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1b.activity6Part2A">Part 2a: Calculate g(-1), g(0), and g(1)</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1b.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                    <div class="MH-solution" id="solution3">
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part2AStep1">Step 1: Calculate g(-1)</p>
+                        <div class="MH-equation">g(-1) = a₂(-1)² + a₁(-1) + a₀ = a₂ - a₁ + a₀</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part2AStep2">Step 2: Calculate g(0)</p>
+                        <div class="MH-equation">g(0) = a₂(0)² + a₁(0) + a₀ = a₀</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part2AStep3">Step 3: Calculate g(1)</p>
+                        <div class="MH-equation">g(1) = a₂(1)² + a₁(1) + a₀ = a₂ + a₁ + a₀</div>
+                    </div>
+                </div>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1b.activity6Part2B">Part 2b: Show that g(x) = 0 for all x if and only if a₂ = a₁ = a₀ = 0</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1b.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+                    <div class="MH-solution" id="solution4">
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part2BStep1">Step 1: If a₂ = a₁ = a₀ = 0, then g(x) = 0 for all x</p>
+                        <div class="MH-equation">g(x) = 0·x² + 0·x + 0 = 0 for all x</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part2BStep2">Step 2: If g(x) = 0 for all x, then a₂ = a₁ = a₀ = 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part2BStep2Text">Since g(x) = 0 for all x, we can use specific values:</p>
+                        <div class="MH-equation">g(0) = a₀ = 0 ⇒ a₀ = 0</div>
+                        <div class="MH-equation">g(1) = a₂ + a₁ + a₀ = a₂ + a₁ = 0</div>
+                        <div class="MH-equation">g(-1) = a₂ - a₁ + a₀ = a₂ - a₁ = 0</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part2BStep3">Step 3: Solve the system</p>
+                        <div class="MH-equation">a₂ + a₁ = 0</div>
+                        <div class="MH-equation">a₂ - a₁ = 0</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part2BStep3Text">Adding these equations: 2a₂ = 0 ⇒ a₂ = 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part2BStep3Text2">Substituting a₂ = 0 into a₂ + a₁ = 0: 0 + a₁ = 0 ⇒ a₁ = 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part2BStep4">Conclusion: a₂ = a₁ = a₀ = 0</p>
+                    </div>
+                </div>
+                
+                <h3 data-i18n="MH.lesson_Y2Al_poly1b.activity6Part3Title">Part 3: Cubic Polynomial</h3>
+                <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part3Question">Let h be the polynomial defined by h(x) = a₃x³ + a₂x² + a₁x + a₀.</p>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1b.activity6Part3">Show that h(x) = 0 for all x if and only if a₃ = a₂ = a₁ = a₀ = 0</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1b.showSolution" onclick="toggleSolution(5)">Show Solution</button>
+                    <div class="MH-solution" id="solution5">
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part3Step1">Step 1: If a₃ = a₂ = a₁ = a₀ = 0, then h(x) = 0 for all x</p>
+                        <div class="MH-equation">h(x) = 0·x³ + 0·x² + 0·x + 0 = 0 for all x</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part3Step2">Step 2: If h(x) = 0 for all x, then a₃ = a₂ = a₁ = a₀ = 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part3Step2Text">Since h(x) = 0 for all x, we can use specific values:</p>
+                        <div class="MH-equation">h(0) = a₀ = 0 ⇒ a₀ = 0</div>
+                        <div class="MH-equation">h(1) = a₃ + a₂ + a₁ + a₀ = a₃ + a₂ + a₁ = 0</div>
+                        <div class="MH-equation">h(-1) = -a₃ + a₂ - a₁ + a₀ = -a₃ + a₂ - a₁ = 0</div>
+                        <div class="MH-equation">h(2) = 8a₃ + 4a₂ + 2a₁ + a₀ = 8a₃ + 4a₂ + 2a₁ = 0</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part3Step3">Step 3: Solve the system</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part3Step3Text">We have a system of three equations with three unknowns:</p>
+                        <div class="MH-equation">a₃ + a₂ + a₁ = 0  (1)</div>
+                        <div class="MH-equation">-a₃ + a₂ - a₁ = 0  (2)</div>
+                        <div class="MH-equation">8a₃ + 4a₂ + 2a₁ = 0  (3)</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part3Step3Text2">Adding (1) and (2): 2a₂ = 0 ⇒ a₂ = 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part3Step3Text3">Substitute a₂ = 0 into (1): a₃ + a₁ = 0 ⇒ a₁ = -a₃</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part3Step3Text4">Substitute a₂ = 0 and a₁ = -a₃ into (3): 8a₃ + 0 + 2(-a₃) = 8a₃ - 2a₃ = 6a₃ = 0 ⇒ a₃ = 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part3Step3Text5">Then a₁ = -a₃ = 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part3Step4">Conclusion: a₃ = a₂ = a₁ = a₀ = 0</p>
+                    </div>
+                </div>
+                
+                <h3 data-i18n="MH.lesson_Y2Al_poly1b.activity6Part4Title">Part 4: General Polynomial</h3>
+                <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part4Question">Let P(x) = aₙxⁿ + aₙ₋₁xⁿ⁻¹ + ... + a₁x + a₀ be a polynomial such that P(x) = 0 for all real x.</p>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1b.activity6Part4">What conjecture can we make about the coefficients of this polynomial?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1b.showSolution" onclick="toggleSolution(6)">Show Solution</button>
+                    <div class="MH-solution" id="solution6">
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part4Step1">Step 1: Analyze the pattern from previous parts</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part4Step1Text">From Part 2b (quadratic): g(x) = 0 for all x ⇒ a₂ = a₁ = a₀ = 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part4Step1Text2">From Part 3 (cubic): h(x) = 0 for all x ⇒ a₃ = a₂ = a₁ = a₀ = 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part4Step2">Step 2: Formulate the conjecture</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part4Step2Text">We can conjecture that:</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part4Step2Text2">A polynomial P(x) = aₙxⁿ + aₙ₋₁xⁿ⁻¹ + ... + a₁x + a₀ is identically zero (P(x) = 0 for all x) if and only if all its coefficients are zero:</p>
+                        <div class="MH-equation">aₙ = aₙ₋₁ = ... = a₁ = a₀ = 0</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part4Step3">Step 3: Understanding the significance</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity6Part4Step3Text">This is a fundamental property of polynomials that allows us to equate coefficients when two polynomials are equal.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Activity 7 -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_poly1b.activity7Title">Activity 7: Equality of Polynomials</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_poly1b.activity7Part1Title">Part 1: Comparing Two Polynomials</h3>
+                <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part1Question">Let f and g be the polynomials defined by f(x) = 3x² - x + 3 and g(x) = 2x² + 4x - 1.</p>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1b.activity7Part1A">Part 1a: Verify that f(1) = g(1) and f(4) = g(4)</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1b.showSolution" onclick="toggleSolution(7)">Show Solution</button>
+                    <div class="MH-solution" id="solution7">
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part1AStep1">Step 1: Calculate f(1) and g(1)</p>
+                        <div class="MH-equation">f(1) = 3(1)² - (1) + 3 = 3 - 1 + 3 = 5</div>
+                        <div class="MH-equation">g(1) = 2(1)² + 4(1) - 1 = 2 + 4 - 1 = 5</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part1AStep1Text">So f(1) = g(1) = 5</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part1AStep2">Step 2: Calculate f(4) and g(4)</p>
+                        <div class="MH-equation">f(4) = 3(4)² - (4) + 3 = 3(16) - 4 + 3 = 48 - 4 + 3 = 47</div>
+                        <div class="MH-equation">g(4) = 2(4)² + 4(4) - 1 = 2(16) + 16 - 1 = 32 + 16 - 1 = 47</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part1AStep2Text">So f(4) = g(4) = 47</p>
+                    </div>
+                </div>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1b.activity7Part1B">Part 1b: Is the statement "f(x) = g(x) for all real x" true?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1b.showSolution" onclick="toggleSolution(8)">Show Solution</button>
+                    <div class="MH-solution" id="solution8">
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part1BStep1">Step 1: Compare the polynomials</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part1BStep1Text">For f(x) = g(x) to be true for all x, the polynomials must have the same coefficients.</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part1BStep1Text2">Let's write both polynomials in standard form:</p>
+                        <div class="MH-equation">f(x) = 3x² - x + 3</div>
+                        <div class="MH-equation">g(x) = 2x² + 4x - 1</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part1BStep2">Step 2: Check if coefficients are equal</p>
+                        <div class="MH-equation">Coefficient of x²: 3 ≠ 2</div>
+                        <div class="MH-equation">Coefficient of x: -1 ≠ 4</div>
+                        <div class="MH-equation">Constant term: 3 ≠ -1</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part1BStep3">Step 3: Test with another value</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part1BStep3Text">Let's test with x = 0:</p>
+                        <div class="MH-equation">f(0) = 3(0)² - 0 + 3 = 3</div>
+                        <div class="MH-equation">g(0) = 2(0)² + 4(0) - 1 = -1</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part1BStep3Text2">f(0) ≠ g(0)</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part1BStep4">Conclusion: f(x) = g(x) is not true for all real x</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part1BStep4Text">Even though f(1) = g(1) and f(4) = g(4), the polynomials are not identical.</p>
+                    </div>
+                </div>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1b.activity7Part1C">Part 1c: Determine the real numbers a₂, a₁, and a₀ such that:</h4>
+                    <div class="MH-equation">a₂x² + a₁x + a₀ = -10x + 2x² + 11 for all real x</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1b.showSolution" onclick="toggleSolution(9)">Show Solution</button>
+                    <div class="MH-solution" id="solution9">
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part1CStep1">Step 1: Write both sides in standard form</p>
+                        <div class="MH-equation">Left side: a₂x² + a₁x + a₀</div>
+                        <div class="MH-equation">Right side: 2x² - 10x + 11</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part1CStep2">Step 2: Equate coefficients</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part1CStep2Text">For the polynomials to be equal for all x, their corresponding coefficients must be equal:</p>
+                        <div class="MH-equation">Coefficient of x²: a₂ = 2</div>
+                        <div class="MH-equation">Coefficient of x: a₁ = -10</div>
+                        <div class="MH-equation">Constant term: a₀ = 11</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part1CStep3">Step 3: Conclusion</p>
+                        <div class="MH-equation">a₂ = 2, a₁ = -10, a₀ = 11</div>
+                    </div>
+                </div>
+                
+                <h3 data-i18n="MH.lesson_Y2Al_poly1b.activity7Part2Title">Part 2: Cubic Polynomial Equality</h3>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1b.activity7Part2">Determine the real numbers a₃, a₂, a₁, and a₀ such that:</h4>
+                    <div class="MH-equation">a₃x³ + a₂x² + a₁x + a₀ = 5x³ - 3x² + 2x - 1 for all real x</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1b.showSolution" onclick="toggleSolution(10)">Show Solution</button>
+                    <div class="MH-solution" id="solution10">
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part2Step1">Step 1: Write both sides in standard form</p>
+                        <div class="MH-equation">Left side: a₃x³ + a₂x² + a₁x + a₀</div>
+                        <div class="MH-equation">Right side: 5x³ - 3x² + 2x - 1</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part2Step2">Step 2: Equate coefficients</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part2Step2Text">For the polynomials to be equal for all x, their corresponding coefficients must be equal:</p>
+                        <div class="MH-equation">Coefficient of x³: a₃ = 5</div>
+                        <div class="MH-equation">Coefficient of x²: a₂ = -3</div>
+                        <div class="MH-equation">Coefficient of x: a₁ = 2</div>
+                        <div class="MH-equation">Constant term: a₀ = -1</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part2Step3">Step 3: Conclusion</p>
+                        <div class="MH-equation">a₃ = 5, a₂ = -3, a₁ = 2, a₀ = -1</div>
+                    </div>
+                </div>
+                
+                <h3 data-i18n="MH.lesson_Y2Al_poly1b.activity7Part3Title">Part 3: General Polynomial Equality</h3>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1b.activity7Part3">Let P(x) = aₙxⁿ + aₙ₋₁xⁿ⁻¹ + ... + a₁x + a₀ and Q(x) = bₙxⁿ + bₙ₋₁xⁿ⁻¹ + ... + b₁x + b₀ be two polynomials such that P(x) = Q(x) for all real x.</h4>
+                    <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part3Question">What can we say about aₙ and bₙ, aₙ₋₁ and bₙ₋₁, ..., a₀ and b₀?</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1b.showSolution" onclick="toggleSolution(11)">Show Solution</button>
+                    <div class="MH-solution" id="solution11">
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part3Step1">Step 1: Rewrite the equality</p>
+                        <div class="MH-equation">P(x) = Q(x) for all x</div>
+                        <div class="MH-equation">⇒ aₙxⁿ + aₙ₋₁xⁿ⁻¹ + ... + a₁x + a₀ = bₙxⁿ + bₙ₋₁xⁿ⁻¹ + ... + b₁x + b₀ for all x</div>
+                        <div class="MH-equation">⇒ (aₙ - bₙ)xⁿ + (aₙ₋₁ - bₙ₋₁)xⁿ⁻¹ + ... + (a₁ - b₁)x + (a₀ - b₀) = 0 for all x</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part3Step2">Step 2: Apply the result from Activity 6</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part3Step2Text">From Activity 6, we know that if a polynomial is identically zero, then all its coefficients must be zero.</p>
+                        <div class="MH-equation">aₙ - bₙ = 0 ⇒ aₙ = bₙ</div>
+                        <div class="MH-equation">aₙ₋₁ - bₙ₋₁ = 0 ⇒ aₙ₋₁ = bₙ₋₁</div>
+                        <div class="MH-equation">...</div>
+                        <div class="MH-equation">a₁ - b₁ = 0 ⇒ a₁ = b₁</div>
+                        <div class="MH-equation">a₀ - b₀ = 0 ⇒ a₀ = b₀</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part3Step3">Step 3: Conclusion</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity7Part3Step3Text">If two polynomials are equal for all real x, then their corresponding coefficients are equal.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Degree Definition -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_poly1b.degreeDefinitionTitle">Definition: Degree of a Polynomial</h2>
+            
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Al_poly1b.degreeDefinition">Degree of a Polynomial</h3>
+                <p data-i18n="MH.lesson_Y2Al_poly1b.degreeDefinitionText1">We accept that every nonzero polynomial P has a unique representation of the form:</p>
+                <div class="MH-equation">P(x) = aₙxⁿ + aₙ₋₁xⁿ⁻¹ + ... + a₁x + a₀, with aₙ ≠ 0</div>
+                <p data-i18n="MH.lesson_Y2Al_poly1b.degreeDefinitionText2">The integer n is called the degree of the polynomial P, written as d°(P) = n.</p>
+                <p data-i18n="MH.lesson_Y2Al_poly1b.degreeDefinitionText3">We agree that the zero polynomial has no degree.</p>
+                <p data-i18n="MH.lesson_Y2Al_poly1b.degreeDefinitionText4">The degree of a constant polynomial (nonzero) is equal to zero.</p>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_poly1b.vocabularyTitle">Vocabulary</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Al_poly1b.vocabulary1">a₀ is called the constant term.</li>
+                    <li data-i18n="MH.lesson_Y2Al_poly1b.vocabulary2">a₁x is called the first-degree term or the term in x.</li>
+                    <li data-i18n="MH.lesson_Y2Al_poly1b.vocabulary3">aₙxⁿ is called the nth-degree term or the term in xⁿ.</li>
+                    <li data-i18n="MH.lesson_Y2Al_poly1b.vocabulary4">It is also called the highest-degree term.</li>
+                    <li data-i18n="MH.lesson_Y2Al_poly1b.vocabulary5">Each of the terms a₀, a₁x, ..., aₙ₋₁xⁿ⁻¹, and aₙxⁿ is called a monomial.</li>
+                    <li data-i18n="MH.lesson_Y2Al_poly1b.vocabulary6">Any polynomial of first degree is called a binomial or first-degree binomial.</li>
+                    <li data-i18n="MH.lesson_Y2Al_poly1b.vocabulary7">Any polynomial of second degree is called a trinomial or second-degree trinomial.</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- Activity 8 -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_poly1b.activity8Title">Activity 8: Determining Polynomial Degrees</h2>
+            
+            <div class="MH-exercise">
+                <p data-i18n="MH.lesson_Y2Al_poly1b.activity8Description">Determine the degree of each polynomial below.</p>
+                
+                <div class="MH-exercise-part">
+                    <div class="MH-equation">P(x) = 3x⁴ - 7x² + x</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1b.showSolution" onclick="toggleSolution(12)">Show Solution</button>
+                    <div class="MH-solution" id="solution12">
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity8PSolution">The highest power of x is 4, so the degree is 4.</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity8PDegree">Degree: 4</p>
+                    </div>
+                </div>
+                
+                <div class="MH-exercise-part">
+                    <div class="MH-equation">Q(x) = 2 - x + x³ + x⁵ + x⁷</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1b.showSolution" onclick="toggleSolution(13)">Show Solution</button>
+                    <div class="MH-solution" id="solution13">
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity8QSolution">The highest power of x is 7, so the degree is 7.</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity8QDegree">Degree: 7</p>
+                    </div>
+                </div>
+                
+                <div class="MH-exercise-part">
+                    <div class="MH-equation">R(x) = (x + 1)(x - 1)</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1b.showSolution" onclick="toggleSolution(14)">Show Solution</button>
+                    <div class="MH-solution" id="solution14">
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity8RStep1">Step 1: Expand the expression</p>
+                        <div class="MH-equation">R(x) = (x + 1)(x - 1) = x² - 1</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity8RStep2">Step 2: Identify the highest power</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity8RStep2Text">The highest power of x is 2, so the degree is 2.</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity8RDegree">Degree: 2</p>
+                    </div>
+                </div>
+                
+                <div class="MH-exercise-part">
+                    <div class="MH-equation">S(x) = -3x³ + 2√5 x² + 1</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1b.showSolution" onclick="toggleSolution(15)">Show Solution</button>
+                    <div class="MH-solution" id="solution15">
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity8SSolution">The highest power of x is 3, so the degree is 3.</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity8SDegree">Degree: 3</p>
+                    </div>
+                </div>
+                
+                <div class="MH-exercise-part">
+                    <div class="MH-equation">T(x) = ¾x² - x + x⁶ + 1</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1b.showSolution" onclick="toggleSolution(16)">Show Solution</button>
+                    <div class="MH-solution" id="solution16">
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity8TSolution">The highest power of x is 6, so the degree is 6.</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity8TDegree">Degree: 6</p>
+                    </div>
+                </div>
+                
+                <div class="MH-exercise-part">
+                    <div class="MH-equation">V(x) = (2x + 1)(2x³ + 8x - 1)</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1b.showSolution" onclick="toggleSolution(17)">Show Solution</button>
+                    <div class="MH-solution" id="solution17">
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity8VStep1">Step 1: Expand the expression</p>
+                        <div class="MH-equation">V(x) = (2x + 1)(2x³ + 8x - 1)</div>
+                        <div class="MH-equation">= 2x(2x³ + 8x - 1) + 1(2x³ + 8x - 1)</div>
+                        <div class="MH-equation">= 4x⁴ + 16x² - 2x + 2x³ + 8x - 1</div>
+                        <div class="MH-equation">= 4x⁴ + 2x³ + 16x² + 6x - 1</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity8VStep2">Step 2: Identify the highest power</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity8VStep2Text">The highest power of x is 4, so the degree is 4.</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity8VDegree">Degree: 4</p>
+                    </div>
+                </div>
+                
+                <div class="MH-exercise-part">
+                    <div class="MH-equation">K(x) = (x - 1)³ - x³</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1b.showSolution" onclick="toggleSolution(18)">Show Solution</button>
+                    <div class="MH-solution" id="solution18">
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity8KStep1">Step 1: Expand the expression</p>
+                        <div class="MH-equation">K(x) = (x - 1)³ - x³</div>
+                        <div class="MH-equation">= (x³ - 3x² + 3x - 1) - x³</div>
+                        <div class="MH-equation">= -3x² + 3x - 1</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity8KStep2">Step 2: Identify the highest power</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity8KStep2Text">The highest power of x is 2, so the degree is 2.</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity8KDegree">Degree: 2</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Activity 9 -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_poly1b.activity9Title">Activity 9: Operations on Polynomials</h2>
+            
+            <div class="MH-step">
+                <p data-i18n="MH.lesson_Y2Al_poly1b.activity9Description">Let f, g, p, and q be the polynomials defined for all real x by:</p>
+                <div class="MH-equation">f(x) = 2x³ - 5x² + x - 1</div>
+                <div class="MH-equation">g(x) = -3x² + 7x - √5</div>
+                <div class="MH-equation">p(x) = 3x² - x - 1</div>
+                <div class="MH-equation">q(x) = x - 2</div>
+                
+                <h3 data-i18n="MH.lesson_Y2Al_poly1b.activity9Part1Title">Part 1: Addition and Scalar Multiplication</h3>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1b.activity9Part1A">Part 1a: Simplify and order f(x) + g(x), g(x) + p(x), g(x) - p(x), f(x) - q(x), 2p(x), and 3f(x)</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1b.showSolution" onclick="toggleSolution(19)">Show Solution</button>
+                    <div class="MH-solution" id="solution19">
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity9Part1AStep1">Step 1: f(x) + g(x)</p>
+                        <div class="MH-equation">f(x) + g(x) = (2x³ - 5x² + x - 1) + (-3x² + 7x - √5)</div>
+                        <div class="MH-equation">= 2x³ + (-5x² - 3x²) + (x + 7x) + (-1 - √5)</div>
+                        <div class="MH-equation">= 2x³ - 8x² + 8x - 1 - √5</div>
+                        
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity9Part1AStep2">Step 2: g(x) + p(x)</p>
+                        <div class="MH-equation">g(x) + p(x) = (-3x² + 7x - √5) + (3x² - x - 1)</div>
+                        <div class="MH-equation">= (-3x² + 3x²) + (7x - x) + (-√5 - 1)</div>
+                        <div class="MH-equation">= 6x - √5 - 1</div>
+                        
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity9Part1AStep3">Step 3: g(x) - p(x)</p>
+                        <div class="MH-equation">g(x) - p(x) = (-3x² + 7x - √5) - (3x² - x - 1)</div>
+                        <div class="MH-equation">= -3x² + 7x - √5 - 3x² + x + 1</div>
+                        <div class="MH-equation">= -6x² + 8x - √5 + 1</div>
+                        
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity9Part1AStep4">Step 4: f(x) - q(x)</p>
+                        <div class="MH-equation">f(x) - q(x) = (2x³ - 5x² + x - 1) - (x - 2)</div>
+                        <div class="MH-equation">= 2x³ - 5x² + x - 1 - x + 2</div>
+                        <div class="MH-equation">= 2x³ - 5x² + 1</div>
+                        
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity9Part1AStep5">Step 5: 2p(x)</p>
+                        <div class="MH-equation">2p(x) = 2(3x² - x - 1) = 6x² - 2x - 2</div>
+                        
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity9Part1AStep6">Step 6: 3f(x)</p>
+                        <div class="MH-equation">3f(x) = 3(2x³ - 5x² + x - 1) = 6x³ - 15x² + 3x - 3</div>
+                    </div>
+                </div>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1b.activity9Part1B">Part 1b: Determine the degree of each polynomial obtained</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1b.showSolution" onclick="toggleSolution(20)">Show Solution</button>
+                    <div class="MH-solution" id="solution20">
+                        <div class="MH-equation">f(x) + g(x) = 2x³ - 8x² + 8x - 1 - √5 → Degree: 3</div>
+                        <div class="MH-equation">g(x) + p(x) = 6x - √5 - 1 → Degree: 1</div>
+                        <div class="MH-equation">g(x) - p(x) = -6x² + 8x - √5 + 1 → Degree: 2</div>
+                        <div class="MH-equation">f(x) - q(x) = 2x³ - 5x² + 1 → Degree: 3</div>
+                        <div class="MH-equation">2p(x) = 6x² - 2x - 2 → Degree: 2</div>
+                        <div class="MH-equation">3f(x) = 6x³ - 15x² + 3x - 3 → Degree: 3</div>
+                    </div>
+                </div>
+                
+                <h3 data-i18n="MH.lesson_Y2Al_poly1b.activity9Part2Title">Part 2: Polynomial Multiplication</h3>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1b.activity9Part2A">Part 2a: Simplify and order f(x)q(x), g(x)p(x), and g(x)q(x)</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1b.showSolution" onclick="toggleSolution(21)">Show Solution</button>
+                    <div class="MH-solution" id="solution21">
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity9Part2AStep1">Step 1: f(x)q(x)</p>
+                        <div class="MH-equation">f(x)q(x) = (2x³ - 5x² + x - 1)(x - 2)</div>
+                        <div class="MH-equation">= 2x³(x - 2) - 5x²(x - 2) + x(x - 2) - 1(x - 2)</div>
+                        <div class="MH-equation">= 2x⁴ - 4x³ - 5x³ + 10x² + x² - 2x - x + 2</div>
+                        <div class="MH-equation">= 2x⁴ - 9x³ + 11x² - 3x + 2</div>
+                        
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity9Part2AStep2">Step 2: g(x)p(x)</p>
+                        <div class="MH-equation">g(x)p(x) = (-3x² + 7x - √5)(3x² - x - 1)</div>
+                        <div class="MH-equation">= -3x²(3x² - x - 1) + 7x(3x² - x - 1) - √5(3x² - x - 1)</div>
+                        <div class="MH-equation">= -9x⁴ + 3x³ + 3x² + 21x³ - 7x² - 7x - 3√5x² + √5x + √5</div>
+                        <div class="MH-equation">= -9x⁴ + 24x³ + (3x² - 7x² - 3√5x²) + (-7x + √5x) + √5</div>
+                        <div class="MH-equation">= -9x⁴ + 24x³ - (4 + 3√5)x² + (-7 + √5)x + √5</div>
+                        
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity9Part2AStep3">Step 3: g(x)q(x)</p>
+                        <div class="MH-equation">g(x)q(x) = (-3x² + 7x - √5)(x - 2)</div>
+                        <div class="MH-equation">= -3x²(x - 2) + 7x(x - 2) - √5(x - 2)</div>
+                        <div class="MH-equation">= -3x³ + 6x² + 7x² - 14x - √5x + 2√5</div>
+                        <div class="MH-equation">= -3x³ + 13x² - (14 + √5)x + 2√5</div>
+                    </div>
+                </div>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1b.activity9Part2B">Part 2b: Determine the degree of each polynomial obtained</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1b.showSolution" onclick="toggleSolution(22)">Show Solution</button>
+                    <div class="MH-solution" id="solution22">
+                        <div class="MH-equation">f(x)q(x) = 2x⁴ - 9x³ + 11x² - 3x + 2 → Degree: 4</div>
+                        <div class="MH-equation">g(x)p(x) = -9x⁴ + 24x³ - (4 + 3√5)x² + (-7 + √5)x + √5 → Degree: 4</div>
+                        <div class="MH-equation">g(x)q(x) = -3x³ + 13x² - (14 + √5)x + 2√5 → Degree: 3</div>
+                    </div>
+                </div>
+                
+                <h3 data-i18n="MH.lesson_Y2Al_poly1b.activity9Part3Title">Part 3: General Polynomial Multiplication</h3>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1b.activity9Part3">Let P(x) = aₙxⁿ + aₙ₋₁xⁿ⁻¹ + ... + a₁x + a₀, with aₙ ≠ 0 and Q(x) = bₚxᵖ + bₚ₋₁xᵖ⁻¹ + ... + b₁x + b₀, with bₚ ≠ 0.</h4>
+                    <p data-i18n="MH.lesson_Y2Al_poly1b.activity9Part3Question">What is the degree of the polynomial R such that R(x) = P(x) × Q(x)?</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1b.showSolution" onclick="toggleSolution(23)">Show Solution</button>
+                    <div class="MH-solution" id="solution23">
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity9Part3Step1">Step 1: Identify the highest degree terms</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity9Part3Step1Text">The highest degree term in P(x) is aₙxⁿ</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity9Part3Step1Text2">The highest degree term in Q(x) is bₚxᵖ</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity9Part3Step2">Step 2: Multiply the highest degree terms</p>
+                        <div class="MH-equation">aₙxⁿ × bₚxᵖ = aₙbₚxⁿ⁺ᵖ</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity9Part3Step3">Step 3: Analyze the result</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity9Part3Step3Text">Since aₙ ≠ 0 and bₚ ≠ 0, then aₙbₚ ≠ 0</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity9Part3Step3Text2">The highest power in R(x) is xⁿ⁺ᵖ</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity9Part3Step4">Step 4: Conclusion</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity9Part3Step4Text">The degree of R(x) = P(x) × Q(x) is n + p</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity9Part3Step4Text2">In other words, the degree of the product of two polynomials is the sum of their degrees.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Definitions -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_poly1b.definitionsTitle">Definitions: Operations on Polynomials</h2>
+            
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Al_poly1b.definitions">Operations on Polynomials</h3>
+                <p data-i18n="MH.lesson_Y2Al_poly1b.definition1">Let f and g be two polynomials and α a real number.</p>
+                <p data-i18n="MH.lesson_Y2Al_poly1b.definition2">- The sum of f and g is the polynomial denoted f + g and defined for all real x by:</p>
+                <div class="MH-equation">(f + g)(x) = f(x) + g(x)</div>
+                <p data-i18n="MH.lesson_Y2Al_poly1b.definition3">- The product of the polynomial f by the real number α is the polynomial denoted αf and defined for all real x by:</p>
+                <div class="MH-equation">(αf)(x) = αf(x)</div>
+                <p data-i18n="MH.lesson_Y2Al_poly1b.definition4">- The product of the polynomials f and g is the polynomial denoted fg and defined for all real x by:</p>
+                <div class="MH-equation">(fg)(x) = f(x) × g(x)</div>
+            </div>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Al_poly1b.remarkTitle">Remark</h3>
+                <p data-i18n="MH.lesson_Y2Al_poly1b.remarkText">The degree of the polynomial fg is the sum of the degrees of f and g.</p>
+            </div>
+        </section>
+        
+        <!-- Activity 10 -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_poly1b.activity10Title">Activity 10: Practice with Polynomial Operations</h2>
+            
+            <div class="MH-exercise">
+                <p data-i18n="MH.lesson_Y2Al_poly1b.activity10Description">Simplify and order the polynomials P + Q, 3P - 2Q, and PQ in each of the following cases, and specify the degree of each polynomial obtained.</p>
+                
+                <div class="MH-exercise-part">
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1b.activity10PartA">Case a</h4>
+                    <div class="MH-equation">P(x) = 2x³ - x² + 2x - 1</div>
+                    <div class="MH-equation">Q(x) = 3x³ - x</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1b.showSolution" onclick="toggleSolution(24)">Show Solution</button>
+                    <div class="MH-solution" id="solution24">
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity10PartAStep1">Step 1: P + Q</p>
+                        <div class="MH-equation">P(x) + Q(x) = (2x³ - x² + 2x - 1) + (3x³ - x)</div>
+                        <div class="MH-equation">= 5x³ - x² + x - 1</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity10PartAStep1Degree">Degree: 3</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity10PartAStep2">Step 2: 3P - 2Q</p>
+                        <div class="MH-equation">3P(x) - 2Q(x) = 3(2x³ - x² + 2x - 1) - 2(3x³ - x)</div>
+                        <div class="MH-equation">= 6x³ - 3x² + 6x - 3 - 6x³ + 2x</div>
+                        <div class="MH-equation">= -3x² + 8x - 3</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity10PartAStep2Degree">Degree: 2</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity10PartAStep3">Step 3: PQ</p>
+                        <div class="MH-equation">P(x)Q(x) = (2x³ - x² + 2x - 1)(3x³ - x)</div>
+                        <div class="MH-equation">= 2x³(3x³ - x) - x²(3x³ - x) + 2x(3x³ - x) - 1(3x³ - x)</div>
+                        <div class="MH-equation">= 6x⁶ - 2x⁴ - 3x⁵ + x³ + 6x⁴ - 2x² - 3x³ + x</div>
+                        <div class="MH-equation">= 6x⁶ - 3x⁵ + 4x⁴ - 2x³ - 2x² + x</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity10PartAStep3Degree">Degree: 6</p>
+                    </div>
+                </div>
+                
+                <div class="MH-exercise-part">
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1b.activity10PartB">Case b</h4>
+                    <div class="MH-equation">P(x) = (2x + 1)²</div>
+                    <div class="MH-equation">Q(x) = (x - 2)(x³ + 1)</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1b.showSolution" onclick="toggleSolution(25)">Show Solution</button>
+                    <div class="MH-solution" id="solution25">
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity10PartBStep1">Step 1: Expand P(x) and Q(x)</p>
+                        <div class="MH-equation">P(x) = (2x + 1)² = 4x² + 4x + 1</div>
+                        <div class="MH-equation">Q(x) = (x - 2)(x³ + 1) = x(x³ + 1) - 2(x³ + 1) = x⁴ + x - 2x³ - 2 = x⁴ - 2x³ + x - 2</div>
+                        
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity10PartBStep2">Step 2: P + Q</p>
+                        <div class="MH-equation">P(x) + Q(x) = (4x² + 4x + 1) + (x⁴ - 2x³ + x - 2)</div>
+                        <div class="MH-equation">= x⁴ - 2x³ + 4x² + 5x - 1</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity10PartBStep2Degree">Degree: 4</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity10PartBStep3">Step 3: 3P - 2Q</p>
+                        <div class="MH-equation">3P(x) - 2Q(x) = 3(4x² + 4x + 1) - 2(x⁴ - 2x³ + x - 2)</div>
+                        <div class="MH-equation">= 12x² + 12x + 3 - 2x⁴ + 4x³ - 2x + 4</div>
+                        <div class="MH-equation">= -2x⁴ + 4x³ + 12x² + 10x + 7</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity10PartBStep3Degree">Degree: 4</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity10PartBStep4">Step 4: PQ</p>
+                        <div class="MH-equation">P(x)Q(x) = (4x² + 4x + 1)(x⁴ - 2x³ + x - 2)</div>
+                        <div class="MH-equation">= 4x²(x⁴ - 2x³ + x - 2) + 4x(x⁴ - 2x³ + x - 2) + 1(x⁴ - 2x³ + x - 2)</div>
+                        <div class="MH-equation">= 4x⁶ - 8x⁵ + 4x³ - 8x² + 4x⁵ - 8x⁴ + 4x² - 8x + x⁴ - 2x³ + x - 2</div>
+                        <div class="MH-equation">= 4x⁶ - 4x⁵ - 7x⁴ + 2x³ - 4x² - 7x - 2</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity10PartBStep4Degree">Degree: 6</p>
+                    </div>
+                </div>
+                
+                <div class="MH-exercise-part">
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1b.activity10PartC">Case c</h4>
+                    <div class="MH-equation">P(x) = 3x¹⁰ - x⁴ + 5x + 4</div>
+                    <div class="MH-equation">Q(x) = 3x⁷ - 2x</div>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1b.showSolution" onclick="toggleSolution(26)">Show Solution</button>
+                    <div class="MH-solution" id="solution26">
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity10PartCStep1">Step 1: P + Q</p>
+                        <div class="MH-equation">P(x) + Q(x) = (3x¹⁰ - x⁴ + 5x + 4) + (3x⁷ - 2x)</div>
+                        <div class="MH-equation">= 3x¹⁰ + 3x⁷ - x⁴ + 3x + 4</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity10PartCStep1Degree">Degree: 10</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity10PartCStep2">Step 2: 3P - 2Q</p>
+                        <div class="MH-equation">3P(x) - 2Q(x) = 3(3x¹⁰ - x⁴ + 5x + 4) - 2(3x⁷ - 2x)</div>
+                        <div class="MH-equation">= 9x¹⁰ - 3x⁴ + 15x + 12 - 6x⁷ + 4x</div>
+                        <div class="MH-equation">= 9x¹⁰ - 6x⁷ - 3x⁴ + 19x + 12</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity10PartCStep2Degree">Degree: 10</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity10PartCStep3">Step 3: PQ</p>
+                        <div class="MH-equation">P(x)Q(x) = (3x¹⁰ - x⁴ + 5x + 4)(3x⁷ - 2x)</div>
+                        <div class="MH-equation">= 3x¹⁰(3x⁷ - 2x) - x⁴(3x⁷ - 2x) + 5x(3x⁷ - 2x) + 4(3x⁷ - 2x)</div>
+                        <div class="MH-equation">= 9x¹⁷ - 6x¹¹ - 3x¹¹ + 2x⁵ + 15x⁸ - 10x² + 12x⁷ - 8x</div>
+                        <div class="MH-equation">= 9x¹⁷ - 9x¹¹ + 15x⁸ + 12x⁷ + 2x⁵ - 10x² - 8x</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1b.activity10PartCStep3Degree">Degree: 17</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_poly1b.summary">Summary</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Al_poly1b.keyConcepts">Key Concepts</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Al_poly1b.concept1">Two polynomials are equal if and only if all their corresponding coefficients are equal</li>
+                    <li data-i18n="MH.lesson_Y2Al_poly1b.concept2">A polynomial is identically zero if and only if all its coefficients are zero</li>
+                    <li data-i18n="MH.lesson_Y2Al_poly1b.concept3">The degree of a polynomial is the highest power of x with a nonzero coefficient</li>
+                    <li data-i18n="MH.lesson_Y2Al_poly1b.concept4">The degree of the sum of two polynomials is at most the maximum of their degrees</li>
+                    <li data-i18n="MH.lesson_Y2Al_poly1b.concept5">The degree of the product of two polynomials is the sum of their degrees</li>
+                </ul>
+            </div>
+            
+            <p data-i18n="MH.lesson_Y2Al_poly1b.finalThought">Understanding polynomial equality and operations is crucial for solving polynomial equations and working with polynomial identities. These concepts form the foundation for more advanced algebraic topics.</p>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="scripts/geometry_utils.js"></script>
+    <script src="scripts/i18n_en.js"></script>
+    <script src="scripts/i18n_ar.js"></script>
+    <script src="scripts/i18n_fr.js"></script>
+    <script src="scripts/translation.js"></script>
+    <script src="scripts/pwa-install.js"></script>
+    <script>
+        // Register service worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                })
+                .catch(function(error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+            });
+        }
+
+        // Toggle solution visibility
+        function toggleSolution(problemNumber) {
+            const solution = document.getElementById(`solution${problemNumber}`);
+            const button = solution.previousElementSibling;
+            
+            if (solution.style.display === 'block') {
+                solution.style.display = 'none';
+                button.setAttribute('data-i18n', 'MH.lesson_Y2Al_poly1b.showSolution');
+                button.textContent = getTranslation('MH.lesson_Y2Al_poly1b.showSolution');
+            } else {
+                solution.style.display = 'block';
+                button.setAttribute('data-i18n', 'MH.lesson_Y2Al_poly1b.hideSolution');
+                button.textContent = getTranslation('MH.lesson_Y2Al_poly1b.hideSolution');
+            }
+        }
+        
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize solutions as hidden
+            for (let i = 1; i <= 26; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+            }
+        });
+    </script>
+    
+    <!-- noscript fallback -->
+    <noscript>
+        <style>
+            .MH-header-controls { display: none; }
+            .MH-solution { display: block; }
+        </style>
+        <div class="MH-warning">
+            JavaScript is recommended for the full experience, but content is still accessible.
+        </div>
+    </noscript>
+</body>
+</html>

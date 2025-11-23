@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Polynomials Part 1 - General Notion</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#BC8F8F" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#696969" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#BC8F8F">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        /* Page-specific color palette - Rosy Brown + Dim Gray Theme */
+        :root {
+            --primary: #BC8F8F;        /* Rosy Brown */
+            --primary-light: #D2B48C;  /* Tan */
+            --primary-dark: #8B6969;   /* Darker Rosy Brown */
+            --secondary: #696969;      /* Dim Gray */
+            --secondary-light: #808080; /* Gray */
+            --secondary-dark: #556B2F;  /* Dark Olive Green */
+            --accent: #9b59b6;
+            --warning: #e74c3c;
+            --info: #3498db;
+        }
+        
+        [data-theme="dark"] {
+            --primary: #8B6969;
+            --primary-light: #BC8F8F;
+            --primary-dark: #5D4A4A;
+            --secondary: #556B2F;
+            --secondary-light: #696969;
+            --secondary-dark: #2F4F2F;
+            --accent: #8e44ad;
+            --warning: #c0392b;
+            --info: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Al_poly1a.title">Polynomials: Part 1</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y2Al_poly1a.subtitle">General Notion</h2>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_poly1a.functionConcept">Function Concept</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_poly1a.activity1Title">Activity 1: Braking Distance</h3>
+                <p data-i18n="MH.lesson_Y2Al_poly1a.activity1Description">Under certain conditions, the braking distance d (in meters) of a car traveling at speed v (in km/h) is modeled by the formula:</p>
+                <div class="MH-equation">d = 0.2v + v²/150</div>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1a.activity1Part1">Part 1: Calculation for 90 km/h</h4>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity1Question1">A car is traveling at 90 km/h. How many meters does it continue to travel after braking?</p>
+                    
+                    <div class="MH-step">
+                        <h5 data-i18n="MH.lesson_Y2Al_poly1a.solution">Solution</h5>
+                        <p data-i18n="MH.lesson_Y2Al_poly1a.step1">Step 1: Substitute v = 90 into the formula</p>
+                        <div class="MH-equation">d = 0.2(90) + (90)²/150</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1a.step2">Step 2: Calculate each term</p>
+                        <div class="MH-equation">0.2 × 90 = 18</div>
+                        <div class="MH-equation">90² = 8100</div>
+                        <div class="MH-equation">8100 ÷ 150 = 54</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1a.step3">Step 3: Add the results</p>
+                        <div class="MH-equation">d = 18 + 54 = 72</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1a.step4">Step 4: Conclusion</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1a.activity1Answer1">The car travels 72 meters after braking.</p>
+                    </div>
+                </div>
+                
+                <div class="MH-example">
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1a.activity1Part2">Part 2: Speed Analysis</h4>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity1Question2a">What speeds allow stopping:</p>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity1Question2b">a) In less than 12 meters?</p>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity1Question2c">b) At a distance between 40 and 50 meters?</p>
+                    
+                    <div class="MH-step">
+                        <h5 data-i18n="MH.lesson_Y2Al_poly1a.solution">Solution</h5>
+                        <p data-i18n="MH.lesson_Y2Al_poly1a.part2aTitle">Part 2a: Less than 12 meters</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1a.part2aStep1">We need to solve the inequality:</p>
+                        <div class="MH-equation">0.2v + v²/150 < 12</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1a.part2aStep2">Multiply both sides by 150:</p>
+                        <div class="MH-equation">30v + v² < 1800</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1a.part2aStep3">Rearrange:</p>
+                        <div class="MH-equation">v² + 30v - 1800 < 0</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1a.part2aStep4">Solve the quadratic equation:</p>
+                        <div class="MH-equation">Δ = 30² - 4(1)(-1800) = 900 + 7200 = 8100</div>
+                        <div class="MH-equation">√Δ = 90</div>
+                        <div class="MH-equation">v = (-30 ± 90)/2</div>
+                        <div class="MH-equation">v₁ = 30, v₂ = -60</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1a.part2aStep5">Since speed must be positive:</p>
+                        <div class="MH-equation">0 < v < 30 km/h</div>
+                        
+                        <p data-i18n="MH.lesson_Y2Al_poly1a.part2bTitle">Part 2b: Between 40 and 50 meters</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1a.part2bStep1">We need to solve the compound inequality:</p>
+                        <div class="MH-equation">40 ≤ 0.2v + v²/150 ≤ 50</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1a.part2bStep2">Multiply by 150:</p>
+                        <div class="MH-equation">6000 ≤ 30v + v² ≤ 7500</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1a.part2bStep3">Solve the two inequalities:</p>
+                        <div class="MH-equation">v² + 30v - 6000 ≥ 0</div>
+                        <div class="MH-equation">v² + 30v - 7500 ≤ 0</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1a.part2bStep4">Calculate discriminants:</p>
+                        <div class="MH-equation">Δ₁ = 30² - 4(1)(-6000) = 900 + 24000 = 24900</div>
+                        <div class="MH-equation">√Δ₁ ≈ 157.8</div>
+                        <div class="MH-equation">v = (-30 ± 157.8)/2</div>
+                        <div class="MH-equation">v₁ ≈ 63.9, v₂ ≈ -93.9</div>
+                        
+                        <div class="MH-equation">Δ₂ = 30² - 4(1)(-7500) = 900 + 30000 = 30900</div>
+                        <div class="MH-equation">√Δ₂ ≈ 175.8</div>
+                        <div class="MH-equation">v = (-30 ± 175.8)/2</div>
+                        <div class="MH-equation">v₁ ≈ 72.9, v₂ ≈ -102.9</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1a.part2bStep5">Combine the solutions:</p>
+                        <div class="MH-equation">63.9 ≤ v ≤ 72.9 km/h</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_poly1a.activity2Title">Activity 2: Geometric Problem</h3>
+                <p data-i18n="MH.lesson_Y2Al_poly1a.activity2Description">The figure shows a quarter circle BC with center A and radius 3. The segment [AB] is present, excluding its endpoints A and B. A point M moves along this segment. Points N and P are placed respectively on the arc [BC] and on the segment [AC], such that AMNP forms a rectangle.</p>
+                
+                <div class="MH-geometry-demo">
+                    <div class="MH-geometry-container">
+                        <canvas id="geometryActivity2" class="MH-geometry-canvas"></canvas>
+                    </div>
+                </div>
+                
+                <p data-i18n="MH.lesson_Y2Al_poly1a.activity2PartA">Let x be the length AM and S(x) be the area of rectangle AMNP.</p>
+                <p data-i18n="MH.lesson_Y2Al_poly1a.activity2QuestionA">a) To what interval does x belong?</p>
+                <p data-i18n="MH.lesson_Y2Al_poly1a.activity2QuestionB">b) Express S(x) in terms of x.</p>
+                <p data-i18n="MH.lesson_Y2Al_poly1a.activity2QuestionC">c) Calculate S(1/2), S(1), and S(√2).</p>
+                
+                <div class="MH-step">
+                    <h5 data-i18n="MH.lesson_Y2Al_poly1a.solution">Solution</h5>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity2PartASolution">Part a: Since M is on segment AB (excluding endpoints) and AB is a radius of length 3:</p>
+                    <div class="MH-equation">0 < x < 3</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity2PartBSolution">Part b: To find S(x), we need both dimensions of the rectangle:</p>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity2PartBStep1">AM = x (given)</p>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity2PartBStep2">Since we have a quarter circle with radius 3, and N is on the arc:</p>
+                    <div class="MH-equation">AN = 3 (radius)</div>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity2PartBStep3">Using the Pythagorean theorem in triangle AMN:</p>
+                    <div class="MH-equation">MN = √(AN² - AM²) = √(9 - x²)</div>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity2PartBStep4">Therefore, the area is:</p>
+                    <div class="MH-equation">S(x) = AM × MN = x × √(9 - x²)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity2PartCSolution">Part c: Calculate specific values:</p>
+                    <div class="MH-equation">S(1/2) = (1/2) × √(9 - (1/2)²) = (1/2) × √(9 - 1/4) = (1/2) × √(35/4) = (1/2) × (√35)/2 = √35/4</div>
+                    <div class="MH-equation">S(1) = 1 × √(9 - 1) = √8 = 2√2</div>
+                    <div class="MH-equation">S(√2) = √2 × √(9 - 2) = √2 × √7 = √14</div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_poly1a.functionDefinition">Function Definition</h2>
+            
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Al_poly1a.definitionTitle">Formal Definition</h3>
+                <p data-i18n="MH.lesson_Y2Al_poly1a.definitionText1">Let E be a non-empty subset of ℝ. When to each real number x in E, we associate at most one real number y, we say we have defined a function from E to ℝ.</p>
+                <p data-i18n="MH.lesson_Y2Al_poly1a.definitionText2">If we denote this function by f, we write y = f(x) and note:</p>
+                <div class="MH-equation">f: E → ℝ</div>
+                <div class="MH-equation">x ↦ f(x)</div>
+                <p data-i18n="MH.lesson_Y2Al_poly1a.definitionText3">The set D of real numbers x in E such that f(x) exists is called the domain of definition of the function f. We then say that f is defined on D.</p>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_poly1a.vocabularyTitle">Vocabulary</h3>
+                <p data-i18n="MH.lesson_Y2Al_poly1a.vocabularyText">Let D be the domain of definition of f, x a real number belonging to D, and y = f(x).</p>
+                <p data-i18n="MH.lesson_Y2Al_poly1a.vocabularyPoint1">We say that:</p>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Al_poly1a.vocabulary1">The real number y is the image of x by the function f.</li>
+                    <li data-i18n="MH.lesson_Y2Al_poly1a.vocabulary2">x is an antecedent of the real number y by f.</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_poly1a.activity3Title">Activity 3: Domain of Definition</h2>
+            
+            <p data-i18n="MH.lesson_Y2Al_poly1a.activity3Description">Determine the domain of definition for each of the functions below.</p>
+            
+            <div class="MH-example">
+                <h4 data-i18n="MH.lesson_Y2Al_poly1a.functionA">Function a</h4>
+                <div class="MH-equation">f: ℝ → ℝ, x ↦ 3x - 9</div>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1a.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                <div class="MH-solution" id="solution3">
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.functionASolution">This is a linear function. Linear functions are defined for all real numbers.</p>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.functionADomain">Domain: ℝ (all real numbers)</p>
+                </div>
+            </div>
+            
+            <div class="MH-example">
+                <h4 data-i18n="MH.lesson_Y2Al_poly1a.functionB">Function b</h4>
+                <div class="MH-equation">g: ℝ → ℝ, z ↦ √(z - 2)</div>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1a.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+                <div class="MH-solution" id="solution4">
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.functionBSolution">Square root functions are defined only when the expression inside is non-negative.</p>
+                    <div class="MH-equation">z - 2 ≥ 0</div>
+                    <div class="MH-equation">z ≥ 2</div>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.functionBDomain">Domain: [2, +∞)</p>
+                </div>
+            </div>
+            
+            <div class="MH-example">
+                <h4 data-i18n="MH.lesson_Y2Al_poly1a.functionC">Function c</h4>
+                <div class="MH-equation">h: ℝ → ℝ, t ↦ -4t² + 2t</div>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1a.showSolution" onclick="toggleSolution(5)">Show Solution</button>
+                <div class="MH-solution" id="solution5">
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.functionCSolution">This is a quadratic function. Quadratic functions are defined for all real numbers.</p>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.functionCDomain">Domain: ℝ (all real numbers)</p>
+                </div>
+            </div>
+            
+            <div class="MH-example">
+                <h4 data-i18n="MH.lesson_Y2Al_poly1a.functionD">Function d</h4>
+                <div class="MH-equation">k: ℝ → ℝ, x ↦ (6x - 1)/(2x + 3)</div>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1a.showSolution" onclick="toggleSolution(6)">Show Solution</button>
+                <div class="MH-solution" id="solution6">
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.functionDSolution">Rational functions are defined when the denominator is not zero.</p>
+                    <div class="MH-equation">2x + 3 ≠ 0</div>
+                    <div class="MH-equation">x ≠ -3/2</div>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.functionDDomain">Domain: ℝ \ {-3/2} (all real numbers except -3/2)</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_poly1a.polynomialFunction">Polynomial Function</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_poly1a.activity4Title">Activity 4: Box Volume Problem</h3>
+                <p data-i18n="MH.lesson_Y2Al_poly1a.activity4Description">To make a rectangular box, we start with a square cardboard piece with side length 60 cm. We cut out squares of side x cm from each corner. This gives us the pattern for a box without a lid.</p>
+                
+                <div class="MH-geometry-demo">
+                    <div class="MH-geometry-container">
+                        <canvas id="geometryActivity4" class="MH-geometry-canvas"></canvas>
+                    </div>
+                </div>
+                
+                <p data-i18n="MH.lesson_Y2Al_poly1a.activity4Question1">1) a) To what interval does x belong?</p>
+                <p data-i18n="MH.lesson_Y2Al_poly1a.activity4Question2">b) Determine, in terms of x, the volume V(x) of the box.</p>
+                
+                <div class="MH-step">
+                    <h5 data-i18n="MH.lesson_Y2Al_poly1a.solution">Solution</h5>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity4PartASolution">Part a: Since we're cutting squares from each corner:</p>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity4PartAStep1">The squares must be smaller than half the side length:</p>
+                    <div class="MH-equation">0 < x < 30</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity4PartBSolution">Part b: Volume calculation:</p>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity4PartBStep1">After cutting, the base dimensions become:</p>
+                    <div class="MH-equation">Length = 60 - 2x</div>
+                    <div class="MH-equation">Width = 60 - 2x</div>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity4PartBStep2">Height = x</p>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity4PartBStep3">Therefore, volume is:</p>
+                    <div class="MH-equation">V(x) = (60 - 2x) × (60 - 2x) × x = x(60 - 2x)²</div>
+                </div>
+                
+                <p data-i18n="MH.lesson_Y2Al_poly1a.activity4Question3">2) a) Calculate V(10) and verify that:</p>
+                <div class="MH-equation">V(x) - V(10) = 4(x - 10)(x² - 50x + 400)</div>
+                <p data-i18n="MH.lesson_Y2Al_poly1a.activity4Question4">b) Determine the sign of V(x) - V(10) and deduce the value of x for which the volume of the box is maximal.</p>
+                
+                <div class="MH-step">
+                    <h5 data-i18n="MH.lesson_Y2Al_poly1a.solution">Solution</h5>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity4Part2ASolution">Part 2a: Calculate V(10):</p>
+                    <div class="MH-equation">V(10) = 10(60 - 20)² = 10 × 40² = 10 × 1600 = 16000 cm³</div>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity4Part2AStep2">Now verify the factorization:</p>
+                    <div class="MH-equation">V(x) - V(10) = x(60 - 2x)² - 16000</div>
+                    <div class="MH-equation">= x(3600 - 240x + 4x²) - 16000</div>
+                    <div class="MH-equation">= 4x³ - 240x² + 3600x - 16000</div>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity4Part2AStep3">Factor out 4:</p>
+                    <div class="MH-equation">= 4(x³ - 60x² + 900x - 4000)</div>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity4Part2AStep4">Since x = 10 is a root (V(10) - V(10) = 0), we can factor (x - 10):</p>
+                    <div class="MH-equation">x³ - 60x² + 900x - 4000 = (x - 10)(x² - 50x + 400)</div>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity4Part2AStep5">Therefore:</p>
+                    <div class="MH-equation">V(x) - V(10) = 4(x - 10)(x² - 50x + 400)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity4Part2BSolution">Part 2b: Sign analysis:</p>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity4Part2BStep1">Solve x² - 50x + 400 = 0:</p>
+                    <div class="MH-equation">Δ = 2500 - 1600 = 900</div>
+                    <div class="MH-equation">√Δ = 30</div>
+                    <div class="MH-equation">x = (50 ± 30)/2</div>
+                    <div class="MH-equation">x₁ = 40, x₂ = 10</div>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity4Part2BStep2">Since x is between 0 and 30, the quadratic x² - 50x + 400 is negative between 10 and 40.</p>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity4Part2BStep3">For 0 < x < 10: (x - 10) < 0 and (x² - 50x + 400) > 0, so V(x) - V(10) < 0</p>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity4Part2BStep4">For 10 < x < 30: (x - 10) > 0 and (x² - 50x + 400) < 0, so V(x) - V(10) < 0</p>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity4Part2BStep5">Conclusion: V(x) ≤ V(10) for all x in (0, 30), with equality only at x = 10.</p>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.activity4Part2BStep6">Therefore, the maximum volume occurs at x = 10 cm.</p>
+                </div>
+            </div>
+            
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Al_poly1a.polynomialDefinitionTitle">Polynomial Definition</h3>
+                <p data-i18n="MH.lesson_Y2Al_poly1a.polynomialDefinitionText">Let a₀, a₁, ..., aₙ₋₁ and aₙ be real numbers.</p>
+                <p data-i18n="MH.lesson_Y2Al_poly1a.polynomialDefinitionText2">The function f defined on ℝ by:</p>
+                <div class="MH-equation">f(x) = aₙxⁿ + aₙ₋₁xⁿ⁻¹ + ... + a₁x + a₀</div>
+                <p data-i18n="MH.lesson_Y2Al_poly1a.polynomialDefinitionText3">is called a polynomial function.</p>
+                <p data-i18n="MH.lesson_Y2Al_poly1a.polynomialDefinitionText4">The real numbers aₙ, aₙ₋₁, ..., a₁ and a₀ are called the coefficients of the polynomial function.</p>
+            </div>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Al_poly1a.remarkTitle">Remark</h3>
+                <p data-i18n="MH.lesson_Y2Al_poly1a.remarkText1">Instead of saying "the polynomial function f defined on ℝ by: f(x) = aₙxⁿ + aₙ₋₁xⁿ⁻¹ + ... + a₁x + a₀", we often say "the polynomial f defined by: f(x) = aₙxⁿ + aₙ₋₁xⁿ⁻¹ + ... + a₁x + a₀".</p>
+                <p data-i18n="MH.lesson_Y2Al_poly1a.remarkText2">If a₀ = a₁ = a₂ = ... = aₙ = 0, the polynomial f is called the zero polynomial.</p>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_poly1a.activity5Title">Activity 5: Identifying Polynomials</h2>
+            
+            <p data-i18n="MH.lesson_Y2Al_poly1a.activity5Description">Determine which of the functions below are polynomials.</p>
+            
+            <div class="MH-example">
+                <h4 data-i18n="MH.lesson_Y2Al_poly1a.functionF">Function F</h4>
+                <div class="MH-equation">F: ℝ → ℝ, x ↦ -2x³ - 5x² - 1</div>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1a.showSolution" onclick="toggleSolution(7)">Show Solution</button>
+                <div class="MH-solution" id="solution7">
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.functionFSolution">This is a polynomial function of degree 3.</p>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.functionFConclusion">Yes, it is a polynomial.</p>
+                </div>
+            </div>
+            
+            <div class="MH-example">
+                <h4 data-i18n="MH.lesson_Y2Al_poly1a.functionG">Function G</h4>
+                <div class="MH-equation">G: ℝ → ℝ, t ↦ 1 + 3t + (2/3)t² - 6t³</div>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1a.showSolution" onclick="toggleSolution(8)">Show Solution</button>
+                <div class="MH-solution" id="solution8">
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.functionGSolution">This is a polynomial function of degree 3.</p>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.functionGConclusion">Yes, it is a polynomial.</p>
+                </div>
+            </div>
+            
+            <div class="MH-example">
+                <h4 data-i18n="MH.lesson_Y2Al_poly1a.functionH">Function H</h4>
+                <div class="MH-equation">H: ℝ → ℝ, x ↦ |x|</div>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1a.showSolution" onclick="toggleSolution(9)">Show Solution</button>
+                <div class="MH-solution" id="solution9">
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.functionHSolution">The absolute value function cannot be expressed as a finite sum of powers of x with constant coefficients.</p>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.functionHConclusion">No, it is not a polynomial.</p>
+                </div>
+            </div>
+            
+            <div class="MH-example">
+                <h4 data-i18n="MH.lesson_Y2Al_poly1a.functionI">Function I</h4>
+                <div class="MH-equation">I: ℝ → ℝ, x ↦ -2(x + 1)³ + 5x² - 4x</div>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1a.showSolution" onclick="toggleSolution(10)">Show Solution</button>
+                <div class="MH-solution" id="solution10">
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.functionISolution">Expand the expression:</p>
+                    <div class="MH-equation">-2(x + 1)³ + 5x² - 4x = -2(x³ + 3x² + 3x + 1) + 5x² - 4x</div>
+                    <div class="MH-equation">= -2x³ - 6x² - 6x - 2 + 5x² - 4x</div>
+                    <div class="MH-equation">= -2x³ - x² - 10x - 2</div>
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.functionIConclusion">Yes, it is a polynomial of degree 3.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_poly1a.practice">Practice Problems</h2>
+            
+            <div class="MH-practice">
+                <h3 class="MH-practice-title" data-i18n="MH.lesson_Y2Al_poly1a.tryYourself">Try Solving These Problems</h3>
+                
+                <div class="MH-practice-problem">
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.problem1">1. Determine if the function f(x) = 3x⁴ - 2x² + 5x - 1 is a polynomial. If yes, what is its degree?</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1a.showSolution" onclick="toggleSolution(11)">Show Solution</button>
+                    <div class="MH-solution" id="solution11">
+                        <p data-i18n="MH.lesson_Y2Al_poly1a.problem1Solution">Yes, it is a polynomial of degree 4.</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.problem2">2. Find the domain of definition for the function g(x) = √(x² - 4).</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1a.showSolution" onclick="toggleSolution(12)">Show Solution</button>
+                    <div class="MH-solution" id="solution12">
+                        <p data-i18n="MH.lesson_Y2Al_poly1a.problem2Solution">We need x² - 4 ≥ 0, which means x ≤ -2 or x ≥ 2.</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1a.problem2Domain">Domain: (-∞, -2] ∪ [2, +∞)</p>
+                    </div>
+                </div>
+                
+                <div class="MH-practice-problem">
+                    <p data-i18n="MH.lesson_Y2Al_poly1a.problem3">3. A rectangle has a perimeter of 20 cm. Express its area A as a function of its length x. What type of function is this?</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1a.showSolution" onclick="toggleSolution(13)">Show Solution</button>
+                    <div class="MH-solution" id="solution13">
+                        <p data-i18n="MH.lesson_Y2Al_poly1a.problem3Solution">Let x be the length and y be the width.</p>
+                        <div class="MH-equation">2x + 2y = 20 ⇒ x + y = 10 ⇒ y = 10 - x</div>
+                        <div class="MH-equation">A(x) = x × y = x(10 - x) = 10x - x²</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1a.problem3Conclusion">This is a polynomial function of degree 2 (quadratic).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_poly1a.summary">Summary</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Al_poly1a.keyConcepts">Key Concepts</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Al_poly1a.concept1">A function associates each element in its domain with at most one element in its codomain</li>
+                    <li data-i18n="MH.lesson_Y2Al_poly1a.concept2">The domain of definition is the set of all inputs for which the function is defined</li>
+                    <li data-i18n="MH.lesson_Y2Al_poly1a.concept3">Polynomial functions have the form f(x) = aₙxⁿ + aₙ₋₁xⁿ⁻¹ + ... + a₁x + a₀</li>
+                    <li data-i18n="MH.lesson_Y2Al_poly1a.concept4">The degree of a polynomial is the highest power of x with a nonzero coefficient</li>
+                    <li data-i18n="MH.lesson_Y2Al_poly1a.concept5">Polynomial functions are defined for all real numbers</li>
+                </ul>
+            </div>
+            
+            <p data-i18n="MH.lesson_Y2Al_poly1a.finalThought">Understanding functions and polynomials is fundamental to advanced mathematics. These concepts form the basis for calculus, physics, engineering, and many other scientific disciplines.</p>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="scripts/geometry_utils.js"></script>
+    <script src="scripts/i18n_en.js"></script>
+    <script src="scripts/i18n_ar.js"></script>
+    <script src="scripts/i18n_fr.js"></script>
+    <script src="scripts/translation.js"></script>
+    <script src="scripts/pwa-install.js"></script>
+    <script>
+        // Register service worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                })
+                .catch(function(error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+            });
+        }
+
+        // Geometry demonstrations
+        function initGeometryDemonstrations() {
+            // Activity 2: Quarter circle with rectangle
+            const canvasActivity2 = document.getElementById('geometryActivity2');
+            const ctxActivity2 = canvasActivity2.getContext('2d');
+            const { width, height, centerX, centerY, scale } = geometryUtils.initializeGeometryCanvas('geometryActivity2', 600, 300);
+            
+            function drawActivity2() {
+                geometryUtils.clearCanvas('geometryActivity2');
+                
+                // Draw quarter circle
+                ctxActivity2.strokeStyle = geometryUtils.getCssVariable('--primary');
+                ctxActivity2.lineWidth = 2;
+                ctxActivity2.beginPath();
+                ctxActivity2.arc(centerX, centerY, 3 * scale, 0, Math.PI / 2, false);
+                ctxActivity2.stroke();
+                
+                // Draw axes
+                ctxActivity2.strokeStyle = geometryUtils.getCssVariable('--MH-geo-grid-color');
+                ctxActivity2.lineWidth = 1;
+                ctxActivity2.beginPath();
+                ctxActivity2.moveTo(centerX, centerY);
+                ctxActivity2.lineTo(centerX + 4 * scale, centerY);
+                ctxActivity2.stroke();
+                
+                ctxActivity2.beginPath();
+                ctxActivity2.moveTo(centerX, centerY);
+                ctxActivity2.lineTo(centerX, centerY - 4 * scale);
+                ctxActivity2.stroke();
+                
+                // Draw points and labels
+                const pointA = { x: 0, y: 0 };
+                const pointB = { x: 3, y: 0 };
+                const pointC = { x: 0, y: 3 };
+                
+                geometryUtils.drawPoint(ctxActivity2, pointA, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--primary'),
+                    radius: 5,
+                    label: 'A'
+                });
+                
+                geometryUtils.drawPoint(ctxActivity2, pointB, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--primary'),
+                    radius: 5,
+                    label: 'B'
+                });
+                
+                geometryUtils.drawPoint(ctxActivity2, pointC, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--primary'),
+                    radius: 5,
+                    label: 'C'
+                });
+                
+                // Draw example rectangle (with x = 1.5)
+                const x = 1.5;
+                const pointM = { x: x, y: 0 };
+                const pointN = { x: 0, y: Math.sqrt(9 - x*x) };
+                const pointP = { x: 0, y: 0 };
+                
+                geometryUtils.drawPoint(ctxActivity2, pointM, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--warning'),
+                    radius: 5,
+                    label: 'M'
+                });
+                
+                geometryUtils.drawPoint(ctxActivity2, pointN, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--warning'),
+                    radius: 5,
+                    label: 'N'
+                });
+                
+                geometryUtils.drawPoint(ctxActivity2, pointP, centerX, centerY, scale, {
+                    color: geometryUtils.getCssVariable('--warning'),
+                    radius: 5,
+                    label: 'P'
+                });
+                
+                // Draw rectangle
+                ctxActivity2.strokeStyle = geometryUtils.getCssVariable('--warning');
+                ctxActivity2.lineWidth = 2;
+                ctxActivity2.beginPath();
+                ctxActivity2.rect(
+                    centerX + pointM.x * scale, 
+                    centerY - pointM.y * scale, 
+                    -pointM.x * scale, 
+                    pointN.y * scale
+                );
+                ctxActivity2.stroke();
+                
+                // Add labels
+                ctxActivity2.fillStyle = geometryUtils.getCssVariable('--MH-geo-text-color');
+                ctxActivity2.font = '14px Arial';
+                ctxActivity2.textAlign = 'center';
+                ctxActivity2.fillText('Quarter Circle with Rectangle AMNP', width / 2, 20);
+            }
+            
+            // Activity 4: Box construction
+            const canvasActivity4 = document.getElementById('geometryActivity4');
+            const ctxActivity4 = canvasActivity4.getContext('2d');
+            geometryUtils.initializeGeometryCanvas('geometryActivity4', 600, 300);
+            
+            function drawActivity4() {
+                geometryUtils.clearCanvas('geometryActivity4');
+                
+                // Draw original square
+                ctxActivity4.strokeStyle = geometryUtils.getCssVariable('--primary');
+                ctxActivity4.lineWidth = 2;
+                ctxActivity4.strokeRect(50, 50, 300, 300);
+                
+                // Draw cut squares
+                const x = 40; // Example value
+                ctxActivity4.fillStyle = geometryUtils.getCssVariable('--primary-light') + '80';
+                ctxActivity4.fillRect(50, 50, x, x);
+                ctxActivity4.fillRect(350 - x, 50, x, x);
+                ctxActivity4.fillRect(50, 350 - x, x, x);
+                ctxActivity4.fillRect(350 - x, 350 - x, x, x);
+                
+                // Draw folded box
+                ctxActivity4.strokeStyle = geometryUtils.getCssVariable('--warning');
+                ctxActivity4.lineWidth = 2;
+                ctxActivity4.beginPath();
+                ctxActivity4.moveTo(50 + x, 50 + x);
+                ctxActivity4.lineTo(350 - x, 50 + x);
+                ctxActivity4.lineTo(350 - x, 350 - x);
+                ctxActivity4.lineTo(50 + x, 350 - x);
+                ctxActivity4.closePath();
+                ctxActivity4.stroke();
+                
+                // Add dimensions
+                ctxActivity4.fillStyle = geometryUtils.getCssVariable('--MH-geo-text-color');
+                ctxActivity4.font = '12px Arial';
+                ctxActivity4.textAlign = 'center';
+                ctxActivity4.fillText('60 cm', 200, 40);
+                ctxActivity4.fillText('60 cm', 370, 200);
+                ctxActivity4.fillText('x', 50 + x/2, 50 + x/2);
+                
+                // Add labels
+                ctxActivity4.font = '14px Arial';
+                ctxActivity4.fillText('Box Construction from Square Cardboard', width / 2, 20);
+            }
+            
+            // Initial drawings
+            drawActivity2();
+            drawActivity4();
+        }
+        
+        // Toggle solution visibility
+        function toggleSolution(problemNumber) {
+            const solution = document.getElementById(`solution${problemNumber}`);
+            const button = solution.previousElementSibling;
+            
+            if (solution.style.display === 'block') {
+                solution.style.display = 'none';
+                button.setAttribute('data-i18n', 'MH.lesson_Y2Al_poly1a.showSolution');
+                button.textContent = getTranslation('MH.lesson_Y2Al_poly1a.showSolution');
+            } else {
+                solution.style.display = 'block';
+                button.setAttribute('data-i18n', 'MH.lesson_Y2Al_poly1a.hideSolution');
+                button.textContent = getTranslation('MH.lesson_Y2Al_poly1a.hideSolution');
+            }
+        }
+        
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize solutions as hidden
+            for (let i = 3; i <= 13; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+            }
+            
+            // Initialize geometry demonstrations
+            initGeometryDemonstrations();
+        });
+    </script>
+    
+    <!-- noscript fallback -->
+    <noscript>
+        <style>
+            .MH-header-controls { display: none; }
+            .MH-solution { display: block; }
+        </style>
+        <div class="MH-warning">
+            JavaScript is recommended for the full experience, but content is still accessible.
+        </div>
+    </noscript>
+</body>
+</html>
