@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Polynomials Part 3 - Factorisation</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#66CDAA" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#BA55D3" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#66CDAA">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <link rel="stylesheet" href="styles/common.css">
+    
+    <style>
+    /* CSS Variables for Theming */
+    :root {
+        --primary: #4A90E2;
+        --primary-light: #7BAAF7;
+        --primary-dark: #357ABD;
+        --secondary: #8E44AD;
+        --secondary-light: #AF7AC5;
+        --secondary-dark: #6C3483;
+        --accent: #E67E22;
+        --warning: #E74C3C;
+        --info: #2ECC71;
+        --text: #333333;
+        --text-light: #666666;
+        --background: #FFFFFF;
+        --surface: #F5F5F5;
+        --border: #E0E0E0;
+        --shadow: rgba(0, 0, 0, 0.1);
+    }
+    
+    [data-theme="dark"] {
+        --primary: #357ABD;
+        --primary-light: #4A90E2;
+        --primary-dark: #2C3E50;
+        --secondary: #6C3483;
+        --secondary-light: #8E44AD;
+        --secondary-dark: #4A235A;
+        --accent: #D35400;
+        --warning: #C0392B;
+        --info: #27AE60;
+        --text: #FFFFFF;
+        --text-light: #CCCCCC;
+        --background: #121212;
+        --surface: #1E1E1E;
+        --border: #333333;
+        --shadow: rgba(0, 0, 0, 0.3);
+    }
+
+    /* Equation styling - consistent with other classes */
+    .MH-equation {
+        font-family: inherit;
+        font-size: inherit;
+        color: inherit;
+        margin: 0.5em 0;
+        padding: 0;
+        display: inline-block;
+        /* Force LTR direction for equations */
+        direction: ltr !important;
+        unicode-bidi: isolate;
+    }
+    
+    /* Ensure equations in RTL contexts are properly isolated */
+    [dir="rtl"] .MH-equation {
+        text-align: left;
+        unicode-bidi: plaintext;
+    }
+</style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+<div class="MH-header-column MH-header-options">
+    <div class="MH-header-controls">
+        <button class="MH-theme-toggle" id="themeToggle">
+            <span data-i18n="MH.general.theme">Theme</span>
+            <span>🌙</span>
+        </button>
+        <div class="MH-language-selector">
+            <button class="MH-language-btn" id="languageBtn">
+                <span data-i18n="MH.general.language">Language</span>
+                <span>▼</span>
+            </button>
+            <div class="MH-language-dropdown" id="languageDropdown">
+                <a href="#" class="MH-language-option" data-lang="en">English</a>
+                <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+            </div>
+        </div>
+        <!-- Notification Button -->
+        <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+            <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+            <span>🔔</span>
+        </button>
+    </div>
+</div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.sample.title">Sample Mathematics Lesson</h1>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.sample.introduction">Introduction</h2>
+            <p data-i18n="MH.sample.introText">This is a standalone sample page that demonstrates the theme switching and translation features without requiring external files. All functionality is contained within this single HTML file.</p>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.sample.featureTitle">Features Demonstrated</h3>
+                <ul>
+                    <li data-i18n="MH.sample.feature1">Light/Dark theme switching</li>
+                    <li data-i18n="MH.sample.feature2">Multi-language support (English, Arabic, French)</li>
+                    <li data-i18n="MH.sample.feature3">Responsive design</li>
+                    <li data-i18n="MH.sample.feature4">Mathematical content styling</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.sample.contentTitle">Mathematical Content</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.sample.quadraticTitle">Quadratic Equations</h3>
+                <p><span data-i18n="MH.sample.quadraticText.part1">A quadratic equation is a second-degree polynomial equation in a single variable x, with</span> <span class="MH-equation" data-i18n="MH.sample.quadraticText.part2">a ≠ 0</span>.</p>
+                
+                <div class="MH-definition">
+                    <h4 data-i18n="MH.sample.quadraticFormulaTitle">Quadratic Formula</h4>
+                    <p data-i18n="MH.sample.quadraticFormulaText.part1">The solutions to the quadratic equation</p>
+                    <div class="MH-equation" data-i18n="MH.sample.quadraticFormulaText.part2">ax² + bx + c = 0</div>
+                    <p data-i18n="MH.sample.quadraticFormulaText.part3">are given by:</p>
+                    <div class="MH-equation" data-i18n="MH.sample.quadraticFormulaText.part4">x = [-b ± √(b² - 4ac)] / (2a)</div>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.sample.exampleTitle">Example Problem</h3>
+                <p><span data-i18n="MH.sample.exampleText.part1">Solve the equation:</span> <span class="MH-equation" data-i18n="MH.sample.exampleText.part2">x² - 5x + 6 = 0</span></p>
+                
+                <button class="MH-solution-btn" data-i18n="MH.sample.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                <div class="MH-solution" id="solution1">
+                    <p data-i18n="MH.sample.step1">Step 1: Identify coefficients</p>
+                    <div class="MH-equation" data-i18n="MH.sample.step1.equation">a = 1, b = -5, c = 6</div>
+                    
+                    <p data-i18n="MH.sample.step2">Step 2: Calculate discriminant</p>
+                    <div class="MH-equation" data-i18n="MH.sample.step2.equation">Δ = b² - 4ac = (-5)² - 4(1)(6) = 25 - 24 = 1</div>
+                    
+                    <p data-i18n="MH.sample.step3">Step 3: Apply quadratic formula</p>
+                    <div class="MH-equation" data-i18n="MH.sample.step3.equation">x = [5 ± √1] / 2 = [5 ± 1] / 2</div>
+                    
+                    <p data-i18n="MH.sample.step4">Step 4: Find solutions</p>
+                    <div class="MH-equation" data-i18n="MH.sample.step4.equation">x₁ = (5 + 1)/2 = 3, x₂ = (5 - 1)/2 = 2</div>
+                    
+                    <p><span data-i18n="MH.sample.conclusion.part1">The solutions are</span> <span class="MH-equation" data-i18n="MH.sample.conclusion.part2">x = 2</span> <span data-i18n="MH.sample.conclusion.part3">and</span> <span class="MH-equation" data-i18n="MH.sample.conclusion.part4">x = 3</span><span data-i18n="MH.sample.conclusion.part5">.</span></p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.sample.practiceTitle">Practice Exercise</h2>
+            
+            <div class="MH-exercise">
+                <p><span data-i18n="MH.sample.practiceText.part1">Solve the equation:</span> <span class="MH-equation" data-i18n="MH.sample.practiceText.part2">2x² + 3x - 2 = 0</span></p>
+                
+                <button class="MH-solution-btn" data-i18n="MH.sample.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                <div class="MH-solution" id="solution2">
+                    <p data-i18n="MH.sample.practiceStep1">Step 1: Identify coefficients</p>
+                    <div class="MH-equation" data-i18n="MH.sample.practiceStep1.equation">a = 2, b = 3, c = -2</div>
+                    
+                    <p data-i18n="MH.sample.practiceStep2">Step 2: Calculate discriminant</p>
+                    <div class="MH-equation" data-i18n="MH.sample.practiceStep2.equation">Δ = b² - 4ac = 3² - 4(2)(-2) = 9 + 16 = 25</div>
+                    
+                    <p data-i18n="MH.sample.practiceStep3">Step 3: Apply quadratic formula</p>
+                    <div class="MH-equation" data-i18n="MH.sample.practiceStep3.equation">x = [-3 ± √25] / (2×2) = [-3 ± 5] / 4</div>
+                    
+                    <p data-i18n="MH.sample.practiceStep4">Step 4: Find solutions</p>
+                    <div class="MH-equation" data-i18n="MH.sample.practiceStep4.equation">x₁ = (-3 + 5)/4 = 2/4 = 1/2, x₂ = (-3 - 5)/4 = -8/4 = -2</div>
+                    
+                    <p><span data-i18n="MH.sample.practiceConclusion.part1">The solutions are</span> <span class="MH-equation" data-i18n="MH.sample.practiceConclusion.part2">x = 1/2</span> <span data-i18n="MH.sample.practiceConclusion.part3">and</span> <span class="MH-equation" data-i18n="MH.sample.practiceConclusion.part4">x = -2</span><span data-i18n="MH.sample.practiceConclusion.part5">.</span></p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- NEW GEOMETRY EXERCISE SECTION -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.sample.geometryTitle">Geometry Exercise</h2>
+            
+            <div class="MH-exercise">
+                <p data-i18n="MH.sample.geometryText">Identify the properties of the following geometric shapes and function graph:</p>
+                
+                <div class="MH-geometry-container">
+                    <div class="MH-geometry-item">
+                        <div class="MH-geometry-title" data-i18n="MH.sample.quadraticGraphTitle">Quadratic Function Graph</div>
+                        <canvas id="quadraticGraph" class="MH-geometry-canvas"></canvas>
+                        <p data-i18n="MH.sample.quadraticGraphQuestion">What is the equation of this quadratic function?</p>
+                    </div>
+                    
+                    <div class="MH-geometry-item">
+                        <div class="MH-geometry-title" data-i18n="MH.sample.triangleTitle">Triangle</div>
+                        <canvas id="triangleCanvas" class="MH-geometry-canvas"></canvas>
+                        <p data-i18n="MH.sample.triangleQuestion">What type of triangle is this? Calculate its area.</p>
+                    </div>
+                    
+                    <div class="MH-geometry-item">
+                        <div class="MH-geometry-title" data-i18n="MH.sample.circleTitle">Circle</div>
+                        <canvas id="circleCanvas" class="MH-geometry-canvas"></canvas>
+                        <p data-i18n="MH.sample.circleQuestion">What is the radius and circumference of this circle?</p>
+                    </div>
+                </div>
+                
+                <button class="MH-solution-btn" data-i18n="MH.sample.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                <div class="MH-solution" id="solution3">
+                    <h4 data-i18n="MH.sample.quadraticGraphTitle">Quadratic Function Graph</h4>
+                    <p><span data-i18n="MH.sample.quadraticGraphSolution.part1">The graph represents the quadratic function</span> <span class="MH-equation" data-i18n="MH.sample.quadraticGraphSolution.part2">f(x) = x² - 4</span><span data-i18n="MH.sample.quadraticGraphSolution.part3">. It has vertex at</span> <span class="MH-equation" data-i18n="MH.sample.quadraticGraphSolution.part4">(0, -4)</span> <span data-i18n="MH.sample.quadraticGraphSolution.part5">and x-intercepts at</span> <span class="MH-equation" data-i18n="MH.sample.quadraticGraphSolution.part6">(-2, 0)</span> <span data-i18n="MH.sample.quadraticGraphSolution.part7">and</span> <span class="MH-equation" data-i18n="MH.sample.quadraticGraphSolution.part8">(2, 0)</span><span data-i18n="MH.sample.quadraticGraphSolution.part9">.</span></p>
+                    
+                    <h4 data-i18n="MH.sample.triangleTitle">Triangle</h4>
+                    <p><span data-i18n="MH.sample.triangleSolution.part1">This is a right triangle with legs of length</span> <span class="MH-equation" data-i18n="MH.sample.triangleSolution.part2">6</span> <span data-i18n="MH.sample.triangleSolution.part3">and</span> <span class="MH-equation" data-i18n="MH.sample.triangleSolution.part4">8</span> <span data-i18n="MH.sample.triangleSolution.part5">units. Using the Pythagorean theorem, the hypotenuse is</span> <span class="MH-equation" data-i18n="MH.sample.triangleSolution.part6">√(6² + 8²) = √(36 + 64) = √100 = 10</span> <span data-i18n="MH.sample.triangleSolution.part7">units. The area is</span> <span class="MH-equation" data-i18n="MH.sample.triangleSolution.part8">(1/2) × 6 × 8 = 24</span> <span data-i18n="MH.sample.triangleSolution.part9">square units.</span></p>
+                    
+                    <h4 data-i18n="MH.sample.circleTitle">Circle</h4>
+                    <p><span data-i18n="MH.sample.circleSolution.part1">The circle has a radius of</span> <span class="MH-equation" data-i18n="MH.sample.circleSolution.part2">5</span> <span data-i18n="MH.sample.circleSolution.part3">units. The circumference is</span> <span class="MH-equation" data-i18n="MH.sample.circleSolution.part4">2 × π × 5 = 10π ≈ 31.42</span> <span data-i18n="MH.sample.circleSolution.part5">units.</span></p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="scripts/translation2.js"></script>
+	<script src="scripts/geometry.js"></script>
+    <script>
+        // Translation data
+        const translations = {
+            'en': {
+	'MH.general.homeTooltip': 'Go to Homepage',
+	'MH.general.install': 'Install App',
+	'MH.general.installSuccess': 'Mathematics Hub installed successfully!',
+'MH.general.enableNotifications': 'Enable Notifications',
+'MH.general.notificationEnabled': 'Notifications enabled! You will now receive updates.',
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Theme',
+                'MH.general.language': 'Language',
+                'MH.sample.title': 'Sample Mathematics Lesson',
+                'MH.sample.introduction': 'Introduction',
+                'MH.sample.introText': 'This is a standalone sample page that demonstrates the theme switching and translation features without requiring external files. All functionality is contained within this single HTML file.',
+                'MH.sample.featureTitle': 'Features Demonstrated',
+                'MH.sample.feature1': 'Light/Dark theme switching',
+                'MH.sample.feature2': 'Multi-language support (English, Arabic, French)',
+                'MH.sample.feature3': 'Responsive design',
+                'MH.sample.feature4': 'Mathematical content styling',
+                'MH.sample.contentTitle': 'Mathematical Content',
+                'MH.sample.quadraticTitle': 'Quadratic Equations',
+                'MH.sample.quadraticText.part1': 'A quadratic equation is a second-degree polynomial equation in a single variable x, with',
+                'MH.sample.quadraticText.part2': 'a ≠ 0',
+                'MH.sample.quadraticFormulaTitle': 'Quadratic Formula',
+                'MH.sample.quadraticFormulaText.part1': 'The solutions to the quadratic equation',
+                'MH.sample.quadraticFormulaText.part2': 'ax² + bx + c = 0',
+                'MH.sample.quadraticFormulaText.part3': 'are given by:',
+                'MH.sample.quadraticFormulaText.part4': 'x = [-b ± √(b² - 4ac)] / (2a)',
+                'MH.sample.exampleTitle': 'Example Problem',
+                'MH.sample.exampleText.part1': 'Solve the equation:',
+                'MH.sample.exampleText.part2': 'x² - 5x + 6 = 0',
+                'MH.sample.showSolution': 'Show Solution',
+                'MH.sample.hideSolution': 'Hide Solution',
+                'MH.sample.step1': 'Step 1: Identify coefficients',
+                'MH.sample.step1.equation': 'a = 1, b = -5, c = 6',
+                'MH.sample.step2': 'Step 2: Calculate discriminant',
+                'MH.sample.step2.equation': 'Δ = b² - 4ac = (-5)² - 4(1)(6) = 25 - 24 = 1',
+                'MH.sample.step3': 'Step 3: Apply quadratic formula',
+                'MH.sample.step3.equation': 'x = [5 ± √1] / 2 = [5 ± 1] / 2',
+                'MH.sample.step4': 'Step 4: Find solutions',
+                'MH.sample.step4.equation': 'x₁ = (5 + 1)/2 = 3, x₂ = (5 - 1)/2 = 2',
+                'MH.sample.conclusion.part1': 'The solutions are',
+                'MH.sample.conclusion.part2': 'x = 2',
+                'MH.sample.conclusion.part3': 'and',
+                'MH.sample.conclusion.part4': 'x = 3',
+                'MH.sample.conclusion.part5': '.',
+                'MH.sample.practiceTitle': 'Practice Exercise',
+                'MH.sample.practiceText.part1': 'Solve the equation:',
+                'MH.sample.practiceText.part2': '2x² + 3x - 2 = 0',
+                'MH.sample.practiceStep1': 'Step 1: Identify coefficients',
+                'MH.sample.practiceStep1.equation': 'a = 2, b = 3, c = -2',
+                'MH.sample.practiceStep2': 'Step 2: Calculate discriminant',
+                'MH.sample.practiceStep2.equation': 'Δ = b² - 4ac = 3² - 4(2)(-2) = 9 + 16 = 25',
+                'MH.sample.practiceStep3': 'Step 3: Apply quadratic formula',
+                'MH.sample.practiceStep3.equation': 'x = [-3 ± √25] / (2×2) = [-3 ± 5] / 4',
+                'MH.sample.practiceStep4': 'Step 4: Find solutions',
+                'MH.sample.practiceStep4.equation': 'x₁ = (-3 + 5)/4 = 2/4 = 1/2, x₂ = (-3 - 5)/4 = -8/4 = -2',
+                'MH.sample.practiceConclusion.part1': 'The solutions are',
+                'MH.sample.practiceConclusion.part2': 'x = 1/2',
+                'MH.sample.practiceConclusion.part3': 'and',
+                'MH.sample.practiceConclusion.part4': 'x = -2',
+                'MH.sample.practiceConclusion.part5': '.',
+                'MH.sample.geometryTitle': 'Geometry Exercise',
+                'MH.sample.geometryText': 'Identify the properties of the following geometric shapes and function graph:',
+                'MH.sample.quadraticGraphTitle': 'Quadratic Function Graph',
+                'MH.sample.quadraticGraphQuestion': 'What is the equation of this quadratic function?',
+                'MH.sample.quadraticGraphSolution.part1': 'The graph represents the quadratic function',
+                'MH.sample.quadraticGraphSolution.part2': 'f(x) = x² - 4',
+                'MH.sample.quadraticGraphSolution.part3': '. It has vertex at',
+                'MH.sample.quadraticGraphSolution.part4': '(0, -4)',
+                'MH.sample.quadraticGraphSolution.part5': 'and x-intercepts at',
+                'MH.sample.quadraticGraphSolution.part6': '(-2, 0)',
+                'MH.sample.quadraticGraphSolution.part7': 'and',
+                'MH.sample.quadraticGraphSolution.part8': '(2, 0)',
+                'MH.sample.quadraticGraphSolution.part9': '.',
+                'MH.sample.triangleTitle': 'Triangle',
+                'MH.sample.triangleQuestion': 'What type of triangle is this? Calculate its area.',
+                'MH.sample.triangleSolution.part1': 'This is a right triangle with legs of length',
+                'MH.sample.triangleSolution.part2': '6',
+                'MH.sample.triangleSolution.part3': 'and',
+                'MH.sample.triangleSolution.part4': '8',
+                'MH.sample.triangleSolution.part5': 'units. Using the Pythagorean theorem, the hypotenuse is',
+                'MH.sample.triangleSolution.part6': '√(6² + 8²) = √(36 + 64) = √100 = 10',
+                'MH.sample.triangleSolution.part7': 'units. The area is',
+                'MH.sample.triangleSolution.part8': '(1/2) × 6 × 8 = 24',
+                'MH.sample.triangleSolution.part9': 'square units.',
+                'MH.sample.circleTitle': 'Circle',
+                'MH.sample.circleQuestion': 'What is the radius and circumference of this circle?',
+                'MH.sample.circleSolution.part1': 'The circle has a radius of',
+                'MH.sample.circleSolution.part2': '5',
+                'MH.sample.circleSolution.part3': 'units. The circumference is',
+                'MH.sample.circleSolution.part4': '2 × π × 5 = 10π ≈ 31.42',
+                'MH.sample.circleSolution.part5': 'units.',
+                'MH.footer.developer': 'Developer',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Links',
+                'MH.footer.terms': 'Terms of Use',
+                'MH.footer.privacy': 'Privacy Policy'
+            },
+            'ar': {
+	'MH.general.homeTooltip': 'الذهاب إلى الصفحة الرئيسية',
+	'MH.general.install': 'تثبيت التطبيق',
+	'MH.general.installSuccess': 'تم تثبيت Mathematics Hub بنجاح!',
+'MH.general.enableNotifications': 'تمكين الإشعارات',
+'MH.general.notificationEnabled': 'تم تمكين الإشعارات! ستتلقى التحديثات الآن.',
+                'MH.general.title': 'مركز الرياضيات',
+                'MH.general.theme': 'السمة',
+                'MH.general.language': 'اللغة',
+                'MH.sample.title': 'عينة درس الرياضيات',
+                'MH.sample.introduction': 'مقدمة',
+                'MH.sample.introText': 'هذه صفحة عينة مستقلة توضح ميزات تبديل السمة والترجمة دون الحاجة إلى ملفات خارجية. جميع الوظائف موجودة في ملف HTML واحد.',
+                'MH.sample.featureTitle': 'الميزات المعروضة',
+                'MH.sample.feature1': 'تبديل السمة الفاتحة/الداكنة',
+                'MH.sample.feature2': 'دعم متعدد اللغات (الإنجليزية، العربية، الفرنسية)',
+                'MH.sample.feature3': 'تصميم متجاوب',
+                'MH.sample.feature4': 'تنسيق المحتوى الرياضي',
+                'MH.sample.contentTitle': 'المحتوى الرياضي',
+                'MH.sample.quadraticTitle': 'المعادلات التربيعية',
+                'MH.sample.quadraticText.part1': 'المعادلة التربيعية هي معادلة كثيرة الحدود من الدرجة الثانية في متغير واحد x، حيث',
+                'MH.sample.quadraticText.part2': 'a ≠ 0',
+                'MH.sample.quadraticFormulaTitle': 'الصيغة التربيعية',
+                'MH.sample.quadraticFormulaText.part1': 'حلول المعادلة التربيعية',
+                'MH.sample.quadraticFormulaText.part2': 'ax² + bx + c = 0',
+                'MH.sample.quadraticFormulaText.part3': 'تعطى بواسطة:',
+                'MH.sample.quadraticFormulaText.part4': 'x = [-b ± √(b² - 4ac)] / (2a)',
+                'MH.sample.exampleTitle': 'مثال',
+                'MH.sample.exampleText.part1': 'حل المعادلة:',
+                'MH.sample.exampleText.part2': 'x² - 5x + 6 = 0',
+                'MH.sample.showSolution': 'إظهار الحل',
+                'MH.sample.hideSolution': 'إخفاء الحل',
+                'MH.sample.step1': 'الخطوة 1: تحديد المعاملات',
+                'MH.sample.step1.equation': 'a = 1, b = -5, c = 6',
+                'MH.sample.step2': 'الخطوة 2: حساب المميز',
+                'MH.sample.step2.equation': 'Δ = b² - 4ac = (-5)² - 4(1)(6) = 25 - 24 = 1',
+                'MH.sample.step3': 'الخطوة 3: تطبيق الصيغة التربيعية',
+                'MH.sample.step3.equation': 'x = [5 ± √1] / 2 = [5 ± 1] / 2',
+                'MH.sample.step4': 'الخطوة 4: إيجاد الحلول',
+                'MH.sample.step4.equation': 'x₁ = (5 + 1)/2 = 3, x₂ = (5 - 1)/2 = 2',
+                'MH.sample.conclusion.part1': 'الحلول هي',
+                'MH.sample.conclusion.part2': 'x = 2',
+                'MH.sample.conclusion.part3': 'و',
+                'MH.sample.conclusion.part4': 'x = 3',
+                'MH.sample.conclusion.part5': '.',
+                'MH.sample.practiceTitle': 'تمرين تدريبي',
+                'MH.sample.practiceText.part1': 'حل المعادلة:',
+                'MH.sample.practiceText.part2': '2x² + 3x - 2 = 0',
+                'MH.sample.practiceStep1': 'الخطوة 1: تحديد المعاملات',
+                'MH.sample.practiceStep1.equation': 'a = 2, b = 3, c = -2',
+                'MH.sample.practiceStep2': 'الخطوة 2: حساب المميز',
+                'MH.sample.practiceStep2.equation': 'Δ = b² - 4ac = 3² - 4(2)(-2) = 9 + 16 = 25',
+                'MH.sample.practiceStep3': 'الخطوة 3: تطبيق الصيغة التربيعية',
+                'MH.sample.practiceStep3.equation': 'x = [-3 ± √25] / (2×2) = [-3 ± 5] / 4',
+                'MH.sample.practiceStep4': 'الخطوة 4: إيجاد الحلول',
+                'MH.sample.practiceStep4.equation': 'x₁ = (-3 + 5)/4 = 2/4 = 1/2, x₂ = (-3 - 5)/4 = -8/4 = -2',
+                'MH.sample.practiceConclusion.part1': 'الحلول هي',
+                'MH.sample.practiceConclusion.part2': 'x = 1/2',
+                'MH.sample.practiceConclusion.part3': 'و',
+                'MH.sample.practiceConclusion.part4': 'x = -2',
+                'MH.sample.practiceConclusion.part5': '.',
+                'MH.sample.geometryTitle': 'تمرين الهندسة',
+                'MH.sample.geometryText': 'حدد خصائص الأشكال الهندسية التالية ورسم الدالة:',
+                'MH.sample.quadraticGraphTitle': 'رسم بياني لدالة تربيعية',
+                'MH.sample.quadraticGraphQuestion': 'ما هي معادلة هذه الدالة التربيعية؟',
+                'MH.sample.quadraticGraphSolution.part1': 'يمثل الرسم البياني الدالة التربيعية',
+                'MH.sample.quadraticGraphSolution.part2': 'f(x) = x² - 4',
+                'MH.sample.quadraticGraphSolution.part3': '. لها رأس عند',
+                'MH.sample.quadraticGraphSolution.part4': '(0, -4)',
+                'MH.sample.quadraticGraphSolution.part5': 'وتقاطعات x عند',
+                'MH.sample.quadraticGraphSolution.part6': '(-2, 0)',
+                'MH.sample.quadraticGraphSolution.part7': 'و',
+                'MH.sample.quadraticGraphSolution.part8': '(2, 0)',
+                'MH.sample.quadraticGraphSolution.part9': '.',
+                'MH.sample.triangleTitle': 'مثلث',
+                'MH.sample.triangleQuestion': 'ما نوع هذا المثلث؟ احسب مساحته.',
+                'MH.sample.triangleSolution.part1': 'هذا مثلث قائم الزاوية بأضلاع طولها',
+                'MH.sample.triangleSolution.part2': '6',
+                'MH.sample.triangleSolution.part3': 'و',
+                'MH.sample.triangleSolution.part4': '8',
+                'MH.sample.triangleSolution.part5': 'وحدات. باستخدام نظرية فيثاغورس، الوتر هو',
+                'MH.sample.triangleSolution.part6': '√(6² + 8²) = √(36 + 64) = √100 = 10',
+                'MH.sample.triangleSolution.part7': 'وحدات. المساحة هي',
+                'MH.sample.triangleSolution.part8': '(1/2) × 6 × 8 = 24',
+                'MH.sample.triangleSolution.part9': 'وحدة مربعة.',
+                'MH.sample.circleTitle': 'دائرة',
+                'MH.sample.circleQuestion': 'ما هو نصف قطر ومحيط هذه الدائرة؟',
+                'MH.sample.circleSolution.part1': 'الدائرة لها نصف قطر',
+                'MH.sample.circleSolution.part2': '5',
+                'MH.sample.circleSolution.part3': 'وحدات. المحيط هو',
+                'MH.sample.circleSolution.part4': '2 × π × 5 = 10π ≈ 31.42',
+                'MH.sample.circleSolution.part5': 'وحدات.',
+                'MH.footer.developer': 'المطور',
+                'MH.footer.version': 'الإصدار',
+                'MH.footer.links': 'روابط',
+                'MH.footer.terms': 'شروط الاستخدام',
+                'MH.footer.privacy': 'سياسة الخصوصية'
+            },
+            'fr': {
+	'MH.general.homeTooltip': 'Aller à la page d\'accueil',
+	'MH.general.install': 'Installer l\'App',
+	'MH.general.installSuccess': 'Mathematics Hub installé avec succès!',
+'MH.general.enableNotifications': 'Activer les notifications',
+'MH.general.notificationEnabled': 'Notifications activées! Vous recevrez maintenant des mises à jour.',
+                'MH.general.title': 'Centre de Mathématiques',
+                'MH.general.theme': 'Thème',
+                'MH.general.language': 'Langue',
+                'MH.sample.title': 'Exemple de Leçon de Mathématiques',
+                'MH.sample.introduction': 'Introduction',
+                'MH.sample.introText': 'Ceci est une page d\'exemple autonome qui démontre les fonctionnalités de changement de thème et de traduction sans nécessiter de fichiers externes. Toutes les fonctionnalités sont contenues dans ce seul fichier HTML.',
+                'MH.sample.featureTitle': 'Fonctionnalités Démonstrées',
+                'MH.sample.feature1': 'Changement de thème clair/sombre',
+                'MH.sample.feature2': 'Support multilingue (anglais, arabe, français)',
+                'MH.sample.feature3': 'Conception réactive',
+                'MH.sample.feature4': 'Style de contenu mathématique',
+                'MH.sample.contentTitle': 'Contenu Mathématique',
+                'MH.sample.quadraticTitle': 'Équations Quadratiques',
+                'MH.sample.quadraticText.part1': 'Une équation quadratique est une équation polynomiale du second degré dans une seule variable x, avec',
+                'MH.sample.quadraticText.part2': 'a ≠ 0',
+                'MH.sample.quadraticFormulaTitle': 'Formule Quadratique',
+                'MH.sample.quadraticFormulaText.part1': 'Les solutions de l\'équation quadratique',
+                'MH.sample.quadraticFormulaText.part2': 'ax² + bx + c = 0',
+                'MH.sample.quadraticFormulaText.part3': 'sont données par:',
+                'MH.sample.quadraticFormulaText.part4': 'x = [-b ± √(b² - 4ac)] / (2a)',
+                'MH.sample.exampleTitle': 'Exemple de Problème',
+                'MH.sample.exampleText.part1': 'Résoudre l\'équation:',
+                'MH.sample.exampleText.part2': 'x² - 5x + 6 = 0',
+                'MH.sample.showSolution': 'Afficher la Solution',
+                'MH.sample.hideSolution': 'Masquer la Solution',
+                'MH.sample.step1': 'Étape 1: Identifier les coefficients',
+                'MH.sample.step1.equation': 'a = 1, b = -5, c = 6',
+                'MH.sample.step2': 'Étape 2: Calculer le discriminant',
+                'MH.sample.step2.equation': 'Δ = b² - 4ac = (-5)² - 4(1)(6) = 25 - 24 = 1',
+                'MH.sample.step3': 'Étape 3: Appliquer la formule quadratique',
+                'MH.sample.step3.equation': 'x = [5 ± √1] / 2 = [5 ± 1] / 2',
+                'MH.sample.step4': 'Étape 4: Trouver les solutions',
+                'MH.sample.step4.equation': 'x₁ = (5 + 1)/2 = 3, x₂ = (5 - 1)/2 = 2',
+                'MH.sample.conclusion.part1': 'Les solutions sont',
+                'MH.sample.conclusion.part2': 'x = 2',
+                'MH.sample.conclusion.part3': 'et',
+                'MH.sample.conclusion.part4': 'x = 3',
+                'MH.sample.conclusion.part5': '.',
+                'MH.sample.practiceTitle': 'Exercice Pratique',
+                'MH.sample.practiceText.part1': 'Résoudre l\'équation:',
+                'MH.sample.practiceText.part2': '2x² + 3x - 2 = 0',
+                'MH.sample.practiceStep1': 'Étape 1: Identifier les coefficients',
+                'MH.sample.practiceStep1.equation': 'a = 2, b = 3, c = -2',
+                'MH.sample.practiceStep2': 'Étape 2: Calculer le discriminant',
+                'MH.sample.practiceStep2.equation': 'Δ = b² - 4ac = 3² - 4(2)(-2) = 9 + 16 = 25',
+                'MH.sample.practiceStep3': 'Étape 3: Appliquer la formule quadratique',
+                'MH.sample.practiceStep3.equation': 'x = [-3 ± √25] / (2×2) = [-3 ± 5] / 4',
+                'MH.sample.practiceStep4': 'Étape 4: Trouver les solutions',
+                'MH.sample.practiceStep4.equation': 'x₁ = (-3 + 5)/4 = 2/4 = 1/2, x₂ = (-3 - 5)/4 = -8/4 = -2',
+                'MH.sample.practiceConclusion.part1': 'Les solutions sont',
+                'MH.sample.practiceConclusion.part2': 'x = 1/2',
+                'MH.sample.practiceConclusion.part3': 'et',
+                'MH.sample.practiceConclusion.part4': 'x = -2',
+                'MH.sample.practiceConclusion.part5': '.',
+                'MH.sample.geometryTitle': 'Exercice de Géométrie',
+                'MH.sample.geometryText': 'Identifiez les propriétés des formes géométriques suivantes et du graphique de fonction:',
+                'MH.sample.quadraticGraphTitle': 'Graphique de Fonction Quadratique',
+                'MH.sample.quadraticGraphQuestion': 'Quelle est l\'équation de cette fonction quadratique?',
+                'MH.sample.quadraticGraphSolution.part1': 'Le graphique représente la fonction quadratique',
+                'MH.sample.quadraticGraphSolution.part2': 'f(x) = x² - 4',
+                'MH.sample.quadraticGraphSolution.part3': '. Il a un sommet à',
+                'MH.sample.quadraticGraphSolution.part4': '(0, -4)',
+                'MH.sample.quadraticGraphSolution.part5': 'et des intersections x à',
+                'MH.sample.quadraticGraphSolution.part6': '(-2, 0)',
+                'MH.sample.quadraticGraphSolution.part7': 'et',
+                'MH.sample.quadraticGraphSolution.part8': '(2, 0)',
+                'MH.sample.quadraticGraphSolution.part9': '.',
+                'MH.sample.triangleTitle': 'Triangle',
+                'MH.sample.triangleQuestion': 'Quel type de triangle est-ce? Calculez son aire.',
+                'MH.sample.triangleSolution.part1': 'C\'est un triangle rectangle avec des jambes de longueur',
+                'MH.sample.triangleSolution.part2': '6',
+                'MH.sample.triangleSolution.part3': 'et',
+                'MH.sample.triangleSolution.part4': '8',
+                'MH.sample.triangleSolution.part5': 'unités. En utilisant le théorème de Pythagore, l\'hypoténuse est',
+                'MH.sample.triangleSolution.part6': '√(6² + 8²) = √(36 + 64) = √100 = 10',
+                'MH.sample.triangleSolution.part7': 'unités. L\'aire est',
+                'MH.sample.triangleSolution.part8': '(1/2) × 6 × 8 = 24',
+                'MH.sample.triangleSolution.part9': 'unités carrées.',
+                'MH.sample.circleTitle': 'Cercle',
+                'MH.sample.circleQuestion': 'Quel est le rayon et la circonférence de ce cercle?',
+                'MH.sample.circleSolution.part1': 'Le cercle a un rayon de',
+                'MH.sample.circleSolution.part2': '5',
+                'MH.sample.circleSolution.part3': 'unités. La circonférence est',
+                'MH.sample.circleSolution.part4': '2 × π × 5 = 10π ≈ 31,42',
+                'MH.sample.circleSolution.part5': 'unités.',
+                'MH.footer.developer': 'Développeur',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Liens',
+                'MH.footer.terms': 'Conditions d\'Utilisation',
+                'MH.footer.privacy': 'Politique de Confidentialité'
+            }
+        };
+
+
+    // Toggle solution visibility
+    function toggleSolution(problemNumber) {
+        const solution = document.getElementById(`solution${problemNumber}`);
+        const button = solution.previousElementSibling;
+        
+        if (solution.style.display === 'block') {
+            solution.style.display = 'none';
+            button.setAttribute('data-i18n', 'MH.sample.showSolution');
+            button.textContent = translations[currentLang]['MH.sample.showSolution'];
+        } else {
+            solution.style.display = 'block';
+            button.setAttribute('data-i18n', 'MH.sample.hideSolution');
+            button.textContent = translations[currentLang]['MH.sample.hideSolution'];
+        }
+    }
+
+    // GEOMETRY FUNCTIONS
+// GEOMETRY FUNCTIONS WITH FIXED COLORS
+// GEOMETRY FUNCTIONS WITH PROPER LABELING AND NUMBERED AXES
+// GEOMETRY FUNCTIONS WITH RTL PROTECTION
+// Draw specific elements
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+    // Initialize solutions as hidden
+    for (let i = 1; i <= 3; i++) {
+        const solution = document.getElementById(`solution${i}`);
+        if (solution) {
+            solution.style.display = 'none';
+        }
+    }
+    
+    // Set up notification button
+    notificationBtn.addEventListener('click', requestNotificationPermission);
+    checkNotificationPermission();
+    
+    // Force LTR on geometry containers and items
+    document.querySelectorAll('.MH-geometry-container, .MH-geometry-item').forEach(element => {
+        element.style.direction = 'ltr';
+        element.setAttribute('dir', 'ltr');
+    });
+    
+    // Draw geometry elements using MHGeometry object
+    MHGeometry.drawQuadraticGraph('quadraticGraph');
+    MHGeometry.drawTriangle('triangleCanvas');
+    MHGeometry.drawCircle('circleCanvas');
+});
+    </script>
+
+<!-- Add the service worker registration script -->
+<script>
+    // Register service worker with better error handling
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+                
+            })
+            .catch(function(error) {
+                console.log('Service Worker registration failed:', error);
+            });
+        });
+    }
+</script>
+
+<!-- Add noscript fallback -->
+<noscript>
+    <style>
+        .MH-header-controls { display: none; }
+        .MH-solution { display: block; }
+    </style>
+    <div class="MH-warning">
+        JavaScript is recommended for the full experience, but content is still accessible.
+    </div>
+</noscript>
+</body>
+</html>

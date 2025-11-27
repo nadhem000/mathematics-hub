@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Geometry - Pythagorean Theorem</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#FF6B6B" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#4ECDC4" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#FF6B6B">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    
+    <style>
+    /* DIFFERENT COLOR PALETTE FOR SAMPLE2 */
+    :root {
+        --primary: #FF6B6B;
+        --primary-light: #FF8E8E;
+        --primary-dark: #E05555;
+        --secondary: #4ECDC4;
+        --secondary-light: #6FE0D8;
+        --secondary-dark: #3AAFA8;
+        --accent: #FFD166;
+        --warning: #EF476F;
+        --info: #06D6A0;
+        --text: #333333;
+        --text-light: #666666;
+        --background: #FFFFFF;
+        --surface: #F8F9FA;
+        --border: #E9ECEF;
+        --shadow: rgba(0, 0, 0, 0.1);
+    }
+    
+    [data-theme="dark"] {
+        --primary: #E05555;
+        --primary-light: #FF6B6B;
+        --primary-dark: #C44B4B;
+        --secondary: #3AAFA8;
+        --secondary-light: #4ECDC4;
+        --secondary-dark: #2E8E88;
+        --accent: #E6B94E;
+        --warning: #D63A5F;
+        --info: #05B58C;
+        --text: #FFFFFF;
+        --text-light: #CCCCCC;
+        --background: #121212;
+        --surface: #1E1E1E;
+        --border: #333333;
+        --shadow: rgba(0, 0, 0, 0.3);
+    }
+
+    /* KaTeX styling */
+    .katex { 
+        font-size: 1.1em; 
+    }
+    
+    .katex-display { 
+        margin: 1em 0; 
+        text-align: center;
+    }
+    
+    .katex-display > .katex { 
+        display: inline-block;
+        text-align: center;
+    }
+
+    /* Equation styling */
+    .MH-equation {
+        font-family: inherit;
+        font-size: inherit;
+        color: inherit;
+        margin: 0.5em 0;
+        padding: 0;
+        display: inline-block;
+        direction: ltr !important;
+        unicode-bidi: isolate;
+    }
+    
+    [dir="rtl"] .MH-equation {
+        text-align: left;
+        unicode-bidi: plaintext;
+    }
+
+    /* Geometry container styling */
+    .MH-geometry-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        margin: 2rem 0;
+        justify-content: center;
+    }
+    
+    .MH-geometry-item {
+        flex: 1;
+        min-width: 300px;
+        max-width: 400px;
+        text-align: center;
+        padding: 1rem;
+        background: var(--surface);
+        border-radius: 8px;
+        border: 1px solid var(--border);
+    }
+    
+    .MH-geometry-title {
+        font-weight: bold;
+        margin-bottom: 1rem;
+        color: var(--primary);
+        font-size: 1.1rem;
+    }
+    
+    .MH-geometry-canvas {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        background: white;
+    }
+</style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                    <!-- Notification Button -->
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+                        <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.geometry.pythagoreanTitle">Pythagorean Theorem</h1>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.geometry.introduction">Introduction</h2>
+            <p data-i18n="MH.geometry.introText">The Pythagorean Theorem is one of the most fundamental concepts in geometry, describing the relationship between the sides of a right triangle.</p>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.geometry.theoremTitle">Pythagorean Theorem</h3>
+                <p data-i18n="MH.geometry.theoremText.part1">In a right triangle, the square of the length of the hypotenuse (the side opposite the right angle) is equal to the sum of the squares of the lengths of the other two sides.</p>
+                <div class="MH-equation" data-i18n="MH.geometry.theoremText.part2">a^2 + b^2 = c^2</div>
+                <p data-i18n="MH.geometry.theoremText.part3">where \(c\) is the length of the hypotenuse, and \(a\) and \(b\) are the lengths of the other two sides.</p>
+            </div>
+        </section>
+
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.geometry.visualizationTitle">Visual Demonstration</h2>
+            
+            <div class="MH-geometry-container">
+                <div class="MH-geometry-item">
+                    <div class="MH-geometry-title" data-i18n="MH.geometry.rightTriangleTitle">Right Triangle (3-4-5)</div>
+                    <canvas id="pythagoreanTriangle" class="MH-geometry-canvas"></canvas>
+                    <p data-i18n="MH.geometry.triangleQuestion">A classic 3-4-5 right triangle demonstrating the Pythagorean theorem.</p>
+                </div>
+                
+                <div class="MH-geometry-item">
+                    <div class="MH-geometry-title" data-i18n="MH.geometry.coordinatePlaneTitle">Coordinate Plane</div>
+                    <canvas id="coordinatePlane" class="MH-geometry-canvas"></canvas>
+                    <p data-i18n="MH.geometry.coordinateQuestion">Use the coordinate plane to verify distances using the distance formula.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.geometry.exampleTitle">Example Problem</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.geometry.example1Title">Example 1: Finding the Hypotenuse</h3>
+                <p><span data-i18n="MH.geometry.example1Text.part1">A right triangle has legs of length</span> <span class="MH-equation" data-i18n="MH.geometry.example1Text.part2">\(a = 3\)</span> <span data-i18n="MH.geometry.example1Text.part3">and</span> <span class="MH-equation" data-i18n="MH.geometry.example1Text.part4">\(b = 4\)</span><span data-i18n="MH.geometry.example1Text.part5">. Find the length of the hypotenuse.</span></p>
+                
+                <button class="MH-solution-btn" data-i18n="MH.geometry.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                <div class="MH-solution" id="solution1">
+                    <p data-i18n="MH.geometry.step1">Step 1: Apply Pythagorean theorem</p>
+                    <div class="MH-equation" data-i18n="MH.geometry.step1.equation">\(a^2 + b^2 = c^2\)</div>
+                    
+                    <p data-i18n="MH.geometry.step2">Step 2: Substitute known values</p>
+                    <div class="MH-equation" data-i18n="MH.geometry.step2.equation">\(3^2 + 4^2 = c^2\)</div>
+                    
+                    <p data-i18n="MH.geometry.step3">Step 3: Calculate squares</p>
+                    <div class="MH-equation" data-i18n="MH.geometry.step3.equation">\(9 + 16 = c^2\)</div>
+                    
+                    <p data-i18n="MH.geometry.step4">Step 4: Simplify</p>
+                    <div class="MH-equation" data-i18n="MH.geometry.step4.equation">\(25 = c^2\)</div>
+                    
+                    <p data-i18n="MH.geometry.step5">Step 5: Take square root</p>
+                    <div class="MH-equation" data-i18n="MH.geometry.step5.equation">\(c = \sqrt{25} = 5\)</div>
+                    
+                    <p><span data-i18n="MH.geometry.conclusion1.part1">The hypotenuse has length</span> <span class="MH-equation" data-i18n="MH.geometry.conclusion1.part2">\(5\)</span><span data-i18n="MH.geometry.conclusion1.part3"> units.</span></p>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.geometry.example2Title">Example 2: Finding a Leg</h3>
+                <p><span data-i18n="MH.geometry.example2Text.part1">A right triangle has a hypotenuse of length</span> <span class="MH-equation" data-i18n="MH.geometry.example2Text.part2">\(c = 13\)</span> <span data-i18n="MH.geometry.example2Text.part3">and one leg of length</span> <span class="MH-equation" data-i18n="MH.geometry.example2Text.part4">\(a = 5\)</span><span data-i18n="MH.geometry.example2Text.part5">. Find the length of the other leg.</span></p>
+                
+                <button class="MH-solution-btn" data-i18n="MH.geometry.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                <div class="MH-solution" id="solution2">
+                    <p data-i18n="MH.geometry.example2.step1">Step 1: Apply Pythagorean theorem</p>
+                    <div class="MH-equation" data-i18n="MH.geometry.example2.step1.equation">\(a^2 + b^2 = c^2\)</div>
+                    
+                    <p data-i18n="MH.geometry.example2.step2">Step 2: Substitute known values</p>
+                    <div class="MH-equation" data-i18n="MH.geometry.example2.step2.equation">\(5^2 + b^2 = 13^2\)</div>
+                    
+                    <p data-i18n="MH.geometry.example2.step3">Step 3: Calculate squares</p>
+                    <div class="MH-equation" data-i18n="MH.geometry.example2.step3.equation">\(25 + b^2 = 169\)</div>
+                    
+                    <p data-i18n="MH.geometry.example2.step4">Step 4: Isolate \(b^2\)</p>
+                    <div class="MH-equation" data-i18n="MH.geometry.example2.step4.equation">\(b^2 = 169 - 25 = 144\)</div>
+                    
+                    <p data-i18n="MH.geometry.example2.step5">Step 5: Take square root</p>
+                    <div class="MH-equation" data-i18n="MH.geometry.example2.step5.equation">\(b = \sqrt{144} = 12\)</div>
+                    
+                    <p><span data-i18n="MH.geometry.conclusion2.part1">The other leg has length</span> <span class="MH-equation" data-i18n="MH.geometry.conclusion2.part2">\(12\)</span><span data-i18n="MH.geometry.conclusion2.part3"> units.</span></p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.geometry.practiceTitle">Practice Exercises</h2>
+            
+            <div class="MH-exercise">
+                <p><span data-i18n="MH.geometry.practice1Text.part1">A right triangle has legs of length</span> <span class="MH-equation" data-i18n="MH.geometry.practice1Text.part2">\(6\)</span> <span data-i18n="MH.geometry.practice1Text.part3">and</span> <span class="MH-equation" data-i18n="MH.geometry.practice1Text.part4">\(8\)</span><span data-i18n="MH.geometry.practice1Text.part5">. Find the hypotenuse.</span></p>
+                
+                <button class="MH-solution-btn" data-i18n="MH.geometry.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                <div class="MH-solution" id="solution3">
+                    <p data-i18n="MH.geometry.practice1.step1">Step 1: Apply Pythagorean theorem</p>
+                    <div class="MH-equation" data-i18n="MH.geometry.practice1.step1.equation">\(a^2 + b^2 = c^2\)</div>
+                    
+                    <p data-i18n="MH.geometry.practice1.step2">Step 2: Substitute values</p>
+                    <div class="MH-equation" data-i18n="MH.geometry.practice1.step2.equation">\(6^2 + 8^2 = c^2\)</div>
+                    
+                    <p data-i18n="MH.geometry.practice1.step3">Step 3: Calculate</p>
+                    <div class="MH-equation" data-i18n="MH.geometry.practice1.step3.equation">\(36 + 64 = c^2\)</div>
+                    
+                    <p data-i18n="MH.geometry.practice1.step4">Step 4: Simplify</p>
+                    <div class="MH-equation" data-i18n="MH.geometry.practice1.step4.equation">\(100 = c^2\)</div>
+                    
+                    <p data-i18n="MH.geometry.practice1.step5">Step 5: Square root</p>
+                    <div class="MH-equation" data-i18n="MH.geometry.practice1.step5.equation">\(c = \sqrt{100} = 10\)</div>
+                    
+                    <p><span data-i18n="MH.geometry.practice1.conclusion.part1">The hypotenuse is</span> <span class="MH-equation" data-i18n="MH.geometry.practice1.conclusion.part2">\(10\)</span><span data-i18n="MH.geometry.practice1.conclusion.part3"> units long.</span></p>
+                </div>
+            </div>
+            
+            <div class="MH-exercise">
+                <p><span data-i18n="MH.geometry.practice2Text.part1">A right triangle has a hypotenuse of</span> <span class="MH-equation" data-i18n="MH.geometry.practice2Text.part2">\(17\)</span> <span data-i18n="MH.geometry.practice2Text.part3">and one leg of</span> <span class="MH-equation" data-i18n="MH.geometry.practice2Text.part4">\(15\)</span><span data-i18n="MH.geometry.practice2Text.part5">. Find the other leg.</span></p>
+                
+                <button class="MH-solution-btn" data-i18n="MH.geometry.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+                <div class="MH-solution" id="solution4">
+                    <p data-i18n="MH.geometry.practice2.step1">Step 1: Apply Pythagorean theorem</p>
+                    <div class="MH-equation" data-i18n="MH.geometry.practice2.step1.equation">\(a^2 + b^2 = c^2\)</div>
+                    
+                    <p data-i18n="MH.geometry.practice2.step2">Step 2: Substitute values</p>
+                    <div class="MH-equation" data-i18n="MH.geometry.practice2.step2.equation">\(15^2 + b^2 = 17^2\)</div>
+                    
+                    <p data-i18n="MH.geometry.practice2.step3">Step 3: Calculate squares</p>
+                    <div class="MH-equation" data-i18n="MH.geometry.practice2.step3.equation">\(225 + b^2 = 289\)</div>
+                    
+                    <p data-i18n="MH.geometry.practice2.step4">Step 4: Isolate \(b^2\)</p>
+                    <div class="MH-equation" data-i18n="MH.geometry.practice2.step4.equation">\(b^2 = 289 - 225 = 64\)</div>
+                    
+                    <p data-i18n="MH.geometry.practice2.step5">Step 5: Square root</p>
+                    <div class="MH-equation" data-i18n="MH.geometry.practice2.step5.equation">\(b = \sqrt{64} = 8\)</div>
+                    
+                    <p><span data-i18n="MH.geometry.practice2.conclusion.part1">The other leg is</span> <span class="MH-equation" data-i18n="MH.geometry.practice2.conclusion.part2">\(8\)</span><span data-i18n="MH.geometry.practice2.conclusion.part3"> units long.</span></p>
+                </div>
+            </div>
+        </section>
+		
+		<!-- Add this new section after the existing practice exercises -->
+<section class="MH-section">
+    <h2 class="MH-section-title" data-i18n="MH.geometry.advancedTitle">Advanced Mathematical Expressions</h2>
+    
+    <div class="MH-exercise">
+        <h3 data-i18n="MH.geometry.vectorExerciseTitle">Vector Geometry Exercise</h3>
+        <p data-i18n="MH.geometry.vectorExerciseText.part1">Given two vectors in 2D space:</p>
+        
+        <div class="MH-equation" data-i18n="MH.geometry.vectorExerciseText.part2">
+            \(\vec{v} = 3\hat{i} + 4\hat{j} \quad \text{and} \quad \vec{w} = 6\hat{i} - 2\hat{j}\)
+        </div>
+        
+        <p data-i18n="MH.geometry.vectorExerciseText.part3">Find the magnitude of the resultant vector \(\vec{r} = \vec{v} + \vec{w}\) using:</p>
+        
+        <div class="MH-equation" data-i18n="MH.geometry.vectorExerciseText.part4">
+            \(|\vec{r}| = \sqrt{(v_x + w_x)^2 + (v_y + w_y)^2}\)
+        </div>
+        
+        <p data-i18n="MH.geometry.vectorExerciseText.part5">Also calculate the unit vector \(\hat{u}\) in the direction of \(\vec{r}\):</p>
+        
+        <div class="MH-equation" data-i18n="MH.geometry.vectorExerciseText.part6">
+            \(\hat{u} = \frac{\vec{r}}{|\vec{r}|}\)
+        </div>
+
+        <div class="MH-solution-btn-container">
+            <button class="MH-solution-btn" data-i18n="MH.geometry.showSolution" onclick="toggleSolution(5)">Show Solution</button>
+        </div>
+        <div class="MH-solution" id="solution5">
+            <p data-i18n="MH.geometry.vectorSolution.step1">Step 1: Find the resultant vector \(\vec{r}\)</p>
+            <div class="MH-equation" data-i18n="MH.geometry.vectorSolution.step1.equation">
+                \(\vec{r} = \vec{v} + \vec{w} = (3 + 6)\hat{i} + (4 - 2)\hat{j} = 9\hat{i} + 2\hat{j}\)
+            </div>
+            
+            <p data-i18n="MH.geometry.vectorSolution.step2">Step 2: Calculate the magnitude \(|\vec{r}|\)</p>
+            <div class="MH-equation" data-i18n="MH.geometry.vectorSolution.step2.equation">
+                \(|\vec{r}| = \sqrt{9^2 + 2^2} = \sqrt{81 + 4} = \sqrt{85} \approx 9.22\)
+            </div>
+            
+            <p data-i18n="MH.geometry.vectorSolution.step3">Step 3: Find the unit vector \(\hat{u}\)</p>
+            <div class="MH-equation" data-i18n="MH.geometry.vectorSolution.step3.equation">
+                \(\hat{u} = \frac{9\hat{i} + 2\hat{j}}{\sqrt{85}} \approx \frac{9}{\sqrt{85}}\hat{i} + \frac{2}{\sqrt{85}}\hat{j}\)
+            </div>
+        </div>
+    </div>
+    
+    <div class="MH-exercise">
+        <h3 data-i18n="MH.geometry.seriesExerciseTitle">Mathematical Series and Operations</h3>
+        
+        <p data-i18n="MH.geometry.seriesExerciseText.part1">Evaluate the following expressions:</p>
+        
+        <div class="MH-equation" data-i18n="MH.geometry.seriesExerciseText.part2">
+            \(\text{A} = \left[\frac{15 × (3 + 2)}{5}\right] ÷ \left\{\frac{25 - 10}{3}\right\}\)
+        </div>
+        
+        <div class="MH-equation" data-i18n="MH.geometry.seriesExerciseText.part3">
+            \(\text{B} = \sum_{n=1}^{4} \left(\frac{n^2 + 1}{n}\right)\)
+        </div>
+        
+        <div class="MH-equation" data-i18n="MH.geometry.seriesExerciseText.part4">
+            \(\text{C} = \lim_{x \to \infty} \left(1 + \frac{1}{x}\right)^x\)
+        </div>
+        
+        <div class="MH-equation" data-i18n="MH.geometry.seriesExerciseText.part5">
+            \(\text{D} = \int_{0}^{1} x^2  dx\)
+        </div>
+
+        <div class="MH-solution-btn-container">
+            <button class="MH-solution-btn" data-i18n="MH.geometry.showSolution" onclick="toggleSolution(6)">Show Solution</button>
+        </div>
+        <div class="MH-solution" id="solution6">
+            <p data-i18n="MH.geometry.seriesSolution.step1">Step 1: Evaluate expression A</p>
+            <div class="MH-equation" data-i18n="MH.geometry.seriesSolution.step1.equation">
+                \(\text{A} = \left[\frac{15 × 5}{5}\right] ÷ \left\{\frac{15}{3}\right\} = \left[\frac{75}{5}\right] ÷ \{5\} = 15 ÷ 5 = 3\)
+            </div>
+            
+            <p data-i18n="MH.geometry.seriesSolution.step2">Step 2: Evaluate the summation B</p>
+            <div class="MH-equation" data-i18n="MH.geometry.seriesSolution.step2.equation">
+                \(\text{B} = \sum_{n=1}^{4} \left(n + \frac{1}{n}\right) = (1 + 1) + (2 + \frac{1}{2}) + (3 + \frac{1}{3}) + (4 + \frac{1}{4})\)
+            </div>
+            <div class="MH-equation" data-i18n="MH.geometry.seriesSolution.step2.equation2">
+                \(\text{B} = 2 + 2.5 + 3.\overline{3} + 4.25 = 12.08\overline{3}\)
+            </div>
+            
+            <p data-i18n="MH.geometry.seriesSolution.step3">Step 3: Recognize the limit C</p>
+            <div class="MH-equation" data-i18n="MH.geometry.seriesSolution.step3.equation">
+                \(\text{C} = \lim_{x \to \infty} \left(1 + \frac{1}{x}\right)^x = e \approx 2.71828\)
+            </div>
+            
+            <p data-i18n="MH.geometry.seriesSolution.step4">Step 4: Evaluate the integral D</p>
+            <div class="MH-equation" data-i18n="MH.geometry.seriesSolution.step4.equation">
+                \(\text{D} = \int_{0}^{1} x^2  dx = \left[\frac{x^3}{3}\right]_{0}^{1} = \frac{1}{3} - 0 = \frac{1}{3}\)
+            </div>
+        </div>
+    </div>
+    
+    <div class="MH-exercise">
+        <h3 data-i18n="MH.geometry.complexExerciseTitle">Complex Mathematical Notation</h3>
+        
+        <p data-i18n="MH.geometry.complexExerciseText.part1">Solve the following equation using various mathematical symbols:</p>
+        
+        <div class="MH-equation" data-i18n="MH.geometry.complexExerciseText.part2">
+            \(\frac{d}{dx}\left[\int_{0}^{x} e^{-t^2} dt\right] = e^{-x^2}\)
+        </div>
+        
+        <p data-i18n="MH.geometry.complexExerciseText.part3">Prove that:</p>
+        
+        <div class="MH-equation" data-i18n="MH.geometry.complexExerciseText.part4">
+            \(\forall \epsilon > 0, \exists \delta > 0 \ni |x - a| < \delta \Rightarrow |f(x) - f(a)| < \epsilon\)
+        </div>
+        
+        <p data-i18n="MH.geometry.complexExerciseText.part5">Evaluate the infinite series:</p>
+        
+        <div class="MH-equation" data-i18n="MH.geometry.complexExerciseText.part6">
+            \(\sum_{n=1}^{\infty} \frac{1}{n(n+1)} = 1\)
+        </div>
+
+        <div class="MH-solution-btn-container">
+            <button class="MH-solution-btn" data-i18n="MH.geometry.showSolution" onclick="toggleSolution(7)">Show Solution</button>
+        </div>
+        <div class="MH-solution" id="solution7">
+            <p data-i18n="MH.geometry.complexSolution.step1">Step 1: Fundamental Theorem of Calculus</p>
+            <div class="MH-equation" data-i18n="MH.geometry.complexSolution.step1.equation">
+                \(\frac{d}{dx}\left[\int_{0}^{x} e^{-t^2} dt\right] = e^{-x^2}\)
+            </div>
+            <p data-i18n="MH.geometry.complexSolution.step1.text">This is a direct application of the Fundamental Theorem of Calculus.</p>
+            
+            <p data-i18n="MH.geometry.complexSolution.step2">Step 2: Epsilon-Delta Definition of Continuity</p>
+            <div class="MH-equation" data-i18n="MH.geometry.complexSolution.step2.equation">
+                \(\forall \epsilon > 0, \exists \delta > 0 \ni |x - a| < \delta \Rightarrow |f(x) - f(a)| < \epsilon\)
+            </div>
+            <p data-i18n="MH.geometry.complexSolution.step2.text">This is the formal definition of continuity at point \(a\).</p>
+            
+            <p data-i18n="MH.geometry.complexSolution.step3">Step 3: Telescoping Series</p>
+            <div class="MH-equation" data-i18n="MH.geometry.complexSolution.step3.equation">
+                \(\sum_{n=1}^{\infty} \frac{1}{n(n+1)} = \sum_{n=1}^{\infty} \left(\frac{1}{n} - \frac{1}{n+1}\right)\)
+            </div>
+            <div class="MH-equation" data-i18n="MH.geometry.complexSolution.step3.equation2">
+                \(= \left(1 - \frac{1}{2}\right) + \left(\frac{1}{2} - \frac{1}{3}\right) + \left(\frac{1}{3} - \frac{1}{4}\right) + \cdots = 1\)
+            </div>
+        </div>
+    </div>
+</section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+    
+    <script>
+        // DIFFERENT TRANSLATIONS FOR SAMPLE2 - FIXED VERSION
+        const translations = {
+            'en': {
+                'MH.general.homeTooltip': 'Go to Homepage',
+                'MH.general.install': 'Install App',
+                'MH.general.installSuccess': 'Mathematics Hub installed successfully!',
+                'MH.general.enableNotifications': 'Enable Notifications',
+                'MH.general.notificationEnabled': 'Notifications enabled! You will now receive updates.',
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Theme',
+                'MH.general.language': 'Language',
+                'MH.geometry.pythagoreanTitle': 'Pythagorean Theorem',
+                'MH.geometry.introduction': 'Introduction',
+                'MH.geometry.introText': 'The Pythagorean Theorem is one of the most fundamental concepts in geometry, describing the relationship between the sides of a right triangle.',
+                'MH.geometry.theoremTitle': 'Pythagorean Theorem',
+                'MH.geometry.theoremText.part1': 'In a right triangle, the square of the length of the hypotenuse (the side opposite the right angle) is equal to the sum of the squares of the lengths of the other two sides.',
+                'MH.geometry.theoremText.part2': '\\(a^2 + b^2 = c^2\\)',
+                'MH.geometry.theoremText.part3': 'where \\(c\\) is the length of the hypotenuse, and \\(a\\) and \\(b\\) are the lengths of the other two sides.',
+                'MH.geometry.visualizationTitle': 'Visual Demonstration',
+                'MH.geometry.rightTriangleTitle': 'Right Triangle (3-4-5)',
+                'MH.geometry.triangleQuestion': 'A classic 3-4-5 right triangle demonstrating the Pythagorean theorem.',
+                'MH.geometry.coordinatePlaneTitle': 'Coordinate Plane',
+                'MH.geometry.coordinateQuestion': 'Use the coordinate plane to verify distances using the distance formula.',
+                'MH.geometry.exampleTitle': 'Example Problems',
+                'MH.geometry.example1Title': 'Example 1: Finding the Hypotenuse',
+                'MH.geometry.example1Text.part1': 'A right triangle has legs of length',
+                'MH.geometry.example1Text.part2': '\\(a = 3\\)',
+                'MH.geometry.example1Text.part3': 'and',
+                'MH.geometry.example1Text.part4': '\\(b = 4\\)',
+                'MH.geometry.example1Text.part5': '. Find the length of the hypotenuse.',
+                'MH.geometry.example2Title': 'Example 2: Finding a Leg',
+                'MH.geometry.example2Text.part1': 'A right triangle has a hypotenuse of length',
+                'MH.geometry.example2Text.part2': '\\(c = 13\\)',
+                'MH.geometry.example2Text.part3': 'and one leg of length',
+                'MH.geometry.example2Text.part4': '\\(a = 5\\)',
+                'MH.geometry.example2Text.part5': '. Find the length of the other leg.',
+                'MH.geometry.showSolution': 'Show Solution',
+                'MH.geometry.hideSolution': 'Hide Solution',
+                'MH.geometry.step1': 'Step 1: Apply Pythagorean theorem',
+                'MH.geometry.step1.equation': '\\(a^2 + b^2 = c^2\\)',
+                'MH.geometry.step2': 'Step 2: Substitute known values',
+                'MH.geometry.step2.equation': '\\(3^2 + 4^2 = c^2\\)',
+                'MH.geometry.step3': 'Step 3: Calculate squares',
+                'MH.geometry.step3.equation': '\\(9 + 16 = c^2\\)',
+                'MH.geometry.step4': 'Step 4: Simplify',
+                'MH.geometry.step4.equation': '\\(25 = c^2\\)',
+                'MH.geometry.step5': 'Step 5: Take square root',
+                'MH.geometry.step5.equation': '\\(c = \\sqrt{25} = 5\\)',
+                'MH.geometry.conclusion1.part1': 'The hypotenuse has length',
+                'MH.geometry.conclusion1.part2': '\\(5\\)',
+                'MH.geometry.conclusion1.part3': 'units.',
+                'MH.geometry.example2.step1': 'Step 1: Apply Pythagorean theorem',
+                'MH.geometry.example2.step1.equation': '\\(a^2 + b^2 = c^2\\)',
+                'MH.geometry.example2.step2': 'Step 2: Substitute known values',
+                'MH.geometry.example2.step2.equation': '\\(5^2 + b^2 = 13^2\\)',
+                'MH.geometry.example2.step3': 'Step 3: Calculate squares',
+                'MH.geometry.example2.step3.equation': '\\(25 + b^2 = 169\\)',
+                'MH.geometry.example2.step4': 'Step 4: Isolate \\(b^2\\)',
+                'MH.geometry.example2.step4.equation': '\\(b^2 = 169 - 25 = 144\\)',
+                'MH.geometry.example2.step5': 'Step 5: Take square root',
+                'MH.geometry.example2.step5.equation': '\\(b = \\sqrt{144} = 12\\)',
+                'MH.geometry.conclusion2.part1': 'The other leg has length',
+                'MH.geometry.conclusion2.part2': '\\(12\\)',
+                'MH.geometry.conclusion2.part3': 'units.',
+                'MH.geometry.practiceTitle': 'Practice Exercises',
+                'MH.geometry.practice1Text.part1': 'A right triangle has legs of length',
+                'MH.geometry.practice1Text.part2': '\\(6\\)',
+                'MH.geometry.practice1Text.part3': 'and',
+                'MH.geometry.practice1Text.part4': '\\(8\\)',
+                'MH.geometry.practice1Text.part5': '. Find the hypotenuse.',
+                'MH.geometry.practice1.step1': 'Step 1: Apply Pythagorean theorem',
+                'MH.geometry.practice1.step1.equation': '\\(a^2 + b^2 = c^2\\)',
+                'MH.geometry.practice1.step2': 'Step 2: Substitute values',
+                'MH.geometry.practice1.step2.equation': '\\(6^2 + 8^2 = c^2\\)',
+                'MH.geometry.practice1.step3': 'Step 3: Calculate',
+                'MH.geometry.practice1.step3.equation': '\\(36 + 64 = c^2\\)',
+                'MH.geometry.practice1.step4': 'Step 4: Simplify',
+                'MH.geometry.practice1.step4.equation': '\\(100 = c^2\\)',
+                'MH.geometry.practice1.step5': 'Step 5: Square root',
+                'MH.geometry.practice1.step5.equation': '\\(c = \\sqrt{100} = 10\\)',
+                'MH.geometry.practice1.conclusion.part1': 'The hypotenuse is',
+                'MH.geometry.practice1.conclusion.part2': '\\(10\\)',
+                'MH.geometry.practice1.conclusion.part3': 'units long.',
+                'MH.geometry.practice2Text.part1': 'A right triangle has a hypotenuse of',
+                'MH.geometry.practice2Text.part2': '\\(17\\)',
+                'MH.geometry.practice2Text.part3': 'and one leg of',
+                'MH.geometry.practice2Text.part4': '\\(15\\)',
+                'MH.geometry.practice2Text.part5': '. Find the other leg.',
+                'MH.geometry.practice2.step1': 'Step 1: Apply Pythagorean theorem',
+                'MH.geometry.practice2.step1.equation': '\\(a^2 + b^2 = c^2\\)',
+                'MH.geometry.practice2.step2': 'Step 2: Substitute values',
+                'MH.geometry.practice2.step2.equation': '\\(15^2 + b^2 = 17^2\\)',
+                'MH.geometry.practice2.step3': 'Step 3: Calculate squares',
+                'MH.geometry.practice2.step3.equation': '\\(225 + b^2 = 289\\)',
+                'MH.geometry.practice2.step4': 'Step 4: Isolate \\(b^2\\)',
+                'MH.geometry.practice2.step4.equation': '\\(b^2 = 289 - 225 = 64\\)',
+                'MH.geometry.practice2.step5': 'Step 5: Square root',
+                'MH.geometry.practice2.step5.equation': '\\(b = \\sqrt{64} = 8\\)',
+                'MH.geometry.practice2.conclusion.part1': 'The other leg is',
+                'MH.geometry.practice2.conclusion.part2': '\\(8\\)',
+                'MH.geometry.practice2.conclusion.part3': 'units long.',
+                'MH.geometry.advancedTitle': 'Advanced Mathematical Expressions',
+                'MH.geometry.vectorExerciseTitle': 'Vector Geometry Exercise',
+                'MH.geometry.vectorExerciseText.part1': 'Given two vectors in 2D space:',
+                'MH.geometry.vectorExerciseText.part2': String.raw`\(\vec{v} = 3\hat{i} + 4\hat{j} \quad \text{and} \quad \vec{w} = 6\hat{i} - 2\hat{j}\)`,
+                'MH.geometry.vectorExerciseText.part3': 'Find the magnitude of the resultant vector \(\vec{r} = \vec{v} + \vec{w}\) using:',
+                'MH.geometry.vectorExerciseText.part4': String.raw`\(|\vec{r}| = \sqrt{(v_x + w_x)^2 + (v_y + w_y)^2}\)`,
+                'MH.geometry.vectorExerciseText.part5': 'Also calculate the unit vector \(\hat{u}\) in the direction of \(\vec{r}\):',
+                'MH.geometry.vectorExerciseText.part6': String.raw`\(\hat{u} = \frac{\vec{r}}{|\vec{r}|}\)`,
+                'MH.geometry.vectorSolution.step1': 'Step 1: Find the resultant vector \(\vec{r}\)',
+                'MH.geometry.vectorSolution.step1.equation': String.raw`\(\vec{r} = \vec{v} + \vec{w} = (3 + 6)\hat{i} + (4 - 2)\hat{j} = 9\hat{i} + 2\hat{j}\)`,
+                'MH.geometry.vectorSolution.step2': 'Step 2: Calculate the magnitude \(|\vec{r}|\)',
+                'MH.geometry.vectorSolution.step2.equation': String.raw`\(|\vec{r}| = \sqrt{9^2 + 2^2} = \sqrt{81 + 4} = \sqrt{85} \approx 9.22\)`,
+                'MH.geometry.vectorSolution.step3': 'Step 3: Find the unit vector \(\hat{u}\)',
+                'MH.geometry.vectorSolution.step3.equation': String.raw`\(\hat{u} = \frac{9\hat{i} + 2\hat{j}}{\sqrt{85}} \approx \frac{9}{\sqrt{85}}\hat{i} + \frac{2}{\sqrt{85}}\hat{j}\)`,
+                'MH.geometry.seriesExerciseTitle': 'Mathematical Series and Operations',
+                'MH.geometry.seriesExerciseText.part1': 'Evaluate the following expressions:',
+                'MH.geometry.seriesExerciseText.part2': String.raw`\(\text{A} = \left[\frac{15 × (3 + 2)}{5}\right] ÷ \left\{\frac{25 - 10}{3}\right\}\)`,
+                'MH.geometry.seriesExerciseText.part3': String.raw`\(\text{B} = \sum_{n=1}^{4} \left(\frac{n^2 + 1}{n}\right)\)`,
+                'MH.geometry.seriesExerciseText.part4': String.raw`\(\text{C} = \lim_{x \to \infty} \left(1 + \frac{1}{x}\right)^x\)`,
+                'MH.geometry.seriesExerciseText.part5': String.raw`\(\text{D} = \int_{0}^{1} x^2  dx\)`,
+                'MH.geometry.seriesSolution.step1': 'Step 1: Evaluate expression A',
+                'MH.geometry.seriesSolution.step1.equation': String.raw`\(\text{A} = \left[\frac{15 × 5}{5}\right] ÷ \left\{\frac{15}{3}\right\} = \left[\frac{75}{5}\right] ÷ \{5\} = 15 ÷ 5 = 3\)`,
+                'MH.geometry.seriesSolution.step2': 'Step 2: Evaluate the summation B',
+                'MH.geometry.seriesSolution.step2.equation': String.raw`\(\text{B} = \sum_{n=1}^{4} \left(n + \frac{1}{n}\right) = (1 + 1) + (2 + \frac{1}{2}) + (3 + \frac{1}{3}) + (4 + \frac{1}{4})\)`,
+                'MH.geometry.seriesSolution.step2.equation2': String.raw`\(\text{B} = 2 + 2.5 + 3.\overline{3} + 4.25 = 12.08\overline{3}\)`,
+                'MH.geometry.seriesSolution.step3': 'Step 3: Recognize the limit C',
+                'MH.geometry.seriesSolution.step3.equation': String.raw`\(\text{C} = \lim_{x \to \infty} \left(1 + \frac{1}{x}\right)^x = e \approx 2.71828\)`,
+                'MH.geometry.seriesSolution.step4': 'Step 4: Evaluate the integral D',
+                'MH.geometry.seriesSolution.step4.equation': String.raw`\(\text{D} = \int_{0}^{1} x^2  dx = \left[\frac{x^3}{3}\right]_{0}^{1} = \frac{1}{3} - 0 = \frac{1}{3}\)`,
+                'MH.geometry.complexExerciseTitle': 'Complex Mathematical Notation',
+                'MH.geometry.complexExerciseText.part1': 'Solve the following equation using various mathematical symbols:',
+                'MH.geometry.complexExerciseText.part2': String.raw`\(\frac{d}{dx}\left[\int_{0}^{x} e^{-t^2} dt\right] = e^{-x^2}\)`,
+                'MH.geometry.complexExerciseText.part3': 'Prove that:',
+                'MH.geometry.complexExerciseText.part4': String.raw`\(\forall \epsilon > 0, \exists \delta > 0 \ni |x - a| < \delta \Rightarrow |f(x) - f(a)| < \epsilon\)`,
+                'MH.geometry.complexExerciseText.part5': 'Evaluate the infinite series:',
+                'MH.geometry.complexExerciseText.part6': String.raw`\(\sum_{n=1}^{\infty} \frac{1}{n(n+1)} = 1\)`,
+                'MH.geometry.complexSolution.step1': 'Step 1: Fundamental Theorem of Calculus',
+                'MH.geometry.complexSolution.step1.equation': String.raw`\(\frac{d}{dx}\left[\int_{0}^{x} e^{-t^2} dt\right] = e^{-x^2}\)`,
+                'MH.geometry.complexSolution.step1.text': 'This is a direct application of the Fundamental Theorem of Calculus.',
+                'MH.geometry.complexSolution.step2': 'Step 2: Epsilon-Delta Definition of Continuity',
+                'MH.geometry.complexSolution.step2.equation': String.raw`\(\forall \epsilon > 0, \exists \delta > 0 \ni |x - a| < \delta \Rightarrow |f(x) - f(a)| < \epsilon\)`,
+                'MH.geometry.complexSolution.step2.text': 'This is the formal definition of continuity at point \(a\).',
+                'MH.geometry.complexSolution.step3': 'Step 3: Telescoping Series',
+                'MH.geometry.complexSolution.step3.equation': String.raw`\(\sum_{n=1}^{\infty} \frac{1}{n(n+1)} = \sum_{n=1}^{\infty} \left(\frac{1}{n} - \frac{1}{n+1}\right)\)`,
+                'MH.geometry.complexSolution.step3.equation2': String.raw`\(= \left(1 - \frac{1}{2}\right) + \left(\frac{1}{2} - \frac{1}{3}\right) + \left(\frac{1}{3} - \frac{1}{4}\right) + \cdots = 1\)`,
+                'MH.footer.developer': 'Developer',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Links',
+                'MH.footer.terms': 'Terms of Use',
+                'MH.footer.privacy': 'Privacy Policy'
+            },
+            'ar': {
+                'MH.general.homeTooltip': 'الذهاب إلى الصفحة الرئيسية',
+                'MH.general.install': 'تثبيت التطبيق',
+                'MH.general.installSuccess': 'تم تثبيت Mathematics Hub بنجاح!',
+                'MH.general.enableNotifications': 'تمكين الإشعارات',
+                'MH.general.notificationEnabled': 'تم تمكين الإشعارات! ستتلقى التحديثات الآن.',
+                'MH.general.title': 'مركز الرياضيات',
+                'MH.general.theme': 'السمة',
+                'MH.general.language': 'اللغة',
+                'MH.geometry.pythagoreanTitle': 'نظرية فيثاغورس',
+                'MH.geometry.introduction': 'مقدمة',
+                'MH.geometry.introText': 'نظرية فيثاغورس هي واحدة من أهم المفاهيم الأساسية في الهندسة، حيث تصف العلاقة بين أضلاع المثلث القائم.',
+                'MH.geometry.theoremTitle': 'نظرية فيثاغورس',
+                'MH.geometry.theoremText.part1': 'في المثلث القائم، مربع طول الوتر (الضلع المقابل للزاوية القائمة) يساوي مجموع مربعي طولي الضلعين الآخرين.',
+                'MH.geometry.theoremText.part2': '\\(a^2 + b^2 = c^2\\)',
+                'MH.geometry.theoremText.part3': 'حيث \\(c\\) هو طول الوتر، و \\(a\\) و \\(b\\) هما طولا الضلعين الآخرين.',
+                'MH.geometry.visualizationTitle': 'توضيح مرئي',
+                'MH.geometry.rightTriangleTitle': 'مثلث قائم (3-4-5)',
+                'MH.geometry.triangleQuestion': 'مثلث قائم كلاسيكي 3-4-5 يوضح نظرية فيثاغورس.',
+                'MH.geometry.coordinatePlaneTitle': 'المستوى الإحداثي',
+                'MH.geometry.coordinateQuestion': 'استخدم المستوى الإحداثي للتحقق من المسافات باستخدام صيغة المسافة.',
+                'MH.geometry.exampleTitle': 'أمثلة',
+                'MH.geometry.example1Title': 'المثال 1: إيجاد الوتر',
+                'MH.geometry.example1Text.part1': 'مثلث قائم طول ضلعيه',
+                'MH.geometry.example1Text.part2': '\\(a = 3\\)',
+                'MH.geometry.example1Text.part3': 'و',
+                'MH.geometry.example1Text.part4': '\\(b = 4\\)',
+                'MH.geometry.example1Text.part5': '. أوجد طول الوتر.',
+                'MH.geometry.example2Title': 'المثال 2: إيجاد ضلع',
+                'MH.geometry.example2Text.part1': 'مثلث قائم طول وتره',
+                'MH.geometry.example2Text.part2': '\\(c = 13\\)',
+                'MH.geometry.example2Text.part3': 'وطول أحد ضلعيه',
+                'MH.geometry.example2Text.part4': '\\(a = 5\\)',
+                'MH.geometry.example2Text.part5': '. أوجد طول الضلع الآخر.',
+                'MH.geometry.showSolution': 'إظهار الحل',
+                'MH.geometry.hideSolution': 'إخفاء الحل',
+                'MH.geometry.step1': 'الخطوة 1: تطبيق نظرية فيثاغورس',
+                'MH.geometry.step1.equation': '\\(a^2 + b^2 = c^2\\)',
+                'MH.geometry.step2': 'الخطوة 2: تعويض القيم المعروفة',
+                'MH.geometry.step2.equation': '\\(3^2 + 4^2 = c^2\\)',
+                'MH.geometry.step3': 'الخطوة 3: حساب المربعات',
+                'MH.geometry.step3.equation': '\\(9 + 16 = c^2\\)',
+                'MH.geometry.step4': 'الخطوة 4: تبسيط',
+                'MH.geometry.step4.equation': '\\(25 = c^2\\)',
+                'MH.geometry.step5': 'الخطوة 5: أخذ الجذر التربيعي',
+                'MH.geometry.step5.equation': '\\(c = \\sqrt{25} = 5\\)',
+                'MH.geometry.conclusion1.part1': 'طول الوتر هو',
+                'MH.geometry.conclusion1.part2': '\\(5\\)',
+                'MH.geometry.conclusion1.part3': 'وحدات.',
+                'MH.geometry.example2.step1': 'الخطوة 1: تطبيق نظرية فيثاغورس',
+                'MH.geometry.example2.step1.equation': '\\(a^2 + b^2 = c^2\\)',
+                'MH.geometry.example2.step2': 'الخطوة 2: تعويض القيم المعروفة',
+                'MH.geometry.example2.step2.equation': '\\(5^2 + b^2 = 13^2\\)',
+                'MH.geometry.example2.step3': 'الخطوة 3: حساب المربعات',
+                'MH.geometry.example2.step3.equation': '\\(25 + b^2 = 169\\)',
+                'MH.geometry.example2.step4': 'الخطوة 4: عزل \\(b^2\\)',
+                'MH.geometry.example2.step4.equation': '\\(b^2 = 169 - 25 = 144\\)',
+                'MH.geometry.example2.step5': 'الخطوة 5: أخذ الجذر التربيعي',
+                'MH.geometry.example2.step5.equation': '\\(b = \\sqrt{144} = 12\\)',
+                'MH.geometry.conclusion2.part1': 'طول الضلع الآخر هو',
+                'MH.geometry.conclusion2.part2': '\\(12\\)',
+                'MH.geometry.conclusion2.part3': 'وحدات.',
+                'MH.geometry.practiceTitle': 'تمارين',
+                'MH.geometry.practice1Text.part1': 'مثلث قائم طول ضلعيه',
+                'MH.geometry.practice1Text.part2': '\\(6\\)',
+                'MH.geometry.practice1Text.part3': 'و',
+                'MH.geometry.practice1Text.part4': '\\(8\\)',
+                'MH.geometry.practice1Text.part5': '. أوجد الوتر.',
+                'MH.geometry.practice1.step1': 'الخطوة 1: تطبيق نظرية فيثاغورس',
+                'MH.geometry.practice1.step1.equation': '\\(a^2 + b^2 = c^2\\)',
+                'MH.geometry.practice1.step2': 'الخطوة 2: تعويض القيم',
+                'MH.geometry.practice1.step2.equation': '\\(6^2 + 8^2 = c^2\\)',
+                'MH.geometry.practice1.step3': 'الخطوة 3: حساب',
+                'MH.geometry.practice1.step3.equation': '\\(36 + 64 = c^2\\)',
+                'MH.geometry.practice1.step4': 'الخطوة 4: تبسيط',
+                'MH.geometry.practice1.step4.equation': '\\(100 = c^2\\)',
+                'MH.geometry.practice1.step5': 'الخطوة 5: جذر تربيعي',
+                'MH.geometry.practice1.step5.equation': '\\(c = \\sqrt{100} = 10\\)',
+                'MH.geometry.practice1.conclusion.part1': 'طول الوتر هو',
+                'MH.geometry.practice1.conclusion.part2': '\\(10\\)',
+                'MH.geometry.practice1.conclusion.part3': 'وحدات.',
+                'MH.geometry.practice2Text.part1': 'مثلث قائم طول وتره',
+                'MH.geometry.practice2Text.part2': '\\(17\\)',
+                'MH.geometry.practice2Text.part3': 'وطول أحد ضلعيه',
+                'MH.geometry.practice2Text.part4': '\\(15\\)',
+                'MH.geometry.practice2Text.part5': '. أوجد الضلع الآخر.',
+                'MH.geometry.practice2.step1': 'الخطوة 1: تطبيق نظرية فيثاغورس',
+                'MH.geometry.practice2.step1.equation': '\\(a^2 + b^2 = c^2\\)',
+                'MH.geometry.practice2.step2': 'الخطوة 2: تعويض القيم',
+                'MH.geometry.practice2.step2.equation': '\\(15^2 + b^2 = 17^2\\)',
+                'MH.geometry.practice2.step3': 'الخطوة 3: حساب المربعات',
+                'MH.geometry.practice2.step3.equation': '\\(225 + b^2 = 289\\)',
+                'MH.geometry.practice2.step4': 'الخطوة 4: عزل \\(b^2\\)',
+                'MH.geometry.practice2.step4.equation': '\\(b^2 = 289 - 225 = 64\\)',
+                'MH.geometry.practice2.step5': 'الخطوة 5: جذر تربيعي',
+                'MH.geometry.practice2.step5.equation': '\\(b = \\sqrt{64} = 8\\)',
+                'MH.geometry.practice2.conclusion.part1': 'طول الضلع الآخر هو',
+                'MH.geometry.practice2.conclusion.part2': '\\(8\\)',
+                'MH.geometry.practice2.conclusion.part3': 'وحدات.',
+                'MH.geometry.advancedTitle': 'التعبيرات الرياضية المتقدمة',
+                'MH.geometry.vectorExerciseTitle': 'تمرين هندسة المتجهات',
+                'MH.geometry.vectorExerciseText.part1': 'بإعطاء متجهين في الفضاء الثنائي الأبعاد:',
+                'MH.geometry.vectorExerciseText.part2': String.raw`\(\vec{v} = 3\hat{i} + 4\hat{j} \quad \text{and} \quad \vec{w} = 6\hat{i} - 2\hat{j}\)`,
+                'MH.geometry.vectorExerciseText.part3': 'أوجد مقدار المتجه المحصل \\(\\vec{r} = \\vec{v} + \\vec{w}\\) باستخدام:',
+                'MH.geometry.vectorExerciseText.part4': String.raw`\(|\vec{r}| = \sqrt{(v_x + w_x)^2 + (v_y + w_y)^2}\)`,
+                'MH.geometry.vectorExerciseText.part5': 'احسب أيضًا متجه الوحدة \\(\\hat{u}\\) في اتجاه \\(\\vec{r}\\):',
+                'MH.geometry.vectorExerciseText.part6': String.raw`\(\hat{u} = \frac{\vec{r}}{|\vec{r}|}\)`,
+                'MH.geometry.vectorSolution.step1': 'الخطوة 1: أوجد المتجه المحصل \\(\\vec{r}\\)',
+                'MH.geometry.vectorSolution.step1.equation': String.raw`\(\vec{r} = \vec{v} + \vec{w} = (3 + 6)\hat{i} + (4 - 2)\hat{j} = 9\hat{i} + 2\hat{j}\)`,
+                'MH.geometry.vectorSolution.step2': 'الخطوة 2: احسب المقدار \\(|\\vec{r}|\\)',
+                'MH.geometry.vectorSolution.step2.equation': String.raw`\(|\vec{r}| = \sqrt{9^2 + 2^2} = \sqrt{81 + 4} = \sqrt{85} \approx 9.22\)`,
+                'MH.geometry.vectorSolution.step3': 'الخطوة 3: أوجد متجه الوحدة \\(\\hat{u}\\)',
+                'MH.geometry.vectorSolution.step3.equation': String.raw`\(\hat{u} = \frac{9\hat{i} + 2\hat{j}}{\sqrt{85}} \approx \frac{9}{\sqrt{85}}\hat{i} + \frac{2}{\sqrt{85}}\hat{j}\)`,
+                'MH.geometry.seriesExerciseTitle': 'المتسلسلات الرياضية والعمليات',
+                'MH.geometry.seriesExerciseText.part1': 'قيم التعابير التالية:',
+                'MH.geometry.seriesExerciseText.part2': String.raw`\(\text{A} = \left[\frac{15 × (3 + 2)}{5}\right] ÷ \left\{\frac{25 - 10}{3}\right\}\)`,
+                'MH.geometry.seriesExerciseText.part3': String.raw`\(\text{B} = \sum_{n=1}^{4} \left(\frac{n^2 + 1}{n}\right)\)`,
+                'MH.geometry.seriesExerciseText.part4': String.raw`\(\text{C} = \lim_{x \to \infty} \left(1 + \frac{1}{x}\right)^x\)`,
+                'MH.geometry.seriesExerciseText.part5': String.raw`\(\text{D} = \int_{0}^{1} x^2  dx\)`,
+                'MH.geometry.seriesSolution.step1': 'الخطوة 1: تقييم التعبير A',
+                'MH.geometry.seriesSolution.step1.equation': String.raw`\(\text{A} = \left[\frac{15 × 5}{5}\right] ÷ \left\{\frac{15}{3}\right\} = \left[\frac{75}{5}\right] ÷ \{5\} = 15 ÷ 5 = 3\)`,
+                'MH.geometry.seriesSolution.step2': 'الخطوة 2: تقييم المجموع B',
+                'MH.geometry.seriesSolution.step2.equation': String.raw`\(\text{B} = \sum_{n=1}^{4} \left(n + \frac{1}{n}\right) = (1 + 1) + (2 + \frac{1}{2}) + (3 + \frac{1}{3}) + (4 + \frac{1}{4})\)`,
+                'MH.geometry.seriesSolution.step2.equation2': String.raw`\(\text{B} = 2 + 2.5 + 3.\overline{3} + 4.25 = 12.08\overline{3}\)`,
+                'MH.geometry.seriesSolution.step3': 'الخطوة 3: التعرف على النهاية C',
+                'MH.geometry.seriesSolution.step3.equation': String.raw`\(\text{C} = \lim_{x \to \infty} \left(1 + \frac{1}{x}\right)^x = e \approx 2.71828\)`,
+                'MH.geometry.seriesSolution.step4': 'الخطوة 4: تقييم التكامل D',
+                'MH.geometry.seriesSolution.step4.equation': String.raw`\(\text{D} = \int_{0}^{1} x^2  dx = \left[\frac{x^3}{3}\right]_{0}^{1} = \frac{1}{3} - 0 = \frac{1}{3}\)`,
+                'MH.geometry.complexExerciseTitle': 'الرموز الرياضية المعقدة',
+                'MH.geometry.complexExerciseText.part1': 'حل المعادلة التالية باستخدام رموز رياضية متنوعة:',
+                'MH.geometry.complexExerciseText.part2': String.raw`\(\frac{d}{dx}\left[\int_{0}^{x} e^{-t^2} dt\right] = e^{-x^2}\)`,
+                'MH.geometry.complexExerciseText.part3': 'أثبت أن:',
+                'MH.geometry.complexExerciseText.part4': String.raw`\(\forall \epsilon > 0, \exists \delta > 0 \ni |x - a| < \delta \Rightarrow |f(x) - f(a)| < \epsilon\)`,
+                'MH.geometry.complexExerciseText.part5': 'قيم المتسلسلة اللانهائية:',
+                'MH.geometry.complexExerciseText.part6': String.raw`\(\sum_{n=1}^{\infty} \frac{1}{n(n+1)} = 1\)`,
+                'MH.geometry.complexSolution.step1': 'الخطوة 1: النظرية الأساسية للتفاضل والتكامل',
+                'MH.geometry.complexSolution.step1.equation': String.raw`\(\frac{d}{dx}\left[\int_{0}^{x} e^{-t^2} dt\right] = e^{-x^2}\)`,
+                'MH.geometry.complexSolution.step1.text': 'هذا تطبيق مباشر للنظرية الأساسية للتفاضل والتكامل.',
+                'MH.geometry.complexSolution.step2': 'الخطوة 2: تعريف إبسيلون-دلتا للاستمرارية',
+                'MH.geometry.complexSolution.step2.equation': String.raw`\(\forall \epsilon > 0, \exists \delta > 0 \ni |x - a| < \delta \Rightarrow |f(x) - f(a)| < \epsilon\)`,
+                'MH.geometry.complexSolution.step2.text': 'هذا هو التعريف الرسمي للاستمرارية عند النقطة \\(a\\).',
+                'MH.geometry.complexSolution.step3': 'الخطوة 3: متسلسلة تلسكوبية',
+                'MH.geometry.complexSolution.step3.equation': String.raw`\(\sum_{n=1}^{\infty} \frac{1}{n(n+1)} = \sum_{n=1}^{\infty} \left(\frac{1}{n} - \frac{1}{n+1}\right)\)`,
+                'MH.geometry.complexSolution.step3.equation2': String.raw`\(= \left(1 - \frac{1}{2}\right) + \left(\frac{1}{2} - \frac{1}{3}\right) + \left(\frac{1}{3} - \frac{1}{4}\right) + \cdots = 1\)`,
+                'MH.footer.developer': 'المطور',
+                'MH.footer.version': 'الإصدار',
+                'MH.footer.links': 'روابط',
+                'MH.footer.terms': 'شروط الاستخدام',
+                'MH.footer.privacy': 'سياسة الخصوصية'
+            },
+            'fr': {
+                'MH.general.homeTooltip': 'Aller à la page d\'accueil',
+                'MH.general.install': 'Installer l\'App',
+                'MH.general.installSuccess': 'Mathematics Hub installé avec succès!',
+                'MH.general.enableNotifications': 'Activer les notifications',
+                'MH.general.notificationEnabled': 'Notifications activées! Vous recevrez maintenant des mises à jour.',
+                'MH.general.title': 'Centre de Mathématiques',
+                'MH.general.theme': 'Thème',
+                'MH.general.language': 'Langue',
+                'MH.geometry.pythagoreanTitle': 'Théorème de Pythagore',
+                'MH.geometry.introduction': 'Introduction',
+                'MH.geometry.introText': 'Le théorème de Pythagore est l\'un des concepts fondamentaux de la géométrie, décrivant la relation entre les côtés d\'un triangle rectangle.',
+                'MH.geometry.theoremTitle': 'Théorème de Pythagore',
+                'MH.geometry.theoremText.part1': 'Dans un triangle rectangle, le carré de la longueur de l\'hypoténuse (le côté opposé à l\'angle droit) est égal à la somme des carrés des longueurs des deux autres côtés.',
+                'MH.geometry.theoremText.part2': '\\(a^2 + b^2 = c^2\\)',
+                'MH.geometry.theoremText.part3': 'où \\(c\\) est la longueur de l\'hypoténuse, et \\(a\\) et \\(b\\) sont les longueurs des deux autres côtés.',
+                'MH.geometry.visualizationTitle': 'Démonstration Visuelle',
+                'MH.geometry.rightTriangleTitle': 'Triangle Rectangle (3-4-5)',
+                'MH.geometry.triangleQuestion': 'Un triangle rectangle classique 3-4-5 démontrant le théorème de Pythagore.',
+                'MH.geometry.coordinatePlaneTitle': 'Plan Cartésien',
+                'MH.geometry.coordinateQuestion': 'Utilisez le plan cartésien pour vérifier les distances en utilisant la formule de distance.',
+                'MH.geometry.exampleTitle': 'Exemples',
+                'MH.geometry.example1Title': 'Exemple 1: Trouver l\'Hypoténuse',
+                'MH.geometry.example1Text.part1': 'Un triangle rectangle a des côtés de longueur',
+                'MH.geometry.example1Text.part2': '\\(a = 3\\)',
+                'MH.geometry.example1Text.part3': 'et',
+                'MH.geometry.example1Text.part4': '\\(b = 4\\)',
+                'MH.geometry.example1Text.part5': '. Trouvez la longueur de l\'hypoténuse.',
+                'MH.geometry.example2Title': 'Exemple 2: Trouver un Côté',
+                'MH.geometry.example2Text.part1': 'Un triangle rectangle a une hypoténuse de longueur',
+                'MH.geometry.example2Text.part2': '\\(c = 13\\)',
+                'MH.geometry.example2Text.part3': 'et un côté de longueur',
+                'MH.geometry.example2Text.part4': '\\(a = 5\\)',
+                'MH.geometry.example2Text.part5': '. Trouvez la longueur de l\'autre côté.',
+                'MH.geometry.showSolution': 'Afficher la Solution',
+                'MH.geometry.hideSolution': 'Masquer la Solution',
+                'MH.geometry.step1': 'Étape 1: Appliquer le théorème de Pythagore',
+                'MH.geometry.step1.equation': '\\(a^2 + b^2 = c^2\\)',
+                'MH.geometry.step2': 'Étape 2: Substituer les valeurs connues',
+                'MH.geometry.step2.equation': '\\(3^2 + 4^2 = c^2\\)',
+                'MH.geometry.step3': 'Étape 3: Calculer les carrés',
+                'MH.geometry.step3.equation': '\\(9 + 16 = c^2\\)',
+                'MH.geometry.step4': 'Étape 4: Simplifier',
+                'MH.geometry.step4.equation': '\\(25 = c^2\\)',
+                'MH.geometry.step5': 'Étape 5: Prendre la racine carrée',
+                'MH.geometry.step5.equation': '\\(c = \\sqrt{25} = 5\\)',
+                'MH.geometry.conclusion1.part1': 'L\'hypoténuse a une longueur de',
+                'MH.geometry.conclusion1.part2': '\\(5\\)',
+                'MH.geometry.conclusion1.part3': 'unités.',
+                'MH.geometry.example2.step1': 'Étape 1: Appliquer le théorème de Pythagore',
+                'MH.geometry.example2.step1.equation': '\\(a^2 + b^2 = c^2\\)',
+                'MH.geometry.example2.step2': 'Étape 2: Substituer les valeurs connues',
+                'MH.geometry.example2.step2.equation': '\\(5^2 + b^2 = 13^2\\)',
+                'MH.geometry.example2.step3': 'Étape 3: Calculer les carrés',
+                'MH.geometry.example2.step3.equation': '\\(25 + b^2 = 169\\)',
+                'MH.geometry.example2.step4': 'Étape 4: Isoler \\(b^2\\)',
+                'MH.geometry.example2.step4.equation': '\\(b^2 = 169 - 25 = 144\\)',
+                'MH.geometry.example2.step5': 'Étape 5: Prendre la racine carrée',
+                'MH.geometry.example2.step5.equation': '\\(b = \\sqrt{144} = 12\\)',
+                'MH.geometry.conclusion2.part1': 'L\'autre côté a une longueur de',
+                'MH.geometry.conclusion2.part2': '\\(12\\)',
+                'MH.geometry.conclusion2.part3': 'unités.',
+                'MH.geometry.practiceTitle': 'Exercices',
+                'MH.geometry.practice1Text.part1': 'Un triangle rectangle a des côtés de longueur',
+                'MH.geometry.practice1Text.part2': '\\(6\\)',
+                'MH.geometry.practice1Text.part3': 'et',
+                'MH.geometry.practice1Text.part4': '\\(8\\)',
+                'MH.geometry.practice1Text.part5': '. Trouvez l\'hypoténuse.',
+                'MH.geometry.practice1.step1': 'Étape 1: Appliquer le théorème de Pythagore',
+                'MH.geometry.practice1.step1.equation': '\\(a^2 + b^2 = c^2\\)',
+                'MH.geometry.practice1.step2': 'Étape 2: Substituer les valeurs',
+                'MH.geometry.practice1.step2.equation': '\\(6^2 + 8^2 = c^2\\)',
+                'MH.geometry.practice1.step3': 'Étape 3: Calculer',
+                'MH.geometry.practice1.step3.equation': '\\(36 + 64 = c^2\\)',
+                'MH.geometry.practice1.step4': 'Étape 4: Simplifier',
+                'MH.geometry.practice1.step4.equation': '\\(100 = c^2\\)',
+                'MH.geometry.practice1.step5': 'Étape 5: Racine carrée',
+                'MH.geometry.practice1.step5.equation': '\\(c = \\sqrt{100} = 10\\)',
+                'MH.geometry.practice1.conclusion.part1': 'L\'hypoténuse mesure',
+                'MH.geometry.practice1.conclusion.part2': '\\(10\\)',
+                'MH.geometry.practice1.conclusion.part3': 'unités.',
+                'MH.geometry.practice2Text.part1': 'Un triangle rectangle a une hypoténuse de',
+                'MH.geometry.practice2Text.part2': '\\(17\\)',
+                'MH.geometry.practice2Text.part3': 'et un côté de',
+                'MH.geometry.practice2Text.part4': '\\(15\\)',
+                'MH.geometry.practice2Text.part5': '. Trouvez l\'autre côté.',
+                'MH.geometry.practice2.step1': 'Étape 1: Appliquer le théorème de Pythagore',
+                'MH.geometry.practice2.step1.equation': '\\(a^2 + b^2 = c^2\\)',
+                'MH.geometry.practice2.step2': 'Étape 2: Substituer les valeurs',
+                'MH.geometry.practice2.step2.equation': '\\(15^2 + b^2 = 17^2\\)',
+                'MH.geometry.practice2.step3': 'Étape 3: Calculer les carrés',
+                'MH.geometry.practice2.step3.equation': '\\(225 + b^2 = 289\\)',
+                'MH.geometry.practice2.step4': 'Étape 4: Isoler \\(b^2\\)',
+                'MH.geometry.practice2.step4.equation': '\\(b^2 = 289 - 225 = 64\\)',
+                'MH.geometry.practice2.step5': 'Étape 5: Racine carrée',
+                'MH.geometry.practice2.step5.equation': '\\(b = \\sqrt{64} = 8\\)',
+                'MH.geometry.practice2.conclusion.part1': 'L\'autre côté mesure',
+                'MH.geometry.practice2.conclusion.part2': '\\(8\\)',
+                'MH.geometry.practice2.conclusion.part3': 'unités.',
+                'MH.geometry.advancedTitle': 'Expressions Mathématiques Avancées',
+                'MH.geometry.vectorExerciseTitle': 'Exercice de Géométrie Vectorielle',
+                'MH.geometry.vectorExerciseText.part1': 'Étant donné deux vecteurs dans l\'espace 2D:',
+                'MH.geometry.vectorExerciseText.part2': String.raw`\(\vec{v} = 3\hat{i} + 4\hat{j} \quad \text{et} \quad \vec{w} = 6\hat{i} - 2\hat{j}\)`,
+                'MH.geometry.vectorExerciseText.part3': 'Trouvez la magnitude du vecteur résultant \\(\\vec{r} = \\vec{v} + \\vec{w}\\) en utilisant:',
+                'MH.geometry.vectorExerciseText.part4': String.raw`\(|\vec{r}| = \sqrt{(v_x + w_x)^2 + (v_y + w_y)^2}\)`,
+                'MH.geometry.vectorExerciseText.part5': 'Calculez également le vecteur unitaire \\(\\hat{u}\\) dans la direction de \\(\\vec{r}\\):',
+                'MH.geometry.vectorExerciseText.part6': String.raw`\(\hat{u} = \frac{\vec{r}}{|\vec{r}|}\)`,
+                'MH.geometry.vectorSolution.step1': 'Étape 1: Trouver le vecteur résultant \\(\\vec{r}\\)',
+                'MH.geometry.vectorSolution.step1.equation': String.raw`\(\vec{r} = \vec{v} + \vec{w} = (3 + 6)\hat{i} + (4 - 2)\hat{j} = 9\hat{i} + 2\hat{j}\)`,
+                'MH.geometry.vectorSolution.step2': 'Étape 2: Calculer la magnitude \\(|\\vec{r}|\\)',
+                'MH.geometry.vectorSolution.step2.equation': String.raw`\(|\vec{r}| = \sqrt{9^2 + 2^2} = \sqrt{81 + 4} = \sqrt{85} \approx 9.22\)`,
+                'MH.geometry.vectorSolution.step3': 'Étape 3: Trouver le vecteur unitaire \\(\\hat{u}\\)',
+                'MH.geometry.vectorSolution.step3.equation': String.raw`\(\hat{u} = \frac{9\hat{i} + 2\hat{j}}{\sqrt{85}} \approx \frac{9}{\sqrt{85}}\hat{i} + \frac{2}{\sqrt{85}}\hat{j}\)`,
+                'MH.geometry.seriesExerciseTitle': 'Séries Mathématiques et Opérations',
+                'MH.geometry.seriesExerciseText.part1': 'Évaluez les expressions suivantes:',
+                'MH.geometry.seriesExerciseText.part2': String.raw`\(\text{A} = \left[\frac{15 × (3 + 2)}{5}\right] ÷ \left\{\frac{25 - 10}{3}\right\}\)`,
+                'MH.geometry.seriesExerciseText.part3': String.raw`\(\text{B} = \sum_{n=1}^{4} \left(\frac{n^2 + 1}{n}\right)\)`,
+                'MH.geometry.seriesExerciseText.part4': String.raw`\(\text{C} = \lim_{x \to \infty} \left(1 + \frac{1}{x}\right)^x\)`,
+                'MH.geometry.seriesExerciseText.part5': String.raw`\(\text{D} = \int_{0}^{1} x^2  dx\)`,
+                'MH.geometry.seriesSolution.step1': 'Étape 1: Évaluer l\'expression A',
+                'MH.geometry.seriesSolution.step1.equation': String.raw`\(\text{A} = \left[\frac{15 × 5}{5}\right] ÷ \left\{\frac{15}{3}\right\} = \left[\frac{75}{5}\right] ÷ \{5\} = 15 ÷ 5 = 3\)`,
+                'MH.geometry.seriesSolution.step2': 'Étape 2: Évaluer la somme B',
+                'MH.geometry.seriesSolution.step2.equation': String.raw`\(\text{B} = \sum_{n=1}^{4} \left(n + \frac{1}{n}\right) = (1 + 1) + (2 + \frac{1}{2}) + (3 + \frac{1}{3}) + (4 + \frac{1}{4})\)`,
+                'MH.geometry.seriesSolution.step2.equation2': String.raw`\(\text{B} = 2 + 2.5 + 3.\overline{3} + 4.25 = 12.08\overline{3}\)`,
+                'MH.geometry.seriesSolution.step3': 'Étape 3: Reconnaître la limite C',
+                'MH.geometry.seriesSolution.step3.equation': String.raw`\(\text{C} = \lim_{x \to \infty} \left(1 + \frac{1}{x}\right)^x = e \approx 2.71828\)`,
+                'MH.geometry.seriesSolution.step4': 'Étape 4: Évaluer l\'intégrale D',
+                'MH.geometry.seriesSolution.step4.equation': String.raw`\(\text{D} = \int_{0}^{1} x^2  dx = \left[\frac{x^3}{3}\right]_{0}^{1} = \frac{1}{3} - 0 = \frac{1}{3}\)`,
+                'MH.geometry.complexExerciseTitle': 'Notation Mathématique Complexe',
+                'MH.geometry.complexExerciseText.part1': 'Résolvez l\'équation suivante en utilisant divers symboles mathématiques:',
+                'MH.geometry.complexExerciseText.part2': String.raw`\(\frac{d}{dx}\left[\int_{0}^{x} e^{-t^2} dt\right] = e^{-x^2}\)`,
+                'MH.geometry.complexExerciseText.part3': 'Prouvez que:',
+                'MH.geometry.complexExerciseText.part4': String.raw`\(\forall \epsilon > 0, \exists \delta > 0 \ni |x - a| < \delta \Rightarrow |f(x) - f(a)| < \epsilon\)`,
+                'MH.geometry.complexExerciseText.part5': 'Évaluez la série infinie:',
+                'MH.geometry.complexExerciseText.part6': String.raw`\(\sum_{n=1}^{\infty} \frac{1}{n(n+1)} = 1\)`,
+                'MH.geometry.complexSolution.step1': 'Étape 1: Théorème fondamental du calcul',
+                'MH.geometry.complexSolution.step1.equation': String.raw`\(\frac{d}{dx}\left[\int_{0}^{x} e^{-t^2} dt\right] = e^{-x^2}\)`,
+                'MH.geometry.complexSolution.step1.text': 'Ceci est une application directe du théorème fondamental du calcul.',
+                'MH.geometry.complexSolution.step2': 'Étape 2: Définition Epsilon-Delta de la continuité',
+                'MH.geometry.complexSolution.step2.equation': String.raw`\(\forall \epsilon > 0, \exists \delta > 0 \ni |x - a| < \delta \Rightarrow |f(x) - f(a)| < \epsilon\)`,
+                'MH.geometry.complexSolution.step2.text': 'Ceci est la définition formelle de la continuité au point \\(a\\).',
+                'MH.geometry.complexSolution.step3': 'Étape 3: Série télescopique',
+                'MH.geometry.complexSolution.step3.equation': String.raw`\(\sum_{n=1}^{\infty} \frac{1}{n(n+1)} = \sum_{n=1}^{\infty} \left(\frac{1}{n} - \frac{1}{n+1}\right)\)`,
+                'MH.geometry.complexSolution.step3.equation2': String.raw`\(= \left(1 - \frac{1}{2}\right) + \left(\frac{1}{2} - \frac{1}{3}\right) + \left(\frac{1}{3} - \frac{1}{4}\right) + \cdots = 1\)`,
+                'MH.footer.developer': 'Développeur',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Liens',
+                'MH.footer.terms': 'Conditions d\'Utilisation',
+                'MH.footer.privacy': 'Politique de Confidentialité'
+            }
+        };
+
+        // Solution toggle function for this page
+        function toggleSolution(problemNumber) {
+            const solution = document.getElementById(`solution${problemNumber}`);
+            const button = solution.previousElementSibling;
+            
+            if (solution.style.display === 'block') {
+                solution.style.display = 'none';
+                button.setAttribute('data-i18n', 'MH.geometry.showSolution');
+                button.textContent = translations[MHThemeManager.getCurrentLanguage()]['MH.geometry.showSolution'];
+            } else {
+                solution.style.display = 'block';
+                button.setAttribute('data-i18n', 'MH.geometry.hideSolution');
+                button.textContent = translations[MHThemeManager.getCurrentLanguage()]['MH.geometry.hideSolution'];
+                
+                // Re-render KaTeX for newly visible equations
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(solution, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\(', right: '\\)', display: false},
+                            {left: '\\[', right: '\\]', display: true}
+                        ],
+                        throwOnError: false
+                    });
+                }
+            }
+        }
+
+        // Initialize KaTeX auto-render
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize KaTeX auto-render
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+
+            // Initialize solutions as hidden
+            for (let i = 1; i <= 7; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+            }
+            
+            // Draw geometry elements using MHGeometry object
+            // Draw a 3-4-5 right triangle
+            MHGeometry.drawTriangle('pythagoreanTriangle', 80, 60, 80, 160, 140, 160);
+            
+            // Draw coordinate plane
+            MHGeometry.drawCoordinatePlane('coordinatePlane', 300, 250, 25);
+            
+            // Draw points to form a 3-4-5 triangle on the coordinate plane
+            const canvas = document.getElementById('coordinatePlane');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                const originX = canvas.width / 2;
+                const originY = canvas.height / 2;
+                const scale = 25;
+                
+                // Draw a 3-4-5 triangle on the coordinate plane
+                ctx.strokeStyle = '#FF6B6B';
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+                ctx.moveTo(originX, originY);
+                ctx.lineTo(originX + 3 * scale, originY);
+                ctx.lineTo(originX, originY - 4 * scale);
+                ctx.closePath();
+                ctx.stroke();
+                
+                // Fill triangle
+                ctx.fillStyle = 'rgba(255, 107, 107, 0.1)';
+                ctx.fill();
+                
+                // Mark points
+                ctx.fillStyle = '#E74C3C';
+                const points = [
+                    [originX, originY, 'A(0,0)'],
+                    [originX + 3 * scale, originY, 'B(3,0)'],
+                    [originX, originY - 4 * scale, 'C(0,4)']
+                ];
+                
+                points.forEach(([x, y, label]) => {
+                    ctx.beginPath();
+                    ctx.arc(x, y, 4, 0, 2 * Math.PI);
+                    ctx.fill();
+                    
+                    // Label points
+                    ctx.fillStyle = '#2C3E50';
+                    ctx.font = '10px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.save();
+                    ctx.direction = 'ltr';
+                    ctx.fillText(label, x, y - 10);
+                    ctx.restore();
+                    ctx.fillStyle = '#E74C3C';
+                });
+            }
+            
+            // Force LTR on geometry containers
+            document.querySelectorAll('.MH-geometry-container, .MH-geometry-item').forEach(element => {
+                element.style.direction = 'ltr';
+                element.setAttribute('dir', 'ltr');
+            });
+        });
+    </script>
+
+<!-- Add the service worker registration script -->
+<script>
+    // Register service worker with better error handling
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+                
+            })
+            .catch(function(error) {
+                console.log('Service Worker registration failed:', error);
+            });
+        });
+    }
+</script>
+
+<!-- Add noscript fallback -->
+<noscript>
+    <style>
+        .MH-header-controls { display: none; }
+        .MH-solution { display: block; }
+    </style>
+    <div class="MH-warning">
+        JavaScript is recommended for the full experience, but content is still accessible.
+    </div>
+</noscript>
+</body>
+</html>

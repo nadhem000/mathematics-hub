@@ -1,0 +1,1847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Polynomials - Part 4</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#9C27B0" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#7B1FA2" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#9C27B0">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    
+    <style>
+    /* PURPLE COLOR PALETTE FOR POLYNOMIALS LESSON */
+    :root {
+        --primary: #9C27B0;
+        --primary-light: #BA68C8;
+        --primary-dark: #7B1FA2;
+        --secondary: #FF9800;
+        --secondary-light: #FFB74D;
+        --secondary-dark: #F57C00;
+        --accent: #4CAF50;
+        --warning: #F44336;
+        --info: #2196F3;
+        --text: #333333;
+        --text-light: #666666;
+        --background: #FFFFFF;
+        --surface: #F8F9FA;
+        --border: #E9ECEF;
+        --shadow: rgba(0, 0, 0, 0.1);
+    }
+    
+    [data-theme="dark"] {
+        --primary: #7B1FA2;
+        --primary-light: #9C27B0;
+        --primary-dark: #6A1B9A;
+        --secondary: #F57C00;
+        --secondary-light: #FF9800;
+        --secondary-dark: #E65100;
+        --accent: #4CAF50;
+        --warning: #D32F2F;
+        --info: #1976D2;
+        --text: #FFFFFF;
+        --text-light: #CCCCCC;
+        --background: #121212;
+        --surface: #1E1E1E;
+        --border: #333333;
+        --shadow: rgba(0, 0, 0, 0.3);
+    }
+
+    /* KaTeX styling */
+    .katex { 
+        font-size: 1.1em; 
+    }
+    
+    .katex-display { 
+        margin: 1em 0; 
+        text-align: center;
+    }
+    
+    .katex-display > .katex { 
+        display: inline-block;
+        text-align: center;
+    }
+
+    /* Equation styling */
+    .MH-equation {
+        font-family: inherit;
+        font-size: inherit;
+        color: inherit;
+        margin: 0.5em 0;
+        padding: 0;
+        display: inline-block;
+        direction: ltr !important;
+        unicode-bidi: isolate;
+    }
+    
+    [dir="rtl"] .MH-equation {
+        text-align: left;
+        unicode-bidi: plaintext;
+    }
+
+    /* Polynomial graph container styling */
+    .MH-graph-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        margin: 2rem 0;
+        justify-content: center;
+    }
+    
+    .MH-graph-item {
+        flex: 1;
+        min-width: 300px;
+        max-width: 400px;
+        text-align: center;
+        padding: 1rem;
+        background: var(--surface);
+        border-radius: 8px;
+        border: 1px solid var(--border);
+    }
+    
+    .MH-graph-title {
+        font-weight: bold;
+        margin-bottom: 1rem;
+        color: var(--primary);
+        font-size: 1.1rem;
+    }
+    
+    .MH-graph-canvas {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        background: white;
+    }
+</style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                    <!-- Notification Button -->
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+                        <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.polynomials.part4Title">Polynomials: Part 4 - Factorization and Roots</h1>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.polynomials.definitionTitle">Definition</h2>
+            <p data-i18n="MH.polynomials.definitionText.part1">Let P and Q be two polynomials.</p>
+            <p data-i18n="MH.polynomials.definitionText.part2">We say that polynomial P is factorable by polynomial Q if there exists a polynomial R such that, for all real x,</p>
+            <div class="MH-equation" data-i18n="MH.polynomials.definitionText.part3">\(P(x) = Q(x) \cdot R(x)\)</div>
+            <p data-i18n="MH.polynomials.definitionText.part4">This means that Q is a factor of P, and we can write P as the product of Q and another polynomial R.</p>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.polynomials.importantNoteTitle">Important Note</h3>
+                <p data-i18n="MH.polynomials.importantNoteText.part1">If a polynomial P is factorable by (x - a), then a is a root of P.</p>
+                <p data-i18n="MH.polynomials.importantNoteText.part2">This means that P(a) = 0, and (x - a) is a factor of P(x).</p>
+            </div>
+        </section>
+
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.polynomials.activityTitle">Activity 16: Exploring Polynomial Factorization</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.polynomials.part1Title">Part 1: Relationship Between Factors and Roots</h3>
+                <p data-i18n="MH.polynomials.part1Text.part1">Let a be a real number.</p>
+                <p data-i18n="MH.polynomials.part1Text.part2">Prove that if a polynomial is factorable by (x - a), then a is a root of this polynomial.</p>
+                
+                <button class="MH-solution-btn" data-i18n="MH.general.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                <div class="MH-solution" id="solution1">
+                    <p data-i18n="MH.polynomials.part1Solution.step1">Step 1: Start with the given information</p>
+                    <p data-i18n="MH.polynomials.part1Solution.step1Text">We know that the polynomial P is factorable by (x - a). This means there exists a polynomial R such that:</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1Solution.step1Equation">\(P(x) = (x - a) \cdot R(x)\)</div>
+                    
+                    <p data-i18n="MH.polynomials.part1Solution.step2">Step 2: Evaluate P at x = a</p>
+                    <p data-i18n="MH.polynomials.part1Solution.step2Text">To prove that a is a root of P, we need to show that P(a) = 0.</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1Solution.step2Equation">\(P(a) = (a - a) \cdot R(a) = 0 \cdot R(a) = 0\)</div>
+                    
+                    <p data-i18n="MH.polynomials.part1Solution.step3">Step 3: Conclusion</p>
+                    <p data-i18n="MH.polynomials.part1Solution.step3Text">Since P(a) = 0, a is indeed a root of the polynomial P.</p>
+                    <p data-i18n="MH.polynomials.part1Solution.step3Text2">This proves that if a polynomial is factorable by (x - a), then a is a root of that polynomial.</p>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.polynomials.part2Title">Part 2: Cubic Polynomials and Factorization</h3>
+                <p data-i18n="MH.polynomials.part2Text.part1">Let a be a real number and P be the polynomial defined by</p>
+                <div class="MH-equation" data-i18n="MH.polynomials.part2Text.part2">\(P(x) = ax^3 + bx^2 + cx + d\)</div>
+                <p data-i18n="MH.polynomials.part2Text.part3">where a, b, c and d are real numbers with \(a \neq 0\).</p>
+                
+                <h4 data-i18n="MH.polynomials.part2aTitle">Part 2a: Factor \(P(x) - P(a)\)</h4>
+                <button class="MH-solution-btn" data-i18n="MH.general.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                <div class="MH-solution" id="solution2">
+                    <p data-i18n="MH.polynomials.part2aSolution.step1">Step 1: Write the expression</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2aSolution.step1Equation">\(P(x) - P(a) = (ax^3 + bx^2 + cx + d) - (aa^3 + ba^2 + ca + d)\)</div>
+                    
+                    <p data-i18n="MH.polynomials.part2aSolution.step2">Step 2: Simplify the expression</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2aSolution.step2Equation">\(P(x) - P(a) = a(x^3 - a^3) + b(x^2 - a^2) + c(x - a)\)</div>
+                    
+                    <p data-i18n="MH.polynomials.part2aSolution.step3">Step 3: Factor each term</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2aSolution.step3Equation">\(x^3 - a^3 = (x - a)(x^2 + ax + a^2)\)</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2aSolution.step3Equation2">\(x^2 - a^2 = (x - a)(x + a)\)</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2aSolution.step3Equation3">\(x - a = (x - a)\)</div>
+                    
+                    <p data-i18n="MH.polynomials.part2aSolution.step4">Step 4: Combine the factors</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2aSolution.step4Equation">\(P(x) - P(a) = (x - a)[a(x^2 + ax + a^2) + b(x + a) + c]\)</div>
+                    
+                    <p data-i18n="MH.polynomials.part2aSolution.step5">Step 5: Final factorization</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2aSolution.step5Equation">\(P(x) - P(a) = (x - a) \cdot Q(x)\)</div>
+                    <p data-i18n="MH.polynomials.part2aSolution.step5Text">where \(Q(x) = a(x^2 + ax + a^2) + b(x + a) + c\) is a polynomial of degree 2.</p>
+                </div>
+                
+                <h4 data-i18n="MH.polynomials.part2bTitle">Part 2b: If a is a root, then P(x) = (x - a)Q(x)</h4>
+                <button class="MH-solution-btn" data-i18n="MH.general.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                <div class="MH-solution" id="solution3">
+                    <p data-i18n="MH.polynomials.part2bSolution.step1">Step 1: Start with the given information</p>
+                    <p data-i18n="MH.polynomials.part2bSolution.step1Text">We know that a is a root of P, which means P(a) = 0.</p>
+                    
+                    <p data-i18n="MH.polynomials.part2bSolution.step2">Step 2: Use the factorization from part 2a</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step2Equation">\(P(x) - P(a) = (x - a) \cdot Q(x)\)</div>
+                    
+                    <p data-i18n="MH.polynomials.part2bSolution.step3">Step 3: Substitute P(a) = 0</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step3Equation">\(P(x) - 0 = (x - a) \cdot Q(x)\)</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step3Equation2">\(P(x) = (x - a) \cdot Q(x)\)</div>
+                    
+                    <p data-i18n="MH.polynomials.part2bSolution.step4">Step 4: Determine the degree of Q</p>
+                    <p data-i18n="MH.polynomials.part2bSolution.step4Text">Since P is a cubic polynomial (degree 3) and (x - a) is a linear polynomial (degree 1), Q must be a quadratic polynomial (degree 2).</p>
+                    
+                    <p data-i18n="MH.polynomials.part2bSolution.step5">Step 5: Conclusion</p>
+                    <p data-i18n="MH.polynomials.part2bSolution.step5Text">If a is a root of the cubic polynomial P, then P(x) = (x - a)Q(x), where Q is a quadratic polynomial.</p>
+                </div>
+                
+                <h4 data-i18n="MH.polynomials.part2cTitle">Part 2c: Maximum number of roots for a cubic polynomial</h4>
+                <button class="MH-solution-btn" data-i18n="MH.general.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+                <div class="MH-solution" id="solution4">
+                    <p data-i18n="MH.polynomials.part2cSolution.step1">Step 1: Understanding the problem</p>
+                    <p data-i18n="MH.polynomials.part2cSolution.step1Text">We need to prove that a cubic polynomial (degree 3) can have at most three roots.</p>
+                    
+                    <p data-i18n="MH.polynomials.part2cSolution.step2">Step 2: Use the factorization property</p>
+                    <p data-i18n="MH.polynomials.part2cSolution.step2Text">From part 2b, if a is a root of P, then P(x) = (x - a)Q(x), where Q is a quadratic polynomial (degree 2).</p>
+                    
+                    <p data-i18n="MH.polynomials.part2cSolution.step3">Step 3: Consider additional roots</p>
+                    <p data-i18n="MH.polynomials.part2cSolution.step3Text">If b is another root of P, then since P(b) = 0 and (b - a) ≠ 0 (assuming a and b are distinct), we must have Q(b) = 0.</p>
+                    <p data-i18n="MH.polynomials.part2cSolution.step3Text2">This means b is a root of the quadratic polynomial Q.</p>
+                    
+                    <p data-i18n="MH.polynomials.part2cSolution.step4">Step 4: Continue the factorization</p>
+                    <p data-i18n="MH.polynomials.part2cSolution.step4Text">If b is a root of Q, then Q(x) = (x - b)R(x), where R is a linear polynomial (degree 1).</p>
+                    <p data-i18n="MH.polynomials.part2cSolution.step4Text2">So P(x) = (x - a)(x - b)R(x).</p>
+                    
+                    <p data-i18n="MH.polynomials.part2cSolution.step5">Step 5: Consider a third root</p>
+                    <p data-i18n="MH.polynomials.part2cSolution.step5Text">If c is a third root of P, then since P(c) = 0 and (c - a) ≠ 0, (c - b) ≠ 0, we must have R(c) = 0.</p>
+                    <p data-i18n="MH.polynomials.part2cSolution.step5Text2">This means c is a root of the linear polynomial R.</p>
+                    
+                    <p data-i18n="MH.polynomials.part2cSolution.step6">Step 6: Final factorization</p>
+                    <p data-i18n="MH.polynomials.part2cSolution.step6Text">If R has a root at c, then R(x) = k(x - c) for some constant k.</p>
+                    <p data-i18n="MH.polynomials.part2cSolution.step6Text2">So P(x) = k(x - a)(x - b)(x - c).</p>
+                    
+                    <p data-i18n="MH.polynomials.part2cSolution.step7">Step 7: Conclusion</p>
+                    <p data-i18n="MH.polynomials.part2cSolution.step7Text">A cubic polynomial can be completely factorized into at most three linear factors, so it can have at most three roots.</p>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.polynomials.part3Title">Part 3: Quartic Polynomials</h3>
+                
+                <h4 data-i18n="MH.polynomials.part3aTitle">Part 3a: Factorization with two distinct roots</h4>
+                <p data-i18n="MH.polynomials.part3aText.part1">Let F be the polynomial defined by</p>
+                <div class="MH-equation" data-i18n="MH.polynomials.part3aText.part2">\(F(x) = ax^4 + bx^3 + cx^2 + dx + e\)</div>
+                <p data-i18n="MH.polynomials.part3aText.part3">where a, b, c, d, e are real numbers with \(a \neq 0\).</p>
+                <p data-i18n="MH.polynomials.part3aText.part4">Let α, β be two distinct roots of F.</p>
+                <p data-i18n="MH.polynomials.part3aText.part5">Show that there exists a polynomial G such that</p>
+                <div class="MH-equation" data-i18n="MH.polynomials.part3aText.part6">\(F(x) = (x - α)(x - β)G(x)\)</div>
+                
+                <div style="margin-top: 1.5rem;">
+    <button class="MH-solution-btn" data-i18n="MH.general.showSolution" onclick="toggleSolution(5)">Show Solution</button>
+</div>
+                <div class="MH-solution" id="solution5">
+                    <p data-i18n="MH.polynomials.part3aSolution.step1">Step 1: Start with the given information</p>
+                    <p data-i18n="MH.polynomials.part3aSolution.step1Text">We know that α and β are roots of F, so F(α) = 0 and F(β) = 0.</p>
+                    
+                    <p data-i18n="MH.polynomials.part3aSolution.step2">Step 2: Factor out (x - α)</p>
+                    <p data-i18n="MH.polynomials.part3aSolution.step2Text">Since α is a root of F, by the result from part 2b, we can write:</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part3aSolution.step2Equation">\(F(x) = (x - α)Q(x)\)</div>
+                    <p data-i18n="MH.polynomials.part3aSolution.step2Text2">where Q is a cubic polynomial (degree 3).</p>
+                    
+                    <p data-i18n="MH.polynomials.part3aSolution.step3">Step 3: Use the second root β</p>
+                    <p data-i18n="MH.polynomials.part3aSolution.step3Text">Since β is also a root of F, we have F(β) = 0.</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part3aSolution.step3Equation">\(F(β) = (β - α)Q(β) = 0\)</div>
+                    
+                    <p data-i18n="MH.polynomials.part3aSolution.step4">Step 4: Since α and β are distinct</p>
+                    <p data-i18n="MH.polynomials.part3aSolution.step4Text">Since α ≠ β, we have (β - α) ≠ 0, so we must have Q(β) = 0.</p>
+                    <p data-i18n="MH.polynomials.part3aSolution.step4Text2">This means β is a root of the cubic polynomial Q.</p>
+                    
+                    <p data-i18n="MH.polynomials.part3aSolution.step5">Step 5: Factor Q(x)</p>
+                    <p data-i18n="MH.polynomials.part3aSolution.step5Text">Since β is a root of Q, we can write:</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part3aSolution.step5Equation">\(Q(x) = (x - β)R(x)\)</div>
+                    <p data-i18n="MH.polynomials.part3aSolution.step5Text2">where R is a quadratic polynomial (degree 2).</p>
+                    
+                    <p data-i18n="MH.polynomials.part3aSolution.step6">Step 6: Combine the factors</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part3aSolution.step6Equation">\(F(x) = (x - α)(x - β)R(x)\)</div>
+                    
+                    <p data-i18n="MH.polynomials.part3aSolution.step7">Step 7: Conclusion</p>
+                    <p data-i18n="MH.polynomials.part3aSolution.step7Text">Let G(x) = R(x), which is a quadratic polynomial.</p>
+                    <p data-i18n="MH.polynomials.part3aSolution.step7Text2">Then F(x) = (x - α)(x - β)G(x), as required.</p>
+                </div>
+                
+                <h4 data-i18n="MH.polynomials.part3bTitle">Part 3b: Maximum number of roots for a quartic polynomial</h4>
+                <button class="MH-solution-btn" data-i18n="MH.general.showSolution" onclick="toggleSolution(6)">Show Solution</button>
+                <div class="MH-solution" id="solution6">
+                    <p data-i18n="MH.polynomials.part3bSolution.step1">Step 1: Understanding the problem</p>
+                    <p data-i18n="MH.polynomials.part3bSolution.step1Text">We need to prove that a quartic polynomial (degree 4) can have at most four roots.</p>
+                    
+                    <p data-i18n="MH.polynomials.part3bSolution.step2">Step 2: Use the factorization from part 3a</p>
+                    <p data-i18n="MH.polynomials.part3bSolution.step2Text">From part 3a, if α and β are roots of F, then F(x) = (x - α)(x - β)G(x), where G is a quadratic polynomial.</p>
+                    
+                    <p data-i18n="MH.polynomials.part3bSolution.step3">Step 3: Consider additional roots</p>
+                    <p data-i18n="MH.polynomials.part3bSolution.step3Text">If γ is another root of F, then since F(γ) = 0 and (γ - α) ≠ 0, (γ - β) ≠ 0, we must have G(γ) = 0.</p>
+                    <p data-i18n="MH.polynomials.part3bSolution.step3Text2">This means γ is a root of the quadratic polynomial G.</p>
+                    
+                    <p data-i18n="MH.polynomials.part3bSolution.step4">Step 4: Continue the factorization</p>
+                    <p data-i18n="MH.polynomials.part3bSolution.step4Text">If γ is a root of G, then G(x) = (x - γ)H(x), where H is a linear polynomial (degree 1).</p>
+                    <p data-i18n="MH.polynomials.part3bSolution.step4Text2">So F(x) = (x - α)(x - β)(x - γ)H(x).</p>
+                    
+                    <p data-i18n="MH.polynomials.part3bSolution.step5">Step 5: Consider a fourth root</p>
+                    <p data-i18n="MH.polynomials.part3bSolution.step5Text">If δ is a fourth root of F, then since F(δ) = 0 and (δ - α) ≠ 0, (δ - β) ≠ 0, (δ - γ) ≠ 0, we must have H(δ) = 0.</p>
+                    <p data-i18n="MH.polynomials.part3bSolution.step5Text2">This means δ is a root of the linear polynomial H.</p>
+                    
+                    <p data-i18n="MH.polynomials.part3bSolution.step6">Step 6: Final factorization</p>
+                    <p data-i18n="MH.polynomials.part3bSolution.step6Text">If H has a root at δ, then H(x) = k(x - δ) for some constant k.</p>
+                    <p data-i18n="MH.polynomials.part3bSolution.step6Text2">So F(x) = k(x - α)(x - β)(x - γ)(x - δ).</p>
+                    
+                    <p data-i18n="MH.polynomials.part3bSolution.step7">Step 7: Conclusion</p>
+                    <p data-i18n="MH.polynomials.part3bSolution.step7Text">A quartic polynomial can be completely factorized into at most four linear factors, so it can have at most four roots.</p>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.polynomials.part4Title">Part 4: General Polynomials and Conjectures</h3>
+                <p data-i18n="MH.polynomials.part4Text.part1">Let f be a polynomial of degree n (n > 2) and let α, β and γ be three distinct roots of f.</p>
+                
+                <h4 data-i18n="MH.polynomials.part4aTitle">Part 4a: Conjecture about factorization</h4>
+                <button class="MH-solution-btn" data-i18n="MH.general.showSolution" onclick="toggleSolution(7)">Show Solution</button>
+                <div class="MH-solution" id="solution7">
+                    <p data-i18n="MH.polynomials.part4aSolution.step1">Step 1: Analyze the pattern from previous parts</p>
+                    <p data-i18n="MH.polynomials.part4aSolution.step1Text">From parts 2 and 3, we observed that:</p>
+                    <ul>
+                        <li data-i18n="MH.polynomials.part4aSolution.step1ListItem1">For a cubic polynomial (degree 3) with roots α, β, γ: \(P(x) = k(x - α)(x - β)(x - γ)\)</li>
+                        <li data-i18n="MH.polynomials.part4aSolution.step1ListItem2">For a quartic polynomial (degree 4) with roots α, β, γ, δ: \(F(x) = k(x - α)(x - β)(x - γ)(x - δ)\)</li>
+                    </ul>
+                    
+                    <p data-i18n="MH.polynomials.part4aSolution.step2">Step 2: Formulate the conjecture</p>
+                    <p data-i18n="MH.polynomials.part4aSolution.step2Text">Based on this pattern, we can conjecture that:</p>
+                    <p data-i18n="MH.polynomials.part4aSolution.step2Text2">If a polynomial f of degree n has distinct roots α₁, α₂, ..., αₘ, then f can be factorized as:</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part4aSolution.step2Equation">\(f(x) = k(x - α₁)(x - α₂)\cdots(x - αₘ) \cdot g(x)\)</div>
+                    <p data-i18n="MH.polynomials.part4aSolution.step2Text3">where g(x) is a polynomial of degree (n - m).</p>
+                    
+                    <p data-i18n="MH.polynomials.part4aSolution.step3">Step 3: Specific conjecture for three roots</p>
+                    <p data-i18n="MH.polynomials.part4aSolution.step3Text">Specifically, if f has three distinct roots α, β, γ, then:</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part4aSolution.step3Equation">\(f(x) = (x - α)(x - β)(x - γ) \cdot h(x)\)</div>
+                    <p data-i18n="MH.polynomials.part4aSolution.step3Text2">where h(x) is a polynomial of degree (n - 3).</p>
+                </div>
+                
+                <h4 data-i18n="MH.polynomials.part4bTitle">Part 4b: Conjecture about maximum number of roots</h4>
+                <button class="MH-solution-btn" data-i18n="MH.general.showSolution" onclick="toggleSolution(8)">Show Solution</button>
+                <div class="MH-solution" id="solution8">
+                    <p data-i18n="MH.polynomials.part4bSolution.step1">Step 1: Analyze the pattern from previous parts</p>
+                    <p data-i18n="MH.polynomials.part4bSolution.step1Text">From parts 2 and 3, we observed that:</p>
+                    <ul>
+                        <li data-i18n="MH.polynomials.part4bSolution.step1ListItem1">A cubic polynomial (degree 3) has at most 3 roots</li>
+                        <li data-i18n="MH.polynomials.part4bSolution.step1ListItem2">A quartic polynomial (degree 4) has at most 4 roots</li>
+                    </ul>
+                    
+                    <p data-i18n="MH.polynomials.part4bSolution.step2">Step 2: Formulate the general conjecture</p>
+                    <p data-i18n="MH.polynomials.part4bSolution.step2Text">Based on this pattern, we can conjecture that:</p>
+                    <p data-i18n="MH.polynomials.part4bSolution.step2Text2">A polynomial of degree n has at most n roots.</p>
+                    
+                    <p data-i18n="MH.polynomials.part4bSolution.step3">Step 3: Reasoning behind the conjecture</p>
+                    <p data-i18n="MH.polynomials.part4bSolution.step3Text">This makes sense because:</p>
+                    <ul>
+                        <li data-i18n="MH.polynomials.part4bSolution.step3ListItem1">Each root corresponds to a linear factor (x - r)</li>
+                        <li data-i18n="MH.polynomials.part4bSolution.step3ListItem2">The product of n linear factors gives a polynomial of degree n</li>
+                        <li data-i18n="MH.polynomials.part4bSolution.step3ListItem3">If we had more than n roots, we would need more than n linear factors, which would result in a polynomial of degree greater than n</li>
+                    </ul>
+                    
+                    <p data-i18n="MH.polynomials.part4bSolution.step4">Step 4: Important note</p>
+                    <p data-i18n="MH.polynomials.part4bSolution.step4Text">This is known as the Fundamental Theorem of Algebra, which states that a polynomial of degree n has exactly n complex roots (counting multiplicity).</p>
+                    <p data-i18n="MH.polynomials.part4bSolution.step4Text2">For real roots specifically, a polynomial of degree n has at most n real roots.</p>
+                </div>
+            </div>
+        </section>
+                <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.polynomials.activity17Title">Activity 17: Polynomial Factorization Practice</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.polynomials.part1Title">Part 1: Verifying Roots and Factorization</h3>
+                <p data-i18n="MH.polynomials.part1IntroText">In each of the following cases, verify that a is a root of P and write P(x) in the form \((x - a)Q(x)\), where Q is a polynomial to be determined.</p>
+                
+                <h4 data-i18n="MH.polynomials.part1aTitle">Part 1a: \(P(x) = 2x^3 - 7x^2 - 17x + 10\), a = -2</h4>
+                <button class="MH-solution-btn" data-i18n="MH.general.showSolution" onclick="toggleSolution(9)">Show Solution</button>
+                <div class="MH-solution" id="solution9">
+                    <p data-i18n="MH.polynomials.part1aSolution.step1">Step 1: Verify that a = -2 is a root</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1aSolution.step1Equation">\(P(-2) = 2(-2)^3 - 7(-2)^2 - 17(-2) + 10\)</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1aSolution.step1Equation2">\(= 2(-8) - 7(4) + 34 + 10\)</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1aSolution.step1Equation3">\(= -16 - 28 + 34 + 10 = 0\)</div>
+                    <p data-i18n="MH.polynomials.part1aSolution.step1Text">Since P(-2) = 0, -2 is indeed a root of P.</p>
+                    
+                    <p data-i18n="MH.polynomials.part1aSolution.step2">Step 2: Perform polynomial division of P(x) by (x + 2)</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1aSolution.step2Equation">\(P(x) = 2x^3 - 7x^2 - 17x + 10\)</div>
+                    <p data-i18n="MH.polynomials.part1aSolution.step2Text">Using synthetic division with -2:</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1aSolution.step2Equation2">Coefficients: 2, -7, -17, 10</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1aSolution.step2Equation3">Bring down 2: 2</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1aSolution.step2Equation4">Multiply by -2: -4</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1aSolution.step2Equation5">Add to -7: -11</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1aSolution.step2Equation6">Multiply by -2: 22</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1aSolution.step2Equation7">Add to -17: 5</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1aSolution.step2Equation8">Multiply by -2: -10</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1aSolution.step2Equation9">Add to 10: 0</div>
+                    
+                    <p data-i18n="MH.polynomials.part1aSolution.step3">Step 3: Write the factorization</p>
+                    <p data-i18n="MH.polynomials.part1aSolution.step3Text">The quotient polynomial has coefficients: 2, -11, 5</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1aSolution.step3Equation">\(Q(x) = 2x^2 - 11x + 5\)</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1aSolution.step3Equation2">\(P(x) = (x + 2)(2x^2 - 11x + 5)\)</div>
+                </div>
+                
+                <h4 data-i18n="MH.polynomials.part1bTitle">Part 1b: \(P(x) = 2x^2 - (1 + \tfrac{2}{3})x - 1 - 13\), a = 1</h4>
+                <button class="MH-solution-btn" data-i18n="MH.general.showSolution" onclick="toggleSolution(10)">Show Solution</button>
+                <div class="MH-solution" id="solution10">
+                    <p data-i18n="MH.polynomials.part1bSolution.step1">Step 1: Simplify the polynomial first</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1bSolution.step1Equation">\(P(x) = 2x^2 - \left(1 + \frac{2}{3}\right)x - 1 - 13\)</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1bSolution.step1Equation2">\(= 2x^2 - \frac{5}{3}x - 14\)</div>
+                    
+                    <p data-i18n="MH.polynomials.part1bSolution.step2">Step 2: Verify that a = 1 is a root</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1bSolution.step2Equation">\(P(1) = 2(1)^2 - \frac{5}{3}(1) - 14\)</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1bSolution.step2Equation2">\(= 2 - \frac{5}{3} - 14\)</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1bSolution.step2Equation3">\(= \frac{6}{3} - \frac{5}{3} - \frac{42}{3} = -\frac{41}{3} \neq 0\)</div>
+                    <p data-i18n="MH.polynomials.part1bSolution.step2Text">Since P(1) ≠ 0, 1 is not a root of P.</p>
+                    
+                    <p data-i18n="MH.polynomials.part1bSolution.step3">Step 3: Check if there might be a typo in the problem</p>
+                    <p data-i18n="MH.polynomials.part1bSolution.step3Text">The polynomial might be intended to be: \(P(x) = 2x^2 - (1 + \frac{2}{3})x - 1 - \frac{1}{3}\)</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1bSolution.step3Equation">\(= 2x^2 - \frac{5}{3}x - \frac{4}{3}\)</div>
+                    <p data-i18n="MH.polynomials.part1bSolution.step3Text2">Then P(1) = 2 - 5/3 - 4/3 = 2 - 9/3 = 2 - 3 = -1 ≠ 0</p>
+                    <p data-i18n="MH.polynomials.part1bSolution.step3Text3">Since the given value is not a root, we cannot factor as requested.</p>
+                </div>
+                
+                <h4 data-i18n="MH.polynomials.part1cTitle">Part 1c: \(P(x) = x^4 - 3x^3 + x^2 - 4x + 3\), a = 3</h4>
+                <button class="MH-solution-btn" data-i18n="MH.general.showSolution" onclick="toggleSolution(11)">Show Solution</button>
+                <div class="MH-solution" id="solution11">
+                    <p data-i18n="MH.polynomials.part1cSolution.step1">Step 1: Verify that a = 3 is a root</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1cSolution.step1Equation">\(P(3) = 3^4 - 3(3)^3 + 3^2 - 4(3) + 3\)</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1cSolution.step1Equation2">\(= 81 - 3(27) + 9 - 12 + 3\)</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1cSolution.step1Equation3">\(= 81 - 81 + 9 - 12 + 3 = 0\)</div>
+                    <p data-i18n="MH.polynomials.part1cSolution.step1Text">Since P(3) = 0, 3 is indeed a root of P.</p>
+                    
+                    <p data-i18n="MH.polynomials.part1cSolution.step2">Step 2: Perform polynomial division of P(x) by (x - 3)</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1cSolution.step2Equation">\(P(x) = x^4 - 3x^3 + x^2 - 4x + 3\)</div>
+                    <p data-i18n="MH.polynomials.part1cSolution.step2Text">Using synthetic division with 3:</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1cSolution.step2Equation2">Coefficients: 1, -3, 1, -4, 3</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1cSolution.step2Equation3">Bring down 1: 1</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1cSolution.step2Equation4">Multiply by 3: 3</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1cSolution.step2Equation5">Add to -3: 0</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1cSolution.step2Equation6">Multiply by 3: 0</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1cSolution.step2Equation7">Add to 1: 1</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1cSolution.step2Equation8">Multiply by 3: 3</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1cSolution.step2Equation9">Add to -4: -1</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1cSolution.step2Equation10">Multiply by 3: -3</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1cSolution.step2Equation11">Add to 3: 0</div>
+                    
+                    <p data-i18n="MH.polynomials.part1cSolution.step3">Step 3: Write the factorization</p>
+                    <p data-i18n="MH.polynomials.part1cSolution.step3Text">The quotient polynomial has coefficients: 1, 0, 1, -1</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1cSolution.step3Equation">\(Q(x) = x^3 + 0x^2 + x - 1 = x^3 + x - 1\)</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part1cSolution.step3Equation2">\(P(x) = (x - 3)(x^3 + x - 1)\)</div>
+                </div>
+            </div>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.polynomials.part2Title">Part 2: Finding Apparent Roots and Factorization</h3>
+                <p data-i18n="MH.polynomials.part2IntroText">In each of the following cases, find an apparent root of the polynomial P and factorize P(x).</p>
+                
+                <h4 data-i18n="MH.polynomials.part2aTitle">Part 2a: \(P(x) = x^3 - 11x^2 + 30x\)</h4>
+                <button class="MH-solution-btn" data-i18n="MH.general.showSolution" onclick="toggleSolution(12)">Show Solution</button>
+                <div class="MH-solution" id="solution12">
+                    <p data-i18n="MH.polynomials.part2aSolution.step1">Step 1: Look for obvious roots</p>
+                    <p data-i18n="MH.polynomials.part2aSolution.step1Text">Notice that P(x) has a common factor of x:</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2aSolution.step1Equation">\(P(x) = x(x^2 - 11x + 30)\)</div>
+                    
+                    <p data-i18n="MH.polynomials.part2aSolution.step2">Step 2: Factor the quadratic</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2aSolution.step2Equation">\(x^2 - 11x + 30 = (x - 5)(x - 6)\)</div>
+                    
+                    <p data-i18n="MH.polynomials.part2aSolution.step3">Step 3: Complete factorization</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2aSolution.step3Equation">\(P(x) = x(x - 5)(x - 6)\)</div>
+                    <p data-i18n="MH.polynomials.part2aSolution.step3Text">The roots are 0, 5, and 6.</p>
+                </div>
+                
+                <h4 data-i18n="MH.polynomials.part2bTitle">Part 2b: \(P(x) = x^4 + x^3 - 3x^2 - 4x - 4\)</h4>
+                <button class="MH-solution-btn" data-i18n="MH.general.showSolution" onclick="toggleSolution(13)">Show Solution</button>
+                <div class="MH-solution" id="solution13">
+                    <p data-i18n="MH.polynomials.part2bSolution.step1">Step 1: Test possible rational roots</p>
+                    <p data-i18n="MH.polynomials.part2bSolution.step1Text">Possible rational roots: ±1, ±2, ±4</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step1Equation">\(P(1) = 1 + 1 - 3 - 4 - 4 = -9 \neq 0\)</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step1Equation2">\(P(-1) = 1 - 1 - 3 + 4 - 4 = -3 \neq 0\)</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step1Equation3">\(P(2) = 16 + 8 - 12 - 8 - 4 = 0\)</div>
+                    <p data-i18n="MH.polynomials.part2bSolution.step1Text2">So x = 2 is a root.</p>
+                    
+                    <p data-i18n="MH.polynomials.part2bSolution.step2">Step 2: Factor out (x - 2) using synthetic division</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step2Equation">Coefficients: 1, 1, -3, -4, -4</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step2Equation2">Bring down 1: 1</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step2Equation3">Multiply by 2: 2</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step2Equation4">Add to 1: 3</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step2Equation5">Multiply by 2: 6</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step2Equation6">Add to -3: 3</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step2Equation7">Multiply by 2: 6</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step2Equation8">Add to -4: 2</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step2Equation9">Multiply by 2: 4</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step2Equation10">Add to -4: 0</div>
+                    
+                    <p data-i18n="MH.polynomials.part2bSolution.step3">Step 3: Continue with the quotient polynomial</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step3Equation">Quotient: \(x^3 + 3x^2 + 3x + 2\)</div>
+                    <p data-i18n="MH.polynomials.part2bSolution.step3Text">Test x = -2:</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step3Equation2">\((-2)^3 + 3(-2)^2 + 3(-2) + 2 = -8 + 12 - 6 + 2 = 0\)</div>
+                    <p data-i18n="MH.polynomials.part2bSolution.step3Text2">So x = -2 is also a root.</p>
+                    
+                    <p data-i18n="MH.polynomials.part2bSolution.step4">Step 4: Factor out (x + 2)</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step4Equation">Coefficients: 1, 3, 3, 2</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step4Equation2">Bring down 1: 1</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step4Equation3">Multiply by -2: -2</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step4Equation4">Add to 3: 1</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step4Equation5">Multiply by -2: -2</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step4Equation6">Add to 3: 1</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step4Equation7">Multiply by -2: -2</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step4Equation8">Add to 2: 0</div>
+                    
+                    <p data-i18n="MH.polynomials.part2bSolution.step5">Step 5: Complete factorization</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step5Equation">Quotient: \(x^2 + x + 1\)</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2bSolution.step5Equation2">\(P(x) = (x - 2)(x + 2)(x^2 + x + 1)\)</div>
+                    <p data-i18n="MH.polynomials.part2bSolution.step5Text">Note: \(x^2 + x + 1\) has no real roots (discriminant = 1 - 4 = -3).</p>
+                </div>
+                
+                <h4 data-i18n="MH.polynomials.part2cTitle">Part 2c: \(P(x) = 3x^3 + 4x^2 - 6x - 7\)</h4>
+                <button class="MH-solution-btn" data-i18n="MH.general.showSolution" onclick="toggleSolution(14)">Show Solution</button>
+                <div class="MH-solution" id="solution14">
+                    <p data-i18n="MH.polynomials.part2cSolution.step1">Step 1: Test possible rational roots</p>
+                    <p data-i18n="MH.polynomials.part2cSolution.step1Text">Possible rational roots: ±1, ±7, ±1/3, ±7/3</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2cSolution.step1Equation">\(P(1) = 3 + 4 - 6 - 7 = -6 \neq 0\)</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2cSolution.step1Equation2">\(P(-1) = -3 + 4 + 6 - 7 = 0\)</div>
+                    <p data-i18n="MH.polynomials.part2cSolution.step1Text2">So x = -1 is a root.</p>
+                    
+                    <p data-i18n="MH.polynomials.part2cSolution.step2">Step 2: Factor out (x + 1) using synthetic division</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2cSolution.step2Equation">Coefficients: 3, 4, -6, -7</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2cSolution.step2Equation2">Bring down 3: 3</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2cSolution.step2Equation3">Multiply by -1: -3</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2cSolution.step2Equation4">Add to 4: 1</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2cSolution.step2Equation5">Multiply by -1: -1</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2cSolution.step2Equation6">Add to -6: -7</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2cSolution.step2Equation7">Multiply by -1: 7</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2cSolution.step2Equation8">Add to -7: 0</div>
+                    
+                    <p data-i18n="MH.polynomials.part2cSolution.step3">Step 3: Complete factorization</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2cSolution.step3Equation">Quotient: \(3x^2 + x - 7\)</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2cSolution.step3Equation2">\(P(x) = (x + 1)(3x^2 + x - 7)\)</div>
+                    <p data-i18n="MH.polynomials.part2cSolution.step3Text">The quadratic factor cannot be factored further using integers.</p>
+                </div>
+                
+                <h4 data-i18n="MH.polynomials.part2dTitle">Part 2d: \(P(x) = 2x^2 - (4 + 12)x + 212\)</h4>
+                <button class="MH-solution-btn" data-i18n="MH.general.showSolution" onclick="toggleSolution(15)">Show Solution</button>
+                <div class="MH-solution" id="solution15">
+                    <p data-i18n="MH.polynomials.part2dSolution.step1">Step 1: Simplify the polynomial</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2dSolution.step1Equation">\(P(x) = 2x^2 - (4 + 12)x + 212\)</div>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2dSolution.step1Equation2">\(= 2x^2 - 16x + 212\)</div>
+                    
+                    <p data-i18n="MH.polynomials.part2dSolution.step2">Step 2: Factor out the common factor</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2dSolution.step2Equation">\(P(x) = 2(x^2 - 8x + 106)\)</div>
+                    
+                    <p data-i18n="MH.polynomials.part2dSolution.step3">Step 3: Check if the quadratic can be factored</p>
+                    <p data-i18n="MH.polynomials.part2dSolution.step3Text">Discriminant = \((-8)^2 - 4(1)(106) = 64 - 424 = -360\)</p>
+                    <p data-i18n="MH.polynomials.part2dSolution.step3Text2">Since the discriminant is negative, the quadratic has no real roots and cannot be factored over the reals.</p>
+                    
+                    <p data-i18n="MH.polynomials.part2dSolution.step4">Step 4: Complete factorization</p>
+                    <div class="MH-equation" data-i18n="MH.polynomials.part2dSolution.step4Equation">\(P(x) = 2(x^2 - 8x + 106)\)</div>
+                    <p data-i18n="MH.polynomials.part2dSolution.step4Text">This is the complete factorization over the real numbers.</p>
+                </div>
+            </div>
+        </section>
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.polynomials.visualizationTitle">Visualizing Polynomial Roots</h2>
+            
+            <div class="MH-graph-container">
+                <div class="MH-graph-item">
+                    <div class="MH-graph-title" data-i18n="MH.polynomials.cubicGraphTitle">Cubic Polynomial with 3 Roots</div>
+                    <canvas id="cubicGraph" class="MH-graph-canvas"></canvas>
+                    <p data-i18n="MH.polynomials.cubicGraphText">A cubic polynomial with three distinct real roots, showing how it crosses the x-axis at each root.</p>
+                </div>
+                
+                <div class="MH-graph-item">
+                    <div class="MH-graph-title" data-i18n="MH.polynomials.quarticGraphTitle">Quartic Polynomial with 4 Roots</div>
+                    <canvas id="quarticGraph" class="MH-graph-canvas"></canvas>
+                    <p data-i18n="MH.polynomials.quarticGraphText">A quartic polynomial with four distinct real roots, demonstrating the maximum number of roots for a degree 4 polynomial.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+    
+    <script>
+        // POLYNOMIALS TRANSLATIONS
+        const translations = {
+            'en': {
+                // General translations
+                'MH.general.homeTooltip': 'Go to Homepage',
+                'MH.general.install': 'Install App',
+                'MH.general.installSuccess': 'Mathematics Hub installed successfully!',
+                'MH.general.enableNotifications': 'Enable Notifications',
+                'MH.general.notificationEnabled': 'Notifications enabled! You will now receive updates.',
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Theme',
+                'MH.general.language': 'Language',
+                'MH.general.showSolution': 'Show Solution',
+                'MH.general.hideSolution': 'Hide Solution',
+                
+                // Polynomials lesson specific translations
+                'MH.polynomials.part4Title': 'Polynomials: Part 4 - Factorization and Roots',
+                'MH.polynomials.definitionTitle': 'Definition',
+                'MH.polynomials.definitionText.part1': 'Let P and Q be two polynomials.',
+                'MH.polynomials.definitionText.part2': 'We say that polynomial P is factorable by polynomial Q if there exists a polynomial R such that, for all real x,',
+                'MH.polynomials.definitionText.part3': '\\(P(x) = Q(x) \\cdot R(x)\\)',
+                'MH.polynomials.definitionText.part4': 'This means that Q is a factor of P, and we can write P as the product of Q and another polynomial R.',
+                'MH.polynomials.importantNoteTitle': 'Important Note',
+                'MH.polynomials.importantNoteText.part1': 'If a polynomial P is factorable by (x - a), then a is a root of P.',
+                'MH.polynomials.importantNoteText.part2': 'This means that P(a) = 0, and (x - a) is a factor of P(x).',
+                'MH.polynomials.activityTitle': 'Activity 16: Exploring Polynomial Factorization',
+                'MH.polynomials.part1Title': 'Part 1: Relationship Between Factors and Roots',
+                'MH.polynomials.part1Text.part1': 'Let a be a real number.',
+                'MH.polynomials.part1Text.part2': 'Prove that if a polynomial is factorable by (x - a), then a is a root of this polynomial.',
+                'MH.polynomials.part1Solution.step1': 'Step 1: Start with the given information',
+                'MH.polynomials.part1Solution.step1Text': 'We know that the polynomial P is factorable by (x - a). This means there exists a polynomial R such that:',
+                'MH.polynomials.part1Solution.step1Equation': '\\(P(x) = (x - a) \\cdot R(x)\\)',
+                'MH.polynomials.part1Solution.step2': 'Step 2: Evaluate P at x = a',
+                'MH.polynomials.part1Solution.step2Text': 'To prove that a is a root of P, we need to show that P(a) = 0.',
+                'MH.polynomials.part1Solution.step2Equation': '\\(P(a) = (a - a) \\cdot R(a) = 0 \\cdot R(a) = 0\\)',
+                'MH.polynomials.part1Solution.step3': 'Step 3: Conclusion',
+                'MH.polynomials.part1Solution.step3Text': 'Since P(a) = 0, a is indeed a root of the polynomial P.',
+                'MH.polynomials.part1Solution.step3Text2': 'This proves that if a polynomial is factorable by (x - a), then a is a root of that polynomial.',
+                'MH.polynomials.part2Title': 'Part 2: Cubic Polynomials and Factorization',
+                'MH.polynomials.part2Text.part1': 'Let a be a real number and P be the polynomial defined by',
+                'MH.polynomials.part2Text.part2': '\\(P(x) = ax^3 + bx^2 + cx + d\\)',
+                'MH.polynomials.part2Text.part3': 'where a, b, c and d are real numbers with \\(a \\neq 0\\).',
+                'MH.polynomials.part2aTitle': 'Part 2a: Factor \\(P(x) - P(a)\\)',
+                'MH.polynomials.part2aSolution.step1': 'Step 1: Write the expression',
+                'MH.polynomials.part2aSolution.step1Equation': '\\(P(x) - P(a) = (ax^3 + bx^2 + cx + d) - (aa^3 + ba^2 + ca + d)\\)',
+                'MH.polynomials.part2aSolution.step2': 'Step 2: Simplify the expression',
+                'MH.polynomials.part2aSolution.step2Equation': '\\(P(x) - P(a) = a(x^3 - a^3) + b(x^2 - a^2) + c(x - a)\\)',
+                'MH.polynomials.part2aSolution.step3': 'Step 3: Factor each term',
+                'MH.polynomials.part2aSolution.step3Equation': '\\(x^3 - a^3 = (x - a)(x^2 + ax + a^2)\\)',
+                'MH.polynomials.part2aSolution.step3Equation2': '\\(x^2 - a^2 = (x - a)(x + a)\\)',
+                'MH.polynomials.part2aSolution.step3Equation3': '\\(x - a = (x - a)\\)',
+                'MH.polynomials.part2aSolution.step4': 'Step 4: Combine the factors',
+                'MH.polynomials.part2aSolution.step4Equation': '\\(P(x) - P(a) = (x - a)[a(x^2 + ax + a^2) + b(x + a) + c]\\)',
+                'MH.polynomials.part2aSolution.step5': 'Step 5: Final factorization',
+                'MH.polynomials.part2aSolution.step5Equation': '\\(P(x) - P(a) = (x - a) \\cdot Q(x)\\)',
+                'MH.polynomials.part2aSolution.step5Text': 'where \\(Q(x) = a(x^2 + ax + a^2) + b(x + a) + c\\) is a polynomial of degree 2.',
+                'MH.polynomials.part2bTitle': 'Part 2b: If a is a root, then P(x) = (x - a)Q(x)',
+                'MH.polynomials.part2bSolution.step1': 'Step 1: Start with the given information',
+                'MH.polynomials.part2bSolution.step1Text': 'We know that a is a root of P, which means P(a) = 0.',
+                'MH.polynomials.part2bSolution.step2': 'Step 2: Use the factorization from part 2a',
+                'MH.polynomials.part2bSolution.step2Equation': '\\(P(x) - P(a) = (x - a) \\cdot Q(x)\\)',
+                'MH.polynomials.part2bSolution.step3': 'Step 3: Substitute P(a) = 0',
+                'MH.polynomials.part2bSolution.step3Equation': '\\(P(x) - 0 = (x - a) \\cdot Q(x)\\)',
+                'MH.polynomials.part2bSolution.step3Equation2': '\\(P(x) = (x - a) \\cdot Q(x)\\)',
+                'MH.polynomials.part2bSolution.step4': 'Step 4: Determine the degree of Q',
+                'MH.polynomials.part2bSolution.step4Text': 'Since P is a cubic polynomial (degree 3) and (x - a) is a linear polynomial (degree 1), Q must be a quadratic polynomial (degree 2).',
+                'MH.polynomials.part2bSolution.step5': 'Step 5: Conclusion',
+                'MH.polynomials.part2bSolution.step5Text': 'If a is a root of the cubic polynomial P, then P(x) = (x - a)Q(x), where Q is a quadratic polynomial.',
+                'MH.polynomials.part2cTitle': 'Part 2c: Maximum number of roots for a cubic polynomial',
+                'MH.polynomials.part2cSolution.step1': 'Step 1: Understanding the problem',
+                'MH.polynomials.part2cSolution.step1Text': 'We need to prove that a cubic polynomial (degree 3) can have at most three roots.',
+                'MH.polynomials.part2cSolution.step2': 'Step 2: Use the factorization property',
+                'MH.polynomials.part2cSolution.step2Text': 'From part 2b, if a is a root of P, then P(x) = (x - a)Q(x), where Q is a quadratic polynomial (degree 2).',
+                'MH.polynomials.part2cSolution.step3': 'Step 3: Consider additional roots',
+                'MH.polynomials.part2cSolution.step3Text': 'If b is another root of P, then since P(b) = 0 and (b - a) ≠ 0 (assuming a and b are distinct), we must have Q(b) = 0.',
+                'MH.polynomials.part2cSolution.step3Text2': 'This means b is a root of the quadratic polynomial Q.',
+                'MH.polynomials.part2cSolution.step4': 'Step 4: Continue the factorization',
+                'MH.polynomials.part2cSolution.step4Text': 'If b is a root of Q, then Q(x) = (x - b)R(x), where R is a linear polynomial (degree 1).',
+                'MH.polynomials.part2cSolution.step4Text2': 'So P(x) = (x - a)(x - b)R(x).',
+                'MH.polynomials.part2cSolution.step5': 'Step 5: Consider a third root',
+                'MH.polynomials.part2cSolution.step5Text': 'If c is a third root of P, then since P(c) = 0 and (c - a) ≠ 0, (c - b) ≠ 0, we must have R(c) = 0.',
+                'MH.polynomials.part2cSolution.step5Text2': 'This means c is a root of the linear polynomial R.',
+                'MH.polynomials.part2cSolution.step6': 'Step 6: Final factorization',
+                'MH.polynomials.part2cSolution.step6Text': 'If R has a root at c, then R(x) = k(x - c) for some constant k.',
+                'MH.polynomials.part2cSolution.step6Text2': 'So P(x) = k(x - a)(x - b)(x - c).',
+                'MH.polynomials.part2cSolution.step7': 'Step 7: Conclusion',
+                'MH.polynomials.part2cSolution.step7Text': 'A cubic polynomial can be completely factorized into at most three linear factors, so it can have at most three roots.',
+                'MH.polynomials.part3Title': 'Part 3: Quartic Polynomials',
+                'MH.polynomials.part3aTitle': 'Part 3a: Factorization with two distinct roots',
+                'MH.polynomials.part3aText.part1': 'Let F be the polynomial defined by',
+                'MH.polynomials.part3aText.part2': '\\(F(x) = ax^4 + bx^3 + cx^2 + dx + e\\)',
+                'MH.polynomials.part3aText.part3': 'where a, b, c, d, e are real numbers with \\(a \\neq 0\\).',
+                'MH.polynomials.part3aText.part4': 'Let α, β be two distinct roots of F.',
+                'MH.polynomials.part3aText.part5': 'Show that there exists a polynomial G such that',
+                'MH.polynomials.part3aText.part6': '\\(F(x) = (x - α)(x - β)G(x)\\)',
+                'MH.polynomials.part3aSolution.step1': 'Step 1: Start with the given information',
+                'MH.polynomials.part3aSolution.step1Text': 'We know that α and β are roots of F, so F(α) = 0 and F(β) = 0.',
+                'MH.polynomials.part3aSolution.step2': 'Step 2: Factor out (x - α)',
+                'MH.polynomials.part3aSolution.step2Text': 'Since α is a root of F, by the result from part 2b, we can write:',
+                'MH.polynomials.part3aSolution.step2Equation': '\\(F(x) = (x - α)Q(x)\\)',
+                'MH.polynomials.part3aSolution.step2Text2': 'where Q is a cubic polynomial (degree 3).',
+                'MH.polynomials.part3aSolution.step3': 'Step 3: Use the second root β',
+                'MH.polynomials.part3aSolution.step3Text': 'Since β is also a root of F, we have F(β) = 0.',
+                'MH.polynomials.part3aSolution.step3Equation': '\\(F(β) = (β - α)Q(β) = 0\\)',
+                'MH.polynomials.part3aSolution.step4': 'Step 4: Since α and β are distinct',
+                'MH.polynomials.part3aSolution.step4Text': 'Since α ≠ β, we have (β - α) ≠ 0, so we must have Q(β) = 0.',
+                'MH.polynomials.part3aSolution.step4Text2': 'This means β is a root of the cubic polynomial Q.',
+                'MH.polynomials.part3aSolution.step5': 'Step 5: Factor Q(x)',
+                'MH.polynomials.part3aSolution.step5Text': 'Since β is a root of Q, we can write:',
+                'MH.polynomials.part3aSolution.step5Equation': '\\(Q(x) = (x - β)R(x)\\)',
+                'MH.polynomials.part3aSolution.step5Text2': 'where R is a quadratic polynomial (degree 2).',
+                'MH.polynomials.part3aSolution.step6': 'Step 6: Combine the factors',
+                'MH.polynomials.part3aSolution.step6Equation': '\\(F(x) = (x - α)(x - β)R(x)\\)',
+                'MH.polynomials.part3aSolution.step7': 'Step 7: Conclusion',
+                'MH.polynomials.part3aSolution.step7Text': 'Let G(x) = R(x), which is a quadratic polynomial.',
+                'MH.polynomials.part3aSolution.step7Text2': 'Then F(x) = (x - α)(x - β)G(x), as required.',
+                'MH.polynomials.part3bTitle': 'Part 3b: Maximum number of roots for a quartic polynomial',
+                'MH.polynomials.part3bSolution.step1': 'Step 1: Understanding the problem',
+                'MH.polynomials.part3bSolution.step1Text': 'We need to prove that a quartic polynomial (degree 4) can have at most four roots.',
+                'MH.polynomials.part3bSolution.step2': 'Step 2: Use the factorization from part 3a',
+                'MH.polynomials.part3bSolution.step2Text': 'From part 3a, if α and β are roots of F, then F(x) = (x - α)(x - β)G(x), where G is a quadratic polynomial.',
+                'MH.polynomials.part3bSolution.step3': 'Step 3: Consider additional roots',
+                'MH.polynomials.part3bSolution.step3Text': 'If γ is another root of F, then since F(γ) = 0 and (γ - α) ≠ 0, (γ - β) ≠ 0, we must have G(γ) = 0.',
+                'MH.polynomials.part3bSolution.step3Text2': 'This means γ is a root of the quadratic polynomial G.',
+                'MH.polynomials.part3bSolution.step4': 'Step 4: Continue the factorization',
+                'MH.polynomials.part3bSolution.step4Text': 'If γ is a root of G, then G(x) = (x - γ)H(x), where H is a linear polynomial (degree 1).',
+                'MH.polynomials.part3bSolution.step4Text2': 'So F(x) = (x - α)(x - β)(x - γ)H(x).',
+                'MH.polynomials.part3bSolution.step5': 'Step 5: Consider a fourth root',
+                'MH.polynomials.part3bSolution.step5Text': 'If δ is a fourth root of F, then since F(δ) = 0 and (δ - α) ≠ 0, (δ - β) ≠ 0, (δ - γ) ≠ 0, we must have H(δ) = 0.',
+                'MH.polynomials.part3bSolution.step5Text2': 'This means δ is a root of the linear polynomial H.',
+                'MH.polynomials.part3bSolution.step6': 'Step 6: Final factorization',
+                'MH.polynomials.part3bSolution.step6Text': 'If H has a root at δ, then H(x) = k(x - δ) for some constant k.',
+                'MH.polynomials.part3bSolution.step6Text2': 'So F(x) = k(x - α)(x - β)(x - γ)(x - δ).',
+                'MH.polynomials.part3bSolution.step7': 'Step 7: Conclusion',
+                'MH.polynomials.part3bSolution.step7Text': 'A quartic polynomial can be completely factorized into at most four linear factors, so it can have at most four roots.',
+                'MH.polynomials.part4Title': 'Part 4: General Polynomials and Conjectures',
+                'MH.polynomials.part4Text.part1': 'Let f be a polynomial of degree n (n > 2) and let α, β and γ be three distinct roots of f.',
+                'MH.polynomials.part4aTitle': 'Part 4a: Conjecture about factorization',
+                'MH.polynomials.part4aSolution.step1': 'Step 1: Analyze the pattern from previous parts',
+                'MH.polynomials.part4aSolution.step1Text': 'From parts 2 and 3, we observed that:',
+                'MH.polynomials.part4aSolution.step1ListItem1': 'For a cubic polynomial (degree 3) with roots α, β, γ: \\(P(x) = k(x - α)(x - β)(x - γ)\\)',
+                'MH.polynomials.part4aSolution.step1ListItem2': 'For a quartic polynomial (degree 4) with roots α, β, γ, δ: \\(F(x) = k(x - α)(x - β)(x - γ)(x - δ)\\)',
+                'MH.polynomials.part4aSolution.step2': 'Step 2: Formulate the conjecture',
+                'MH.polynomials.part4aSolution.step2Text': 'Based on this pattern, we can conjecture that:',
+                'MH.polynomials.part4aSolution.step2Text2': 'If a polynomial f of degree n has distinct roots α₁, α₂, ..., αₘ, then f can be factorized as:',
+                'MH.polynomials.part4aSolution.step2Equation': '\\(f(x) = k(x - α₁)(x - α₂)\\cdots(x - αₘ) \\cdot g(x)\\)',
+                'MH.polynomials.part4aSolution.step2Text3': 'where g(x) is a polynomial of degree (n - m).',
+                'MH.polynomials.part4aSolution.step3': 'Step 3: Specific conjecture for three roots',
+                'MH.polynomials.part4aSolution.step3Text': 'Specifically, if f has three distinct roots α, β, γ, then:',
+                'MH.polynomials.part4aSolution.step3Equation': '\\(f(x) = (x - α)(x - β)(x - γ) \\cdot h(x)\\)',
+                'MH.polynomials.part4aSolution.step3Text2': 'where h(x) is a polynomial of degree (n - 3).',
+                'MH.polynomials.part4bTitle': 'Part 4b: Conjecture about maximum number of roots',
+                'MH.polynomials.part4bSolution.step1': 'Step 1: Analyze the pattern from previous parts',
+                'MH.polynomials.part4bSolution.step1Text': 'From parts 2 and 3, we observed that:',
+                'MH.polynomials.part4bSolution.step1ListItem1': 'A cubic polynomial (degree 3) has at most 3 roots',
+                'MH.polynomials.part4bSolution.step1ListItem2': 'A quartic polynomial (degree 4) has at most 4 roots',
+                'MH.polynomials.part4bSolution.step2': 'Step 2: Formulate the general conjecture',
+                'MH.polynomials.part4bSolution.step2Text': 'Based on this pattern, we can conjecture that:',
+                'MH.polynomials.part4bSolution.step2Text2': 'A polynomial of degree n has at most n roots.',
+                'MH.polynomials.part4bSolution.step3': 'Step 3: Reasoning behind the conjecture',
+                'MH.polynomials.part4bSolution.step3Text': 'This makes sense because:',
+                'MH.polynomials.part4bSolution.step3ListItem1': 'Each root corresponds to a linear factor (x - r)',
+                'MH.polynomials.part4bSolution.step3ListItem2': 'The product of n linear factors gives a polynomial of degree n',
+                'MH.polynomials.part4bSolution.step3ListItem3': 'If we had more than n roots, we would need more than n linear factors, which would result in a polynomial of degree greater than n',
+                'MH.polynomials.part4bSolution.step4': 'Step 4: Important note',
+                'MH.polynomials.part4bSolution.step4Text': 'This is known as the Fundamental Theorem of Algebra, which states that a polynomial of degree n has exactly n complex roots (counting multiplicity).',
+                'MH.polynomials.part4bSolution.step4Text2': 'For real roots specifically, a polynomial of degree n has at most n real roots.',
+                
+                // Activity 17 translations
+                'MH.polynomials.activity17Title': 'Activity 17: Polynomial Factorization Practice',
+                'MH.polynomials.part1IntroText': 'In each of the following cases, verify that a is a root of P and write P(x) in the form \((x - a)Q(x)\), where Q is a polynomial to be determined.',
+                'MH.polynomials.part1aTitle': 'Part 1a: \(P(x) = 2x^3 - 7x^2 - 17x + 10\), a = -2',
+                'MH.polynomials.part1aSolution.step1': 'Step 1: Verify that a = -2 is a root',
+                'MH.polynomials.part1aSolution.step1Equation': '\(P(-2) = 2(-2)^3 - 7(-2)^2 - 17(-2) + 10\)',
+                'MH.polynomials.part1aSolution.step1Equation2': '\(= 2(-8) - 7(4) + 34 + 10\)',
+                'MH.polynomials.part1aSolution.step1Equation3': '\(= -16 - 28 + 34 + 10 = 0\)',
+                'MH.polynomials.part1aSolution.step1Text': 'Since P(-2) = 0, -2 is indeed a root of P.',
+                'MH.polynomials.part1aSolution.step2': 'Step 2: Perform polynomial division of P(x) by (x + 2)',
+                'MH.polynomials.part1aSolution.step2Equation': '\(P(x) = 2x^3 - 7x^2 - 17x + 10\)',
+                'MH.polynomials.part1aSolution.step2Text': 'Using synthetic division with -2:',
+                'MH.polynomials.part1aSolution.step2Equation2': 'Coefficients: 2, -7, -17, 10',
+                'MH.polynomials.part1aSolution.step2Equation3': 'Bring down 2: 2',
+                'MH.polynomials.part1aSolution.step2Equation4': 'Multiply by -2: -4',
+                'MH.polynomials.part1aSolution.step2Equation5': 'Add to -7: -11',
+                'MH.polynomials.part1aSolution.step2Equation6': 'Multiply by -2: 22',
+                'MH.polynomials.part1aSolution.step2Equation7': 'Add to -17: 5',
+                'MH.polynomials.part1aSolution.step2Equation8': 'Multiply by -2: -10',
+                'MH.polynomials.part1aSolution.step2Equation9': 'Add to 10: 0',
+                'MH.polynomials.part1aSolution.step3': 'Step 3: Write the factorization',
+                'MH.polynomials.part1aSolution.step3Text': 'The quotient polynomial has coefficients: 2, -11, 5',
+                'MH.polynomials.part1aSolution.step3Equation': '\(Q(x) = 2x^2 - 11x + 5\)',
+                'MH.polynomials.part1aSolution.step3Equation2': '\(P(x) = (x + 2)(2x^2 - 11x + 5)\)',
+                
+                'MH.polynomials.part1bTitle': 'Part 1b: \(P(x) = 2x^2 - (1 + \tfrac{2}{3})x - 1 - 13\), a = 1',
+                'MH.polynomials.part1bSolution.step1': 'Step 1: Simplify the polynomial first',
+                'MH.polynomials.part1bSolution.step1Equation': '\(P(x) = 2x^2 - \left(1 + \frac{2}{3}\right)x - 1 - 13\)',
+                'MH.polynomials.part1bSolution.step1Equation2': '\(= 2x^2 - \frac{5}{3}x - 14\)',
+                'MH.polynomials.part1bSolution.step2': 'Step 2: Verify that a = 1 is a root',
+                'MH.polynomials.part1bSolution.step2Equation': '\(P(1) = 2(1)^2 - \frac{5}{3}(1) - 14\)',
+                'MH.polynomials.part1bSolution.step2Equation2': '\(= 2 - \frac{5}{3} - 14\)',
+                'MH.polynomials.part1bSolution.step2Equation3': '\(= \frac{6}{3} - \frac{5}{3} - \frac{42}{3} = -\frac{41}{3} \neq 0\)',
+                'MH.polynomials.part1bSolution.step2Text': 'Since P(1) ≠ 0, 1 is not a root of P.',
+                'MH.polynomials.part1bSolution.step3': 'Step 3: Check if there might be a typo in the problem',
+                'MH.polynomials.part1bSolution.step3Text': 'The polynomial might be intended to be: \(P(x) = 2x^2 - (1 + \frac{2}{3})x - 1 - \frac{1}{3}\)',
+                'MH.polynomials.part1bSolution.step3Equation': '\(= 2x^2 - \frac{5}{3}x - \frac{4}{3}\)',
+                'MH.polynomials.part1bSolution.step3Text2': 'Then P(1) = 2 - 5/3 - 4/3 = 2 - 9/3 = 2 - 3 = -1 ≠ 0',
+                'MH.polynomials.part1bSolution.step3Text3': 'Since the given value is not a root, we cannot factor as requested.',
+                
+                'MH.polynomials.part1cTitle': 'Part 1c: \(P(x) = x^4 - 3x^3 + x^2 - 4x + 3\), a = 3',
+                'MH.polynomials.part1cSolution.step1': 'Step 1: Verify that a = 3 is a root',
+                'MH.polynomials.part1cSolution.step1Equation': '\(P(3) = 3^4 - 3(3)^3 + 3^2 - 4(3) + 3\)',
+                'MH.polynomials.part1cSolution.step1Equation2': '\(= 81 - 3(27) + 9 - 12 + 3\)',
+                'MH.polynomials.part1cSolution.step1Equation3': '\(= 81 - 81 + 9 - 12 + 3 = 0\)',
+                'MH.polynomials.part1cSolution.step1Text': 'Since P(3) = 0, 3 is indeed a root of P.',
+                'MH.polynomials.part1cSolution.step2': 'Step 2: Perform polynomial division of P(x) by (x - 3)',
+                'MH.polynomials.part1cSolution.step2Equation': '\(P(x) = x^4 - 3x^3 + x^2 - 4x + 3\)',
+                'MH.polynomials.part1cSolution.step2Text': 'Using synthetic division with 3:',
+                'MH.polynomials.part1cSolution.step2Equation2': 'Coefficients: 1, -3, 1, -4, 3',
+                'MH.polynomials.part1cSolution.step2Equation3': 'Bring down 1: 1',
+                'MH.polynomials.part1cSolution.step2Equation4': 'Multiply by 3: 3',
+                'MH.polynomials.part1cSolution.step2Equation5': 'Add to -3: 0',
+                'MH.polynomials.part1cSolution.step2Equation6': 'Multiply by 3: 0',
+                'MH.polynomials.part1cSolution.step2Equation7': 'Add to 1: 1',
+                'MH.polynomials.part1cSolution.step2Equation8': 'Multiply by 3: 3',
+                'MH.polynomials.part1cSolution.step2Equation9': 'Add to -4: -1',
+                'MH.polynomials.part1cSolution.step2Equation10': 'Multiply by 3: -3',
+                'MH.polynomials.part1cSolution.step2Equation11': 'Add to 3: 0',
+                'MH.polynomials.part1cSolution.step3': 'Step 3: Write the factorization',
+                'MH.polynomials.part1cSolution.step3Text': 'The quotient polynomial has coefficients: 1, 0, 1, -1',
+                'MH.polynomials.part1cSolution.step3Equation': '\(Q(x) = x^3 + 0x^2 + x - 1 = x^3 + x - 1\)',
+                'MH.polynomials.part1cSolution.step3Equation2': '\(P(x) = (x - 3)(x^3 + x - 1)\)',
+                
+                'MH.polynomials.part2IntroText': 'In each of the following cases, find an apparent root of the polynomial P and factorize P(x).',
+                'MH.polynomials.part2aTitle': 'Part 2a: \(P(x) = x^3 - 11x^2 + 30x\)',
+                'MH.polynomials.part2aSolution.step1': 'Step 1: Look for obvious roots',
+                'MH.polynomials.part2aSolution.step1Text': 'Notice that P(x) has a common factor of x:',
+                'MH.polynomials.part2aSolution.step1Equation': '\(P(x) = x(x^2 - 11x + 30)\)',
+                'MH.polynomials.part2aSolution.step2': 'Step 2: Factor the quadratic',
+                'MH.polynomials.part2aSolution.step2Equation': '\(x^2 - 11x + 30 = (x - 5)(x - 6)\)',
+                'MH.polynomials.part2aSolution.step3': 'Step 3: Complete factorization',
+                'MH.polynomials.part2aSolution.step3Equation': '\(P(x) = x(x - 5)(x - 6)\)',
+                'MH.polynomials.part2aSolution.step3Text': 'The roots are 0, 5, and 6.',
+                
+                'MH.polynomials.part2bTitle': 'Part 2b: \(P(x) = x^4 + x^3 - 3x^2 - 4x - 4\)',
+                'MH.polynomials.part2bSolution.step1': 'Step 1: Test possible rational roots',
+                'MH.polynomials.part2bSolution.step1Text': 'Possible rational roots: ±1, ±2, ±4',
+                'MH.polynomials.part2bSolution.step1Equation': '\(P(1) = 1 + 1 - 3 - 4 - 4 = -9 \neq 0\)',
+                'MH.polynomials.part2bSolution.step1Equation2': '\(P(-1) = 1 - 1 - 3 + 4 - 4 = -3 \neq 0\)',
+                'MH.polynomials.part2bSolution.step1Equation3': '\(P(2) = 16 + 8 - 12 - 8 - 4 = 0\)',
+                'MH.polynomials.part2bSolution.step1Text2': 'So x = 2 is a root.',
+                'MH.polynomials.part2bSolution.step2': 'Step 2: Factor out (x - 2) using synthetic division',
+                'MH.polynomials.part2bSolution.step2Equation': 'Coefficients: 1, 1, -3, -4, -4',
+                'MH.polynomials.part2bSolution.step2Equation2': 'Bring down 1: 1',
+                'MH.polynomials.part2bSolution.step2Equation3': 'Multiply by 2: 2',
+                'MH.polynomials.part2bSolution.step2Equation4': 'Add to 1: 3',
+                'MH.polynomials.part2bSolution.step2Equation5': 'Multiply by 2: 6',
+                'MH.polynomials.part2bSolution.step2Equation6': 'Add to -3: 3',
+                'MH.polynomials.part2bSolution.step2Equation7': 'Multiply by 2: 6',
+                'MH.polynomials.part2bSolution.step2Equation8': 'Add to -4: 2',
+                'MH.polynomials.part2bSolution.step2Equation9': 'Multiply by 2: 4',
+                'MH.polynomials.part2bSolution.step2Equation10': 'Add to -4: 0',
+                'MH.polynomials.part2bSolution.step3': 'Step 3: Continue with the quotient polynomial',
+                'MH.polynomials.part2bSolution.step3Equation': 'Quotient: \(x^3 + 3x^2 + 3x + 2\)',
+                'MH.polynomials.part2bSolution.step3Text': 'Test x = -2:',
+                'MH.polynomials.part2bSolution.step3Equation2': '\((-2)^3 + 3(-2)^2 + 3(-2) + 2 = -8 + 12 - 6 + 2 = 0\)',
+                'MH.polynomials.part2bSolution.step3Text2': 'So x = -2 is also a root.',
+                'MH.polynomials.part2bSolution.step4': 'Step 4: Factor out (x + 2)',
+                'MH.polynomials.part2bSolution.step4Equation': 'Coefficients: 1, 3, 3, 2',
+                'MH.polynomials.part2bSolution.step4Equation2': 'Bring down 1: 1',
+                'MH.polynomials.part2bSolution.step4Equation3': 'Multiply by -2: -2',
+                'MH.polynomials.part2bSolution.step4Equation4': 'Add to 3: 1',
+                'MH.polynomials.part2bSolution.step4Equation5': 'Multiply by -2: -2',
+                'MH.polynomials.part2bSolution.step4Equation6': 'Add to 3: 1',
+                'MH.polynomials.part2bSolution.step4Equation7': 'Multiply by -2: -2',
+                'MH.polynomials.part2bSolution.step4Equation8': 'Add to 2: 0',
+                'MH.polynomials.part2bSolution.step5': 'Step 5: Complete factorization',
+                'MH.polynomials.part2bSolution.step5Equation': 'Quotient: \(x^2 + x + 1\)',
+                'MH.polynomials.part2bSolution.step5Equation2': '\(P(x) = (x - 2)(x + 2)(x^2 + x + 1)\)',
+                'MH.polynomials.part2bSolution.step5Text': 'Note: \(x^2 + x + 1\) has no real roots (discriminant = 1 - 4 = -3).',
+                
+                'MH.polynomials.part2cTitle': 'Part 2c: \(P(x) = 3x^3 + 4x^2 - 6x - 7\)',
+                'MH.polynomials.part2cSolution.step1': 'Step 1: Test possible rational roots',
+                'MH.polynomials.part2cSolution.step1Text': 'Possible rational roots: ±1, ±7, ±1/3, ±7/3',
+                'MH.polynomials.part2cSolution.step1Equation': '\(P(1) = 3 + 4 - 6 - 7 = -6 \neq 0\)',
+                'MH.polynomials.part2cSolution.step1Equation2': '\(P(-1) = -3 + 4 + 6 - 7 = 0\)',
+                'MH.polynomials.part2cSolution.step1Text2': 'So x = -1 is a root.',
+                'MH.polynomials.part2cSolution.step2': 'Step 2: Factor out (x + 1) using synthetic division',
+                'MH.polynomials.part2cSolution.step2Equation': 'Coefficients: 3, 4, -6, -7',
+                'MH.polynomials.part2cSolution.step2Equation2': 'Bring down 3: 3',
+                'MH.polynomials.part2cSolution.step2Equation3': 'Multiply by -1: -3',
+                'MH.polynomials.part2cSolution.step2Equation4': 'Add to 4: 1',
+                'MH.polynomials.part2cSolution.step2Equation5': 'Multiply by -1: -1',
+                'MH.polynomials.part2cSolution.step2Equation6': 'Add to -6: -7',
+                'MH.polynomials.part2cSolution.step2Equation7': 'Multiply by -1: 7',
+                'MH.polynomials.part2cSolution.step2Equation8': 'Add to -7: 0',
+                'MH.polynomials.part2cSolution.step3': 'Step 3: Complete factorization',
+                'MH.polynomials.part2cSolution.step3Equation': 'Quotient: \(3x^2 + x - 7\)',
+                'MH.polynomials.part2cSolution.step3Equation2': '\(P(x) = (x + 1)(3x^2 + x - 7)\)',
+                'MH.polynomials.part2cSolution.step3Text': 'The quadratic factor cannot be factored further using integers.',
+                
+                'MH.polynomials.part2dTitle': 'Part 2d: \(P(x) = 2x^2 - (4 + 12)x + 212\)',
+                'MH.polynomials.part2dSolution.step1': 'Step 1: Simplify the polynomial',
+                'MH.polynomials.part2dSolution.step1Equation': '\(P(x) = 2x^2 - (4 + 12)x + 212\)',
+                'MH.polynomials.part2dSolution.step1Equation2': '\(= 2x^2 - 16x + 212\)',
+                'MH.polynomials.part2dSolution.step2': 'Step 2: Factor out the common factor',
+                'MH.polynomials.part2dSolution.step2Equation': '\(P(x) = 2(x^2 - 8x + 106)\)',
+                'MH.polynomials.part2dSolution.step3': 'Step 3: Check if the quadratic can be factored',
+                'MH.polynomials.part2dSolution.step3Text': 'Discriminant = \((-8)^2 - 4(1)(106) = 64 - 424 = -360\)',
+                'MH.polynomials.part2dSolution.step3Text2': 'Since the discriminant is negative, the quadratic has no real roots and cannot be factored over the reals.',
+                'MH.polynomials.part2dSolution.step4': 'Step 4: Complete factorization',
+                'MH.polynomials.part2dSolution.step4Equation': '\(P(x) = 2(x^2 - 8x + 106)\)',
+                'MH.polynomials.part2dSolution.step4Text': 'This is the complete factorization over the real numbers.',
+                'MH.polynomials.visualizationTitle': 'Visualizing Polynomial Roots',
+                'MH.polynomials.cubicGraphTitle': 'Cubic Polynomial with 3 Roots',
+                'MH.polynomials.cubicGraphText': 'A cubic polynomial with three distinct real roots, showing how it crosses the x-axis at each root.',
+                'MH.polynomials.quarticGraphTitle': 'Quartic Polynomial with 4 Roots',
+                'MH.polynomials.quarticGraphText': 'A quartic polynomial with four distinct real roots, demonstrating the maximum number of roots for a degree 4 polynomial.',
+                
+                // Footer translations
+                'MH.footer.developer': 'Developer',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Links',
+                'MH.footer.terms': 'Terms of Use',
+                'MH.footer.privacy': 'Privacy Policy'
+            },
+            'ar': {
+    // General translations
+    'MH.general.homeTooltip': 'الذهاب إلى الصفحة الرئيسية',
+    'MH.general.install': 'تثبيت التطبيق',
+    'MH.general.installSuccess': 'تم تثبيت Mathematics Hub بنجاح!',
+    'MH.general.enableNotifications': 'تمكين الإشعارات',
+    'MH.general.notificationEnabled': 'تم تمكين الإشعارات! ستتلقى التحديثات الآن.',
+    'MH.general.title': 'مركز الرياضيات',
+    'MH.general.theme': 'السمة',
+    'MH.general.language': 'اللغة',
+    'MH.general.showSolution': 'إظهار الحل',
+    'MH.general.hideSolution': 'إخفاء الحل',
+    
+    // Polynomials lesson specific translations
+    'MH.polynomials.part4Title': 'كثيرات الحدود: الجزء 4 - التحليل إلى عوامل والجذور',
+    'MH.polynomials.definitionTitle': 'التعريف',
+    'MH.polynomials.definitionText.part1': 'ليكن P و Q كثيرتي حدود.',
+    'MH.polynomials.definitionText.part2': 'نقول أن كثيرة الحدود P قابلة للتحليل بواسطة كثيرة الحدود Q إذا وجدت كثيرة حدود R بحيث، لكل عدد حقيقي x،',
+    'MH.polynomials.definitionText.part3': '\\(P(x) = Q(x) \\cdot R(x)\\)',
+    'MH.polynomials.definitionText.part4': 'هذا يعني أن Q عامل من P، ويمكننا كتابة P كحاصل ضرب Q وكثيرة حدود أخرى R.',
+    'MH.polynomials.importantNoteTitle': 'ملاحظة هامة',
+    'MH.polynomials.importantNoteText.part1': 'إذا كانت كثيرة الحدود P قابلة للتحليل بواسطة (x - a)، فإن a جذر لـ P.',
+    'MH.polynomials.importantNoteText.part2': 'هذا يعني أن P(a) = 0، و (x - a) عامل من P(x).',
+    'MH.polynomials.activityTitle': 'النشاط 16: استكشاف تحليل كثيرات الحدود',
+    'MH.polynomials.part1Title': 'الجزء 1: العلاقة بين العوامل والجذور',
+    'MH.polynomials.part1Text.part1': 'ليكن a عددا حقيقيا.',
+    'MH.polynomials.part1Text.part2': 'أثبت أنه إذا كانت كثيرة الحدود قابلة للتحليل بواسطة (x - a)، فإن a جذر لهذه كثيرة الحدود.',
+    'MH.polynomials.part1Solution.step1': 'الخطوة 1: ابدأ بالمعلومات المعطاة',
+    'MH.polynomials.part1Solution.step1Text': 'نعلم أن كثيرة الحدود P قابلة للتحليل بواسطة (x - a). هذا يعني وجود كثيرة حدود R بحيث:',
+    'MH.polynomials.part1Solution.step1Equation': '\\(P(x) = (x - a) \\cdot R(x)\\)',
+    'MH.polynomials.part1Solution.step2': 'الخطوة 2: قيم P عند x = a',
+    'MH.polynomials.part1Solution.step2Text': 'لإثبات أن a جذر لـ P، نحتاج إلى إظهار أن P(a) = 0.',
+    'MH.polynomials.part1Solution.step2Equation': '\\(P(a) = (a - a) \\cdot R(a) = 0 \\cdot R(a) = 0\\)',
+    'MH.polynomials.part1Solution.step3': 'الخطوة 3: الاستنتاج',
+    'MH.polynomials.part1Solution.step3Text': 'بما أن P(a) = 0، فإن a هو بالفعل جذر لكثيرة الحدود P.',
+    'MH.polynomials.part1Solution.step3Text2': 'هذا يثبت أنه إذا كانت كثيرة الحدود قابلة للتحليل بواسطة (x - a)، فإن a جذر لتلك كثيرة الحدود.',
+    'MH.polynomials.part2Title': 'الجزء 2: كثيرات الحدود التكعيبية والتحليل',
+    'MH.polynomials.part2Text.part1': 'ليكن a عددا حقيقيا و P كثيرة الحدود المعرفة بـ',
+    'MH.polynomials.part2Text.part2': '\\(P(x) = ax^3 + bx^2 + cx + d\\)',
+    'MH.polynomials.part2Text.part3': 'حيث a، b، c و d أعداد حقيقية مع \\(a \\neq 0\\).',
+    'MH.polynomials.part2aTitle': 'الجزء 2أ: حلل \\(P(x) - P(a)\\)',
+    'MH.polynomials.part2aSolution.step1': 'الخطوة 1: اكتب التعبير',
+    'MH.polynomials.part2aSolution.step1Equation': '\\(P(x) - P(a) = (ax^3 + bx^2 + cx + d) - (aa^3 + ba^2 + ca + d)\\)',
+    'MH.polynomials.part2aSolution.step2': 'الخطوة 2: بسط التعبير',
+    'MH.polynomials.part2aSolution.step2Equation': '\\(P(x) - P(a) = a(x^3 - a^3) + b(x^2 - a^2) + c(x - a)\\)',
+    'MH.polynomials.part2aSolution.step3': 'الخطوة 3: حلل كل حد',
+    'MH.polynomials.part2aSolution.step3Equation': '\\(x^3 - a^3 = (x - a)(x^2 + ax + a^2)\\)',
+    'MH.polynomials.part2aSolution.step3Equation2': '\\(x^2 - a^2 = (x - a)(x + a)\\)',
+    'MH.polynomials.part2aSolution.step3Equation3': '\\(x - a = (x - a)\\)',
+    'MH.polynomials.part2aSolution.step4': 'الخطوة 4: اجمع العوامل',
+    'MH.polynomials.part2aSolution.step4Equation': '\\(P(x) - P(a) = (x - a)[a(x^2 + ax + a^2) + b(x + a) + c]\\)',
+    'MH.polynomials.part2aSolution.step5': 'الخطوة 5: التحليل النهائي',
+    'MH.polynomials.part2aSolution.step5Equation': '\\(P(x) - P(a) = (x - a) \\cdot Q(x)\\)',
+    'MH.polynomials.part2aSolution.step5Text': 'حيث \\(Q(x) = a(x^2 + ax + a^2) + b(x + a) + c\\) هي كثيرة حدود من الدرجة 2.',
+    'MH.polynomials.part2bTitle': 'الجزء 2ب: إذا كان a جذر، فإن P(x) = (x - a)Q(x)',
+    'MH.polynomials.part2bSolution.step1': 'الخطوة 1: ابدأ بالمعلومات المعطاة',
+    'MH.polynomials.part2bSolution.step1Text': 'نعلم أن a جذر لـ P، مما يعني أن P(a) = 0.',
+    'MH.polynomials.part2bSolution.step2': 'الخطوة 2: استخدم التحليل من الجزء 2أ',
+    'MH.polynomials.part2bSolution.step2Equation': '\\(P(x) - P(a) = (x - a) \\cdot Q(x)\\)',
+    'MH.polynomials.part2bSolution.step3': 'الخطوة 3: عوض P(a) = 0',
+    'MH.polynomials.part2bSolution.step3Equation': '\\(P(x) - 0 = (x - a) \\cdot Q(x)\\)',
+    'MH.polynomials.part2bSolution.step3Equation2': '\\(P(x) = (x - a) \\cdot Q(x)\\)',
+    'MH.polynomials.part2bSolution.step4': 'الخطوة 4: حدد درجة Q',
+    'MH.polynomials.part2bSolution.step4Text': 'بما أن P كثيرة حدود تكعيبية (الدرجة 3) و (x - a) كثيرة حدود خطية (الدرجة 1)، يجب أن تكون Q كثيرة حدود تربيعية (الدرجة 2).',
+    'MH.polynomials.part2bSolution.step5': 'الخطوة 5: الاستنتاج',
+    'MH.polynomials.part2bSolution.step5Text': 'إذا كان a جذرًا لكثيرة الحدود التكعيبية P، فإن P(x) = (x - a)Q(x)، حيث Q هي كثيرة حدود تربيعية.',
+    'MH.polynomials.part2cTitle': 'الجزء 2ج: الحد الأقصى لعدد الجذور لكثيرة حدود تكعيبية',
+    'MH.polynomials.part2cSolution.step1': 'الخطوة 1: فهم المشكلة',
+    'MH.polynomials.part2cSolution.step1Text': 'نحتاج إلى إثبات أن كثيرة الحدود التكعيبية (الدرجة 3) يمكن أن يكون لها على الأكثر ثلاثة جذور.',
+    'MH.polynomials.part2cSolution.step2': 'الخطوة 2: استخدم خاصية التحليل',
+    'MH.polynomials.part2cSolution.step2Text': 'من الجزء 2ب، إذا كان a جذرًا لـ P، فإن P(x) = (x - a)Q(x)، حيث Q هي كثيرة حدود تربيعية (الدرجة 2).',
+    'MH.polynomials.part2cSolution.step3': 'الخطوة 3: فكر في جذور إضافية',
+    'MH.polynomials.part2cSolution.step3Text': 'إذا كان b جذرًا آخر لـ P، فبما أن P(b) = 0 و (b - a) ≠ 0 (بافتراض أن a و b مختلفان)، يجب أن يكون Q(b) = 0.',
+    'MH.polynomials.part2cSolution.step3Text2': 'هذا يعني أن b جذر لكثيرة الحدود التربيعية Q.',
+    'MH.polynomials.part2cSolution.step4': 'الخطوة 4: تابع التحليل',
+    'MH.polynomials.part2cSolution.step4Text': 'إذا كان b جذرًا لـ Q، فإن Q(x) = (x - b)R(x)، حيث R هي كثيرة حدود خطية (الدرجة 1).',
+    'MH.polynomials.part2cSolution.step4Text2': 'لذا P(x) = (x - a)(x - b)R(x).',
+    'MH.polynomials.part2cSolution.step5': 'الخطوة 5: فكر في جذر ثالث',
+    'MH.polynomials.part2cSolution.step5Text': 'إذا كان c جذرًا ثالثًا لـ P، فبما أن P(c) = 0 و (c - a) ≠ 0، (c - b) ≠ 0، يجب أن يكون R(c) = 0.',
+    'MH.polynomials.part2cSolution.step5Text2': 'هذا يعني أن c جذر لكثيرة الحدود الخطية R.',
+    'MH.polynomials.part2cSolution.step6': 'الخطوة 6: التحليل النهائي',
+    'MH.polynomials.part2cSolution.step6Text': 'إذا كان لـ R جذر عند c، فإن R(x) = k(x - c) لبعض الثوابت k.',
+    'MH.polynomials.part2cSolution.step6Text2': 'لذا P(x) = k(x - a)(x - b)(x - c).',
+    'MH.polynomials.part2cSolution.step7': 'الخطوة 7: الاستنتاج',
+    'MH.polynomials.part2cSolution.step7Text': 'يمكن تحليل كثيرة الحدود التكعيبية بالكامل إلى ثلاثة عوامل خطية على الأكثر، لذا يمكن أن يكون لها على الأكثر ثلاثة جذور.',
+    'MH.polynomials.part3Title': 'الجزء 3: كثيرات الحدود من الدرجة الرابعة',
+    'MH.polynomials.part3aTitle': 'الجزء 3أ: التحليل مع جذرين متميزين',
+    'MH.polynomials.part3aText.part1': 'لتكن F كثيرة الحدود المعرفة بـ',
+    'MH.polynomials.part3aText.part2': '\\(F(x) = ax^4 + bx^3 + cx^2 + dx + e\\)',
+    'MH.polynomials.part3aText.part3': 'حيث a، b، c، d، e أعداد حقيقية مع \\(a \\neq 0\\).',
+    'MH.polynomials.part3aText.part4': 'ليكن α، β جذرين متميزين لـ F.',
+    'MH.polynomials.part3aText.part5': 'أظهر أن هناك كثيرة حدود G بحيث',
+    'MH.polynomials.part3aText.part6': '\\(F(x) = (x - α)(x - β)G(x)\\)',
+    'MH.polynomials.part3aSolution.step1': 'الخطوة 1: ابدأ بالمعلومات المعطاة',
+    'MH.polynomials.part3aSolution.step1Text': 'نعلم أن α و β جذور لـ F، لذا F(α) = 0 و F(β) = 0.',
+    'MH.polynomials.part3aSolution.step2': 'الخطوة 2: حلل (x - α)',
+    'MH.polynomials.part3aSolution.step2Text': 'بما أن α جذر لـ F، حسب النتيجة من الجزء 2ب، يمكننا كتابة:',
+    'MH.polynomials.part3aSolution.step2Equation': '\\(F(x) = (x - α)Q(x)\\)',
+    'MH.polynomials.part3aSolution.step2Text2': 'حيث Q هي كثيرة حدود تكعيبية (الدرجة 3).',
+    'MH.polynomials.part3aSolution.step3': 'الخطوة 3: استخدم الجذر الثاني β',
+    'MH.polynomials.part3aSolution.step3Text': 'بما أن β هو أيضًا جذر لـ F، لدينا F(β) = 0.',
+    'MH.polynomials.part3aSolution.step3Equation': '\\(F(β) = (β - α)Q(β) = 0\\)',
+    'MH.polynomials.part3aSolution.step4': 'الخطوة 4: بما أن α و β متميزان',
+    'MH.polynomials.part3aSolution.step4Text': 'بما أن α ≠ β، لدينا (β - α) ≠ 0، لذا يجب أن يكون Q(β) = 0.',
+    'MH.polynomials.part3aSolution.step4Text2': 'هذا يعني أن β جذر لكثيرة الحدود التكعيبية Q.',
+    'MH.polynomials.part3aSolution.step5': 'الخطوة 5: حلل Q(x)',
+    'MH.polynomials.part3aSolution.step5Text': 'بما أن β جذر لـ Q، يمكننا كتابة:',
+    'MH.polynomials.part3aSolution.step5Equation': '\\(Q(x) = (x - β)R(x)\\)',
+    'MH.polynomials.part3aSolution.step5Text2': 'حيث R هي كثيرة حدود تربيعية (الدرجة 2).',
+    'MH.polynomials.part3aSolution.step6': 'الخطوة 6: اجمع العوامل',
+    'MH.polynomials.part3aSolution.step6Equation': '\\(F(x) = (x - α)(x - β)R(x)\\)',
+    'MH.polynomials.part3aSolution.step7': 'الخطوة 7: الاستنتاج',
+    'MH.polynomials.part3aSolution.step7Text': 'لتكن G(x) = R(x)، وهي كثيرة حدود تربيعية.',
+    'MH.polynomials.part3aSolution.step7Text2': 'إذن F(x) = (x - α)(x - β)G(x)، كما هو مطلوب.',
+    'MH.polynomials.part3bTitle': 'الجزء 3ب: الحد الأقصى لعدد الجذور لكثيرة حدود من الدرجة الرابعة',
+    'MH.polynomials.part3bSolution.step1': 'الخطوة 1: فهم المشكلة',
+    'MH.polynomials.part3bSolution.step1Text': 'نحتاج إلى إثبات أن كثيرة الحدود من الدرجة الرابعة (الدرجة 4) يمكن أن يكون لها على الأكثر أربعة جذور.',
+    'MH.polynomials.part3bSolution.step2': 'الخطوة 2: استخدم التحليل من الجزء 3أ',
+    'MH.polynomials.part3bSolution.step2Text': 'من الجزء 3أ، إذا كان α و β جذرين لـ F، فإن F(x) = (x - α)(x - β)G(x)، حيث G هي كثيرة حدود تربيعية.',
+    'MH.polynomials.part3bSolution.step3': 'الخطوة 3: فكر في جذور إضافية',
+    'MH.polynomials.part3bSolution.step3Text': 'إذا كان γ جذرًا آخر لـ F، فبما أن F(γ) = 0 و (γ - α) ≠ 0، (γ - β) ≠ 0، يجب أن يكون G(γ) = 0.',
+    'MH.polynomials.part3bSolution.step3Text2': 'هذا يعني أن γ جذر لكثيرة الحدود التربيعية G.',
+    'MH.polynomials.part3bSolution.step4': 'الخطوة 4: تابع التحليل',
+    'MH.polynomials.part3bSolution.step4Text': 'إذا كان γ جذرًا لـ G، فإن G(x) = (x - γ)H(x)، حيث H هي كثيرة حدود خطية (الدرجة 1).',
+    'MH.polynomials.part3bSolution.step4Text2': 'لذا F(x) = (x - α)(x - β)(x - γ)H(x).',
+    'MH.polynomials.part3bSolution.step5': 'الخطوة 5: فكر في جذر رابع',
+    'MH.polynomials.part3bSolution.step5Text': 'إذا كان δ جذرًا رابعًا لـ F، فبما أن F(δ) = 0 و (δ - α) ≠ 0، (δ - β) ≠ 0، (δ - γ) ≠ 0، يجب أن يكون H(δ) = 0.',
+    'MH.polynomials.part3bSolution.step5Text2': 'هذا يعني أن δ جذر لكثيرة الحدود الخطية H.',
+    'MH.polynomials.part3bSolution.step6': 'الخطوة 6: التحليل النهائي',
+    'MH.polynomials.part3bSolution.step6Text': 'إذا كان لـ H جذر عند δ، فإن H(x) = k(x - δ) لبعض الثوابت k.',
+    'MH.polynomials.part3bSolution.step6Text2': 'لذا F(x) = k(x - α)(x - β)(x - γ)(x - δ).',
+    'MH.polynomials.part3bSolution.step7': 'الخطوة 7: الاستنتاج',
+    'MH.polynomials.part3bSolution.step7Text': 'يمكن تحليل كثيرة الحدود من الدرجة الرابعة بالكامل إلى أربعة عوامل خطية على الأكثر، لذا يمكن أن يكون لها على الأكثر أربعة جذور.',
+    'MH.polynomials.part4Title': 'الجزء 4: كثيرات الحدود العامة والفرضيات',
+    'MH.polynomials.part4Text.part1': 'لتكن f كثيرة حدود من الدرجة n (n > 2) وليكن α، β و γ ثلاثة جذور متميزة لـ f.',
+    'MH.polynomials.part4aTitle': 'الجزء 4أ: فرضية حول التحليل',
+    'MH.polynomials.part4aSolution.step1': 'الخطوة 1: حلل النمط من الأجزاء السابقة',
+    'MH.polynomials.part4aSolution.step1Text': 'من الجزئين 2 و 3، لاحظنا أن:',
+    'MH.polynomials.part4aSolution.step1ListItem1': 'لكثيرة الحدود التكعيبية (الدرجة 3) مع الجذور α، β، γ: \\(P(x) = k(x - α)(x - β)(x - γ)\\)',
+    'MH.polynomials.part4aSolution.step1ListItem2': 'لكثيرة الحدود من الدرجة الرابعة (الدرجة 4) مع الجذور α، β، γ، δ: \\(F(x) = k(x - α)(x - β)(x - γ)(x - δ)\\)',
+    'MH.polynomials.part4aSolution.step2': 'الخطوة 2: صياغة الفرضية',
+    'MH.polynomials.part4aSolution.step2Text': 'بناءً على هذا النمط، يمكننا افتراض أن:',
+    'MH.polynomials.part4aSolution.step2Text2': 'إذا كانت لكثيرة الحدود f من الدرجة n جذور متميزة α₁، α₂، ...، αₘ، فيمكن تحليل f كالتالي:',
+    'MH.polynomials.part4aSolution.step2Equation': '\\(f(x) = k(x - α₁)(x - α₂)\\cdots(x - αₘ) \\cdot g(x)\\)',
+    'MH.polynomials.part4aSolution.step2Text3': 'حيث g(x) هي كثيرة حدود من الدرجة (n - m).',
+    'MH.polynomials.part4aSolution.step3': 'الخطوة 3: فرضية محددة لثلاثة جذور',
+    'MH.polynomials.part4aSolution.step3Text': 'على وجه التحديد، إذا كان لـ f ثلاثة جذور متميزة α، β، γ، فإن:',
+    'MH.polynomials.part4aSolution.step3Equation': '\\(f(x) = (x - α)(x - β)(x - γ) \\cdot h(x)\\)',
+    'MH.polynomials.part4aSolution.step3Text2': 'حيث h(x) هي كثيرة حدود من الدرجة (n - 3).',
+    'MH.polynomials.part4bTitle': 'الجزء 4ب: فرضية حول الحد الأقصى لعدد الجذور',
+    'MH.polynomials.part4bSolution.step1': 'الخطوة 1: حلل النمط من الأجزاء السابقة',
+    'MH.polynomials.part4bSolution.step1Text': 'من الجزئين 2 و 3، لاحظنا أن:',
+    'MH.polynomials.part4bSolution.step1ListItem1': 'كثيرة الحدود التكعيبية (الدرجة 3) لها على الأكثر 3 جذور',
+    'MH.polynomials.part4bSolution.step1ListItem2': 'كثيرة الحدود من الدرجة الرابعة (الدرجة 4) لها على الأكثر 4 جذور',
+    'MH.polynomials.part4bSolution.step2': 'الخطوة 2: صياغة الفرضية العامة',
+    'MH.polynomials.part4bSolution.step2Text': 'بناءً على هذا النمط، يمكننا افتراض أن:',
+    'MH.polynomials.part4bSolution.step2Text2': 'كثيرة الحدود من الدرجة n لها على الأكثر n جذر.',
+    'MH.polynomials.part4bSolution.step3': 'الخطوة 3: المنطق وراء الفرضية',
+    'MH.polynomials.part4bSolution.step3Text': 'هذا منطقي لأن:',
+    'MH.polynomials.part4bSolution.step3ListItem1': 'كل جذر يقابل عاملاً خطياً (x - r)',
+    'MH.polynomials.part4bSolution.step3ListItem2': 'حاصل ضرب n عامل خطي يعطي كثيرة حدود من الدرجة n',
+    'MH.polynomials.part4bSolution.step3ListItem3': 'إذا كان لدينا أكثر من n جذر، فسنحتاج إلى أكثر من n عامل خطي، مما سيؤدي إلى كثيرة حدود من درجة أكبر من n',
+    'MH.polynomials.part4bSolution.step4': 'الخطوة 4: ملاحظة هامة',
+    'MH.polynomials.part4bSolution.step4Text': 'هذا معروف باسم النظرية الأساسية للجبر، التي تنص على أن كثيرة الحدود من الدرجة n لها بالضبط n جذر مركب (مع احتساب التكرار).',
+    'MH.polynomials.part4bSolution.step4Text2': 'بالنسبة للجذور الحقيقية تحديدًا، كثيرة الحدود من الدرجة n لها على الأكثر n جذر حقيقي.',
+                
+                // Activity 17 Arabic translations
+                'MH.polynomials.activity17Title': 'النشاط 17: تمرين على تحليل كثيرات الحدود',
+                'MH.polynomials.part1IntroText': 'في كل من الحالات التالية، تحقق من أن a جذر لـ P واكتب P(x) على الصورة \((x - a)Q(x)\)، حيث Q هي كثيرة حدود يجب تحديدها.',
+                'MH.polynomials.part1aTitle': 'الجزء 1أ: \(P(x) = 2x^3 - 7x^2 - 17x + 10\)، a = -2',
+                'MH.polynomials.part1aSolution.step1': 'الخطوة 1: تحقق من أن a = -2 هو جذر',
+                'MH.polynomials.part1aSolution.step1Equation': '\(P(-2) = 2(-2)^3 - 7(-2)^2 - 17(-2) + 10\)',
+                'MH.polynomials.part1aSolution.step1Equation2': '\(= 2(-8) - 7(4) + 34 + 10\)',
+                'MH.polynomials.part1aSolution.step1Equation3': '\(= -16 - 28 + 34 + 10 = 0\)',
+                'MH.polynomials.part1aSolution.step1Text': 'بما أن P(-2) = 0، فإن -2 هو بالفعل جذر لـ P.',
+                'MH.polynomials.part1aSolution.step2': 'الخطوة 2: قم بإجراء قسمة كثيرة الحدود لـ P(x) على (x + 2)',
+                'MH.polynomials.part1aSolution.step2Equation': '\(P(x) = 2x^3 - 7x^2 - 17x + 10\)',
+                'MH.polynomials.part1aSolution.step2Text': 'باستخدام القسمة التركيبية مع -2:',
+                'MH.polynomials.part1aSolution.step2Equation2': 'المعاملات: 2, -7, -17, 10',
+                'MH.polynomials.part1aSolution.step2Equation3': 'أنزل 2: 2',
+                'MH.polynomials.part1aSolution.step2Equation4': 'اضرب في -2: -4',
+                'MH.polynomials.part1aSolution.step2Equation5': 'أضف إلى -7: -11',
+                'MH.polynomials.part1aSolution.step2Equation6': 'اضرب في -2: 22',
+                'MH.polynomials.part1aSolution.step2Equation7': 'أضف إلى -17: 5',
+                'MH.polynomials.part1aSolution.step2Equation8': 'اضرب في -2: -10',
+                'MH.polynomials.part1aSolution.step2Equation9': 'أضف إلى 10: 0',
+                'MH.polynomials.part1aSolution.step3': 'الخطوة 3: اكتب التحليل',
+                'MH.polynomials.part1aSolution.step3Text': 'كثيرة الحدود الناتجة لها المعاملات: 2, -11, 5',
+                'MH.polynomials.part1aSolution.step3Equation': '\(Q(x) = 2x^2 - 11x + 5\)',
+                'MH.polynomials.part1aSolution.step3Equation2': '\(P(x) = (x + 2)(2x^2 - 11x + 5)\)',
+                
+                'MH.polynomials.part1bTitle': 'الجزء 1ب: \(P(x) = 2x^2 - (1 + \tfrac{2}{3})x - 1 - 13\)، a = 1',
+                'MH.polynomials.part1bSolution.step1': 'الخطوة 1: بسّط كثيرة الحدود أولاً',
+                'MH.polynomials.part1bSolution.step1Equation': '\(P(x) = 2x^2 - \left(1 + \frac{2}{3}\right)x - 1 - 13\)',
+                'MH.polynomials.part1bSolution.step1Equation2': '\(= 2x^2 - \frac{5}{3}x - 14\)',
+                'MH.polynomials.part1bSolution.step2': 'الخطوة 2: تحقق من أن a = 1 هو جذر',
+                'MH.polynomials.part1bSolution.step2Equation': '\(P(1) = 2(1)^2 - \frac{5}{3}(1) - 14\)',
+                'MH.polynomials.part1bSolution.step2Equation2': '\(= 2 - \frac{5}{3} - 14\)',
+                'MH.polynomials.part1bSolution.step2Equation3': '\(= \frac{6}{3} - \frac{5}{3} - \frac{42}{3} = -\frac{41}{3} \neq 0\)',
+                'MH.polynomials.part1bSolution.step2Text': 'بما أن P(1) ≠ 0، فإن 1 ليس جذرًا لـ P.',
+                'MH.polynomials.part1bSolution.step3': 'الخطوة 3: تحقق مما إذا كان هناك خطأ مطبعي في المسألة',
+                'MH.polynomials.part1bSolution.step3Text': 'قد تكون كثيرة الحدود المقصودة هي: \(P(x) = 2x^2 - (1 + \frac{2}{3})x - 1 - \frac{1}{3}\)',
+                'MH.polynomials.part1bSolution.step3Equation': '\(= 2x^2 - \frac{5}{3}x - \frac{4}{3}\)',
+                'MH.polynomials.part1bSolution.step3Text2': 'ثم P(1) = 2 - 5/3 - 4/3 = 2 - 9/3 = 2 - 3 = -1 ≠ 0',
+                'MH.polynomials.part1bSolution.step3Text3': 'بما أن القيمة المعطاة ليست جذرًا، لا يمكننا التحليل كما هو مطلوب.',
+                
+                'MH.polynomials.part1cTitle': 'الجزء 1ج: \(P(x) = x^4 - 3x^3 + x^2 - 4x + 3\)، a = 3',
+                'MH.polynomials.part1cSolution.step1': 'الخطوة 1: تحقق من أن a = 3 هو جذر',
+                'MH.polynomials.part1cSolution.step1Equation': '\(P(3) = 3^4 - 3(3)^3 + 3^2 - 4(3) + 3\)',
+                'MH.polynomials.part1cSolution.step1Equation2': '\(= 81 - 3(27) + 9 - 12 + 3\)',
+                'MH.polynomials.part1cSolution.step1Equation3': '\(= 81 - 81 + 9 - 12 + 3 = 0\)',
+                'MH.polynomials.part1cSolution.step1Text': 'بما أن P(3) = 0، فإن 3 هو بالفعل جذر لـ P.',
+                'MH.polynomials.part1cSolution.step2': 'الخطوة 2: قم بإجراء قسمة كثيرة الحدود لـ P(x) على (x - 3)',
+                'MH.polynomials.part1cSolution.step2Equation': '\(P(x) = x^4 - 3x^3 + x^2 - 4x + 3\)',
+                'MH.polynomials.part1cSolution.step2Text': 'باستخدام القسمة التركيبية مع 3:',
+                'MH.polynomials.part1cSolution.step2Equation2': 'المعاملات: 1, -3, 1, -4, 3',
+                'MH.polynomials.part1cSolution.step2Equation3': 'أنزل 1: 1',
+                'MH.polynomials.part1cSolution.step2Equation4': 'اضرب في 3: 3',
+                'MH.polynomials.part1cSolution.step2Equation5': 'أضف إلى -3: 0',
+                'MH.polynomials.part1cSolution.step2Equation6': 'اضرب في 3: 0',
+                'MH.polynomials.part1cSolution.step2Equation7': 'أضف إلى 1: 1',
+                'MH.polynomials.part1cSolution.step2Equation8': 'اضرب في 3: 3',
+                'MH.polynomials.part1cSolution.step2Equation9': 'أضف إلى -4: -1',
+                'MH.polynomials.part1cSolution.step2Equation10': 'اضرب في 3: -3',
+                'MH.polynomials.part1cSolution.step2Equation11': 'أضف إلى 3: 0',
+                'MH.polynomials.part1cSolution.step3': 'الخطوة 3: اكتب التحليل',
+                'MH.polynomials.part1cSolution.step3Text': 'كثيرة الحدود الناتجة لها المعاملات: 1, 0, 1, -1',
+                'MH.polynomials.part1cSolution.step3Equation': '\(Q(x) = x^3 + 0x^2 + x - 1 = x^3 + x - 1\)',
+                'MH.polynomials.part1cSolution.step3Equation2': '\(P(x) = (x - 3)(x^3 + x - 1)\)',
+                
+                'MH.polynomials.part2IntroText': 'في كل من الحالات التالية، ابحث عن جذر واضح لكثيرة الحدود P وحلل P(x).',
+                'MH.polynomials.part2aTitle': 'الجزء 2أ: \(P(x) = x^3 - 11x^2 + 30x\)',
+                'MH.polynomials.part2aSolution.step1': 'الخطوة 1: ابحث عن جذور واضحة',
+                'MH.polynomials.part2aSolution.step1Text': 'لاحظ أن P(x) لها عامل مشترك هو x:',
+                'MH.polynomials.part2aSolution.step1Equation': '\(P(x) = x(x^2 - 11x + 30)\)',
+                'MH.polynomials.part2aSolution.step2': 'الخطوة 2: حلل التربيعية',
+                'MH.polynomials.part2aSolution.step2Equation': '\(x^2 - 11x + 30 = (x - 5)(x - 6)\)',
+                'MH.polynomials.part2aSolution.step3': 'الخطوة 3: أكمل التحليل',
+                'MH.polynomials.part2aSolution.step3Equation': '\(P(x) = x(x - 5)(x - 6)\)',
+                'MH.polynomials.part2aSolution.step3Text': 'الجذور هي 0, 5, و 6.',
+                
+                'MH.polynomials.part2bTitle': 'الجزء 2ب: \(P(x) = x^4 + x^3 - 3x^2 - 4x - 4\)',
+                'MH.polynomials.part2bSolution.step1': 'الخطوة 1: اختبر الجذور النسبية المحتملة',
+                'MH.polynomials.part2bSolution.step1Text': 'الجذور النسبية المحتملة: ±1, ±2, ±4',
+                'MH.polynomials.part2bSolution.step1Equation': '\(P(1) = 1 + 1 - 3 - 4 - 4 = -9 \neq 0\)',
+                'MH.polynomials.part2bSolution.step1Equation2': '\(P(-1) = 1 - 1 - 3 + 4 - 4 = -3 \neq 0\)',
+                'MH.polynomials.part2bSolution.step1Equation3': '\(P(2) = 16 + 8 - 12 - 8 - 4 = 0\)',
+                'MH.polynomials.part2bSolution.step1Text2': 'إذن x = 2 هو جذر.',
+                'MH.polynomials.part2bSolution.step2': 'الخطوة 2: حلل (x - 2) باستخدام القسمة التركيبية',
+                'MH.polynomials.part2bSolution.step2Equation': 'المعاملات: 1, 1, -3, -4, -4',
+                'MH.polynomials.part2bSolution.step2Equation2': 'أنزل 1: 1',
+                'MH.polynomials.part2bSolution.step2Equation3': 'اضرب في 2: 2',
+                'MH.polynomials.part2bSolution.step2Equation4': 'أضف إلى 1: 3',
+                'MH.polynomials.part2bSolution.step2Equation5': 'اضرب في 2: 6',
+                'MH.polynomials.part2bSolution.step2Equation6': 'أضف إلى -3: 3',
+                'MH.polynomials.part2bSolution.step2Equation7': 'اضرب في 2: 6',
+                'MH.polynomials.part2bSolution.step2Equation8': 'أضف إلى -4: 2',
+                'MH.polynomials.part2bSolution.step2Equation9': 'اضرب في 2: 4',
+                'MH.polynomials.part2bSolution.step2Equation10': 'أضف إلى -4: 0',
+                'MH.polynomials.part2bSolution.step3': 'الخطوة 3: تابع مع كثيرة الحدود الناتجة',
+                'MH.polynomials.part2bSolution.step3Equation': 'الناتج: \(x^3 + 3x^2 + 3x + 2\)',
+                'MH.polynomials.part2bSolution.step3Text': 'اختبر x = -2:',
+                'MH.polynomials.part2bSolution.step3Equation2': '\((-2)^3 + 3(-2)^2 + 3(-2) + 2 = -8 + 12 - 6 + 2 = 0\)',
+                'MH.polynomials.part2bSolution.step3Text2': 'إذن x = -2 هو أيضًا جذر.',
+                'MH.polynomials.part2bSolution.step4': 'الخطوة 4: حلل (x + 2)',
+                'MH.polynomials.part2bSolution.step4Equation': 'المعاملات: 1, 3, 3, 2',
+                'MH.polynomials.part2bSolution.step4Equation2': 'أنزل 1: 1',
+                'MH.polynomials.part2bSolution.step4Equation3': 'اضرب في -2: -2',
+                'MH.polynomials.part2bSolution.step4Equation4': 'أضف إلى 3: 1',
+                'MH.polynomials.part2bSolution.step4Equation5': 'اضرب في -2: -2',
+                'MH.polynomials.part2bSolution.step4Equation6': 'أضف إلى 3: 1',
+                'MH.polynomials.part2bSolution.step4Equation7': 'اضرب في -2: -2',
+                'MH.polynomials.part2bSolution.step4Equation8': 'أضف إلى 2: 0',
+                'MH.polynomials.part2bSolution.step5': 'الخطوة 5: أكمل التحليل',
+                'MH.polynomials.part2bSolution.step5Equation': 'الناتج: \(x^2 + x + 1\)',
+                'MH.polynomials.part2bSolution.step5Equation2': '\(P(x) = (x - 2)(x + 2)(x^2 + x + 1)\)',
+                'MH.polynomials.part2bSolution.step5Text': 'ملاحظة: \(x^2 + x + 1\) ليس لها جذور حقيقية (المميز = 1 - 4 = -3).',
+                
+                'MH.polynomials.part2cTitle': 'الجزء 2ج: \(P(x) = 3x^3 + 4x^2 - 6x - 7\)',
+                'MH.polynomials.part2cSolution.step1': 'الخطوة 1: اختبر الجذور النسبية المحتملة',
+                'MH.polynomials.part2cSolution.step1Text': 'الجذور النسبية المحتملة: ±1, ±7, ±1/3, ±7/3',
+                'MH.polynomials.part2cSolution.step1Equation': '\(P(1) = 3 + 4 - 6 - 7 = -6 \neq 0\)',
+                'MH.polynomials.part2cSolution.step1Equation2': '\(P(-1) = -3 + 4 + 6 - 7 = 0\)',
+                'MH.polynomials.part2cSolution.step1Text2': 'إذن x = -1 هو جذر.',
+                'MH.polynomials.part2cSolution.step2': 'الخطوة 2: حلل (x + 1) باستخدام القسمة التركيبية',
+                'MH.polynomials.part2cSolution.step2Equation': 'المعاملات: 3, 4, -6, -7',
+                'MH.polynomials.part2cSolution.step2Equation2': 'أنزل 3: 3',
+                'MH.polynomials.part2cSolution.step2Equation3': 'اضرب في -1: -3',
+                'MH.polynomials.part2cSolution.step2Equation4': 'أضف إلى 4: 1',
+                'MH.polynomials.part2cSolution.step2Equation5': 'اضرب في -1: -1',
+                'MH.polynomials.part2cSolution.step2Equation6': 'أضف إلى -6: -7',
+                'MH.polynomials.part2cSolution.step2Equation7': 'اضرب في -1: 7',
+                'MH.polynomials.part2cSolution.step2Equation8': 'أضف إلى -7: 0',
+                'MH.polynomials.part2cSolution.step3': 'الخطوة 3: أكمل التحليل',
+                'MH.polynomials.part2cSolution.step3Equation': 'الناتج: \(3x^2 + x - 7\)',
+                'MH.polynomials.part2cSolution.step3Equation2': '\(P(x) = (x + 1)(3x^2 + x - 7)\)',
+                'MH.polynomials.part2cSolution.step3Text': 'لا يمكن تحليل العامل التربيعي أكثر باستخدام الأعداد الصحيحة.',
+                
+                'MH.polynomials.part2dTitle': 'الجزء 2د: \(P(x) = 2x^2 - (4 + 12)x + 212\)',
+                'MH.polynomials.part2dSolution.step1': 'الخطوة 1: بسّط كثيرة الحدود',
+                'MH.polynomials.part2dSolution.step1Equation': '\(P(x) = 2x^2 - (4 + 12)x + 212\)',
+                'MH.polynomials.part2dSolution.step1Equation2': '\(= 2x^2 - 16x + 212\)',
+                'MH.polynomials.part2dSolution.step2': 'الخطوة 2: حلل العامل المشترك',
+                'MH.polynomials.part2dSolution.step2Equation': '\(P(x) = 2(x^2 - 8x + 106)\)',
+                'MH.polynomials.part2dSolution.step3': 'الخطوة 3: تحقق مما إذا كان يمكن تحليل التربيعية',
+                'MH.polynomials.part2dSolution.step3Text': 'المميز = \((-8)^2 - 4(1)(106) = 64 - 424 = -360\)',
+                'MH.polynomials.part2dSolution.step3Text2': 'بما أن المميز سالب، فإن التربيعية ليس لها جذور حقيقية ولا يمكن تحليلها على الأعداد الحقيقية.',
+                'MH.polynomials.part2dSolution.step4': 'الخطوة 4: أكمل التحليل',
+                'MH.polynomials.part2dSolution.step4Equation': '\(P(x) = 2(x^2 - 8x + 106)\)',
+                'MH.polynomials.part2dSolution.step4Text': 'هذا هو التحليل الكامل على الأعداد الحقيقية.',
+    'MH.polynomials.visualizationTitle': 'تصور جذور كثيرات الحدود',
+    'MH.polynomials.cubicGraphTitle': 'كثيرة حدود تكعيبية بثلاثة جذور',
+    'MH.polynomials.cubicGraphText': 'كثيرة حدود تكعيبية بثلاثة جذور حقيقية متميزة، تظهر كيف تعبر المحور x عند كل جذر.',
+    'MH.polynomials.quarticGraphTitle': 'كثيرة حدود من الدرجة الرابعة بأربعة جذور',
+    'MH.polynomials.quarticGraphText': 'كثيرة حدود من الدرجة الرابعة بأربعة جذور حقيقية متميزة، توضح الحد الأقصى لعدد الجذور لكثيرة حدود من الدرجة 4.',
+    
+    // Footer translations
+    'MH.footer.developer': 'المطور',
+    'MH.footer.version': 'الإصدار',
+    'MH.footer.links': 'روابط',
+    'MH.footer.terms': 'شروط الاستخدام',
+    'MH.footer.privacy': 'سياسة الخصوصية'
+},
+            'fr': {
+    // General translations
+    'MH.general.homeTooltip': 'Aller à la page d\'accueil',
+    'MH.general.install': 'Installer l\'App',
+    'MH.general.installSuccess': 'Mathematics Hub installé avec succès!',
+    'MH.general.enableNotifications': 'Activer les notifications',
+    'MH.general.notificationEnabled': 'Notifications activées! Vous recevrez maintenant des mises à jour.',
+    'MH.general.title': 'Centre de Mathématiques',
+    'MH.general.theme': 'Thème',
+    'MH.general.language': 'Langue',
+    'MH.general.showSolution': 'Afficher la Solution',
+    'MH.general.hideSolution': 'Masquer la Solution',
+    
+    // Polynomials lesson specific translations
+    'MH.polynomials.part4Title': 'Polynômes : Partie 4 - Factorisation et Racines',
+    'MH.polynomials.definitionTitle': 'Définition',
+    'MH.polynomials.definitionText.part1': 'Soient P et Q deux polynômes.',
+    'MH.polynomials.definitionText.part2': 'On dit que le polynôme P est factorisable par le polynôme Q s\'il existe un polynôme R tel que, pour tout réel x,',
+    'MH.polynomials.definitionText.part3': '\\(P(x) = Q(x) \\cdot R(x)\\)',
+    'MH.polynomials.definitionText.part4': 'Cela signifie que Q est un facteur de P, et on peut écrire P comme le produit de Q et d\'un autre polynôme R.',
+    'MH.polynomials.importantNoteTitle': 'Note Importante',
+    'MH.polynomials.importantNoteText.part1': 'Si un polynôme P est factorisable par (x - a), alors a est une racine de P.',
+    'MH.polynomials.importantNoteText.part2': 'Cela signifie que P(a) = 0, et (x - a) est un facteur de P(x).',
+    'MH.polynomials.activityTitle': 'Activité 16 : Exploration de la Factorisation des Polynômes',
+    'MH.polynomials.part1Title': 'Partie 1 : Relation entre Facteurs et Racines',
+    'MH.polynomials.part1Text.part1': 'Soit a un nombre réel.',
+    'MH.polynomials.part1Text.part2': 'Prouvez que si un polynôme est factorisable par (x - a), alors a est une racine de ce polynôme.',
+    'MH.polynomials.part1Solution.step1': 'Étape 1 : Commencer avec les informations données',
+    'MH.polynomials.part1Solution.step1Text': 'Nous savons que le polynôme P est factorisable par (x - a). Cela signifie qu\'il existe un polynôme R tel que :',
+    'MH.polynomials.part1Solution.step1Equation': '\\(P(x) = (x - a) \\cdot R(x)\\)',
+    'MH.polynomials.part1Solution.step2': 'Étape 2 : Évaluer P en x = a',
+    'MH.polynomials.part1Solution.step2Text': 'Pour prouver que a est une racine de P, nous devons montrer que P(a) = 0.',
+    'MH.polynomials.part1Solution.step2Equation': '\\(P(a) = (a - a) \\cdot R(a) = 0 \\cdot R(a) = 0\\)',
+    'MH.polynomials.part1Solution.step3': 'Étape 3 : Conclusion',
+    'MH.polynomials.part1Solution.step3Text': 'Puisque P(a) = 0, a est effectivement une racine du polynôme P.',
+    'MH.polynomials.part1Solution.step3Text2': 'Cela prouve que si un polynôme est factorisable par (x - a), alors a est une racine de ce polynôme.',
+    'MH.polynomials.part2Title': 'Partie 2 : Polynômes Cubiques et Factorisation',
+    'MH.polynomials.part2Text.part1': 'Soit a un nombre réel et P le polynôme défini par',
+    'MH.polynomials.part2Text.part2': '\\(P(x) = ax^3 + bx^2 + cx + d\\)',
+    'MH.polynomials.part2Text.part3': 'où a, b, c et d sont des nombres réels avec \\(a \\neq 0\\).',
+    'MH.polynomials.part2aTitle': 'Partie 2a : Factoriser \\(P(x) - P(a)\\)',
+    'MH.polynomials.part2aSolution.step1': 'Étape 1 : Écrire l\'expression',
+    'MH.polynomials.part2aSolution.step1Equation': '\\(P(x) - P(a) = (ax^3 + bx^2 + cx + d) - (aa^3 + ba^2 + ca + d)\\)',
+    'MH.polynomials.part2aSolution.step2': 'Étape 2 : Simplifier l\'expression',
+    'MH.polynomials.part2aSolution.step2Equation': '\\(P(x) - P(a) = a(x^3 - a^3) + b(x^2 - a^2) + c(x - a)\\)',
+    'MH.polynomials.part2aSolution.step3': 'Étape 3 : Factoriser chaque terme',
+    'MH.polynomials.part2aSolution.step3Equation': '\\(x^3 - a^3 = (x - a)(x^2 + ax + a^2)\\)',
+    'MH.polynomials.part2aSolution.step3Equation2': '\\(x^2 - a^2 = (x - a)(x + a)\\)',
+    'MH.polynomials.part2aSolution.step3Equation3': '\\(x - a = (x - a)\\)',
+    'MH.polynomials.part2aSolution.step4': 'Étape 4 : Combiner les facteurs',
+    'MH.polynomials.part2aSolution.step4Equation': '\\(P(x) - P(a) = (x - a)[a(x^2 + ax + a^2) + b(x + a) + c]\\)',
+    'MH.polynomials.part2aSolution.step5': 'Étape 5 : Factorisation finale',
+    'MH.polynomials.part2aSolution.step5Equation': '\\(P(x) - P(a) = (x - a) \\cdot Q(x)\\)',
+    'MH.polynomials.part2aSolution.step5Text': 'où \\(Q(x) = a(x^2 + ax + a^2) + b(x + a) + c\\) est un polynôme de degré 2.',
+    'MH.polynomials.part2bTitle': 'Partie 2b : Si a est une racine, alors P(x) = (x - a)Q(x)',
+    'MH.polynomials.part2bSolution.step1': 'Étape 1 : Commencer avec les informations données',
+    'MH.polynomials.part2bSolution.step1Text': 'Nous savons que a est une racine de P, ce qui signifie P(a) = 0.',
+    'MH.polynomials.part2bSolution.step2': 'Étape 2 : Utiliser la factorisation de la partie 2a',
+    'MH.polynomials.part2bSolution.step2Equation': '\\(P(x) - P(a) = (x - a) \\cdot Q(x)\\)',
+    'MH.polynomials.part2bSolution.step3': 'Étape 3 : Substituer P(a) = 0',
+    'MH.polynomials.part2bSolution.step3Equation': '\\(P(x) - 0 = (x - a) \\cdot Q(x)\\)',
+    'MH.polynomials.part2bSolution.step3Equation2': '\\(P(x) = (x - a) \\cdot Q(x)\\)',
+    'MH.polynomials.part2bSolution.step4': 'Étape 4 : Déterminer le degré de Q',
+    'MH.polynomials.part2bSolution.step4Text': 'Puisque P est un polynôme cubique (degré 3) et (x - a) est un polynôme linéaire (degré 1), Q doit être un polynôme quadratique (degré 2).',
+    'MH.polynomials.part2bSolution.step5': 'Étape 5 : Conclusion',
+    'MH.polynomials.part2bSolution.step5Text': 'Si a est une racine du polynôme cubique P, alors P(x) = (x - a)Q(x), où Q est un polynôme quadratique.',
+    'MH.polynomials.part2cTitle': 'Partie 2c : Nombre maximum de racines pour un polynôme cubique',
+    'MH.polynomials.part2cSolution.step1': 'Étape 1 : Comprendre le problème',
+    'MH.polynomials.part2cSolution.step1Text': 'Nous devons prouver qu\'un polynôme cubique (degré 3) peut avoir au plus trois racines.',
+    'MH.polynomials.part2cSolution.step2': 'Étape 2 : Utiliser la propriété de factorisation',
+    'MH.polynomials.part2cSolution.step2Text': 'De la partie 2b, si a est une racine de P, alors P(x) = (x - a)Q(x), où Q est un polynôme quadratique (degré 2).',
+    'MH.polynomials.part2cSolution.step3': 'Étape 3 : Considérer des racines supplémentaires',
+    'MH.polynomials.part2cSolution.step3Text': 'Si b est une autre racine de P, alors puisque P(b) = 0 et (b - a) ≠ 0 (en supposant que a et b sont distincts), nous devons avoir Q(b) = 0.',
+    'MH.polynomials.part2cSolution.step3Text2': 'Cela signifie que b est une racine du polynôme quadratique Q.',
+    'MH.polynomials.part2cSolution.step4': 'Étape 4 : Continuer la factorisation',
+    'MH.polynomials.part2cSolution.step4Text': 'Si b est une racine de Q, alors Q(x) = (x - b)R(x), où R est un polynôme linéaire (degré 1).',
+    'MH.polynomials.part2cSolution.step4Text2': 'Donc P(x) = (x - a)(x - b)R(x).',
+    'MH.polynomials.part2cSolution.step5': 'Étape 5 : Considérer une troisième racine',
+    'MH.polynomials.part2cSolution.step5Text': 'Si c est une troisième racine de P, alors puisque P(c) = 0 et (c - a) ≠ 0, (c - b) ≠ 0, nous devons avoir R(c) = 0.',
+    'MH.polynomials.part2cSolution.step5Text2': 'Cela signifie que c est une racine du polynôme linéaire R.',
+    'MH.polynomials.part2cSolution.step6': 'Étape 6 : Factorisation finale',
+    'MH.polynomials.part2cSolution.step6Text': 'Si R a une racine en c, alors R(x) = k(x - c) pour une certaine constante k.',
+    'MH.polynomials.part2cSolution.step6Text2': 'Donc P(x) = k(x - a)(x - b)(x - c).',
+    'MH.polynomials.part2cSolution.step7': 'Étape 7 : Conclusion',
+    'MH.polynomials.part2cSolution.step7Text': 'Un polynôme cubique peut être complètement factorisé en au plus trois facteurs linéaires, donc il peut avoir au plus trois racines.',
+    'MH.polynomials.part3Title': 'Partie 3 : Polynômes Quartiques',
+    'MH.polynomials.part3aTitle': 'Partie 3a : Factorisation avec deux racines distinctes',
+    'MH.polynomials.part3aText.part1': 'Soit F le polynôme défini par',
+    'MH.polynomials.part3aText.part2': '\\(F(x) = ax^4 + bx^3 + cx^2 + dx + e\\)',
+    'MH.polynomials.part3aText.part3': 'où a, b, c, d, e sont des nombres réels avec \\(a \\neq 0\\).',
+    'MH.polynomials.part3aText.part4': 'Soient α, β deux racines distinctes de F.',
+    'MH.polynomials.part3aText.part5': 'Montrez qu\'il existe un polynôme G tel que',
+    'MH.polynomials.part3aText.part6': '\\(F(x) = (x - α)(x - β)G(x)\\)',
+    'MH.polynomials.part3aSolution.step1': 'Étape 1 : Commencer avec les informations données',
+    'MH.polynomials.part3aSolution.step1Text': 'Nous savons que α et β sont des racines de F, donc F(α) = 0 et F(β) = 0.',
+    'MH.polynomials.part3aSolution.step2': 'Étape 2 : Factoriser (x - α)',
+    'MH.polynomials.part3aSolution.step2Text': 'Puisque α est une racine de F, d\'après le résultat de la partie 2b, nous pouvons écrire :',
+    'MH.polynomials.part3aSolution.step2Equation': '\\(F(x) = (x - α)Q(x)\\)',
+    'MH.polynomials.part3aSolution.step2Text2': 'où Q est un polynôme cubique (degré 3).',
+    'MH.polynomials.part3aSolution.step3': 'Étape 3 : Utiliser la deuxième racine β',
+    'MH.polynomials.part3aSolution.step3Text': 'Puisque β est aussi une racine de F, nous avons F(β) = 0.',
+    'MH.polynomials.part3aSolution.step3Equation': '\\(F(β) = (β - α)Q(β) = 0\\)',
+    'MH.polynomials.part3aSolution.step4': 'Étape 4 : Puisque α et β sont distincts',
+    'MH.polynomials.part3aSolution.step4Text': 'Puisque α ≠ β, nous avons (β - α) ≠ 0, donc nous devons avoir Q(β) = 0.',
+    'MH.polynomials.part3aSolution.step4Text2': 'Cela signifie que β est une racine du polynôme cubique Q.',
+    'MH.polynomials.part3aSolution.step5': 'Étape 5 : Factoriser Q(x)',
+    'MH.polynomials.part3aSolution.step5Text': 'Puisque β est une racine de Q, nous pouvons écrire :',
+    'MH.polynomials.part3aSolution.step5Equation': '\\(Q(x) = (x - β)R(x)\\)',
+    'MH.polynomials.part3aSolution.step5Text2': 'où R est un polynôme quadratique (degré 2).',
+    'MH.polynomials.part3aSolution.step6': 'Étape 6 : Combiner les facteurs',
+    'MH.polynomials.part3aSolution.step6Equation': '\\(F(x) = (x - α)(x - β)R(x)\\)',
+    'MH.polynomials.part3aSolution.step7': 'Étape 7 : Conclusion',
+    'MH.polynomials.part3aSolution.step7Text': 'Soit G(x) = R(x), qui est un polynôme quadratique.',
+    'MH.polynomials.part3aSolution.step7Text2': 'Alors F(x) = (x - α)(x - β)G(x), comme requis.',
+    'MH.polynomials.part3bTitle': 'Partie 3b : Nombre maximum de racines pour un polynôme quartique',
+    'MH.polynomials.part3bSolution.step1': 'Étape 1 : Comprendre le problème',
+    'MH.polynomials.part3bSolution.step1Text': 'Nous devons prouver qu\'un polynôme quartique (degré 4) peut avoir au plus quatre racines.',
+    'MH.polynomials.part3bSolution.step2': 'Étape 2 : Utiliser la factorisation de la partie 3a',
+    'MH.polynomials.part3bSolution.step2Text': 'De la partie 3a, si α et β sont des racines de F, alors F(x) = (x - α)(x - β)G(x), où G est un polynôme quadratique.',
+    'MH.polynomials.part3bSolution.step3': 'Étape 3 : Considérer des racines supplémentaires',
+    'MH.polynomials.part3bSolution.step3Text': 'Si γ est une autre racine de F, alors puisque F(γ) = 0 et (γ - α) ≠ 0, (γ - β) ≠ 0, nous devons avoir G(γ) = 0.',
+    'MH.polynomials.part3bSolution.step3Text2': 'Cela signifie que γ est une racine du polynôme quadratique G.',
+    'MH.polynomials.part3bSolution.step4': 'Étape 4 : Continuer la factorisation',
+    'MH.polynomials.part3bSolution.step4Text': 'Si γ est une racine de G, alors G(x) = (x - γ)H(x), où H est un polynôme linéaire (degré 1).',
+    'MH.polynomials.part3bSolution.step4Text2': 'Donc F(x) = (x - α)(x - β)(x - γ)H(x).',
+    'MH.polynomials.part3bSolution.step5': 'Étape 5 : Considérer une quatrième racine',
+    'MH.polynomials.part3bSolution.step5Text': 'Si δ est une quatrième racine de F, alors puisque F(δ) = 0 et (δ - α) ≠ 0, (δ - β) ≠ 0, (δ - γ) ≠ 0, nous devons avoir H(δ) = 0.',
+    'MH.polynomials.part3bSolution.step5Text2': 'Cela signifie que δ est une racine du polynôme linéaire H.',
+    'MH.polynomials.part3bSolution.step6': 'Étape 6 : Factorisation finale',
+    'MH.polynomials.part3bSolution.step6Text': 'Si H a une racine en δ, alors H(x) = k(x - δ) pour une certaine constante k.',
+    'MH.polynomials.part3bSolution.step6Text2': 'Donc F(x) = k(x - α)(x - β)(x - γ)(x - δ).',
+    'MH.polynomials.part3bSolution.step7': 'Étape 7 : Conclusion',
+    'MH.polynomials.part3bSolution.step7Text': 'Un polynôme quartique peut être complètement factorisé en au plus quatre facteurs linéaires, donc il peut avoir au plus quatre racines.',
+    'MH.polynomials.part4Title': 'Partie 4 : Polynômes Généraux et Conjectures',
+    'MH.polynomials.part4Text.part1': 'Soit f un polynôme de degré n (n > 2) et soient α, β et γ trois racines distinctes de f.',
+    'MH.polynomials.part4aTitle': 'Partie 4a : Conjecture sur la factorisation',
+    'MH.polynomials.part4aSolution.step1': 'Étape 1 : Analyser le motif des parties précédentes',
+    'MH.polynomials.part4aSolution.step1Text': 'Des parties 2 et 3, nous avons observé que :',
+    'MH.polynomials.part4aSolution.step1ListItem1': 'Pour un polynôme cubique (degré 3) avec des racines α, β, γ : \\(P(x) = k(x - α)(x - β)(x - γ)\\)',
+    'MH.polynomials.part4aSolution.step1ListItem2': 'Pour un polynôme quartique (degré 4) avec des racines α, β, γ, δ : \\(F(x) = k(x - α)(x - β)(x - γ)(x - δ)\\)',
+    'MH.polynomials.part4aSolution.step2': 'Étape 2 : Formuler la conjecture',
+    'MH.polynomials.part4aSolution.step2Text': 'Sur la base de ce motif, nous pouvons conjecturer que :',
+    'MH.polynomials.part4aSolution.step2Text2': 'Si un polynôme f de degré n a des racines distinctes α₁, α₂, ..., αₘ, alors f peut être factorisé comme :',
+    'MH.polynomials.part4aSolution.step2Equation': '\\(f(x) = k(x - α₁)(x - α₂)\\cdots(x - αₘ) \\cdot g(x)\\)',
+    'MH.polynomials.part4aSolution.step2Text3': 'où g(x) est un polynôme de degré (n - m).',
+    'MH.polynomials.part4aSolution.step3': 'Étape 3 : Conjecture spécifique pour trois racines',
+    'MH.polynomials.part4aSolution.step3Text': 'Spécifiquement, si f a trois racines distinctes α, β, γ, alors :',
+    'MH.polynomials.part4aSolution.step3Equation': '\\(f(x) = (x - α)(x - β)(x - γ) \\cdot h(x)\\)',
+    'MH.polynomials.part4aSolution.step3Text2': 'où h(x) est un polynôme de degré (n - 3).',
+    'MH.polynomials.part4bTitle': 'Partie 4b : Conjecture sur le nombre maximum de racines',
+    'MH.polynomials.part4bSolution.step1': 'Étape 1 : Analyser le motif des parties précédentes',
+    'MH.polynomials.part4bSolution.step1Text': 'Des parties 2 et 3, nous avons observé que :',
+    'MH.polynomials.part4bSolution.step1ListItem1': 'Un polynôme cubique (degré 3) a au plus 3 racines',
+    'MH.polynomials.part4bSolution.step1ListItem2': 'Un polynôme quartique (degré 4) a au plus 4 racines',
+    'MH.polynomials.part4bSolution.step2': 'Étape 2 : Formuler la conjecture générale',
+    'MH.polynomials.part4bSolution.step2Text': 'Sur la base de ce motif, nous pouvons conjecturer que :',
+    'MH.polynomials.part4bSolution.step2Text2': 'Un polynôme de degré n a au plus n racines.',
+    'MH.polynomials.part4bSolution.step3': 'Étape 3 : Raisonnement derrière la conjecture',
+    'MH.polynomials.part4bSolution.step3Text': 'Cela a du sens car :',
+    'MH.polynomials.part4bSolution.step3ListItem1': 'Chaque racine correspond à un facteur linéaire (x - r)',
+    'MH.polynomials.part4bSolution.step3ListItem2': 'Le produit de n facteurs linéaires donne un polynôme de degré n',
+    'MH.polynomials.part4bSolution.step3ListItem3': 'Si nous avions plus de n racines, nous aurions besoin de plus de n facteurs linéaires, ce qui donnerait un polynôme de degré supérieur à n',
+    'MH.polynomials.part4bSolution.step4': 'Étape 4 : Note importante',
+    'MH.polynomials.part4bSolution.step4Text': 'Ceci est connu sous le nom de Théorème Fondamental de l\'Algèbre, qui énonce qu\'un polynôme de degré n a exactement n racines complexes (en comptant les multiplicités).',
+    'MH.polynomials.part4bSolution.step4Text2': 'Pour les racines réelles spécifiquement, un polynôme de degré n a au plus n racines réelles.',
+                
+                // Activity 17 French translations
+                'MH.polynomials.activity17Title': 'Activité 17 : Pratique de la Factorisation des Polynômes',
+                'MH.polynomials.part1IntroText': 'Dans chacun des cas suivants, vérifier que a est une racine de P et écrire P(x) sous la forme \((x - a)Q(x)\), où Q est un polynôme à déterminer.',
+                'MH.polynomials.part1aTitle': 'Partie 1a : \(P(x) = 2x^3 - 7x^2 - 17x + 10\), a = -2',
+                'MH.polynomials.part1aSolution.step1': 'Étape 1 : Vérifier que a = -2 est une racine',
+                'MH.polynomials.part1aSolution.step1Equation': '\(P(-2) = 2(-2)^3 - 7(-2)^2 - 17(-2) + 10\)',
+                'MH.polynomials.part1aSolution.step1Equation2': '\(= 2(-8) - 7(4) + 34 + 10\)',
+                'MH.polynomials.part1aSolution.step1Equation3': '\(= -16 - 28 + 34 + 10 = 0\)',
+                'MH.polynomials.part1aSolution.step1Text': 'Puisque P(-2) = 0, -2 est bien une racine de P.',
+                'MH.polynomials.part1aSolution.step2': 'Étape 2 : Effectuer la division polynomiale de P(x) par (x + 2)',
+                'MH.polynomials.part1aSolution.step2Equation': '\(P(x) = 2x^3 - 7x^2 - 17x + 10\)',
+                'MH.polynomials.part1aSolution.step2Text': 'En utilisant la division synthétique avec -2 :',
+                'MH.polynomials.part1aSolution.step2Equation2': 'Coefficients : 2, -7, -17, 10',
+                'MH.polynomials.part1aSolution.step2Equation3': 'Descendre 2 : 2',
+                'MH.polynomials.part1aSolution.step2Equation4': 'Multiplier par -2 : -4',
+                'MH.polynomials.part1aSolution.step2Equation5': 'Ajouter à -7 : -11',
+                'MH.polynomials.part1aSolution.step2Equation6': 'Multiplier par -2 : 22',
+                'MH.polynomials.part1aSolution.step2Equation7': 'Ajouter à -17 : 5',
+                'MH.polynomials.part1aSolution.step2Equation8': 'Multiplier par -2 : -10',
+                'MH.polynomials.part1aSolution.step2Equation9': 'Ajouter à 10 : 0',
+                'MH.polynomials.part1aSolution.step3': 'Étape 3 : Écrire la factorisation',
+                'MH.polynomials.part1aSolution.step3Text': 'Le polynôme quotient a pour coefficients : 2, -11, 5',
+                'MH.polynomials.part1aSolution.step3Equation': '\(Q(x) = 2x^2 - 11x + 5\)',
+                'MH.polynomials.part1aSolution.step3Equation2': '\(P(x) = (x + 2)(2x^2 - 11x + 5)\)',
+                
+                'MH.polynomials.part1bTitle': 'Partie 1b : \(P(x) = 2x^2 - (1 + \tfrac{2}{3})x - 1 - 13\), a = 1',
+                'MH.polynomials.part1bSolution.step1': 'Étape 1 : Simplifier d\'abord le polynôme',
+                'MH.polynomials.part1bSolution.step1Equation': '\(P(x) = 2x^2 - \left(1 + \frac{2}{3}\right)x - 1 - 13\)',
+                'MH.polynomials.part1bSolution.step1Equation2': '\(= 2x^2 - \frac{5}{3}x - 14\)',
+                'MH.polynomials.part1bSolution.step2': 'Étape 2 : Vérifier que a = 1 est une racine',
+                'MH.polynomials.part1bSolution.step2Equation': '\(P(1) = 2(1)^2 - \frac{5}{3}(1) - 14\)',
+                'MH.polynomials.part1bSolution.step2Equation2': '\(= 2 - \frac{5}{3} - 14\)',
+                'MH.polynomials.part1bSolution.step2Equation3': '\(= \frac{6}{3} - \frac{5}{3} - \frac{42}{3} = -\frac{41}{3} \neq 0\)',
+                'MH.polynomials.part1bSolution.step2Text': 'Puisque P(1) ≠ 0, 1 n\'est pas une racine de P.',
+                'MH.polynomials.part1bSolution.step3': 'Étape 3 : Vérifier s\'il y a une erreur dans l\'énoncé',
+                'MH.polynomials.part1bSolution.step3Text': 'Le polynôme pourrait être : \(P(x) = 2x^2 - (1 + \frac{2}{3})x - 1 - \frac{1}{3}\)',
+                'MH.polynomials.part1bSolution.step3Equation': '\(= 2x^2 - \frac{5}{3}x - \frac{4}{3}\)',
+                'MH.polynomials.part1bSolution.step3Text2': 'Alors P(1) = 2 - 5/3 - 4/3 = 2 - 9/3 = 2 - 3 = -1 ≠ 0',
+                'MH.polynomials.part1bSolution.step3Text3': 'Puisque la valeur donnée n\'est pas une racine, nous ne pouvons pas factoriser comme demandé.',
+                
+                'MH.polynomials.part1cTitle': 'Partie 1c : \(P(x) = x^4 - 3x^3 + x^2 - 4x + 3\), a = 3',
+                'MH.polynomials.part1cSolution.step1': 'Étape 1 : Vérifier que a = 3 est une racine',
+                'MH.polynomials.part1cSolution.step1Equation': '\(P(3) = 3^4 - 3(3)^3 + 3^2 - 4(3) + 3\)',
+                'MH.polynomials.part1cSolution.step1Equation2': '\(= 81 - 3(27) + 9 - 12 + 3\)',
+                'MH.polynomials.part1cSolution.step1Equation3': '\(= 81 - 81 + 9 - 12 + 3 = 0\)',
+                'MH.polynomials.part1cSolution.step1Text': 'Puisque P(3) = 0, 3 est bien une racine de P.',
+                'MH.polynomials.part1cSolution.step2': 'Étape 2 : Effectuer la division polynomiale de P(x) par (x - 3)',
+                'MH.polynomials.part1cSolution.step2Equation': '\(P(x) = x^4 - 3x^3 + x^2 - 4x + 3\)',
+                'MH.polynomials.part1cSolution.step2Text': 'En utilisant la division synthétique avec 3 :',
+                'MH.polynomials.part1cSolution.step2Equation2': 'Coefficients : 1, -3, 1, -4, 3',
+                'MH.polynomials.part1cSolution.step2Equation3': 'Descendre 1 : 1',
+                'MH.polynomials.part1cSolution.step2Equation4': 'Multiplier par 3 : 3',
+                'MH.polynomials.part1cSolution.step2Equation5': 'Ajouter à -3 : 0',
+                'MH.polynomials.part1cSolution.step2Equation6': 'Multiplier par 3 : 0',
+                'MH.polynomials.part1cSolution.step2Equation7': 'Ajouter à 1 : 1',
+                'MH.polynomials.part1cSolution.step2Equation8': 'Multiplier par 3 : 3',
+                'MH.polynomials.part1cSolution.step2Equation9': 'Ajouter à -4 : -1',
+                'MH.polynomials.part1cSolution.step2Equation10': 'Multiplier par 3 : -3',
+                'MH.polynomials.part1cSolution.step2Equation11': 'Ajouter à 3 : 0',
+                'MH.polynomials.part1cSolution.step3': 'Étape 3 : Écrire la factorisation',
+                'MH.polynomials.part1cSolution.step3Text': 'Le polynôme quotient a pour coefficients : 1, 0, 1, -1',
+                'MH.polynomials.part1cSolution.step3Equation': '\(Q(x) = x^3 + 0x^2 + x - 1 = x^3 + x - 1\)',
+                'MH.polynomials.part1cSolution.step3Equation2': '\(P(x) = (x - 3)(x^3 + x - 1)\)',
+                
+                'MH.polynomials.part2IntroText': 'Dans chacun des cas suivants, trouver une racine évidente du polynôme P et factoriser P(x).',
+                'MH.polynomials.part2aTitle': 'Partie 2a : \(P(x) = x^3 - 11x^2 + 30x\)',
+                'MH.polynomials.part2aSolution.step1': 'Étape 1 : Chercher des racines évidentes',
+                'MH.polynomials.part2aSolution.step1Text': 'Remarquer que P(x) a un facteur commun x :',
+                'MH.polynomials.part2aSolution.step1Equation': '\(P(x) = x(x^2 - 11x + 30)\)',
+                'MH.polynomials.part2aSolution.step2': 'Étape 2 : Factoriser le trinôme',
+                'MH.polynomials.part2aSolution.step2Equation': '\(x^2 - 11x + 30 = (x - 5)(x - 6)\)',
+                'MH.polynomials.part2aSolution.step3': 'Étape 3 : Compléter la factorisation',
+                'MH.polynomials.part2aSolution.step3Equation': '\(P(x) = x(x - 5)(x - 6)\)',
+                'MH.polynomials.part2aSolution.step3Text': 'Les racines sont 0, 5 et 6.',
+                
+                'MH.polynomials.part2bTitle': 'Partie 2b : \(P(x) = x^4 + x^3 - 3x^2 - 4x - 4\)',
+                'MH.polynomials.part2bSolution.step1': 'Étape 1 : Tester les racines rationnelles possibles',
+                'MH.polynomials.part2bSolution.step1Text': 'Racines rationnelles possibles : ±1, ±2, ±4',
+                'MH.polynomials.part2bSolution.step1Equation': '\(P(1) = 1 + 1 - 3 - 4 - 4 = -9 \neq 0\)',
+                'MH.polynomials.part2bSolution.step1Equation2': '\(P(-1) = 1 - 1 - 3 + 4 - 4 = -3 \neq 0\)',
+                'MH.polynomials.part2bSolution.step1Equation3': '\(P(2) = 16 + 8 - 12 - 8 - 4 = 0\)',
+                'MH.polynomials.part2bSolution.step1Text2': 'Donc x = 2 est une racine.',
+                'MH.polynomials.part2bSolution.step2': 'Étape 2 : Factoriser (x - 2) en utilisant la division synthétique',
+                'MH.polynomials.part2bSolution.step2Equation': 'Coefficients : 1, 1, -3, -4, -4',
+                'MH.polynomials.part2bSolution.step2Equation2': 'Descendre 1 : 1',
+                'MH.polynomials.part2bSolution.step2Equation3': 'Multiplier par 2 : 2',
+                'MH.polynomials.part2bSolution.step2Equation4': 'Ajouter à 1 : 3',
+                'MH.polynomials.part2bSolution.step2Equation5': 'Multiplier par 2 : 6',
+                'MH.polynomials.part2bSolution.step2Equation6': 'Ajouter à -3 : 3',
+                'MH.polynomials.part2bSolution.step2Equation7': 'Multiplier par 2 : 6',
+                'MH.polynomials.part2bSolution.step2Equation8': 'Ajouter à -4 : 2',
+                'MH.polynomials.part2bSolution.step2Equation9': 'Multiplier par 2 : 4',
+                'MH.polynomials.part2bSolution.step2Equation10': 'Ajouter à -4 : 0',
+                'MH.polynomials.part2bSolution.step3': 'Étape 3 : Continuer avec le polynôme quotient',
+                'MH.polynomials.part2bSolution.step3Equation': 'Quotient : \(x^3 + 3x^2 + 3x + 2\)',
+                'MH.polynomials.part2bSolution.step3Text': 'Tester x = -2 :',
+                'MH.polynomials.part2bSolution.step3Equation2': '\((-2)^3 + 3(-2)^2 + 3(-2) + 2 = -8 + 12 - 6 + 2 = 0\)',
+                'MH.polynomials.part2bSolution.step3Text2': 'Donc x = -2 est aussi une racine.',
+                'MH.polynomials.part2bSolution.step4': 'Étape 4 : Factoriser (x + 2)',
+                'MH.polynomials.part2bSolution.step4Equation': 'Coefficients : 1, 3, 3, 2',
+                'MH.polynomials.part2bSolution.step4Equation2': 'Descendre 1 : 1',
+                'MH.polynomials.part2bSolution.step4Equation3': 'Multiplier par -2 : -2',
+                'MH.polynomials.part2bSolution.step4Equation4': 'Ajouter à 3 : 1',
+                'MH.polynomials.part2bSolution.step4Equation5': 'Multiplier par -2 : -2',
+                'MH.polynomials.part2bSolution.step4Equation6': 'Ajouter à 3 : 1',
+                'MH.polynomials.part2bSolution.step4Equation7': 'Multiplier par -2 : -2',
+                'MH.polynomials.part2bSolution.step4Equation8': 'Ajouter à 2 : 0',
+                'MH.polynomials.part2bSolution.step5': 'Étape 5 : Compléter la factorisation',
+                'MH.polynomials.part2bSolution.step5Equation': 'Quotient : \(x^2 + x + 1\)',
+                'MH.polynomials.part2bSolution.step5Equation2': '\(P(x) = (x - 2)(x + 2)(x^2 + x + 1)\)',
+                'MH.polynomials.part2bSolution.step5Text': 'Note : \(x^2 + x + 1\) n\'a pas de racines réelles (discriminant = 1 - 4 = -3).',
+                
+                'MH.polynomials.part2cTitle': 'Partie 2c : \(P(x) = 3x^3 + 4x^2 - 6x - 7\)',
+                'MH.polynomials.part2cSolution.step1': 'Étape 1 : Tester les racines rationnelles possibles',
+                'MH.polynomials.part2cSolution.step1Text': 'Racines rationnelles possibles : ±1, ±7, ±1/3, ±7/3',
+                'MH.polynomials.part2cSolution.step1Equation': '\(P(1) = 3 + 4 - 6 - 7 = -6 \neq 0\)',
+                'MH.polynomials.part2cSolution.step1Equation2': '\(P(-1) = -3 + 4 + 6 - 7 = 0\)',
+                'MH.polynomials.part2cSolution.step1Text2': 'Donc x = -1 est une racine.',
+                'MH.polynomials.part2cSolution.step2': 'Étape 2 : Factoriser (x + 1) en utilisant la division synthétique',
+                'MH.polynomials.part2cSolution.step2Equation': 'Coefficients : 3, 4, -6, -7',
+                'MH.polynomials.part2cSolution.step2Equation2': 'Descendre 3 : 3',
+                'MH.polynomials.part2cSolution.step2Equation3': 'Multiplier par -1 : -3',
+                'MH.polynomials.part2cSolution.step2Equation4': 'Ajouter à 4 : 1',
+                'MH.polynomials.part2cSolution.step2Equation5': 'Multiplier par -1 : -1',
+                'MH.polynomials.part2cSolution.step2Equation6': 'Ajouter à -6 : -7',
+                'MH.polynomials.part2cSolution.step2Equation7': 'Multiplier par -1 : 7',
+                'MH.polynomials.part2cSolution.step2Equation8': 'Ajouter à -7 : 0',
+                'MH.polynomials.part2cSolution.step3': 'Étape 3 : Compléter la factorisation',
+                'MH.polynomials.part2cSolution.step3Equation': 'Quotient : \(3x^2 + x - 7\)',
+                'MH.polynomials.part2cSolution.step3Equation2': '\(P(x) = (x + 1)(3x^2 + x - 7)\)',
+                'MH.polynomials.part2cSolution.step3Text': 'Le facteur quadratique ne peut pas être factorisé davantage avec des entiers.',
+                
+                'MH.polynomials.part2dTitle': 'Partie 2d : \(P(x) = 2x^2 - (4 + 12)x + 212\)',
+                'MH.polynomials.part2dSolution.step1': 'Étape 1 : Simplifier le polynôme',
+                'MH.polynomials.part2dSolution.step1Equation': '\(P(x) = 2x^2 - (4 + 12)x + 212\)',
+                'MH.polynomials.part2dSolution.step1Equation2': '\(= 2x^2 - 16x + 212\)',
+                'MH.polynomials.part2dSolution.step2': 'Étape 2 : Factoriser le facteur commun',
+                'MH.polynomials.part2dSolution.step2Equation': '\(P(x) = 2(x^2 - 8x + 106)\)',
+                'MH.polynomials.part2dSolution.step3': 'Étape 3 : Vérifier si le trinôme peut être factorisé',
+                'MH.polynomials.part2dSolution.step3Text': 'Discriminant = \((-8)^2 - 4(1)(106) = 64 - 424 = -360\)',
+                'MH.polynomials.part2dSolution.step3Text2': 'Puisque le discriminant est négatif, le trinôme n\'a pas de racines réelles et ne peut pas être factorisé sur les réels.',
+                'MH.polynomials.part2dSolution.step4': 'Étape 4 : Compléter la factorisation',
+                'MH.polynomials.part2dSolution.step4Equation': '\(P(x) = 2(x^2 - 8x + 106)\)',
+                'MH.polynomials.part2dSolution.step4Text': 'Ceci est la factorisation complète sur les nombres réels.',
+    'MH.polynomials.visualizationTitle': 'Visualisation des Racines des Polynômes',
+    'MH.polynomials.cubicGraphTitle': 'Polynôme Cubique avec 3 Racines',
+    'MH.polynomials.cubicGraphText': 'Un polynôme cubique avec trois racines réelles distinctes, montrant comment il croise l\'axe des x à chaque racine.',
+    'MH.polynomials.quarticGraphTitle': 'Polynôme Quartique avec 4 Racines',
+    'MH.polynomials.quarticGraphText': 'Un polynôme quartique avec quatre racines réelles distinctes, démontrant le nombre maximum de racines pour un polynôme de degré 4.',
+    
+    // Footer translations
+    'MH.footer.developer': 'Développeur',
+    'MH.footer.version': 'Version',
+    'MH.footer.links': 'Liens',
+    'MH.footer.terms': 'Conditions d\'Utilisation',
+    'MH.footer.privacy': 'Politique de Confidentialité'
+}
+        };
+
+        // Solution toggle function for this page
+        function toggleSolution(problemNumber) {
+            const solution = document.getElementById(`solution${problemNumber}`);
+            const button = solution.previousElementSibling;
+            
+            if (solution.style.display === 'block') {
+                solution.style.display = 'none';
+                button.setAttribute('data-i18n', 'MH.general.showSolution');
+                button.textContent = translations[MHThemeManager.getCurrentLanguage()]['MH.general.showSolution'];
+            } else {
+                solution.style.display = 'block';
+                button.setAttribute('data-i18n', 'MH.general.hideSolution');
+                button.textContent = translations[MHThemeManager.getCurrentLanguage()]['MH.general.hideSolution'];
+                
+                // Re-render KaTeX for newly visible equations
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(solution, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\(', right: '\\)', display: false},
+                            {left: '\\[', right: '\\]', display: true}
+                        ],
+                        throwOnError: false
+                    });
+                }
+            }
+        }
+
+        // Initialize KaTeX auto-render
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize KaTeX auto-render
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+
+            // Initialize solutions as hidden
+                        // Initialize solutions as hidden
+            for (let i = 1; i <= 15; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+            }
+            
+            // Draw polynomial graphs
+            drawPolynomialGraphs();
+            
+            // Force LTR on graph containers
+            document.querySelectorAll('.MH-graph-container, .MH-graph-item').forEach(element => {
+                element.style.direction = 'ltr';
+                element.setAttribute('dir', 'ltr');
+            });
+        });
+
+        // Function to draw polynomial graphs
+        function drawPolynomialGraphs() {
+            // Draw cubic polynomial graph
+            const cubicCanvas = document.getElementById('cubicGraph');
+            if (cubicCanvas) {
+                const ctx = cubicCanvas.getContext('2d');
+                const width = cubicCanvas.width = 300;
+                const height = cubicCanvas.height = 200;
+                
+                // Clear canvas
+                ctx.clearRect(0, 0, width, height);
+                
+                // Draw axes
+                ctx.strokeStyle = '#999';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(0, height/2);
+                ctx.lineTo(width, height/2);
+                ctx.moveTo(width/2, 0);
+                ctx.lineTo(width/2, height);
+                ctx.stroke();
+                
+                // Draw cubic polynomial: f(x) = (x+2)(x)(x-2) = x^3 - 4x
+                ctx.strokeStyle = '#9C27B0';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                
+                const scale = 20;
+                const originX = width/2;
+                const originY = height/2;
+                
+                for (let x = -7; x <= 7; x += 0.1) {
+                    const y = x*(x+2)*(x-2); // x^3 - 4x
+                    const canvasX = originX + x * scale;
+                    const canvasY = originY - y * scale;
+                    
+                    if (x === -7) {
+                        ctx.moveTo(canvasX, canvasY);
+                    } else {
+                        ctx.lineTo(canvasX, canvasY);
+                    }
+                }
+                
+                ctx.stroke();
+                
+                // Mark roots
+                ctx.fillStyle = '#E74C3C';
+                const roots = [-2, 0, 2];
+                roots.forEach(root => {
+                    const canvasX = originX + root * scale;
+                    const canvasY = originY;
+                    ctx.beginPath();
+                    ctx.arc(canvasX, canvasY, 4, 0, 2 * Math.PI);
+                    ctx.fill();
+                });
+            }
+            
+            // Draw quartic polynomial graph
+            const quarticCanvas = document.getElementById('quarticGraph');
+            if (quarticCanvas) {
+                const ctx = quarticCanvas.getContext('2d');
+                const width = quarticCanvas.width = 300;
+                const height = quarticCanvas.height = 200;
+                
+                // Clear canvas
+                ctx.clearRect(0, 0, width, height);
+                
+                // Draw axes
+                ctx.strokeStyle = '#999';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(0, height/2);
+                ctx.lineTo(width, height/2);
+                ctx.moveTo(width/2, 0);
+                ctx.lineTo(width/2, height);
+                ctx.stroke();
+                
+                // Draw quartic polynomial: f(x) = (x+3)(x+1)(x-1)(x-3) = x^4 - 10x^2 + 9
+                ctx.strokeStyle = '#FF9800';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                
+                const scale = 15;
+                const originX = width/2;
+                const originY = height/2;
+                
+                for (let x = -5; x <= 5; x += 0.1) {
+                    const y = (x+3)*(x+1)*(x-1)*(x-3); // x^4 - 10x^2 + 9
+                    const canvasX = originX + x * scale;
+                    const canvasY = originY - y * scale;
+                    
+                    if (x === -5) {
+                        ctx.moveTo(canvasX, canvasY);
+                    } else {
+                        ctx.lineTo(canvasX, canvasY);
+                    }
+                }
+                
+                ctx.stroke();
+                
+                // Mark roots
+                ctx.fillStyle = '#E74C3C';
+                const roots = [-3, -1, 1, 3];
+                roots.forEach(root => {
+                    const canvasX = originX + root * scale;
+                    const canvasY = originY;
+                    ctx.beginPath();
+                    ctx.arc(canvasX, canvasY, 4, 0, 2 * Math.PI);
+                    ctx.fill();
+                });
+            }
+        }
+    </script>
+
+<!-- Add the service worker registration script -->
+<script>
+    // Register service worker with better error handling
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+                
+            })
+            .catch(function(error) {
+                console.log('Service Worker registration failed:', error);
+            });
+        });
+    }
+</script>
+
+<!-- Add noscript fallback -->
+<noscript>
+    <style>
+        .MH-header-controls { display: none; }
+        .MH-solution { display: block; }
+    </style>
+    <div class="MH-warning">
+        JavaScript is recommended for the full experience, but content is still accessible.
+    </div>
+</noscript>
+</body>
+</html>

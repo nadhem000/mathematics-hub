@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mathematics Lesson: Polynomials Part 3 - Factorisation</title>
+    
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
     
@@ -22,7 +23,13 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="msapplication-TileColor" content="#66CDAA">
     <meta name="msapplication-config" content="/browserconfig.xml">
-    <link rel="stylesheet" href="styles/main.css">
+    
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    
     <style>
         /* Page-specific color palette - Medium Aquamarine + Medium Orchid Theme */
         :root {
@@ -35,6 +42,12 @@
             --accent: #FF69B4;
             --warning: #FF6347;
             --info: #4682B4;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #FFFFFF;
+            --surface: #F8F9FA;
+            --border: #E9ECEF;
+            --shadow: rgba(0, 0, 0, 0.1);
         }
         
         [data-theme="dark"] {
@@ -47,6 +60,66 @@
             --accent: #FF1493;
             --warning: #FF4500;
             --info: #4169E1;
+            --text: #FFFFFF;
+            --text-light: #CCCCCC;
+            --background: #121212;
+            --surface: #1E1E1E;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        /* KaTeX styling */
+        .katex { 
+            font-size: 1.1em; 
+        }
+        
+        .katex-display { 
+            margin: 1em 0; 
+            text-align: center;
+        }
+        
+        .katex-display > .katex { 
+            display: inline-block;
+            text-align: center;
+        }
+
+        /* Equation styling - FIXED FOR RTL */
+        .MH-equation {
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            margin: 0.5em 0;
+            padding: 0;
+            display: inline-block;
+            direction: ltr !important;
+            text-align: left !important;
+            unicode-bidi: isolate !important;
+        }
+        
+        [dir="rtl"] .MH-equation,
+        [dir="rtl"] .katex,
+        [dir="rtl"] .katex-display,
+        [dir="rtl"] .katex-html {
+            direction: ltr !important;
+            text-align: left !important;
+            unicode-bidi: embed !important;
+        }
+
+        /* Ensure KaTeX elements maintain LTR in all contexts */
+        .katex, .katex-display, .katex-html {
+            direction: ltr !important;
+            unicode-bidi: isolate !important;
+        }
+
+        /* Force LTR for specific problematic elements in RTL */
+        [dir="rtl"] .MH-step .MH-equation,
+        [dir="rtl"] .MH-example .MH-equation,
+        [dir="rtl"] .MH-solution .MH-equation {
+            direction: ltr !important;
+            text-align: left !important;
+            unicode-bidi: embed !important;
+            display: block;
+            margin: 0.5em 0;
         }
     </style>
 </head>
@@ -83,6 +156,11 @@
                             <a href="#" class="MH-language-option" data-lang="fr">Français</a>
                         </div>
                     </div>
+                    <!-- Notification Button -->
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+                        <span>🔔</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -108,53 +186,53 @@
             
             <div class="MH-definition">
                 <h3 data-i18n="MH.lesson_Y2Al_poly1c.rootDefinitionTitle">Definition: Root of a Polynomial</h3>
-                <p data-i18n="MH.lesson_Y2Al_poly1c.rootDefinitionText">A real number α is called a root or zero of a polynomial f if f(α) = 0.</p>
+                <p data-i18n="MH.lesson_Y2Al_poly1c.rootDefinitionText">A real number \( \alpha \) is called a root or zero of a polynomial \( f \) if \( f(\alpha) = 0 \).</p>
             </div>
             
             <!-- Activity 11 -->
             <div class="MH-step">
                 <h3 data-i18n="MH.lesson_Y2Al_poly1c.activity11Title">Activity 11: Evaluating Polynomials</h3>
-                <p data-i18n="MH.lesson_Y2Al_poly1c.activity11Description">Let f(x) = x² + 2x - 3, g(x) = x³ + 2x² - 1, and h(x) = 3x³ - x² - 6x + 2.</p>
+                <p><span data-i18n="MH.lesson_Y2Al_poly1c.activity11Description.text1">Let</span> <span class="MH-equation" dir="ltr" data-i18n="MH.lesson_Y2Al_poly1c.activity11Description.eq1">\( f(x) = x^2 + 2x - 3 \)</span><span data-i18n="MH.lesson_Y2Al_poly1c.activity11Description.text2">,</span> <span class="MH-equation" dir="ltr" data-i18n="MH.lesson_Y2Al_poly1c.activity11Description.eq2">\( g(x) = x^3 + 2x^2 - 1 \)</span><span data-i18n="MH.lesson_Y2Al_poly1c.activity11Description.text3">, and</span> <span class="MH-equation" dir="ltr" data-i18n="MH.lesson_Y2Al_poly1c.activity11Description.eq3">\( h(x) = 3x^3 - x^2 - 6x + 2 \)</span><span data-i18n="MH.lesson_Y2Al_poly1c.activity11Description.text4">.</span></p>
                 
                 <div class="MH-example">
-                    <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity11PartA">Part A: Calculate f(-1), f(1), and f(-3)</h4>
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity11PartA">Part A: Calculate \( f(-1) \), \( f(1) \), and \( f(-3) \)</h4>
                     <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1c.showSolution" onclick="toggleSolution(1)">Show Solution</button>
                     <div class="MH-solution" id="solution1">
-                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartAStep1">Step 1: Calculate f(-1)</p>
-                        <div class="MH-equation">f(-1) = (-1)² + 2(-1) - 3 = 1 - 2 - 3 = -4</div>
-                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartAStep2">Step 2: Calculate f(1)</p>
-                        <div class="MH-equation">f(1) = (1)² + 2(1) - 3 = 1 + 2 - 3 = 0</div>
-                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartAStep3">Step 3: Calculate f(-3)</p>
-                        <div class="MH-equation">f(-3) = (-3)² + 2(-3) - 3 = 9 - 6 - 3 = 0</div>
-                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartAConclusion">Conclusion: f(1) = 0 and f(-3) = 0, so 1 and -3 are roots of f.</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartAStep1">Step 1: Calculate \( f(-1) \)</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity11PartAStep1.equation">\( f(-1) = (-1)^2 + 2(-1) - 3 = 1 - 2 - 3 = -4 \)</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartAStep2">Step 2: Calculate \( f(1) \)</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity11PartAStep2.equation">\( f(1) = (1)^2 + 2(1) - 3 = 1 + 2 - 3 = 0 \)</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartAStep3">Step 3: Calculate \( f(-3) \)</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity11PartAStep3.equation">\( f(-3) = (-3)^2 + 2(-3) - 3 = 9 - 6 - 3 = 0 \)</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartAConclusion">Conclusion: \( f(1) = 0 \) and \( f(-3) = 0 \), so 1 and -3 are roots of \( f \).</p>
                     </div>
                 </div>
                 
                 <div class="MH-example">
-                    <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity11PartB">Part B: Calculate g(-1), g(0), and g(√2)</h4>
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity11PartB">Part B: Calculate \( g(-1) \), \( g(0) \), and \( g(\sqrt{2}) \)</h4>
                     <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1c.showSolution" onclick="toggleSolution(2)">Show Solution</button>
                     <div class="MH-solution" id="solution2">
-                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartBStep1">Step 1: Calculate g(-1)</p>
-                        <div class="MH-equation">g(-1) = (-1)³ + 2(-1)² - 1 = -1 + 2 - 1 = 0</div>
-                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartBStep2">Step 2: Calculate g(0)</p>
-                        <div class="MH-equation">g(0) = (0)³ + 2(0)² - 1 = -1</div>
-                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartBStep3">Step 3: Calculate g(√2)</p>
-                        <div class="MH-equation">g(√2) = (√2)³ + 2(√2)² - 1 = 2√2 + 4 - 1 = 2√2 + 3</div>
-                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartBConclusion">Conclusion: g(-1) = 0, so -1 is a root of g.</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartBStep1">Step 1: Calculate \( g(-1) \)</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity11PartBStep1.equation">\( g(-1) = (-1)^3 + 2(-1)^2 - 1 = -1 + 2 - 1 = 0 \)</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartBStep2">Step 2: Calculate \( g(0) \)</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity11PartBStep2.equation">\( g(0) = (0)^3 + 2(0)^2 - 1 = -1 \)</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartBStep3">Step 3: Calculate \( g(\sqrt{2}) \)</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity11PartBStep3.equation">\( g(\sqrt{2}) = (\sqrt{2})^3 + 2(\sqrt{2})^2 - 1 = 2\sqrt{2} + 4 - 1 = 2\sqrt{2} + 3 \)</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartBConclusion">Conclusion: \( g(-1) = 0 \), so -1 is a root of \( g \).</p>
                     </div>
                 </div>
                 
                 <div class="MH-example">
-                    <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity11PartC">Part C: Calculate h(0), h(1/3), and h(2)</h4>
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity11PartC">Part C: Calculate \( h(0) \), \( h\left(\frac{1}{3}\right) \), and \( h(2) \)</h4>
                     <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1c.showSolution" onclick="toggleSolution(3)">Show Solution</button>
                     <div class="MH-solution" id="solution3">
-                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartCStep1">Step 1: Calculate h(0)</p>
-                        <div class="MH-equation">h(0) = 3(0)³ - (0)² - 6(0) + 2 = 2</div>
-                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartCStep2">Step 2: Calculate h(1/3)</p>
-                        <div class="MH-equation">h(1/3) = 3(1/3)³ - (1/3)² - 6(1/3) + 2 = 3(1/27) - 1/9 - 2 + 2 = 1/9 - 1/9 = 0</div>
-                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartCStep3">Step 3: Calculate h(2)</p>
-                        <div class="MH-equation">h(2) = 3(2)³ - (2)² - 6(2) + 2 = 24 - 4 - 12 + 2 = 10</div>
-                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartCConclusion">Conclusion: h(1/3) = 0, so 1/3 is a root of h.</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartCStep1">Step 1: Calculate \( h(0) \)</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity11PartCStep1.equation">\( h(0) = 3(0)^3 - (0)^2 - 6(0) + 2 = 2 \)</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartCStep2">Step 2: Calculate \( h\left(\frac{1}{3}\right) \)</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity11PartCStep2.equation">\( h\left(\frac{1}{3}\right) = 3\left(\frac{1}{3}\right)^3 - \left(\frac{1}{3}\right)^2 - 6\left(\frac{1}{3}\right) + 2 = 3\left(\frac{1}{27}\right) - \frac{1}{9} - 2 + 2 = \frac{1}{9} - \frac{1}{9} = 0 \)</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartCStep3">Step 3: Calculate \( h(2) \)</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity11PartCStep3.equation">\( h(2) = 3(2)^3 - (2)^2 - 6(2) + 2 = 24 - 4 - 12 + 2 = 10 \)</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity11PartCConclusion">Conclusion: \( h\left(\frac{1}{3}\right) = 0 \), so \( \frac{1}{3} \) is a root of \( h \).</p>
                     </div>
                 </div>
             </div>
@@ -162,45 +240,268 @@
             <!-- Activity 12 -->
             <div class="MH-step">
                 <h3 data-i18n="MH.lesson_Y2Al_poly1c.activity12Title">Activity 12: Verifying Roots</h3>
-                <p data-i18n="MH.lesson_Y2Al_poly1c.activity12Description">Show that the real number α is a root of the given polynomial.</p>
+                <p data-i18n="MH.lesson_Y2Al_poly1c.activity12Description">Show that the real number \( \alpha \) is a root of the given polynomial.</p>
                 
                 <div class="MH-example">
-                    <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity12PartA">Part A: f(x) = 5x² + x - 6; α = 1</h4>
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity12PartA">Part A: \( f(x) = 5x^2 + x - 6 \); \( \alpha = 1 \)</h4>
                     <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1c.showSolution" onclick="toggleSolution(4)">Show Solution</button>
                     <div class="MH-solution" id="solution4">
-                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity12PartAStep1">Step 1: Substitute α = 1 into f(x)</p>
-                        <div class="MH-equation">f(1) = 5(1)² + 1 - 6 = 5 + 1 - 6 = 0</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity12PartAStep1">Step 1: Substitute \( \alpha = 1 \) into \( f(x) \)</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity12PartAStep1.equation">\( f(1) = 5(1)^2 + 1 - 6 = 5 + 1 - 6 = 0 \)</div>
                         <p data-i18n="MH.lesson_Y2Al_poly1c.activity12PartAStep2">Step 2: Conclusion</p>
-                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity12PartAConclusion">Since f(1) = 0, α = 1 is indeed a root of f(x).</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity12PartAConclusion">Since \( f(1) = 0 \), \( \alpha = 1 \) is indeed a root of \( f(x) \).</p>
                     </div>
                 </div>
                 
                 <div class="MH-example">
-                    <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity12PartB">Part B: g(x) = 4x⁴ + 5x³ - 14x² - 9x + 14; α = -2</h4>
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity12PartB">Part B: \( g(x) = 4x^4 + 5x^3 - 14x^2 - 9x + 14 \); \( \alpha = -2 \)</h4>
                     <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1c.showSolution" onclick="toggleSolution(5)">Show Solution</button>
                     <div class="MH-solution" id="solution5">
-                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity12PartBStep1">Step 1: Substitute α = -2 into g(x)</p>
-                        <div class="MH-equation">g(-2) = 4(-2)⁴ + 5(-2)³ - 14(-2)² - 9(-2) + 14</div>
-                        <div class="MH-equation">= 4(16) + 5(-8) - 14(4) + 18 + 14</div>
-                        <div class="MH-equation">= 64 - 40 - 56 + 18 + 14 = 0</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity12PartBStep1">Step 1: Substitute \( \alpha = -2 \) into \( g(x) \)</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity12PartBStep1.equation">\( g(-2) = 4(-2)^4 + 5(-2)^3 - 14(-2)^2 - 9(-2) + 14 \)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity12PartBStep1.equation2">\( = 4(16) + 5(-8) - 14(4) + 18 + 14 \)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity12PartBStep1.equation3">\( = 64 - 40 - 56 + 18 + 14 = 0 \)</div>
                         <p data-i18n="MH.lesson_Y2Al_poly1c.activity12PartBStep2">Step 2: Conclusion</p>
-                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity12PartBConclusion">Since g(-2) = 0, α = -2 is indeed a root of g(x).</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity12PartBConclusion">Since \( g(-2) = 0 \), \( \alpha = -2 \) is indeed a root of \( g(x) \).</p>
                     </div>
                 </div>
                 
                 <div class="MH-example">
-                    <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity12PartC">Part C: h(x) = 8x⁵ + 3x² - 1; α = 1/2</h4>
+                    <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity12PartC">Part C: \( h(x) = 8x^5 + 3x^2 - 1 \); \( \alpha = \frac{1}{2} \)</h4>
                     <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1c.showSolution" onclick="toggleSolution(6)">Show Solution</button>
                     <div class="MH-solution" id="solution6">
-                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity12PartCStep1">Step 1: Substitute α = 1/2 into h(x)</p>
-                        <div class="MH-equation">h(1/2) = 8(1/2)⁵ + 3(1/2)² - 1</div>
-                        <div class="MH-equation">= 8(1/32) + 3(1/4) - 1</div>
-                        <div class="MH-equation">= 1/4 + 3/4 - 1 = 1 - 1 = 0</div>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity12PartCStep1">Step 1: Substitute \( \alpha = \frac{1}{2} \) into \( h(x) \)</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity12PartCStep1.equation">\( h\left(\frac{1}{2}\right) = 8\left(\frac{1}{2}\right)^5 + 3\left(\frac{1}{2}\right)^2 - 1 \)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity12PartCStep1.equation2">\( = 8\left(\frac{1}{32}\right) + 3\left(\frac{1}{4}\right) - 1 \)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity12PartCStep1.equation3">\( = \frac{1}{4} + \frac{3}{4} - 1 = 1 - 1 = 0 \)</div>
                         <p data-i18n="MH.lesson_Y2Al_poly1c.activity12PartCStep2">Step 2: Conclusion</p>
-                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity12PartCConclusion">Since h(1/2) = 0, α = 1/2 is indeed a root of h(x).</p>
+                        <p data-i18n="MH.lesson_Y2Al_poly1c.activity12PartCConclusion">Since \( h\left(\frac{1}{2}\right) = 0 \), \( \alpha = \frac{1}{2} \) is indeed a root of \( h(x) \).</p>
                     </div>
                 </div>
+            </div>        <!-- Activity 13 -->
+        <div class="MH-step">
+            <h3 data-i18n="MH.lesson_Y2Al_poly1c.activity13Title">Activity 13: Finding Coefficients Using Roots</h3>
+            <p data-i18n="MH.lesson_Y2Al_poly1c.activity13Description">Let P be the polynomial defined by \(P(x) = ax^4 + (a + 1)x^3 - (b+9)x^2 - (2b-1)x + 14\), where a and b are real numbers.</p>
+            
+            <div class="MH-example">
+                <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity13PartA">Part A: Determine a and b knowing that 1 and -2 are two roots of the polynomial P</h4>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1c.showSolution" onclick="toggleSolution(7)">Show Solution</button>
+                <div class="MH-solution" id="solution7">
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity13PartAStep1">Step 1: Use the fact that 1 is a root of P</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartAStep1.equation">\(P(1) = a(1)^4 + (a + 1)(1)^3 - (b+9)(1)^2 - (2b-1)(1) + 14 = 0\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartAStep1.equation2">\(a + (a + 1) - (b+9) - (2b-1) + 14 = 0\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartAStep1.equation3">\(2a + 1 - b - 9 - 2b + 1 + 14 = 0\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartAStep1.equation4">\(2a - 3b + 7 = 0\)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity13PartAStep2">Step 2: Use the fact that -2 is a root of P</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartAStep2.equation">\(P(-2) = a(-2)^4 + (a + 1)(-2)^3 - (b+9)(-2)^2 - (2b-1)(-2) + 14 = 0\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartAStep2.equation2">\(16a + (a + 1)(-8) - (b+9)(4) + 2(2b-1) + 14 = 0\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartAStep2.equation3">\(16a - 8a - 8 - 4b - 36 + 4b - 2 + 14 = 0\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartAStep2.equation4">\(8a - 32 = 0\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartAStep2.equation5">\(8a = 32\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartAStep2.equation6">\(a = 4\)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity13PartAStep3">Step 3: Substitute a = 4 into the first equation</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartAStep3.equation">\(2(4) - 3b + 7 = 0\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartAStep3.equation2">\(8 - 3b + 7 = 0\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartAStep3.equation3">\(15 - 3b = 0\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartAStep3.equation4">\(3b = 15\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartAStep3.equation5">\(b = 5\)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity13PartAConclusion">Conclusion: a = 4 and b = 5</p>
+                </div>
             </div>
+            
+            <div class="MH-example">
+                <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity13PartB">Part B: With a and b found, determine the polynomial Q such that \(P(x) = (x^2 + x - 2)Q(x)\) for all real x</h4>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1c.showSolution" onclick="toggleSolution(8)">Show Solution</button>
+                <div class="MH-solution" id="solution8">
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity13PartBStep1">Step 1: Write P(x) with the values a = 4 and b = 5</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartBStep1.equation">\(P(x) = 4x^4 + (4 + 1)x^3 - (5+9)x^2 - (2(5)-1)x + 14\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartBStep1.equation2">\(P(x) = 4x^4 + 5x^3 - 14x^2 - 9x + 14\)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity13PartBStep2">Step 2: Factor \(x^2 + x - 2\)</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartBStep2.equation">\(x^2 + x - 2 = (x - 1)(x + 2)\)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity13PartBStep3">Step 3: Perform polynomial division of P(x) by \(x^2 + x - 2\)</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation">\(4x^4 + 5x^3 - 14x^2 - 9x + 14 \div (x^2 + x - 2)\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation2">First term: \(4x^2\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation3">Multiply: \(4x^2(x^2 + x - 2) = 4x^4 + 4x^3 - 8x^2\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation4">Subtract: \((4x^4 + 5x^3 - 14x^2) - (4x^4 + 4x^3 - 8x^2) = x^3 - 6x^2\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation5">Bring down next term: \(x^3 - 6x^2 - 9x\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation6">Next term: \(x\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation7">Multiply: \(x(x^2 + x - 2) = x^3 + x^2 - 2x\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation8">Subtract: \((x^3 - 6x^2 - 9x) - (x^3 + x^2 - 2x) = -7x^2 - 7x\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation9">Bring down next term: \(-7x^2 - 7x + 14\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation10">Next term: \(-7\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation11">Multiply: \(-7(x^2 + x - 2) = -7x^2 - 7x + 14\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation12">Subtract: \((-7x^2 - 7x + 14) - (-7x^2 - 7x + 14) = 0\)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity13PartBConclusion">Conclusion: \(Q(x) = 4x^2 + x - 7\)</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Activity 14 -->
+        <div class="MH-step">
+            <h3 data-i18n="MH.lesson_Y2Al_poly1c.activity14Title">Activity 14: Factorizing Polynomials</h3>
+            <p data-i18n="MH.lesson_Y2Al_poly1c.activity14Description">Factorize each of the polynomials A, B, C and D defined by:</p>
+            
+            <div class="MH-example">
+                <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity14PartA">Part A: Factorize \(A(x) = x^4 - 3x^3 + 2x^2\)</h4>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1c.showSolution" onclick="toggleSolution(9)">Show Solution</button>
+                <div class="MH-solution" id="solution9">
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity14PartAStep1">Step 1: Factor out the common factor \(x^2\)</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity14PartAStep1.equation">\(A(x) = x^2(x^2 - 3x + 2)\)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity14PartAStep2">Step 2: Factor the quadratic \(x^2 - 3x + 2\)</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity14PartAStep2.equation">\(x^2 - 3x + 2 = (x - 1)(x - 2)\)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity14PartAConclusion">Conclusion: \(A(x) = x^2(x - 1)(x - 2)\)</p>
+                </div>
+            </div>
+            
+            <div class="MH-example">
+                <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity14PartB">Part B: Factorize \(B(x) = (x^2 + 5x) + 2(x+5)^3\)</h4>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1c.showSolution" onclick="toggleSolution(10)">Show Solution</button>
+                <div class="MH-solution" id="solution10">
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity14PartBStep1">Step 1: Factor out x from the first term</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity14PartBStep1.equation">\(B(x) = x(x + 5) + 2(x+5)^3\)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity14PartBStep2">Step 2: Factor out the common factor \((x + 5)\)</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity14PartBStep2.equation">\(B(x) = (x + 5)[x + 2(x+5)^2]\)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity14PartBStep3">Step 3: Expand and simplify the expression inside the brackets</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity14PartBStep3.equation">\(x + 2(x+5)^2 = x + 2(x^2 + 10x + 25)\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity14PartBStep3.equation2">\(= x + 2x^2 + 20x + 50\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity14PartBStep3.equation3">\(= 2x^2 + 21x + 50\)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity14PartBStep4">Step 4: Factor the quadratic \(2x^2 + 21x + 50\)</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity14PartBStep4.equation">\(2x^2 + 21x + 50 = (2x + 5)(x + 10)\)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity14PartBConclusion">Conclusion: \(B(x) = (x + 5)(2x + 5)(x + 10)\)</p>
+                </div>
+            </div>
+            
+            <div class="MH-example">
+                <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity14PartC">Part C: Factorize \(C(x) = 2x^3 + 4x^2 + 3x + 6\)</h4>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1c.showSolution" onclick="toggleSolution(11)">Show Solution</button>
+                <div class="MH-solution" id="solution11">
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity14PartCStep1">Step 1: Group terms to find common factors</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity14PartCStep1.equation">\(C(x) = (2x^3 + 4x^2) + (3x + 6)\)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity14PartCStep2">Step 2: Factor out common factors from each group</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity14PartCStep2.equation">\(C(x) = 2x^2(x + 2) + 3(x + 2)\)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity14PartCStep3">Step 3: Factor out the common factor \((x + 2)\)</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity14PartCStep3.equation">\(C(x) = (x + 2)(2x^2 + 3)\)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity14PartCConclusion">Conclusion: \(C(x) = (x + 2)(2x^2 + 3)\)</p>
+                </div>
+            </div>
+            
+            <div class="MH-example">
+                <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity14PartD">Part D: Factorize \(D(x) = x^4 + 3x^3 - x - 3\)</h4>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1c.showSolution" onclick="toggleSolution(12)">Show Solution</button>
+                <div class="MH-solution" id="solution12">
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity14PartDStep1">Step 1: Group terms to find common factors</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity14PartDStep1.equation">\(D(x) = (x^4 + 3x^3) + (-x - 3)\)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity14PartDStep2">Step 2: Factor out common factors from each group</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity14PartDStep2.equation">\(D(x) = x^3(x + 3) - 1(x + 3)\)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity14PartDStep3">Step 3: Factor out the common factor \((x + 3)\)</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity14PartDStep3.equation">\(D(x) = (x + 3)(x^3 - 1)\)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity14PartDStep4">Step 4: Factor \(x^3 - 1\) as a difference of cubes</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity14PartDStep4.equation">\(x^3 - 1 = (x - 1)(x^2 + x + 1)\)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity14PartDConclusion">Conclusion: \(D(x) = (x + 3)(x - 1)(x^2 + x + 1)\)</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Activity 15 -->
+        <div class="MH-step">
+            <h3 data-i18n="MH.lesson_Y2Al_poly1c.activity15Title">Activity 15: Working with Polynomials P and Q</h3>
+            <p data-i18n="MH.lesson_Y2Al_poly1c.activity15Description">Let P and Q be the polynomials defined by \(P(x) = 3x^3 + x^2 + 2x - 6\) and \(Q(x) = x^3 + 3x^2 - 4x - 12\).</p>
+            
+            <div class="MH-example">
+                <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity15Part1a">Part 1a: Verify that 1 is a root of P</h4>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1c.showSolution" onclick="toggleSolution(13)">Show Solution</button>
+                <div class="MH-solution" id="solution13">
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity15Part1aStep1">Step 1: Substitute x = 1 into P(x)</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part1aStep1.equation">\(P(1) = 3(1)^3 + (1)^2 + 2(1) - 6\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part1aStep1.equation2">\(= 3 + 1 + 2 - 6\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part1aStep1.equation3">\(= 0\)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity15Part1aConclusion">Conclusion: Since P(1) = 0, 1 is indeed a root of P</p>
+                </div>
+            </div>
+            
+            <div class="MH-example">
+                <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity15Part1b">Part 1b: Determine three real numbers a, b and c such that for all real x, \(P(x) = (x - 1)(ax^2 + bx + c)\)</h4>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1c.showSolution" onclick="toggleSolution(14)">Show Solution</button>
+                <div class="MH-solution" id="solution14">
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity15Part1bStep1">Step 1: Perform polynomial division of P(x) by (x - 1)</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation">\(3x^3 + x^2 + 2x - 6 \div (x - 1)\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation2">First term: \(3x^2\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation3">Multiply: \(3x^2(x - 1) = 3x^3 - 3x^2\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation4">Subtract: \((3x^3 + x^2) - (3x^3 - 3x^2) = 4x^2\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation5">Bring down next term: \(4x^2 + 2x\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation6">Next term: \(4x\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation7">Multiply: \(4x(x - 1) = 4x^2 - 4x\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation8">Subtract: \((4x^2 + 2x) - (4x^2 - 4x) = 6x\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation9">Bring down next term: \(6x - 6\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation10">Next term: \(6\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation11">Multiply: \(6(x - 1) = 6x - 6\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation12">Subtract: \((6x - 6) - (6x - 6) = 0\)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity15Part1bConclusion">Conclusion: \(a = 3\), \(b = 4\), \(c = 6\), so \(P(x) = (x - 1)(3x^2 + 4x + 6)\)</p>
+                </div>
+            </div>
+            
+            <div class="MH-example">
+                <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity15Part2a">Part 2a: Calculate Q(2) and Q(-3)</h4>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1c.showSolution" onclick="toggleSolution(15)">Show Solution</button>
+                <div class="MH-solution" id="solution15">
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity15Part2aStep1">Step 1: Calculate Q(2)</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part2aStep1.equation">\(Q(2) = (2)^3 + 3(2)^2 - 4(2) - 12\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part2aStep1.equation2">\(= 8 + 12 - 8 - 12\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part2aStep1.equation3">\(= 0\)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity15Part2aStep2">Step 2: Calculate Q(-3)</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part2aStep2.equation">\(Q(-3) = (-3)^3 + 3(-3)^2 - 4(-3) - 12\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part2aStep2.equation2">\(= -27 + 27 + 12 - 12\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part2aStep2.equation3">\(= 0\)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity15Part2aConclusion">Conclusion: Q(2) = 0 and Q(-3) = 0, so 2 and -3 are roots of Q</p>
+                </div>
+            </div>
+            
+            <div class="MH-example">
+                <h4 data-i18n="MH.lesson_Y2Al_poly1c.activity15Part2b">Part 2b: Determine the polynomial R such that for all real x, \(Q(x) = (x - 2)(x + 3)R(x)\)</h4>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_poly1c.showSolution" onclick="toggleSolution(16)">Show Solution</button>
+                <div class="MH-solution" id="solution16">
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity15Part2bStep1">Step 1: First, multiply (x - 2)(x + 3)</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part2bStep1.equation">\((x - 2)(x + 3) = x^2 + 3x - 2x - 6 = x^2 + x - 6\)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity15Part2bStep2">Step 2: Perform polynomial division of Q(x) by \(x^2 + x - 6\)</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation">\(x^3 + 3x^2 - 4x - 12 \div (x^2 + x - 6)\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation2">First term: \(x\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation3">Multiply: \(x(x^2 + x - 6) = x^3 + x^2 - 6x\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation4">Subtract: \((x^3 + 3x^2 - 4x) - (x^3 + x^2 - 6x) = 2x^2 + 2x\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation5">Bring down next term: \(2x^2 + 2x - 12\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation6">Next term: \(2\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation7">Multiply: \(2(x^2 + x - 6) = 2x^2 + 2x - 12\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation8">Subtract: \((2x^2 + 2x - 12) - (2x^2 + 2x - 12) = 0\)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Al_poly1c.activity15Part2bConclusion">Conclusion: \(R(x) = x + 2\), so \(Q(x) = (x - 2)(x + 3)(x + 2)\)</p>
+                </div>
+            </div>
+        </div>
+		
+		
         </section>
         
         <!-- Continue with remaining activities... -->
@@ -212,8 +513,8 @@
                 <h3 data-i18n="MH.lesson_Y2Al_poly1c.keyConcepts">Key Concepts</h3>
                 <ul>
                     <li data-i18n="MH.lesson_Y2Al_poly1c.concept1">A root of a polynomial is a value that makes the polynomial equal to zero</li>
-                    <li data-i18n="MH.lesson_Y2Al_poly1c.concept2">If α is a root of polynomial P(x), then (x - α) is a factor of P(x)</li>
-                    <li data-i18n="MH.lesson_Y2Al_poly1c.concept3">A polynomial of degree n has at most n real roots</li>
+                    <li data-i18n="MH.lesson_Y2Al_poly1c.concept2">If \( \alpha \) is a root of polynomial \( P(x) \), then \( (x - \alpha) \) is a factor of \( P(x) \)</li>
+                    <li data-i18n="MH.lesson_Y2Al_poly1c.concept3">A polynomial of degree \( n \) has at most \( n \) real roots</li>
                     <li data-i18n="MH.lesson_Y2Al_poly1c.concept4">Factorisation allows us to rewrite polynomials as products of simpler polynomials</li>
                     <li data-i18n="MH.lesson_Y2Al_poly1c.concept5">Finding roots is essential for solving polynomial equations</li>
                 </ul>
@@ -244,27 +545,665 @@
             </div>
         </div>
     </footer>
-    
-    <script src="scripts/i18n_en.js"></script>
-    <script src="scripts/i18n_ar.js"></script>
-    <script src="scripts/i18n_fr.js"></script>
-    <script src="scripts/translation.js"></script>
-    <script src="scripts/pwa-install.js"></script>
-    <script>
-        // Register service worker
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/sw.js')
-                .then(function(registration) {
-                    console.log('Service Worker registered with scope:', registration.scope);
-                })
-                .catch(function(error) {
-                    console.log('Service Worker registration failed:', error);
-                });
-            });
-        }
 
-        // Toggle solution visibility
+    <!-- JavaScript Files -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+    
+    <script>
+        // TRANSLATIONS FOR POLYNOMIAL PAGE
+        const translations = {
+            'en': {
+                'MH.general.homeTooltip': 'Go to Homepage',
+                'MH.general.install': 'Install App',
+                'MH.general.installSuccess': 'Mathematics Hub installed successfully!',
+                'MH.general.enableNotifications': 'Enable Notifications',
+                'MH.general.notificationEnabled': 'Notifications enabled! You will now receive updates.',
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Theme',
+                'MH.general.language': 'Language',
+                'MH.lesson_Y2Al_poly1c.title': 'Polynomials: Part 3',
+                'MH.lesson_Y2Al_poly1c.subtitle': 'Factorisation of Polynomials',
+                'MH.lesson_Y2Al_poly1c.introduction': 'Introduction to Polynomial Factorisation',
+                'MH.lesson_Y2Al_poly1c.introText1': 'In this lesson, we\'ll explore the concept of polynomial roots and learn how to factor polynomials. Factorisation is a powerful technique that allows us to rewrite polynomials as products of simpler polynomials, which is essential for solving polynomial equations and understanding their properties.',
+                'MH.lesson_Y2Al_poly1c.levelNoteTitle': 'Level Note',
+                'MH.lesson_Y2Al_poly1c.levelNoteText': 'This lesson builds upon your knowledge of polynomial operations and equality. We\'re advancing to more complex algebraic concepts that will be fundamental for solving higher-degree equations.',
+                'MH.lesson_Y2Al_poly1c.rootsTitle': 'Roots of Polynomials and Factorisation',
+                'MH.lesson_Y2Al_poly1c.rootDefinitionTitle': 'Definition: Root of a Polynomial',
+                'MH.lesson_Y2Al_poly1c.rootDefinitionText': 'A real number \\( \\alpha \\) is called a root or zero of a polynomial \\( f \\) if \\( f(\\alpha) = 0 \\).',
+                'MH.lesson_Y2Al_poly1c.activity11Title': 'Activity 11: Evaluating Polynomials',
+                'MH.lesson_Y2Al_poly1c.activity11Description.text1': 'Let',
+                'MH.lesson_Y2Al_poly1c.activity11Description.eq1': '\\( f(x) = x^2 + 2x - 3 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11Description.text2': ',',
+                'MH.lesson_Y2Al_poly1c.activity11Description.eq2': '\\( g(x) = x^3 + 2x^2 - 1 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11Description.text3': 'and',
+                'MH.lesson_Y2Al_poly1c.activity11Description.eq3': '\\( h(x) = 3x^3 - x^2 - 6x + 2 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11Description.text4': '.',
+                'MH.lesson_Y2Al_poly1c.activity11PartA': 'Part A: Calculate \\( f(-1) \\), \\( f(1) \\), and \\( f(-3) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartAStep1': 'Step 1: Calculate \\( f(-1) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartAStep1.equation': '\\( f(-1) = (-1)^2 + 2(-1) - 3 = 1 - 2 - 3 = -4 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartAStep2': 'Step 2: Calculate \\( f(1) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartAStep2.equation': '\\( f(1) = (1)^2 + 2(1) - 3 = 1 + 2 - 3 = 0 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartAStep3': 'Step 3: Calculate \\( f(-3) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartAStep3.equation': '\\( f(-3) = (-3)^2 + 2(-3) - 3 = 9 - 6 - 3 = 0 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartAConclusion': 'Conclusion: \\( f(1) = 0 \\) and \\( f(-3) = 0 \\), so 1 and -3 are roots of \\( f \\).',
+                'MH.lesson_Y2Al_poly1c.activity11PartB': 'Part B: Calculate \\( g(-1) \\), \\( g(0) \\), and \\( g(\\sqrt{2}) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartBStep1': 'Step 1: Calculate \\( g(-1) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartBStep1.equation': '\\( g(-1) = (-1)^3 + 2(-1)^2 - 1 = -1 + 2 - 1 = 0 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartBStep2': 'Step 2: Calculate \\( g(0) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartBStep2.equation': '\\( g(0) = (0)^3 + 2(0)^2 - 1 = -1 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartBStep3': 'Step 3: Calculate \\( g(\\sqrt{2}) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartBStep3.equation': '\\( g(\\sqrt{2}) = (\\sqrt{2})^3 + 2(\\sqrt{2})^2 - 1 = 2\\sqrt{2} + 4 - 1 = 2\\sqrt{2} + 3 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartBConclusion': 'Conclusion: \\( g(-1) = 0 \\), so -1 is a root of \\( g \\).',
+                'MH.lesson_Y2Al_poly1c.activity11PartC': 'Part C: Calculate \\( h(0) \\), \\( h\\left(\\frac{1}{3}\\right) \\), and \\( h(2) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartCStep1': 'Step 1: Calculate \\( h(0) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartCStep1.equation': '\\( h(0) = 3(0)^3 - (0)^2 - 6(0) + 2 = 2 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartCStep2': 'Step 2: Calculate \\( h\\left(\\frac{1}{3}\\right) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartCStep2.equation': '\\( h\\left(\\frac{1}{3}\\right) = 3\\left(\\frac{1}{3}\\right)^3 - \\left(\\frac{1}{3}\\right)^2 - 6\\left(\\frac{1}{3}\\right) + 2 = 3\\left(\\frac{1}{27}\\right) - \\frac{1}{9} - 2 + 2 = \\frac{1}{9} - \\frac{1}{9} = 0 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartCStep3': 'Step 3: Calculate \\( h(2) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartCStep3.equation': '\\( h(2) = 3(2)^3 - (2)^2 - 6(2) + 2 = 24 - 4 - 12 + 2 = 10 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartCConclusion': 'Conclusion: \\( h\\left(\\frac{1}{3}\\right) = 0 \\), so \\( \\frac{1}{3} \\) is a root of \\( h \\).',
+                'MH.lesson_Y2Al_poly1c.activity12Title': 'Activity 12: Verifying Roots',
+                'MH.lesson_Y2Al_poly1c.activity12Description': 'Show that the real number \\( \\alpha \\) is a root of the given polynomial.',
+                'MH.lesson_Y2Al_poly1c.activity12PartA': 'Part A: \\( f(x) = 5x^2 + x - 6 \\); \\( \\alpha = 1 \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartAStep1': 'Step 1: Substitute \\( \\alpha = 1 \\) into \\( f(x) \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartAStep1.equation': '\\( f(1) = 5(1)^2 + 1 - 6 = 5 + 1 - 6 = 0 \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartAStep2': 'Step 2: Conclusion',
+                'MH.lesson_Y2Al_poly1c.activity12PartAConclusion': 'Since \\( f(1) = 0 \\), \\( \\alpha = 1 \\) is indeed a root of \\( f(x) \\).',
+                'MH.lesson_Y2Al_poly1c.activity12PartB': 'Part B: \\( g(x) = 4x^4 + 5x^3 - 14x^2 - 9x + 14 \\); \\( \\alpha = -2 \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartBStep1': 'Step 1: Substitute \\( \\alpha = -2 \\) into \\( g(x) \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartBStep1.equation': '\\( g(-2) = 4(-2)^4 + 5(-2)^3 - 14(-2)^2 - 9(-2) + 14 \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartBStep1.equation2': '\\( = 4(16) + 5(-8) - 14(4) + 18 + 14 \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartBStep1.equation3': '\\( = 64 - 40 - 56 + 18 + 14 = 0 \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartBStep2': 'Step 2: Conclusion',
+                'MH.lesson_Y2Al_poly1c.activity12PartBConclusion': 'Since \\( g(-2) = 0 \\), \\( \\alpha = -2 \\) is indeed a root of \\( g(x) \\).',
+                'MH.lesson_Y2Al_poly1c.activity12PartC': 'Part C: \\( h(x) = 8x^5 + 3x^2 - 1 \\); \\( \\alpha = \\frac{1}{2} \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartCStep1': 'Step 1: Substitute \\( \\alpha = \\frac{1}{2} \\) into \\( h(x) \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartCStep1.equation': '\\( h\\left(\\frac{1}{2}\\right) = 8\\left(\\frac{1}{2}\\right)^5 + 3\\left(\\frac{1}{2}\\right)^2 - 1 \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartCStep1.equation2': '\\( = 8\\left(\\frac{1}{32}\\right) + 3\\left(\\frac{1}{4}\\right) - 1 \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartCStep1.equation3': '\\( = \\frac{1}{4} + \\frac{3}{4} - 1 = 1 - 1 = 0 \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartCStep2': 'Step 2: Conclusion',
+                'MH.lesson_Y2Al_poly1c.activity12PartCConclusion': 'Since \\( h\\left(\\frac{1}{2}\\right) = 0 \\), \\( \\alpha = \\frac{1}{2} \\) is indeed a root of \\( h(x) \\).',
+                'MH.lesson_Y2Al_poly1c.showSolution': 'Show Solution',
+                'MH.lesson_Y2Al_poly1c.hideSolution': 'Hide Solution',
+				// Add these complete translation entries to the translations object
+'MH.lesson_Y2Al_poly1c.activity13Title': 'Activity 13: Finding Coefficients Using Roots',
+'MH.lesson_Y2Al_poly1c.activity13Description': 'Let P be the polynomial defined by \\(P(x) = ax^4 + (a + 1)x^3 - (b+9)x^2 - (2b-1)x + 14\\), where a and b are real numbers.',
+'MH.lesson_Y2Al_poly1c.activity13PartA': 'Part A: Determine a and b knowing that 1 and -2 are two roots of the polynomial P',
+'MH.lesson_Y2Al_poly1c.activity13PartAStep1': 'Step 1: Use the fact that 1 is a root of P',
+'MH.lesson_Y2Al_poly1c.activity13PartAStep1.equation': '\\(P(1) = a(1)^4 + (a + 1)(1)^3 - (b+9)(1)^2 - (2b-1)(1) + 14 = 0\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartAStep1.equation2': '\\(a + (a + 1) - (b+9) - (2b-1) + 14 = 0\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartAStep1.equation3': '\\(2a + 1 - b - 9 - 2b + 1 + 14 = 0\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartAStep1.equation4': '\\(2a - 3b + 7 = 0\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartAStep2': 'Step 2: Use the fact that -2 is a root of P',
+'MH.lesson_Y2Al_poly1c.activity13PartAStep2.equation': '\\(P(-2) = a(-2)^4 + (a + 1)(-2)^3 - (b+9)(-2)^2 - (2b-1)(-2) + 14 = 0\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartAStep2.equation2': '\\(16a + (a + 1)(-8) - (b+9)(4) + 2(2b-1) + 14 = 0\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartAStep2.equation3': '\\(16a - 8a - 8 - 4b - 36 + 4b - 2 + 14 = 0\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartAStep2.equation4': '\\(8a - 32 = 0\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartAStep2.equation5': '\\(8a = 32\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartAStep2.equation6': '\\(a = 4\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartAStep3': 'Step 3: Substitute a = 4 into the first equation',
+'MH.lesson_Y2Al_poly1c.activity13PartAStep3.equation': '\\(2(4) - 3b + 7 = 0\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartAStep3.equation2': '\\(8 - 3b + 7 = 0\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartAStep3.equation3': '\\(15 - 3b = 0\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartAStep3.equation4': '\\(3b = 15\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartAStep3.equation5': '\\(b = 5\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartAConclusion': 'Conclusion: a = 4 and b = 5',
+'MH.lesson_Y2Al_poly1c.activity13PartB': 'Part B: With a and b found, determine the polynomial Q such that \\(P(x) = (x^2 + x - 2)Q(x)\\) for all real x',
+'MH.lesson_Y2Al_poly1c.activity13PartBStep1': 'Step 1: Write P(x) with the values a = 4 and b = 5',
+'MH.lesson_Y2Al_poly1c.activity13PartBStep1.equation': '\\(P(x) = 4x^4 + (4 + 1)x^3 - (5+9)x^2 - (2(5)-1)x + 14\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartBStep1.equation2': '\\(P(x) = 4x^4 + 5x^3 - 14x^2 - 9x + 14\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartBStep2': 'Step 2: Factor \\(x^2 + x - 2\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartBStep2.equation': '\\(x^2 + x - 2 = (x - 1)(x + 2)\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartBStep3': 'Step 3: Perform polynomial division of P(x) by \\(x^2 + x - 2\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation': '\\(4x^4 + 5x^3 - 14x^2 - 9x + 14 \\div (x^2 + x - 2)\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation2': 'First term: \\(4x^2\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation3': 'Multiply: \\(4x^2(x^2 + x - 2) = 4x^4 + 4x^3 - 8x^2\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation4': 'Subtract: \\((4x^4 + 5x^3 - 14x^2) - (4x^4 + 4x^3 - 8x^2) = x^3 - 6x^2\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation5': 'Bring down next term: \\(x^3 - 6x^2 - 9x\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation6': 'Next term: \\(x\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation7': 'Multiply: \\(x(x^2 + x - 2) = x^3 + x^2 - 2x\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation8': 'Subtract: \\((x^3 - 6x^2 - 9x) - (x^3 + x^2 - 2x) = -7x^2 - 7x\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation9': 'Bring down next term: \\(-7x^2 - 7x + 14\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation10': 'Next term: \\(-7\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation11': 'Multiply: \\(-7(x^2 + x - 2) = -7x^2 - 7x + 14\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation12': 'Subtract: \\((-7x^2 - 7x + 14) - (-7x^2 - 7x + 14) = 0\\)',
+'MH.lesson_Y2Al_poly1c.activity13PartBConclusion': 'Conclusion: \\(Q(x) = 4x^2 + x - 7\\)',
+
+'MH.lesson_Y2Al_poly1c.activity14Title': 'Activity 14: Factorizing Polynomials',
+'MH.lesson_Y2Al_poly1c.activity14Description': 'Factorize each of the polynomials A, B, C and D defined by:',
+'MH.lesson_Y2Al_poly1c.activity14PartA': 'Part A: Factorize \\(A(x) = x^4 - 3x^3 + 2x^2\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartAStep1': 'Step 1: Factor out the common factor \\(x^2\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartAStep1.equation': '\\(A(x) = x^2(x^2 - 3x + 2)\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartAStep2': 'Step 2: Factor the quadratic \\(x^2 - 3x + 2\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartAStep2.equation': '\\(x^2 - 3x + 2 = (x - 1)(x - 2)\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartAConclusion': 'Conclusion: \\(A(x) = x^2(x - 1)(x - 2)\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartB': 'Part B: Factorize \\(B(x) = (x^2 + 5x) + 2(x+5)^3\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartBStep1': 'Step 1: Factor out x from the first term',
+'MH.lesson_Y2Al_poly1c.activity14PartBStep1.equation': '\\(B(x) = x(x + 5) + 2(x+5)^3\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartBStep2': 'Step 2: Factor out the common factor \\((x + 5)\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartBStep2.equation': '\\(B(x) = (x + 5)[x + 2(x+5)^2]\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartBStep3': 'Step 3: Expand and simplify the expression inside the brackets',
+'MH.lesson_Y2Al_poly1c.activity14PartBStep3.equation': '\\(x + 2(x+5)^2 = x + 2(x^2 + 10x + 25)\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartBStep3.equation2': '\\(= x + 2x^2 + 20x + 50\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartBStep3.equation3': '\\(= 2x^2 + 21x + 50\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartBStep4': 'Step 4: Factor the quadratic \\(2x^2 + 21x + 50\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartBStep4.equation': '\\(2x^2 + 21x + 50 = (2x + 5)(x + 10)\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartBConclusion': 'Conclusion: \\(B(x) = (x + 5)(2x + 5)(x + 10)\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartC': 'Part C: Factorize \\(C(x) = 2x^3 + 4x^2 + 3x + 6\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartCStep1': 'Step 1: Group terms to find common factors',
+'MH.lesson_Y2Al_poly1c.activity14PartCStep1.equation': '\\(C(x) = (2x^3 + 4x^2) + (3x + 6)\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartCStep2': 'Step 2: Factor out common factors from each group',
+'MH.lesson_Y2Al_poly1c.activity14PartCStep2.equation': '\\(C(x) = 2x^2(x + 2) + 3(x + 2)\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartCStep3': 'Step 3: Factor out the common factor \\((x + 2)\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartCStep3.equation': '\\(C(x) = (x + 2)(2x^2 + 3)\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartCConclusion': 'Conclusion: \\(C(x) = (x + 2)(2x^2 + 3)\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartD': 'Part D: Factorize \\(D(x) = x^4 + 3x^3 - x - 3\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartDStep1': 'Step 1: Group terms to find common factors',
+'MH.lesson_Y2Al_poly1c.activity14PartDStep1.equation': '\\(D(x) = (x^4 + 3x^3) + (-x - 3)\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartDStep2': 'Step 2: Factor out common factors from each group',
+'MH.lesson_Y2Al_poly1c.activity14PartDStep2.equation': '\\(D(x) = x^3(x + 3) - 1(x + 3)\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartDStep3': 'Step 3: Factor out the common factor \\((x + 3)\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartDStep3.equation': '\\(D(x) = (x + 3)(x^3 - 1)\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartDStep4': 'Step 4: Factor \\(x^3 - 1\\) as a difference of cubes',
+'MH.lesson_Y2Al_poly1c.activity14PartDStep4.equation': '\\(x^3 - 1 = (x - 1)(x^2 + x + 1)\\)',
+'MH.lesson_Y2Al_poly1c.activity14PartDConclusion': 'Conclusion: \\(D(x) = (x + 3)(x - 1)(x^2 + x + 1)\\)',
+
+'MH.lesson_Y2Al_poly1c.activity15Title': 'Activity 15: Working with Polynomials P and Q',
+'MH.lesson_Y2Al_poly1c.activity15Description': 'Let P and Q be the polynomials defined by \\(P(x) = 3x^3 + x^2 + 2x - 6\\) and \\(Q(x) = x^3 + 3x^2 - 4x - 12\\).',
+'MH.lesson_Y2Al_poly1c.activity15Part1a': 'Part 1a: Verify that 1 is a root of P',
+'MH.lesson_Y2Al_poly1c.activity15Part1aStep1': 'Step 1: Substitute x = 1 into P(x)',
+'MH.lesson_Y2Al_poly1c.activity15Part1aStep1.equation': '\\(P(1) = 3(1)^3 + (1)^2 + 2(1) - 6\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part1aStep1.equation2': '\\(= 3 + 1 + 2 - 6\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part1aStep1.equation3': '\\(= 0\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part1aConclusion': 'Conclusion: Since P(1) = 0, 1 is indeed a root of P',
+'MH.lesson_Y2Al_poly1c.activity15Part1b': 'Part 1b: Determine three real numbers a, b and c such that for all real x, \\(P(x) = (x - 1)(ax^2 + bx + c)\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part1bStep1': 'Step 1: Perform polynomial division of P(x) by (x - 1)',
+'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation': '\\(3x^3 + x^2 + 2x - 6 \\div (x - 1)\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation2': 'First term: \\(3x^2\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation3': 'Multiply: \\(3x^2(x - 1) = 3x^3 - 3x^2\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation4': 'Subtract: \\((3x^3 + x^2) - (3x^3 - 3x^2) = 4x^2\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation5': 'Bring down next term: \\(4x^2 + 2x\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation6': 'Next term: \\(4x\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation7': 'Multiply: \\(4x(x - 1) = 4x^2 - 4x\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation8': 'Subtract: \\((4x^2 + 2x) - (4x^2 - 4x) = 6x\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation9': 'Bring down next term: \\(6x - 6\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation10': 'Next term: \\(6\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation11': 'Multiply: \\(6(x - 1) = 6x - 6\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation12': 'Subtract: \\((6x - 6) - (6x - 6) = 0\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part1bConclusion': 'Conclusion: \\(a = 3\\), \\(b = 4\\), \\(c = 6\\), so \\(P(x) = (x - 1)(3x^2 + 4x + 6)\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part2a': 'Part 2a: Calculate Q(2) and Q(-3)',
+'MH.lesson_Y2Al_poly1c.activity15Part2aStep1': 'Step 1: Calculate Q(2)',
+'MH.lesson_Y2Al_poly1c.activity15Part2aStep1.equation': '\\(Q(2) = (2)^3 + 3(2)^2 - 4(2) - 12\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part2aStep1.equation2': '\\(= 8 + 12 - 8 - 12\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part2aStep1.equation3': '\\(= 0\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part2aStep2': 'Step 2: Calculate Q(-3)',
+'MH.lesson_Y2Al_poly1c.activity15Part2aStep2.equation': '\\(Q(-3) = (-3)^3 + 3(-3)^2 - 4(-3) - 12\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part2aStep2.equation2': '\\(= -27 + 27 + 12 - 12\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part2aStep2.equation3': '\\(= 0\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part2aConclusion': 'Conclusion: Q(2) = 0 and Q(-3) = 0, so 2 and -3 are roots of Q',
+'MH.lesson_Y2Al_poly1c.activity15Part2b': 'Part 2b: Determine the polynomial R such that for all real x, \\(Q(x) = (x - 2)(x + 3)R(x)\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part2bStep1': 'Step 1: First, multiply (x - 2)(x + 3)',
+'MH.lesson_Y2Al_poly1c.activity15Part2bStep1.equation': '\\((x - 2)(x + 3) = x^2 + 3x - 2x - 6 = x^2 + x - 6\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part2bStep2': 'Step 2: Perform polynomial division of Q(x) by \\(x^2 + x - 6\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation': '\\(x^3 + 3x^2 - 4x - 12 \\div (x^2 + x - 6)\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation2': 'First term: \\(x\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation3': 'Multiply: \\(x(x^2 + x - 6) = x^3 + x^2 - 6x\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation4': 'Subtract: \\((x^3 + 3x^2 - 4x) - (x^3 + x^2 - 6x) = 2x^2 + 2x\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation5': 'Bring down next term: \\(2x^2 + 2x - 12\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation6': 'Next term: \\(2\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation7': 'Multiply: \\(2(x^2 + x - 6) = 2x^2 + 2x - 12\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation8': 'Subtract: \\((2x^2 + 2x - 12) - (2x^2 + 2x - 12) = 0\\)',
+'MH.lesson_Y2Al_poly1c.activity15Part2bConclusion': 'Conclusion: \\(R(x) = x + 2\\), so \\(Q(x) = (x - 2)(x + 3)(x + 2)\\)',
+                'MH.lesson_Y2Al_poly1c.summary': 'Summary',
+                'MH.lesson_Y2Al_poly1c.keyConcepts': 'Key Concepts',
+                'MH.lesson_Y2Al_poly1c.concept1': 'A root of a polynomial is a value that makes the polynomial equal to zero',
+                'MH.lesson_Y2Al_poly1c.concept2': 'If \\( \\alpha \\) is a root of polynomial \\( P(x) \\), then \\( (x - \\alpha) \\) is a factor of \\( P(x) \\)',
+                'MH.lesson_Y2Al_poly1c.concept3': 'A polynomial of degree \\( n \\) has at most \\( n \\) real roots',
+                'MH.lesson_Y2Al_poly1c.concept4': 'Factorisation allows us to rewrite polynomials as products of simpler polynomials',
+                'MH.lesson_Y2Al_poly1c.concept5': 'Finding roots is essential for solving polynomial equations',
+                'MH.lesson_Y2Al_poly1c.finalThought': 'Understanding polynomial roots and factorisation is crucial for solving polynomial equations and analyzing polynomial functions. These concepts form the foundation for more advanced algebraic techniques you\'ll encounter in your mathematical journey.',
+                'MH.footer.developer': 'Developer',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Links',
+                'MH.footer.terms': 'Terms of Use',
+                'MH.footer.privacy': 'Privacy Policy'
+            },
+            'ar': {
+                'MH.general.homeTooltip': 'الذهاب إلى الصفحة الرئيسية',
+                'MH.general.install': 'تثبيت التطبيق',
+                'MH.general.installSuccess': 'تم تثبيت Mathematics Hub بنجاح!',
+                'MH.general.enableNotifications': 'تمكين الإشعارات',
+                'MH.general.notificationEnabled': 'تم تمكين الإشعارات! ستتلقى التحديثات الآن.',
+                'MH.general.title': 'مركز الرياضيات',
+                'MH.general.theme': 'السمة',
+                'MH.general.language': 'اللغة',
+                'MH.lesson_Y2Al_poly1c.title': 'متعددات الحدود: الجزء 3',
+                'MH.lesson_Y2Al_poly1c.subtitle': 'تحليل متعددات الحدود',
+                'MH.lesson_Y2Al_poly1c.introduction': 'مقدمة في تحليل متعددات الحدود',
+                'MH.lesson_Y2Al_poly1c.introText1': 'في هذا الدرس، سنستكشف مفهوم جذور متعددات الحدود ونتعلم كيفية تحليلها. التحليل هو تقنية قوية تتيح لنا إعادة كتابة متعددات الحدود كحاصل ضرب متعددات حدود أبسط، وهو أمر أساسي لحل معادلات متعددات الحدود وفهم خصائصها.',
+                'MH.lesson_Y2Al_poly1c.levelNoteTitle': 'ملاحظة المستوى',
+                'MH.lesson_Y2Al_poly1c.levelNoteText': 'هذا الدرس يبني على معرفتك بعمليات متعددات الحدود والمساواة. نحن نتقدم إلى مفاهيم جبرية أكثر تعقيدًا ستكون أساسية لحل معادلات الدرجات الأعلى.',
+                'MH.lesson_Y2Al_poly1c.rootsTitle': 'جذور متعددات الحدود والتحليل',
+                'MH.lesson_Y2Al_poly1c.rootDefinitionTitle': 'تعريف: جذر متعدد الحدود',
+                'MH.lesson_Y2Al_poly1c.rootDefinitionText': 'العدد الحقيقي \\( \\alpha \\) يسمى جذرًا أو صفرًا لمتعدد الحدود \\( f \\) إذا كان \\( f(\\alpha) = 0 \\).',
+                'MH.lesson_Y2Al_poly1c.activity11Title': 'النشاط 11: تقييم متعددات الحدود',
+                'MH.lesson_Y2Al_poly1c.activity11Description.text1': 'لنفرض أن',
+                'MH.lesson_Y2Al_poly1c.activity11Description.eq1': '\\( f(x) = x^2 + 2x - 3 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11Description.text2': '،',
+                'MH.lesson_Y2Al_poly1c.activity11Description.eq2': '\\( g(x) = x^3 + 2x^2 - 1 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11Description.text3': 'و',
+                'MH.lesson_Y2Al_poly1c.activity11Description.eq3': '\\( h(x) = 3x^3 - x^2 - 6x + 2 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11Description.text4': '.',
+                'MH.lesson_Y2Al_poly1c.activity11PartA': 'الجزء أ: احسب \\( f(-1) \\)، \\( f(1) \\)، و \\( f(-3) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartAStep1': 'الخطوة 1: احسب \\( f(-1) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartAStep1.equation': '\\( f(-1) = (-1)^2 + 2(-1) - 3 = 1 - 2 - 3 = -4 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartAStep2': 'الخطوة 2: احسب \\( f(1) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartAStep2.equation': '\\( f(1) = (1)^2 + 2(1) - 3 = 1 + 2 - 3 = 0 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartAStep3': 'الخطوة 3: احسب \\( f(-3) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartAStep3.equation': '\\( f(-3) = (-3)^2 + 2(-3) - 3 = 9 - 6 - 3 = 0 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartAConclusion': 'الخلاصة: \\( f(1) = 0 \\) و \\( f(-3) = 0 \\)، إذن 1 و -3 هما جذور لـ \\( f \\).',
+                'MH.lesson_Y2Al_poly1c.activity11PartB': 'الجزء ب: احسب \\( g(-1) \\)، \\( g(0) \\)، و \\( g(\\sqrt{2}) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartBStep1': 'الخطوة 1: احسب \\( g(-1) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartBStep1.equation': '\\( g(-1) = (-1)^3 + 2(-1)^2 - 1 = -1 + 2 - 1 = 0 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartBStep2': 'الخطوة 2: احسب \\( g(0) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartBStep2.equation': '\\( g(0) = (0)^3 + 2(0)^2 - 1 = -1 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartBStep3': 'الخطوة 3: احسب \\( g(\\sqrt{2}) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartBStep3.equation': '\\( g(\\sqrt{2}) = (\\sqrt{2})^3 + 2(\\sqrt{2})^2 - 1 = 2\\sqrt{2} + 4 - 1 = 2\\sqrt{2} + 3 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartBConclusion': 'الخلاصة: \\( g(-1) = 0 \\)، إذن -1 هو جذر لـ \\( g \\).',
+                'MH.lesson_Y2Al_poly1c.activity11PartC': 'الجزء ج: احسب \\( h(0) \\)، \\( h\\left(\\frac{1}{3}\\right) \\)، و \\( h(2) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartCStep1': 'الخطوة 1: احسب \\( h(0) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartCStep1.equation': '\\( h(0) = 3(0)^3 - (0)^2 - 6(0) + 2 = 2 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartCStep2': 'الخطوة 2: احسب \\( h\\left(\\frac{1}{3}\\right) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartCStep2.equation': '\\( h\\left(\\frac{1}{3}\\right) = 3\\left(\\frac{1}{3}\\right)^3 - \\left(\\frac{1}{3}\\right)^2 - 6\\left(\\frac{1}{3}\\right) + 2 = 3\\left(\\frac{1}{27}\\right) - \\frac{1}{9} - 2 + 2 = \\frac{1}{9} - \\frac{1}{9} = 0 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartCStep3': 'الخطوة 3: احسب \\( h(2) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartCStep3.equation': '\\( h(2) = 3(2)^3 - (2)^2 - 6(2) + 2 = 24 - 4 - 12 + 2 = 10 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartCConclusion': 'الخلاصة: \\( h\\left(\\frac{1}{3}\\right) = 0 \\)، إذن \\( \\frac{1}{3} \\) هو جذر لـ \\( h \\).',
+                'MH.lesson_Y2Al_poly1c.activity12Title': 'النشاط 12: التحقق من الجذور',
+                'MH.lesson_Y2Al_poly1c.activity12Description': 'أثبت أن العدد الحقيقي \\( \\alpha \\) هو جذر لمتعدد الحدود المعطى.',
+                'MH.lesson_Y2Al_poly1c.activity12PartA': 'الجزء أ: \\( f(x) = 5x^2 + x - 6 \\)؛ \\( \\alpha = 1 \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartAStep1': 'الخطوة 1: عوّض \\( \\alpha = 1 \\) في \\( f(x) \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartAStep1.equation': '\\( f(1) = 5(1)^2 + 1 - 6 = 5 + 1 - 6 = 0 \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartAStep2': 'الخطوة 2: الخلاصة',
+                'MH.lesson_Y2Al_poly1c.activity12PartAConclusion': 'بما أن \\( f(1) = 0 \\)، فإن \\( \\alpha = 1 \\) هو بالفعل جذر لـ \\( f(x) \\).',
+                'MH.lesson_Y2Al_poly1c.activity12PartB': 'الجزء ب: \\( g(x) = 4x^4 + 5x^3 - 14x^2 - 9x + 14 \\)؛ \\( \\alpha = -2 \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartBStep1': 'الخطوة 1: عوّض \\( \\alpha = -2 \\) في \\( g(x) \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartBStep1.equation': '\\( g(-2) = 4(-2)^4 + 5(-2)^3 - 14(-2)^2 - 9(-2) + 14 \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartBStep1.equation2': '\\( = 4(16) + 5(-8) - 14(4) + 18 + 14 \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartBStep1.equation3': '\\( = 64 - 40 - 56 + 18 + 14 = 0 \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartBStep2': 'الخطوة 2: الخلاصة',
+                'MH.lesson_Y2Al_poly1c.activity12PartBConclusion': 'بما أن \\( g(-2) = 0 \\)، فإن \\( \\alpha = -2 \\) هو بالفعل جذر لـ \\( g(x) \\).',
+                'MH.lesson_Y2Al_poly1c.activity12PartC': 'الجزء ج: \\( h(x) = 8x^5 + 3x^2 - 1 \\)؛ \\( \\alpha = \\frac{1}{2} \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartCStep1': 'الخطوة 1: عوّض \\( \\alpha = \\frac{1}{2} \\) في \\( h(x) \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartCStep1.equation': '\\( h\\left(\\frac{1}{2}\\right) = 8\\left(\\frac{1}{2}\\right)^5 + 3\\left(\\frac{1}{2}\\right)^2 - 1 \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartCStep1.equation2': '\\( = 8\\left(\\frac{1}{32}\\right) + 3\\left(\\frac{1}{4}\\right) - 1 \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartCStep1.equation3': '\\( = \\frac{1}{4} + \\frac{3}{4} - 1 = 1 - 1 = 0 \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartCStep2': 'الخطوة 2: الخلاصة',
+                'MH.lesson_Y2Al_poly1c.activity12PartCConclusion': 'بما أن \\( h\\left(\\frac{1}{2}\\right) = 0 \\)، فإن \\( \\alpha = \\frac{1}{2} \\) هو بالفعل جذر لـ \\( h(x) \\).',
+                'MH.lesson_Y2Al_poly1c.showSolution': 'إظهار الحل',
+                'MH.lesson_Y2Al_poly1c.hideSolution': 'إخفاء الحل',
+    'MH.lesson_Y2Al_poly1c.activity13Title': 'النشاط 13: إيجاد المعاملات باستخدام الجذور',
+    'MH.lesson_Y2Al_poly1c.activity13Description': 'لنفرض أن P هو متعدد الحدود المعرف بـ \\(P(x) = ax^4 + (a + 1)x^3 - (b+9)x^2 - (2b-1)x + 14\\)، حيث a و b عددان حقيقيان.',
+    'MH.lesson_Y2Al_poly1c.activity13PartA': 'الجزء أ: حدد a و b علماً أن 1 و -2 هما جذران لمتعدد الحدود P',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep1': 'الخطوة 1: استخدم حقيقة أن 1 هو جذر لـ P',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep1.equation': '\\(P(1) = a(1)^4 + (a + 1)(1)^3 - (b+9)(1)^2 - (2b-1)(1) + 14 = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep1.equation2': '\\(a + (a + 1) - (b+9) - (2b-1) + 14 = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep1.equation3': '\\(2a + 1 - b - 9 - 2b + 1 + 14 = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep1.equation4': '\\(2a - 3b + 7 = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep2': 'الخطوة 2: استخدم حقيقة أن -2 هو جذر لـ P',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep2.equation': '\\(P(-2) = a(-2)^4 + (a + 1)(-2)^3 - (b+9)(-2)^2 - (2b-1)(-2) + 14 = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep2.equation2': '\\(16a + (a + 1)(-8) - (b+9)(4) + 2(2b-1) + 14 = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep2.equation3': '\\(16a - 8a - 8 - 4b - 36 + 4b - 2 + 14 = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep2.equation4': '\\(8a - 32 = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep2.equation5': '\\(8a = 32\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep2.equation6': '\\(a = 4\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep3': 'الخطوة 3: عوّض a = 4 في المعادلة الأولى',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep3.equation': '\\(2(4) - 3b + 7 = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep3.equation2': '\\(8 - 3b + 7 = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep3.equation3': '\\(15 - 3b = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep3.equation4': '\\(3b = 15\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep3.equation5': '\\(b = 5\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAConclusion': 'الخلاصة: a = 4 و b = 5',
+    'MH.lesson_Y2Al_poly1c.activity13PartB': 'الجزء ب: بعد إيجاد a و b، حدد متعدد الحدود Q بحيث \\(P(x) = (x^2 + x - 2)Q(x)\\) لكل x حقيقي',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep1': 'الخطوة 1: اكتب P(x) بقيم a = 4 و b = 5',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep1.equation': '\\(P(x) = 4x^4 + (4 + 1)x^3 - (5+9)x^2 - (2(5)-1)x + 14\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep1.equation2': '\\(P(x) = 4x^4 + 5x^3 - 14x^2 - 9x + 14\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep2': 'الخطوة 2: حلل \\(x^2 + x - 2\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep2.equation': '\\(x^2 + x - 2 = (x - 1)(x + 2)\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep3': 'الخطوة 3: نفذ قسمة متعددات الحدود لـ P(x) على \\(x^2 + x - 2\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation': '\\(4x^4 + 5x^3 - 14x^2 - 9x + 14 \\div (x^2 + x - 2)\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation2': 'الحد الأول: \\(4x^2\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation3': 'اضرب: \\(4x^2(x^2 + x - 2) = 4x^4 + 4x^3 - 8x^2\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation4': 'اطرح: \\((4x^4 + 5x^3 - 14x^2) - (4x^4 + 4x^3 - 8x^2) = x^3 - 6x^2\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation5': 'أنزل الحد التالي: \\(x^3 - 6x^2 - 9x\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation6': 'الحد التالي: \\(x\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation7': 'اضرب: \\(x(x^2 + x - 2) = x^3 + x^2 - 2x\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation8': 'اطرح: \\((x^3 - 6x^2 - 9x) - (x^3 + x^2 - 2x) = -7x^2 - 7x\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation9': 'أنزل الحد التالي: \\(-7x^2 - 7x + 14\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation10': 'الحد التالي: \\(-7\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation11': 'اضرب: \\(-7(x^2 + x - 2) = -7x^2 - 7x + 14\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation12': 'اطرح: \\((-7x^2 - 7x + 14) - (-7x^2 - 7x + 14) = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBConclusion': 'الخلاصة: \\(Q(x) = 4x^2 + x - 7\\)',
+
+    'MH.lesson_Y2Al_poly1c.activity14Title': 'النشاط 14: تحليل متعددات الحدود',
+    'MH.lesson_Y2Al_poly1c.activity14Description': 'حلل كل من متعددات الحدود A, B, C و D المعرفة بـ:',
+    'MH.lesson_Y2Al_poly1c.activity14PartA': 'الجزء أ: حلل \\(A(x) = x^4 - 3x^3 + 2x^2\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartAStep1': 'الخطوة 1: أخرج العامل المشترك \\(x^2\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartAStep1.equation': '\\(A(x) = x^2(x^2 - 3x + 2)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartAStep2': 'الخطوة 2: حلل ثلاثي الحدود \\(x^2 - 3x + 2\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartAStep2.equation': '\\(x^2 - 3x + 2 = (x - 1)(x - 2)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartAConclusion': 'الخلاصة: \\(A(x) = x^2(x - 1)(x - 2)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartB': 'الجزء ب: حلل \\(B(x) = (x^2 + 5x) + 2(x+5)^3\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartBStep1': 'الخطوة 1: أخرج x من الحد الأول',
+    'MH.lesson_Y2Al_poly1c.activity14PartBStep1.equation': '\\(B(x) = x(x + 5) + 2(x+5)^3\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartBStep2': 'الخطوة 2: أخرج العامل المشترك \\((x + 5)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartBStep2.equation': '\\(B(x) = (x + 5)[x + 2(x+5)^2]\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartBStep3': 'الخطوة 3: وسّط وبسّط التعبير داخل الأقواس',
+    'MH.lesson_Y2Al_poly1c.activity14PartBStep3.equation': '\\(x + 2(x+5)^2 = x + 2(x^2 + 10x + 25)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartBStep3.equation2': '\\(= x + 2x^2 + 20x + 50\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartBStep3.equation3': '\\(= 2x^2 + 21x + 50\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartBStep4': 'الخطوة 4: حلل ثلاثي الحدود \\(2x^2 + 21x + 50\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartBStep4.equation': '\\(2x^2 + 21x + 50 = (2x + 5)(x + 10)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartBConclusion': 'الخلاصة: \\(B(x) = (x + 5)(2x + 5)(x + 10)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartC': 'الجزء ج: حلل \\(C(x) = 2x^3 + 4x^2 + 3x + 6\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartCStep1': 'الخطوة 1: جمّع الحدود لإيجاد العوامل المشتركة',
+    'MH.lesson_Y2Al_poly1c.activity14PartCStep1.equation': '\\(C(x) = (2x^3 + 4x^2) + (3x + 6)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartCStep2': 'الخطوة 2: أخرج العوامل المشتركة من كل مجموعة',
+    'MH.lesson_Y2Al_poly1c.activity14PartCStep2.equation': '\\(C(x) = 2x^2(x + 2) + 3(x + 2)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartCStep3': 'الخطوة 3: أخرج العامل المشترك \\((x + 2)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartCStep3.equation': '\\(C(x) = (x + 2)(2x^2 + 3)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartCConclusion': 'الخلاصة: \\(C(x) = (x + 2)(2x^2 + 3)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartD': 'الجزء د: حلل \\(D(x) = x^4 + 3x^3 - x - 3\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartDStep1': 'الخطوة 1: جمّع الحدود لإيجاد العوامل المشتركة',
+    'MH.lesson_Y2Al_poly1c.activity14PartDStep1.equation': '\\(D(x) = (x^4 + 3x^3) + (-x - 3)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartDStep2': 'الخطوة 2: أخرج العوامل المشتركة من كل مجموعة',
+    'MH.lesson_Y2Al_poly1c.activity14PartDStep2.equation': '\\(D(x) = x^3(x + 3) - 1(x + 3)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartDStep3': 'الخطوة 3: أخرج العامل المشترك \\((x + 3)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartDStep3.equation': '\\(D(x) = (x + 3)(x^3 - 1)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartDStep4': 'الخطوة 4: حلل \\(x^3 - 1\\) كفرق بين مكعبين',
+    'MH.lesson_Y2Al_poly1c.activity14PartDStep4.equation': '\\(x^3 - 1 = (x - 1)(x^2 + x + 1)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartDConclusion': 'الخلاصة: \\(D(x) = (x + 3)(x - 1)(x^2 + x + 1)\\)',
+
+    'MH.lesson_Y2Al_poly1c.activity15Title': 'النشاط 15: العمل مع متعددات الحدود P و Q',
+    'MH.lesson_Y2Al_poly1c.activity15Description': 'لنفرض أن P و Q هما متعددات الحدود المعرفة بـ \\(P(x) = 3x^3 + x^2 + 2x - 6\\) و \\(Q(x) = x^3 + 3x^2 - 4x - 12\\).',
+    'MH.lesson_Y2Al_poly1c.activity15Part1a': 'الجزء 1أ: تحقق من أن 1 هو جذر لـ P',
+    'MH.lesson_Y2Al_poly1c.activity15Part1aStep1': 'الخطوة 1: عوّض x = 1 في P(x)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1aStep1.equation': '\\(P(1) = 3(1)^3 + (1)^2 + 2(1) - 6\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1aStep1.equation2': '\\(= 3 + 1 + 2 - 6\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1aStep1.equation3': '\\(= 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1aConclusion': 'الخلاصة: بما أن P(1) = 0، فإن 1 هو بالفعل جذر لـ P',
+    'MH.lesson_Y2Al_poly1c.activity15Part1b': 'الجزء 1ب: حدد ثلاثة أعداد حقيقية a, b و c بحيث لكل x حقيقي، \\(P(x) = (x - 1)(ax^2 + bx + c)\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bStep1': 'الخطوة 1: نفذ قسمة متعددات الحدود لـ P(x) على (x - 1)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation': '\\(3x^3 + x^2 + 2x - 6 \\div (x - 1)\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation2': 'الحد الأول: \\(3x^2\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation3': 'اضرب: \\(3x^2(x - 1) = 3x^3 - 3x^2\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation4': 'اطرح: \\((3x^3 + x^2) - (3x^3 - 3x^2) = 4x^2\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation5': 'أنزل الحد التالي: \\(4x^2 + 2x\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation6': 'الحد التالي: \\(4x\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation7': 'اضرب: \\(4x(x - 1) = 4x^2 - 4x\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation8': 'اطرح: \\((4x^2 + 2x) - (4x^2 - 4x) = 6x\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation9': 'أنزل الحد التالي: \\(6x - 6\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation10': 'الحد التالي: \\(6\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation11': 'اضرب: \\(6(x - 1) = 6x - 6\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation12': 'اطرح: \\((6x - 6) - (6x - 6) = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bConclusion': 'الخلاصة: \\(a = 3\\), \\(b = 4\\), \\(c = 6\\)، إذن \\(P(x) = (x - 1)(3x^2 + 4x + 6)\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2a': 'الجزء 2أ: احسب Q(2) و Q(-3)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2aStep1': 'الخطوة 1: احسب Q(2)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2aStep1.equation': '\\(Q(2) = (2)^3 + 3(2)^2 - 4(2) - 12\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2aStep1.equation2': '\\(= 8 + 12 - 8 - 12\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2aStep1.equation3': '\\(= 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2aStep2': 'الخطوة 2: احسب Q(-3)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2aStep2.equation': '\\(Q(-3) = (-3)^3 + 3(-3)^2 - 4(-3) - 12\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2aStep2.equation2': '\\(= -27 + 27 + 12 - 12\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2aStep2.equation3': '\\(= 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2aConclusion': 'الخلاصة: Q(2) = 0 و Q(-3) = 0، إذن 2 و -3 هما جذران لـ Q',
+    'MH.lesson_Y2Al_poly1c.activity15Part2b': 'الجزء 2ب: حدد متعدد الحدود R بحيث لكل x حقيقي، \\(Q(x) = (x - 2)(x + 3)R(x)\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2bStep1': 'الخطوة 1: أولاً، اضرب (x - 2)(x + 3)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2bStep1.equation': '\\((x - 2)(x + 3) = x^2 + 3x - 2x - 6 = x^2 + x - 6\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2bStep2': 'الخطوة 2: نفذ قسمة متعددات الحدود لـ Q(x) على \\(x^2 + x - 6\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation': '\\(x^3 + 3x^2 - 4x - 12 \\div (x^2 + x - 6)\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation2': 'الحد الأول: \\(x\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation3': 'اضرب: \\(x(x^2 + x - 6) = x^3 + x^2 - 6x\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation4': 'اطرح: \\((x^3 + 3x^2 - 4x) - (x^3 + x^2 - 6x) = 2x^2 + 2x\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation5': 'أنزل الحد التالي: \\(2x^2 + 2x - 12\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation6': 'الحد التالي: \\(2\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation7': 'اضرب: \\(2(x^2 + x - 6) = 2x^2 + 2x - 12\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation8': 'اطرح: \\((2x^2 + 2x - 12) - (2x^2 + 2x - 12) = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2bConclusion': 'الخلاصة: \\(R(x) = x + 2\\)، إذن \\(Q(x) = (x - 2)(x + 3)(x + 2)\\)',
+                'MH.lesson_Y2Al_poly1c.summary': 'الملخص',
+                'MH.lesson_Y2Al_poly1c.keyConcepts': 'المفاهيم الرئيسية',
+                'MH.lesson_Y2Al_poly1c.concept1': 'جذر متعدد الحدود هو قيمة تجعل متعدد الحدود يساوي صفرًا',
+                'MH.lesson_Y2Al_poly1c.concept2': 'إذا كان \\( \\alpha \\) جذرًا لمتعدد الحدود \\( P(x) \\)، فإن \\( (x - \\alpha) \\) هو عامل لـ \\( P(x) \\)',
+                'MH.lesson_Y2Al_poly1c.concept3': 'متعدد الحدود من الدرجة \\( n \\) له على الأكثر \\( n \\) جذر حقيقي',
+                'MH.lesson_Y2Al_poly1c.concept4': 'التحليل يسمح لنا بإعادة كتابة متعددات الحدود كحاصل ضرب متعددات حدود أبسط',
+                'MH.lesson_Y2Al_poly1c.concept5': 'إيجاد الجذور أساسي لحل معادلات متعددات الحدود',
+                'MH.lesson_Y2Al_poly1c.finalThought': 'فهم جذور متعددات الحدود والتحليل أمر بالغ الأهمية لحل معادلات متعددات الحدود وتحليل دوال متعددات الحدود. تشكل هذه المفاهيم الأساس للتقنيات الجبرية الأكثر تقدمًا التي ستواجهها في رحلتك الرياضية.',
+                'MH.footer.developer': 'المطور',
+                'MH.footer.version': 'الإصدار',
+                'MH.footer.links': 'روابط',
+                'MH.footer.terms': 'شروط الاستخدام',
+                'MH.footer.privacy': 'سياسة الخصوصية'
+            },
+            'fr': {
+                'MH.general.homeTooltip': 'Aller à la page d\'accueil',
+                'MH.general.install': 'Installer l\'App',
+                'MH.general.installSuccess': 'Mathematics Hub installé avec succès!',
+                'MH.general.enableNotifications': 'Activer les notifications',
+                'MH.general.notificationEnabled': 'Notifications activées! Vous recevrez maintenant des mises à jour.',
+                'MH.general.title': 'Centre de Mathématiques',
+                'MH.general.theme': 'Thème',
+                'MH.general.language': 'Langue',
+                'MH.lesson_Y2Al_poly1c.title': 'Polynômes: Partie 3',
+                'MH.lesson_Y2Al_poly1c.subtitle': 'Factorisation des Polynômes',
+                'MH.lesson_Y2Al_poly1c.introduction': 'Introduction à la Factorisation des Polynômes',
+                'MH.lesson_Y2Al_poly1c.introText1': 'Dans cette leçon, nous explorerons le concept des racines polynomiales et apprendrons comment factoriser les polynômes. La factorisation est une technique puissante qui nous permet de réécrire les polynômes comme des produits de polynômes plus simples, ce qui est essentiel pour résoudre des équations polynomiales et comprendre leurs propriétés.',
+                'MH.lesson_Y2Al_poly1c.levelNoteTitle': 'Note de Niveau',
+                'MH.lesson_Y2Al_poly1c.levelNoteText': 'Cette leçon s\'appuie sur vos connaissances des opérations polynomiales et de l\'égalité. Nous progressons vers des concepts algébriques plus complexes qui seront fondamentaux pour résoudre des équations de degré supérieur.',
+                'MH.lesson_Y2Al_poly1c.rootsTitle': 'Racines des Polynômes et Factorisation',
+                'MH.lesson_Y2Al_poly1c.rootDefinitionTitle': 'Définition: Racine d\'un Polynôme',
+                'MH.lesson_Y2Al_poly1c.rootDefinitionText': 'Un nombre réel \\( \\alpha \\) est appelé racine ou zéro d\'un polynôme \\( f \\) si \\( f(\\alpha) = 0 \\).',
+                'MH.lesson_Y2Al_poly1c.activity11Title': 'Activité 11: Évaluation des Polynômes',
+                'MH.lesson_Y2Al_poly1c.activity11Description.text1': 'Soit',
+                'MH.lesson_Y2Al_poly1c.activity11Description.eq1': '\\( f(x) = x^2 + 2x - 3 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11Description.text2': ',',
+                'MH.lesson_Y2Al_poly1c.activity11Description.eq2': '\\( g(x) = x^3 + 2x^2 - 1 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11Description.text3': 'et',
+                'MH.lesson_Y2Al_poly1c.activity11Description.eq3': '\\( h(x) = 3x^3 - x^2 - 6x + 2 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11Description.text4': '.',
+                'MH.lesson_Y2Al_poly1c.activity11PartA': 'Partie A: Calculez \\( f(-1) \\), \\( f(1) \\), et \\( f(-3) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartAStep1': 'Étape 1: Calculez \\( f(-1) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartAStep1.equation': '\\( f(-1) = (-1)^2 + 2(-1) - 3 = 1 - 2 - 3 = -4 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartAStep2': 'Étape 2: Calculez \\( f(1) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartAStep2.equation': '\\( f(1) = (1)^2 + 2(1) - 3 = 1 + 2 - 3 = 0 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartAStep3': 'Étape 3: Calculez \\( f(-3) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartAStep3.equation': '\\( f(-3) = (-3)^2 + 2(-3) - 3 = 9 - 6 - 3 = 0 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartAConclusion': 'Conclusion: \\( f(1) = 0 \\) et \\( f(-3) = 0 \\), donc 1 et -3 sont des racines de \\( f \\).',
+                'MH.lesson_Y2Al_poly1c.activity11PartB': 'Partie B: Calculez \\( g(-1) \\), \\( g(0) \\), et \\( g(\\sqrt{2}) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartBStep1': 'Étape 1: Calculez \\( g(-1) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartBStep1.equation': '\\( g(-1) = (-1)^3 + 2(-1)^2 - 1 = -1 + 2 - 1 = 0 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartBStep2': 'Étape 2: Calculez \\( g(0) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartBStep2.equation': '\\( g(0) = (0)^3 + 2(0)^2 - 1 = -1 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartBStep3': 'Étape 3: Calculez \\( g(\\sqrt{2}) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartBStep3.equation': '\\( g(\\sqrt{2}) = (\\sqrt{2})^3 + 2(\\sqrt{2})^2 - 1 = 2\\sqrt{2} + 4 - 1 = 2\\sqrt{2} + 3 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartBConclusion': 'Conclusion: \\( g(-1) = 0 \\), donc -1 est une racine de \\( g \\).',
+                'MH.lesson_Y2Al_poly1c.activity11PartC': 'Partie C: Calculez \\( h(0) \\), \\( h\\left(\\frac{1}{3}\\right) \\), et \\( h(2) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartCStep1': 'Étape 1: Calculez \\( h(0) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartCStep1.equation': '\\( h(0) = 3(0)^3 - (0)^2 - 6(0) + 2 = 2 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartCStep2': 'Étape 2: Calculez \\( h\\left(\\frac{1}{3}\\right) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartCStep2.equation': '\\( h\\left(\\frac{1}{3}\\right) = 3\\left(\\frac{1}{3}\\right)^3 - \\left(\\frac{1}{3}\\right)^2 - 6\\left(\\frac{1}{3}\\right) + 2 = 3\\left(\\frac{1}{27}\\right) - \\frac{1}{9} - 2 + 2 = \\frac{1}{9} - \\frac{1}{9} = 0 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartCStep3': 'Étape 3: Calculez \\( h(2) \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartCStep3.equation': '\\( h(2) = 3(2)^3 - (2)^2 - 6(2) + 2 = 24 - 4 - 12 + 2 = 10 \\)',
+                'MH.lesson_Y2Al_poly1c.activity11PartCConclusion': 'Conclusion: \\( h\\left(\\frac{1}{3}\\right) = 0 \\), donc \\( \\frac{1}{3} \\) est une racine de \\( h \\).',
+                'MH.lesson_Y2Al_poly1c.activity12Title': 'Activité 12: Vérification des Racines',
+                'MH.lesson_Y2Al_poly1c.activity12Description': 'Montrez que le nombre réel \\( \\alpha \\) est une racine du polynôme donné.',
+                'MH.lesson_Y2Al_poly1c.activity12PartA': 'Partie A: \\( f(x) = 5x^2 + x - 6 \\); \\( \\alpha = 1 \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartAStep1': 'Étape 1: Substituer \\( \\alpha = 1 \\) dans \\( f(x) \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartAStep1.equation': '\\( f(1) = 5(1)^2 + 1 - 6 = 5 + 1 - 6 = 0 \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartAStep2': 'Étape 2: Conclusion',
+                'MH.lesson_Y2Al_poly1c.activity12PartAConclusion': 'Puisque \\( f(1) = 0 \\), \\( \\alpha = 1 \\) est bien une racine de \\( f(x) \\).',
+                'MH.lesson_Y2Al_poly1c.activity12PartB': 'Partie B: \\( g(x) = 4x^4 + 5x^3 - 14x^2 - 9x + 14 \\); \\( \\alpha = -2 \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartBStep1': 'Étape 1: Substituer \\( \\alpha = -2 \\) dans \\( g(x) \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartBStep1.equation': '\\( g(-2) = 4(-2)^4 + 5(-2)^3 - 14(-2)^2 - 9(-2) + 14 \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartBStep1.equation2': '\\( = 4(16) + 5(-8) - 14(4) + 18 + 14 \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartBStep1.equation3': '\\( = 64 - 40 - 56 + 18 + 14 = 0 \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartBStep2': 'Étape 2: Conclusion',
+                'MH.lesson_Y2Al_poly1c.activity12PartBConclusion': 'Puisque \\( g(-2) = 0 \\), \\( \\alpha = -2 \\) est bien une racine de \\( g(x) \\).',
+                'MH.lesson_Y2Al_poly1c.activity12PartC': 'Partie C: \\( h(x) = 8x^5 + 3x^2 - 1 \\); \\( \\alpha = \\frac{1}{2} \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartCStep1': 'Étape 1: Substituer \\( \\alpha = \\frac{1}{2} \\) dans \\( h(x) \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartCStep1.equation': '\\( h\\left(\\frac{1}{2}\\right) = 8\\left(\\frac{1}{2}\\right)^5 + 3\\left(\\frac{1}{2}\\right)^2 - 1 \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartCStep1.equation2': '\\( = 8\\left(\\frac{1}{32}\\right) + 3\\left(\\frac{1}{4}\\right) - 1 \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartCStep1.equation3': '\\( = \\frac{1}{4} + \\frac{3}{4} - 1 = 1 - 1 = 0 \\)',
+                'MH.lesson_Y2Al_poly1c.activity12PartCStep2': 'Étape 2: Conclusion',
+                'MH.lesson_Y2Al_poly1c.activity12PartCConclusion': 'Puisque \\( h\\left(\\frac{1}{2}\\right) = 0 \\), \\( \\alpha = \\frac{1}{2} \\) est bien une racine de \\( h(x) \\).',
+                'MH.lesson_Y2Al_poly1c.showSolution': 'Afficher la Solution',
+                'MH.lesson_Y2Al_poly1c.hideSolution': 'Masquer la Solution',
+    'MH.lesson_Y2Al_poly1c.activity13Title': 'Activité 13: Trouver les Coefficients en Utilisant les Racines',
+    'MH.lesson_Y2Al_poly1c.activity13Description': 'Soit P le polynôme défini par \\(P(x) = ax^4 + (a + 1)x^3 - (b+9)x^2 - (2b-1)x + 14\\), où a et b sont des nombres réels.',
+    'MH.lesson_Y2Al_poly1c.activity13PartA': 'Partie A: Déterminer a et b sachant que 1 et -2 sont deux racines du polynôme P',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep1': 'Étape 1: Utiliser le fait que 1 est une racine de P',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep1.equation': '\\(P(1) = a(1)^4 + (a + 1)(1)^3 - (b+9)(1)^2 - (2b-1)(1) + 14 = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep1.equation2': '\\(a + (a + 1) - (b+9) - (2b-1) + 14 = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep1.equation3': '\\(2a + 1 - b - 9 - 2b + 1 + 14 = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep1.equation4': '\\(2a - 3b + 7 = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep2': 'Étape 2: Utiliser le fait que -2 est une racine de P',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep2.equation': '\\(P(-2) = a(-2)^4 + (a + 1)(-2)^3 - (b+9)(-2)^2 - (2b-1)(-2) + 14 = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep2.equation2': '\\(16a + (a + 1)(-8) - (b+9)(4) + 2(2b-1) + 14 = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep2.equation3': '\\(16a - 8a - 8 - 4b - 36 + 4b - 2 + 14 = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep2.equation4': '\\(8a - 32 = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep2.equation5': '\\(8a = 32\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep2.equation6': '\\(a = 4\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep3': 'Étape 3: Substituer a = 4 dans la première équation',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep3.equation': '\\(2(4) - 3b + 7 = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep3.equation2': '\\(8 - 3b + 7 = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep3.equation3': '\\(15 - 3b = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep3.equation4': '\\(3b = 15\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAStep3.equation5': '\\(b = 5\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartAConclusion': 'Conclusion: a = 4 et b = 5',
+    'MH.lesson_Y2Al_poly1c.activity13PartB': 'Partie B: Avec a et b trouvés, déterminer le polynôme Q tel que \\(P(x) = (x^2 + x - 2)Q(x)\\) pour tout x réel',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep1': 'Étape 1: Écrire P(x) avec les valeurs a = 4 et b = 5',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep1.equation': '\\(P(x) = 4x^4 + (4 + 1)x^3 - (5+9)x^2 - (2(5)-1)x + 14\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep1.equation2': '\\(P(x) = 4x^4 + 5x^3 - 14x^2 - 9x + 14\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep2': 'Étape 2: Factoriser \\(x^2 + x - 2\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep2.equation': '\\(x^2 + x - 2 = (x - 1)(x + 2)\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep3': 'Étape 3: Effectuer la division polynomiale de P(x) par \\(x^2 + x - 2\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation': '\\(4x^4 + 5x^3 - 14x^2 - 9x + 14 \\div (x^2 + x - 2)\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation2': 'Premier terme: \\(4x^2\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation3': 'Multiplier: \\(4x^2(x^2 + x - 2) = 4x^4 + 4x^3 - 8x^2\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation4': 'Soustraire: \\((4x^4 + 5x^3 - 14x^2) - (4x^4 + 4x^3 - 8x^2) = x^3 - 6x^2\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation5': 'Descendre le terme suivant: \\(x^3 - 6x^2 - 9x\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation6': 'Terme suivant: \\(x\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation7': 'Multiplier: \\(x(x^2 + x - 2) = x^3 + x^2 - 2x\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation8': 'Soustraire: \\((x^3 - 6x^2 - 9x) - (x^3 + x^2 - 2x) = -7x^2 - 7x\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation9': 'Descendre le terme suivant: \\(-7x^2 - 7x + 14\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation10': 'Terme suivant: \\(-7\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation11': 'Multiplier: \\(-7(x^2 + x - 2) = -7x^2 - 7x + 14\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBStep3.equation12': 'Soustraire: \\((-7x^2 - 7x + 14) - (-7x^2 - 7x + 14) = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity13PartBConclusion': 'Conclusion: \\(Q(x) = 4x^2 + x - 7\\)',
+
+    'MH.lesson_Y2Al_poly1c.activity14Title': 'Activité 14: Factorisation des Polynômes',
+    'MH.lesson_Y2Al_poly1c.activity14Description': 'Factoriser chacun des polynômes A, B, C et D définis par:',
+    'MH.lesson_Y2Al_poly1c.activity14PartA': 'Partie A: Factoriser \\(A(x) = x^4 - 3x^3 + 2x^2\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartAStep1': 'Étape 1: Factoriser le facteur commun \\(x^2\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartAStep1.equation': '\\(A(x) = x^2(x^2 - 3x + 2)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartAStep2': 'Étape 2: Factoriser le trinôme \\(x^2 - 3x + 2\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartAStep2.equation': '\\(x^2 - 3x + 2 = (x - 1)(x - 2)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartAConclusion': 'Conclusion: \\(A(x) = x^2(x - 1)(x - 2)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartB': 'Partie B: Factoriser \\(B(x) = (x^2 + 5x) + 2(x+5)^3\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartBStep1': 'Étape 1: Factoriser x du premier terme',
+    'MH.lesson_Y2Al_poly1c.activity14PartBStep1.equation': '\\(B(x) = x(x + 5) + 2(x+5)^3\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartBStep2': 'Étape 2: Factoriser le facteur commun \\((x + 5)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartBStep2.equation': '\\(B(x) = (x + 5)[x + 2(x+5)^2]\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartBStep3': 'Étape 3: Développer et simplifier l\'expression entre les crochets',
+    'MH.lesson_Y2Al_poly1c.activity14PartBStep3.equation': '\\(x + 2(x+5)^2 = x + 2(x^2 + 10x + 25)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartBStep3.equation2': '\\(= x + 2x^2 + 20x + 50\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartBStep3.equation3': '\\(= 2x^2 + 21x + 50\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartBStep4': 'Étape 4: Factoriser le trinôme \\(2x^2 + 21x + 50\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartBStep4.equation': '\\(2x^2 + 21x + 50 = (2x + 5)(x + 10)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartBConclusion': 'Conclusion: \\(B(x) = (x + 5)(2x + 5)(x + 10)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartC': 'Partie C: Factoriser \\(C(x) = 2x^3 + 4x^2 + 3x + 6\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartCStep1': 'Étape 1: Grouper les termes pour trouver des facteurs communs',
+    'MH.lesson_Y2Al_poly1c.activity14PartCStep1.equation': '\\(C(x) = (2x^3 + 4x^2) + (3x + 6)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartCStep2': 'Étape 2: Factoriser les facteurs communs de chaque groupe',
+    'MH.lesson_Y2Al_poly1c.activity14PartCStep2.equation': '\\(C(x) = 2x^2(x + 2) + 3(x + 2)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartCStep3': 'Étape 3: Factoriser le facteur commun \\((x + 2)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartCStep3.equation': '\\(C(x) = (x + 2)(2x^2 + 3)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartCConclusion': 'Conclusion: \\(C(x) = (x + 2)(2x^2 + 3)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartD': 'Partie D: Factoriser \\(D(x) = x^4 + 3x^3 - x - 3\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartDStep1': 'Étape 1: Grouper les termes pour trouver des facteurs communs',
+    'MH.lesson_Y2Al_poly1c.activity14PartDStep1.equation': '\\(D(x) = (x^4 + 3x^3) + (-x - 3)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartDStep2': 'Étape 2: Factoriser les facteurs communs de chaque groupe',
+    'MH.lesson_Y2Al_poly1c.activity14PartDStep2.equation': '\\(D(x) = x^3(x + 3) - 1(x + 3)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartDStep3': 'Étape 3: Factoriser le facteur commun \\((x + 3)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartDStep3.equation': '\\(D(x) = (x + 3)(x^3 - 1)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartDStep4': 'Étape 4: Factoriser \\(x^3 - 1\\) comme une différence de cubes',
+    'MH.lesson_Y2Al_poly1c.activity14PartDStep4.equation': '\\(x^3 - 1 = (x - 1)(x^2 + x + 1)\\)',
+    'MH.lesson_Y2Al_poly1c.activity14PartDConclusion': 'Conclusion: \\(D(x) = (x + 3)(x - 1)(x^2 + x + 1)\\)',
+
+    'MH.lesson_Y2Al_poly1c.activity15Title': 'Activité 15: Travailler avec les Polynômes P et Q',
+    'MH.lesson_Y2Al_poly1c.activity15Description': 'Soit P et Q les polynômes définis par \\(P(x) = 3x^3 + x^2 + 2x - 6\\) et \\(Q(x) = x^3 + 3x^2 - 4x - 12\\).',
+    'MH.lesson_Y2Al_poly1c.activity15Part1a': 'Partie 1a: Vérifier que 1 est une racine de P',
+    'MH.lesson_Y2Al_poly1c.activity15Part1aStep1': 'Étape 1: Substituer x = 1 dans P(x)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1aStep1.equation': '\\(P(1) = 3(1)^3 + (1)^2 + 2(1) - 6\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1aStep1.equation2': '\\(= 3 + 1 + 2 - 6\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1aStep1.equation3': '\\(= 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1aConclusion': 'Conclusion: Puisque P(1) = 0, 1 est bien une racine de P',
+    'MH.lesson_Y2Al_poly1c.activity15Part1b': 'Partie 1b: Déterminer trois nombres réels a, b et c tels que pour tout x réel, \\(P(x) = (x - 1)(ax^2 + bx + c)\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bStep1': 'Étape 1: Effectuer la division polynomiale de P(x) par (x - 1)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation': '\\(3x^3 + x^2 + 2x - 6 \\div (x - 1)\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation2': 'Premier terme: \\(3x^2\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation3': 'Multiplier: \\(3x^2(x - 1) = 3x^3 - 3x^2\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation4': 'Soustraire: \\((3x^3 + x^2) - (3x^3 - 3x^2) = 4x^2\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation5': 'Descendre le terme suivant: \\(4x^2 + 2x\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation6': 'Terme suivant: \\(4x\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation7': 'Multiplier: \\(4x(x - 1) = 4x^2 - 4x\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation8': 'Soustraire: \\((4x^2 + 2x) - (4x^2 - 4x) = 6x\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation9': 'Descendre le terme suivant: \\(6x - 6\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation10': 'Terme suivant: \\(6\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation11': 'Multiplier: \\(6(x - 1) = 6x - 6\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bStep1.equation12': 'Soustraire: \\((6x - 6) - (6x - 6) = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part1bConclusion': 'Conclusion: \\(a = 3\\), \\(b = 4\\), \\(c = 6\\), donc \\(P(x) = (x - 1)(3x^2 + 4x + 6)\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2a': 'Partie 2a: Calculer Q(2) et Q(-3)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2aStep1': 'Étape 1: Calculer Q(2)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2aStep1.equation': '\\(Q(2) = (2)^3 + 3(2)^2 - 4(2) - 12\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2aStep1.equation2': '\\(= 8 + 12 - 8 - 12\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2aStep1.equation3': '\\(= 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2aStep2': 'Étape 2: Calculer Q(-3)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2aStep2.equation': '\\(Q(-3) = (-3)^3 + 3(-3)^2 - 4(-3) - 12\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2aStep2.equation2': '\\(= -27 + 27 + 12 - 12\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2aStep2.equation3': '\\(= 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2aConclusion': 'Conclusion: Q(2) = 0 et Q(-3) = 0, donc 2 et -3 sont des racines de Q',
+    'MH.lesson_Y2Al_poly1c.activity15Part2b': 'Partie 2b: Déterminer le polynôme R tel que pour tout x réel, \\(Q(x) = (x - 2)(x + 3)R(x)\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2bStep1': 'Étape 1: D\'abord, multiplier (x - 2)(x + 3)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2bStep1.equation': '\\((x - 2)(x + 3) = x^2 + 3x - 2x - 6 = x^2 + x - 6\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2bStep2': 'Étape 2: Effectuer la division polynomiale de Q(x) par \\(x^2 + x - 6\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation': '\\(x^3 + 3x^2 - 4x - 12 \\div (x^2 + x - 6)\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation2': 'Premier terme: \\(x\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation3': 'Multiplier: \\(x(x^2 + x - 6) = x^3 + x^2 - 6x\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation4': 'Soustraire: \\((x^3 + 3x^2 - 4x) - (x^3 + x^2 - 6x) = 2x^2 + 2x\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation5': 'Descendre le terme suivant: \\(2x^2 + 2x - 12\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation6': 'Terme suivant: \\(2\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation7': 'Multiplier: \\(2(x^2 + x - 6) = 2x^2 + 2x - 12\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2bStep2.equation8': 'Soustraire: \\((2x^2 + 2x - 12) - (2x^2 + 2x - 12) = 0\\)',
+    'MH.lesson_Y2Al_poly1c.activity15Part2bConclusion': 'Conclusion: \\(R(x) = x + 2\\), donc \\(Q(x) = (x - 2)(x + 3)(x + 2)\\)',
+                'MH.lesson_Y2Al_poly1c.summary': 'Résumé',
+                'MH.lesson_Y2Al_poly1c.keyConcepts': 'Concepts Clés',
+                'MH.lesson_Y2Al_poly1c.concept1': 'Une racine d\'un polynôme est une valeur qui rend le polynôme égal à zéro',
+                'MH.lesson_Y2Al_poly1c.concept2': 'Si \\( \\alpha \\) est une racine du polynôme \\( P(x) \\), alors \\( (x - \\alpha) \\) est un facteur de \\( P(x) \\)',
+                'MH.lesson_Y2Al_poly1c.concept3': 'Un polynôme de degré \\( n \\) a au plus \\( n \\) racines réelles',
+                'MH.lesson_Y2Al_poly1c.concept4': 'La factorisation nous permet de réécrire les polynômes comme des produits de polynômes plus simples',
+                'MH.lesson_Y2Al_poly1c.concept5': 'Trouver les racines est essentiel pour résoudre les équations polynomiales',
+                'MH.lesson_Y2Al_poly1c.finalThought': 'Comprendre les racines polynomiales et la factorisation est crucial pour résoudre des équations polynomiales et analyser des fonctions polynomiales. Ces concepts forment la base des techniques algébriques plus avancées que vous rencontrerez dans votre parcours mathématique.',
+                'MH.footer.developer': 'Développeur',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Liens',
+                'MH.footer.terms': 'Conditions d\'Utilisation',
+                'MH.footer.privacy': 'Politique de Confidentialité'
+            }
+        };
+
+        // Solution toggle function for this page
         function toggleSolution(problemNumber) {
             const solution = document.getElementById(`solution${problemNumber}`);
             const button = solution.previousElementSibling;
@@ -272,16 +1211,53 @@
             if (solution.style.display === 'block') {
                 solution.style.display = 'none';
                 button.setAttribute('data-i18n', 'MH.lesson_Y2Al_poly1c.showSolution');
-                button.textContent = getTranslation('MH.lesson_Y2Al_poly1c.showSolution');
+                button.textContent = translations[MHThemeManager.getCurrentLanguage()]['MH.lesson_Y2Al_poly1c.showSolution'];
             } else {
                 solution.style.display = 'block';
                 button.setAttribute('data-i18n', 'MH.lesson_Y2Al_poly1c.hideSolution');
-                button.textContent = getTranslation('MH.lesson_Y2Al_poly1c.hideSolution');
+                button.textContent = translations[MHThemeManager.getCurrentLanguage()]['MH.lesson_Y2Al_poly1c.hideSolution'];
+                
+                // Re-render KaTeX for newly visible equations
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(solution, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\(', right: '\\)', display: false},
+                            {left: '\\[', right: '\\]', display: true}
+                        ],
+                        throwOnError: false
+                    });
+                }
             }
         }
-        
-        // Initialize when DOM is loaded
+
+        // Fix RTL math equations function
+        function fixRTLMathEquations() {
+            const equations = document.querySelectorAll('.MH-equation, .katex, .katex-display');
+            equations.forEach(eq => {
+                eq.setAttribute('dir', 'ltr');
+                eq.style.direction = 'ltr';
+                eq.style.textAlign = 'left';
+                eq.style.unicodeBidi = 'isolate';
+            });
+        }
+
+        // Initialize KaTeX auto-render
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize KaTeX auto-render
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+
             // Initialize solutions as hidden
             for (let i = 1; i <= 25; i++) {
                 const solution = document.getElementById(`solution${i}`);
@@ -289,18 +1265,46 @@
                     solution.style.display = 'none';
                 }
             }
+
+            // Fix equations after translations are applied
+            setTimeout(fixRTLMathEquations, 100);
+            
+            // Also fix equations when language changes
+            const languageOptions = document.querySelectorAll('.MH-language-option');
+            languageOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    setTimeout(fixRTLMathEquations, 300);
+                });
+            });
         });
     </script>
-    
-    <!-- noscript fallback -->
-    <noscript>
-        <style>
-            .MH-header-controls { display: none; }
-            .MH-solution { display: block; }
-        </style>
-        <div class="MH-warning">
-            JavaScript is recommended for the full experience, but content is still accessible.
-        </div>
-    </noscript>
+
+<!-- Add the service worker registration script -->
+<script>
+    // Register service worker with better error handling
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+                
+            })
+            .catch(function(error) {
+                console.log('Service Worker registration failed:', error);
+            });
+        });
+    }
+</script>
+
+<!-- Add noscript fallback -->
+<noscript>
+    <style>
+        .MH-header-controls { display: none; }
+        .MH-solution { display: block; }
+    </style>
+    <div class="MH-warning">
+        JavaScript is recommended for the full experience, but content is still accessible.
+    </div>
+</noscript>
 </body>
 </html>
