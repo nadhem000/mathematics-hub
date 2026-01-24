@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Arithmetic - Divisibility Criteria by 3 and 9</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#4A90E2" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#8E44AD" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#4A90E2">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    
+    <style>
+        /* Page-specific color palette - Blue + Purple Theme */
+        :root {
+            --primary: #4A90E2;        /* Cornflower Blue */
+            --primary-light: #7BAAF7;  /* Light Blue */
+            --primary-dark: #357ABD;   /* Darker Blue */
+            --secondary: #8E44AD;      /* Dark Purple */
+            --secondary-light: #AF7AC5; /* Light Purple */
+            --secondary-dark: #6C3483;  /* Darker Purple */
+            --accent: #E67E22;
+            --warning: #E74C3C;
+            --info: #2ECC71;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #FFFFFF;
+            --surface: #F8F9FA;
+            --border: #E9ECEF;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        [data-theme="dark"] {
+            --primary: #357ABD;
+            --primary-light: #4A90E2;
+            --primary-dark: #2C3E50;
+            --secondary: #6C3483;
+            --secondary-light: #8E44AD;
+            --secondary-dark: #4A235A;
+            --accent: #D35400;
+            --warning: #C0392B;
+            --info: #27AE60;
+            --text: #FFFFFF;
+            --text-light: #CCCCCC;
+            --background: #121212;
+            --surface: #1E1E1E;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        /* KaTeX styling */
+        .katex { 
+            font-size: 1.1em; 
+        }
+        
+        .katex-display { 
+            margin: 1em 0; 
+            text-align: center;
+        }
+        
+        .katex-display > .katex { 
+            display: inline-block;
+            text-align: center;
+        }
+
+        /* Equation styling */
+        .MH-equation {
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            margin: 0.5em 0;
+            padding: 0;
+            display: inline-block;
+            direction: ltr !important;
+            unicode-bidi: isolate;
+        }
+        
+        [dir="rtl"] .MH-equation {
+            text-align: left;
+            unicode-bidi: plaintext;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                    <!-- Notification Button -->
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+                        <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Al_arth1c.title">Arithmetic: Part 3</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y2Al_arth1c.subtitle">Divisibility Criteria by 3 and 9</h2>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_arth1c.introduction">Introduction</h2>
+            <p data-i18n="MH.lesson_Y2Al_arth1c.introText1">In this lesson, we explore divisibility criteria by 3 and 9. Unlike criteria based on the last digits, these rely on the sum of all digits of a number.</p>
+            <p data-i18n="MH.lesson_Y2Al_arth1c.introText2">These criteria are particularly useful for checking divisibility of large numbers and have interesting applications in problem-solving.</p>
+        </section>
+
+        <!-- Apply Exercises -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_arth1c.applyExercisesTitle">Apply Exercises</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1c.applyInstructionsTitle">Instructions</h3>
+                <p data-i18n="MH.lesson_Y2Al_arth1c.applyInstructionsText">Solve these exercises by applying the divisibility concepts for 3 and 9.</p>
+            </div>
+            
+            <!-- Activity 1 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1c.activity1Title">Activity 1: Milk, Oil, and Petroleum</h3>
+                <p data-i18n="MH.lesson_Y2Al_arth1c.activity1Question">A farmer goes to the market with his van to buy milk, oil, and petroleum. He has nine containers with capacities (in liters): 3, 6, 10, 11, 15, 17, 23, 25, and 30. He returns with twice as much milk as oil and three times as much petroleum as milk. All containers are completely filled except one which is empty. Which container is empty? Indicate the contents of each container.</p>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1c.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                <div class="MH-solution" id="solution1">
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution1">Let x = liters of oil.</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution.equation1">Then milk = 2x, petroleum = 3 × milk = 3 × 2x = 6x</div>
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution2">Total liquid = oil + milk + petroleum = x + 2x + 6x = 9x</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution3">The total capacity of all containers = 3 + 6 + 10 + 11 + 15 + 17 + 23 + 25 + 30 = 140 liters</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution4">Since one container is empty, total liquid = 140 - (capacity of empty container)</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution5">Total liquid must be divisible by 9 (since 9x).</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution6">Check each container as the empty one:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution.equation2">140 - 3 = 137 (not divisible by 9)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution.equation3">140 - 6 = 134 (not divisible by 9)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution.equation4">140 - 10 = 130 (not divisible by 9)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution.equation5">140 - 11 = 129 (not divisible by 9)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution.equation6">140 - 15 = 125 (not divisible by 9)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution.equation7">140 - 17 = 123 (not divisible by 9)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution.equation8">140 - 23 = 117 (divisible by 9: 117 ÷ 9 = 13)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution.equation9">140 - 25 = 115 (not divisible by 9)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution.equation10">140 - 30 = 110 (not divisible by 9)</div>
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution7">Only when container 23 is empty, total liquid = 117, which is divisible by 9.</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution.equation11">117 ÷ 9 = 13, so x = 13 (oil)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution.equation12">Oil = 13L, Milk = 26L, Petroleum = 78L</div>
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution8">We need to distribute 13L oil, 26L milk, and 78L petroleum among containers 3, 6, 10, 11, 15, 17, 25, 30 (total 117L).</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution9">Possible distribution:</p>
+                    <ul>
+                        <li data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution.item1">Oil (13L): 3 + 10</li>
+                        <li data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution.item2">Milk (26L): 6 + 11 + 3 + 6 (but 3 and 6 already used for oil) → 15 + 11</li>
+                        <li data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution.item3">Petroleum (78L): 30 + 25 + 17 + 6</li>
+                    </ul>
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution10">Actually, let's find a combination:</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution11">Oil (13): 3 + 10</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution12">Milk (26): 11 + 15</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution13">Petroleum (78): 30 + 25 + 17 + 6</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.activity1Solution14">All containers used except 23L (empty).</p>
+                </div>
+            </div>
+            
+            <!-- Activity 2 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1c.activity2Title">Activity 2: Remainders by 3 and 9</h3>
+                <p data-i18n="MH.lesson_Y2Al_arth1c.activity2Question">Determine the remainder of Euclidean division by 3 and then by 9 for each of the following numbers: 86, 195, 206, 1359, 7695, 11111, 2851961.</p>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1c.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                <div class="MH-solution" id="solution2">
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.activity2Solution1">Use the sum of digits method:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.activity2Solution.equation1">86: 8+6=14 → 14÷3=4 remainder 2; 14÷9=1 remainder 5</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.activity2Solution.equation2">195: 1+9+5=15 → 15÷3=5 remainder 0; 15÷9=1 remainder 6</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.activity2Solution.equation3">206: 2+0+6=8 → 8÷3=2 remainder 2; 8÷9=0 remainder 8</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.activity2Solution.equation4">1359: 1+3+5+9=18 → 18÷3=6 remainder 0; 18÷9=2 remainder 0</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.activity2Solution.equation5">7695: 7+6+9+5=27 → 27÷3=9 remainder 0; 27÷9=3 remainder 0</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.activity2Solution.equation6">11111: 1+1+1+1+1=5 → 5÷3=1 remainder 2; 5÷9=0 remainder 5</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.activity2Solution.equation7">2851961: 2+8+5+1+9+6+1=32 → 32÷3=10 remainder 2; 32÷9=3 remainder 5</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_arth1c.summaryTitle">Summary: Divisibility by 3 and 9</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1c.divisibilityBy3And9Title">Divisibility by 3 and 9</h3>
+                <p data-i18n="MH.lesson_Y2Al_arth1c.divisibilityBy3And9Text1">• An integer is divisible by 3 (respectively by 9) if and only if the sum of its digits is divisible by 3 (respectively by 9).</p>
+                <p data-i18n="MH.lesson_Y2Al_arth1c.divisibilityBy3And9Text2">• The remainder of the Euclidean division of an integer by 3 (respectively by 9) is equal to the remainder of the Euclidean division of the sum of its digits by 3 (respectively by 9).</p>
+                
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.example1">Example: 123 is divisible by 3 because 1+2+3=6 is divisible by 3.</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.example2">Example: 234 is divisible by 9 because 2+3+4=9 is divisible by 9.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Master Exercises -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_arth1c.masterExercisesTitle">Master Exercises</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1c.masterInstructionsTitle">Challenge Level</h3>
+                <p data-i18n="MH.lesson_Y2Al_arth1c.masterInstructionsText">These exercises require deeper understanding and application of divisibility criteria by 3 and 9.</p>
+            </div>
+            
+            <!-- Exercise 1 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1c.exercise1Title">Exercise 1: Divisibility Check</h3>
+                <p data-i18n="MH.lesson_Y2Al_arth1c.exercise1">Without performing division, determine which of the following numbers are divisible by 3 and by 9: 123, 456, 789, 111111, 246810.</p>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1c.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                <div class="MH-solution" id="solution3">
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.exercise1Solution">Check sum of digits:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.exercise1Solution.equation1">123: 1+2+3=6 → divisible by 3 ✓, not by 9</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.exercise1Solution.equation2">456: 4+5+6=15 → divisible by 3 ✓, not by 9</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.exercise1Solution.equation3">789: 7+8+9=24 → divisible by 3 ✓, not by 9</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.exercise1Solution.equation4">111111: 1+1+1+1+1+1=6 → divisible by 3 ✓, not by 9</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.exercise1Solution.equation5">246810: 2+4+6+8+1+0=21 → divisible by 3 ✓, not by 9</div>
+                </div>
+            </div>
+            
+            <!-- Exercise 2 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1c.exercise2Title">Exercise 2: Remainder Calculation</h3>
+                <p data-i18n="MH.lesson_Y2Al_arth1c.exercise2">Find the remainder when 123456 is divided by 3 and by 9.</p>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1c.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+                <div class="MH-solution" id="solution4">
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.exercise2Solution">Sum of digits: 1+2+3+4+5+6=21</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.exercise2Solution.equation1">21 ÷ 3 = 7 remainder 0 → remainder when divided by 3 is 0</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.exercise2Solution.equation2">21 ÷ 9 = 2 remainder 3 → remainder when divided by 9 is 3</div>
+                </div>
+            </div>
+            
+            <!-- Exercise 3 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1c.exercise3Title">Exercise 3: Smallest Number to Add</h3>
+                <p data-i18n="MH.lesson_Y2Al_arth1c.exercise3">Find the smallest natural number that must be added to 1234 to make it divisible by 3 and by 9.</p>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1c.showSolution" onclick="toggleSolution(5)">Show Solution</button>
+                <div class="MH-solution" id="solution5">
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.exercise3Solution1">Sum of digits of 1234: 1+2+3+4=10</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.exercise3Solution2">For divisibility by 3: remainder of 10÷3=1, need to add 2 (so sum becomes 12)</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.exercise3Solution3">For divisibility by 9: remainder of 10÷9=1, need to add 8 (so sum becomes 18)</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.exercise3Solution4">The smallest number that satisfies both is the least common multiple consideration, but we need a number that when added to 1234 gives a number divisible by both 3 and 9.</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.exercise3Solution5">Actually, if a number is divisible by 9, it's automatically divisible by 3.</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.exercise3Solution6">So we need to add the smallest number to make it divisible by 9: that's 8.</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.exercise3Solution.equation1">1234 + 8 = 1242, sum of digits = 1+2+4+2=9 ✓</div>
+                </div>
+            </div>
+            
+            <!-- Exercise 4 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1c.exercise4Title">Exercise 4: Proof</h3>
+                <p data-i18n="MH.lesson_Y2Al_arth1c.exercise4">Prove that the difference between a number and the sum of its digits is always divisible by 9.</p>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1c.showSolution" onclick="toggleSolution(6)">Show Solution</button>
+                <div class="MH-solution" id="solution6">
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.exercise4Solution1">Let n be a number with digits \(a_k a_{k-1} ... a_1 a_0\).</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1c.exercise4Solution.equation1">\(n = a_k \times 10^k + a_{k-1} \times 10^{k-1} + ... + a_1 \times 10 + a_0\)</div>
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.exercise4Solution2">Sum of digits S = \(a_k + a_{k-1} + ... + a_1 + a_0\)</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.exercise4Solution3">Now, \(10^m \equiv 1 \pmod{9}\) for any m ≥ 0 because \(10 = 9 + 1\).</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.exercise4Solution4">Therefore, \(n \equiv a_k + a_{k-1} + ... + a_1 + a_0 \equiv S \pmod{9}\)</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1c.exercise4Solution5">Thus, \(n - S \equiv 0 \pmod{9}\), so n - S is divisible by 9.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Conclusion -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_arth1c.conclusionTitle">Conclusion</h2>
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1c.keyConceptsTitle">Key Concepts Mastered</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Al_arth1c.concept1">Divisibility criteria for 3 and 9 based on sum of digits</li>
+                    <li data-i18n="MH.lesson_Y2Al_arth1c.concept2">Finding remainders using digit sums</li>
+                    <li data-i18n="MH.lesson_Y2Al_arth1c.concept3">Application to real-world problems</li>
+                    <li data-i18n="MH.lesson_Y2Al_arth1c.concept4">Mathematical justification of the criteria</li>
+                    <li data-i18n="MH.lesson_Y2Al_arth1c.concept5">Problem-solving with divisibility by 3 and 9</li>
+                </ul>
+            </div>
+            <p data-i18n="MH.lesson_Y2Al_arth1c.finalThought">Divisibility criteria by 3 and 9 are powerful tools that allow quick checks without division. They demonstrate the beautiful connection between a number's digits and its divisibility properties.</p>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+    
+    <script>
+        // ARITHMETIC LESSON TRANSLATIONS
+        const arithmeticTranslations = {
+            'en': {
+                // General translations
+                'MH.general.homeTooltip': 'Go to Homepage',
+                'MH.general.install': 'Install App',
+                'MH.general.installSuccess': 'Mathematics Hub installed successfully!',
+                'MH.general.enableNotifications': 'Enable Notifications',
+                'MH.general.notificationEnabled': 'Notifications enabled! You will now receive updates.',
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Theme',
+                'MH.general.language': 'Language',
+                
+                // Arithmetic lesson specific translations
+                'MH.lesson_Y2Al_arth1c.title': 'Arithmetic: Part 3',
+                'MH.lesson_Y2Al_arth1c.subtitle': 'Divisibility Criteria by 3 and 9',
+                'MH.lesson_Y2Al_arth1c.introduction': 'Introduction',
+                'MH.lesson_Y2Al_arth1c.introText1': 'In this lesson, we explore divisibility criteria by 3 and 9. Unlike criteria based on the last digits, these rely on the sum of all digits of a number.',
+                'MH.lesson_Y2Al_arth1c.introText2': 'These criteria are particularly useful for checking divisibility of large numbers and have interesting applications in problem-solving.',
+                
+                // Apply Exercises
+                'MH.lesson_Y2Al_arth1c.applyExercisesTitle': 'Apply Exercises',
+                'MH.lesson_Y2Al_arth1c.applyInstructionsTitle': 'Instructions',
+                'MH.lesson_Y2Al_arth1c.applyInstructionsText': 'Solve these exercises by applying the divisibility concepts for 3 and 9.',
+                
+                // Activity 1
+                'MH.lesson_Y2Al_arth1c.activity1Title': 'Activity 1: Milk, Oil, and Petroleum',
+                'MH.lesson_Y2Al_arth1c.activity1Question': 'A farmer goes to the market with his van to buy milk, oil, and petroleum. He has nine containers with capacities (in liters): 3, 6, 10, 11, 15, 17, 23, 25, and 30. He returns with twice as much milk as oil and three times as much petroleum as milk. All containers are completely filled except one which is empty. Which container is empty? Indicate the contents of each container.',
+                'MH.lesson_Y2Al_arth1c.activity1Solution1': 'Let x = liters of oil.',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation1': 'Then milk = 2x, petroleum = 3 × milk = 3 × 2x = 6x',
+                'MH.lesson_Y2Al_arth1c.activity1Solution2': 'Total liquid = oil + milk + petroleum = x + 2x + 6x = 9x',
+                'MH.lesson_Y2Al_arth1c.activity1Solution3': 'The total capacity of all containers = 3 + 6 + 10 + 11 + 15 + 17 + 23 + 25 + 30 = 140 liters',
+                'MH.lesson_Y2Al_arth1c.activity1Solution4': 'Since one container is empty, total liquid = 140 - (capacity of empty container)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution5': 'Total liquid must be divisible by 9 (since 9x).',
+                'MH.lesson_Y2Al_arth1c.activity1Solution6': 'Check each container as the empty one:',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation2': '140 - 3 = 137 (not divisible by 9)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation3': '140 - 6 = 134 (not divisible by 9)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation4': '140 - 10 = 130 (not divisible by 9)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation5': '140 - 11 = 129 (not divisible by 9)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation6': '140 - 15 = 125 (not divisible by 9)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation7': '140 - 17 = 123 (not divisible by 9)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation8': '140 - 23 = 117 (divisible by 9: 117 ÷ 9 = 13)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation9': '140 - 25 = 115 (not divisible by 9)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation10': '140 - 30 = 110 (not divisible by 9)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution7': 'Only when container 23 is empty, total liquid = 117, which is divisible by 9.',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation11': '117 ÷ 9 = 13, so x = 13 (oil)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation12': 'Oil = 13L, Milk = 26L, Petroleum = 78L',
+                'MH.lesson_Y2Al_arth1c.activity1Solution8': 'We need to distribute 13L oil, 26L milk, and 78L petroleum among containers 3, 6, 10, 11, 15, 17, 25, 30 (total 117L).',
+                'MH.lesson_Y2Al_arth1c.activity1Solution9': 'Possible distribution:',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.item1': 'Oil (13L): 3 + 10',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.item2': 'Milk (26L): 15 + 11',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.item3': 'Petroleum (78L): 30 + 25 + 17 + 6',
+                'MH.lesson_Y2Al_arth1c.activity1Solution10': 'Actually, let\'s find a combination:',
+                'MH.lesson_Y2Al_arth1c.activity1Solution11': 'Oil (13): 3 + 10',
+                'MH.lesson_Y2Al_arth1c.activity1Solution12': 'Milk (26): 11 + 15',
+                'MH.lesson_Y2Al_arth1c.activity1Solution13': 'Petroleum (78): 30 + 25 + 17 + 6',
+                'MH.lesson_Y2Al_arth1c.activity1Solution14': 'All containers used except 23L (empty).',
+                
+                // Activity 2
+                'MH.lesson_Y2Al_arth1c.activity2Title': 'Activity 2: Remainders by 3 and 9',
+                'MH.lesson_Y2Al_arth1c.activity2Question': 'Determine the remainder of Euclidean division by 3 and then by 9 for each of the following numbers: 86, 195, 206, 1359, 7695, 11111, 2851961.',
+                'MH.lesson_Y2Al_arth1c.activity2Solution1': 'Use the sum of digits method:',
+                'MH.lesson_Y2Al_arth1c.activity2Solution.equation1': '86: 8+6=14 → 14÷3=4 remainder 2; 14÷9=1 remainder 5',
+                'MH.lesson_Y2Al_arth1c.activity2Solution.equation2': '195: 1+9+5=15 → 15÷3=5 remainder 0; 15÷9=1 remainder 6',
+                'MH.lesson_Y2Al_arth1c.activity2Solution.equation3': '206: 2+0+6=8 → 8÷3=2 remainder 2; 8÷9=0 remainder 8',
+                'MH.lesson_Y2Al_arth1c.activity2Solution.equation4': '1359: 1+3+5+9=18 → 18÷3=6 remainder 0; 18÷9=2 remainder 0',
+                'MH.lesson_Y2Al_arth1c.activity2Solution.equation5': '7695: 7+6+9+5=27 → 27÷3=9 remainder 0; 27÷9=3 remainder 0',
+                'MH.lesson_Y2Al_arth1c.activity2Solution.equation6': '11111: 1+1+1+1+1=5 → 5÷3=1 remainder 2; 5÷9=0 remainder 5',
+                'MH.lesson_Y2Al_arth1c.activity2Solution.equation7': '2851961: 2+8+5+1+9+6+1=32 → 32÷3=10 remainder 2; 32÷9=3 remainder 5',
+                
+                // Summary
+                'MH.lesson_Y2Al_arth1c.summaryTitle': 'Summary: Divisibility by 3 and 9',
+                'MH.lesson_Y2Al_arth1c.divisibilityBy3And9Title': 'Divisibility by 3 and 9',
+                'MH.lesson_Y2Al_arth1c.divisibilityBy3And9Text1': '• An integer is divisible by 3 (respectively by 9) if and only if the sum of its digits is divisible by 3 (respectively by 9).',
+                'MH.lesson_Y2Al_arth1c.divisibilityBy3And9Text2': '• The remainder of the Euclidean division of an integer by 3 (respectively by 9) is equal to the remainder of the Euclidean division of the sum of its digits by 3 (respectively by 9).',
+                'MH.lesson_Y2Al_arth1c.example1': 'Example: 123 is divisible by 3 because 1+2+3=6 is divisible by 3.',
+                'MH.lesson_Y2Al_arth1c.example2': 'Example: 234 is divisible by 9 because 2+3+4=9 is divisible by 9.',
+                
+                // Master Exercises
+                'MH.lesson_Y2Al_arth1c.masterExercisesTitle': 'Master Exercises',
+                'MH.lesson_Y2Al_arth1c.masterInstructionsTitle': 'Challenge Level',
+                'MH.lesson_Y2Al_arth1c.masterInstructionsText': 'These exercises require deeper understanding and application of divisibility criteria by 3 and 9.',
+                
+                // Exercise 1
+                'MH.lesson_Y2Al_arth1c.exercise1Title': 'Exercise 1: Divisibility Check',
+                'MH.lesson_Y2Al_arth1c.exercise1': 'Without performing division, determine which of the following numbers are divisible by 3 and by 9: 123, 456, 789, 111111, 246810.',
+                'MH.lesson_Y2Al_arth1c.exercise1Solution': 'Check sum of digits:',
+                'MH.lesson_Y2Al_arth1c.exercise1Solution.equation1': '123: 1+2+3=6 → divisible by 3 ✓, not by 9',
+                'MH.lesson_Y2Al_arth1c.exercise1Solution.equation2': '456: 4+5+6=15 → divisible by 3 ✓, not by 9',
+                'MH.lesson_Y2Al_arth1c.exercise1Solution.equation3': '789: 7+8+9=24 → divisible by 3 ✓, not by 9',
+                'MH.lesson_Y2Al_arth1c.exercise1Solution.equation4': '111111: 1+1+1+1+1+1=6 → divisible by 3 ✓, not by 9',
+                'MH.lesson_Y2Al_arth1c.exercise1Solution.equation5': '246810: 2+4+6+8+1+0=21 → divisible by 3 ✓, not by 9',
+                
+                // Exercise 2
+                'MH.lesson_Y2Al_arth1c.exercise2Title': 'Exercise 2: Remainder Calculation',
+                'MH.lesson_Y2Al_arth1c.exercise2': 'Find the remainder when 123456 is divided by 3 and by 9.',
+                'MH.lesson_Y2Al_arth1c.exercise2Solution': 'Sum of digits: 1+2+3+4+5+6=21',
+                'MH.lesson_Y2Al_arth1c.exercise2Solution.equation1': '21 ÷ 3 = 7 remainder 0 → remainder when divided by 3 is 0',
+                'MH.lesson_Y2Al_arth1c.exercise2Solution.equation2': '21 ÷ 9 = 2 remainder 3 → remainder when divided by 9 is 3',
+                
+                // Exercise 3
+                'MH.lesson_Y2Al_arth1c.exercise3Title': 'Exercise 3: Smallest Number to Add',
+                'MH.lesson_Y2Al_arth1c.exercise3': 'Find the smallest natural number that must be added to 1234 to make it divisible by 3 and by 9.',
+                'MH.lesson_Y2Al_arth1c.exercise3Solution1': 'Sum of digits of 1234: 1+2+3+4=10',
+                'MH.lesson_Y2Al_arth1c.exercise3Solution2': 'For divisibility by 3: remainder of 10÷3=1, need to add 2 (so sum becomes 12)',
+                'MH.lesson_Y2Al_arth1c.exercise3Solution3': 'For divisibility by 9: remainder of 10÷9=1, need to add 8 (so sum becomes 18)',
+                'MH.lesson_Y2Al_arth1c.exercise3Solution4': 'The smallest number that satisfies both is the least common multiple consideration, but we need a number that when added to 1234 gives a number divisible by both 3 and 9.',
+                'MH.lesson_Y2Al_arth1c.exercise3Solution5': 'Actually, if a number is divisible by 9, it\'s automatically divisible by 3.',
+                'MH.lesson_Y2Al_arth1c.exercise3Solution6': 'So we need to add the smallest number to make it divisible by 9: that\'s 8.',
+                'MH.lesson_Y2Al_arth1c.exercise3Solution.equation1': '1234 + 8 = 1242, sum of digits = 1+2+4+2=9 ✓',
+                
+                // Exercise 4
+                'MH.lesson_Y2Al_arth1c.exercise4Title': 'Exercise 4: Proof',
+    'MH.lesson_Y2Al_arth1c.exercise4': 'Prove that the difference between a number and the sum of its digits is always divisible by 9.',
+    'MH.lesson_Y2Al_arth1c.exercise4Solution1': 'Let n be a number with digits $a_k a_{k-1} ... a_1 a_0$.',
+    'MH.lesson_Y2Al_arth1c.exercise4Solution.equation1': '$n = a_k \\times 10^k + a_{k-1} \\times 10^{k-1} + ... + a_1 \\times 10 + a_0$',
+    'MH.lesson_Y2Al_arth1c.exercise4Solution2': 'Sum of digits S = $a_k + a_{k-1} + ... + a_1 + a_0$',
+    'MH.lesson_Y2Al_arth1c.exercise4Solution3': 'Now, $10^m \\equiv 1 \\pmod{9}$ for any m ≥ 0 because $10 = 9 + 1$.',
+    'MH.lesson_Y2Al_arth1c.exercise4Solution4': 'Therefore, $n \\equiv a_k + a_{k-1} + ... + a_1 + a_0 \\equiv S \\pmod{9}$',
+    'MH.lesson_Y2Al_arth1c.exercise4Solution5': 'Thus, $n - S \\equiv 0 \\pmod{9}$, so n - S is divisible by 9.',
+                
+                // Conclusion
+                'MH.lesson_Y2Al_arth1c.conclusionTitle': 'Conclusion',
+                'MH.lesson_Y2Al_arth1c.keyConceptsTitle': 'Key Concepts Mastered',
+                'MH.lesson_Y2Al_arth1c.concept1': 'Divisibility criteria for 3 and 9 based on sum of digits',
+                'MH.lesson_Y2Al_arth1c.concept2': 'Finding remainders using digit sums',
+                'MH.lesson_Y2Al_arth1c.concept3': 'Application to real-world problems',
+                'MH.lesson_Y2Al_arth1c.concept4': 'Mathematical justification of the criteria',
+                'MH.lesson_Y2Al_arth1c.concept5': 'Problem-solving with divisibility by 3 and 9',
+                'MH.lesson_Y2Al_arth1c.finalThought': 'Divisibility criteria by 3 and 9 are powerful tools that allow quick checks without division. They demonstrate the beautiful connection between a number\'s digits and its divisibility properties.',
+                
+                // Solution buttons
+                'MH.lesson_Y2Al_arth1c.showSolution': 'Show Solution',
+                'MH.lesson_Y2Al_arth1c.hideSolution': 'Hide Solution',
+                
+                // Footer
+                'MH.footer.developer': 'Developer',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Links',
+                'MH.footer.terms': 'Terms of Use',
+                'MH.footer.privacy': 'Privacy Policy'
+            },
+            'ar': {
+                'MH.lesson_Y2Al_arth1c.title': 'الحساب: الجزء 3',
+                'MH.lesson_Y2Al_arth1c.subtitle': 'معايير القسمة على 3 و 9',
+                'MH.lesson_Y2Al_arth1c.introduction': 'مقدمة',
+                'MH.lesson_Y2Al_arth1c.introText1': 'في هذا الدرس، نستكشف معايير القسمة على 3 و 9. على عكس المعايير القائمة على الأرقام الأخيرة، تعتمد هذه المعايير على مجموع جميع أرقام العدد.',
+                'MH.lesson_Y2Al_arth1c.introText2': 'هذه المعايير مفيدة بشكل خاص للتحقق من قابلية القسمة للأعداد الكبيرة ولها تطبيقات مثيرة في حل المشكلات.',
+                
+                'MH.lesson_Y2Al_arth1c.applyExercisesTitle': 'تمارين التطبيق',
+                'MH.lesson_Y2Al_arth1c.applyInstructionsTitle': 'التعليمات',
+                'MH.lesson_Y2Al_arth1c.applyInstructionsText': 'حل هذه التمارين بتطبيق مفاهيم القسمة على 3 و 9.',
+                
+                'MH.lesson_Y2Al_arth1c.activity1Title': 'النشاط 1: الحليب والزيت والنفط',
+                'MH.lesson_Y2Al_arth1c.activity1Question': 'يذهب مزارع إلى السوق بشاحنته لشراء الحليب والزيت والنفط. لديه تسعة حاويات بسعات (باللترات): 3، 6، 10، 11، 15، 17، 23، 25، و30. يعود بضعف كمية الحليب من الزيت وثلاثة أضعاف كمية النفط من الحليب. جميع الحاويات ممتلئة تمامًا باستثناء واحدة فارغة. أي حاوية فارغة؟ حدد محتويات كل حاوية.',
+                'MH.lesson_Y2Al_arth1c.activity1Solution1': 'ليكن س = لترات الزيت.',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation1': 'إذن الحليب = 2س، النفط = 3 × الحليب = 3 × 2س = 6س',
+                'MH.lesson_Y2Al_arth1c.activity1Solution2': 'إجمالي السائل = زيت + حليب + نفط = س + 2س + 6س = 9س',
+                'MH.lesson_Y2Al_arth1c.activity1Solution3': 'السعة الإجمالية لجميع الحاويات = 3 + 6 + 10 + 11 + 15 + 17 + 23 + 25 + 30 = 140 لتر',
+                'MH.lesson_Y2Al_arth1c.activity1Solution4': 'بما أن حاوية واحدة فارغة، إجمالي السائل = 140 - (سعة الحاوية الفارغة)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution5': 'يجب أن يكون إجمالي السائل قابلاً للقسمة على 9 (بما أن 9س).',
+                'MH.lesson_Y2Al_arth1c.activity1Solution6': 'تحقق من كل حاوية كحاوية فارغة:',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation2': '140 - 3 = 137 (غير قابل للقسمة على 9)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation3': '140 - 6 = 134 (غير قابل للقسمة على 9)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation4': '140 - 10 = 130 (غير قابل للقسمة على 9)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation5': '140 - 11 = 129 (غير قابل للقسمة على 9)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation6': '140 - 15 = 125 (غير قابل للقسمة على 9)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation7': '140 - 17 = 123 (غير قابل للقسمة على 9)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation8': '140 - 23 = 117 (قابل للقسمة على 9: 117 ÷ 9 = 13)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation9': '140 - 25 = 115 (غير قابل للقسمة على 9)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation10': '140 - 30 = 110 (غير قابل للقسمة على 9)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution7': 'فقط عندما تكون الحاوية 23 فارغة، إجمالي السائل = 117، وهو قابل للقسمة على 9.',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation11': '117 ÷ 9 = 13، إذن س = 13 (زيت)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation12': 'الزيت = 13 لتر، الحليب = 26 لتر، النفط = 78 لتر',
+                'MH.lesson_Y2Al_arth1c.activity1Solution8': 'نحتاج إلى توزيع 13 لتر زيت، 26 لتر حليب، و78 لتر نفط على الحاويات 3، 6، 10، 11، 15، 17، 25، 30 (إجمالي 117 لتر).',
+                'MH.lesson_Y2Al_arth1c.activity1Solution9': 'توزيع ممكن:',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.item1': 'الزيت (13 لتر): 3 + 10',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.item2': 'الحليب (26 لتر): 11 + 15',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.item3': 'النفط (78 لتر): 30 + 25 + 17 + 6',
+                'MH.lesson_Y2Al_arth1c.activity1Solution10': 'في الواقع، لنجد تركيبة:',
+                'MH.lesson_Y2Al_arth1c.activity1Solution11': 'الزيت (13): 3 + 10',
+                'MH.lesson_Y2Al_arth1c.activity1Solution12': 'الحليب (26): 11 + 15',
+                'MH.lesson_Y2Al_arth1c.activity1Solution13': 'النفط (78): 30 + 25 + 17 + 6',
+                'MH.lesson_Y2Al_arth1c.activity1Solution14': 'جميع الحاويات مستخدمة باستثناء 23 لتر (فارغة).',
+                
+                'MH.lesson_Y2Al_arth1c.activity2Title': 'النشاط 2: بواقي القسمة على 3 و 9',
+                'MH.lesson_Y2Al_arth1c.activity2Question': 'حدد باقي القسمة الإقليدية على 3 ثم على 9 لكل من الأعداد التالية: 86، 195، 206، 1359، 7695، 11111، 2851961.',
+                'MH.lesson_Y2Al_arth1c.activity2Solution1': 'استخدم طريقة مجموع الأرقام:',
+                'MH.lesson_Y2Al_arth1c.activity2Solution.equation1': '86: 8+6=14 → 14÷3=4 باقي 2؛ 14÷9=1 باقي 5',
+                'MH.lesson_Y2Al_arth1c.activity2Solution.equation2': '195: 1+9+5=15 → 15÷3=5 باقي 0؛ 15÷9=1 باقي 6',
+                'MH.lesson_Y2Al_arth1c.activity2Solution.equation3': '206: 2+0+6=8 → 8÷3=2 باقي 2؛ 8÷9=0 باقي 8',
+                'MH.lesson_Y2Al_arth1c.activity2Solution.equation4': '1359: 1+3+5+9=18 → 18÷3=6 باقي 0؛ 18÷9=2 باقي 0',
+                'MH.lesson_Y2Al_arth1c.activity2Solution.equation5': '7695: 7+6+9+5=27 → 27÷3=9 باقي 0؛ 27÷9=3 باقي 0',
+                'MH.lesson_Y2Al_arth1c.activity2Solution.equation6': '11111: 1+1+1+1+1=5 → 5÷3=1 باقي 2؛ 5÷9=0 باقي 5',
+                'MH.lesson_Y2Al_arth1c.activity2Solution.equation7': '2851961: 2+8+5+1+9+6+1=32 → 32÷3=10 باقي 2؛ 32÷9=3 باقي 5',
+                
+                'MH.lesson_Y2Al_arth1c.summaryTitle': 'ملخص: القسمة على 3 و 9',
+                'MH.lesson_Y2Al_arth1c.divisibilityBy3And9Title': 'القسمة على 3 و 9',
+                'MH.lesson_Y2Al_arth1c.divisibilityBy3And9Text1': '• عدد صحيح يقبل القسمة على 3 (على التوالي على 9) إذا وفقط إذا كان مجموع أرقامه يقبل القسمة على 3 (على التوالي على 9).',
+                'MH.lesson_Y2Al_arth1c.divisibilityBy3And9Text2': '• باقي القسمة الإقليدية لعدد صحيح على 3 (على التوالي على 9) يساوي باقي القسمة الإقليدية لمجموع أرقامه على 3 (على التوالي على 9).',
+                'MH.lesson_Y2Al_arth1c.example1': 'مثال: 123 يقبل القسمة على 3 لأن 1+2+3=6 يقبل القسمة على 3.',
+                'MH.lesson_Y2Al_arth1c.example2': 'مثال: 234 يقبل القسمة على 9 لأن 2+3+4=9 يقبل القسمة على 9.',
+                
+                'MH.lesson_Y2Al_arth1c.masterExercisesTitle': 'تمارين الإتقان',
+                'MH.lesson_Y2Al_arth1c.masterInstructionsTitle': 'مستوى التحدي',
+                'MH.lesson_Y2Al_arth1c.masterInstructionsText': 'تتطلب هذه التمارين فهمًا أعمق وتطبيقًا لمعايير القسمة على 3 و 9.',
+                
+                'MH.lesson_Y2Al_arth1c.exercise1Title': 'التمرين 1: التحقق من القسمة',
+                'MH.lesson_Y2Al_arth1c.exercise1': 'بدون إجراء القسمة، حدد أي من الأعداد التالية يقبل القسمة على 3 وعلى 9: 123، 456، 789، 111111، 246810.',
+                'MH.lesson_Y2Al_arth1c.exercise1Solution': 'تحقق من مجموع الأرقام:',
+                'MH.lesson_Y2Al_arth1c.exercise1Solution.equation1': '123: 1+2+3=6 → يقبل القسمة على 3 ✓، ليس على 9',
+                'MH.lesson_Y2Al_arth1c.exercise1Solution.equation2': '456: 4+5+6=15 → يقبل القسمة على 3 ✓، ليس على 9',
+                'MH.lesson_Y2Al_arth1c.exercise1Solution.equation3': '789: 7+8+9=24 → يقبل القسمة على 3 ✓، ليس على 9',
+                'MH.lesson_Y2Al_arth1c.exercise1Solution.equation4': '111111: 1+1+1+1+1+1=6 → يقبل القسمة على 3 ✓، ليس على 9',
+                'MH.lesson_Y2Al_arth1c.exercise1Solution.equation5': '246810: 2+4+6+8+1+0=21 → يقبل القسمة على 3 ✓، ليس على 9',
+                
+                'MH.lesson_Y2Al_arth1c.exercise2Title': 'التمرين 2: حساب الباقي',
+                'MH.lesson_Y2Al_arth1c.exercise2': 'أوجد الباقي عند قسمة 123456 على 3 وعلى 9.',
+                'MH.lesson_Y2Al_arth1c.exercise2Solution': 'مجموع الأرقام: 1+2+3+4+5+6=21',
+                'MH.lesson_Y2Al_arth1c.exercise2Solution.equation1': '21 ÷ 3 = 7 باقي 0 → الباقي عند القسمة على 3 هو 0',
+                'MH.lesson_Y2Al_arth1c.exercise2Solution.equation2': '21 ÷ 9 = 2 باقي 3 → الباقي عند القسمة على 9 هو 3',
+                
+                'MH.lesson_Y2Al_arth1c.exercise3Title': 'التمرين 3: أصغر عدد للإضافة',
+                'MH.lesson_Y2Al_arth1c.exercise3': 'أوجد أصغر عدد طبيعي يجب إضافته إلى 1234 لجعله قابلاً للقسمة على 3 وعلى 9.',
+                'MH.lesson_Y2Al_arth1c.exercise3Solution1': 'مجموع أرقام 1234: 1+2+3+4=10',
+                'MH.lesson_Y2Al_arth1c.exercise3Solution2': 'للانقسام على 3: باقي 10÷3=1، يجب إضافة 2 (ليصبح المجموع 12)',
+                'MH.lesson_Y2Al_arth1c.exercise3Solution3': 'للانقسام على 9: باقي 10÷9=1، يجب إضافة 8 (ليصبح المجموع 18)',
+                'MH.lesson_Y2Al_arth1c.exercise3Solution4': 'أصغر عدد يحقق الاثنين هو اعتبار المضاعف المشترك الأصغر، لكننا نحتاج إلى عدد عند إضافته إلى 1234 يعطي عددًا يقبل القسمة على كلا 3 و 9.',
+                'MH.lesson_Y2Al_arth1c.exercise3Solution5': 'في الواقع، إذا كان الرقم يقبل القسمة على 9، فهو تلقائيًا يقبل القسمة على 3.',
+                'MH.lesson_Y2Al_arth1c.exercise3Solution6': 'لذا نحتاج إلى إضافة أصغر عدد لجعله قابلاً للقسمة على 9: وهذا هو 8.',
+                'MH.lesson_Y2Al_arth1c.exercise3Solution.equation1': '1234 + 8 = 1242، مجموع الأرقام = 1+2+4+2=9 ✓',
+                
+                'MH.lesson_Y2Al_arth1c.exercise4Title': 'التمرين 4: برهان',
+    'MH.lesson_Y2Al_arth1c.exercise4': 'أثبت أن الفرق بين عدد ومجموع أرقامه دائماً يقبل القسمة على 9.',
+    'MH.lesson_Y2Al_arth1c.exercise4Solution1': 'ليكن ن عددا بأرقام $a_k a_{k-1} ... a_1 a_0$.',
+    'MH.lesson_Y2Al_arth1c.exercise4Solution.equation1': '$n = a_k \\times 10^k + a_{k-1} \\times 10^{k-1} + ... + a_1 \\times 10 + a_0$',
+    'MH.lesson_Y2Al_arth1c.exercise4Solution2': 'مجموع الأرقام S = $a_k + a_{k-1} + ... + a_1 + a_0$',
+    'MH.lesson_Y2Al_arth1c.exercise4Solution3': 'الآن، $10^m \\equiv 1 \\pmod{9}$ لأي m ≥ 0 لأن $10 = 9 + 1$.',
+    'MH.lesson_Y2Al_arth1c.exercise4Solution4': 'لذلك، $n \\equiv a_k + a_{k-1} + ... + a_1 + a_0 \\equiv S \\pmod{9}$',
+    'MH.lesson_Y2Al_arth1c.exercise4Solution5': 'وهكذا، $n - S \\equiv 0 \\pmod{9}$، لذا فإن n - S يقبل القسمة على 9.',
+                
+                'MH.lesson_Y2Al_arth1c.conclusionTitle': 'الخلاصة',
+                'MH.lesson_Y2Al_arth1c.keyConceptsTitle': 'المفاهيم الرئيسية التي تم إتقانها',
+                'MH.lesson_Y2Al_arth1c.concept1': 'معايير القسمة على 3 و 9 بناءً على مجموع الأرقام',
+                'MH.lesson_Y2Al_arth1c.concept2': 'إيجاد البواقي باستخدام مجموع الأرقام',
+                'MH.lesson_Y2Al_arth1c.concept3': 'التطبيق على مشاكل العالم الحقيقي',
+                'MH.lesson_Y2Al_arth1c.concept4': 'التبرير الرياضي للمعايير',
+                'MH.lesson_Y2Al_arth1c.concept5': 'حل المشكلات بالقسمة على 3 و 9',
+                'MH.lesson_Y2Al_arth1c.finalThought': 'معايير القسمة على 3 و 9 هي أدوات قوية تسمح بإجراء فحوصات سريعة بدون قسمة. وهي توضح العلاقة الجميلة بين أرقام العدد وخصائص قابليته للقسمة.',
+                
+                'MH.lesson_Y2Al_arth1c.showSolution': 'إظهار الحل',
+                'MH.lesson_Y2Al_arth1c.hideSolution': 'إخفاء الحل'
+            },
+            'fr': {
+                'MH.lesson_Y2Al_arth1c.title': 'Arithmétique: Partie 3',
+                'MH.lesson_Y2Al_arth1c.subtitle': 'Critères de divisibilité par 3 et par 9',
+                'MH.lesson_Y2Al_arth1c.introduction': 'Introduction',
+                'MH.lesson_Y2Al_arth1c.introText1': 'Dans cette leçon, nous explorons les critères de divisibilité par 3 et 9. Contrairement aux critères basés sur les derniers chiffres, ceux-ci reposent sur la somme de tous les chiffres d\'un nombre.',
+                'MH.lesson_Y2Al_arth1c.introText2': 'Ces critères sont particulièrement utiles pour vérifier la divisibilité des grands nombres et ont des applications intéressantes dans la résolution de problèmes.',
+                
+                'MH.lesson_Y2Al_arth1c.applyExercisesTitle': 'Exercices d\'application',
+                'MH.lesson_Y2Al_arth1c.applyInstructionsTitle': 'Instructions',
+                'MH.lesson_Y2Al_arth1c.applyInstructionsText': 'Résolvez ces exercices en appliquant les concepts de divisibilité pour 3 et 9.',
+                
+                'MH.lesson_Y2Al_arth1c.activity1Title': 'Activité 1: Du lait, de l\'huile et du pétrole',
+                'MH.lesson_Y2Al_arth1c.activity1Question': 'Un paysan part avec sa camionnette vers le marché pour acheter du lait, de l\'huile et du pétrole. Il dispose de neuf récipients de contenances respectives (en litres) 3 ; 6 ; 10 ; 11 ; 15 ; 17 ; 23 ; 25 et 30. Il revient avec deux fois plus de lait que d\'huile et 3 fois plus de pétrole que de lait. Tous ses récipients sont complètement remplis, sauf un qui est vide. Lequel ? Indiquer le contenu de chaque récipient.',
+                'MH.lesson_Y2Al_arth1c.activity1Solution1': 'Soit x = litres d\'huile.',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation1': 'Alors lait = 2x, pétrole = 3 × lait = 3 × 2x = 6x',
+                'MH.lesson_Y2Al_arth1c.activity1Solution2': 'Liquide total = huile + lait + pétrole = x + 2x + 6x = 9x',
+                'MH.lesson_Y2Al_arth1c.activity1Solution3': 'La capacité totale de tous les récipients = 3 + 6 + 10 + 11 + 15 + 17 + 23 + 25 + 30 = 140 litres',
+                'MH.lesson_Y2Al_arth1c.activity1Solution4': 'Puisqu\'un récipient est vide, liquide total = 140 - (capacité du récipient vide)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution5': 'Le liquide total doit être divisible par 9 (puisque 9x).',
+                'MH.lesson_Y2Al_arth1c.activity1Solution6': 'Vérifiez chaque récipient comme étant vide:',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation2': '140 - 3 = 137 (non divisible par 9)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation3': '140 - 6 = 134 (non divisible par 9)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation4': '140 - 10 = 130 (non divisible par 9)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation5': '140 - 11 = 129 (non divisible par 9)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation6': '140 - 15 = 125 (non divisible par 9)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation7': '140 - 17 = 123 (non divisible par 9)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation8': '140 - 23 = 117 (divisible par 9: 117 ÷ 9 = 13)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation9': '140 - 25 = 115 (non divisible par 9)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation10': '140 - 30 = 110 (non divisible par 9)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution7': 'Seulement lorsque le récipient 23 est vide, liquide total = 117, qui est divisible par 9.',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation11': '117 ÷ 9 = 13, donc x = 13 (huile)',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.equation12': 'Huile = 13L, Lait = 26L, Pétrole = 78L',
+                'MH.lesson_Y2Al_arth1c.activity1Solution8': 'Nous devons distribuer 13L d\'huile, 26L de lait et 78L de pétrole dans les récipients 3, 6, 10, 11, 15, 17, 25, 30 (total 117L).',
+                'MH.lesson_Y2Al_arth1c.activity1Solution9': 'Distribution possible:',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.item1': 'Huile (13L): 3 + 10',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.item2': 'Lait (26L): 11 + 15',
+                'MH.lesson_Y2Al_arth1c.activity1Solution.item3': 'Pétrole (78L): 30 + 25 + 17 + 6',
+                'MH.lesson_Y2Al_arth1c.activity1Solution10': 'En fait, trouvons une combinaison:',
+                'MH.lesson_Y2Al_arth1c.activity1Solution11': 'Huile (13): 3 + 10',
+                'MH.lesson_Y2Al_arth1c.activity1Solution12': 'Lait (26): 11 + 15',
+                'MH.lesson_Y2Al_arth1c.activity1Solution13': 'Pétrole (78): 30 + 25 + 17 + 6',
+                'MH.lesson_Y2Al_arth1c.activity1Solution14': 'Tous les récipients sont utilisés sauf 23L (vide).',
+                
+                'MH.lesson_Y2Al_arth1c.activity2Title': 'Activité 2: Restes par 3 et 9',
+                'MH.lesson_Y2Al_arth1c.activity2Question': 'Déterminer le reste de la division euclidienne par 3 puis par 9 de chacun des nombres suivants : 86 ; 195 ; 206 ; 1359 ; 7695 ; 11111 ; 2851961.',
+                'MH.lesson_Y2Al_arth1c.activity2Solution1': 'Utilisez la méthode de la somme des chiffres:',
+                'MH.lesson_Y2Al_arth1c.activity2Solution.equation1': '86: 8+6=14 → 14÷3=4 reste 2; 14÷9=1 reste 5',
+                'MH.lesson_Y2Al_arth1c.activity2Solution.equation2': '195: 1+9+5=15 → 15÷3=5 reste 0; 15÷9=1 reste 6',
+                'MH.lesson_Y2Al_arth1c.activity2Solution.equation3': '206: 2+0+6=8 → 8÷3=2 reste 2; 8÷9=0 reste 8',
+                'MH.lesson_Y2Al_arth1c.activity2Solution.equation4': '1359: 1+3+5+9=18 → 18÷3=6 reste 0; 18÷9=2 reste 0',
+                'MH.lesson_Y2Al_arth1c.activity2Solution.equation5': '7695: 7+6+9+5=27 → 27÷3=9 reste 0; 27÷9=3 reste 0',
+                'MH.lesson_Y2Al_arth1c.activity2Solution.equation6': '11111: 1+1+1+1+1=5 → 5÷3=1 reste 2; 5÷9=0 reste 5',
+                'MH.lesson_Y2Al_arth1c.activity2Solution.equation7': '2851961: 2+8+5+1+9+6+1=32 → 32÷3=10 reste 2; 32÷9=3 reste 5',
+                
+                'MH.lesson_Y2Al_arth1c.summaryTitle': 'Résumé: Divisibilité par 3 et 9',
+                'MH.lesson_Y2Al_arth1c.divisibilityBy3And9Title': 'Divisibilité par 3 et 9',
+                'MH.lesson_Y2Al_arth1c.divisibilityBy3And9Text1': '• Un entier est divisible par 3 (respectivement par 9) si et seulement si la somme de ses chiffres est divisible par 3 (respectivement par 9).',
+                'MH.lesson_Y2Al_arth1c.divisibilityBy3And9Text2': '• Le reste de la division euclidienne d\'un entier par 3 (respectivement par 9) est égal au reste de la division euclidienne de la somme de ses chiffres par 3 (respectivement par 9).',
+                'MH.lesson_Y2Al_arth1c.example1': 'Exemple: 123 est divisible par 3 car 1+2+3=6 est divisible par 3.',
+                'MH.lesson_Y2Al_arth1c.example2': 'Exemple: 234 est divisible par 9 car 2+3+4=9 est divisible par 9.',
+                
+                'MH.lesson_Y2Al_arth1c.masterExercisesTitle': 'Exercices de Maîtrise',
+                'MH.lesson_Y2Al_arth1c.masterInstructionsTitle': 'Niveau Défi',
+                'MH.lesson_Y2Al_arth1c.masterInstructionsText': 'Ces exercices nécessitent une compréhension plus profonde et une application des critères de divisibilité par 3 et 9.',
+                
+                'MH.lesson_Y2Al_arth1c.exercise1Title': 'Exercice 1: Vérification de divisibilité',
+                'MH.lesson_Y2Al_arth1c.exercise1': 'Sans effectuer la division, déterminer lesquels des nombres suivants sont divisibles par 3 et par 9: 123, 456, 789, 111111, 246810.',
+                'MH.lesson_Y2Al_arth1c.exercise1Solution': 'Vérifiez la somme des chiffres:',
+                'MH.lesson_Y2Al_arth1c.exercise1Solution.equation1': '123: 1+2+3=6 → divisible par 3 ✓, pas par 9',
+                'MH.lesson_Y2Al_arth1c.exercise1Solution.equation2': '456: 4+5+6=15 → divisible par 3 ✓, pas par 9',
+                'MH.lesson_Y2Al_arth1c.exercise1Solution.equation3': '789: 7+8+9=24 → divisible par 3 ✓, pas par 9',
+                'MH.lesson_Y2Al_arth1c.exercise1Solution.equation4': '111111: 1+1+1+1+1+1=6 → divisible par 3 ✓, pas par 9',
+                'MH.lesson_Y2Al_arth1c.exercise1Solution.equation5': '246810: 2+4+6+8+1+0=21 → divisible par 3 ✓, pas par 9',
+                
+                'MH.lesson_Y2Al_arth1c.exercise2Title': 'Exercice 2: Calcul du reste',
+                'MH.lesson_Y2Al_arth1c.exercise2': 'Trouver le reste lorsque 123456 est divisé par 3 et par 9.',
+                'MH.lesson_Y2Al_arth1c.exercise2Solution': 'Somme des chiffres: 1+2+3+4+5+6=21',
+                'MH.lesson_Y2Al_arth1c.exercise2Solution.equation1': '21 ÷ 3 = 7 reste 0 → reste lorsqu\'il est divisé par 3 est 0',
+                'MH.lesson_Y2Al_arth1c.exercise2Solution.equation2': '21 ÷ 9 = 2 reste 3 → reste lorsqu\'il est divisé par 9 est 3',
+                
+                'MH.lesson_Y2Al_arth1c.exercise3Title': 'Exercice 3: Plus petit nombre à ajouter',
+                'MH.lesson_Y2Al_arth1c.exercise3': 'Trouver le plus petit nombre naturel qui doit être ajouté à 1234 pour le rendre divisible par 3 et par 9.',
+                'MH.lesson_Y2Al_arth1c.exercise3Solution1': 'Somme des chiffres de 1234: 1+2+3+4=10',
+                'MH.lesson_Y2Al_arth1c.exercise3Solution2': 'Pour la divisibilité par 3: reste de 10÷3=1, besoin d\'ajouter 2 (pour que la somme devienne 12)',
+                'MH.lesson_Y2Al_arth1c.exercise3Solution3': 'Pour la divisibilité par 9: reste de 10÷9=1, besoin d\'ajouter 8 (pour que la somme devienne 18)',
+                'MH.lesson_Y2Al_arth1c.exercise3Solution4': 'Le plus petit nombre qui satisfait les deux est la considération du multiple commun le plus bas, mais nous avons besoin d\'un nombre qui, ajouté à 1234, donne un nombre divisible par 3 et 9.',
+                'MH.lesson_Y2Al_arth1c.exercise3Solution5': 'En fait, si un nombre est divisible par 9, il est automatiquement divisible par 3.',
+                'MH.lesson_Y2Al_arth1c.exercise3Solution6': 'Nous devons donc ajouter le plus petit nombre pour le rendre divisible par 9: c\'est 8.',
+                'MH.lesson_Y2Al_arth1c.exercise3Solution.equation1': '1234 + 8 = 1242, somme des chiffres = 1+2+4+2=9 ✓',
+                
+                'MH.lesson_Y2Al_arth1c.exercise4Title': 'Exercice 4: Preuve',
+    'MH.lesson_Y2Al_arth1c.exercise4': 'Prouver que la différence entre un nombre et la somme de ses chiffres est toujours divisible par 9.',
+    'MH.lesson_Y2Al_arth1c.exercise4Solution1': 'Soit n un nombre avec les chiffres $a_k a_{k-1} ... a_1 a_0$.',
+    'MH.lesson_Y2Al_arth1c.exercise4Solution.equation1': '$n = a_k \\times 10^k + a_{k-1} \\times 10^{k-1} + ... + a_1 \\times 10 + a_0$',
+    'MH.lesson_Y2Al_arth1c.exercise4Solution2': 'Somme des chiffres S = $a_k + a_{k-1} + ... + a_1 + a_0$',
+    'MH.lesson_Y2Al_arth1c.exercise4Solution3': 'Maintenant, $10^m \\equiv 1 \\pmod{9}$ pour tout m ≥ 0 car $10 = 9 + 1$.',
+    'MH.lesson_Y2Al_arth1c.exercise4Solution4': 'Par conséquent, $n \\equiv a_k + a_{k-1} + ... + a_1 + a_0 \\equiv S \\pmod{9}$',
+    'MH.lesson_Y2Al_arth1c.exercise4Solution5': 'Ainsi, $n - S \\equiv 0 \\pmod{9}$, donc n - S est divisible par 9.',
+                
+                'MH.lesson_Y2Al_arth1c.conclusionTitle': 'Conclusion',
+                'MH.lesson_Y2Al_arth1c.keyConceptsTitle': 'Concepts Clés Maîtrisés',
+                'MH.lesson_Y2Al_arth1c.concept1': 'Critères de divisibilité pour 3 et 9 basés sur la somme des chiffres',
+                'MH.lesson_Y2Al_arth1c.concept2': 'Trouver les restes en utilisant la somme des chiffres',
+                'MH.lesson_Y2Al_arth1c.concept3': 'Application à des problèmes du monde réel',
+                'MH.lesson_Y2Al_arth1c.concept4': 'Justification mathématique des critères',
+                'MH.lesson_Y2Al_arth1c.concept5': 'Résolution de problèmes avec la divisibilité par 3 et 9',
+                'MH.lesson_Y2Al_arth1c.finalThought': 'Les critères de divisibilité par 3 et 9 sont des outils puissants qui permettent des vérifications rapides sans division. Ils démontrent le beau lien entre les chiffres d\'un nombre et ses propriétés de divisibilité.',
+                
+                'MH.lesson_Y2Al_arth1c.showSolution': 'Afficher la Solution',
+                'MH.lesson_Y2Al_arth1c.hideSolution': 'Masquer la Solution'
+            }
+        };
+
+        // Merge with existing translations if they exist
+        if (typeof translations !== 'undefined') {
+            Object.keys(arithmeticTranslations).forEach(lang => {
+                if (translations[lang]) {
+                    translations[lang] = {...translations[lang], ...arithmeticTranslations[lang]};
+                } else {
+                    translations[lang] = arithmeticTranslations[lang];
+                }
+            });
+        } else {
+            var translations = arithmeticTranslations;
+        }
+
+        // Solution toggle function
+        function toggleSolution(problemNumber) {
+    const solution = document.getElementById(`solution${problemNumber}`);
+    const button = solution.previousElementSibling;
+    
+    if (solution.style.display === 'block') {
+        solution.style.display = 'none';
+        button.setAttribute('data-i18n', 'MH.lesson_Y2Al_arth1c.showSolution');
+        button.textContent = translations[MHThemeManager.getCurrentLanguage()]['MH.lesson_Y2Al_arth1c.showSolution'];
+    } else {
+        solution.style.display = 'block';
+        button.setAttribute('data-i18n', 'MH.lesson_Y2Al_arth1c.hideSolution');
+        button.textContent = translations[MHThemeManager.getCurrentLanguage()]['MH.lesson_Y2Al_arth1c.hideSolution'];
+        
+        // Re-render KaTeX for newly visible equations
+        if (typeof renderMathInElement !== 'undefined') {
+            renderMathInElement(solution, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false},
+                    {left: '\\(', right: '\\)', display: false},
+                    {left: '\\[', right: '\\]', display: true}
+                ],
+                throwOnError: false,
+                strict: false
+            });
+        }
+    }
+}
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize KaTeX auto-render
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+
+            // Initialize solutions as hidden
+            for (let i = 1; i <= 6; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+            }
+        });
+    </script>
+
+<!-- Add the service worker registration script -->
+<script>
+    // Register service worker with better error handling
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch(function(error) {
+                console.log('Service Worker registration failed:', error);
+            });
+        });
+    }
+</script>
+
+<!-- Add noscript fallback -->
+<noscript>
+    <style>
+        .MH-header-controls { display: none; }
+        .MH-solution { display: block; }
+    </style>
+    <div class="MH-warning">
+        JavaScript is recommended for the full experience, but content is still accessible.
+    </div>
+</noscript>
+</body>
+</html>

@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Arithmetic - Euclidean Division and Divisibility</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#4A90E2" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#8E44AD" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#4A90E2">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    
+    <style>
+        /* Page-specific color palette - Blue + Purple Theme */
+        :root {
+            --primary: #4A90E2;        /* Cornflower Blue */
+            --primary-light: #7BAAF7;  /* Light Blue */
+            --primary-dark: #357ABD;   /* Darker Blue */
+            --secondary: #8E44AD;      /* Dark Purple */
+            --secondary-light: #AF7AC5; /* Light Purple */
+            --secondary-dark: #6C3483;  /* Darker Purple */
+            --accent: #E67E22;
+            --warning: #E74C3C;
+            --info: #2ECC71;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #FFFFFF;
+            --surface: #F8F9FA;
+            --border: #E9ECEF;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        [data-theme="dark"] {
+            --primary: #357ABD;
+            --primary-light: #4A90E2;
+            --primary-dark: #2C3E50;
+            --secondary: #6C3483;
+            --secondary-light: #8E44AD;
+            --secondary-dark: #4A235A;
+            --accent: #D35400;
+            --warning: #C0392B;
+            --info: #27AE60;
+            --text: #FFFFFF;
+            --text-light: #CCCCCC;
+            --background: #121212;
+            --surface: #1E1E1E;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        /* KaTeX styling */
+        .katex { 
+            font-size: 1.1em; 
+        }
+        
+        .katex-display { 
+            margin: 1em 0; 
+            text-align: center;
+        }
+        
+        .katex-display > .katex { 
+            display: inline-block;
+            text-align: center;
+        }
+
+        /* Equation styling */
+        .MH-equation {
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            margin: 0.5em 0;
+            padding: 0;
+            display: inline-block;
+            direction: ltr !important;
+            unicode-bidi: isolate;
+        }
+        
+        [dir="rtl"] .MH-equation {
+            text-align: left;
+            unicode-bidi: plaintext;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                    <!-- Notification Button -->
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+                        <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Al_arth1a.title">Arithmetic: Part 1</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y2Al_arth1a.subtitle">Euclidean Division - Divisibility</h2>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_arth1a.introduction">Introduction</h2>
+            <p data-i18n="MH.lesson_Y2Al_arth1a.introText1">Euclidean division and divisibility are fundamental concepts in arithmetic that form the basis for many mathematical operations and proofs. These concepts are essential for understanding number theory and advanced mathematics.</p>
+            <p data-i18n="MH.lesson_Y2Al_arth1a.introText2">In this lesson, we will explore the properties of divisibility, learn how to perform Euclidean division, and apply these concepts to solve various mathematical problems.</p>
+        </section>
+
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_arth1a.activity1Title">Activity 1: Understanding Divisibility</h2>
+            <div class="MH-step">
+                <p data-i18n="MH.lesson_Y2Al_arth1a.activity1Description">Let a be a natural integer and n a divisor of a. Indicate which of the following statements are true:</p>
+                
+                <div class="MH-exercise-part">
+                    <div class="MH-exercise-statement">
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.activity1a">a) a is a multiple of n</p>
+                        <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                        <div class="MH-solution" id="solution1">
+                            <p data-i18n="MH.lesson_Y2Al_arth1a.activity1aSolution">TRUE. By definition, if n divides a, then there exists an integer k such that \(a = k \times n\), which means a is a multiple of n.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="MH-exercise-part">
+                    <div class="MH-exercise-statement">
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.activity1b">b) a and n are coprime (relatively prime)</p>
+                        <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                        <div class="MH-solution" id="solution2">
+                            <p data-i18n="MH.lesson_Y2Al_arth1a.activity1bSolution">FALSE. This is not necessarily true. For example, if \(a = 6\) and \(n = 2\), then n divides a but a and n are not coprime since \(\text{GCD}(6, 2) = 2 \neq 1\).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="MH-exercise-part">
+                    <div class="MH-exercise-statement">
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.activity1c">c) \(\text{GCD}(a, n) = n\)</p>
+                        <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                        <div class="MH-solution" id="solution3">
+                            <p data-i18n="MH.lesson_Y2Al_arth1a.activity1cSolution">TRUE. Since n divides a, the greatest common divisor of a and n is n itself.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="MH-exercise-part">
+                    <div class="MH-exercise-statement">
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.activity1d">d) \(a = k \times n\), where k is a natural integer</p>
+                        <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+                        <div class="MH-solution" id="solution4">
+                            <p data-i18n="MH.lesson_Y2Al_arth1a.activity1dSolution">TRUE. This is the definition of divisibility: n divides a if and only if there exists an integer k such that \(a = k \times n\).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="MH-exercise-part">
+                    <div class="MH-exercise-statement">
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.activity1e">e) \(\text{LCM}(a, n) = n \times a\)</p>
+                        <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(5)">Show Solution</button>
+                        <div class="MH-solution" id="solution5">
+                            <p data-i18n="MH.lesson_Y2Al_arth1a.activity1eSolution">FALSE. The least common multiple of a and n is actually a itself, since a is a multiple of n. \(\text{LCM}(a, n) = a\) when n divides a.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="MH-exercise-part">
+                    <div class="MH-exercise-statement">
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.activity1f">f) The remainder of the Euclidean division of a by n is zero</p>
+                        <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(6)">Show Solution</button>
+                        <div class="MH-solution" id="solution6">
+                            <p data-i18n="MH.lesson_Y2Al_arth1a.activity1fSolution">TRUE. If n divides a, then \(a = k \times n\) with k integer, so when we divide a by n, the quotient is k and the remainder is 0.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_arth1a.part1Title">Part 1: Euclidean Division - Divisibility</h2>
+            
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1a.activity2Title">Activity 2: Properties of Divisibility</h3>
+                <p data-i18n="MH.lesson_Y2Al_arth1a.activity2Description">Let n, x, and y be three natural integers such that n divides x and n divides y.</p>
+                
+                <div class="MH-exercise-part">
+                    <p data-i18n="MH.lesson_Y2Al_arth1a.activity2a">a) Show that n divides \(p \times x\) and n divides \(p \times y\), where p is a natural integer.</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(7)">Show Solution</button>
+                    <div class="MH-solution" id="solution7">
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.activity2aSolution">Since n divides x, there exists an integer k such that \(x = k \times n\).</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1a.equation2a">\(p \times x = p \times (k \times n) = (p \times k) \times n\)</div>
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.activity2aSolution2">Since \(p \times k\) is an integer, n divides \(p \times x\). The same reasoning applies for y.</p>
+                    </div>
+                </div>
+
+                <div class="MH-exercise-part">
+                    <p data-i18n="MH.lesson_Y2Al_arth1a.activity2b">b) Show that n divides \(x + y\).</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(8)">Show Solution</button>
+                    <div class="MH-solution" id="solution8">
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.activity2bSolution">Since n divides x and n divides y, there exist integers \(k_1\) and \(k_2\) such that:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1a.equation2b1">\(x = k_1 \times n\) and \(y = k_2 \times n\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1a.equation2b2">\(x + y = k_1 \times n + k_2 \times n = (k_1 + k_2) \times n\)</div>
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.activity2bSolution2">Since \(k_1 + k_2\) is an integer, n divides \(x + y\).</p>
+                    </div>
+                </div>
+
+                <div class="MH-exercise-part">
+                    <p data-i18n="MH.lesson_Y2Al_arth1a.activity2c">c) Show that n divides \(x - y\) (assuming \(x \geq y\)).</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(9)">Show Solution</button>
+                    <div class="MH-solution" id="solution9">
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.activity2cSolution">Since n divides x and n divides y, there exist integers \(k_1\) and \(k_2\) such that:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1a.equation2c1">\(x = k_1 \times n\) and \(y = k_2 \times n\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1a.equation2c2">\(x - y = k_1 \times n - k_2 \times n = (k_1 - k_2) \times n\)</div>
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.activity2cSolution2">Since \(k_1 - k_2\) is an integer (and \(x \geq y\) ensures it's non-negative), n divides \(x - y\).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1a.activity3Title">Activity 3: Advanced Divisibility Problems</h3>
+                
+                <div class="MH-exercise-part">
+                    <p data-i18n="MH.lesson_Y2Al_arth1a.activity3a">1. Show that if a natural integer divides 328 and divides 299, then it divides 29.</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(10)">Show Solution</button>
+                    <div class="MH-solution" id="solution10">
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.activity3aSolution">Let d be a natural integer that divides both 328 and 299. Then d divides any linear combination of 328 and 299.</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1a.equation3a">\(328 - 299 = 29\)</div>
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.activity3aSolution2">Since d divides 328 and 299, by Activity 2(c), d also divides their difference \(328 - 299 = 29\).</p>
+                    </div>
+                </div>
+
+                <div class="MH-exercise-part">
+                    <p data-i18n="MH.lesson_Y2Al_arth1a.activity3b">2. Deduce that 328 and 299 are coprime.</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(11)">Show Solution</button>
+                    <div class="MH-solution" id="solution11">
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.activity3bSolution">The only positive divisors of 29 are 1 and 29. If a number d divides both 328 and 299, then it divides 29.</p>
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.activity3bSolution2">Check if 29 divides 328: \(328 \div 29 = 11\) remainder 9, so 29 does not divide 328.</p>
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.activity3bSolution3">Therefore, the only common divisor is 1, so \(\text{GCD}(328, 299) = 1\), meaning they are coprime.</p>
+                    </div>
+                </div>
+
+                <div class="MH-exercise-part">
+                    <p data-i18n="MH.lesson_Y2Al_arth1a.activity3c">3. Decompose 343 into prime factors and show that 118 and 225 are coprime.</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(12)">Show Solution</button>
+                    <div class="MH-solution" id="solution12">
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.activity3cSolution">Prime factorization of 343:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1a.equation3c1">\(343 = 7 \times 49 = 7 \times 7 \times 7 = 7^3\)</div>
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.activity3cSolution2">Prime factorization of 118 and 225:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1a.equation3c2">\(118 = 2 \times 59\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1a.equation3c3">\(225 = 3^2 \times 5^2\)</div>
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.activity3cSolution3">Since 118 and 225 have no common prime factors, they are coprime: \(\text{GCD}(118, 225) = 1\).</p>
+                    </div>
+                </div>
+
+                <div class="MH-exercise-part">
+                    <p data-i18n="MH.lesson_Y2Al_arth1a.activity3d">4. Let a, b, and n be three natural integers. Show that if n divides \(2a + 3b\) and n divides \(3a + 2b\), then n divides \(5a\) and n divides \(5b\).</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(13)">Show Solution</button>
+                    <div class="MH-solution" id="solution13">
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.activity3dSolution">Given: n divides \((2a + 3b)\) and n divides \((3a + 2b)\)</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1a.equation3d1">\(3 \times (2a + 3b) - 2 \times (3a + 2b) = 6a + 9b - 6a - 4b = 5b\)</div>
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.activity3dSolution2">Since n divides both \((2a + 3b)\) and \((3a + 2b)\), n divides any linear combination: n divides \(5b\).</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1a.equation3d2">\(2 \times (3a + 2b) - 3 \times (2a + 3b) = 6a + 4b - 6a - 9b = -5a\)</div>
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.activity3dSolution3">Thus n divides \(5a\) (since if n divides \(-5a\), it also divides \(5a\)).</p>
+                    </div>
+                </div>
+
+                <div class="MH-exercise-part">
+                    <p data-i18n="MH.lesson_Y2Al_arth1a.activity3e">5. Determine all natural integers n such that n divides \(n + 15\).</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(14)">Show Solution</button>
+                    <div class="MH-solution" id="solution14">
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.activity3eSolution">If n divides \((n + 15)\), then there exists an integer k such that:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1a.equation3e1">\(n + 15 = k \times n\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1a.equation3e2">\(15 = k \times n - n = n \times (k - 1)\)</div>
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.activity3eSolution2">So n must be a divisor of 15. The divisors of 15 are: 1, 3, 5, 15.</p>
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.activity3eSolution3">Check each:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1a.check3e">For n = 1: 1 divides 16 ✓<br>For n = 3: 3 divides 18 ✓<br>For n = 5: 5 divides 20 ✓<br>For n = 15: 15 divides 30 ✓</div>
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.activity3eSolution4">Therefore, \(n \in \{1, 3, 5, 15\}\).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_arth1a.summaryTitle">Summary: Euclidean Division</h2>
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1a.definitionTitle">Definition</h3>
+                <p data-i18n="MH.lesson_Y2Al_arth1a.definitionText1">Let a and b be two natural integers with \(b \neq 0\).</p>
+                <p data-i18n="MH.lesson_Y2Al_arth1a.definitionText2">There exists a unique pair \((q, r)\) of natural integers such that:</p>
+                <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1a.equationDefinition">\(a = b \times q + r\) with \(0 \leq r < b\)</div>
+                <p data-i18n="MH.lesson_Y2Al_arth1a.definitionText3">Performing the Euclidean division of a by b means finding the pair \((q, r)\) of natural integers such that: \(a = b \times q + r\) with \(0 \leq r < b\).</p>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Al_arth1a.termDividend">a is the dividend</li>
+                    <li data-i18n="MH.lesson_Y2Al_arth1a.termDivisor">b is the divisor</li>
+                    <li data-i18n="MH.lesson_Y2Al_arth1a.termQuotient">q is the quotient</li>
+                    <li data-i18n="MH.lesson_Y2Al_arth1a.termRemainder">r is the remainder</li>
+                </ul>
+            </div>
+
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1a.keyPropertiesTitle">Key Properties</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Al_arth1a.property1">If n divides a and n divides b, then n divides \((a + b)\) and \((a - b)\)</li>
+                    <li data-i18n="MH.lesson_Y2Al_arth1a.property2">If n divides a, then n divides \((k \times a)\) for any integer k</li>
+                    <li data-i18n="MH.lesson_Y2Al_arth1a.property3">If n divides a and n divides b, then n divides any linear combination \((m \times a + p \times b)\)</li>
+                    <li data-i18n="MH.lesson_Y2Al_arth1a.property4">A number is divisible by another if and only if the remainder of their Euclidean division is zero</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_arth1a.practiceTitle">Practice Exercises</h2>
+            <div class="MH-practice">
+                <h3 class="MH-practice-title" data-i18n="MH.lesson_Y2Al_arth1a.masterConcepts">Master the Concepts</h3>
+                
+                <div class="MH-practice-problem">
+                    <h4 data-i18n="MH.lesson_Y2Al_arth1a.exercise1Title">Exercise 1</h4>
+                    <p data-i18n="MH.lesson_Y2Al_arth1a.exercise1">Perform the Euclidean division of 457 by 23. Find the quotient and remainder.</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(15)">Show Solution</button>
+                    <div class="MH-solution" id="solution15">
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.exercise1Solution">\(457 \div 23 = 19\) remainder 20</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1a.equationEx1">\(457 = 23 \times 19 + 20\)</div>
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.exercise1Solution2">Quotient = 19, Remainder = 20</p>
+                    </div>
+                </div>
+
+                <div class="MH-practice-problem">
+                    <h4 data-i18n="MH.lesson_Y2Al_arth1a.exercise2Title">Exercise 2</h4>
+                    <p data-i18n="MH.lesson_Y2Al_arth1a.exercise2">Show that if a number divides both 84 and 108, then it also divides 24.</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(16)">Show Solution</button>
+                    <div class="MH-solution" id="solution16">
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.exercise2Solution">Let d be a divisor of both 84 and 108. Then:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1a.equationEx2">\(108 - 84 = 24\)</div>
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.exercise2Solution2">Since d divides 108 and 84, by the properties of divisibility, d divides their difference 24.</p>
+                    </div>
+                </div>
+
+                <div class="MH-practice-problem">
+                    <h4 data-i18n="MH.lesson_Y2Al_arth1a.exercise3Title">Exercise 3</h4>
+                    <p data-i18n="MH.lesson_Y2Al_arth1a.exercise3">Find all natural numbers n such that n divides \(2n + 8\).</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(17)">Show Solution</button>
+                    <div class="MH-solution" id="solution17">
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.exercise3Solution">If n divides \((2n + 8)\), then there exists integer k such that:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1a.equationEx3a">\(2n + 8 = k \times n\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1a.equationEx3b">\(8 = k \times n - 2n = n \times (k - 2)\)</div>
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.exercise3Solution2">So n must be a divisor of 8: \(\{1, 2, 4, 8\}\)</p>
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.exercise3Solution3">Check each:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1a.checkEx3">n = 1: 1 divides 10 ✓<br>n = 2: 2 divides 12 ✓<br>n = 4: 4 divides 16 ✓<br>n = 8: 8 divides 24 ✓</div>
+                    </div>
+                </div>
+
+                <div class="MH-practice-problem">
+                    <h4 data-i18n="MH.lesson_Y2Al_arth1a.exercise4Title">Exercise 4</h4>
+                    <p data-i18n="MH.lesson_Y2Al_arth1a.exercise4">Prove that the product of three consecutive integers is divisible by 6.</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(18)">Show Solution</button>
+                    <div class="MH-solution" id="solution18">
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.exercise4Solution">Let the three consecutive integers be n, \(n+1\), and \(n+2\).</p>
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.exercise4Solution2">Among any three consecutive integers:</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Al_arth1a.exercise4Solution3">At least one is divisible by 2 (even)</li>
+                            <li data-i18n="MH.lesson_Y2Al_arth1a.exercise4Solution4">Exactly one is divisible by 3</li>
+                        </ul>
+                        <p data-i18n="MH.lesson_Y2Al_arth1a.exercise4Solution5">Therefore, the product contains factors 2 and 3, so it's divisible by \(2 \times 3 = 6\).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_arth1a.conclusionTitle">Conclusion</h2>
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1a.keyConceptsTitle">Key Concepts Mastered</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Al_arth1a.concept1">Definition and properties of divisibility</li>
+                    <li data-i18n="MH.lesson_Y2Al_arth1a.concept2">Euclidean division algorithm</li>
+                    <li data-i18n="MH.lesson_Y2Al_arth1a.concept3">Linear combinations and divisibility</li>
+                    <li data-i18n="MH.lesson_Y2Al_arth1a.concept4">Relationship between divisors and remainders</li>
+                    <li data-i18n="MH.lesson_Y2Al_arth1a.concept5">Applications to problem-solving</li>
+                </ul>
+            </div>
+            <p data-i18n="MH.lesson_Y2Al_arth1a.finalThought">Euclidean division and divisibility form the foundation of number theory and are essential for understanding more advanced mathematical concepts. Mastery of these basics will help you in algebra, cryptography, and computer science.</p>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/translation2.js"></script>
+    
+    <script>
+        // ARITHMETIC LESSON TRANSLATIONS
+        const arithmeticTranslations = {
+            'en': {
+                // General translations
+                'MH.general.homeTooltip': 'Go to Homepage',
+                'MH.general.install': 'Install App',
+                'MH.general.installSuccess': 'Mathematics Hub installed successfully!',
+                'MH.general.enableNotifications': 'Enable Notifications',
+                'MH.general.notificationEnabled': 'Notifications enabled! You will now receive updates.',
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Theme',
+                'MH.general.language': 'Language',
+                
+                // Arithmetic lesson specific translations
+                'MH.lesson_Y2Al_arth1a.title': 'Arithmetic: Part 1',
+                'MH.lesson_Y2Al_arth1a.subtitle': 'Euclidean Division - Divisibility',
+                'MH.lesson_Y2Al_arth1a.introduction': 'Introduction',
+                'MH.lesson_Y2Al_arth1a.introText1': 'Euclidean division and divisibility are fundamental concepts in arithmetic that form the basis for many mathematical operations and proofs. These concepts are essential for understanding number theory and advanced mathematics.',
+                'MH.lesson_Y2Al_arth1a.introText2': 'In this lesson, we will explore the properties of divisibility, learn how to perform Euclidean division, and apply these concepts to solve various mathematical problems.',
+                
+                // Activity 1
+                'MH.lesson_Y2Al_arth1a.activity1Title': 'Activity 1: Understanding Divisibility',
+                'MH.lesson_Y2Al_arth1a.activity1Description': 'Let a be a natural integer and n a divisor of a. Indicate which of the following statements are true:',
+                'MH.lesson_Y2Al_arth1a.activity1a': 'a) a is a multiple of n',
+                'MH.lesson_Y2Al_arth1a.activity1b': 'b) a and n are coprime (relatively prime)',
+                'MH.lesson_Y2Al_arth1a.activity1c': 'c) GCD(a, n) = n',
+                'MH.lesson_Y2Al_arth1a.activity1d': 'd) a = k × n, where k is a natural integer',
+                'MH.lesson_Y2Al_arth1a.activity1e': 'e) LCM(a, n) = n × a',
+                'MH.lesson_Y2Al_arth1a.activity1f': 'f) The remainder of the Euclidean division of a by n is zero',
+                
+                // Activity 1 Solutions
+                'MH.lesson_Y2Al_arth1a.activity1aSolution': String.raw`TRUE. By definition, if n divides a, then there exists an integer k such that \(a = k \times n\), which means a is a multiple of n.`,
+                'MH.lesson_Y2Al_arth1a.activity1bSolution': String.raw`FALSE. This is not necessarily true. For example, if \(a = 6\) and \(n = 2\), then n divides a but a and n are not coprime since \(\text{GCD}(6, 2) = 2 \neq 1\).`,
+                'MH.lesson_Y2Al_arth1a.activity1cSolution': 'TRUE. Since n divides a, the greatest common divisor of a and n is n itself.',
+                'MH.lesson_Y2Al_arth1a.activity1dSolution': String.raw`TRUE. This is the definition of divisibility: n divides a if and only if there exists an integer k such that \(a = k \times n\).`,
+                'MH.lesson_Y2Al_arth1a.activity1eSolution': String.raw`FALSE. The least common multiple of a and n is actually a itself, since a is a multiple of n. \(\text{LCM}(a, n) = a\) when n divides a.`,
+                'MH.lesson_Y2Al_arth1a.activity1fSolution': String.raw`TRUE. If n divides a, then \(a = k \times n\) with k integer, so when we divide a by n, the quotient is k and the remainder is 0.`,
+                
+                // Part 1
+                'MH.lesson_Y2Al_arth1a.part1Title': 'Part 1: Euclidean Division - Divisibility',
+                'MH.lesson_Y2Al_arth1a.activity2Title': 'Activity 2: Properties of Divisibility',
+                'MH.lesson_Y2Al_arth1a.activity2Description': 'Let n, x, and y be three natural integers such that n divides x and n divides y.',
+                'MH.lesson_Y2Al_arth1a.activity2a': String.raw`a) Show that n divides \(p \times x\) and n divides \(p \times y\), where p is a natural integer.`,
+                'MH.lesson_Y2Al_arth1a.activity2b': String.raw`b) Show that n divides \(x + y\).`,
+                'MH.lesson_Y2Al_arth1a.activity2c': String.raw`c) Show that n divides \(x - y\) (assuming \(x \geq y\)).`,
+                
+                // Activity 2 Solutions
+                'MH.lesson_Y2Al_arth1a.activity2aSolution': String.raw`Since n divides x, there exists an integer k such that \(x = k \times n\).`,
+                'MH.lesson_Y2Al_arth1a.equation2a': String.raw`\(p \times x = p \times (k \times n) = (p \times k) \times n\)`,
+                'MH.lesson_Y2Al_arth1a.activity2aSolution2': String.raw`Since \(p \times k\) is an integer, n divides \(p \times x\). The same reasoning applies for y.`,
+                'MH.lesson_Y2Al_arth1a.activity2bSolution': String.raw`Since n divides x and n divides y, there exist integers \(k_1\) and \(k_2\) such that:`,
+                'MH.lesson_Y2Al_arth1a.equation2b1': String.raw`\(x = k_1 \times n\) and \(y = k_2 \times n\)`,
+                'MH.lesson_Y2Al_arth1a.equation2b2': String.raw`\(x + y = k_1 \times n + k_2 \times n = (k_1 + k_2) \times n\)`,
+                'MH.lesson_Y2Al_arth1a.activity2bSolution2': String.raw`Since \(k_1 + k_2\) is an integer, n divides \(x + y\).`,
+                'MH.lesson_Y2Al_arth1a.activity2cSolution': String.raw`Since n divides x and n divides y, there exist integers \(k_1\) and \(k_2\) such that:`,
+                'MH.lesson_Y2Al_arth1a.equation2c1': String.raw`\(x = k_1 \times n\) and \(y = k_2 \times n\)`,
+                'MH.lesson_Y2Al_arth1a.equation2c2': String.raw`\(x - y = k_1 \times n - k_2 \times n = (k_1 - k_2) \times n\)`,
+                'MH.lesson_Y2Al_arth1a.activity2cSolution2': String.raw`Since \(k_1 - k_2\) is an integer (and \(x \geq y\) ensures it's non-negative), n divides \(x - y\).`,
+                
+                // Activity 3
+                'MH.lesson_Y2Al_arth1a.activity3Title': 'Activity 3: Advanced Divisibility Problems',
+                'MH.lesson_Y2Al_arth1a.activity3a': '1. Show that if a natural integer divides 328 and divides 299, then it divides 29.',
+                'MH.lesson_Y2Al_arth1a.activity3b': '2. Deduce that 328 and 299 are coprime.',
+                'MH.lesson_Y2Al_arth1a.activity3c': '3. Decompose 343 into prime factors and show that 118 and 225 are coprime.',
+                'MH.lesson_Y2Al_arth1a.activity3d': String.raw`4. Let a, b, and n be three natural integers. Show that if n divides \(2a + 3b\) and n divides \(3a + 2b\), then n divides \(5a\) and n divides \(5b\).`,
+                'MH.lesson_Y2Al_arth1a.activity3e': String.raw`5. Determine all natural integers n such that n divides \(n + 15\).`,
+                
+                // Activity 3 Solutions
+                'MH.lesson_Y2Al_arth1a.activity3aSolution': 'Let d be a natural integer that divides both 328 and 299. Then d divides any linear combination of 328 and 299.',
+                'MH.lesson_Y2Al_arth1a.equation3a': '\(328 - 299 = 29\)',
+                'MH.lesson_Y2Al_arth1a.activity3aSolution2': String.raw`Since d divides 328 and 299, by Activity 2(c), d also divides their difference \(328 - 299 = 29\).`,
+                'MH.lesson_Y2Al_arth1a.activity3bSolution': 'The only positive divisors of 29 are 1 and 29. If a number d divides both 328 and 299, then it divides 29.',
+                'MH.lesson_Y2Al_arth1a.activity3bSolution2': String.raw`Check if 29 divides 328: \(328 \div 29 = 11\) remainder 9, so 29 does not divide 328.`,
+                'MH.lesson_Y2Al_arth1a.activity3bSolution3': String.raw`Therefore, the only common divisor is 1, so \(\text{GCD}(328, 299) = 1\), meaning they are coprime.`,
+                'MH.lesson_Y2Al_arth1a.activity3cSolution': 'Prime factorization of 343:',
+                'MH.lesson_Y2Al_arth1a.equation3c1': String.raw`\(343 = 7 \times 49 = 7 \times 7 \times 7 = 7^3\)`,
+                'MH.lesson_Y2Al_arth1a.activity3cSolution2': 'Prime factorization of 118 and 225:',
+                'MH.lesson_Y2Al_arth1a.equation3c2': String.raw`\(118 = 2 \times 59\)`,
+                'MH.lesson_Y2Al_arth1a.equation3c3': String.raw`\(225 = 3^2 \times 5^2\)`,
+                'MH.lesson_Y2Al_arth1a.activity3cSolution3': String.raw`Since 118 and 225 have no common prime factors, they are coprime: \(\text{GCD}(118, 225) = 1\).`,
+                'MH.lesson_Y2Al_arth1a.activity3dSolution': String.raw`Given: n divides \((2a + 3b)\) and n divides \((3a + 2b)\)`,
+                'MH.lesson_Y2Al_arth1a.equation3d1': String.raw`\(3 \times (2a + 3b) - 2 \times (3a + 2b) = 6a + 9b - 6a - 4b = 5b\)`,
+                'MH.lesson_Y2Al_arth1a.activity3dSolution2': String.raw`Since n divides both \((2a + 3b)\) and \((3a + 2b)\), n divides any linear combination: n divides \(5b\).`,
+                'MH.lesson_Y2Al_arth1a.equation3d2': String.raw`\(2 \times (3a + 2b) - 3 \times (2a + 3b) = 6a + 4b - 6a - 9b = -5a\)`,
+                'MH.lesson_Y2Al_arth1a.activity3dSolution3': String.raw`Thus n divides \(5a\) (since if n divides \(-5a\), it also divides \(5a\)).`,
+                'MH.lesson_Y2Al_arth1a.activity3eSolution': String.raw`If n divides \((n + 15)\), then there exists an integer k such that:`,
+                'MH.lesson_Y2Al_arth1a.equation3e1': String.raw`\(n + 15 = k \times n\)`,
+                'MH.lesson_Y2Al_arth1a.equation3e2': String.raw`\(15 = k \times n - n = n \times (k - 1)\)`,
+                'MH.lesson_Y2Al_arth1a.activity3eSolution2': 'So n must be a divisor of 15. The divisors of 15 are: 1, 3, 5, 15.',
+                'MH.lesson_Y2Al_arth1a.activity3eSolution3': 'Check each:',
+                'MH.lesson_Y2Al_arth1a.check3e': 'For n = 1: 1 divides 16 ✓<br>For n = 3: 3 divides 18 ✓<br>For n = 5: 5 divides 20 ✓<br>For n = 15: 15 divides 30 ✓',
+                'MH.lesson_Y2Al_arth1a.activity3eSolution4': String.raw`Therefore, \(n \in \{1, 3, 5, 15\}\).`,
+                
+                // Summary
+                'MH.lesson_Y2Al_arth1a.summaryTitle': 'Summary: Euclidean Division',
+                'MH.lesson_Y2Al_arth1a.definitionTitle': 'Definition',
+                'MH.lesson_Y2Al_arth1a.definitionText1': String.raw`Let a and b be two natural integers with \(b \neq 0\).`,
+                'MH.lesson_Y2Al_arth1a.definitionText2': String.raw`There exists a unique pair \((q, r)\) of natural integers such that:`,
+                'MH.lesson_Y2Al_arth1a.equationDefinition': String.raw`\(a = b \times q + r\) with \(0 \leq r < b\)`,
+                'MH.lesson_Y2Al_arth1a.definitionText3': String.raw`Performing the Euclidean division of a by b means finding the pair \((q, r)\) of natural integers such that: \(a = b \times q + r\) with \(0 \leq r < b\).`,
+                'MH.lesson_Y2Al_arth1a.termDividend': 'a is the dividend',
+                'MH.lesson_Y2Al_arth1a.termDivisor': 'b is the divisor',
+                'MH.lesson_Y2Al_arth1a.termQuotient': 'q is the quotient',
+                'MH.lesson_Y2Al_arth1a.termRemainder': 'r is the remainder',
+                'MH.lesson_Y2Al_arth1a.keyPropertiesTitle': 'Key Properties',
+                'MH.lesson_Y2Al_arth1a.property1': String.raw`If n divides a and n divides b, then n divides \((a + b)\) and \((a - b)\)`,
+                'MH.lesson_Y2Al_arth1a.property2': String.raw`If n divides a, then n divides \((k \times a)\) for any integer k`,
+                'MH.lesson_Y2Al_arth1a.property3': String.raw`If n divides a and n divides b, then n divides any linear combination \((m \times a + p \times b)\)`,
+                'MH.lesson_Y2Al_arth1a.property4': 'A number is divisible by another if and only if the remainder of their Euclidean division is zero',
+                
+                // Practice Exercises
+                'MH.lesson_Y2Al_arth1a.practiceTitle': 'Practice Exercises',
+                'MH.lesson_Y2Al_arth1a.masterConcepts': 'Master the Concepts',
+                'MH.lesson_Y2Al_arth1a.exercise1Title': 'Exercise 1',
+                'MH.lesson_Y2Al_arth1a.exercise1': 'Perform the Euclidean division of 457 by 23. Find the quotient and remainder.',
+                'MH.lesson_Y2Al_arth1a.exercise2Title': 'Exercise 2',
+                'MH.lesson_Y2Al_arth1a.exercise2': 'Show that if a number divides both 84 and 108, then it also divides 24.',
+                'MH.lesson_Y2Al_arth1a.exercise3Title': 'Exercise 3',
+                'MH.lesson_Y2Al_arth1a.exercise3': String.raw`Find all natural numbers n such that n divides \(2n + 8\).`,
+                'MH.lesson_Y2Al_arth1a.exercise4Title': 'Exercise 4',
+                'MH.lesson_Y2Al_arth1a.exercise4': 'Prove that the product of three consecutive integers is divisible by 6.',
+                
+                // Practice Solutions
+                'MH.lesson_Y2Al_arth1a.exercise1Solution': String.raw`\(457 \div 23 = 19\) remainder 20`,
+                'MH.lesson_Y2Al_arth1a.equationEx1': String.raw`\(457 = 23 \times 19 + 20\)`,
+                'MH.lesson_Y2Al_arth1a.exercise1Solution2': 'Quotient = 19, Remainder = 20',
+                'MH.lesson_Y2Al_arth1a.exercise2Solution': 'Let d be a divisor of both 84 and 108. Then:',
+                'MH.lesson_Y2Al_arth1a.equationEx2': '\(108 - 84 = 24\)',
+                'MH.lesson_Y2Al_arth1a.exercise2Solution2': 'Since d divides 108 and 84, by the properties of divisibility, d divides their difference 24.',
+                'MH.lesson_Y2Al_arth1a.exercise3Solution': String.raw`If n divides \((2n + 8)\), then there exists integer k such that:`,
+                'MH.lesson_Y2Al_arth1a.equationEx3a': String.raw`\(2n + 8 = k \times n\)`,
+                'MH.lesson_Y2Al_arth1a.equationEx3b': String.raw`\(8 = k \times n - 2n = n \times (k - 2)\)`,
+                'MH.lesson_Y2Al_arth1a.exercise3Solution2': String.raw`So n must be a divisor of 8: \(\{1, 2, 4, 8\}\)`,
+                'MH.lesson_Y2Al_arth1a.exercise3Solution3': 'Check each:',
+                'MH.lesson_Y2Al_arth1a.checkEx3': 'n = 1: 1 divides 10 ✓<br>n = 2: 2 divides 12 ✓<br>n = 4: 4 divides 16 ✓<br>n = 8: 8 divides 24 ✓',
+                'MH.lesson_Y2Al_arth1a.exercise4Solution': String.raw`Let the three consecutive integers be n, \(n+1\), and \(n+2\).`,
+                'MH.lesson_Y2Al_arth1a.exercise4Solution2': 'Among any three consecutive integers:',
+                'MH.lesson_Y2Al_arth1a.exercise4Solution3': 'At least one is divisible by 2 (even)',
+                'MH.lesson_Y2Al_arth1a.exercise4Solution4': 'Exactly one is divisible by 3',
+                'MH.lesson_Y2Al_arth1a.exercise4Solution5': String.raw`Therefore, the product contains factors 2 and 3, so it's divisible by \(2 \times 3 = 6\).`,
+                
+                // Conclusion
+                'MH.lesson_Y2Al_arth1a.conclusionTitle': 'Conclusion',
+                'MH.lesson_Y2Al_arth1a.keyConceptsTitle': 'Key Concepts Mastered',
+                'MH.lesson_Y2Al_arth1a.concept1': 'Definition and properties of divisibility',
+                'MH.lesson_Y2Al_arth1a.concept2': 'Euclidean division algorithm',
+                'MH.lesson_Y2Al_arth1a.concept3': 'Linear combinations and divisibility',
+                'MH.lesson_Y2Al_arth1a.concept4': 'Relationship between divisors and remainders',
+                'MH.lesson_Y2Al_arth1a.concept5': 'Applications to problem-solving',
+                'MH.lesson_Y2Al_arth1a.finalThought': 'Euclidean division and divisibility form the foundation of number theory and are essential for understanding more advanced mathematical concepts. Mastery of these basics will help you in algebra, cryptography, and computer science.',
+                
+                // Solution buttons
+                'MH.lesson_Y2Al_arth1a.showSolution': 'Show Solution',
+                'MH.lesson_Y2Al_arth1a.hideSolution': 'Hide Solution',
+                
+                // Footer
+                'MH.footer.developer': 'Developer',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Links',
+                'MH.footer.terms': 'Terms of Use',
+                'MH.footer.privacy': 'Privacy Policy'
+            },
+            'ar': {
+    // ترجمات عامة
+    'MH.general.homeTooltip': 'الذهاب إلى الصفحة الرئيسية',
+    'MH.general.install': 'تثبيت التطبيق',
+    'MH.general.installSuccess': 'تم تثبيت Mathematics Hub بنجاح!',
+    'MH.general.enableNotifications': 'تمكين الإشعارات',
+    'MH.general.notificationEnabled': 'تم تمكين الإشعارات! ستتلقى التحديثات الآن.',
+    'MH.general.title': 'مركز الرياضيات',
+    'MH.general.theme': 'السمة',
+    'MH.general.language': 'اللغة',
+    
+    // ترجمات درس الحساب
+    'MH.lesson_Y2Al_arth1a.title': 'الحساب: الجزء 1',
+    'MH.lesson_Y2Al_arth1a.subtitle': 'القسمة الإقليدية - القسمة',
+    'MH.lesson_Y2Al_arth1a.introduction': 'المقدمة',
+    'MH.lesson_Y2Al_arth1a.introText1': 'تشكل القسمة الإقليدية والقسمة مفاهيم أساسية في الحساب تشكل أساسًا للعديد من العمليات والبراهين الرياضية. هذه المفاهيم ضرورية لفهم نظرية الأعداد والرياضيات المتقدمة.',
+    'MH.lesson_Y2Al_arth1a.introText2': 'في هذا الدرس، سنستكشف خصائص القسمة، ونتعلم كيفية إجراء القسمة الإقليدية، ونطبق هذه المفاهيم لحل مسائل رياضية متنوعة.',
+    
+    // النشاط 1
+    'MH.lesson_Y2Al_arth1a.activity1Title': 'النشاط 1: فهم القسمة',
+    'MH.lesson_Y2Al_arth1a.activity1Description': 'ليكن a عددًا طبيعيًا و n قاسمًا لـ a. حدد أي العبارات التالية صحيحة:',
+    'MH.lesson_Y2Al_arth1a.activity1a': 'أ) a هو مضاعف لـ n',
+    'MH.lesson_Y2Al_arth1a.activity1b': 'ب) a و n أوليان فيما بينهما',
+    'MH.lesson_Y2Al_arth1a.activity1c': 'ج) القاسم المشترك الأكبر (a, n) = n',
+    'MH.lesson_Y2Al_arth1a.activity1d': 'د) a = k × n، حيث k عدد طبيعي',
+    'MH.lesson_Y2Al_arth1a.activity1e': 'هـ) المضاعف المشترك الأصغر (a, n) = n × a',
+    'MH.lesson_Y2Al_arth1a.activity1f': 'و) باقي القسمة الإقليدية لـ a على n هو صفر',
+    
+    // حلول النشاط 1
+    'MH.lesson_Y2Al_arth1a.activity1aSolution': String.raw`صحيح. حسب التعريف، إذا كان n يقسم a، فإنه يوجد عدد صحيح k بحيث \(a = k \times n\)، مما يعني أن a هو مضاعف لـ n.`,
+    'MH.lesson_Y2Al_arth1a.activity1bSolution': String.raw`خطأ. هذا ليس بالضرورة صحيحًا. على سبيل المثال، إذا كان \(a = 6\) و \(n = 2\)، فإن n يقسم a لكن a و n ليسا أوليين فيما بينهما لأن \(\text{القاسم المشترك الأكبر}(6, 2) = 2 \neq 1\).`,
+    'MH.lesson_Y2Al_arth1a.activity1cSolution': 'صحيح. بما أن n يقسم a، فإن القاسم المشترك الأكبر لـ a و n هو n نفسه.',
+    'MH.lesson_Y2Al_arth1a.activity1dSolution': String.raw`صحيح. هذا هو تعريف القسمة: n يقسم a إذا وفقط إذا وجد عدد صحيح k بحيث \(a = k \times n\).`,
+    'MH.lesson_Y2Al_arth1a.activity1eSolution': String.raw`خطأ. المضاعف المشترك الأصغر لـ a و n هو في الواقع a نفسه، لأن a مضاعف لـ n. \(\text{المضاعف المشترك الأصغر}(a, n) = a\) عندما يقسم n العدد a.`,
+    'MH.lesson_Y2Al_arth1a.activity1fSolution': String.raw`صحيح. إذا كان n يقسم a، فإن \(a = k \times n\) حيث k عدد صحيح، لذلك عندما نقسم a على n، يكون الخارج k والباقي 0.`,
+    
+    // الجزء 1
+    'MH.lesson_Y2Al_arth1a.part1Title': 'الجزء 1: القسمة الإقليدية - القسمة',
+    'MH.lesson_Y2Al_arth1a.activity2Title': 'النشاط 2: خصائص القسمة',
+    'MH.lesson_Y2Al_arth1a.activity2Description': 'ليكن n، x، و y ثلاثة أعداد طبيعية بحيث يقسم n العدد x ويقسم n العدد y.',
+    'MH.lesson_Y2Al_arth1a.activity2a': String.raw`أ) أثبت أن n يقسم \(p \times x\) ويقسم \(p \times y\)، حيث p عدد طبيعي.`,
+    'MH.lesson_Y2Al_arth1a.activity2b': String.raw`ب) أثبت أن n يقسم \(x + y\).`,
+    'MH.lesson_Y2Al_arth1a.activity2c': String.raw`ج) أثبت أن n يقسم \(x - y\) (بافتراض \(x \geq y\)).`,
+    
+    // حلول النشاط 2
+    'MH.lesson_Y2Al_arth1a.activity2aSolution': String.raw`بما أن n يقسم x، فإنه يوجد عدد صحيح k بحيث \(x = k \times n\).`,
+    'MH.lesson_Y2Al_arth1a.equation2a': String.raw`\(p \times x = p \times (k \times n) = (p \times k) \times n\)`,
+    'MH.lesson_Y2Al_arth1a.activity2aSolution2': String.raw`بما أن \(p \times k\) عدد صحيح، فإن n يقسم \(p \times x\). نفس المنطق ينطبق على y.`,
+    'MH.lesson_Y2Al_arth1a.activity2bSolution': String.raw`بما أن n يقسم x و n يقسم y، فإنه يوجد عددان صحيحان \(k_1\) و \(k_2\) بحيث:`,
+    'MH.lesson_Y2Al_arth1a.equation2b1': String.raw`\(x = k_1 \times n\) و \(y = k_2 \times n\)`,
+    'MH.lesson_Y2Al_arth1a.equation2b2': String.raw`\(x + y = k_1 \times n + k_2 \times n = (k_1 + k_2) \times n\)`,
+    'MH.lesson_Y2Al_arth1a.activity2bSolution2': String.raw`بما أن \(k_1 + k_2\) عدد صحيح، فإن n يقسم \(x + y\).`,
+    'MH.lesson_Y2Al_arth1a.activity2cSolution': String.raw`بما أن n يقسم x و n يقسم y، فإنه يوجد عددان صحيحان \(k_1\) و \(k_2\) بحيث:`,
+    'MH.lesson_Y2Al_arth1a.equation2c1': String.raw`\(x = k_1 \times n\) و \(y = k_2 \times n\)`,
+    'MH.lesson_Y2Al_arth1a.equation2c2': String.raw`\(x - y = k_1 \times n - k_2 \times n = (k_1 - k_2) \times n\)`,
+    'MH.lesson_Y2Al_arth1a.activity2cSolution2': String.raw`بما أن \(k_1 - k_2\) عدد صحيح (و \(x \geq y\) يضمن أنه غير سالب)، فإن n يقسم \(x - y\).`,
+    
+    // النشاط 3
+    'MH.lesson_Y2Al_arth1a.activity3Title': 'النشاط 3: مسائل قسمة متقدمة',
+    'MH.lesson_Y2Al_arth1a.activity3a': '1. أثبت أنه إذا كان عدد طبيعي يقسم 328 ويقسم 299، فإنه يقسم 29.',
+    'MH.lesson_Y2Al_arth1a.activity3b': '2. استنتج أن 328 و 299 أوليان فيما بينهما.',
+    'MH.lesson_Y2Al_arth1a.activity3c': '3. حلل العدد 343 إلى عوامله الأولية وأثبت أن 118 و 225 أوليان فيما بينهما.',
+    'MH.lesson_Y2Al_arth1a.activity3d': String.raw`4. ليكن a، b، و n ثلاثة أعداد طبيعية. أثبت أنه إذا كان n يقسم \(2a + 3b\) ويقسم \(3a + 2b\)، فإن n يقسم \(5a\) ويقسم \(5b\).`,
+    'MH.lesson_Y2Al_arth1a.activity3e': String.raw`5. حدد جميع الأعداد الطبيعية n التي تقسم \(n + 15\).`,
+    
+    // حلول النشاط 3
+    'MH.lesson_Y2Al_arth1a.activity3aSolution': 'ليكن d عددًا طبيعيًا يقسم كلاً من 328 و 299. إذن d يقسم أي تركيب خطي من 328 و 299.',
+    'MH.lesson_Y2Al_arth1a.equation3a': '\(328 - 299 = 29\)',
+    'MH.lesson_Y2Al_arth1a.activity3aSolution2': String.raw`بما أن d يقسم 328 و 299، حسب النشاط 2(ج)، فإن d يقسم أيضًا الفرق بينهما \(328 - 299 = 29\).`,
+    'MH.lesson_Y2Al_arth1a.activity3bSolution': 'القواسم الموجبة للعدد 29 هي فقط 1 و 29. إذا كان عدد d يقسم كلاً من 328 و 299، فإنه يقسم 29.',
+    'MH.lesson_Y2Al_arth1a.activity3bSolution2': String.raw`تحقق مما إذا كان 29 يقسم 328: \(328 \div 29 = 11\) والباقي 9، إذن 29 لا يقسم 328.`,
+    'MH.lesson_Y2Al_arth1a.activity3bSolution3': String.raw`لذلك، القاسم المشترك الوحيد هو 1، إذن \(\text{القاسم المشترك الأكبر}(328, 299) = 1\)، مما يعني أنهما أوليان فيما بينهما.`,
+    'MH.lesson_Y2Al_arth1a.activity3cSolution': 'التحليل الأولي للعدد 343:',
+    'MH.lesson_Y2Al_arth1a.equation3c1': String.raw`\(343 = 7 \times 49 = 7 \times 7 \times 7 = 7^3\)`,
+    'MH.lesson_Y2Al_arth1a.activity3cSolution2': 'التحليل الأولي للعددين 118 و 225:',
+    'MH.lesson_Y2Al_arth1a.equation3c2': String.raw`\(118 = 2 \times 59\)`,
+    'MH.lesson_Y2Al_arth1a.equation3c3': String.raw`\(225 = 3^2 \times 5^2\)`,
+    'MH.lesson_Y2Al_arth1a.activity3cSolution3': String.raw`بما أن 118 و 225 ليس لهما عوامل أولية مشتركة، فهما أوليان فيما بينهما: \(\text{القاسم المشترك الأكبر}(118, 225) = 1\).`,
+    'MH.lesson_Y2Al_arth1a.activity3dSolution': String.raw`المعطى: n يقسم \((2a + 3b)\) و n يقسم \((3a + 2b)\)`,
+    'MH.lesson_Y2Al_arth1a.equation3d1': String.raw`\(3 \times (2a + 3b) - 2 \times (3a + 2b) = 6a + 9b - 6a - 4b = 5b\)`,
+    'MH.lesson_Y2Al_arth1a.activity3dSolution2': String.raw`بما أن n يقسم كلاً من \((2a + 3b)\) و \((3a + 2b)\)، فإن n يقسم أي تركيب خطي: n يقسم \(5b\).`,
+    'MH.lesson_Y2Al_arth1a.equation3d2': String.raw`\(2 \times (3a + 2b) - 3 \times (2a + 3b) = 6a + 4b - 6a - 9b = -5a\)`,
+    'MH.lesson_Y2Al_arth1a.activity3dSolution3': String.raw`إذن n يقسم \(5a\) (بما أنه إذا كان n يقسم \(-5a\)، فإنه يقسم أيضًا \(5a\)).`,
+    'MH.lesson_Y2Al_arth1a.activity3eSolution': String.raw`إذا كان n يقسم \((n + 15)\)، فإنه يوجد عدد صحيح k بحيث:`,
+    'MH.lesson_Y2Al_arth1a.equation3e1': String.raw`\(n + 15 = k \times n\)`,
+    'MH.lesson_Y2Al_arth1a.equation3e2': String.raw`\(15 = k \times n - n = n \times (k - 1)\)`,
+    'MH.lesson_Y2Al_arth1a.activity3eSolution2': 'إذن يجب أن يكون n قاسمًا للعدد 15. قواسم العدد 15 هي: 1، 3، 5، 15.',
+    'MH.lesson_Y2Al_arth1a.activity3eSolution3': 'تحقق من كل منها:',
+    'MH.lesson_Y2Al_arth1a.check3e': 'n = 1: 1 يقسم 16 ✓<br>n = 3: 3 يقسم 18 ✓<br>n = 5: 5 يقسم 20 ✓<br>n = 15: 15 يقسم 30 ✓',
+    'MH.lesson_Y2Al_arth1a.activity3eSolution4': String.raw`لذلك، \(n \in \{1, 3, 5, 15\}\).`,
+    
+    // الملخص
+    'MH.lesson_Y2Al_arth1a.summaryTitle': 'الملخص: القسمة الإقليدية',
+    'MH.lesson_Y2Al_arth1a.definitionTitle': 'التعريف',
+    'MH.lesson_Y2Al_arth1a.definitionText1': String.raw`ليكن a و b عددين طبيعيين مع \(b \neq 0\).`,
+    'MH.lesson_Y2Al_arth1a.definitionText2': String.raw`يوجد زوج فريد \((q, r)\) من الأعداد الطبيعية بحيث:`,
+    'MH.lesson_Y2Al_arth1a.equationDefinition': String.raw`\(a = b \times q + r\) مع \(0 \leq r < b\)`,
+    'MH.lesson_Y2Al_arth1a.definitionText3': String.raw`إجراء القسمة الإقليدية لـ a على b يعني إيجاد الزوج \((q, r)\) من الأعداد الطبيعية بحيث: \(a = b \times q + r\) مع \(0 \leq r < b\).`,
+    'MH.lesson_Y2Al_arth1a.termDividend': 'a هو المقسوم',
+    'MH.lesson_Y2Al_arth1a.termDivisor': 'b هو المقسوم عليه',
+    'MH.lesson_Y2Al_arth1a.termQuotient': 'q هو الخارج',
+    'MH.lesson_Y2Al_arth1a.termRemainder': 'r هو الباقي',
+    'MH.lesson_Y2Al_arth1a.keyPropertiesTitle': 'الخصائص الرئيسية',
+    'MH.lesson_Y2Al_arth1a.property1': String.raw`إذا كان n يقسم a و n يقسم b، فإن n يقسم \((a + b)\) و \((a - b)\)`,
+    'MH.lesson_Y2Al_arth1a.property2': String.raw`إذا كان n يقسم a، فإن n يقسم \((k \times a)\) لأي عدد صحيح k`,
+    'MH.lesson_Y2Al_arth1a.property3': String.raw`إذا كان n يقسم a و n يقسم b، فإن n يقسم أي تركيب خطي \((m \times a + p \times b)\)`,
+    'MH.lesson_Y2Al_arth1a.property4': 'العدد يقبل القسمة على عدد آخر إذا وفقط إذا كان باقي قسمتهما الإقليدية صفرًا',
+    
+    // تمارين الممارسة
+    'MH.lesson_Y2Al_arth1a.practiceTitle': 'تمارين الممارسة',
+    'MH.lesson_Y2Al_arth1a.masterConcepts': 'أتقن المفاهيم',
+    'MH.lesson_Y2Al_arth1a.exercise1Title': 'التمرين 1',
+    'MH.lesson_Y2Al_arth1a.exercise1': 'أجرِ القسمة الإقليدية للعدد 457 على 23. أوجد الخارج والباقي.',
+    'MH.lesson_Y2Al_arth1a.exercise2Title': 'التمرين 2',
+    'MH.lesson_Y2Al_arth1a.exercise2': 'أثبت أنه إذا كان عدد يقسم كلاً من 84 و 108، فإنه يقسم أيضًا 24.',
+    'MH.lesson_Y2Al_arth1a.exercise3Title': 'التمرين 3',
+    'MH.lesson_Y2Al_arth1a.exercise3': String.raw`أوجد جميع الأعداد الطبيعية n التي تقسم \(2n + 8\).`,
+    'MH.lesson_Y2Al_arth1a.exercise4Title': 'التمرين 4',
+    'MH.lesson_Y2Al_arth1a.exercise4': 'أثبت أن حاصل ضرب ثلاثة أعداد صحيحة متتالية يقبل القسمة على 6.',
+    
+    // حلول التمارين
+    'MH.lesson_Y2Al_arth1a.exercise1Solution': String.raw`\(457 \div 23 = 19\) والباقي 20`,
+    'MH.lesson_Y2Al_arth1a.equationEx1': String.raw`\(457 = 23 \times 19 + 20\)`,
+    'MH.lesson_Y2Al_arth1a.exercise1Solution2': 'الخارج = 19، الباقي = 20',
+    'MH.lesson_Y2Al_arth1a.exercise2Solution': 'ليكن d قاسمًا لكل من 84 و 108. إذن:',
+    'MH.lesson_Y2Al_arth1a.equationEx2': '\(108 - 84 = 24\)',
+    'MH.lesson_Y2Al_arth1a.exercise2Solution2': 'بما أن d يقسم 108 و 84، فبخصائص القسمة، فإن d يقسم الفرق بينهما 24.',
+    'MH.lesson_Y2Al_arth1a.exercise3Solution': String.raw`إذا كان n يقسم \((2n + 8)\)، فإنه يوجد عدد صحيح k بحيث:`,
+    'MH.lesson_Y2Al_arth1a.equationEx3a': String.raw`\(2n + 8 = k \times n\)`,
+    'MH.lesson_Y2Al_arth1a.equationEx3b': String.raw`\(8 = k \times n - 2n = n \times (k - 2)\)`,
+    'MH.lesson_Y2Al_arth1a.exercise3Solution2': String.raw`إذن يجب أن يكون n قاسمًا للعدد 8: \(\{1, 2, 4, 8\}\)`,
+    'MH.lesson_Y2Al_arth1a.exercise3Solution3': 'تحقق من كل منها:',
+    'MH.lesson_Y2Al_arth1a.checkEx3': 'n = 1: 1 يقسم 10 ✓<br>n = 2: 2 يقسم 12 ✓<br>n = 4: 4 يقسم 16 ✓<br>n = 8: 8 يقسم 24 ✓',
+    'MH.lesson_Y2Al_arth1a.exercise4Solution': String.raw`لتكن الأعداد الصحيحة المتتالية الثلاثة هي n، \(n+1\)، و \(n+2\).`,
+    'MH.lesson_Y2Al_arth1a.exercise4Solution2': 'بين أي ثلاثة أعداد صحيحة متتالية:',
+    'MH.lesson_Y2Al_arth1a.exercise4Solution3': 'على الأقل واحد يقبل القسمة على 2 (زوجي)',
+    'MH.lesson_Y2Al_arth1a.exercise4Solution4': 'واحد بالضبط يقبل القسمة على 3',
+    'MH.lesson_Y2Al_arth1a.exercise4Solution5': String.raw`لذلك، يحتوي الناتج على العاملين 2 و 3، لذا فهو يقبل القسمة على \(2 \times 3 = 6\).`,
+    
+    // الخاتمة
+    'MH.lesson_Y2Al_arth1a.conclusionTitle': 'الخاتمة',
+    'MH.lesson_Y2Al_arth1a.keyConceptsTitle': 'المفاهيم الرئيسية التي أتقنتها',
+    'MH.lesson_Y2Al_arth1a.concept1': 'تعريف وخصائص القسمة',
+    'MH.lesson_Y2Al_arth1a.concept2': 'خوارزمية القسمة الإقليدية',
+    'MH.lesson_Y2Al_arth1a.concept3': 'التركيبات الخطية والقسمة',
+    'MH.lesson_Y2Al_arth1a.concept4': 'العلاقة بين القواسم والبواقي',
+    'MH.lesson_Y2Al_arth1a.concept5': 'التطبيقات في حل المسائل',
+    'MH.lesson_Y2Al_arth1a.finalThought': 'تشكل القسمة الإقليدية والقسمة أساس نظرية الأعداد وهي ضرورية لفهم المفاهيم الرياضية الأكثر تقدمًا. سيُساعدك إتقان هذه الأساسيات في الجبر والتشفير وعلوم الحاسوب.',
+    
+    // أزرار الحلول
+    'MH.lesson_Y2Al_arth1a.showSolution': 'إظهار الحل',
+    'MH.lesson_Y2Al_arth1a.hideSolution': 'إخفاء الحل',
+    
+    // التذييل
+    'MH.footer.developer': 'المطور',
+    'MH.footer.version': 'الإصدار',
+    'MH.footer.links': 'روابط',
+    'MH.footer.terms': 'شروط الاستخدام',
+    'MH.footer.privacy': 'سياسة الخصوصية'
+},
+            'fr': {
+    // Traductions générales
+    'MH.general.homeTooltip': 'Aller à la page d\'accueil',
+    'MH.general.install': 'Installer l\'App',
+    'MH.general.installSuccess': 'Mathematics Hub installé avec succès!',
+    'MH.general.enableNotifications': 'Activer les notifications',
+    'MH.general.notificationEnabled': 'Notifications activées! Vous recevrez maintenant des mises à jour.',
+    'MH.general.title': 'Centre de Mathématiques',
+    'MH.general.theme': 'Thème',
+    'MH.general.language': 'Langue',
+    
+    // Traductions de la leçon d\'arithmétique
+    'MH.lesson_Y2Al_arth1a.title': 'Arithmétique : Partie 1',
+    'MH.lesson_Y2Al_arth1a.subtitle': 'Division Euclidienne - Divisibilité',
+    'MH.lesson_Y2Al_arth1a.introduction': 'Introduction',
+    'MH.lesson_Y2Al_arth1a.introText1': 'La division euclidienne et la divisibilité sont des concepts fondamentaux en arithmétique qui forment la base de nombreuses opérations et preuves mathématiques. Ces concepts sont essentiels pour comprendre la théorie des nombres et les mathématiques avancées.',
+    'MH.lesson_Y2Al_arth1a.introText2': 'Dans cette leçon, nous explorerons les propriétés de la divisibilité, apprendrons comment effectuer la division euclidienne et appliquerons ces concepts pour résoudre divers problèmes mathématiques.',
+    
+    // Activité 1
+    'MH.lesson_Y2Al_arth1a.activity1Title': 'Activité 1 : Comprendre la Divisibilité',
+    'MH.lesson_Y2Al_arth1a.activity1Description': 'Soit a un entier naturel et n un diviseur de a. Indiquez lesquelles des affirmations suivantes sont vraies:',
+    'MH.lesson_Y2Al_arth1a.activity1a': 'a) a est un multiple de n',
+    'MH.lesson_Y2Al_arth1a.activity1b': 'b) a et n sont premiers entre eux',
+    'MH.lesson_Y2Al_arth1a.activity1c': 'c) PGCD(a, n) = n',
+    'MH.lesson_Y2Al_arth1a.activity1d': 'd) a = k × n, où k est un entier naturel',
+    'MH.lesson_Y2Al_arth1a.activity1e': 'e) PPCM(a, n) = n × a',
+    'MH.lesson_Y2Al_arth1a.activity1f': 'f) Le reste de la division euclidienne de a par n est zéro',
+    
+    // Solutions Activité 1
+    'MH.lesson_Y2Al_arth1a.activity1aSolution': String.raw`VRAI. Par définition, si n divise a, alors il existe un entier k tel que \(a = k \times n\), ce qui signifie que a est un multiple de n.`,
+    'MH.lesson_Y2Al_arth1a.activity1bSolution': String.raw`FAUX. Ce n'est pas nécessairement vrai. Par exemple, si \(a = 6\) et \(n = 2\), alors n divise a mais a et n ne sont pas premiers entre eux puisque \(\text{PGCD}(6, 2) = 2 \neq 1\).`,
+    'MH.lesson_Y2Al_arth1a.activity1cSolution': 'VRAI. Puisque n divise a, le plus grand commun diviseur de a et n est n lui-même.',
+    'MH.lesson_Y2Al_arth1a.activity1dSolution': String.raw`VRAI. C'est la définition de la divisibilité : n divise a si et seulement s'il existe un entier k tel que \(a = k \times n\).`,
+    'MH.lesson_Y2Al_arth1a.activity1eSolution': String.raw`FAUX. Le plus petit commun multiple de a et n est en réalité a lui-même, puisque a est un multiple de n. \(\text{PPCM}(a, n) = a\) lorsque n divise a.`,
+    'MH.lesson_Y2Al_arth1a.activity1fSolution': String.raw`VRAI. Si n divise a, alors \(a = k \times n\) avec k entier, donc lorsque nous divisons a par n, le quotient est k et le reste est 0.`,
+    
+    // Partie 1
+    'MH.lesson_Y2Al_arth1a.part1Title': 'Partie 1 : Division Euclidienne - Divisibilité',
+    'MH.lesson_Y2Al_arth1a.activity2Title': 'Activité 2 : Propriétés de la Divisibilité',
+    'MH.lesson_Y2Al_arth1a.activity2Description': 'Soient n, x et y trois entiers naturels tels que n divise x et n divise y.',
+    'MH.lesson_Y2Al_arth1a.activity2a': String.raw`a) Montrer que n divise \(p \times x\) et n divise \(p \times y\), où p est un entier naturel.`,
+    'MH.lesson_Y2Al_arth1a.activity2b': String.raw`b) Montrer que n divise \(x + y\).`,
+    'MH.lesson_Y2Al_arth1a.activity2c': String.raw`c) Montrer que n divise \(x - y\) (en supposant \(x \geq y\)).`,
+    
+    // Solutions Activité 2
+    'MH.lesson_Y2Al_arth1a.activity2aSolution': String.raw`Puisque n divise x, il existe un entier k tel que \(x = k \times n\).`,
+    'MH.lesson_Y2Al_arth1a.equation2a': String.raw`\(p \times x = p \times (k \times n) = (p \times k) \times n\)`,
+    'MH.lesson_Y2Al_arth1a.activity2aSolution2': String.raw`Puisque \(p \times k\) est un entier, n divise \(p \times x\). Le même raisonnement s'applique pour y.`,
+    'MH.lesson_Y2Al_arth1a.activity2bSolution': String.raw`Puisque n divise x et n divise y, il existe des entiers \(k_1\) et \(k_2\) tels que:`,
+    'MH.lesson_Y2Al_arth1a.equation2b1': String.raw`\(x = k_1 \times n\) et \(y = k_2 \times n\)`,
+    'MH.lesson_Y2Al_arth1a.equation2b2': String.raw`\(x + y = k_1 \times n + k_2 \times n = (k_1 + k_2) \times n\)`,
+    'MH.lesson_Y2Al_arth1a.activity2bSolution2': String.raw`Puisque \(k_1 + k_2\) est un entier, n divise \(x + y\).`,
+    'MH.lesson_Y2Al_arth1a.activity2cSolution': String.raw`Puisque n divise x et n divise y, il existe des entiers \(k_1\) et \(k_2\) tels que:`,
+    'MH.lesson_Y2Al_arth1a.equation2c1': String.raw`\(x = k_1 \times n\) et \(y = k_2 \times n\)`,
+    'MH.lesson_Y2Al_arth1a.equation2c2': String.raw`\(x - y = k_1 \times n - k_2 \times n = (k_1 - k_2) \times n\)`,
+    'MH.lesson_Y2Al_arth1a.activity2cSolution2': String.raw`Puisque \(k_1 - k_2\) est un entier (et \(x \geq y\) assure qu'il est non négatif), n divise \(x - y\).`,
+    
+    // Activité 3
+    'MH.lesson_Y2Al_arth1a.activity3Title': 'Activité 3 : Problèmes de Divisibilité Avancés',
+    'MH.lesson_Y2Al_arth1a.activity3a': '1. Montrer que si un entier naturel divise 328 et divise 299, alors il divise 29.',
+    'MH.lesson_Y2Al_arth1a.activity3b': '2. Déduire que 328 et 299 sont premiers entre eux.',
+    'MH.lesson_Y2Al_arth1a.activity3c': '3. Décomposer 343 en facteurs premiers et montrer que 118 et 225 sont premiers entre eux.',
+    'MH.lesson_Y2Al_arth1a.activity3d': String.raw`4. Soient a, b et n trois entiers naturels. Montrer que si n divise \(2a + 3b\) et n divise \(3a + 2b\), alors n divise \(5a\) et n divise \(5b\).`,
+    'MH.lesson_Y2Al_arth1a.activity3e': String.raw`5. Déterminer tous les entiers naturels n tels que n divise \(n + 15\).`,
+    
+    // Solutions Activité 3
+    'MH.lesson_Y2Al_arth1a.activity3aSolution': 'Soit d un entier naturel qui divise à la fois 328 et 299. Alors d divise toute combinaison linéaire de 328 et 299.',
+    'MH.lesson_Y2Al_arth1a.equation3a': '\(328 - 299 = 29\)',
+    'MH.lesson_Y2Al_arth1a.activity3aSolution2': String.raw`Puisque d divise 328 et 299, par l'Activité 2(c), d divise également leur différence \(328 - 299 = 29\).`,
+    'MH.lesson_Y2Al_arth1a.activity3bSolution': 'Les seuls diviseurs positifs de 29 sont 1 et 29. Si un nombre d divise à la fois 328 et 299, alors il divise 29.',
+    'MH.lesson_Y2Al_arth1a.activity3bSolution2': String.raw`Vérifions si 29 divise 328: \(328 \div 29 = 11\) reste 9, donc 29 ne divise pas 328.`,
+    'MH.lesson_Y2Al_arth1a.activity3bSolution3': String.raw`Par conséquent, le seul diviseur commun est 1, donc \(\text{PGCD}(328, 299) = 1\), ce qui signifie qu'ils sont premiers entre eux.`,
+    'MH.lesson_Y2Al_arth1a.activity3cSolution': 'Décomposition en facteurs premiers de 343:',
+    'MH.lesson_Y2Al_arth1a.equation3c1': String.raw`\(343 = 7 \times 49 = 7 \times 7 \times 7 = 7^3\)`,
+    'MH.lesson_Y2Al_arth1a.activity3cSolution2': 'Décomposition en facteurs premiers de 118 et 225:',
+    'MH.lesson_Y2Al_arth1a.equation3c2': String.raw`\(118 = 2 \times 59\)`,
+    'MH.lesson_Y2Al_arth1a.equation3c3': String.raw`\(225 = 3^2 \times 5^2\)`,
+    'MH.lesson_Y2Al_arth1a.activity3cSolution3': String.raw`Puisque 118 et 225 n'ont pas de facteurs premiers communs, ils sont premiers entre eux: \(\text{PGCD}(118, 225) = 1\).`,
+    'MH.lesson_Y2Al_arth1a.activity3dSolution': String.raw`Donné: n divise \((2a + 3b)\) et n divise \((3a + 2b)\)`,
+    'MH.lesson_Y2Al_arth1a.equation3d1': String.raw`\(3 \times (2a + 3b) - 2 \times (3a + 2b) = 6a + 9b - 6a - 4b = 5b\)`,
+    'MH.lesson_Y2Al_arth1a.activity3dSolution2': String.raw`Puisque n divise à la fois \((2a + 3b)\) et \((3a + 2b)\), n divise toute combinaison linéaire: n divise \(5b\).`,
+    'MH.lesson_Y2Al_arth1a.equation3d2': String.raw`\(2 \times (3a + 2b) - 3 \times (2a + 3b) = 6a + 4b - 6a - 9b = -5a\)`,
+    'MH.lesson_Y2Al_arth1a.activity3dSolution3': String.raw`Ainsi n divise \(5a\) (puisque si n divise \(-5a\), il divise aussi \(5a\)).`,
+    'MH.lesson_Y2Al_arth1a.activity3eSolution': String.raw`Si n divise \((n + 15)\), alors il existe un entier k tel que:`,
+    'MH.lesson_Y2Al_arth1a.equation3e1': String.raw`\(n + 15 = k \times n\)`,
+    'MH.lesson_Y2Al_arth1a.equation3e2': String.raw`\(15 = k \times n - n = n \times (k - 1)\)`,
+    'MH.lesson_Y2Al_arth1a.activity3eSolution2': 'Donc n doit être un diviseur de 15. Les diviseurs de 15 sont: 1, 3, 5, 15.',
+    'MH.lesson_Y2Al_arth1a.activity3eSolution3': 'Vérifions chacun:',
+    'MH.lesson_Y2Al_arth1a.check3e': 'Pour n = 1: 1 divise 16 ✓<br>Pour n = 3: 3 divise 18 ✓<br>Pour n = 5: 5 divise 20 ✓<br>Pour n = 15: 15 divise 30 ✓',
+    'MH.lesson_Y2Al_arth1a.activity3eSolution4': String.raw`Par conséquent, \(n \in \{1, 3, 5, 15\}\).`,
+    
+    // Résumé
+    'MH.lesson_Y2Al_arth1a.summaryTitle': 'Résumé : Division Euclidienne',
+    'MH.lesson_Y2Al_arth1a.definitionTitle': 'Définition',
+    'MH.lesson_Y2Al_arth1a.definitionText1': String.raw`Soient a et b deux entiers naturels avec \(b \neq 0\).`,
+    'MH.lesson_Y2Al_arth1a.definitionText2': String.raw`Il existe un unique couple \((q, r)\) d'entiers naturels tel que:`,
+    'MH.lesson_Y2Al_arth1a.equationDefinition': String.raw`\(a = b \times q + r\) avec \(0 \leq r < b\)`,
+    'MH.lesson_Y2Al_arth1a.definitionText3': String.raw`Effectuer la division euclidienne de a par b signifie trouver le couple \((q, r)\) d'entiers naturels tel que: \(a = b \times q + r\) avec \(0 \leq r < b\).`,
+    'MH.lesson_Y2Al_arth1a.termDividend': 'a est le dividende',
+    'MH.lesson_Y2Al_arth1a.termDivisor': 'b est le diviseur',
+    'MH.lesson_Y2Al_arth1a.termQuotient': 'q est le quotient',
+    'MH.lesson_Y2Al_arth1a.termRemainder': 'r est le reste',
+    'MH.lesson_Y2Al_arth1a.keyPropertiesTitle': 'Propriétés Clés',
+    'MH.lesson_Y2Al_arth1a.property1': String.raw`Si n divise a et n divise b, alors n divise \((a + b)\) et \((a - b)\)`,
+    'MH.lesson_Y2Al_arth1a.property2': String.raw`Si n divise a, alors n divise \((k \times a)\) pour tout entier k`,
+    'MH.lesson_Y2Al_arth1a.property3': String.raw`Si n divise a et n divise b, alors n divise toute combinaison linéaire \((m \times a + p \times b)\)`,
+    'MH.lesson_Y2Al_arth1a.property4': 'Un nombre est divisible par un autre si et seulement si le reste de leur division euclidienne est zéro',
+    
+    // Exercices Pratiques
+    'MH.lesson_Y2Al_arth1a.practiceTitle': 'Exercices Pratiques',
+    'MH.lesson_Y2Al_arth1a.masterConcepts': 'Maîtriser les Concepts',
+    'MH.lesson_Y2Al_arth1a.exercise1Title': 'Exercice 1',
+    'MH.lesson_Y2Al_arth1a.exercise1': 'Effectuer la division euclidienne de 457 par 23. Trouver le quotient et le reste.',
+    'MH.lesson_Y2Al_arth1a.exercise2Title': 'Exercice 2',
+    'MH.lesson_Y2Al_arth1a.exercise2': 'Montrer que si un nombre divise à la fois 84 et 108, alors il divise aussi 24.',
+    'MH.lesson_Y2Al_arth1a.exercise3Title': 'Exercice 3',
+    'MH.lesson_Y2Al_arth1a.exercise3': String.raw`Trouver tous les nombres naturels n tels que n divise \(2n + 8\).`,
+    'MH.lesson_Y2Al_arth1a.exercise4Title': 'Exercice 4',
+    'MH.lesson_Y2Al_arth1a.exercise4': 'Prouver que le produit de trois entiers consécutifs est divisible par 6.',
+    
+    // Solutions des Exercices
+    'MH.lesson_Y2Al_arth1a.exercise1Solution': String.raw`\(457 \div 23 = 19\) reste 20`,
+    'MH.lesson_Y2Al_arth1a.equationEx1': String.raw`\(457 = 23 \times 19 + 20\)`,
+    'MH.lesson_Y2Al_arth1a.exercise1Solution2': 'Quotient = 19, Reste = 20',
+    'MH.lesson_Y2Al_arth1a.exercise2Solution': 'Soit d un diviseur commun de 84 et 108. Alors:',
+    'MH.lesson_Y2Al_arth1a.equationEx2': '\(108 - 84 = 24\)',
+    'MH.lesson_Y2Al_arth1a.exercise2Solution2': 'Puisque d divise 108 et 84, par les propriétés de la divisibilité, d divise leur différence 24.',
+    'MH.lesson_Y2Al_arth1a.exercise3Solution': String.raw`Si n divise \((2n + 8)\), alors il existe un entier k tel que:`,
+    'MH.lesson_Y2Al_arth1a.equationEx3a': String.raw`\(2n + 8 = k \times n\)`,
+    'MH.lesson_Y2Al_arth1a.equationEx3b': String.raw`\(8 = k \times n - 2n = n \times (k - 2)\)`,
+    'MH.lesson_Y2Al_arth1a.exercise3Solution2': String.raw`Donc n doit être un diviseur de 8: \(\{1, 2, 4, 8\}\)`,
+    'MH.lesson_Y2Al_arth1a.exercise3Solution3': 'Vérifions chacun:',
+    'MH.lesson_Y2Al_arth1a.checkEx3': 'n = 1: 1 divise 10 ✓<br>n = 2: 2 divise 12 ✓<br>n = 4: 4 divise 16 ✓<br>n = 8: 8 divise 24 ✓',
+    'MH.lesson_Y2Al_arth1a.exercise4Solution': String.raw`Soient les trois entiers consécutifs n, \(n+1\) et \(n+2\).`,
+    'MH.lesson_Y2Al_arth1a.exercise4Solution2': 'Parmi trois entiers consécutifs quelconques:',
+    'MH.lesson_Y2Al_arth1a.exercise4Solution3': 'Au moins un est divisible par 2 (pair)',
+    'MH.lesson_Y2Al_arth1a.exercise4Solution4': 'Exactement un est divisible par 3',
+    'MH.lesson_Y2Al_arth1a.exercise4Solution5': String.raw`Par conséquent, le produit contient les facteurs 2 et 3, donc il est divisible par \(2 \times 3 = 6\).`,
+    
+    // Conclusion
+    'MH.lesson_Y2Al_arth1a.conclusionTitle': 'Conclusion',
+    'MH.lesson_Y2Al_arth1a.keyConceptsTitle': 'Concepts Clés Maîtrisés',
+    'MH.lesson_Y2Al_arth1a.concept1': 'Définition et propriétés de la divisibilité',
+    'MH.lesson_Y2Al_arth1a.concept2': 'Algorithme de division euclidienne',
+    'MH.lesson_Y2Al_arth1a.concept3': 'Combinaisons linéaires et divisibilité',
+    'MH.lesson_Y2Al_arth1a.concept4': 'Relation entre diviseurs et restes',
+    'MH.lesson_Y2Al_arth1a.concept5': 'Applications à la résolution de problèmes',
+    'MH.lesson_Y2Al_arth1a.finalThought': 'La division euclidienne et la divisibilité forment la base de la théorie des nombres et sont essentielles pour comprendre des concepts mathématiques plus avancés. La maîtrise de ces bases vous aidera en algèbre, cryptographie et informatique.',
+    
+    // Boutons de Solutions
+    'MH.lesson_Y2Al_arth1a.showSolution': 'Afficher la Solution',
+    'MH.lesson_Y2Al_arth1a.hideSolution': 'Masquer la Solution',
+    
+    // Pied de page
+    'MH.footer.developer': 'Développeur',
+    'MH.footer.version': 'Version',
+    'MH.footer.links': 'Liens',
+    'MH.footer.terms': 'Conditions d\'Utilisation',
+    'MH.footer.privacy': 'Politique de Confidentialité'
+}
+        };
+
+        // Merge with existing translations if they exist
+        if (typeof translations !== 'undefined') {
+            Object.keys(arithmeticTranslations).forEach(lang => {
+                if (translations[lang]) {
+                    translations[lang] = {...translations[lang], ...arithmeticTranslations[lang]};
+                } else {
+                    translations[lang] = arithmeticTranslations[lang];
+                }
+            });
+        } else {
+            var translations = arithmeticTranslations;
+        }
+
+        // Solution toggle function
+        function toggleSolution(problemNumber) {
+            const solution = document.getElementById(`solution${problemNumber}`);
+            const button = solution.previousElementSibling;
+            
+            if (solution.style.display === 'block') {
+                solution.style.display = 'none';
+                button.setAttribute('data-i18n', 'MH.lesson_Y2Al_arth1a.showSolution');
+                button.textContent = translations[MHThemeManager.getCurrentLanguage()]['MH.lesson_Y2Al_arth1a.showSolution'];
+            } else {
+                solution.style.display = 'block';
+                button.setAttribute('data-i18n', 'MH.lesson_Y2Al_arth1a.hideSolution');
+                button.textContent = translations[MHThemeManager.getCurrentLanguage()]['MH.lesson_Y2Al_arth1a.hideSolution'];
+                
+                // Re-render KaTeX for newly visible equations
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(solution, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\(', right: '\\)', display: false},
+                            {left: '\\[', right: '\\]', display: true}
+                        ],
+                        throwOnError: false
+                    });
+                }
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize KaTeX auto-render
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+
+            // Initialize solutions as hidden
+            for (let i = 1; i <= 18; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+            }
+        });
+    </script>
+
+<!-- Add the service worker registration script -->
+<script>
+    // Register service worker with better error handling
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch(function(error) {
+                console.log('Service Worker registration failed:', error);
+            });
+        });
+    }
+</script>
+
+<!-- Add noscript fallback -->
+<noscript>
+    <style>
+        .MH-header-controls { display: none; }
+        .MH-solution { display: block; }
+    </style>
+    <div class="MH-warning">
+        JavaScript is recommended for the full experience, but content is still accessible.
+    </div>
+</noscript>
+</body>
+</html>

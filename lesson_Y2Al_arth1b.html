@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Arithmetic - Divisibility Criteria</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#4A90E2" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#8E44AD" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#4A90E2">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    
+    <style>
+        /* Page-specific color palette - Blue + Purple Theme */
+        :root {
+            --primary: #4A90E2;        /* Cornflower Blue */
+            --primary-light: #7BAAF7;  /* Light Blue */
+            --primary-dark: #357ABD;   /* Darker Blue */
+            --secondary: #8E44AD;      /* Dark Purple */
+            --secondary-light: #AF7AC5; /* Light Purple */
+            --secondary-dark: #6C3483;  /* Darker Purple */
+            --accent: #E67E22;
+            --warning: #E74C3C;
+            --info: #2ECC71;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #FFFFFF;
+            --surface: #F8F9FA;
+            --border: #E9ECEF;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        [data-theme="dark"] {
+            --primary: #357ABD;
+            --primary-light: #4A90E2;
+            --primary-dark: #2C3E50;
+            --secondary: #6C3483;
+            --secondary-light: #8E44AD;
+            --secondary-dark: #4A235A;
+            --accent: #D35400;
+            --warning: #C0392B;
+            --info: #27AE60;
+            --text: #FFFFFF;
+            --text-light: #CCCCCC;
+            --background: #121212;
+            --surface: #1E1E1E;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        /* KaTeX styling */
+        .katex { 
+            font-size: 1.1em; 
+        }
+        
+        .katex-display { 
+            margin: 1em 0; 
+            text-align: center;
+        }
+        
+        .katex-display > .katex { 
+            display: inline-block;
+            text-align: center;
+        }
+
+        /* Equation styling */
+        .MH-equation {
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            margin: 0.5em 0;
+            padding: 0;
+            display: inline-block;
+            direction: ltr !important;
+            unicode-bidi: isolate;
+        }
+        
+        [dir="rtl"] .MH-equation {
+            text-align: left;
+            unicode-bidi: plaintext;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                    <!-- Notification Button -->
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+                        <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Al_arth1b.title">Arithmetic: Part 2</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y2Al_arth1b.subtitle">Divisibility Criteria by 2, 5, 4, 25, and 8</h2>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_arth1b.introduction">Introduction</h2>
+            <p data-i18n="MH.lesson_Y2Al_arth1b.introText1">Divisibility criteria are simple rules that allow us to quickly determine whether one number is divisible by another without performing the actual division. These criteria are particularly useful for numbers like 2, 5, 4, 25, and 8, which have patterns based on the last digits of a number.</p>
+            <p data-i18n="MH.lesson_Y2Al_arth1b.introText2">In this lesson, we will explore the mathematical foundations of these divisibility criteria and learn how to apply them to solve various problems efficiently.</p>
+        </section>
+
+        <!-- Apply Exercises -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_arth1b.applyExercisesTitle">Apply Exercises: Understanding Patterns</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1b.applyInstructionsTitle">Instructions</h3>
+                <p data-i18n="MH.lesson_Y2Al_arth1b.applyInstructionsText">Solve these exercises by applying the divisibility concepts. Show all your work step by step.</p>
+            </div>
+            
+            <!-- Exercise 1 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1b.activity1Title">Activity 1: Understanding the Pattern</h3>
+                
+                <div class="MH-exercise-part">
+                    <h4 data-i18n="MH.lesson_Y2Al_arth1b.activity1a">Part a: Remainders by 1000</h4>
+                    <p data-i18n="MH.lesson_Y2Al_arth1b.activity1aQuestion">For each of the numbers 23, 96, 249, 1672, 3502, and 19456, determine the remainder of its Euclidean division by 1000. What do you notice?</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1b.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                    <div class="MH-solution" id="solution1">
+                        <p data-i18n="MH.lesson_Y2Al_arth1b.activity1aSolution1">For each number, the remainder when divided by 1000 is simply the last three digits:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.activity1aSolution.equation1">\(23 \div 1000 = 0\) remainder \(23\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.activity1aSolution.equation2">\(96 \div 1000 = 0\) remainder \(96\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.activity1aSolution.equation3">\(249 \div 1000 = 0\) remainder \(249\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.activity1aSolution.equation4">\(1672 \div 1000 = 1\) remainder \(672\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.activity1aSolution.equation5">\(3502 \div 1000 = 3\) remainder \(502\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.activity1aSolution.equation6">\(19456 \div 1000 = 19\) remainder \(456\)</div>
+                        <p data-i18n="MH.lesson_Y2Al_arth1b.activity1aSolution2">Observation: The remainder is exactly the number formed by the last three digits of the original number.</p>
+                    </div>
+                </div>
+                
+                <div class="MH-exercise-part">
+                    <h4 data-i18n="MH.lesson_Y2Al_arth1b.activity1b">Part b: Remainders by 8</h4>
+                    <p data-i18n="MH.lesson_Y2Al_arth1b.activity1bQuestion">For each of the previous numbers, determine the remainder of its Euclidean division by 8.</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1b.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                    <div class="MH-solution" id="solution2">
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.activity1bSolution.equation1">\(23 \div 8 = 2\) remainder \(7\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.activity1bSolution.equation2">\(96 \div 8 = 12\) remainder \(0\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.activity1bSolution.equation3">\(249 \div 8 = 31\) remainder \(1\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.activity1bSolution.equation4">\(1672 \div 8 = 209\) remainder \(0\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.activity1bSolution.equation5">\(3502 \div 8 = 437\) remainder \(6\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.activity1bSolution.equation6">\(19456 \div 8 = 2432\) remainder \(0\)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Exercise 2 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1b.activity2Title">Activity 2: Mathematical Justification</h3>
+                
+                <div class="MH-exercise-part">
+                    <h4 data-i18n="MH.lesson_Y2Al_arth1b.activity2a">Part a: Number Representation</h4>
+                    <p data-i18n="MH.lesson_Y2Al_arth1b.activity2aQuestion">Let \(n\) be a natural number greater than or equal to 100 and let \(b\) be the number formed by its last three digits. Justify writing \(n\) in the form \(n = 1000a + b\), where \(a\) is a natural number.</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1b.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                    <div class="MH-solution" id="solution3">
+                        <p data-i18n="MH.lesson_Y2Al_arth1b.activity2aSolution">Any natural number \(n \geq 100\) can be written in the decimal system as:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.activity2aSolution.equation1">\(n = a_k \times 10^k + a_{k-1} \times 10^{k-1} + \ldots + a_3 \times 10^3 + a_2 \times 10^2 + a_1 \times 10 + a_0\)</div>
+                        <p data-i18n="MH.lesson_Y2Al_arth1b.activity2aSolution2">We can group the terms:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.activity2aSolution.equation2">\(n = (a_k \times 10^{k-3} + a_{k-1} \times 10^{k-4} + \ldots + a_3) \times 1000 + (a_2 \times 100 + a_1 \times 10 + a_0)\)</div>
+                        <p data-i18n="MH.lesson_Y2Al_arth1b.activity2aSolution3">Let \(a = a_k \times 10^{k-3} + a_{k-1} \times 10^{k-4} + \ldots + a_3\) (which is a natural number) and \(b = a_2 \times 100 + a_1 \times 10 + a_0\) (the number formed by the last three digits). Therefore:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.activity2aSolution.equation3">\(n = 1000a + b\)</div>
+                    </div>
+                </div>
+                
+                <div class="MH-exercise-part">
+                    <h4 data-i18n="MH.lesson_Y2Al_arth1b.activity2b">Part b: Remainder Equality</h4>
+                    <p data-i18n="MH.lesson_Y2Al_arth1b.activity2bQuestion">Show that \(n\) and \(b\) have the same remainder in the Euclidean division by 8.</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1b.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+                    <div class="MH-solution" id="solution4">
+                        <p data-i18n="MH.lesson_Y2Al_arth1b.activity2bSolution">We have \(n = 1000a + b\). Now \(1000 = 8 \times 125\), so \(1000\) is divisible by 8.</p>
+                        <p data-i18n="MH.lesson_Y2Al_arth1b.activity2bSolution2">When we divide \(n\) by 8:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.activity2bSolution.equation1">\(n \div 8 = (1000a + b) \div 8 = (1000a) \div 8 + b \div 8\)</div>
+                        <p data-i18n="MH.lesson_Y2Al_arth1b.activity2bSolution3">Since \(1000a\) is divisible by 8, the remainder when dividing \(n\) by 8 depends only on \(b\). Therefore, \(n\) and \(b\) have the same remainder when divided by 8.</p>
+                    </div>
+                </div>
+                
+                <div class="MH-exercise-part">
+                    <h4 data-i18n="MH.lesson_Y2Al_arth1b.activity2c">Part c: Divisibility Criterion</h4>
+                    <p data-i18n="MH.lesson_Y2Al_arth1b.activity2cQuestion">State a divisibility criterion by 8.</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1b.showSolution" onclick="toggleSolution(5)">Show Solution</button>
+                    <div class="MH-solution" id="solution5">
+                        <div class="MH-definition">
+                            <h3 data-i18n="MH.lesson_Y2Al_arth1b.divisibilityBy8Criterion">Divisibility Criterion by 8</h3>
+                            <p data-i18n="MH.lesson_Y2Al_arth1b.divisibilityBy8CriterionText">A natural number \(n\) (\(n \geq 100\)) is divisible by 8 if and only if the number formed by its last three digits is divisible by 8.</p>
+                            <p data-i18n="MH.lesson_Y2Al_arth1b.divisibilityBy8CriterionText2">The remainder of the Euclidean division of \(n\) by 8 is equal to the remainder of the Euclidean division by 8 of the number formed by its last three digits.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Exercise 3 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1b.activity3Title">Activity 3: Application to Powers</h3>
+                <p data-i18n="MH.lesson_Y2Al_arth1b.activity3Question">Show that \(2^{721} + 2^{723}\) is divisible by 5.</p>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1b.showSolution" onclick="toggleSolution(6)">Show Solution</button>
+                <div class="MH-solution" id="solution6">
+                    <p data-i18n="MH.lesson_Y2Al_arth1b.activity3Solution1">First, factor the expression:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.activity3Solution.equation1">\(2^{721} + 2^{723} = 2^{721}(1 + 2^2) = 2^{721}(1 + 4) = 2^{721} \times 5\)</div>
+                    <p data-i18n="MH.lesson_Y2Al_arth1b.activity3Solution2">Therefore, the expression is clearly divisible by 5 since it contains a factor of 5.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Master Exercises -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_arth1b.masterExercisesTitle">Master Exercises</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1b.masterInstructionsTitle">Challenge Level</h3>
+                <p data-i18n="MH.lesson_Y2Al_arth1b.masterInstructionsText">These exercises require deeper understanding and application of divisibility criteria. They will test your problem-solving skills at an advanced level.</p>
+            </div>
+            
+            <!-- Exercise 1 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1b.exercise1Title">Exercise 1: Divisibility by 4</h3>
+                <p data-i18n="MH.lesson_Y2Al_arth1b.exercise1">Without performing the division, determine which of the following numbers are divisible by 4: 324, 517, 892, 1236, 2050, 3714.</p>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1b.showSolution" onclick="toggleSolution(7)">Show Solution</button>
+                <div class="MH-solution" id="solution7">
+                    <p data-i18n="MH.lesson_Y2Al_arth1b.exercise1Solution">Check the last two digits of each number:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.exercise1Solution.equation1">324: \(24 \div 4 = 6\) → Divisible by 4</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.exercise1Solution.equation2">517: \(17 \div 4 = 4\) remainder \(1\) → Not divisible by 4</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.exercise1Solution.equation3">892: \(92 \div 4 = 23\) → Divisible by 4</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.exercise1Solution.equation4">1236: \(36 \div 4 = 9\) → Divisible by 4</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.exercise1Solution.equation5">2050: \(50 \div 4 = 12\) remainder \(2\) → Not divisible by 4</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.exercise1Solution.equation6">3714: \(14 \div 4 = 3\) remainder \(2\) → Not divisible by 4</div>
+                </div>
+            </div>
+            
+            <!-- Exercise 2 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1b.exercise2Title">Exercise 2: Remainder of Powers</h3>
+                <p data-i18n="MH.lesson_Y2Al_arth1b.exercise2">Determine the remainder when \(3^{2024}\) is divided by 5.</p>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1b.showSolution" onclick="toggleSolution(8)">Show Solution</button>
+                <div class="MH-solution" id="solution8">
+                    <p data-i18n="MH.lesson_Y2Al_arth1b.exercise2Solution1">Look at the pattern of units digits for powers of 3:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.exercise2Solution.equation1">\(3^1 = 3\) → units digit: \(3\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.exercise2Solution.equation2">\(3^2 = 9\) → units digit: \(9\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.exercise2Solution.equation3">\(3^3 = 27\) → units digit: \(7\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.exercise2Solution.equation4">\(3^4 = 81\) → units digit: \(1\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.exercise2Solution.equation5">\(3^5 = 243\) → units digit: \(3\) (pattern repeats every 4)</div>
+                    <p data-i18n="MH.lesson_Y2Al_arth1b.exercise2Solution2">Since \(2024 \div 4 = 506\) exactly, \(3^{2024}\) ends with the same digit as \(3^4\), which is 1.</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1b.exercise2Solution3">Therefore, \(3^{2024} \div 5\) gives a remainder equal to the remainder of \(1 \div 5\), which is 1.</p>
+                </div>
+            </div>
+            
+            <!-- Exercise 3 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1b.exercise3Title">Exercise 3: Product Consecutive Integers</h3>
+                <p data-i18n="MH.lesson_Y2Al_arth1b.exercise3">Show that the product of any three consecutive integers is divisible by 8.</p>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1b.showSolution" onclick="toggleSolution(9)">Show Solution</button>
+                <div class="MH-solution" id="solution9">
+                    <p data-i18n="MH.lesson_Y2Al_arth1b.exercise3Solution1">Let the three consecutive integers be \(n\), \(n+1\), and \(n+2\).</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1b.exercise3Solution2">Among any three consecutive integers, at least one is even (divisible by 2).</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1b.exercise3Solution3">Also, among any three consecutive integers, at least one is divisible by 4 (since every other even number is divisible by 4).</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1b.exercise3Solution4">Therefore, the product contains factors 2 and 4, so it contains factor \(2 \times 4 = 8\).</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1b.exercise3Solution5">Thus, the product of any three consecutive integers is divisible by 8.</p>
+                </div>
+            </div>
+            
+            <!-- Exercise 4 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1b.exercise4Title">Exercise 4: Smallest Power</h3>
+                <p data-i18n="MH.lesson_Y2Al_arth1b.exercise4">Find the smallest natural number \(n\) such that \(2^n - 1\) is divisible by 5.</p>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1b.showSolution" onclick="toggleSolution(10)">Show Solution</button>
+                <div class="MH-solution" id="solution10">
+                    <p data-i18n="MH.lesson_Y2Al_arth1b.exercise4Solution1">We need to find when \(2^n \equiv 1 \pmod{5}\).</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1b.exercise4Solution2">Check powers of 2 modulo 5:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.exercise4Solution.equation1">\(2^1 = 2 \equiv 2 \pmod{5}\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.exercise4Solution.equation2">\(2^2 = 4 \equiv 4 \pmod{5}\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.exercise4Solution.equation3">\(2^3 = 8 \equiv 3 \pmod{5}\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1b.exercise4Solution.equation4">\(2^4 = 16 \equiv 1 \pmod{5}\)</div>
+                    <p data-i18n="MH.lesson_Y2Al_arth1b.exercise4Solution3">So \(2^4 - 1\) is divisible by 5. Check smaller values: \(2^1 - 1 = 1\), \(2^2 - 1 = 3\), \(2^3 - 1 = 7\), none divisible by 5.</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1b.exercise4Solution4">Therefore, the smallest natural number \(n\) is 4.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comprehensive Summary -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_arth1b.summaryTitle">Comprehensive Summary</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1b.divisibilityBy2And5Title">Divisibility by 2 and 5</h3>
+                <p data-i18n="MH.lesson_Y2Al_arth1b.divisibilityBy2And5Text1">• An integer is divisible by 2 (respectively by 5) if and only if its units digit is divisible by 2 (respectively by 5).</p>
+                <p data-i18n="MH.lesson_Y2Al_arth1b.divisibilityBy2And5Text2">• The remainder of the Euclidean division of an integer by 2 (respectively by 5) is equal to the remainder of the Euclidean division of its units digit by 2 (respectively by 5).</p>
+                
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_arth1b.example1">Example: 3476 is divisible by 2 because 6 is divisible by 2.</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1b.example2">Example: 8495 is divisible by 5 because its units digit is 5.</p>
+                </div>
+            </div>
+
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1b.divisibilityBy4And25Title">Divisibility by 4 and 25</h3>
+                <p data-i18n="MH.lesson_Y2Al_arth1b.divisibilityBy4And25Text1">• An integer is divisible by 4 (respectively by 25) if and only if the number formed by its last two digits is divisible by 4 (respectively by 25).</p>
+                <p data-i18n="MH.lesson_Y2Al_arth1b.divisibilityBy4And25Text2">• The remainder of the Euclidean division of an integer by 4 (respectively by 25) is equal to the remainder of the Euclidean division by 4 (respectively by 25) of the number formed by its last two digits.</p>
+                
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_arth1b.example3">Example: 1236 is divisible by 4 because 36 is divisible by 4.</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1b.example4">Example: 1750 is divisible by 25 because 50 is divisible by 25.</p>
+                </div>
+            </div>
+
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1b.divisibilityBy8Title">Divisibility by 8</h3>
+                <p data-i18n="MH.lesson_Y2Al_arth1b.divisibilityBy8Text1">• An integer, greater than or equal to 100, is divisible by 8 if and only if the number formed by its last three digits is divisible by 8.</p>
+                <p data-i18n="MH.lesson_Y2Al_arth1b.divisibilityBy8Text2">• The remainder of the Euclidean division of an integer by 8 is equal to the remainder of the Euclidean division by 8 of the number formed by its last three digits.</p>
+                
+                <div class="MH-example">
+                    <p data-i18n="MH.lesson_Y2Al_arth1b.example5">Example: 15432 is divisible by 8 because \(432 \div 8 = 54\).</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1b.example6">Example: 7297 is not divisible by 8 because \(297 \div 8 = 37\) remainder 1.</p>
+                </div>
+            </div>
+            
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1b.conclusionTitle">Conclusion</h3>
+                <div class="MH-important">
+                    <h3 data-i18n="MH.lesson_Y2Al_arth1b.keyConceptsTitle">Key Concepts Mastered</h3>
+                    <ul>
+                        <li data-i18n="MH.lesson_Y2Al_arth1b.concept1">Divisibility criteria for 2 and 5 based on the units digit</li>
+                        <li data-i18n="MH.lesson_Y2Al_arth1b.concept2">Divisibility criteria for 4 and 25 based on the last two digits</li>
+                        <li data-i18n="MH.lesson_Y2Al_arth1b.concept3">Divisibility criterion for 8 based on the last three digits</li>
+                        <li data-i18n="MH.lesson_Y2Al_arth1b.concept4">Mathematical justification of these criteria</li>
+                        <li data-i18n="MH.lesson_Y2Al_arth1b.concept5">Application to problem-solving and proofs</li>
+                    </ul>
+                </div>
+                <p data-i18n="MH.lesson_Y2Al_arth1b.finalThought">Divisibility criteria are powerful tools that simplify many mathematical calculations and proofs. Understanding their mathematical foundations helps you apply them correctly and even discover new patterns in numbers.</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+    
+    <script>
+        // ARITHMETIC LESSON TRANSLATIONS
+        const arithmeticTranslations = {
+            'en': {
+                // General translations
+                'MH.general.homeTooltip': 'Go to Homepage',
+                'MH.general.install': 'Install App',
+                'MH.general.installSuccess': 'Mathematics Hub installed successfully!',
+                'MH.general.enableNotifications': 'Enable Notifications',
+                'MH.general.notificationEnabled': 'Notifications enabled! You will now receive updates.',
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Theme',
+                'MH.general.language': 'Language',
+                
+                // Arithmetic lesson specific translations
+                'MH.lesson_Y2Al_arth1b.title': 'Arithmetic: Part 2',
+                'MH.lesson_Y2Al_arth1b.subtitle': 'Divisibility Criteria by 2, 5, 4, 25, and 8',
+                'MH.lesson_Y2Al_arth1b.introduction': 'Introduction',
+                'MH.lesson_Y2Al_arth1b.introText1': 'Divisibility criteria are simple rules that allow us to quickly determine whether one number is divisible by another without performing the actual division. These criteria are particularly useful for numbers like 2, 5, 4, 25, and 8, which have patterns based on the last digits of a number.',
+                'MH.lesson_Y2Al_arth1b.introText2': 'In this lesson, we will explore the mathematical foundations of these divisibility criteria and learn how to apply them to solve various problems efficiently.',
+                
+                // Apply Exercises
+                'MH.lesson_Y2Al_arth1b.applyExercisesTitle': 'Apply Exercises: Understanding Patterns',
+                'MH.lesson_Y2Al_arth1b.applyInstructionsTitle': 'Instructions',
+                'MH.lesson_Y2Al_arth1b.applyInstructionsText': 'Solve these exercises by applying the divisibility concepts. Show all your work step by step.',
+                
+                // Activity 1
+                'MH.lesson_Y2Al_arth1b.activity1Title': 'Activity 1: Understanding the Pattern',
+                'MH.lesson_Y2Al_arth1b.activity1a': 'Part a: Remainders by 1000',
+                'MH.lesson_Y2Al_arth1b.activity1aQuestion': 'For each of the numbers 23, 96, 249, 1672, 3502, and 19456, determine the remainder of its Euclidean division by 1000. What do you notice?',
+                'MH.lesson_Y2Al_arth1b.activity1aSolution1': 'For each number, the remainder when divided by 1000 is simply the last three digits:',
+                'MH.lesson_Y2Al_arth1b.activity1aSolution.equation1': String.raw`\(23 \div 1000 = 0\) remainder \(23\)`,
+                'MH.lesson_Y2Al_arth1b.activity1aSolution.equation2': String.raw`\(96 \div 1000 = 0\) remainder \(96\)`,
+                'MH.lesson_Y2Al_arth1b.activity1aSolution.equation3': String.raw`\(249 \div 1000 = 0\) remainder \(249\)`,
+                'MH.lesson_Y2Al_arth1b.activity1aSolution.equation4': String.raw`\(1672 \div 1000 = 1\) remainder \(672\)`,
+                'MH.lesson_Y2Al_arth1b.activity1aSolution.equation5': String.raw`\(3502 \div 1000 = 3\) remainder \(502\)`,
+                'MH.lesson_Y2Al_arth1b.activity1aSolution.equation6': String.raw`\(19456 \div 1000 = 19\) remainder \(456\)`,
+                'MH.lesson_Y2Al_arth1b.activity1aSolution2': 'Observation: The remainder is exactly the number formed by the last three digits of the original number.',
+                
+                'MH.lesson_Y2Al_arth1b.activity1b': 'Part b: Remainders by 8',
+                'MH.lesson_Y2Al_arth1b.activity1bQuestion': 'For each of the previous numbers, determine the remainder of its Euclidean division by 8.',
+                'MH.lesson_Y2Al_arth1b.activity1bSolution.equation1': String.raw`\(23 \div 8 = 2\) remainder \(7\)`,
+                'MH.lesson_Y2Al_arth1b.activity1bSolution.equation2': String.raw`\(96 \div 8 = 12\) remainder \(0\)`,
+                'MH.lesson_Y2Al_arth1b.activity1bSolution.equation3': String.raw`\(249 \div 8 = 31\) remainder \(1\)`,
+                'MH.lesson_Y2Al_arth1b.activity1bSolution.equation4': String.raw`\(1672 \div 8 = 209\) remainder \(0\)`,
+                'MH.lesson_Y2Al_arth1b.activity1bSolution.equation5': String.raw`\(3502 \div 8 = 437\) remainder \(6\)`,
+                'MH.lesson_Y2Al_arth1b.activity1bSolution.equation6': String.raw`\(19456 \div 8 = 2432\) remainder \(0\)`,
+                
+                // Activity 2
+                'MH.lesson_Y2Al_arth1b.activity2Title': 'Activity 2: Mathematical Justification',
+                'MH.lesson_Y2Al_arth1b.activity2a': 'Part a: Number Representation',
+                'MH.lesson_Y2Al_arth1b.activity2aQuestion': String.raw`Let \(n\) be a natural number greater than or equal to 100 and let \(b\) be the number formed by its last three digits. Justify writing \(n\) in the form \(n = 1000a + b\), where \(a\) is a natural number.`,
+                'MH.lesson_Y2Al_arth1b.activity2aSolution': String.raw`Any natural number \(n \geq 100\) can be written in the decimal system as:`,
+                'MH.lesson_Y2Al_arth1b.activity2aSolution.equation1': String.raw`\(n = a_k \times 10^k + a_{k-1} \times 10^{k-1} + \ldots + a_3 \times 10^3 + a_2 \times 10^2 + a_1 \times 10 + a_0\)`,
+                'MH.lesson_Y2Al_arth1b.activity2aSolution2': 'We can group the terms:',
+                'MH.lesson_Y2Al_arth1b.activity2aSolution.equation2': String.raw`\(n = (a_k \times 10^{k-3} + a_{k-1} \times 10^{k-4} + \ldots + a_3) \times 1000 + (a_2 \times 100 + a_1 \times 10 + a_0)\)`,
+                'MH.lesson_Y2Al_arth1b.activity2aSolution3': String.raw`Let \(a = a_k \times 10^{k-3} + a_{k-1} \times 10^{k-4} + \ldots + a_3\) (which is a natural number) and \(b = a_2 \times 100 + a_1 \times 10 + a_0\) (the number formed by the last three digits). Therefore:`,
+                'MH.lesson_Y2Al_arth1b.activity2aSolution.equation3': String.raw`\(n = 1000a + b\)`,
+                
+                'MH.lesson_Y2Al_arth1b.activity2b': 'Part b: Remainder Equality',
+                'MH.lesson_Y2Al_arth1b.activity2bQuestion': String.raw`Show that \(n\) and \(b\) have the same remainder in the Euclidean division by 8.`,
+                'MH.lesson_Y2Al_arth1b.activity2bSolution': String.raw`We have \(n = 1000a + b\). Now \(1000 = 8 \times 125\), so \(1000\) is divisible by 8.`,
+                'MH.lesson_Y2Al_arth1b.activity2bSolution2': String.raw`When we divide \(n\) by 8:`,
+                'MH.lesson_Y2Al_arth1b.activity2bSolution.equation1': String.raw`\(n \div 8 = (1000a + b) \div 8 = (1000a) \div 8 + b \div 8\)`,
+                'MH.lesson_Y2Al_arth1b.activity2bSolution3': 'Since \(1000a\) is divisible by 8, the remainder when dividing \(n\) by 8 depends only on \(b\). Therefore, \(n\) and \(b\) have the same remainder when divided by 8.',
+                
+                'MH.lesson_Y2Al_arth1b.activity2c': 'Part c: Divisibility Criterion',
+                'MH.lesson_Y2Al_arth1b.activity2cQuestion': 'State a divisibility criterion by 8.',
+                'MH.lesson_Y2Al_arth1b.divisibilityBy8Criterion': 'Divisibility Criterion by 8',
+                'MH.lesson_Y2Al_arth1b.divisibilityBy8CriterionText': String.raw`A natural number \(n\) (\(n \geq 100\)) is divisible by 8 if and only if the number formed by its last three digits is divisible by 8.`,
+                'MH.lesson_Y2Al_arth1b.divisibilityBy8CriterionText2': 'The remainder of the Euclidean division of \(n\) by 8 is equal to the remainder of the Euclidean division by 8 of the number formed by its last three digits.',
+                
+                // Activity 3
+                'MH.lesson_Y2Al_arth1b.activity3Title': 'Activity 3: Application to Powers',
+                'MH.lesson_Y2Al_arth1b.activity3Question': String.raw`Show that \(2^{721} + 2^{723}\) is divisible by 5.`,
+                'MH.lesson_Y2Al_arth1b.activity3Solution1': 'First, factor the expression:',
+                'MH.lesson_Y2Al_arth1b.activity3Solution.equation1': String.raw`\(2^{721} + 2^{723} = 2^{721}(1 + 2^2) = 2^{721}(1 + 4) = 2^{721} \times 5\)`,
+                'MH.lesson_Y2Al_arth1b.activity3Solution2': 'Therefore, the expression is clearly divisible by 5 since it contains a factor of 5.',
+                
+                // Master Exercises
+                'MH.lesson_Y2Al_arth1b.masterExercisesTitle': 'Master Exercises',
+                'MH.lesson_Y2Al_arth1b.masterInstructionsTitle': 'Challenge Level',
+                'MH.lesson_Y2Al_arth1b.masterInstructionsText': 'These exercises require deeper understanding and application of divisibility criteria. They will test your problem-solving skills at an advanced level.',
+                
+                // Exercise 1
+                'MH.lesson_Y2Al_arth1b.exercise1Title': 'Exercise 1: Divisibility by 4',
+                'MH.lesson_Y2Al_arth1b.exercise1': 'Without performing the division, determine which of the following numbers are divisible by 4: 324, 517, 892, 1236, 2050, 3714.',
+                'MH.lesson_Y2Al_arth1b.exercise1Solution': 'Check the last two digits of each number:',
+                'MH.lesson_Y2Al_arth1b.exercise1Solution.equation1': String.raw`324: \(24 \div 4 = 6\) → Divisible by 4`,
+                'MH.lesson_Y2Al_arth1b.exercise1Solution.equation2': String.raw`517: \(17 \div 4 = 4\) remainder \(1\) → Not divisible by 4`,
+                'MH.lesson_Y2Al_arth1b.exercise1Solution.equation3': String.raw`892: \(92 \div 4 = 23\) → Divisible by 4`,
+                'MH.lesson_Y2Al_arth1b.exercise1Solution.equation4': String.raw`1236: \(36 \div 4 = 9\) → Divisible by 4`,
+                'MH.lesson_Y2Al_arth1b.exercise1Solution.equation5': String.raw`2050: \(50 \div 4 = 12\) remainder \(2\) → Not divisible by 4`,
+                'MH.lesson_Y2Al_arth1b.exercise1Solution.equation6': String.raw`3714: \(14 \div 4 = 3\) remainder \(2\) → Not divisible by 4`,
+                
+                // Exercise 2
+                'MH.lesson_Y2Al_arth1b.exercise2Title': 'Exercise 2: Remainder of Powers',
+                'MH.lesson_Y2Al_arth1b.exercise2': String.raw`Determine the remainder when \(3^{2024}\) is divided by 5.`,
+                'MH.lesson_Y2Al_arth1b.exercise2Solution1': 'Look at the pattern of units digits for powers of 3:',
+                'MH.lesson_Y2Al_arth1b.exercise2Solution.equation1': String.raw`\(3^1 = 3\) → units digit: \(3\)`,
+                'MH.lesson_Y2Al_arth1b.exercise2Solution.equation2': String.raw`\(3^2 = 9\) → units digit: \(9\)`,
+                'MH.lesson_Y2Al_arth1b.exercise2Solution.equation3': String.raw`\(3^3 = 27\) → units digit: \(7\)`,
+                'MH.lesson_Y2Al_arth1b.exercise2Solution.equation4': String.raw`\(3^4 = 81\) → units digit: \(1\)`,
+                'MH.lesson_Y2Al_arth1b.exercise2Solution.equation5': String.raw`\(3^5 = 243\) → units digit: \(3\) (pattern repeats every 4)`,
+                'MH.lesson_Y2Al_arth1b.exercise2Solution2': String.raw`Since \(2024 \div 4 = 506\) exactly, \(3^{2024}\) ends with the same digit as \(3^4\), which is 1.`,
+                'MH.lesson_Y2Al_arth1b.exercise2Solution3': String.raw`Therefore, \(3^{2024} \div 5\) gives a remainder equal to the remainder of \(1 \div 5\), which is 1.`,
+                
+                // Exercise 3
+                'MH.lesson_Y2Al_arth1b.exercise3Title': 'Exercise 3: Product Consecutive Integers',
+                'MH.lesson_Y2Al_arth1b.exercise3': 'Show that the product of any three consecutive integers is divisible by 8.',
+                'MH.lesson_Y2Al_arth1b.exercise3Solution1': String.raw`Let the three consecutive integers be \(n\), \(n+1\), and \(n+2\).`,
+                'MH.lesson_Y2Al_arth1b.exercise3Solution2': 'Among any three consecutive integers, at least one is even (divisible by 2).',
+                'MH.lesson_Y2Al_arth1b.exercise3Solution3': 'Also, among any three consecutive integers, at least one is divisible by 4 (since every other even number is divisible by 4).',
+                'MH.lesson_Y2Al_arth1b.exercise3Solution4': 'Therefore, the product contains factors 2 and 4, so it contains factor \(2 \times 4 = 8\).',
+                'MH.lesson_Y2Al_arth1b.exercise3Solution5': 'Thus, the product of any three consecutive integers is divisible by 8.',
+                
+                // Exercise 4
+                'MH.lesson_Y2Al_arth1b.exercise4Title': 'Exercise 4: Smallest Power',
+                'MH.lesson_Y2Al_arth1b.exercise4': String.raw`Find the smallest natural number \(n\) such that \(2^n - 1\) is divisible by 5.`,
+                'MH.lesson_Y2Al_arth1b.exercise4Solution1': String.raw`We need to find when \(2^n \equiv 1 \pmod{5}\).`,
+                'MH.lesson_Y2Al_arth1b.exercise4Solution2': 'Check powers of 2 modulo 5:',
+                'MH.lesson_Y2Al_arth1b.exercise4Solution.equation1': String.raw`\(2^1 = 2 \equiv 2 \pmod{5}\)`,
+                'MH.lesson_Y2Al_arth1b.exercise4Solution.equation2': String.raw`\(2^2 = 4 \equiv 4 \pmod{5}\)`,
+                'MH.lesson_Y2Al_arth1b.exercise4Solution.equation3': String.raw`\(2^3 = 8 \equiv 3 \pmod{5}\)`,
+                'MH.lesson_Y2Al_arth1b.exercise4Solution.equation4': String.raw`\(2^4 = 16 \equiv 1 \pmod{5}\)`,
+                'MH.lesson_Y2Al_arth1b.exercise4Solution3': String.raw`So \(2^4 - 1\) is divisible by 5. Check smaller values: \(2^1 - 1 = 1\), \(2^2 - 1 = 3\), \(2^3 - 1 = 7\), none divisible by 5.`,
+                'MH.lesson_Y2Al_arth1b.exercise4Solution4': String.raw`Therefore, the smallest natural number \(n\) is 4.`,
+                
+                // Summary
+                'MH.lesson_Y2Al_arth1b.summaryTitle': 'Comprehensive Summary',
+                'MH.lesson_Y2Al_arth1b.divisibilityBy2And5Title': 'Divisibility by 2 and 5',
+                'MH.lesson_Y2Al_arth1b.divisibilityBy2And5Text1': '• An integer is divisible by 2 (respectively by 5) if and only if its units digit is divisible by 2 (respectively by 5).',
+                'MH.lesson_Y2Al_arth1b.divisibilityBy2And5Text2': '• The remainder of the Euclidean division of an integer by 2 (respectively by 5) is equal to the remainder of the Euclidean division of its units digit by 2 (respectively by 5).',
+                'MH.lesson_Y2Al_arth1b.example1': 'Example: 3476 is divisible by 2 because 6 is divisible by 2.',
+                'MH.lesson_Y2Al_arth1b.example2': 'Example: 8495 is divisible by 5 because its units digit is 5.',
+                
+                'MH.lesson_Y2Al_arth1b.divisibilityBy4And25Title': 'Divisibility by 4 and 25',
+                'MH.lesson_Y2Al_arth1b.divisibilityBy4And25Text1': '• An integer is divisible by 4 (respectively by 25) if and only if the number formed by its last two digits is divisible by 4 (respectively by 25).',
+                'MH.lesson_Y2Al_arth1b.divisibilityBy4And25Text2': '• The remainder of the Euclidean division of an integer by 4 (respectively by 25) is equal to the remainder of the Euclidean division by 4 (respectively by 25) of the number formed by its last two digits.',
+                'MH.lesson_Y2Al_arth1b.example3': 'Example: 1236 is divisible by 4 because 36 is divisible by 4.',
+                'MH.lesson_Y2Al_arth1b.example4': 'Example: 1750 is divisible by 25 because 50 is divisible by 25.',
+                
+                'MH.lesson_Y2Al_arth1b.divisibilityBy8Title': 'Divisibility by 8',
+                'MH.lesson_Y2Al_arth1b.divisibilityBy8Text1': '• An integer, greater than or equal to 100, is divisible by 8 if and only if the number formed by its last three digits is divisible by 8.',
+                'MH.lesson_Y2Al_arth1b.divisibilityBy8Text2': '• The remainder of the Euclidean division of an integer by 8 is equal to the remainder of the Euclidean division by 8 of the number formed by its last three digits.',
+                'MH.lesson_Y2Al_arth1b.example5': String.raw`Example: 15432 is divisible by 8 because \(432 \div 8 = 54\).`,
+                'MH.lesson_Y2Al_arth1b.example6': String.raw`Example: 7297 is not divisible by 8 because \(297 \div 8 = 37\) remainder 1.`,
+                
+                // Conclusion
+                'MH.lesson_Y2Al_arth1b.conclusionTitle': 'Conclusion',
+                'MH.lesson_Y2Al_arth1b.keyConceptsTitle': 'Key Concepts Mastered',
+                'MH.lesson_Y2Al_arth1b.concept1': 'Divisibility criteria for 2 and 5 based on the units digit',
+                'MH.lesson_Y2Al_arth1b.concept2': 'Divisibility criteria for 4 and 25 based on the last two digits',
+                'MH.lesson_Y2Al_arth1b.concept3': 'Divisibility criterion for 8 based on the last three digits',
+                'MH.lesson_Y2Al_arth1b.concept4': 'Mathematical justification of these criteria',
+                'MH.lesson_Y2Al_arth1b.concept5': 'Application to problem-solving and proofs',
+                'MH.lesson_Y2Al_arth1b.finalThought': 'Divisibility criteria are powerful tools that simplify many mathematical calculations and proofs. Understanding their mathematical foundations helps you apply them correctly and even discover new patterns in numbers.',
+                
+                // Solution buttons
+                'MH.lesson_Y2Al_arth1b.showSolution': 'Show Solution',
+                'MH.lesson_Y2Al_arth1b.hideSolution': 'Hide Solution',
+                
+                // Footer
+                'MH.footer.developer': 'Developer',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Links',
+                'MH.footer.terms': 'Terms of Use',
+                'MH.footer.privacy': 'Privacy Policy'
+            },
+            'ar': {
+    'MH.general.homeTooltip': 'الصفحة الرئيسية',
+    'MH.general.install': 'تثبيت التطبيق',
+    'MH.general.installSuccess': 'تم تثبيت مركز الرياضيات بنجاح!',
+    'MH.general.enableNotifications': 'تفعيل الإشعارات',
+    'MH.general.notificationEnabled': 'تم تفعيل الإشعارات! ستتلقى التحديثات الآن.',
+    'MH.general.title': 'مركز الرياضيات',
+    'MH.general.theme': 'السمة',
+    'MH.general.language': 'اللغة',
+    
+    'MH.lesson_Y2Al_arth1b.title': 'الحساب: الجزء 2',
+    'MH.lesson_Y2Al_arth1b.subtitle': 'معايير القسمة على 2، 5، 4، 25، و 8',
+    'MH.lesson_Y2Al_arth1b.introduction': 'مقدمة',
+    'MH.lesson_Y2Al_arth1b.introText1': 'معايير القسمة هي قواعد بسيطة تتيح لنا تحديد ما إذا كان الرقم يقبل القسمة على رقم آخر بسرعة دون إجراء القسمة الفعلية. هذه المعايير مفيدة بشكل خاص للأرقام مثل 2، 5، 4، 25، و 8، والتي لها أنماط تعتمد على الأرقام الأخيرة للعدد.',
+    'MH.lesson_Y2Al_arth1b.introText2': 'في هذا الدرس، سنستكشف الأسس الرياضية لهذه المعايير ونعلم كيفية تطبيقها لحل مشاكل متنوعة بكفاءة.',
+    
+    'MH.lesson_Y2Al_arth1b.applyExercisesTitle': 'تمارين التطبيق: فهم الأنماط',
+    'MH.lesson_Y2Al_arth1b.applyInstructionsTitle': 'التعليمات',
+    'MH.lesson_Y2Al_arth1b.applyInstructionsText': 'حل هذه التمارين بتطبيق مفاهيم القسمة. اظهار جميع خطوات العمل خطوة بخطوة.',
+    
+    'MH.lesson_Y2Al_arth1b.activity1Title': 'النشاط 1: فهم النمط',
+    'MH.lesson_Y2Al_arth1b.activity1a': 'الجزء أ: باقي القسمة على 1000',
+    'MH.lesson_Y2Al_arth1b.activity1aQuestion': 'لكل من الأرقام 23، 96، 249، 1672، 3502، و 19456، حدد باقي قسمتها الإقليدية على 1000. ماذا تلاحظ؟',
+    'MH.lesson_Y2Al_arth1b.activity1aSolution1': 'لكل رقم، الباقي عند القسمة على 1000 هو ببساطة آخر ثلاثة أرقام:',
+    'MH.lesson_Y2Al_arth1b.activity1aSolution.equation1': String.raw`\(23 \div 1000 = 0\) باقي \(23\)`,
+    'MH.lesson_Y2Al_arth1b.activity1aSolution.equation2': String.raw`\(96 \div 1000 = 0\) باقي \(96\)`,
+    'MH.lesson_Y2Al_arth1b.activity1aSolution.equation3': String.raw`\(249 \div 1000 = 0\) باقي \(249\)`,
+    'MH.lesson_Y2Al_arth1b.activity1aSolution.equation4': String.raw`\(1672 \div 1000 = 1\) باقي \(672\)`,
+    'MH.lesson_Y2Al_arth1b.activity1aSolution.equation5': String.raw`\(3502 \div 1000 = 3\) باقي \(502\)`,
+    'MH.lesson_Y2Al_arth1b.activity1aSolution.equation6': String.raw`\(19456 \div 1000 = 19\) باقي \(456\)`,
+    'MH.lesson_Y2Al_arth1b.activity1aSolution2': 'ملاحظة: الباقي هو بالضبط الرقم المكون من آخر ثلاثة أرقام من الرقم الأصلي.',
+    
+    'MH.lesson_Y2Al_arth1b.activity1b': 'الجزء ب: باقي القسمة على 8',
+    'MH.lesson_Y2Al_arth1b.activity1bQuestion': 'لكل من الأرقام السابقة، حدد باقي قسمتها الإقليدية على 8.',
+    'MH.lesson_Y2Al_arth1b.activity1bSolution.equation1': String.raw`\(23 \div 8 = 2\) باقي \(7\)`,
+    'MH.lesson_Y2Al_arth1b.activity1bSolution.equation2': String.raw`\(96 \div 8 = 12\) باقي \(0\)`,
+    'MH.lesson_Y2Al_arth1b.activity1bSolution.equation3': String.raw`\(249 \div 8 = 31\) باقي \(1\)`,
+    'MH.lesson_Y2Al_arth1b.activity1bSolution.equation4': String.raw`\(1672 \div 8 = 209\) باقي \(0\)`,
+    'MH.lesson_Y2Al_arth1b.activity1bSolution.equation5': String.raw`\(3502 \div 8 = 437\) باقي \(6\)`,
+    'MH.lesson_Y2Al_arth1b.activity1bSolution.equation6': String.raw`\(19456 \div 8 = 2432\) باقي \(0\)`,
+    
+    'MH.lesson_Y2Al_arth1b.activity2Title': 'النشاط 2: التبرير الرياضي',
+    'MH.lesson_Y2Al_arth1b.activity2a': 'الجزء أ: تمثيل الرقم',
+    'MH.lesson_Y2Al_arth1b.activity2aQuestion': String.raw`لنفترض أن \(n\) عدد طبيعي أكبر من أو يساوي 100 وليكن \(b\) الرقم المكون من آخر ثلاثة أرقامه. برر كتابة \(n\) بالصيغة \(n = 1000a + b\)، حيث \(a\) عدد طبيعي.`,
+    'MH.lesson_Y2Al_arth1b.activity2aSolution': String.raw`يمكن كتابة أي عدد طبيعي \(n \geq 100\) في النظام العشري على النحو التالي:`,
+    'MH.lesson_Y2Al_arth1b.activity2aSolution.equation1': String.raw`\(n = a_k \times 10^k + a_{k-1} \times 10^{k-1} + \ldots + a_3 \times 10^3 + a_2 \times 10^2 + a_1 \times 10 + a_0\)`,
+    'MH.lesson_Y2Al_arth1b.activity2aSolution2': 'يمكننا تجميع الحدود:',
+    'MH.lesson_Y2Al_arth1b.activity2aSolution.equation2': String.raw`\(n = (a_k \times 10^{k-3} + a_{k-1} \times 10^{k-4} + \ldots + a_3) \times 1000 + (a_2 \times 100 + a_1 \times 10 + a_0)\)`,
+    'MH.lesson_Y2Al_arth1b.activity2aSolution3': String.raw`ليكن \(a = a_k \times 10^{k-3} + a_{k-1} \times 10^{k-4} + \ldots + a_3\) (وهو عدد طبيعي) و \(b = a_2 \times 100 + a_1 \times 10 + a_0\) (الرقم المكون من آخر ثلاثة أرقام). لذلك:`,
+    'MH.lesson_Y2Al_arth1b.activity2aSolution.equation3': String.raw`\(n = 1000a + b\)`,
+    
+    'MH.lesson_Y2Al_arth1b.activity2b': 'الجزء ب: تساوي الباقي',
+    'MH.lesson_Y2Al_arth1b.activity2bQuestion': String.raw`أظهر أن \(n\) و \(b\) لهما نفس الباقي في القسمة الإقليدية على 8.`,
+    'MH.lesson_Y2Al_arth1b.activity2bSolution': String.raw`لدينا \(n = 1000a + b\). الآن \(1000 = 8 \times 125\)، لذا \(1000\) يقبل القسمة على 8.`,
+    'MH.lesson_Y2Al_arth1b.activity2bSolution2': String.raw`عندما نقسم \(n\) على 8:`,
+    'MH.lesson_Y2Al_arth1b.activity2bSolution.equation1': String.raw`\(n \div 8 = (1000a + b) \div 8 = (1000a) \div 8 + b \div 8\)`,
+    'MH.lesson_Y2Al_arth1b.activity2bSolution3': 'بما أن \(1000a\) يقبل القسمة على 8، فإن الباقي عند قسمة \(n\) على 8 يعتمد فقط على \(b\). لذلك، \(n\) و \(b\) لهما نفس الباقي عند القسمة على 8.',
+    
+    'MH.lesson_Y2Al_arth1b.activity2c': 'الجزء ج: معيار القسمة',
+    'MH.lesson_Y2Al_arth1b.activity2cQuestion': 'اذكر معيار القسمة على 8.',
+    'MH.lesson_Y2Al_arth1b.divisibilityBy8Criterion': 'معيار القسمة على 8',
+    'MH.lesson_Y2Al_arth1b.divisibilityBy8CriterionText': String.raw`عدد طبيعي \(n\) (\(n \geq 100\)) يقبل القسمة على 8 إذا وفقط إذا كان الرقم المكون من آخر ثلاثة أرقامه يقبل القسمة على 8.`,
+    'MH.lesson_Y2Al_arth1b.divisibilityBy8CriterionText2': 'باقي القسمة الإقليدية للعدد \(n\) على 8 يساوي باقي القسمة الإقليدية على 8 للرقم المكون من آخر ثلاثة أرقامه.',
+    
+    'MH.lesson_Y2Al_arth1b.activity3Title': 'النشاط 3: التطبيق على القوى',
+    'MH.lesson_Y2Al_arth1b.activity3Question': String.raw`أظهر أن \(2^{721} + 2^{723}\) يقبل القسمة على 5.`,
+    'MH.lesson_Y2Al_arth1b.activity3Solution1': 'أولاً، عامل التعبير:',
+    'MH.lesson_Y2Al_arth1b.activity3Solution.equation1': String.raw`\(2^{721} + 2^{723} = 2^{721}(1 + 2^2) = 2^{721}(1 + 4) = 2^{721} \times 5\)`,
+    'MH.lesson_Y2Al_arth1b.activity3Solution2': 'لذلك، التعبير يقبل القسمة بوضوح على 5 لأنه يحتوي على عامل 5.',
+    
+    'MH.lesson_Y2Al_arth1b.masterExercisesTitle': 'تمارين الإتقان',
+    'MH.lesson_Y2Al_arth1b.masterInstructionsTitle': 'مستوى التحدي',
+    'MH.lesson_Y2Al_arth1b.masterInstructionsText': 'تتطلب هذه التمارين فهمًا أعمق وتطبيقًا لمعايير القسمة. ستختبر مهاراتك في حل المشكلات على مستوى متقدم.',
+    
+    'MH.lesson_Y2Al_arth1b.exercise1Title': 'التمرين 1: القسمة على 4',
+    'MH.lesson_Y2Al_arth1b.exercise1': 'بدون إجراء القسمة، حدد أي من الأرقام التالية يقبل القسمة على 4: 324، 517، 892، 1236، 2050، 3714.',
+    'MH.lesson_Y2Al_arth1b.exercise1Solution': 'تحقق من آخر رقمين من كل رقم:',
+    'MH.lesson_Y2Al_arth1b.exercise1Solution.equation1': String.raw`324: \(24 \div 4 = 6\) → يقبل القسمة على 4`,
+    'MH.lesson_Y2Al_arth1b.exercise1Solution.equation2': String.raw`517: \(17 \div 4 = 4\) باقي \(1\) → لا يقبل القسمة على 4`,
+    'MH.lesson_Y2Al_arth1b.exercise1Solution.equation3': String.raw`892: \(92 \div 4 = 23\) → يقبل القسمة على 4`,
+    'MH.lesson_Y2Al_arth1b.exercise1Solution.equation4': String.raw`1236: \(36 \div 4 = 9\) → يقبل القسمة على 4`,
+    'MH.lesson_Y2Al_arth1b.exercise1Solution.equation5': String.raw`2050: \(50 \div 4 = 12\) باقي \(2\) → لا يقبل القسمة على 4`,
+    'MH.lesson_Y2Al_arth1b.exercise1Solution.equation6': String.raw`3714: \(14 \div 4 = 3\) باقي \(2\) → لا يقبل القسمة على 4`,
+    
+    'MH.lesson_Y2Al_arth1b.exercise2Title': 'التمرين 2: باقي القوى',
+    'MH.lesson_Y2Al_arth1b.exercise2': String.raw`حدد الباقي عند قسمة \(3^{2024}\) على 5.`,
+    'MH.lesson_Y2Al_arth1b.exercise2Solution1': 'انظر إلى نمط أرقام الوحدات لقوى 3:',
+    'MH.lesson_Y2Al_arth1b.exercise2Solution.equation1': String.raw`\(3^1 = 3\) → رقم الوحدات: \(3\)`,
+    'MH.lesson_Y2Al_arth1b.exercise2Solution.equation2': String.raw`\(3^2 = 9\) → رقم الوحدات: \(9\)`,
+    'MH.lesson_Y2Al_arth1b.exercise2Solution.equation3': String.raw`\(3^3 = 27\) → رقم الوحدات: \(7\)`,
+    'MH.lesson_Y2Al_arth1b.exercise2Solution.equation4': String.raw`\(3^4 = 81\) → رقم الوحدات: \(1\)`,
+    'MH.lesson_Y2Al_arth1b.exercise2Solution.equation5': String.raw`\(3^5 = 243\) → رقم الوحدات: \(3\) (النمط يتكرر كل 4)`,
+    'MH.lesson_Y2Al_arth1b.exercise2Solution2': String.raw`بما أن \(2024 \div 4 = 506\) بالضبط، فإن \(3^{2024}\) ينتهي بنفس رقم \(3^4\)، وهو 1.`,
+    'MH.lesson_Y2Al_arth1b.exercise2Solution3': String.raw`لذلك، \(3^{2024} \div 5\) يعطي باقي يساوي باقي \(1 \div 5\)، وهو 1.`,
+    
+    'MH.lesson_Y2Al_arth1b.exercise3Title': 'التمرين 3: حاصل ضرب أعداد صحيحة متتالية',
+    'MH.lesson_Y2Al_arth1b.exercise3': 'أظهر أن حاصل ضرب أي ثلاثة أعداد صحيحة متتالية يقبل القسمة على 8.',
+    'MH.lesson_Y2Al_arth1b.exercise3Solution1': String.raw`ليكن الأعداد الصحيحة الثلاثة المتتالية هي \(n\)، \(n+1\)، و \(n+2\).`,
+    'MH.lesson_Y2Al_arth1b.exercise3Solution2': 'من بين أي ثلاثة أعداد صحيحة متتالية، يكون واحد على الأقل زوجيًا (يقبل القسمة على 2).',
+    'MH.lesson_Y2Al_arth1b.exercise3Solution3': 'أيضًا، من بين أي ثلاثة أعداد صحيحة متتالية، يكون واحد على الأقل يقبل القسمة على 4 (بما أن كل عدد زوجي آخر يقبل القسمة على 4).',
+    'MH.lesson_Y2Al_arth1b.exercise3Solution4': 'لذلك، يحتوي المنتج على العوامل 2 و 4، لذا يحتوي على العامل \(2 \times 4 = 8\).',
+    'MH.lesson_Y2Al_arth1b.exercise3Solution5': 'وبالتالي، حاصل ضرب أي ثلاثة أعداد صحيحة متتالية يقبل القسمة على 8.',
+    
+    'MH.lesson_Y2Al_arth1b.exercise4Title': 'التمرين 4: أصغر قوة',
+    'MH.lesson_Y2Al_arth1b.exercise4': String.raw`أوجد أصغر عدد طبيعي \(n\) بحيث \(2^n - 1\) يقبل القسمة على 5.`,
+    'MH.lesson_Y2Al_arth1b.exercise4Solution1': String.raw`نحتاج إلى إيجاد متى \(2^n \equiv 1 \pmod{5}\).`,
+    'MH.lesson_Y2Al_arth1b.exercise4Solution2': 'تحقق من قوى 2 مودولو 5:',
+    'MH.lesson_Y2Al_arth1b.exercise4Solution.equation1': String.raw`\(2^1 = 2 \equiv 2 \pmod{5}\)`,
+    'MH.lesson_Y2Al_arth1b.exercise4Solution.equation2': String.raw`\(2^2 = 4 \equiv 4 \pmod{5}\)`,
+    'MH.lesson_Y2Al_arth1b.exercise4Solution.equation3': String.raw`\(2^3 = 8 \equiv 3 \pmod{5}\)`,
+    'MH.lesson_Y2Al_arth1b.exercise4Solution.equation4': String.raw`\(2^4 = 16 \equiv 1 \pmod{5}\)`,
+    'MH.lesson_Y2Al_arth1b.exercise4Solution3': String.raw`لذا \(2^4 - 1\) يقبل القسمة على 5. تحقق من القيم الأصغر: \(2^1 - 1 = 1\)، \(2^2 - 1 = 3\)، \(2^3 - 1 = 7\)، لا شيء يقبل القسمة على 5.`,
+    'MH.lesson_Y2Al_arth1b.exercise4Solution4': String.raw`لذلك، أصغر عدد طبيعي \(n\) هو 4.`,
+    
+    'MH.lesson_Y2Al_arth1b.summaryTitle': 'ملخص شامل',
+    'MH.lesson_Y2Al_arth1b.divisibilityBy2And5Title': 'القسمة على 2 و 5',
+    'MH.lesson_Y2Al_arth1b.divisibilityBy2And5Text1': '• عدد صحيح يقبل القسمة على 2 (على التوالي على 5) إذا وفقط إذا كان رقم وحداته يقبل القسمة على 2 (على التوالي على 5).',
+    'MH.lesson_Y2Al_arth1b.divisibilityBy2And5Text2': '• باقي القسمة الإقليدية لعدد صحيح على 2 (على التوالي على 5) يساوي باقي القسمة الإقليدية لرقم وحداته على 2 (على التوالي على 5).',
+    'MH.lesson_Y2Al_arth1b.example1': 'مثال: 3476 يقبل القسمة على 2 لأن 6 يقبل القسمة على 2.',
+    'MH.lesson_Y2Al_arth1b.example2': 'مثال: 8495 يقبل القسمة على 5 لأن رقم وحداته هو 5.',
+    
+    'MH.lesson_Y2Al_arth1b.divisibilityBy4And25Title': 'القسمة على 4 و 25',
+    'MH.lesson_Y2Al_arth1b.divisibilityBy4And25Text1': '• عدد صحيح يقبل القسمة على 4 (على التوالي على 25) إذا وفقط إذا كان الرقم المكون من آخر رقمين له يقبل القسمة على 4 (على التوالي على 25).',
+    'MH.lesson_Y2Al_arth1b.divisibilityBy4And25Text2': '• باقي القسمة الإقليدية لعدد صحيح على 4 (على التوالي على 25) يساوي باقي القسمة الإقليدية على 4 (على التوالي على 25) للرقم المكون من آخر رقمين له.',
+    'MH.lesson_Y2Al_arth1b.example3': 'مثال: 1236 يقبل القسمة على 4 لأن 36 يقبل القسمة على 4.',
+    'MH.lesson_Y2Al_arth1b.example4': 'مثال: 1750 يقبل القسمة على 25 لأن 50 يقبل القسمة على 25.',
+    
+    'MH.lesson_Y2Al_arth1b.divisibilityBy8Title': 'القسمة على 8',
+    'MH.lesson_Y2Al_arth1b.divisibilityBy8Text1': '• عدد صحيح، أكبر من أو يساوي 100، يقبل القسمة على 8 إذا وفقط إذا كان الرقم المكون من آخر ثلاثة أرقام له يقبل القسمة على 8.',
+    'MH.lesson_Y2Al_arth1b.divisibilityBy8Text2': '• باقي القسمة الإقليدية لعدد صحيح على 8 يساوي باقي القسمة الإقليدية على 8 للرقم المكون من آخر ثلاثة أرقام له.',
+    'MH.lesson_Y2Al_arth1b.example5': String.raw`مثال: 15432 يقبل القسمة على 8 لأن \(432 \div 8 = 54\).`,
+    'MH.lesson_Y2Al_arth1b.example6': String.raw`مثال: 7297 لا يقبل القسمة على 8 لأن \(297 \div 8 = 37\) باقي 1.`,
+    
+    'MH.lesson_Y2Al_arth1b.conclusionTitle': 'الخلاصة',
+    'MH.lesson_Y2Al_arth1b.keyConceptsTitle': 'المفاهيم الرئيسية التي تم إتقانها',
+    'MH.lesson_Y2Al_arth1b.concept1': 'معايير القسمة على 2 و 5 بناءً على رقم الوحدات',
+    'MH.lesson_Y2Al_arth1b.concept2': 'معايير القسمة على 4 و 25 بناءً على آخر رقمين',
+    'MH.lesson_Y2Al_arth1b.concept3': 'معيار القسمة على 8 بناءً على آخر ثلاثة أرقام',
+    'MH.lesson_Y2Al_arth1b.concept4': 'التبرير الرياضي لهذه المعايير',
+    'MH.lesson_Y2Al_arth1b.concept5': 'التطبيق على حل المشكلات والبراهين',
+    'MH.lesson_Y2Al_arth1b.finalThought': 'معايير القسمة هي أدوات قوية تبسط العديد من الحسابات الرياضية والبراهين. فهم أسسها الرياضية يساعدك على تطبيقها بشكل صحيح وحتى اكتشاف أنماط جديدة في الأرقام.',
+    
+    'MH.lesson_Y2Al_arth1b.showSolution': 'إظهار الحل',
+    'MH.lesson_Y2Al_arth1b.hideSolution': 'إخفاء الحل',
+    
+    'MH.footer.developer': 'المطور',
+    'MH.footer.version': 'الإصدار',
+    'MH.footer.links': 'الروابط',
+    'MH.footer.terms': 'شروط الاستخدام',
+    'MH.footer.privacy': 'سياسة الخصوصية'
+            },
+            'fr': {
+    // Traductions générales
+    'MH.general.homeTooltip': 'Aller à l\'accueil',
+    'MH.general.install': 'Installer l\'application',
+    'MH.general.installSuccess': 'Mathematics Hub installé avec succès !',
+    'MH.general.enableNotifications': 'Activer les notifications',
+    'MH.general.notificationEnabled': 'Notifications activées ! Vous recevrez maintenant des mises à jour.',
+    'MH.general.title': 'Centre de Mathématiques',
+    'MH.general.theme': 'Thème',
+    'MH.general.language': 'Langue',
+    
+    // Traductions spécifiques à la leçon d'arithmétique
+    'MH.lesson_Y2Al_arth1b.title': 'Arithmétique: Partie 2',
+    'MH.lesson_Y2Al_arth1b.subtitle': 'Critères de Divisibilité par 2, 5, 4, 25 et 8',
+    'MH.lesson_Y2Al_arth1b.introduction': 'Introduction',
+    'MH.lesson_Y2Al_arth1b.introText1': 'Les critères de divisibilité sont des règles simples qui nous permettent de déterminer rapidement si un nombre est divisible par un autre sans effectuer la division réelle. Ces critères sont particulièrement utiles pour les nombres comme 2, 5, 4, 25 et 8, qui ont des motifs basés sur les derniers chiffres d\'un nombre.',
+    'MH.lesson_Y2Al_arth1b.introText2': 'Dans cette leçon, nous explorerons les fondements mathématiques de ces critères de divisibilité et apprendrons comment les appliquer pour résoudre efficacement divers problèmes.',
+    
+    // Exercices d'application
+    'MH.lesson_Y2Al_arth1b.applyExercisesTitle': 'Exercices d\'Application: Comprendre les Modèles',
+    'MH.lesson_Y2Al_arth1b.applyInstructionsTitle': 'Instructions',
+    'MH.lesson_Y2Al_arth1b.applyInstructionsText': 'Résolvez ces exercices en appliquant les concepts de divisibilité. Montrez tout votre travail étape par étape.',
+    
+    // Activité 1
+    'MH.lesson_Y2Al_arth1b.activity1Title': 'Activité 1: Comprendre le Modèle',
+    'MH.lesson_Y2Al_arth1b.activity1a': 'Partie a: Restes par 1000',
+    'MH.lesson_Y2Al_arth1b.activity1aQuestion': 'Pour chacun des nombres 23, 96, 249, 1672, 3502 et 19456, déterminez le reste de sa division euclidienne par 1000. Que remarquez-vous ?',
+    'MH.lesson_Y2Al_arth1b.activity1aSolution1': 'Pour chaque nombre, le reste lors de la division par 1000 est simplement les trois derniers chiffres :',
+    'MH.lesson_Y2Al_arth1b.activity1aSolution.equation1': String.raw`\(23 \div 1000 = 0\) reste \(23\)`,
+    'MH.lesson_Y2Al_arth1b.activity1aSolution.equation2': String.raw`\(96 \div 1000 = 0\) reste \(96\)`,
+    'MH.lesson_Y2Al_arth1b.activity1aSolution.equation3': String.raw`\(249 \div 1000 = 0\) reste \(249\)`,
+    'MH.lesson_Y2Al_arth1b.activity1aSolution.equation4': String.raw`\(1672 \div 1000 = 1\) reste \(672\)`,
+    'MH.lesson_Y2Al_arth1b.activity1aSolution.equation5': String.raw`\(3502 \div 1000 = 3\) reste \(502\)`,
+    'MH.lesson_Y2Al_arth1b.activity1aSolution.equation6': String.raw`\(19456 \div 1000 = 19\) reste \(456\)`,
+    'MH.lesson_Y2Al_arth1b.activity1aSolution2': 'Observation : Le reste est exactement le nombre formé par les trois derniers chiffres du nombre original.',
+    
+    'MH.lesson_Y2Al_arth1b.activity1b': 'Partie b: Restes par 8',
+    'MH.lesson_Y2Al_arth1b.activity1bQuestion': 'Pour chacun des nombres précédents, déterminez le reste de sa division euclidienne par 8.',
+    'MH.lesson_Y2Al_arth1b.activity1bSolution.equation1': String.raw`\(23 \div 8 = 2\) reste \(7\)`,
+    'MH.lesson_Y2Al_arth1b.activity1bSolution.equation2': String.raw`\(96 \div 8 = 12\) reste \(0\)`,
+    'MH.lesson_Y2Al_arth1b.activity1bSolution.equation3': String.raw`\(249 \div 8 = 31\) reste \(1\)`,
+    'MH.lesson_Y2Al_arth1b.activity1bSolution.equation4': String.raw`\(1672 \div 8 = 209\) reste \(0\)`,
+    'MH.lesson_Y2Al_arth1b.activity1bSolution.equation5': String.raw`\(3502 \div 8 = 437\) reste \(6\)`,
+    'MH.lesson_Y2Al_arth1b.activity1bSolution.equation6': String.raw`\(19456 \div 8 = 2432\) reste \(0\)`,
+    
+    // Activité 2
+    'MH.lesson_Y2Al_arth1b.activity2Title': 'Activité 2: Justification Mathématique',
+    'MH.lesson_Y2Al_arth1b.activity2a': 'Partie a: Représentation des Nombres',
+    'MH.lesson_Y2Al_arth1b.activity2aQuestion': String.raw`Soit \(n\) un nombre naturel supérieur ou égal à 100 et soit \(b\) le nombre formé par ses trois derniers chiffres. Justifiez l\'écriture de \(n\) sous la forme \(n = 1000a + b\), où \(a\) est un nombre naturel.`,
+    'MH.lesson_Y2Al_arth1b.activity2aSolution': String.raw`Tout nombre naturel \(n \geq 100\) peut être écrit dans le système décimal comme :`,
+    'MH.lesson_Y2Al_arth1b.activity2aSolution.equation1': String.raw`\(n = a_k \times 10^k + a_{k-1} \times 10^{k-1} + \ldots + a_3 \times 10^3 + a_2 \times 10^2 + a_1 \times 10 + a_0\)`,
+    'MH.lesson_Y2Al_arth1b.activity2aSolution2': 'Nous pouvons regrouper les termes :',
+    'MH.lesson_Y2Al_arth1b.activity2aSolution.equation2': String.raw`\(n = (a_k \times 10^{k-3} + a_{k-1} \times 10^{k-4} + \ldots + a_3) \times 1000 + (a_2 \times 100 + a_1 \times 10 + a_0)\)`,
+    'MH.lesson_Y2Al_arth1b.activity2aSolution3': String.raw`Soit \(a = a_k \times 10^{k-3} + a_{k-1} \times 10^{k-4} + \ldots + a_3\) (qui est un nombre naturel) et \(b = a_2 \times 100 + a_1 \times 10 + a_0\) (le nombre formé par les trois derniers chiffres). Donc :`,
+    'MH.lesson_Y2Al_arth1b.activity2aSolution.equation3': String.raw`\(n = 1000a + b\)`,
+    
+    'MH.lesson_Y2Al_arth1b.activity2b': 'Partie b: Égalité des Restes',
+    'MH.lesson_Y2Al_arth1b.activity2bQuestion': String.raw`Montrez que \(n\) et \(b\) ont le même reste dans la division euclidienne par 8.`,
+    'MH.lesson_Y2Al_arth1b.activity2bSolution': String.raw`Nous avons \(n = 1000a + b\). Maintenant \(1000 = 8 \times 125\), donc \(1000\) est divisible par 8.`,
+    'MH.lesson_Y2Al_arth1b.activity2bSolution2': String.raw`Lorsque nous divisons \(n\) par 8 :`,
+    'MH.lesson_Y2Al_arth1b.activity2bSolution.equation1': String.raw`\(n \div 8 = (1000a + b) \div 8 = (1000a) \div 8 + b \div 8\)`,
+    'MH.lesson_Y2Al_arth1b.activity2bSolution3': 'Puisque \(1000a\) est divisible par 8, le reste lors de la division de \(n\) par 8 dépend uniquement de \(b\). Donc, \(n\) et \(b\) ont le même reste lorsqu\'ils sont divisés par 8.',
+    
+    'MH.lesson_Y2Al_arth1b.activity2c': 'Partie c: Critère de Divisibilité',
+    'MH.lesson_Y2Al_arth1b.activity2cQuestion': 'Énoncez un critère de divisibilité par 8.',
+    'MH.lesson_Y2Al_arth1b.divisibilityBy8Criterion': 'Critère de Divisibilité par 8',
+    'MH.lesson_Y2Al_arth1b.divisibilityBy8CriterionText': String.raw`Un nombre naturel \(n\) (\(n \geq 100\)) est divisible par 8 si et seulement si le nombre formé par ses trois derniers chiffres est divisible par 8.`,
+    'MH.lesson_Y2Al_arth1b.divisibilityBy8CriterionText2': 'Le reste de la division euclidienne de \(n\) par 8 est égal au reste de la division euclidienne par 8 du nombre formé par ses trois derniers chiffres.',
+    
+    // Activité 3
+    'MH.lesson_Y2Al_arth1b.activity3Title': 'Activité 3: Application aux Puissances',
+    'MH.lesson_Y2Al_arth1b.activity3Question': String.raw`Montrez que \(2^{721} + 2^{723}\) est divisible par 5.`,
+    'MH.lesson_Y2Al_arth1b.activity3Solution1': 'Premièrement, factorisez l\'expression :',
+    'MH.lesson_Y2Al_arth1b.activity3Solution.equation1': String.raw`\(2^{721} + 2^{723} = 2^{721}(1 + 2^2) = 2^{721}(1 + 4) = 2^{721} \times 5\)`,
+    'MH.lesson_Y2Al_arth1b.activity3Solution2': 'Par conséquent, l\'expression est clairement divisible par 5 puisqu\'elle contient un facteur 5.',
+    
+    // Exercices de Maîtrise
+    'MH.lesson_Y2Al_arth1b.masterExercisesTitle': 'Exercices de Maîtrise',
+    'MH.lesson_Y2Al_arth1b.masterInstructionsTitle': 'Niveau Défi',
+    'MH.lesson_Y2Al_arth1b.masterInstructionsText': 'Ces exercices nécessitent une compréhension plus profonde et une application des critères de divisibilité. Ils testeront vos compétences en résolution de problèmes à un niveau avancé.',
+    
+    // Exercice 1
+    'MH.lesson_Y2Al_arth1b.exercise1Title': 'Exercice 1: Divisibilité par 4',
+    'MH.lesson_Y2Al_arth1b.exercise1': 'Sans effectuer la division, déterminez lesquels des nombres suivants sont divisibles par 4 : 324, 517, 892, 1236, 2050, 3714.',
+    'MH.lesson_Y2Al_arth1b.exercise1Solution': 'Vérifiez les deux derniers chiffres de chaque nombre :',
+    'MH.lesson_Y2Al_arth1b.exercise1Solution.equation1': String.raw`324: \(24 \div 4 = 6\) → Divisible par 4`,
+    'MH.lesson_Y2Al_arth1b.exercise1Solution.equation2': String.raw`517: \(17 \div 4 = 4\) reste \(1\) → Non divisible par 4`,
+    'MH.lesson_Y2Al_arth1b.exercise1Solution.equation3': String.raw`892: \(92 \div 4 = 23\) → Divisible par 4`,
+    'MH.lesson_Y2Al_arth1b.exercise1Solution.equation4': String.raw`1236: \(36 \div 4 = 9\) → Divisible par 4`,
+    'MH.lesson_Y2Al_arth1b.exercise1Solution.equation5': String.raw`2050: \(50 \div 4 = 12\) reste \(2\) → Non divisible par 4`,
+    'MH.lesson_Y2Al_arth1b.exercise1Solution.equation6': String.raw`3714: \(14 \div 4 = 3\) reste \(2\) → Non divisible par 4`,
+    
+    // Exercice 2
+    'MH.lesson_Y2Al_arth1b.exercise2Title': 'Exercice 2: Reste des Puissances',
+    'MH.lesson_Y2Al_arth1b.exercise2': String.raw`Déterminez le reste lorsque \(3^{2024}\) est divisé par 5.`,
+    'MH.lesson_Y2Al_arth1b.exercise2Solution1': 'Regardez le motif des chiffres des unités pour les puissances de 3 :',
+    'MH.lesson_Y2Al_arth1b.exercise2Solution.equation1': String.raw`\(3^1 = 3\) → chiffre des unités: \(3\)`,
+    'MH.lesson_Y2Al_arth1b.exercise2Solution.equation2': String.raw`\(3^2 = 9\) → chiffre des unités: \(9\)`,
+    'MH.lesson_Y2Al_arth1b.exercise2Solution.equation3': String.raw`\(3^3 = 27\) → chiffre des unités: \(7\)`,
+    'MH.lesson_Y2Al_arth1b.exercise2Solution.equation4': String.raw`\(3^4 = 81\) → chiffre des unités: \(1\)`,
+    'MH.lesson_Y2Al_arth1b.exercise2Solution.equation5': String.raw`\(3^5 = 243\) → chiffre des unités: \(3\) (le motif se répète tous les 4)`,
+    'MH.lesson_Y2Al_arth1b.exercise2Solution2': String.raw`Puisque \(2024 \div 4 = 506\) exactement, \(3^{2024}\) se termine par le même chiffre que \(3^4\), qui est 1.`,
+    'MH.lesson_Y2Al_arth1b.exercise2Solution3': String.raw`Par conséquent, \(3^{2024} \div 5\) donne un reste égal au reste de \(1 \div 5\), qui est 1.`,
+    
+    // Exercice 3
+    'MH.lesson_Y2Al_arth1b.exercise3Title': 'Exercice 3: Produit d\'Entiers Consécutifs',
+    'MH.lesson_Y2Al_arth1b.exercise3': 'Montrez que le produit de trois entiers consécutifs quelconques est divisible par 8.',
+    'MH.lesson_Y2Al_arth1b.exercise3Solution1': String.raw`Soit les trois entiers consécutifs \(n\), \(n+1\) et \(n+2\).`,
+    'MH.lesson_Y2Al_arth1b.exercise3Solution2': 'Parmi trois entiers consécutifs quelconques, au moins un est pair (divisible par 2).',
+    'MH.lesson_Y2Al_arth1b.exercise3Solution3': 'De plus, parmi trois entiers consécutifs quelconques, au moins un est divisible par 4 (puisque chaque autre nombre pair est divisible par 4).',
+    'MH.lesson_Y2Al_arth1b.exercise3Solution4': 'Par conséquent, le produit contient les facteurs 2 et 4, donc il contient le facteur \(2 \times 4 = 8\).',
+    'MH.lesson_Y2Al_arth1b.exercise3Solution5': 'Ainsi, le produit de trois entiers consécutifs quelconques est divisible par 8.',
+    
+    // Exercice 4
+    'MH.lesson_Y2Al_arth1b.exercise4Title': 'Exercice 4: Plus Petite Puissance',
+    'MH.lesson_Y2Al_arth1b.exercise4': String.raw`Trouvez le plus petit nombre naturel \(n\) tel que \(2^n - 1\) soit divisible par 5.`,
+    'MH.lesson_Y2Al_arth1b.exercise4Solution1': String.raw`Nous devons trouver quand \(2^n \equiv 1 \pmod{5}\).`,
+    'MH.lesson_Y2Al_arth1b.exercise4Solution2': 'Vérifiez les puissances de 2 modulo 5 :',
+    'MH.lesson_Y2Al_arth1b.exercise4Solution.equation1': String.raw`\(2^1 = 2 \equiv 2 \pmod{5}\)`,
+    'MH.lesson_Y2Al_arth1b.exercise4Solution.equation2': String.raw`\(2^2 = 4 \equiv 4 \pmod{5}\)`,
+    'MH.lesson_Y2Al_arth1b.exercise4Solution.equation3': String.raw`\(2^3 = 8 \equiv 3 \pmod{5}\)`,
+    'MH.lesson_Y2Al_arth1b.exercise4Solution.equation4': String.raw`\(2^4 = 16 \equiv 1 \pmod{5}\)`,
+    'MH.lesson_Y2Al_arth1b.exercise4Solution3': String.raw`Donc \(2^4 - 1\) est divisible par 5. Vérifiez les valeurs plus petites: \(2^1 - 1 = 1\), \(2^2 - 1 = 3\), \(2^3 - 1 = 7\), aucun n\'est divisible par 5.`,
+    'MH.lesson_Y2Al_arth1b.exercise4Solution4': String.raw`Par conséquent, le plus petit nombre naturel \(n\) est 4.`,
+    
+    // Résumé
+    'MH.lesson_Y2Al_arth1b.summaryTitle': 'Résumé Complet',
+    'MH.lesson_Y2Al_arth1b.divisibilityBy2And5Title': 'Divisibilité par 2 et 5',
+    'MH.lesson_Y2Al_arth1b.divisibilityBy2And5Text1': '• Un entier est divisible par 2 (respectivement par 5) si et seulement si son chiffre des unités est divisible par 2 (respectivement par 5).',
+    'MH.lesson_Y2Al_arth1b.divisibilityBy2And5Text2': '• Le reste de la division euclidienne d\'un entier par 2 (respectivement par 5) est égal au reste de la division euclidienne de son chiffre des unités par 2 (respectivement par 5).',
+    'MH.lesson_Y2Al_arth1b.example1': 'Exemple: 3476 est divisible par 2 car 6 est divisible par 2.',
+    'MH.lesson_Y2Al_arth1b.example2': 'Exemple: 8495 est divisible par 5 car son chiffre des unités est 5.',
+    
+    'MH.lesson_Y2Al_arth1b.divisibilityBy4And25Title': 'Divisibilité par 4 et 25',
+    'MH.lesson_Y2Al_arth1b.divisibilityBy4And25Text1': '• Un entier est divisible par 4 (respectivement par 25) si et seulement si le nombre formé par ses deux derniers chiffres est divisible par 4 (respectivement par 25).',
+    'MH.lesson_Y2Al_arth1b.divisibilityBy4And25Text2': '• Le reste de la division euclidienne d\'un entier par 4 (respectivement par 25) est égal au reste de la division euclidienne par 4 (respectivement par 25) du nombre formé par ses deux derniers chiffres.',
+    'MH.lesson_Y2Al_arth1b.example3': 'Exemple: 1236 est divisible par 4 car 36 est divisible par 4.',
+    'MH.lesson_Y2Al_arth1b.example4': 'Exemple: 1750 est divisible par 25 car 50 est divisible par 25.',
+    
+    'MH.lesson_Y2Al_arth1b.divisibilityBy8Title': 'Divisibilité par 8',
+    'MH.lesson_Y2Al_arth1b.divisibilityBy8Text1': '• Un entier, supérieur ou égal à 100, est divisible par 8 si et seulement si le nombre formé par ses trois derniers chiffres est divisible par 8.',
+    'MH.lesson_Y2Al_arth1b.divisibilityBy8Text2': '• Le reste de la division euclidienne d\'un entier par 8 est égal au reste de la division euclidienne par 8 du nombre formé par ses trois derniers chiffres.',
+    'MH.lesson_Y2Al_arth1b.example5': String.raw`Exemple: 15432 est divisible par 8 car \(432 \div 8 = 54\).`,
+    'MH.lesson_Y2Al_arth1b.example6': String.raw`Exemple: 7297 n\'est pas divisible par 8 car \(297 \div 8 = 37\) reste 1.`,
+    
+    // Conclusion
+    'MH.lesson_Y2Al_arth1b.conclusionTitle': 'Conclusion',
+    'MH.lesson_Y2Al_arth1b.keyConceptsTitle': 'Concepts Clés Maîtrisés',
+    'MH.lesson_Y2Al_arth1b.concept1': 'Critères de divisibilité pour 2 et 5 basés sur le chiffre des unités',
+    'MH.lesson_Y2Al_arth1b.concept2': 'Critères de divisibilité pour 4 et 25 basés sur les deux derniers chiffres',
+    'MH.lesson_Y2Al_arth1b.concept3': 'Critère de divisibilité pour 8 basé sur les trois derniers chiffres',
+    'MH.lesson_Y2Al_arth1b.concept4': 'Justification mathématique de ces critères',
+    'MH.lesson_Y2Al_arth1b.concept5': 'Application à la résolution de problèmes et aux preuves',
+    'MH.lesson_Y2Al_arth1b.finalThought': 'Les critères de divisibilité sont des outils puissants qui simplifient de nombreux calculs et preuves mathématiques. Comprendre leurs fondements mathématiques vous aide à les appliquer correctement et même à découvrir de nouveaux modèles dans les nombres.',
+    
+    // Boutons de solution
+    'MH.lesson_Y2Al_arth1b.showSolution': 'Afficher la Solution',
+    'MH.lesson_Y2Al_arth1b.hideSolution': 'Masquer la Solution',
+    
+    // Pied de page
+    'MH.footer.developer': 'Développeur',
+    'MH.footer.version': 'Version',
+    'MH.footer.links': 'Liens',
+    'MH.footer.terms': 'Conditions d\'Utilisation',
+    'MH.footer.privacy': 'Politique de Confidentialité'
+            }
+        };
+
+        // Merge with existing translations if they exist
+        if (typeof translations !== 'undefined') {
+            Object.keys(arithmeticTranslations).forEach(lang => {
+                if (translations[lang]) {
+                    translations[lang] = {...translations[lang], ...arithmeticTranslations[lang]};
+                } else {
+                    translations[lang] = arithmeticTranslations[lang];
+                }
+            });
+        } else {
+            var translations = arithmeticTranslations;
+        }
+
+        // Solution toggle function
+        function toggleSolution(problemNumber) {
+            const solution = document.getElementById(`solution${problemNumber}`);
+            const button = solution.previousElementSibling;
+            
+            if (solution.style.display === 'block') {
+                solution.style.display = 'none';
+                button.setAttribute('data-i18n', 'MH.lesson_Y2Al_arth1b.showSolution');
+                button.textContent = translations[MHThemeManager.getCurrentLanguage()]['MH.lesson_Y2Al_arth1b.showSolution'];
+            } else {
+                solution.style.display = 'block';
+                button.setAttribute('data-i18n', 'MH.lesson_Y2Al_arth1b.hideSolution');
+                button.textContent = translations[MHThemeManager.getCurrentLanguage()]['MH.lesson_Y2Al_arth1b.hideSolution'];
+                
+                // Re-render KaTeX for newly visible equations
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(solution, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\(', right: '\\)', display: false},
+                            {left: '\\[', right: '\\]', display: true}
+                        ],
+                        throwOnError: false
+                    });
+                }
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize KaTeX auto-render
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+
+            // Initialize solutions as hidden
+            for (let i = 1; i <= 10; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+            }
+        });
+    </script>
+
+<!-- Add the service worker registration script -->
+<script>
+    // Register service worker with better error handling
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch(function(error) {
+                console.log('Service Worker registration failed:', error);
+            });
+        });
+    }
+</script>
+
+<!-- Add noscript fallback -->
+<noscript>
+    <style>
+        .MH-header-controls { display: none; }
+        .MH-solution { display: block; }
+    </style>
+    <div class="MH-warning">
+        JavaScript is recommended for the full experience, but content is still accessible.
+    </div>
+</noscript>
+</body>
+</html>
