@@ -1,0 +1,2072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Geometry - Loci and Construction Problems (Part 5)</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#4A90E2" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#8E44AD" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#4A90E2">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    
+    <style>
+        /* Page-specific color palette - Blue + Purple Theme */
+        :root {
+            --primary: #4A90E2;        /* Cornflower Blue */
+            --primary-light: #7BAAF7;  /* Light Blue */
+            --primary-dark: #357ABD;   /* Darker Blue */
+            --secondary: #8E44AD;      /* Dark Purple */
+            --secondary-light: #AF7AC5; /* Light Purple */
+            --secondary-dark: #6C3483;  /* Darker Purple */
+            --accent: #E67E22;
+            --warning: #E74C3C;
+            --info: #2ECC71;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #FFFFFF;
+            --surface: #F8F9FA;
+            --border: #E9ECEF;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        [data-theme="dark"] {
+            --primary: #357ABD;
+            --primary-light: #4A90E2;
+            --primary-dark: #2C3E50;
+            --secondary: #6C3483;
+            --secondary-light: #8E44AD;
+            --secondary-dark: #4A235A;
+            --accent: #D35400;
+            --warning: #C0392B;
+            --info: #27AE60;
+            --text: #FFFFFF;
+            --text-light: #CCCCCC;
+            --background: #121212;
+            --surface: #1E1E1E;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        /* KaTeX styling */
+        .katex { 
+            font-size: 1.1em; 
+        }
+        
+        .katex-display { 
+            margin: 1em 0; 
+            text-align: center;
+        }
+        
+        .katex-display > .katex { 
+            display: inline-block;
+            text-align: center;
+        }
+
+        /* Equation styling */
+        .MH-equation {
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            margin: 0.5em 0;
+            padding: 0;
+            display: inline-block;
+            direction: ltr !important;
+            unicode-bidi: isolate;
+        }
+        
+        [dir="rtl"] .MH-equation {
+            text-align: left;
+            unicode-bidi: plaintext;
+        }
+
+        /* Canvas container styling */
+        .MH-canvas-container {
+            margin: 2em 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .MH-canvas {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background-color: var(--surface);
+            max-width: 100%;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+
+        .MH-canvas-title {
+            font-weight: bold;
+            margin-bottom: 0.5em;
+            color: var(--primary);
+        }
+
+        .MH-canvas-instructions {
+            font-size: 0.9em;
+            color: var(--text-light);
+            margin-top: 0.5em;
+            font-style: italic;
+        }
+
+        /* Geometry specific styling */
+        .MH-construction-step {
+            margin: 1.5em 0;
+            padding: 1em;
+            background-color: var(--surface);
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+        }
+
+        .MH-construction-step h4 {
+            margin-top: 0;
+            color: var(--primary-dark);
+        }
+
+        .MH-vector-notation {
+            font-family: 'KaTeX_Math', 'Cambria Math', serif;
+            font-style: italic;
+            color: var(--secondary);
+        }
+
+        .MH-point-label {
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .MH-transformation-notation {
+            background-color: rgba(78, 144, 226, 0.1);
+            padding: 0.5em;
+            border-radius: 4px;
+            font-family: 'KaTeX_Math', 'Cambria Math', serif;
+            margin: 0.5em 0;
+        }
+
+        /* Locus specific styling */
+        .MH-locus-path {
+            stroke: var(--warning);
+            stroke-width: 3;
+            stroke-dasharray: 5, 5;
+            fill: none;
+        }
+
+        .MH-variable-point {
+            fill: var(--info);
+            stroke: var(--info-dark);
+            stroke-width: 2;
+        }
+
+        .MH-fixed-point {
+            fill: var(--warning);
+            stroke: var(--warning-dark);
+            stroke-width: 2;
+        }
+
+        .MH-locus-point {
+            fill: var(--secondary);
+            stroke: var(--secondary-dark);
+            stroke-width: 2;
+        }
+
+        /* Construction specific styling */
+        .MH-construction-line {
+            stroke: var(--primary-light);
+            stroke-width: 1;
+            stroke-dasharray: 3, 3;
+        }
+
+        .MH-parallel-line {
+            stroke: var(--secondary-light);
+            stroke-width: 1;
+            stroke-dasharray: 2, 2;
+        }
+
+        /* Responsive canvas */
+        @media (max-width: 768px) {
+            .MH-canvas {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                    <!-- Notification Button -->
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+                        <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Geo_transl5a.title">Translation: Part 5</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y2Geo_transl5a.subtitle">Locus Problems and Construction Problems Involving Translations</h2>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_transl5a.introduction">Introduction</h2>
+            <p data-i18n="MH.lesson_Y2Geo_transl5a.introText1">In this fifth lesson on translations, we will explore two important types of geometric problems: locus problems and construction problems. These problems test our understanding of geometric configurations and transformations.</p>
+            <p data-i18n="MH.lesson_Y2Geo_transl5a.introText2">Locus problems ask us to determine the set of points satisfying certain geometric conditions, while construction problems challenge us to build geometric figures with specific properties using only a straightedge and compass.</p>
+        </section>
+
+        <!-- Part XII: Problems of Loci -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_transl5a.partXIITitle">Part XII: Problems of Loci</h2>
+            
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_transl5a.partXIIIntro">A locus is the set of all points satisfying certain geometric conditions. Locus problems often involve determining the path traced by a point as other elements in the configuration vary.</p>
+            </div>
+
+            <!-- Activity 1 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl5a.activity1Title">Activity 1: Locus Determined by Perpendicular Lines</h3>
+                
+                <!-- Diagram 1: Perpendicular lines D and D' with variable point M -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_transl5a.diagram1Title">Figure: Perpendicular lines D and D' intersecting at O, point A, and variable point M on D</div>
+                    <canvas id="activity1Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_transl5a.diagram1Instructions">Two perpendicular lines D and D' intersect at O. Point A is fixed. M varies on D. N is determined by constructing perpendicular from A to AM meeting D'. I is the midpoint of MN.</div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl5a.step1aTitle">Step 1: Experimental Phase</h4>
+                    <p data-i18n="MH.lesson_Y2Geo_transl5a.step1aQuestion">Consider two perpendicular lines D and D' intersecting at point O, and a point A not on either line. Let M be a variable point on line D. The perpendicular to line (AM) at point A meets line D' at point N. Let I be the midpoint of segment [MN].</p>
+                    <p data-i18n="MH.lesson_Y2Geo_transl5a.step1aTasks">a) Construct a figure.<br>b) Identify fixed and variable elements.<br>c) Place several points I corresponding to different positions of M.</p>
+                    <button class="MH-solution-btn" onclick="constructActivity1Step1()" data-i18n="MH.lesson_Y2Geo_transl5a.constructButton">Construct</button>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl5a.step1bTitle">Step 2: Conjecture</h4>
+                    <p data-i18n="MH.lesson_Y2Geo_transl5a.step1bQuestion">Make a conjecture about the set of points I as M varies along line D.</p>
+                    <button class="MH-solution-btn" onclick="constructActivity1Step2()" data-i18n="MH.lesson_Y2Geo_transl5a.showConjecture">Show Conjecture</button>
+                    <div class="MH-solution" id="conjecture1">
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.conjecture1Text">Based on experimental observation, it appears that point I traces a straight line parallel to line D and passing through the midpoint of segment [OA].</p>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl5a.step1cTitle">Step 3: Proof of Conjecture</h4>
+                    <p data-i18n="MH.lesson_Y2Geo_transl5a.step1cQuestion">Prove that I varies along a specific line.</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl5a.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                    <div class="MH-solution" id="solution1">
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step1cSolution">Let O be the origin of a coordinate system with axes along D and D'. Without loss of generality, let:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl5a.equation1a">\(D: y = 0\) (horizontal axis)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl5a.equation1b">\(D': x = 0\) (vertical axis)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step1cSolution2">Let A have coordinates \((a, b)\) with \(a ≠ 0\) and \(b ≠ 0\). Let M have coordinates \((m, 0)\) where m is variable.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step1cSolution3">The slope of line AM is:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl5a.equation1c">\(slope(AM) = \frac{0 - b}{m - a} = \frac{-b}{m - a}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step1cSolution4">The perpendicular at A has slope:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl5a.equation1d">\(slope_{\perp} = \frac{m - a}{b}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step1cSolution5">The equation of the perpendicular through A is:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl5a.equation1e">\(y - b = \frac{m - a}{b}(x - a)\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step1cSolution6">This line intersects D' (x = 0) at N:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl5a.equation1f">\(y_N - b = \frac{m - a}{b}(0 - a) = -\frac{a(m - a)}{b}\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl5a.equation1g">\(y_N = b - \frac{a(m - a)}{b} = \frac{b^2 - a(m - a)}{b}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step1cSolution7">Thus N has coordinates \((0, \frac{b^2 - a(m - a)}{b})\).</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step1cSolution8">I is the midpoint of M(m, 0) and N(0, y_N):</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl5a.equation1h">\(I\left(\frac{m + 0}{2}, \frac{0 + y_N}{2}\right) = \left(\frac{m}{2}, \frac{y_N}{2}\right)\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl5a.equation1i">\(y_I = \frac{y_N}{2} = \frac{b^2 - a(m - a)}{2b}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step1cSolution9">From \(x_I = \frac{m}{2}\), we have \(m = 2x_I\). Substituting:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl5a.equation1j">\(y_I = \frac{b^2 - a(2x_I - a)}{2b} = \frac{b^2 - 2a x_I + a^2}{2b}\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl5a.equation1k">\(y_I = -\frac{a}{b}x_I + \frac{a^2 + b^2}{2b}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step1cSolution10">This is the equation of a straight line with slope \(-\frac{a}{b}\) and y-intercept \(\frac{a^2 + b^2}{2b}\).</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step1cConclusion">Therefore, as M varies on D, point I moves along a straight line.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity 2 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl5a.activity2Title">Activity 2: Locus Determined by Parallelogram Construction</h3>
+                
+                <!-- Diagram 2: Points A, B, line D, and parallelogram ABNM -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_transl5a.diagram2Title">Figure: Points A and B, line D through A, and parallelogram ABNM</div>
+                    <canvas id="activity2Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_transl5a.diagram2Instructions">Points A and B are fixed. Line D passes through A. M varies on D. N completes parallelogram ABNM. The locus of N is shown.</div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl5a.step2aTitle">Given points A and B and a line D passing through A but not through B. Let M be a variable point on D distinct from A. Let N be the point such that ABNM is a parallelogram.</h4>
+                    <p data-i18n="MH.lesson_Y2Geo_transl5a.step2aQuestion">a) Prove that point N is the image of point M under a specific transformation.</p>
+                    <button class="MH-solution-btn" onclick="constructActivity2PartA()" data-i18n="MH.lesson_Y2Geo_transl5a.constructButton">Construct</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl5a.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                    <div class="MH-solution" id="solution2">
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step2aSolution">Since ABNM is a parallelogram, we have:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl5a.equation2a">\(\overrightarrow{AB} = \overrightarrow{NM}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step2aSolution2">This can be rewritten as:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl5a.equation2b">\(\overrightarrow{AN} = \overrightarrow{BM}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step2aSolution3">Also, from the parallelogram property:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl5a.equation2c">\(\overrightarrow{AM} = \overrightarrow{BN}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step2aSolution4">Consider the translation t with vector \(\overrightarrow{AB}\). Then:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl5a.equation2d">\(t(A) = B\) and \(t(M) = N\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step2aSolution5">Thus N is the image of M under the translation of vector \(\overrightarrow{AB}\).</p>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl5a.step2bTitle">b) What is the locus of points N as M varies on D? Construct this locus.</h4>
+                    <button class="MH-solution-btn" onclick="constructActivity2PartB()" data-i18n="MH.lesson_Y2Geo_transl5a.constructButton">Construct Locus</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl5a.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                    <div class="MH-solution" id="solution3">
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step2bSolution">Since N = t(M) where t is translation by vector \(\overrightarrow{AB}\), and M varies on line D:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl5a.equation2e">The locus of N is \(t(D)\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step2bSolution2">Since translations map lines to parallel lines:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl5a.equation2f">\(t(D)\) is parallel to D</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step2bSolution3">Specifically, t(D) is the line through point B (since t(A) = B) parallel to D.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step2bConclusion">Therefore, the locus of N is the line through B parallel to D.</p>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl5a.step2cTitle">c) What is the locus of points N when M varies on a fixed circle C with center A and radius 3? Construct this locus.</h4>
+                    <button class="MH-solution-btn" onclick="constructActivity2PartC()" data-i18n="MH.lesson_Y2Geo_transl5a.constructButton">Construct Circular Locus</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl5a.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+                    <div class="MH-solution" id="solution4">
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step2cSolution">Let C be the circle with center A and radius 3. Since N = t(M) where t is translation by vector \(\overrightarrow{AB}\):</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl5a.equation2g">The locus of N is \(t(C)\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step2cSolution2">We know from previous lessons that the image of a circle under translation is a congruent circle. Specifically:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl5a.equation2h">\(t(C)\) is the circle with center \(t(A) = B\) and radius 3</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step2cConclusion">Therefore, the locus of N is the circle with center B and radius 3.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part XIII: Construction Problems -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_transl5a.partXIIITitle">Part XIII: Construction Problems</h2>
+            
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_transl5a.partXIIIIntro">Construction problems involve creating geometric figures with specified properties using only straightedge and compass. These problems often require careful analysis and application of geometric theorems.</p>
+            </div>
+
+            <!-- Activity 3 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl5a.activity3Title">Activity 3: Constructing a Triangle from Midpoints</h3>
+                
+                <!-- Diagram 3: Triangle ABC with midpoints I, J, K -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_transl5a.diagram3Title">Figure: Triangle ABC with midpoints I, J, K of sides [BC], [AC], [AB] respectively</div>
+                    <canvas id="activity3Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_transl5a.diagram3Instructions">Given three non-collinear points I, J, K, construct triangle ABC such that I, J, K are midpoints of its sides.</div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl5a.step3aTitle">Step 1: Analysis from a Study Figure</h4>
+                    <p data-i18n="MH.lesson_Y2Geo_transl5a.step3aQuestion">Given three non-collinear points I, J, K, we want to construct triangle ABC such that I, J, K are midpoints of [BC], [AC], and [AB] respectively.</p>
+                    <p data-i18n="MH.lesson_Y2Geo_transl5a.step3aTasks">a) Construct triangle ABC and place points I, J, K as midpoints.<br>b) Observe and prove that:<br>• (AB) is parallel to (IJ)<br>• (AC) is parallel to (IK)<br>• (BC) is parallel to (JK)</p>
+                    <button class="MH-solution-btn" onclick="constructActivity3Step1()" data-i18n="MH.lesson_Y2Geo_transl5a.constructButton">Construct</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl5a.showSolution" onclick="toggleSolution(5)">Show Solution</button>
+                    <div class="MH-solution" id="solution5">
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step3aSolution">In triangle ABC with midpoints I, J, K:</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Geo_transl5a.step3aSol1">IJ joins midpoints of BC and AC, so by the Midsegment Theorem, IJ ∥ AB and IJ = ½ AB</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl5a.step3aSol2">IK joins midpoints of BC and AB, so IK ∥ AC and IK = ½ AC</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl5a.step3aSol3">JK joins midpoints of AC and AB, so JK ∥ BC and JK = ½ BC</li>
+                        </ul>
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step3aConclusion">Thus each side of triangle ABC is parallel to the corresponding side of triangle IJK.</p>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl5a.step3bTitle">Step 2: Synthesis and Return to Initial Data</h4>
+                    <p data-i18n="MH.lesson_Y2Geo_transl5a.step3bQuestion">Given three non-collinear points I, J, K:</p>
+                    <p data-i18n="MH.lesson_Y2Geo_transl5a.step3bTasks">a) Construct the parallel to (IJ) through K and the parallel to (IK) through J.<br>b) Are these lines always intersecting? If yes, let A be their intersection.<br>c) Complete the construction of triangle ABC.</p>
+                    <button class="MH-solution-btn" onclick="constructActivity3Step2()" data-i18n="MH.lesson_Y2Geo_transl5a.constructButton">Construct Triangle</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl5a.showSolution" onclick="toggleSolution(6)">Show Solution</button>
+                    <div class="MH-solution" id="solution6">
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step3bSolution">Construction Steps:</p>
+                        <ol>
+                            <li data-i18n="MH.lesson_Y2Geo_transl5a.step3bSol1">Draw line through K parallel to IJ</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl5a.step3bSol2">Draw line through J parallel to IK</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl5a.step3bSol3">These lines intersect at point A (since I, J, K are non-collinear, the lines are not parallel)</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl5a.step3bSol4">Construct point B such that K is midpoint of AB: B is symmetric to A with respect to K</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl5a.step3bSol5">Construct point C such that J is midpoint of AC: C is symmetric to A with respect to J</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl5a.step3bSol6">Verify that I is midpoint of BC</li>
+                        </ol>
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step3bConclusion">The construction is always possible when I, J, K are non-collinear.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity 4 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl5a.activity4Title">Activity 4: Constructing a Parallelogram with Vertices on Given Lines</h3>
+                
+                <!-- Diagram 4: Lines D and Δ intersecting, points A, B, and parallelogram ABMN -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_transl5a.diagram4Title">Figure: Intersecting lines D and Δ, points A and B, and parallelogram ABMN with M on D and N on Δ</div>
+                    <canvas id="activity4Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_transl5a.diagram4Instructions">Given intersecting lines D and Δ, and points A and B not on these lines, construct points M on D and N on Δ such that ABMN is a parallelogram.</div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl5a.step4aTitle">Step 1: Analysis from a Study Figure</h4>
+                    <p data-i18n="MH.lesson_Y2Geo_transl5a.step4aQuestion">Given intersecting lines D and Δ, and distinct points A and B not on these lines. We want to construct points M on D and N on Δ such that ABMN is a parallelogram.</p>
+                    <p data-i18n="MH.lesson_Y2Geo_transl5a.step4aTasks">a) Construct parallelogram ABMN and intersecting lines D and Δ through M and N respectively.<br>b) Find a transformation t that maps M to N.<br>c) Let D' be the image of line D under t. Determine the intersection of D' and Δ.</p>
+                    <button class="MH-solution-btn" onclick="constructActivity4Step1()" data-i18n="MH.lesson_Y2Geo_transl5a.constructButton">Construct</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl5a.showSolution" onclick="toggleSolution(7)">Show Solution</button>
+                    <div class="MH-solution" id="solution7">
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step4aSolution">Analysis:</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Geo_transl5a.step4aSol1">Since ABMN is a parallelogram, we have \(\overrightarrow{AB} = \overrightarrow{MN}\)</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl5a.step4aSol2">Thus N is the image of M under translation t with vector \(\overrightarrow{AB}\)</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl5a.step4aSol3">D' = t(D) is parallel to D</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl5a.step4aSol4">N is on both D' and Δ, so N = D' ∩ Δ</li>
+                        </ul>
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step4aConclusion">Therefore, N can be found as the intersection of Δ and the line through B parallel to D.</p>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl5a.step4bTitle">Step 2: Synthesis and Return to Initial Data</h4>
+                    <p data-i18n="MH.lesson_Y2Geo_transl5a.step4bQuestion">Given intersecting lines D and Δ, and distinct points A and B not on D or Δ:</p>
+                    <p data-i18n="MH.lesson_Y2Geo_transl5a.step4bTasks">a) Construct lines D and Δ and points A and B.<br>b) Construct line D' = t(D), the image of D under translation t with vector \(\overrightarrow{AB}\).<br>c) Show that D' and Δ intersect. Let N be their intersection.<br>d) Construct point M on line D such that ABMN is a parallelogram.</p>
+                    <button class="MH-solution-btn" onclick="constructActivity4Step2()" data-i18n="MH.lesson_Y2Geo_transl5a.constructButton">Construct Parallelogram</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl5a.showSolution" onclick="toggleSolution(8)">Show Solution</button>
+                    <div class="MH-solution" id="solution8">
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step4bSolution">Construction Steps:</p>
+                        <ol>
+                            <li data-i18n="MH.lesson_Y2Geo_transl5a.step4bSol1">Draw line through B parallel to D (this is D')</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl5a.step4bSol2">Find N = intersection of D' and Δ</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl5a.step4bSol3">Construct M such that \(\overrightarrow{AB} = \overrightarrow{MN}\)</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl5a.step4bSol4">Specifically, M can be found by translating N by vector \(\overrightarrow{BA}\) (opposite to \(\overrightarrow{AB}\))</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl5a.step4bSol5">Verify that M lies on D and that ABMN is a parallelogram</li>
+                        </ol>
+                        <p data-i18n="MH.lesson_Y2Geo_transl5a.step4bConclusion">The construction always works when D' and Δ intersect, which occurs unless D' is parallel to Δ (which would mean D is parallel to Δ, contradicting that D and Δ are intersecting).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_transl5a.summaryTitle">Comprehensive Summary</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl5a.summary1Title">Problems of Loci</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Geo_transl5a.summary1Item1">A locus is the set of points satisfying certain geometric conditions</li>
+                    <li data-i18n="MH.lesson_Y2Geo_transl5a.summary1Item2">Loci can be lines, circles, or other curves</li>
+                    <li data-i18n="MH.lesson_Y2Geo_transl5a.summary1Item3">Translations transform loci in predictable ways</li>
+                </ul>
+            </div>
+
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl5a.summary2Title">Construction Problems</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Geo_transl5a.summary2Item1">Construction problems require creating figures with specified properties</li>
+                    <li data-i18n="MH.lesson_Y2Geo_transl5a.summary2Item2">Analysis involves working backward from a hypothetical solution</li>
+                    <li data-i18n="MH.lesson_Y2Geo_transl5a.summary2Item3">Synthesis involves using the analysis to create an actual construction</li>
+                </ul>
+            </div>
+
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl5a.summary3Title">Key Translation Applications</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Geo_transl5a.summary3Item1">Translations map lines to parallel lines</li>
+                    <li data-i18n="MH.lesson_Y2Geo_transl5a.summary3Item2">Translations map circles to congruent circles</li>
+                    <li data-i18n="MH.lesson_Y2Geo_transl5a.summary3Item3">Parallelograms can be constructed using translations</li>
+                    <li data-i18n="MH.lesson_Y2Geo_transl5a.summary3Item4">Midpoints provide information about parallel lines</li>
+                </ul>
+            </div>
+            
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl5a.conclusionTitle">Conclusion</h3>
+                <div class="MH-important">
+                    <h3 data-i18n="MH.lesson_Y2Geo_transl5a.keyConceptsTitle">Key Concepts Mastered</h3>
+                    <ul>
+                        <li data-i18n="MH.lesson_Y2Geo_transl5a.concept1">Understanding and solving locus problems</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl5a.concept2">Using translations to determine loci</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl5a.concept3">Constructing triangles from midpoints</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl5a.concept4">Constructing parallelograms with vertices on given lines</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl5a.concept5">Applying the Midsegment Theorem in constructions</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl5a.concept6">Using analysis-synthesis approach in construction problems</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl5a.concept7">Translating lines and circles to solve geometric problems</li>
+                    </ul>
+                </div>
+                <p data-i18n="MH.lesson_Y2Geo_transl5a.finalThought">The problems studied in this lesson demonstrate the power of translations in solving both locus problems and construction problems. By understanding how translations transform geometric figures and applying this knowledge systematically, we can solve complex geometric problems that might otherwise seem intractable. These skills are essential for advanced geometry and have applications in fields such as engineering, computer graphics, and architecture.</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+    
+    <script>
+        // GEOMETRY LESSON TRANSLATIONS - Part 5
+        // GEOMETRY LESSON TRANSLATIONS - Part 5 (FIXED VERSION)
+const geometryTranslations5 = {
+    'en': {
+        // General translations
+        'MH.general.homeTooltip': 'Go to Homepage',
+        'MH.general.install': 'Install App',
+        'MH.general.installSuccess': 'Mathematics Hub installed successfully!',
+        'MH.general.enableNotifications': 'Enable Notifications',
+        'MH.general.notificationEnabled': 'Notifications enabled! You will now receive updates.',
+        'MH.general.title': 'Mathematics Hub',
+        'MH.general.theme': 'Theme',
+        'MH.general.language': 'Language',
+        'MH.lesson_Y2Geo_transl5a.showSolution': 'Show Solution',
+        'MH.lesson_Y2Geo_transl5a.hideSolution': 'Hide Solution',
+        'MH.lesson_Y2Geo_transl5a.constructButton': 'Construct',
+        'MH.lesson_Y2Geo_transl5a.showConjecture': 'Show Conjecture',
+        
+        // Geometry lesson specific translations
+        'MH.lesson_Y2Geo_transl5a.title': 'Translation: Part 5',
+        'MH.lesson_Y2Geo_transl5a.subtitle': 'Locus Problems and Construction Problems Involving Translations',
+        'MH.lesson_Y2Geo_transl5a.introduction': 'Introduction',
+        'MH.lesson_Y2Geo_transl5a.introText1': 'In this fifth lesson on translations, we will explore two important types of geometric problems: locus problems and construction problems. These problems test our understanding of geometric configurations and transformations.',
+        'MH.lesson_Y2Geo_transl5a.introText2': 'Locus problems ask us to determine the set of points satisfying certain geometric conditions, while construction problems challenge us to build geometric figures with specific properties using only a straightedge and compass.',
+        
+        // Part XII
+        'MH.lesson_Y2Geo_transl5a.partXIITitle': 'Part XII: Problems of Loci',
+        'MH.lesson_Y2Geo_transl5a.partXIIIntro': 'A locus is the set of all points satisfying certain geometric conditions. Locus problems often involve determining the path traced by a point as other elements in the configuration vary.',
+        
+        // Activity 1
+        'MH.lesson_Y2Geo_transl5a.activity1Title': 'Activity 1: Locus Determined by Perpendicular Lines',
+        'MH.lesson_Y2Geo_transl5a.diagram1Title': 'Figure: Perpendicular lines D and D\' intersecting at O, point A, and variable point M on D',
+        'MH.lesson_Y2Geo_transl5a.diagram1Instructions': 'Two perpendicular lines D and D\' intersect at O. Point A is fixed. M varies on D. N is determined by constructing perpendicular from A to AM meeting D\'. I is the midpoint of MN.',
+        'MH.lesson_Y2Geo_transl5a.step1aTitle': 'Step 1: Experimental Phase',
+        'MH.lesson_Y2Geo_transl5a.step1aQuestion': 'Consider two perpendicular lines D and D\' intersecting at point O, and a point A not on either line. Let M be a variable point on line D. The perpendicular to line (AM) at point A meets line D\' at point N. Let I be the midpoint of segment [MN].',
+        'MH.lesson_Y2Geo_transl5a.step1aTasks': 'a) Construct a figure.<br>b) Identify fixed and variable elements.<br>c) Place several points I corresponding to different positions of M.',
+        'MH.lesson_Y2Geo_transl5a.step1bTitle': 'Step 2: Conjecture',
+        'MH.lesson_Y2Geo_transl5a.step1bQuestion': 'Make a conjecture about the set of points I as M varies along line D.',
+        'MH.lesson_Y2Geo_transl5a.conjecture1Text': 'Based on experimental observation, it appears that point I traces a straight line parallel to line D and passing through the midpoint of segment [OA].',
+        'MH.lesson_Y2Geo_transl5a.step1cTitle': 'Step 3: Proof of Conjecture',
+        'MH.lesson_Y2Geo_transl5a.step1cQuestion': 'Prove that I varies along a specific line.',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution': 'Let O be the origin of a coordinate system with axes along D and D\'. Without loss of generality, let:',
+        'MH.lesson_Y2Geo_transl5a.equation1a': '\\(D: y = 0\\) (horizontal axis)',
+        'MH.lesson_Y2Geo_transl5a.equation1b': '\\(D\': x = 0\\) (vertical axis)',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution2': 'Let A have coordinates \\((a, b)\\) with \\(a \\ne 0\\) and \\(b \\ne 0\\). Let M have coordinates \\((m, 0)\\) where m is variable.',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution3': 'The slope of line AM is:',
+        'MH.lesson_Y2Geo_transl5a.equation1c': '\\(\\text{slope}(AM) = \\frac{0 - b}{m - a} = \\frac{-b}{m - a}\\)',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution4': 'The perpendicular at A has slope:',
+        'MH.lesson_Y2Geo_transl5a.equation1d': '\\(\\text{slope}_{\\perp} = \\frac{m - a}{b}\\)',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution5': 'The equation of the perpendicular through A is:',
+        'MH.lesson_Y2Geo_transl5a.equation1e': '\\(y - b = \\frac{m - a}{b}(x - a)\\)',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution6': 'This line intersects D\' (x = 0) at N:',
+        'MH.lesson_Y2Geo_transl5a.equation1f': '\\(y_N - b = \\frac{m - a}{b}(0 - a) = -\\frac{a(m - a)}{b}\\)',
+        'MH.lesson_Y2Geo_transl5a.equation1g': '\\(y_N = b - \\frac{a(m - a)}{b} = \\frac{b^2 - a(m - a)}{b}\\)',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution7': 'Thus N has coordinates \\((0, \\frac{b^2 - a(m - a)}{b})\\).',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution8': 'I is the midpoint of M(m, 0) and N(0, y_N):',
+        'MH.lesson_Y2Geo_transl5a.equation1h': '\\(I\\left(\\frac{m + 0}{2}, \\frac{0 + y_N}{2}\\right) = \\left(\\frac{m}{2}, \\frac{y_N}{2}\\right)\\)',
+        'MH.lesson_Y2Geo_transl5a.equation1i': '\\(y_I = \\frac{y_N}{2} = \\frac{b^2 - a(m - a)}{2b}\\)',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution9': 'From \\(x_I = \\frac{m}{2}\\), we have \\(m = 2x_I\\). Substituting:',
+        'MH.lesson_Y2Geo_transl5a.equation1j': '\\(y_I = \\frac{b^2 - a(2x_I - a)}{2b} = \\frac{b^2 - 2a x_I + a^2}{2b}\\)',
+        'MH.lesson_Y2Geo_transl5a.equation1k': '\\(y_I = -\\frac{a}{b}x_I + \\frac{a^2 + b^2}{2b}\\)',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution10': 'This is the equation of a straight line with slope \\(-\\frac{a}{b}\\) and y-intercept \\(\\frac{a^2 + b^2}{2b}\\).',
+        'MH.lesson_Y2Geo_transl5a.step1cConclusion': 'Therefore, as M varies on D, point I moves along a straight line.',
+        
+        // Activity 2
+        'MH.lesson_Y2Geo_transl5a.activity2Title': 'Activity 2: Locus Determined by Parallelogram Construction',
+        'MH.lesson_Y2Geo_transl5a.diagram2Title': 'Figure: Points A and B, line D through A, and parallelogram ABNM',
+        'MH.lesson_Y2Geo_transl5a.diagram2Instructions': 'Points A and B are fixed. Line D passes through A. M varies on D. N completes parallelogram ABNM. The locus of N is shown.',
+        'MH.lesson_Y2Geo_transl5a.step2aTitle': 'Given points A and B and a line D passing through A but not through B. Let M be a variable point on D distinct from A. Let N be the point such that ABNM is a parallelogram.',
+        'MH.lesson_Y2Geo_transl5a.step2aQuestion': 'a) Prove that point N is the image of point M under a specific transformation.',
+        'MH.lesson_Y2Geo_transl5a.step2aSolution': 'Since ABNM is a parallelogram, we have:',
+        'MH.lesson_Y2Geo_transl5a.equation2a': '\\(\\overrightarrow{AB} = \\overrightarrow{NM}\\)',
+        'MH.lesson_Y2Geo_transl5a.step2aSolution2': 'This can be rewritten as:',
+        'MH.lesson_Y2Geo_transl5a.equation2b': '\\(\\overrightarrow{AN} = \\overrightarrow{BM}\\)',
+        'MH.lesson_Y2Geo_transl5a.step2aSolution3': 'Also, from the parallelogram property:',
+        'MH.lesson_Y2Geo_transl5a.equation2c': '\\(\\overrightarrow{AM} = \\overrightarrow{BN}\\)',
+        'MH.lesson_Y2Geo_transl5a.step2aSolution4': 'Consider the translation t with vector \\(\\overrightarrow{AB}\\). Then:',
+        'MH.lesson_Y2Geo_transl5a.equation2d': '\\(t(A) = B\\) and \\(t(M) = N\\)',
+        'MH.lesson_Y2Geo_transl5a.step2aSolution5': 'Thus N is the image of M under the translation of vector \\(\\overrightarrow{AB}\\).',
+        'MH.lesson_Y2Geo_transl5a.step2bTitle': 'b) What is the locus of points N as M varies on D? Construct this locus.',
+        'MH.lesson_Y2Geo_transl5a.step2bSolution': 'Since N = t(M) where t is translation by vector \\(\\overrightarrow{AB}\\), and M varies on line D:',
+        'MH.lesson_Y2Geo_transl5a.equation2e': 'The locus of N is \\(t(D)\\)',
+        'MH.lesson_Y2Geo_transl5a.step2bSolution2': 'Since translations map lines to parallel lines:',
+        'MH.lesson_Y2Geo_transl5a.equation2f': '\\(t(D)\\) is parallel to D',
+        'MH.lesson_Y2Geo_transl5a.step2bSolution3': 'Specifically, t(D) is the line through point B (since t(A) = B) parallel to D.',
+        'MH.lesson_Y2Geo_transl5a.step2bConclusion': 'Therefore, the locus of N is the line through B parallel to D.',
+        'MH.lesson_Y2Geo_transl5a.step2cTitle': 'c) What is the locus of points N when M varies on a fixed circle C with center A and radius 3? Construct this locus.',
+        'MH.lesson_Y2Geo_transl5a.step2cSolution': 'Let C be the circle with center A and radius 3. Since N = t(M) where t is translation by vector \\(\\overrightarrow{AB}\\):',
+        'MH.lesson_Y2Geo_transl5a.equation2g': 'The locus of N is \\(t(C)\\)',
+        'MH.lesson_Y2Geo_transl5a.step2cSolution2': 'We know from previous lessons that the image of a circle under translation is a congruent circle. Specifically:',
+        'MH.lesson_Y2Geo_transl5a.equation2h': '\\(t(C)\\) is the circle with center \\(t(A) = B\\) and radius 3',
+        'MH.lesson_Y2Geo_transl5a.step2cConclusion': 'Therefore, the locus of N is the circle with center B and radius 3.',
+        
+        // Part XIII
+        'MH.lesson_Y2Geo_transl5a.partXIIITitle': 'Part XIII: Construction Problems',
+        'MH.lesson_Y2Geo_transl5a.partXIIIIntro': 'Construction problems involve creating geometric figures with specified properties using only straightedge and compass. These problems often require careful analysis and application of geometric theorems.',
+        
+        // Activity 3
+        'MH.lesson_Y2Geo_transl5a.activity3Title': 'Activity 3: Constructing a Triangle from Midpoints',
+        'MH.lesson_Y2Geo_transl5a.diagram3Title': 'Figure: Triangle ABC with midpoints I, J, K of sides [BC], [AC], [AB] respectively',
+        'MH.lesson_Y2Geo_transl5a.diagram3Instructions': 'Given three non-collinear points I, J, K, construct triangle ABC such that I, J, K are midpoints of its sides.',
+        'MH.lesson_Y2Geo_transl5a.step3aTitle': 'Step 1: Analysis from a Study Figure',
+        'MH.lesson_Y2Geo_transl5a.step3aQuestion': 'Given three non-collinear points I, J, K, we want to construct triangle ABC such that I, J, K are midpoints of [BC], [AC], and [AB] respectively.',
+        'MH.lesson_Y2Geo_transl5a.step3aTasks': 'a) Construct triangle ABC and place points I, J, K as midpoints.<br>b) Observe and prove that:<br>• (AB) is parallel to (IJ)<br>• (AC) is parallel to (IK)<br>• (BC) is parallel to (JK)',
+        'MH.lesson_Y2Geo_transl5a.step3aSolution': 'In triangle ABC with midpoints I, J, K:',
+        'MH.lesson_Y2Geo_transl5a.step3aSol1': 'IJ joins midpoints of BC and AC, so by the Midsegment Theorem, IJ ∥ AB and IJ = ½ AB',
+        'MH.lesson_Y2Geo_transl5a.step3aSol2': 'IK joins midpoints of BC and AB, so IK ∥ AC and IK = ½ AC',
+        'MH.lesson_Y2Geo_transl5a.step3aSol3': 'JK joins midpoints of AC and AB, so JK ∥ BC and JK = ½ BC',
+        'MH.lesson_Y2Geo_transl5a.step3aConclusion': 'Thus each side of triangle ABC is parallel to the corresponding side of triangle IJK.',
+        'MH.lesson_Y2Geo_transl5a.step3bTitle': 'Step 2: Synthesis and Return to Initial Data',
+        'MH.lesson_Y2Geo_transl5a.step3bQuestion': 'Given three non-collinear points I, J, K:',
+        'MH.lesson_Y2Geo_transl5a.step3bTasks': 'a) Construct the parallel to (IJ) through K and the parallel to (IK) through J.<br>b) Are these lines always intersecting? If yes, let A be their intersection.<br>c) Complete the construction of triangle ABC.',
+        'MH.lesson_Y2Geo_transl5a.step3bSolution': 'Construction Steps:',
+        'MH.lesson_Y2Geo_transl5a.step3bSol1': 'Draw line through K parallel to IJ',
+        'MH.lesson_Y2Geo_transl5a.step3bSol2': 'Draw line through J parallel to IK',
+        'MH.lesson_Y2Geo_transl5a.step3bSol3': 'These lines intersect at point A (since I, J, K are non-collinear, the lines are not parallel)',
+        'MH.lesson_Y2Geo_transl5a.step3bSol4': 'Construct point B such that K is midpoint of AB: B is symmetric to A with respect to K',
+        'MH.lesson_Y2Geo_transl5a.step3bSol5': 'Construct point C such that J is midpoint of AC: C is symmetric to A with respect to J',
+        'MH.lesson_Y2Geo_transl5a.step3bSol6': 'Verify that I is midpoint of BC',
+        'MH.lesson_Y2Geo_transl5a.step3bConclusion': 'The construction is always possible when I, J, K are non-collinear.',
+        
+        // Activity 4
+        'MH.lesson_Y2Geo_transl5a.activity4Title': 'Activity 4: Constructing a Parallelogram with Vertices on Given Lines',
+        'MH.lesson_Y2Geo_transl5a.diagram4Title': 'Figure: Intersecting lines D and Δ, points A and B, and parallelogram ABMN with M on D and N on Δ',
+        'MH.lesson_Y2Geo_transl5a.diagram4Instructions': 'Given intersecting lines D and Δ, and points A and B not on these lines, construct points M on D and N on Δ such that ABMN is a parallelogram.',
+        'MH.lesson_Y2Geo_transl5a.step4aTitle': 'Step 1: Analysis from a Study Figure',
+        'MH.lesson_Y2Geo_transl5a.step4aQuestion': 'Given intersecting lines D and Δ, and distinct points A and B not on these lines. We want to construct points M on D and N on Δ such that ABMN is a parallelogram.',
+        'MH.lesson_Y2Geo_transl5a.step4aTasks': 'a) Construct parallelogram ABMN and intersecting lines D and Δ through M and N respectively.<br>b) Find a transformation t that maps M to N.<br>c) Let D\' be the image of line D under t. Determine the intersection of D\' and Δ.',
+        'MH.lesson_Y2Geo_transl5a.step4aSolution': 'Analysis:',
+        'MH.lesson_Y2Geo_transl5a.step4aSol1': 'Since ABMN is a parallelogram, we have \\(\\overrightarrow{AB} = \\overrightarrow{MN}\\)',
+        'MH.lesson_Y2Geo_transl5a.step4aSol2': 'Thus N is the image of M under translation t with vector \\(\\overrightarrow{AB}\\)',
+        'MH.lesson_Y2Geo_transl5a.step4aSol3': 'D\' = t(D) is parallel to D',
+        'MH.lesson_Y2Geo_transl5a.step4aSol4': 'N is on both D\' and Δ, so N = D\' ∩ Δ',
+        'MH.lesson_Y2Geo_transl5a.step4aConclusion': 'Therefore, N can be found as the intersection of Δ and the line through B parallel to D.',
+        'MH.lesson_Y2Geo_transl5a.step4bTitle': 'Step 2: Synthesis and Return to Initial Data',
+        'MH.lesson_Y2Geo_transl5a.step4bQuestion': 'Given intersecting lines D and Δ, and distinct points A and B not on D or Δ:',
+        'MH.lesson_Y2Geo_transl5a.step4bTasks': 'a) Construct lines D and Δ and points A and B.<br>b) Construct line D\' = t(D), the image of D under translation t with vector \\(\\overrightarrow{AB}\\).<br>c) Show that D\' and Δ intersect. Let N be their intersection.<br>d) Construct point M on line D such that ABMN is a parallelogram.',
+        'MH.lesson_Y2Geo_transl5a.step4bSolution': 'Construction Steps:',
+        'MH.lesson_Y2Geo_transl5a.step4bSol1': 'Draw line through B parallel to D (this is D\')',
+        'MH.lesson_Y2Geo_transl5a.step4bSol2': 'Find N = intersection of D\' and Δ',
+        'MH.lesson_Y2Geo_transl5a.step4bSol3': 'Construct M such that \\(\\overrightarrow{AB} = \\overrightarrow{MN}\\)',
+        'MH.lesson_Y2Geo_transl5a.step4bSol4': 'Specifically, M can be found by translating N by vector \\(\\overrightarrow{BA}\\) (opposite to \\(\\overrightarrow{AB}\\))',
+        'MH.lesson_Y2Geo_transl5a.step4bSol5': 'Verify that M lies on D and that ABMN is a parallelogram',
+        'MH.lesson_Y2Geo_transl5a.step4bConclusion': 'The construction always works when D\' and Δ intersect, which occurs unless D\' is parallel to Δ (which would mean D is parallel to Δ, contradicting that D and Δ are intersecting).',
+        
+        // Summary
+        'MH.lesson_Y2Geo_transl5a.summaryTitle': 'Comprehensive Summary',
+        'MH.lesson_Y2Geo_transl5a.summary1Title': 'Problems of Loci',
+        'MH.lesson_Y2Geo_transl5a.summary1Item1': 'A locus is the set of points satisfying certain geometric conditions',
+        'MH.lesson_Y2Geo_transl5a.summary1Item2': 'Loci can be lines, circles, or other curves',
+        'MH.lesson_Y2Geo_transl5a.summary1Item3': 'Translations transform loci in predictable ways',
+        'MH.lesson_Y2Geo_transl5a.summary2Title': 'Construction Problems',
+        'MH.lesson_Y2Geo_transl5a.summary2Item1': 'Construction problems require creating figures with specified properties',
+        'MH.lesson_Y2Geo_transl5a.summary2Item2': 'Analysis involves working backward from a hypothetical solution',
+        'MH.lesson_Y2Geo_transl5a.summary2Item3': 'Synthesis involves using the analysis to create an actual construction',
+        'MH.lesson_Y2Geo_transl5a.summary3Title': 'Key Translation Applications',
+        'MH.lesson_Y2Geo_transl5a.summary3Item1': 'Translations map lines to parallel lines',
+        'MH.lesson_Y2Geo_transl5a.summary3Item2': 'Translations map circles to congruent circles',
+        'MH.lesson_Y2Geo_transl5a.summary3Item3': 'Parallelograms can be constructed using translations',
+        'MH.lesson_Y2Geo_transl5a.summary3Item4': 'Midpoints provide information about parallel lines',
+        'MH.lesson_Y2Geo_transl5a.conclusionTitle': 'Conclusion',
+        'MH.lesson_Y2Geo_transl5a.keyConceptsTitle': 'Key Concepts Mastered',
+        'MH.lesson_Y2Geo_transl5a.concept1': 'Understanding and solving locus problems',
+        'MH.lesson_Y2Geo_transl5a.concept2': 'Using translations to determine loci',
+        'MH.lesson_Y2Geo_transl5a.concept3': 'Constructing triangles from midpoints',
+        'MH.lesson_Y2Geo_transl5a.concept4': 'Constructing parallelograms with vertices on given lines',
+        'MH.lesson_Y2Geo_transl5a.concept5': 'Applying the Midsegment Theorem in constructions',
+        'MH.lesson_Y2Geo_transl5a.concept6': 'Using analysis-synthesis approach in construction problems',
+        'MH.lesson_Y2Geo_transl5a.concept7': 'Translating lines and circles to solve geometric problems',
+        'MH.lesson_Y2Geo_transl5a.finalThought': 'The problems studied in this lesson demonstrate the power of translations in solving both locus problems and construction problems. By understanding how translations transform geometric figures and applying this knowledge systematically, we can solve complex geometric problems that might otherwise seem intractable. These skills are essential for advanced geometry and have applications in fields such as engineering, computer graphics, and architecture.',
+        
+        // Footer
+        'MH.footer.developer': 'Developer',
+        'MH.footer.version': 'Version',
+        'MH.footer.links': 'Links',
+        'MH.footer.terms': 'Terms of Use',
+        'MH.footer.privacy': 'Privacy Policy'
+    },
+    'ar': {
+        // ترجمات عربية
+        'MH.general.homeTooltip': 'الذهاب إلى الصفحة الرئيسية',
+        'MH.general.install': 'تثبيت التطبيق',
+        'MH.general.installSuccess': 'تم تثبيت Mathematics Hub بنجاح!',
+        'MH.general.enableNotifications': 'تفعيل الإشعارات',
+        'MH.general.notificationEnabled': 'تم تفعيل الإشعارات! ستتلقى التحديثات الآن.',
+        'MH.general.title': 'مركز الرياضيات',
+        'MH.general.theme': 'السمة',
+        'MH.general.language': 'اللغة',
+        'MH.lesson_Y2Geo_transl5a.showSolution': 'إظهار الحل',
+        'MH.lesson_Y2Geo_transl5a.hideSolution': 'إخفاء الحل',
+        'MH.lesson_Y2Geo_transl5a.constructButton': 'ابنِ',
+        'MH.lesson_Y2Geo_transl5a.showConjecture': 'إظهار التخمين',
+        
+        // ترجمات درس الهندسة
+        'MH.lesson_Y2Geo_transl5a.title': 'الإنسحاب: الجزء 5',
+        'MH.lesson_Y2Geo_transl5a.subtitle': 'مسائل المحل الهندسي ومسائل الإنشاء باستخدام الانسحابات',
+        'MH.lesson_Y2Geo_transl5a.introduction': 'المقدمة',
+        'MH.lesson_Y2Geo_transl5a.introText1': 'في هذا الدرس الخامس عن الانسحابات، سوف نستكشف نوعين مهمين من المسائل الهندسية: مسائل المحل الهندسي ومسائل الإنشاء. هذه المسائل تختبر فهمنا للتكوينات الهندسية والتحويلات.',
+        'MH.lesson_Y2Geo_transl5a.introText2': 'مسائل المحل الهندسي تطلب منا تحديد مجموعة النقاط التي تحقق شروطًا هندسية معينة، بينما تتحدانا مسائل الإنشاء ببناء أشكال هندسية بخصائص محددة باستخدام المسطرة والفرجار فقط.',
+        
+        // الجزء الثاني عشر
+        'MH.lesson_Y2Geo_transl5a.partXIITitle': 'الجزء الثاني عشر: مسائل المحل الهندسي',
+        'MH.lesson_Y2Geo_transl5a.partXIIIntro': 'المحل الهندسي هو مجموعة جميع النقاط التي تحقق شروطًا هندسية معينة. غالبًا ما تتضمن مسائل المحل الهندسي تحديد المسار الذي تتبعه نقطة مع تغير العناصر الأخرى في التكوين.',
+        
+        // النشاط 1
+        'MH.lesson_Y2Geo_transl5a.activity1Title': 'النشاط 1: المحل الهندسي المحدد بخطوط متعامدة',
+        'MH.lesson_Y2Geo_transl5a.diagram1Title': 'الشكل: الخطان المتعامدان D و D\' يتقاطعان عند O، النقطة A، والنقطة المتغيرة M على D',
+        'MH.lesson_Y2Geo_transl5a.diagram1Instructions': 'الخطان المتعامدان D و D\' يتقاطعان عند O. النقطة A ثابتة. M تتغير على D. N تحدد برسم العمودي من A إلى AM الذي يلتقي D\'. I هي منتصف MN.',
+        'MH.lesson_Y2Geo_transl5a.step1aTitle': 'الخطوة 1: المرحلة التجريبية',
+        'MH.lesson_Y2Geo_transl5a.step1aQuestion': 'ضع في اعتبارك خطين متعامدين D و D\' يتقاطعان عند النقطة O، ونقطة A لا تقع على أي منهما. لتكن M نقطة متغيرة على الخط D. العمودي على الخط (AM) عند النقطة A يلتقي الخط D\' عند النقطة N. لتكن I منتصف القطعة [MN].',
+        'MH.lesson_Y2Geo_transl5a.step1aTasks': 'أ) ابنِ شكلاً.<br>ب) حدد العناصر الثابتة والمتغيرة.<br>ج) ضع عدة نقاط I تتوافق مع أوضاع مختلفة لـ M.',
+        'MH.lesson_Y2Geo_transl5a.step1bTitle': 'الخطوة 2: التخمين',
+        'MH.lesson_Y2Geo_transl5a.step1bQuestion': 'ضع تخمينًا حول مجموعة النقاط I عندما يتغير M على طول الخط D.',
+        'MH.lesson_Y2Geo_transl5a.conjecture1Text': 'بناءً على الملاحظة التجريبية، يبدو أن النقطة I تتبع خطًا مستقيمًا موازيًا للخط D ويمر عبر منتصف القطعة [OA].',
+        'MH.lesson_Y2Geo_transl5a.step1cTitle': 'الخطوة 3: إثبات التخمين',
+        'MH.lesson_Y2Geo_transl5a.step1cQuestion': 'أثبت أن I تتحرك على طول خط محدد.',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution': 'لنفترض أن O هو أصل نظام إحداثيات بمحاور على طول D و D\'. دون فقدان العمومية، دع:',
+        'MH.lesson_Y2Geo_transl5a.equation1a': '\\(D: y = 0\\) (المحور الأفقي)',
+        'MH.lesson_Y2Geo_transl5a.equation1b': '\\(D\': x = 0\\) (المحور العمودي)',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution2': 'لتكن إحداثيات A هي \\((a, b)\\) حيث \\(a \\ne 0\\) و \\(b \\ne 0\\). لتكن إحداثيات M هي \\((m, 0)\\) حيث m متغير.',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution3': 'ميل الخط AM هو:',
+        'MH.lesson_Y2Geo_transl5a.equation1c': '\\(\\text{slope}(AM) = \\frac{0 - b}{m - a} = \\frac{-b}{m - a}\\)',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution4': 'ميل العمودي عند A هو:',
+        'MH.lesson_Y2Geo_transl5a.equation1d': '\\(\\text{slope}_{\\perp} = \\frac{m - a}{b}\\)',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution5': 'معادلة العمودي المار بـ A هي:',
+        'MH.lesson_Y2Geo_transl5a.equation1e': '\\(y - b = \\frac{m - a}{b}(x - a)\\)',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution6': 'هذا الخط يقطع D\' (x = 0) عند N:',
+        'MH.lesson_Y2Geo_transl5a.equation1f': '\\(y_N - b = \\frac{m - a}{b}(0 - a) = -\\frac{a(m - a)}{b}\\)',
+        'MH.lesson_Y2Geo_transl5a.equation1g': '\\(y_N = b - \\frac{a(m - a)}{b} = \\frac{b^2 - a(m - a)}{b}\\)',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution7': 'وبالتالي فإن إحداثيات N هي \\((0, \\frac{b^2 - a(m - a)}{b})\\).',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution8': 'I هي منتصف M(m, 0) و N(0, y_N):',
+        'MH.lesson_Y2Geo_transl5a.equation1h': '\\(I\\left(\\frac{m + 0}{2}, \\frac{0 + y_N}{2}\\right) = \\left(\\frac{m}{2}, \\frac{y_N}{2}\\right)\\)',
+        'MH.lesson_Y2Geo_transl5a.equation1i': '\\(y_I = \\frac{y_N}{2} = \\frac{b^2 - a(m - a)}{2b}\\)',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution9': 'من \\(x_I = \\frac{m}{2}\\)، لدينا \\(m = 2x_I\\). بالتعويض:',
+        'MH.lesson_Y2Geo_transl5a.equation1j': '\\(y_I = \\frac{b^2 - a(2x_I - a)}{2b} = \\frac{b^2 - 2a x_I + a^2}{2b}\\)',
+        'MH.lesson_Y2Geo_transl5a.equation1k': '\\(y_I = -\\frac{a}{b}x_I + \\frac{a^2 + b^2}{2b}\\)',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution10': 'هذه معادلة خط مستقيم بميل \\(-\\frac{a}{b}\\) وقطع محور y عند \\(\\frac{a^2 + b^2}{2b}\\).',
+        'MH.lesson_Y2Geo_transl5a.step1cConclusion': 'لذلك، عندما يتغير M على D، تتحرك النقطة I على طول خط مستقيم.',
+        
+        // النشاط 2
+        'MH.lesson_Y2Geo_transl5a.activity2Title': 'النشاط 2: المحل الهندسي المحدد بإنشاء متوازي أضلاع',
+        'MH.lesson_Y2Geo_transl5a.diagram2Title': 'الشكل: النقطتان A و B، الخط D المار بـ A، ومتوازي الأضلاع ABNM',
+        'MH.lesson_Y2Geo_transl5a.diagram2Instructions': 'النقطتان A و B ثابتتان. الخط D يمر بـ A. M تتغير على D. N تكمل متوازي الأضلاع ABNM. يظهر المحل الهندسي لـ N.',
+        'MH.lesson_Y2Geo_transl5a.step2aTitle': 'بالنظر إلى النقطتين A و B والخط D المار بـ A ولكنه لا يمر بـ B. لتكن M نقطة متغيرة على D مختلفة عن A. لتكن N النقطة بحيث يكون ABNM متوازي أضلاع.',
+        'MH.lesson_Y2Geo_transl5a.step2aQuestion': 'أ) أثبت أن النقطة N هي صورة النقطة M تحت تحويل محدد.',
+        'MH.lesson_Y2Geo_transl5a.step2aSolution': 'بما أن ABNM متوازي أضلاع، لدينا:',
+        'MH.lesson_Y2Geo_transl5a.equation2a': '\\(\\overrightarrow{AB} = \\overrightarrow{NM}\\)',
+        'MH.lesson_Y2Geo_transl5a.step2aSolution2': 'يمكن إعادة كتابة هذا على النحو التالي:',
+        'MH.lesson_Y2Geo_transl5a.equation2b': '\\(\\overrightarrow{AN} = \\overrightarrow{BM}\\)',
+        'MH.lesson_Y2Geo_transl5a.step2aSolution3': 'أيضًا، من خاصية متوازي الأضلاع:',
+        'MH.lesson_Y2Geo_transl5a.equation2c': '\\(\\overrightarrow{AM} = \\overrightarrow{BN}\\)',
+        'MH.lesson_Y2Geo_transl5a.step2aSolution4': 'ضع في اعتبارك الانسحاب t بمتجه \\(\\overrightarrow{AB}\\). ثم:',
+        'MH.lesson_Y2Geo_transl5a.equation2d': '\\(t(A) = B\\) و \\(t(M) = N\\)',
+        'MH.lesson_Y2Geo_transl5a.step2aSolution5': 'وبالتالي فإن N هي صورة M تحت الانسحاب بمتجه \\(\\overrightarrow{AB}\\).',
+        'MH.lesson_Y2Geo_transl5a.step2bTitle': 'ب) ما هو المحل الهندسي للنقاط N عندما يتغير M على D؟ ابنِ هذا المحل.',
+        'MH.lesson_Y2Geo_transl5a.step2bSolution': 'بما أن N = t(M) حيث t هو الانسحاب بمتجه \\(\\overrightarrow{AB}\\)، وM تتغير على الخط D:',
+        'MH.lesson_Y2Geo_transl5a.equation2e': 'المحل الهندسي لـ N هو \\(t(D)\\)',
+        'MH.lesson_Y2Geo_transl5a.step2bSolution2': 'بما أن الانسحابات تحول الخطوط إلى خطوط متوازية:',
+        'MH.lesson_Y2Geo_transl5a.equation2f': '\\(t(D)\\) يوازي D',
+        'MH.lesson_Y2Geo_transl5a.step2bSolution3': 'على وجه التحديد، t(D) هو الخط المار بالنقطة B (بما أن t(A) = B) الموازي لـ D.',
+        'MH.lesson_Y2Geo_transl5a.step2bConclusion': 'لذلك، فإن المحل الهندسي لـ N هو الخط المار بـ B الموازي لـ D.',
+        'MH.lesson_Y2Geo_transl5a.step2cTitle': 'ج) ما هو المحل الهندسي للنقاط N عندما يتغير M على دائرة ثابتة C مركزها A ونصف قطرها 3؟ ابنِ هذا المحل.',
+        'MH.lesson_Y2Geo_transl5a.step2cSolution': 'لتكن C الدائرة التي مركزها A ونصف قطرها 3. بما أن N = t(M) حيث t هو الانسحاب بمتجه \\(\\overrightarrow{AB}\\):',
+        'MH.lesson_Y2Geo_transl5a.equation2g': 'المحل الهندسي لـ N هو \\(t(C)\\)',
+        'MH.lesson_Y2Geo_transl5a.step2cSolution2': 'نعلم من الدروس السابقة أن صورة دائرة تحت الانسحاب هي دائرة متطابقة. على وجه التحديد:',
+        'MH.lesson_Y2Geo_transl5a.equation2h': '\\(t(C)\\) هي الدائرة التي مركزها \\(t(A) = B\\) ونصف قطرها 3',
+        'MH.lesson_Y2Geo_transl5a.step2cConclusion': 'لذلك، فإن المحل الهندسي لـ N هو الدائرة التي مركزها B ونصف قطرها 3.',
+        
+        // الجزء الثالث عشر
+        'MH.lesson_Y2Geo_transl5a.partXIIITitle': 'الجزء الثالث عشر: مسائل الإنشاء',
+        'MH.lesson_Y2Geo_transl5a.partXIIIIntro': 'تتضمن مسائل الإنشاء إنشاء أشكال هندسية بخصائص محددة باستخدام المسطرة والفرجار فقط. غالبًا ما تتطلب هذه المسائل تحليلًا دقيقًا وتطبيقًا للنظريات الهندسية.',
+        
+        // النشاط 3
+        'MH.lesson_Y2Geo_transl5a.activity3Title': 'النشاط 3: إنشاء مثلث من منتصفاته',
+        'MH.lesson_Y2Geo_transl5a.diagram3Title': 'الشكل: المثلث ABC مع منتصفات I، J، K للأضلاع [BC]، [AC]، [AB] على التوالي',
+        'MH.lesson_Y2Geo_transl5a.diagram3Instructions': 'بالنظر إلى ثلاث نقاط غير مستقيمة على استقامة واحدة I، J، K، ابنِ المثلث ABC بحيث تكون I، J، K منتصفات أضلاعه.',
+        'MH.lesson_Y2Geo_transl5a.step3aTitle': 'الخطوة 1: التحليل من شكل دراسة',
+        'MH.lesson_Y2Geo_transl5a.step3aQuestion': 'بالنظر إلى ثلاث نقاط غير مستقيمة على استقامة واحدة I، J، K، نريد إنشاء المثلث ABC بحيث تكون I، J، K منتصفات [BC]، [AC]، و[AB] على التوالي.',
+        'MH.lesson_Y2Geo_transl5a.step3aTasks': 'أ) ابنِ المثلث ABC وضع النقاط I، J، K كمنتصفات.<br>ب) لاحظ وأثبت أن:<br>• (AB) يوازي (IJ)<br>• (AC) يوازي (IK)<br>• (BC) يوازي (JK)',
+        'MH.lesson_Y2Geo_transl5a.step3aSolution': 'في المثلث ABC مع المنتصفات I، J، K:',
+        'MH.lesson_Y2Geo_transl5a.step3aSol1': 'IJ يصل منتصفي BC و AC، لذا حسب نظرية القطعة المتوسطة، IJ ∥ AB و IJ = ½ AB',
+        'MH.lesson_Y2Geo_transl5a.step3aSol2': 'IK يصل منتصفي BC و AB، لذا IK ∥ AC و IK = ½ AC',
+        'MH.lesson_Y2Geo_transl5a.step3aSol3': 'JK يصل منتصفي AC و AB، لذا JK ∥ BC و JK = ½ BC',
+        'MH.lesson_Y2Geo_transl5a.step3aConclusion': 'وبالتالي فإن كل ضلع من المثلث ABC يوازي الضلع المقابل في المثلث IJK.',
+        'MH.lesson_Y2Geo_transl5a.step3bTitle': 'الخطوة 2: التركيب والعودة إلى البيانات الأولية',
+        'MH.lesson_Y2Geo_transl5a.step3bQuestion': 'بالنظر إلى ثلاث نقاط غير مستقيمة على استقامة واحدة I، J، K:',
+        'MH.lesson_Y2Geo_transl5a.step3bTasks': 'أ) ابنِ الموازي لـ (IJ) المار بـ K والموازي لـ (IK) المار بـ J.<br>ب) هل هذان الخطان يتقاطعان دائمًا؟ إذا كان الأمر كذلك، فليكن A نقطة تقاطعهما.<br>ج) أكمل إنشاء المثلث ABC.',
+        'MH.lesson_Y2Geo_transl5a.step3bSolution': 'خطوات الإنشاء:',
+        'MH.lesson_Y2Geo_transl5a.step3bSol1': 'ارسم خطًا يمر بـ K موازيًا لـ IJ',
+        'MH.lesson_Y2Geo_transl5a.step3bSol2': 'ارسم خطًا يمر بـ J موازيًا لـ IK',
+        'MH.lesson_Y2Geo_transl5a.step3bSol3': 'يتقاطع هذان الخطان عند النقطة A (بما أن I، J، K ليست على استقامة واحدة، فالخطان ليسا متوازيين)',
+        'MH.lesson_Y2Geo_transl5a.step3bSol4': 'ابنِ النقطة B بحيث تكون K منتصف AB: B متماثلة مع A بالنسبة لـ K',
+        'MH.lesson_Y2Geo_transl5a.step3bSol5': 'ابنِ النقطة C بحيث تكون J منتصف AC: C متماثلة مع A بالنسبة لـ J',
+        'MH.lesson_Y2Geo_transl5a.step3bSol6': 'تحقق من أن I هي منتصف BC',
+        'MH.lesson_Y2Geo_transl5a.step3bConclusion': 'الإنشاء ممكن دائمًا عندما تكون I، J، K غير مستقيمة على استقامة واحدة.',
+        
+        // النشاط 4
+        'MH.lesson_Y2Geo_transl5a.activity4Title': 'النشاط 4: إنشاء متوازي أضلاع برؤوس على خطوط معينة',
+        'MH.lesson_Y2Geo_transl5a.diagram4Title': 'الشكل: الخطوط المتقاطعة D و Δ، النقطتان A و B، ومتوازي الأضلاع ABMN حيث M على D و N على Δ',
+        'MH.lesson_Y2Geo_transl5a.diagram4Instructions': 'بالنظر إلى الخطين المتقاطعين D و Δ، والنقطتين A و B غير الواقعتين على هذين الخطين، ابنِ النقطتين M على D و N على Δ بحيث يكون ABMN متوازي أضلاع.',
+        'MH.lesson_Y2Geo_transl5a.step4aTitle': 'الخطوة 1: التحليل من شكل دراسة',
+        'MH.lesson_Y2Geo_transl5a.step4aQuestion': 'بالنظر إلى الخطين المتقاطعين D و Δ، والنقطتين المميزتين A و B غير الواقعتين على هذين الخطين. نريد إنشاء النقطتين M على D و N على Δ بحيث يكون ABMN متوازي أضلاع.',
+        'MH.lesson_Y2Geo_transl5a.step4aTasks': 'أ) ابنِ متوازي الأضلاع ABMN والخطين المتقاطعين D و Δ المارين بـ M و N على التوالي.<br>ب) ابحث عن تحويل t يحول M إلى N.<br>ج) ليكن D\' صورة الخط D تحت t. حدد تقاطع D\' و Δ.',
+        'MH.lesson_Y2Geo_transl5a.step4aSolution': 'التحليل:',
+        'MH.lesson_Y2Geo_transl5a.step4aSol1': 'بما أن ABMN متوازي أضلاع، لدينا \\(\\overrightarrow{AB} = \\overrightarrow{MN}\\)',
+        'MH.lesson_Y2Geo_transl5a.step4aSol2': 'وبالتالي فإن N هي صورة M تحت الانسحاب t بمتجه \\(\\overrightarrow{AB}\\)',
+        'MH.lesson_Y2Geo_transl5a.step4aSol3': 'D\' = t(D) يوازي D',
+        'MH.lesson_Y2Geo_transl5a.step4aSol4': 'N تقع على كل من D\' و Δ، لذا N = D\' ∩ Δ',
+        'MH.lesson_Y2Geo_transl5a.step4aConclusion': 'لذلك، يمكن إيجاد N كنقطة تقاطع Δ والخط المار بـ B الموازي لـ D.',
+        'MH.lesson_Y2Geo_transl5a.step4bTitle': 'الخطوة 2: التركيب والعودة إلى البيانات الأولية',
+        'MH.lesson_Y2Geo_transl5a.step4bQuestion': 'بالنظر إلى الخطين المتقاطعين D و Δ، والنقطتين المميزتين A و B غير الواقعتين على D أو Δ:',
+        'MH.lesson_Y2Geo_transl5a.step4bTasks': 'أ) ابنِ الخطين D و Δ والنقطتين A و B.<br>ب) ابنِ الخط D\' = t(D)، صورة الخط D تحت الانسحاب t بمتجه \\(\\overrightarrow{AB}\\).<br>ج) أظهر أن D\' و Δ يتقاطعان. ليكن N نقطة تقاطعهما.<br>د) ابنِ النقطة M على الخط D بحيث يكون ABMN متوازي أضلاع.',
+        'MH.lesson_Y2Geo_transl5a.step4bSolution': 'خطوات الإنشاء:',
+        'MH.lesson_Y2Geo_transl5a.step4bSol1': 'ارسم خطًا يمر بـ B موازيًا لـ D (هذا هو D\')',
+        'MH.lesson_Y2Geo_transl5a.step4bSol2': 'ابحث عن N = تقاطع D\' و Δ',
+        'MH.lesson_Y2Geo_transl5a.step4bSol3': 'ابنِ M بحيث \\(\\overrightarrow{AB} = \\overrightarrow{MN}\\)',
+        'MH.lesson_Y2Geo_transl5a.step4bSol4': 'على وجه التحديد، يمكن إيجاد M بترجمة N بمتجه \\(\\overrightarrow{BA}\\) (عكس \\(\\overrightarrow{AB}\\))',
+        'MH.lesson_Y2Geo_transl5a.step4bSol5': 'تحقق من أن M تقع على D وأن ABMN متوازي أضلاع',
+        'MH.lesson_Y2Geo_transl5a.step4bConclusion': 'يعمل الإنشاء دائمًا عندما يتقاطع D\' و Δ، وهو ما يحدث ما لم يكن D\' موازيًا لـ Δ (مما يعني أن D يوازي Δ، وهذا يتناقض مع كون D و Δ متقاطعين).',
+        
+        // الملخص
+        'MH.lesson_Y2Geo_transl5a.summaryTitle': 'ملخص شامل',
+        'MH.lesson_Y2Geo_transl5a.summary1Title': 'مسائل المحل الهندسي',
+        'MH.lesson_Y2Geo_transl5a.summary1Item1': 'المحل الهندسي هو مجموعة النقاط التي تحقق شروطًا هندسية معينة',
+        'MH.lesson_Y2Geo_transl5a.summary1Item2': 'يمكن أن تكون المحاور خطوطًا أو دوائرًا أو منحنيات أخرى',
+        'MH.lesson_Y2Geo_transl5a.summary1Item3': 'الانسحابات تحول المحاور بطرق يمكن التنبؤ بها',
+        'MH.lesson_Y2Geo_transl5a.summary2Title': 'مسائل الإنشاء',
+        'MH.lesson_Y2Geo_transl5a.summary2Item1': 'تتطلب مسائل الإنشاء إنشاء أشكال بخصائص محددة',
+        'MH.lesson_Y2Geo_transl5a.summary2Item2': 'يتضمن التحليل العمل للخلف من حل افتراضي',
+        'MH.lesson_Y2Geo_transl5a.summary2Item3': 'يتضمن التركيب استخدام التحليل لإنشاء إنشاء فعلي',
+        'MH.lesson_Y2Geo_transl5a.summary3Title': 'التطبيقات الرئيسية للانسحاب',
+        'MH.lesson_Y2Geo_transl5a.summary3Item1': 'الانسحابات تحول الخطوط إلى خطوط متوازية',
+        'MH.lesson_Y2Geo_transl5a.summary3Item2': 'الانسحابات تحول الدوائر إلى دوائر متطابقة',
+        'MH.lesson_Y2Geo_transl5a.summary3Item3': 'يمكن إنشاء متوازيات الأضلاع باستخدام الانسحابات',
+        'MH.lesson_Y2Geo_transl5a.summary3Item4': 'توفر المنتصفات معلومات عن الخطوط المتوازية',
+        'MH.lesson_Y2Geo_transl5a.conclusionTitle': 'الخلاصة',
+        'MH.lesson_Y2Geo_transl5a.keyConceptsTitle': 'المفاهيم الرئيسية التي تم إتقانها',
+        'MH.lesson_Y2Geo_transl5a.concept1': 'فهم وحل مسائل المحل الهندسي',
+        'MH.lesson_Y2Geo_transl5a.concept2': 'استخدام الانسحابات لتحديد المحاور',
+        'MH.lesson_Y2Geo_transl5a.concept3': 'إنشاء مثلثات من منتصفاتها',
+        'MH.lesson_Y2Geo_transl5a.concept4': 'إنشاء متوازيات أضلاع برؤوس على خطوط معينة',
+        'MH.lesson_Y2Geo_transl5a.concept5': 'تطبيق نظرية القطعة المتوسطة في الإنشاءات',
+        'MH.lesson_Y2Geo_transl5a.concept6': 'استخدام نهج التحليل والتركيب في مسائل الإنشاء',
+        'MH.lesson_Y2Geo_transl5a.concept7': 'ترجمة الخطوط والدوائر لحل مسائل هندسية',
+        'MH.lesson_Y2Geo_transl5a.finalThought': 'تظهر المسائل التي درسناها في هذا الدرس قوة الانسحابات في حل كل من مسائل المحل الهندسي ومسائل الإنشاء. من خلال فهم كيفية تحويل الانسحابات للأشكال الهندسية وتطبيق هذه المعرفة بشكل منهجي، يمكننا حل مسائل هندسية معقدة قد تبدو صعبة الحل بطريقة أخرى. هذه المهارات أساسية للهندسة المتقدمة ولها تطبيقات في مجالات مثل الهندسة ورسومات الكمبيوتر والعمارة.',
+        
+        // التذييل
+        'MH.footer.developer': 'المطور',
+        'MH.footer.version': 'الإصدار',
+        'MH.footer.links': 'الروابط',
+        'MH.footer.terms': 'شروط الاستخدام',
+        'MH.footer.privacy': 'سياسة الخصوصية'
+    },
+    'fr': {
+        // Traductions françaises
+        'MH.general.homeTooltip': 'Aller à l\'accueil',
+        'MH.general.install': 'Installer l\'App',
+        'MH.general.installSuccess': 'Mathematics Hub installé avec succès!',
+        'MH.general.enableNotifications': 'Activer les notifications',
+        'MH.general.notificationEnabled': 'Notifications activées! Vous recevrez maintenant des mises à jour.',
+        'MH.general.title': 'Centre de Mathématiques',
+        'MH.general.theme': 'Thème',
+        'MH.general.language': 'Langue',
+        'MH.lesson_Y2Geo_transl5a.showSolution': 'Afficher la Solution',
+        'MH.lesson_Y2Geo_transl5a.hideSolution': 'Masquer la Solution',
+        'MH.lesson_Y2Geo_transl5a.constructButton': 'Construire',
+        'MH.lesson_Y2Geo_transl5a.showConjecture': 'Afficher la Conjecture',
+        
+        // Traductions de la leçon de géométrie
+        'MH.lesson_Y2Geo_transl5a.title': 'Translation : Partie 5',
+        'MH.lesson_Y2Geo_transl5a.subtitle': 'Problèmes de Lieux et Problèmes de Construction impliquant des Translations',
+        'MH.lesson_Y2Geo_transl5a.introduction': 'Introduction',
+        'MH.lesson_Y2Geo_transl5a.introText1': 'Dans cette cinquième leçon sur les translations, nous explorerons deux types importants de problèmes géométriques : les problèmes de lieux et les problèmes de construction. Ces problèmes testent notre compréhension des configurations géométriques et des transformations.',
+        'MH.lesson_Y2Geo_transl5a.introText2': 'Les problèmes de lieux nous demandent de déterminer l\'ensemble des points satisfaisant certaines conditions géométriques, tandis que les problèmes de construction nous défient de construire des figures géométriques avec des propriétés spécifiques en utilisant seulement une règle et un compas.',
+        
+        // Partie XII
+        'MH.lesson_Y2Geo_transl5a.partXIITitle': 'Partie XII : Problèmes de Lieux',
+        'MH.lesson_Y2Geo_transl5a.partXIIIntro': 'Un lieu est l\'ensemble de tous les points satisfaisant certaines conditions géométriques. Les problèmes de lieux impliquent souvent de déterminer le chemin tracé par un point lorsque d\'autres éléments de la configuration varient.',
+        
+        // Activité 1
+        'MH.lesson_Y2Geo_transl5a.activity1Title': 'Activité 1 : Lieu déterminé par des droites perpendiculaires',
+        'MH.lesson_Y2Geo_transl5a.diagram1Title': 'Figure : Droites perpendiculaires D et D\' se coupant en O, point A, et point variable M sur D',
+        'MH.lesson_Y2Geo_transl5a.diagram1Instructions': 'Deux droites perpendiculaires D et D\' se coupent en O. Le point A est fixe. M varie sur D. N est déterminé en construisant la perpendiculaire de A à AM rencontrant D\'. I est le milieu de MN.',
+        'MH.lesson_Y2Geo_transl5a.step1aTitle': 'Étape 1 : Phase expérimentale',
+        'MH.lesson_Y2Geo_transl5a.step1aQuestion': 'Considérons deux droites perpendiculaires D et D\' se coupant au point O, et un point A n\'appartenant à aucune des deux droites. Soit M un point variable sur la droite D. La perpendiculaire à la droite (AM) au point A rencontre la droite D\' au point N. Soit I le milieu du segment [MN].',
+        'MH.lesson_Y2Geo_transl5a.step1aTasks': 'a) Faire une figure.<br>b) Identifier les éléments fixes et variables.<br>c) Placer plusieurs points I correspondant à différentes positions de M.',
+        'MH.lesson_Y2Geo_transl5a.step1bTitle': 'Étape 2 : Conjecture',
+        'MH.lesson_Y2Geo_transl5a.step1bQuestion': 'Émettre une conjecture sur l\'ensemble des points I lorsque M varie le long de la droite D.',
+        'MH.lesson_Y2Geo_transl5a.conjecture1Text': 'D\'après l\'observation expérimentale, il semble que le point I décrit une droite parallèle à la droite D et passant par le milieu du segment [OA].',
+        'MH.lesson_Y2Geo_transl5a.step1cTitle': 'Étape 3 : Preuve de la conjecture',
+        'MH.lesson_Y2Geo_transl5a.step1cQuestion': 'Prouver que I varie le long d\'une ligne spécifique.',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution': 'Soit O l\'origine d\'un système de coordonnées avec les axes le long de D et D\'. Sans perte de généralité, posons :',
+        'MH.lesson_Y2Geo_transl5a.equation1a': '\\(D: y = 0\\) (axe horizontal)',
+        'MH.lesson_Y2Geo_transl5a.equation1b': '\\(D\': x = 0\\) (axe vertical)',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution2': 'Soient \\((a, b)\\) les coordonnées de A avec \\(a \\ne 0\\) et \\(b \\ne 0\\). Soient \\((m, 0)\\) les coordonnées de M où m est variable.',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution3': 'La pente de la droite AM est :',
+        'MH.lesson_Y2Geo_transl5a.equation1c': '\\(\\text{slope}(AM) = \\frac{0 - b}{m - a} = \\frac{-b}{m - a}\\)',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution4': 'La perpendiculaire en A a pour pente :',
+        'MH.lesson_Y2Geo_transl5a.equation1d': '\\(\\text{slope}_{\\perp} = \\frac{m - a}{b}\\)',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution5': 'L\'équation de la perpendiculaire passant par A est :',
+        'MH.lesson_Y2Geo_transl5a.equation1e': '\\(y - b = \\frac{m - a}{b}(x - a)\\)',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution6': 'Cette droite coupe D\' (x = 0) en N :',
+        'MH.lesson_Y2Geo_transl5a.equation1f': '\\(y_N - b = \\frac{m - a}{b}(0 - a) = -\\frac{a(m - a)}{b}\\)',
+        'MH.lesson_Y2Geo_transl5a.equation1g': '\\(y_N = b - \\frac{a(m - a)}{b} = \\frac{b^2 - a(m - a)}{b}\\)',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution7': 'Ainsi N a pour coordonnées \\((0, \\frac{b^2 - a(m - a)}{b})\\).',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution8': 'I est le milieu de M(m, 0) et N(0, y_N) :',
+        'MH.lesson_Y2Geo_transl5a.equation1h': '\\(I\\left(\\frac{m + 0}{2}, \\frac{0 + y_N}{2}\\right) = \\left(\\frac{m}{2}, \\frac{y_N}{2}\\right)\\)',
+        'MH.lesson_Y2Geo_transl5a.equation1i': '\\(y_I = \\frac{y_N}{2} = \\frac{b^2 - a(m - a)}{2b}\\)',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution9': 'De \\(x_I = \\frac{m}{2}\\), nous avons \\(m = 2x_I\\). En substituant :',
+        'MH.lesson_Y2Geo_transl5a.equation1j': '\\(y_I = \\frac{b^2 - a(2x_I - a)}{2b} = \\frac{b^2 - 2a x_I + a^2}{2b}\\)',
+        'MH.lesson_Y2Geo_transl5a.equation1k': '\\(y_I = -\\frac{a}{b}x_I + \\frac{a^2 + b^2}{2b}\\)',
+        'MH.lesson_Y2Geo_transl5a.step1cSolution10': 'C\'est l\'équation d\'une droite de pente \\(-\\frac{a}{b}\\) et d\'ordonnée à l\'origine \\(\\frac{a^2 + b^2}{2b}\\).',
+        'MH.lesson_Y2Geo_transl5a.step1cConclusion': 'Par conséquent, lorsque M varie sur D, le point I se déplace le long d\'une droite.',
+        
+        // Activité 2
+        'MH.lesson_Y2Geo_transl5a.activity2Title': 'Activité 2 : Lieu déterminé par la construction d\'un parallélogramme',
+        'MH.lesson_Y2Geo_transl5a.diagram2Title': 'Figure : Points A et B, droite D passant par A, et parallélogramme ABNM',
+        'MH.lesson_Y2Geo_transl5a.diagram2Instructions': 'Les points A et B sont fixes. La droite D passe par A. M varie sur D. N complète le parallélogramme ABNM. Le lieu de N est montré.',
+        'MH.lesson_Y2Geo_transl5a.step2aTitle': 'Soient deux points A et B et une droite D passant par A mais ne passant pas par B. Soit M un point variable sur D distinct de A. Soit N le point tel que ABNM soit un parallélogramme.',
+        'MH.lesson_Y2Geo_transl5a.step2aQuestion': 'a) Prouver que le point N est l\'image du point M par une transformation spécifique.',
+        'MH.lesson_Y2Geo_transl5a.step2aSolution': 'Puisque ABNM est un parallélogramme, nous avons :',
+        'MH.lesson_Y2Geo_transl5a.equation2a': '\\(\\overrightarrow{AB} = \\overrightarrow{NM}\\)',
+        'MH.lesson_Y2Geo_transl5a.step2aSolution2': 'Cela peut être réécrit comme :',
+        'MH.lesson_Y2Geo_transl5a.equation2b': '\\(\\overrightarrow{AN} = \\overrightarrow{BM}\\)',
+        'MH.lesson_Y2Geo_transl5a.step2aSolution3': 'Aussi, d\'après la propriété du parallélogramme :',
+        'MH.lesson_Y2Geo_transl5a.equation2c': '\\(\\overrightarrow{AM} = \\overrightarrow{BN}\\)',
+        'MH.lesson_Y2Geo_transl5a.step2aSolution4': 'Considérons la translation t de vecteur \\(\\overrightarrow{AB}\\). Alors :',
+        'MH.lesson_Y2Geo_transl5a.equation2d': '\\(t(A) = B\\) et \\(t(M) = N\\)',
+        'MH.lesson_Y2Geo_transl5a.step2aSolution5': 'Ainsi N est l\'image de M par la translation de vecteur \\(\\overrightarrow{AB}\\).',
+        'MH.lesson_Y2Geo_transl5a.step2bTitle': 'b) Quel est le lieu des points N lorsque M varie sur D ? Construire ce lieu.',
+        'MH.lesson_Y2Geo_transl5a.step2bSolution': 'Puisque N = t(M) où t est la translation de vecteur \\(\\overrightarrow{AB}\\), et que M varie sur la droite D :',
+        'MH.lesson_Y2Geo_transl5a.equation2e': 'Le lieu de N est \\(t(D)\\)',
+        'MH.lesson_Y2Geo_transl5a.step2bSolution2': 'Puisque les translations transforment les droites en droites parallèles :',
+        'MH.lesson_Y2Geo_transl5a.equation2f': '\\(t(D)\\) est parallèle à D',
+        'MH.lesson_Y2Geo_transl5a.step2bSolution3': 'Plus précisément, t(D) est la droite passant par le point B (puisque t(A) = B) parallèle à D.',
+        'MH.lesson_Y2Geo_transl5a.step2bConclusion': 'Par conséquent, le lieu de N est la droite passant par B parallèle à D.',
+        'MH.lesson_Y2Geo_transl5a.step2cTitle': 'c) Quel est le lieu des points N lorsque M varie sur un cercle fixe C de centre A et de rayon 3 ? Construire ce lieu.',
+        'MH.lesson_Y2Geo_transl5a.step2cSolution': 'Soit C le cercle de centre A et de rayon 3. Puisque N = t(M) où t est la translation de vecteur \\(\\overrightarrow{AB}\\) :',
+        'MH.lesson_Y2Geo_transl5a.equation2g': 'Le lieu de N est \\(t(C)\\)',
+        'MH.lesson_Y2Geo_transl5a.step2cSolution2': 'Nous savons des leçons précédentes que l\'image d\'un cercle par translation est un cercle congruent. Plus précisément :',
+        'MH.lesson_Y2Geo_transl5a.equation2h': '\\(t(C)\\) est le cercle de centre \\(t(A) = B\\) et de rayon 3',
+        'MH.lesson_Y2Geo_transl5a.step2cConclusion': 'Par conséquent, le lieu de N est le cercle de centre B et de rayon 3.',
+        
+        // Partie XIII
+        'MH.lesson_Y2Geo_transl5a.partXIIITitle': 'Partie XIII : Problèmes de Construction',
+        'MH.lesson_Y2Geo_transl5a.partXIIIIntro': 'Les problèmes de construction impliquent de créer des figures géométriques avec des propriétés spécifiées en utilisant seulement une règle et un compas. Ces problèmes nécessitent souvent une analyse minutieuse et l\'application de théorèmes géométriques.',
+        
+        // Activité 3
+        'MH.lesson_Y2Geo_transl5a.activity3Title': 'Activité 3 : Construction d\'un triangle à partir de ses milieux',
+        'MH.lesson_Y2Geo_transl5a.diagram3Title': 'Figure : Triangle ABC avec les milieux I, J, K des côtés [BC], [AC], [AB] respectivement',
+        'MH.lesson_Y2Geo_transl5a.diagram3Instructions': 'Étant donnés trois points non alignés I, J, K, construire le triangle ABC tel que I, J, K soient les milieux de ses côtés.',
+        'MH.lesson_Y2Geo_transl5a.step3aTitle': 'Étape 1 : Analyse à partir d\'une figure d\'étude',
+        'MH.lesson_Y2Geo_transl5a.step3aQuestion': 'Étant donnés trois points non alignés I, J, K, nous voulons construire le triangle ABC tel que I, J, K soient les milieux de [BC], [AC], et [AB] respectivement.',
+        'MH.lesson_Y2Geo_transl5a.step3aTasks': 'a) Construire le triangle ABC et placer les points I, J, K comme milieux.<br>b) Observer et prouver que :<br>• (AB) est parallèle à (IJ)<br>• (AC) est parallèle à (IK)<br>• (BC) est parallèle à (JK)',
+        'MH.lesson_Y2Geo_transl5a.step3aSolution': 'Dans le triangle ABC avec les milieux I, J, K :',
+        'MH.lesson_Y2Geo_transl5a.step3aSol1': 'IJ joint les milieux de BC et AC, donc d\'après le théorème du segment médian, IJ ∥ AB et IJ = ½ AB',
+        'MH.lesson_Y2Geo_transl5a.step3aSol2': 'IK joint les milieux de BC et AB, donc IK ∥ AC et IK = ½ AC',
+        'MH.lesson_Y2Geo_transl5a.step3aSol3': 'JK joint les milieux de AC et AB, donc JK ∥ BC et JK = ½ BC',
+        'MH.lesson_Y2Geo_transl5a.step3aConclusion': 'Ainsi chaque côté du triangle ABC est parallèle au côté correspondant du triangle IJK.',
+        'MH.lesson_Y2Geo_transl5a.step3bTitle': 'Étape 2 : Synthèse et retour aux données initiales',
+        'MH.lesson_Y2Geo_transl5a.step3bQuestion': 'Étant donnés trois points non alignés I, J, K :',
+        'MH.lesson_Y2Geo_transl5a.step3bTasks': 'a) Construire la parallèle à (IJ) passant par K et la parallèle à (IK) passant par J.<br>b) Ces droites sont-elles toujours sécantes ? Si oui, soit A leur intersection.<br>c) Compléter la construction du triangle ABC.',
+        'MH.lesson_Y2Geo_transl5a.step3bSolution': 'Étapes de construction :',
+        'MH.lesson_Y2Geo_transl5a.step3bSol1': 'Tracer la droite passant par K parallèle à IJ',
+        'MH.lesson_Y2Geo_transl5a.step3bSol2': 'Tracer la droite passant par J parallèle à IK',
+        'MH.lesson_Y2Geo_transl5a.step3bSol3': 'Ces droites se coupent au point A (puisque I, J, K ne sont pas alignés, les droites ne sont pas parallèles)',
+        'MH.lesson_Y2Geo_transl5a.step3bSol4': 'Construire le point B tel que K soit le milieu de AB : B est symétrique de A par rapport à K',
+        'MH.lesson_Y2Geo_transl5a.step3bSol5': 'Construire le point C tel que J soit le milieu de AC : C est symétrique de A par rapport à J',
+        'MH.lesson_Y2Geo_transl5a.step3bSol6': 'Vérifier que I est le milieu de BC',
+        'MH.lesson_Y2Geo_transl5a.step3bConclusion': 'La construction est toujours possible lorsque I, J, K sont non alignés.',
+        
+        // Activité 4
+        'MH.lesson_Y2Geo_transl5a.activity4Title': 'Activité 4 : Construction d\'un parallélogramme avec des sommets sur des droites données',
+        'MH.lesson_Y2Geo_transl5a.diagram4Title': 'Figure : Droites sécantes D et Δ, points A et B, et parallélogramme ABMN avec M sur D et N sur Δ',
+        'MH.lesson_Y2Geo_transl5a.diagram4Instructions': 'Étant données les droites sécantes D et Δ, et les points A et B n\'appartenant pas à ces droites, construire les points M sur D et N sur Δ tels que ABMN soit un parallélogramme.',
+        'MH.lesson_Y2Geo_transl5a.step4aTitle': 'Étape 1 : Analyse à partir d\'une figure d\'étude',
+        'MH.lesson_Y2Geo_transl5a.step4aQuestion': 'Étant données les droites sécantes D et Δ, et les points distincts A et B n\'appartenant pas à ces droites. Nous voulons construire les points M sur D et N sur Δ tels que ABMN soit un parallélogramme.',
+        'MH.lesson_Y2Geo_transl5a.step4aTasks': 'a) Construire le parallélogramme ABMN et les droites sécantes D et Δ passant respectivement par M et N.<br>b) Trouver une transformation t qui envoie M sur N.<br>c) Soit D\' l\'image de la droite D par t. Déterminer l\'intersection de D\' et Δ.',
+        'MH.lesson_Y2Geo_transl5a.step4aSolution': 'Analyse :',
+        'MH.lesson_Y2Geo_transl5a.step4aSol1': 'Puisque ABMN est un parallélogramme, nous avons \\(\\overrightarrow{AB} = \\overrightarrow{MN}\\)',
+        'MH.lesson_Y2Geo_transl5a.step4aSol2': 'Ainsi N est l\'image de M par la translation t de vecteur \\(\\overrightarrow{AB}\\)',
+        'MH.lesson_Y2Geo_transl5a.step4aSol3': 'D\' = t(D) est parallèle à D',
+        'MH.lesson_Y2Geo_transl5a.step4aSol4': 'N est sur D\' et Δ, donc N = D\' ∩ Δ',
+        'MH.lesson_Y2Geo_transl5a.step4aConclusion': 'Par conséquent, N peut être trouvé comme l\'intersection de Δ et de la droite passant par B parallèle à D.',
+        'MH.lesson_Y2Geo_transl5a.step4bTitle': 'Étape 2 : Synthèse et retour aux données initiales',
+        'MH.lesson_Y2Geo_transl5a.step4bQuestion': 'Étant données les droites sécantes D et Δ, et les points distincts A et B n\'appartenant pas à D ou Δ :',
+        'MH.lesson_Y2Geo_transl5a.step4bTasks': 'a) Construire les droites D et Δ et les points A et B.<br>b) Construire la droite D\' = t(D), l\'image de D par la translation t de vecteur \\(\\overrightarrow{AB}\\).<br>c) Montrer que D\' et Δ sont sécantes. Soit N leur point d\'intersection.<br>d) Construire le point M sur la droite D tel que ABMN soit un parallélogramme.',
+        'MH.lesson_Y2Geo_transl5a.step4bSolution': 'Étapes de construction :',
+        'MH.lesson_Y2Geo_transl5a.step4bSol1': 'Tracer la droite passant par B parallèle à D (c\'est D\')',
+        'MH.lesson_Y2Geo_transl5a.step4bSol2': 'Trouver N = intersection de D\' et Δ',
+        'MH.lesson_Y2Geo_transl5a.step4bSol3': 'Construire M tel que \\(\\overrightarrow{AB} = \\overrightarrow{MN}\\)',
+        'MH.lesson_Y2Geo_transl5a.step4bSol4': 'Plus précisément, M peut être trouvé en translatant N par le vecteur \\(\\overrightarrow{BA}\\) (opposé à \\(\\overrightarrow{AB}\\))',
+        'MH.lesson_Y2Geo_transl5a.step4bSol5': 'Vérifier que M est sur D et que ABMN est un parallélogramme',
+        'MH.lesson_Y2Geo_transl5a.step4bConclusion': 'La construction fonctionne toujours lorsque D\' et Δ se coupent, ce qui se produit sauf si D\' est parallèle à Δ (ce qui signifierait que D est parallèle à Δ, contredisant le fait que D et Δ sont sécantes).',
+        
+        // Résumé
+        'MH.lesson_Y2Geo_transl5a.summaryTitle': 'Résumé Complet',
+        'MH.lesson_Y2Geo_transl5a.summary1Title': 'Problèmes de Lieux',
+        'MH.lesson_Y2Geo_transl5a.summary1Item1': 'Un lieu est l\'ensemble des points satisfaisant certaines conditions géométriques',
+        'MH.lesson_Y2Geo_transl5a.summary1Item2': 'Les lieux peuvent être des droites, des cercles ou d\'autres courbes',
+        'MH.lesson_Y2Geo_transl5a.summary1Item3': 'Les translations transforment les lieux de manière prévisible',
+        'MH.lesson_Y2Geo_transl5a.summary2Title': 'Problèmes de Construction',
+        'MH.lesson_Y2Geo_transl5a.summary2Item1': 'Les problèmes de construction nécessitent de créer des figures avec des propriétés spécifiées',
+        'MH.lesson_Y2Geo_transl5a.summary2Item2': 'L\'analyse consiste à travailler à rebours à partir d\'une solution hypothétique',
+        'MH.lesson_Y2Geo_transl5a.summary2Item3': 'La synthèse consiste à utiliser l\'analyse pour créer une construction effective',
+        'MH.lesson_Y2Geo_transl5a.summary3Title': 'Applications Clés des Translations',
+        'MH.lesson_Y2Geo_transl5a.summary3Item1': 'Les translations transforment les droites en droites parallèles',
+        'MH.lesson_Y2Geo_transl5a.summary3Item2': 'Les translations transforment les cercles en cercles congruents',
+        'MH.lesson_Y2Geo_transl5a.summary3Item3': 'Les parallélogrammes peuvent être construits en utilisant des translations',
+        'MH.lesson_Y2Geo_transl5a.summary3Item4': 'Les milieux fournissent des informations sur les droites parallèles',
+        'MH.lesson_Y2Geo_transl5a.conclusionTitle': 'Conclusion',
+        'MH.lesson_Y2Geo_transl5a.keyConceptsTitle': 'Concepts Clés Maîtrisés',
+        'MH.lesson_Y2Geo_transl5a.concept1': 'Comprendre et résoudre les problèmes de lieux',
+        'MH.lesson_Y2Geo_transl5a.concept2': 'Utiliser les translations pour déterminer les lieux',
+        'MH.lesson_Y2Geo_transl5a.concept3': 'Construire des triangles à partir de leurs milieux',
+        'MH.lesson_Y2Geo_transl5a.concept4': 'Construire des parallélogrammes avec des sommets sur des droites données',
+        'MH.lesson_Y2Geo_transl5a.concept5': 'Appliquer le théorème du segment médian dans les constructions',
+        'MH.lesson_Y2Geo_transl5a.concept6': 'Utiliser l\'approche analyse-synthèse dans les problèmes de construction',
+        'MH.lesson_Y2Geo_transl5a.concept7': 'Translater des droites et des cercles pour résoudre des problèmes géométriques',
+        'MH.lesson_Y2Geo_transl5a.finalThought': 'Les problèmes étudiés dans cette leçon démontrent la puissance des translations pour résoudre à la fois les problèmes de lieux et les problèmes de construction. En comprenant comment les translations transforment les figures géométriques et en appliquant cette connaissance systématiquement, nous pouvons résoudre des problèmes géométriques complexes qui pourraient autrement sembler insolubles. Ces compétences sont essentielles pour la géométrie avancée et ont des applications dans des domaines tels que l\'ingénierie, l\'infographie et l\'architecture.',
+        
+        // Pied de page
+        'MH.footer.developer': 'Développeur',
+        'MH.footer.version': 'Version',
+        'MH.footer.links': 'Liens',
+        'MH.footer.terms': 'Conditions d\'Utilisation',
+        'MH.footer.privacy': 'Politique de Confidentialité'
+    }
+};
+
+        // Merge with existing translations if they exist
+        if (typeof translations !== 'undefined') {
+            Object.keys(geometryTranslations5).forEach(lang => {
+                if (translations[lang]) {
+                    translations[lang] = {...translations[lang], ...geometryTranslations5[lang]};
+                } else {
+                    translations[lang] = geometryTranslations5[lang];
+                }
+            });
+        } else {
+            var translations = geometryTranslations5;
+        }
+
+        // Canvas drawing functions
+        let activity1State = {step1: false, step2: false, step3: false};
+        let activity2State = {partA: false, partB: false, partC: false};
+        let activity3State = {step1: false, step2: false};
+        let activity4State = {step1: false, step2: false};
+        
+        // Activity 1 drawing functions
+        function drawActivity1Canvas() {
+            const canvas = document.getElementById('activity1Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define perpendicular lines D and D'
+            const O = {x: width * 0.5, y: height * 0.5};
+            
+            // D is horizontal, D' is vertical
+            const D = {
+                start: {x: width * 0.1, y: O.y},
+                end: {x: width * 0.9, y: O.y}
+            };
+            
+            const Dprime = {
+                start: {x: O.x, y: height * 0.1},
+                end: {x: O.x, y: height * 0.9}
+            };
+            
+            // Fixed point A
+            const A = {x: width * 0.3, y: height * 0.7};
+            
+            // Draw lines
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            
+            // Line D
+            ctx.beginPath();
+            ctx.moveTo(D.start.x, D.start.y);
+            ctx.lineTo(D.end.x, D.end.y);
+            ctx.stroke();
+            
+            // Line D'
+            ctx.beginPath();
+            ctx.moveTo(Dprime.start.x, Dprime.start.y);
+            ctx.lineTo(Dprime.end.x, Dprime.end.y);
+            ctx.stroke();
+            
+            // Draw points
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(O.x, O.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillText('O', O.x - 15, O.y - 15);
+            
+            ctx.fillStyle = '#2ECC71';
+            ctx.beginPath();
+            ctx.arc(A.x, A.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillText('A', A.x + 10, A.y + 10);
+            
+            // Draw variable point M and related constructions
+            if (activity1State.step1 || activity1State.step2 || activity1State.step3) {
+                // M is variable on D
+                const mOffset = width * 0.2 * Math.sin(Date.now() / 2000); // Animated
+                const M = {x: O.x + mOffset, y: O.y};
+                
+                // Draw M
+                ctx.fillStyle = '#3498DB';
+                ctx.beginPath();
+                ctx.arc(M.x, M.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('M', M.x + 10, M.y - 15);
+                
+                // Draw line AM
+                ctx.strokeStyle = '#9B59B6';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                ctx.beginPath();
+                ctx.moveTo(A.x, A.y);
+                ctx.lineTo(M.x, M.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Calculate perpendicular from A to AM
+                const slopeAM = (M.y - A.y) / (M.x - A.x);
+                const perpendicularSlope = -1 / slopeAM;
+                
+                // Find intersection with D'
+                // Line through A with perpendicular slope: y - A.y = perpendicularSlope(x - A.x)
+                // D' is vertical: x = O.x
+                const x_N = O.x;
+                const y_N = A.y + perpendicularSlope * (x_N - A.x);
+                
+                const N = {x: x_N, y: y_N};
+                
+                // Draw perpendicular line
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(A.x, A.y);
+                
+                // Extend the line a bit beyond N
+                const extendLength = 50;
+                const dx = N.x - A.x;
+                const dy = N.y - A.y;
+                const length = Math.sqrt(dx*dx + dy*dy);
+                const N_extended = {
+                    x: A.x + (dx/length) * (length + extendLength),
+                    y: A.y + (dy/length) * (length + extendLength)
+                };
+                
+                ctx.lineTo(N_extended.x, N_extended.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw N
+                ctx.fillStyle = '#1ABC9C';
+                ctx.beginPath();
+                ctx.arc(N.x, N.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('N', N.x - 15, N.y - 10);
+                
+                // Draw segment MN
+                ctx.strokeStyle = '#666666';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(M.x, M.y);
+                ctx.lineTo(N.x, N.y);
+                ctx.stroke();
+                
+                // Draw I (midpoint of MN)
+                const I = {
+                    x: (M.x + N.x) / 2,
+                    y: (M.y + N.y) / 2
+                };
+                
+                ctx.fillStyle = '#8E44AD';
+                ctx.beginPath();
+                ctx.arc(I.x, I.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('I', I.x + 10, I.y);
+                
+                // If step 2 or 3, show multiple positions and locus
+                if (activity1State.step2 || activity1State.step3) {
+                    // Show multiple positions of M and corresponding I
+                    const positions = 8;
+                    const locusPoints = [];
+                    
+                    for (let i = 0; i < positions; i++) {
+                        const t = (i / (positions - 1)) * 0.8 - 0.4; // -0.4 to 0.4
+                        const M_i = {x: O.x + width * 0.4 * t, y: O.y};
+                        
+                        // Calculate corresponding N_i and I_i
+                        const slopeAM_i = (M_i.y - A.y) / (M_i.x - A.x);
+                        const perpendicularSlope_i = slopeAM_i !== 0 ? -1 / slopeAM_i : 1000;
+                        const x_N_i = O.x;
+                        const y_N_i = A.y + perpendicularSlope_i * (x_N_i - A.x);
+                        const N_i = {x: x_N_i, y: y_N_i};
+                        
+                        const I_i = {
+                            x: (M_i.x + N_i.x) / 2,
+                            y: (M_i.y + N_i.y) / 2
+                        };
+                        
+                        locusPoints.push(I_i);
+                        
+                        // Draw I_i
+                        ctx.fillStyle = '#8E44AD';
+                        ctx.globalAlpha = 0.5;
+                        ctx.beginPath();
+                        ctx.arc(I_i.x, I_i.y, 4, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.globalAlpha = 1;
+                    }
+                    
+                    // Draw locus line
+                    if (activity1State.step3 && locusPoints.length >= 2) {
+                        ctx.strokeStyle = '#E74C3C';
+                        ctx.lineWidth = 3;
+                        ctx.setLineDash([5, 5]);
+                        ctx.beginPath();
+                        ctx.moveTo(locusPoints[0].x, locusPoints[0].y);
+                        for (let i = 1; i < locusPoints.length; i++) {
+                            ctx.lineTo(locusPoints[i].x, locusPoints[i].y);
+                        }
+                        ctx.stroke();
+                        ctx.setLineDash([]);
+                        
+                        // Show equation of locus line
+                        ctx.fillStyle = '#333333';
+                        ctx.font = '14px Arial';
+                        ctx.textAlign = 'center';
+                        ctx.fillText('Locus of I', width/2, 20);
+                    }
+                }
+            }
+            
+            // Draw labels for lines
+            ctx.fillStyle = '#4A90E2';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('D', D.end.x - 20, D.end.y - 10);
+            ctx.fillText('D\'', Dprime.end.x + 15, Dprime.end.y + 20);
+        }
+        
+        // Activity 2 drawing functions
+        function drawActivity2Canvas() {
+            const canvas = document.getElementById('activity2Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Fixed points A and B
+            const A = {x: width * 0.3, y: height * 0.5};
+            const B = {x: width * 0.7, y: height * 0.5};
+            
+            // Line D through A
+            const angle = Math.PI / 6; // 30 degrees
+            const D = {
+                start: {x: A.x - 100 * Math.cos(angle), y: A.y - 100 * Math.sin(angle)},
+                end: {x: A.x + 150 * Math.cos(angle), y: A.y + 150 * Math.sin(angle)}
+            };
+            
+            // Draw points
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(A.x, A.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillText('A', A.x - 15, A.y - 15);
+            
+            ctx.fillStyle = '#2ECC71';
+            ctx.beginPath();
+            ctx.arc(B.x, B.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillText('B', B.x + 10, B.y - 15);
+            
+            // Draw line D
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(D.start.x, D.start.y);
+            ctx.lineTo(D.end.x, D.end.y);
+            ctx.stroke();
+            ctx.fillText('D', D.end.x + 10, D.end.y);
+            
+            // Draw variable point M and parallelogram
+            if (activity2State.partA || activity2State.partB || activity2State.partC) {
+                // M varies on D
+                const t = 0.3 + 0.4 * Math.sin(Date.now() / 2000); // Animated
+                const M = {
+                    x: D.start.x + t * (D.end.x - D.start.x),
+                    y: D.start.y + t * (D.end.y - D.start.y)
+                };
+                
+                // Draw M
+                ctx.fillStyle = '#3498DB';
+                ctx.beginPath();
+                ctx.arc(M.x, M.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('M', M.x + 10, M.y - 10);
+                
+                // Calculate N to complete parallelogram ABNM
+                // In parallelogram, AB = MN and AM = BN
+                const N = {
+                    x: B.x + (M.x - A.x),
+                    y: B.y + (M.y - A.y)
+                };
+                
+                // Draw N
+                ctx.fillStyle = '#9B59B6';
+                ctx.beginPath();
+                ctx.arc(N.x, N.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('N', N.x + 10, N.y);
+                
+                // Draw parallelogram ABNM
+                ctx.strokeStyle = '#8E44AD';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(A.x, A.y);
+                ctx.lineTo(B.x, B.y);
+                ctx.lineTo(N.x, N.y);
+                ctx.lineTo(M.x, M.y);
+                ctx.closePath();
+                ctx.stroke();
+                
+                // Draw translation vector
+                if (activity2State.partA) {
+                    ctx.strokeStyle = '#E67E22';
+                    ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    ctx.moveTo(M.x, M.y);
+                    ctx.lineTo(N.x, N.y);
+                    ctx.stroke();
+                    
+                    // Draw arrowhead
+                    const angle = Math.atan2(N.y - M.y, N.x - M.x);
+                    drawArrowhead(ctx, N.x, N.y, angle);
+                    
+                    ctx.fillStyle = '#E67E22';
+                    ctx.font = 'bold 14px Arial';
+                    ctx.fillText('Translation AB', (M.x + N.x)/2, (M.y + N.y)/2 - 15);
+                }
+                
+                // Show locus of N
+                if (activity2State.partB) {
+                    // Draw line through B parallel to D (locus of N)
+                    const Dprime = {
+                        start: {x: B.x - 100 * Math.cos(angle), y: B.y - 100 * Math.sin(angle)},
+                        end: {x: B.x + 150 * Math.cos(angle), y: B.y + 150 * Math.sin(angle)}
+                    };
+                    
+                    ctx.strokeStyle = '#E74C3C';
+                    ctx.lineWidth = 3;
+                    ctx.setLineDash([5, 5]);
+                    ctx.beginPath();
+                    ctx.moveTo(Dprime.start.x, Dprime.start.y);
+                    ctx.lineTo(Dprime.end.x, Dprime.end.y);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                    
+                    ctx.fillStyle = '#E74C3C';
+                    ctx.fillText('Locus of N', Dprime.end.x + 20, Dprime.end.y);
+                }
+                
+                // Show circular locus for part C
+                if (activity2State.partC) {
+                    // Draw circle with center A and radius 3 (scaled for visibility)
+                    const radius = 80; // Scaled for visibility
+                    
+                    ctx.strokeStyle = '#4A90E2';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.arc(A.x, A.y, radius, 0, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.fillText('C', A.x + radius + 10, A.y);
+                    
+                    // Draw circle with center B and same radius (locus of N)
+                    ctx.strokeStyle = '#E74C3C';
+                    ctx.lineWidth = 3;
+                    ctx.setLineDash([5, 5]);
+                    ctx.beginPath();
+                    ctx.arc(B.x, B.y, radius, 0, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                    
+                    ctx.fillStyle = '#E74C3C';
+                    ctx.fillText('Locus of N', B.x + radius + 10, B.y);
+                    
+                    // Show several positions of M on circle C and corresponding N
+                    const positions = 12;
+                    for (let i = 0; i < positions; i++) {
+                        const angle_i = (i / positions) * Math.PI * 2;
+                        const M_i = {
+                            x: A.x + radius * Math.cos(angle_i),
+                            y: A.y + radius * Math.sin(angle_i)
+                        };
+                        
+                        const N_i = {
+                            x: B.x + (M_i.x - A.x),
+                            y: B.y + (M_i.y - A.y)
+                        };
+                        
+                        // Draw N_i
+                        ctx.fillStyle = '#9B59B6';
+                        ctx.globalAlpha = 0.5;
+                        ctx.beginPath();
+                        ctx.arc(N_i.x, N_i.y, 3, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.globalAlpha = 1;
+                    }
+                }
+            }
+        }
+        
+        // Activity 3 drawing functions
+        function drawActivity3Canvas() {
+            const canvas = document.getElementById('activity3Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Points I, J, K (non-collinear)
+            const I = {x: width * 0.4, y: height * 0.6};
+            const J = {x: width * 0.6, y: height * 0.7};
+            const K = {x: width * 0.5, y: height * 0.4};
+            
+            // Draw given points
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(I.x, I.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillText('I', I.x - 15, I.y - 15);
+            
+            ctx.fillStyle = '#2ECC71';
+            ctx.beginPath();
+            ctx.arc(J.x, J.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillText('J', J.x + 10, J.y - 10);
+            
+            ctx.fillStyle = '#3498DB';
+            ctx.beginPath();
+            ctx.arc(K.x, K.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillText('K', K.x - 10, K.y + 15);
+            
+            // Draw triangle IJK
+            ctx.strokeStyle = '#666666';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+            ctx.beginPath();
+            ctx.moveTo(I.x, I.y);
+            ctx.lineTo(J.x, J.y);
+            ctx.lineTo(K.x, K.y);
+            ctx.closePath();
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            if (activity3State.step1) {
+                // Show triangle ABC with midpoints I, J, K
+                // A is opposite I (midpoint of BC)
+                // B is opposite J (midpoint of AC)
+                // C is opposite K (midpoint of AB)
+                
+                // We need to reconstruct ABC from I, J, K
+                // A = intersection of lines through J parallel to IK and through K parallel to IJ
+                
+                // First method: A = J + (K - I) (translation)
+                // Actually, A = K + (J - I) [since IJ is parallel to AB, and IK is parallel to AC]
+                
+                // Calculate A
+                const A = {
+                    x: K.x + (J.x - I.x),
+                    y: K.y + (J.y - I.y)
+                };
+                
+                // Then B and C can be found using midpoints
+                // K is midpoint of AB, so B = 2K - A
+                const B = {
+                    x: 2 * K.x - A.x,
+                    y: 2 * K.y - A.y
+                };
+                
+                // J is midpoint of AC, so C = 2J - A
+                const C = {
+                    x: 2 * J.x - A.x,
+                    y: 2 * J.y - A.y
+                };
+                
+                // Draw triangle ABC
+                ctx.strokeStyle = '#4A90E2';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(A.x, A.y);
+                ctx.lineTo(B.x, B.y);
+                ctx.lineTo(C.x, C.y);
+                ctx.closePath();
+                ctx.stroke();
+                
+                // Draw vertices
+                ctx.fillStyle = '#4A90E2';
+                ctx.beginPath();
+                ctx.arc(A.x, A.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('A', A.x - 15, A.y - 15);
+                
+                ctx.beginPath();
+                ctx.arc(B.x, B.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('B', B.x + 10, B.y - 10);
+                
+                ctx.beginPath();
+                ctx.arc(C.x, C.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('C', C.x - 10, C.y + 15);
+                
+                // Show that I, J, K are midpoints
+                const midBC = {x: (B.x + C.x)/2, y: (B.y + C.y)/2};
+                const midAC = {x: (A.x + C.x)/2, y: (A.y + C.y)/2};
+                const midAB = {x: (A.x + B.x)/2, y: (A.y + B.y)/2};
+                
+                // Draw segments from vertices to midpoints
+                ctx.strokeStyle = '#9B59B6';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                
+                ctx.beginPath();
+                ctx.moveTo(A.x, A.y);
+                ctx.lineTo(midBC.x, midBC.y);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(B.x, B.y);
+                ctx.lineTo(midAC.x, midAC.y);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(C.x, C.y);
+                ctx.lineTo(midAB.x, midAB.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Show parallel lines
+                if (activity3State.step2) {
+                    // Show that AB ∥ IJ
+                    ctx.strokeStyle = '#E67E22';
+                    ctx.lineWidth = 1;
+                    ctx.setLineDash([2, 2]);
+                    
+                    // Line through K parallel to IJ (should be AB)
+                    const parallel1_start = {
+                        x: K.x - 100 * (J.x - I.x),
+                        y: K.y - 100 * (J.y - I.y)
+                    };
+                    const parallel1_end = {
+                        x: K.x + 100 * (J.x - I.x),
+                        y: K.y + 100 * (J.y - I.y)
+                    };
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(parallel1_start.x, parallel1_start.y);
+                    ctx.lineTo(parallel1_end.x, parallel1_end.y);
+                    ctx.stroke();
+                    
+                    // Line through J parallel to IK (should be AC)
+                    const parallel2_start = {
+                        x: J.x - 100 * (K.x - I.x),
+                        y: J.y - 100 * (K.y - I.y)
+                    };
+                    const parallel2_end = {
+                        x: J.x + 100 * (K.x - I.x),
+                        y: J.y + 100 * (K.y - I.y)
+                    };
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(parallel2_start.x, parallel2_start.y);
+                    ctx.lineTo(parallel2_end.x, parallel2_end.y);
+                    ctx.stroke();
+                    
+                    ctx.setLineDash([]);
+                    
+                    // Mark intersection point A
+                    ctx.fillStyle = '#E67E22';
+                    ctx.beginPath();
+                    ctx.arc(A.x, A.y, 8, 0, Math.PI * 2);
+                    ctx.stroke();
+                    
+                    // Show construction text
+                    ctx.fillStyle = '#333333';
+                    ctx.font = '14px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('Construction: A = intersection of parallels', width/2, 20);
+                }
+            }
+        }
+        
+        // Activity 4 drawing functions
+        function drawActivity4Canvas() {
+            const canvas = document.getElementById('activity4Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Intersecting lines D and Δ
+            const intersection = {x: width * 0.5, y: height * 0.5};
+            
+            // Line D at 30° from horizontal
+            const D_angle = Math.PI / 6;
+            const D = {
+                start: {x: intersection.x - 150 * Math.cos(D_angle), y: intersection.y - 150 * Math.sin(D_angle)},
+                end: {x: intersection.x + 150 * Math.cos(D_angle), y: intersection.y + 150 * Math.sin(D_angle)}
+            };
+            
+            // Line Δ at 120° from horizontal
+            const Δ_angle = Math.PI * 2 / 3;
+            const Δ = {
+                start: {x: intersection.x - 150 * Math.cos(Δ_angle), y: intersection.y - 150 * Math.sin(Δ_angle)},
+                end: {x: intersection.x + 150 * Math.cos(Δ_angle), y: intersection.y + 150 * Math.sin(Δ_angle)}
+            };
+            
+            // Points A and B (not on D or Δ)
+            const A = {x: width * 0.3, y: height * 0.3};
+            const B = {x: width * 0.7, y: height * 0.7};
+            
+            // Draw lines
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(D.start.x, D.start.y);
+            ctx.lineTo(D.end.x, D.end.y);
+            ctx.stroke();
+            ctx.fillText('D', D.end.x + 10, D.end.y);
+            
+            ctx.strokeStyle = '#2ECC71';
+            ctx.beginPath();
+            ctx.moveTo(Δ.start.x, Δ.start.y);
+            ctx.lineTo(Δ.end.x, Δ.end.y);
+            ctx.stroke();
+            ctx.fillText('Δ', Δ.end.x - 20, Δ.end.y - 10);
+            
+            // Draw points
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(A.x, A.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillText('A', A.x - 15, A.y - 15);
+            
+            ctx.fillStyle = '#9B59B6';
+            ctx.beginPath();
+            ctx.arc(B.x, B.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillText('B', B.x + 10, B.y - 10);
+            
+            if (activity4State.step1) {
+                // Show parallelogram ABMN
+                // We need to find M on D and N on Δ such that ABMN is parallelogram
+                // Translation vector is AB
+                
+                // Step 1: Construct line D' through B parallel to D
+                const Dprime = {
+                    start: {x: B.x - 150 * Math.cos(D_angle), y: B.y - 150 * Math.sin(D_angle)},
+                    end: {x: B.x + 150 * Math.cos(D_angle), y: B.y + 150 * Math.sin(D_angle)}
+                };
+                
+                // Draw D'
+                ctx.strokeStyle = '#4A90E2';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(Dprime.start.x, Dprime.start.y);
+                ctx.lineTo(Dprime.end.x, Dprime.end.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.fillText('D\'', Dprime.end.x + 10, Dprime.end.y);
+                
+                // Find N = intersection of D' and Δ
+                // Solve for intersection
+                const N = lineIntersection(Dprime, Δ);
+                
+                if (N) {
+                    // Draw N
+                    ctx.fillStyle = '#3498DB';
+                    ctx.beginPath();
+                    ctx.arc(N.x, N.y, 6, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillText('N', N.x + 10, N.y - 10);
+                    
+                    // Find M such that ABMN is parallelogram
+                    // In parallelogram, AB = MN, so M = N - AB
+                    const M = {
+                        x: N.x - (B.x - A.x),
+                        y: N.y - (B.y - A.y)
+                    };
+                    
+                    // Draw M
+                    ctx.fillStyle = '#1ABC9C';
+                    ctx.beginPath();
+                    ctx.arc(M.x, M.y, 6, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillText('M', M.x - 15, M.y - 10);
+                    
+                    // Verify M is on D (or close to it)
+                    // Draw line from M to show it's on D
+                    ctx.strokeStyle = '#E67E22';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.arc(M.x, M.y, 8, 0, Math.PI * 2);
+                    ctx.stroke();
+                    
+                    // Draw parallelogram ABMN
+                    ctx.strokeStyle = '#8E44AD';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(A.x, A.y);
+                    ctx.lineTo(B.x, B.y);
+                    ctx.lineTo(N.x, N.y);
+                    ctx.lineTo(M.x, M.y);
+                    ctx.closePath();
+                    ctx.stroke();
+                    
+                    // Draw translation vector
+                    if (activity4State.step2) {
+                        ctx.strokeStyle = '#E67E22';
+                        ctx.lineWidth = 3;
+                        ctx.beginPath();
+                        ctx.moveTo(M.x, M.y);
+                        ctx.lineTo(N.x, N.y);
+                        ctx.stroke();
+                        
+                        // Draw arrowhead
+                        const angle = Math.atan2(N.y - M.y, N.x - M.x);
+                        drawArrowhead(ctx, N.x, N.y, angle);
+                        
+                        ctx.fillStyle = '#E67E22';
+                        ctx.font = 'bold 14px Arial';
+                        ctx.fillText('Translation AB', (M.x + N.x)/2, (M.y + N.y)/2 - 15);
+                    }
+                }
+            }
+        }
+        
+        // Helper function to draw arrowhead
+        function drawArrowhead(ctx, x, y, angle) {
+            const headlen = 10;
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angle);
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(-headlen, -headlen/2);
+            ctx.moveTo(0, 0);
+            ctx.lineTo(-headlen, headlen/2);
+            ctx.stroke();
+            ctx.restore();
+        }
+        
+        // Helper function to find intersection of two lines
+        function lineIntersection(line1, line2) {
+            // Line 1: defined by start and end points
+            // Line 2: defined by start and end points
+            
+            const x1 = line1.start.x, y1 = line1.start.y;
+            const x2 = line1.end.x, y2 = line1.end.y;
+            const x3 = line2.start.x, y3 = line2.start.y;
+            const x4 = line2.end.x, y4 = line2.end.y;
+            
+            const denom = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+            if (Math.abs(denom) < 0.001) return null; // Lines are parallel
+            
+            const x = ((x1*y2 - y1*x2)*(x3 - x4) - (x1 - x2)*(x3*y4 - y3*x4)) / denom;
+            const y = ((x1*y2 - y1*x2)*(y3 - y4) - (y1 - y2)*(x3*y4 - y3*x4)) / denom;
+            
+            return {x, y};
+        }
+        
+        // Construction functions
+        function constructActivity1Step1() {
+            activity1State.step1 = true;
+            drawActivity1Canvas();
+        }
+        
+        function constructActivity1Step2() {
+            activity1State.step2 = true;
+            drawActivity1Canvas();
+        }
+        
+        function constructActivity1Step3() {
+            activity1State.step3 = true;
+            drawActivity1Canvas();
+        }
+        
+        function constructActivity2PartA() {
+            activity2State.partA = true;
+            drawActivity2Canvas();
+        }
+        
+        function constructActivity2PartB() {
+            activity2State.partB = true;
+            drawActivity2Canvas();
+        }
+        
+        function constructActivity2PartC() {
+            activity2State.partC = true;
+            drawActivity2Canvas();
+        }
+        
+        function constructActivity3Step1() {
+            activity3State.step1 = true;
+            drawActivity3Canvas();
+        }
+        
+        function constructActivity3Step2() {
+            activity3State.step2 = true;
+            drawActivity3Canvas();
+        }
+        
+        function constructActivity4Step1() {
+            activity4State.step1 = true;
+            drawActivity4Canvas();
+        }
+        
+        function constructActivity4Step2() {
+            activity4State.step2 = true;
+            drawActivity4Canvas();
+        }
+        
+        // Solution toggle function
+        function toggleSolution(problemNumber) {
+            const solution = document.getElementById(`solution${problemNumber}`);
+            const button = solution.previousElementSibling;
+            const currentLang = MHThemeManager ? MHThemeManager.getCurrentLanguage() : 'en';
+            
+            if (solution.style.display === 'block' || solution.style.display === '') {
+                solution.style.display = 'none';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_transl5a.showSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_transl5a.showSolution'];
+                } else {
+                    button.textContent = 'Show Solution';
+                }
+            } else {
+                solution.style.display = 'block';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_transl5a.hideSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_transl5a.hideSolution'];
+                } else {
+                    button.textContent = 'Hide Solution';
+                }
+                
+                // Re-render KaTeX for newly visible equations
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(solution, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\(', right: '\\)', display: false},
+                            {left: '\\[', right: '\\]', display: true}
+                        ],
+                        throwOnError: false
+                    });
+                }
+            }
+        }
+        
+        // Toggle conjecture function
+        function toggleConjecture(conjectureNumber) {
+            const conjecture = document.getElementById(`conjecture${conjectureNumber}`);
+            const button = conjecture.previousElementSibling;
+            
+            if (conjecture.style.display === 'block' || conjecture.style.display === '') {
+                conjecture.style.display = 'none';
+                button.textContent = 'Show Conjecture';
+            } else {
+                conjecture.style.display = 'block';
+                button.textContent = 'Hide Conjecture';
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize KaTeX auto-render
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+
+            // Draw initial canvases
+            drawActivity1Canvas();
+            drawActivity2Canvas();
+            drawActivity3Canvas();
+            drawActivity4Canvas();
+
+            // Initialize solutions as hidden and set button text
+            const currentLang = MHThemeManager ? MHThemeManager.getCurrentLanguage() : 'en';
+            for (let i = 1; i <= 8; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                const button = solution ? solution.previousElementSibling : null;
+                
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+                
+                // Set initial button text
+                if (button && translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_transl5a.showSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_transl5a.showSolution'];
+                }
+            }
+            
+            // Initialize conjectures as hidden
+            const conjecture1 = document.getElementById('conjecture1');
+            if (conjecture1) conjecture1.style.display = 'none';
+            
+            // Set up animation loop for moving points
+            function animate() {
+                if (activity1State.step1 || activity1State.step2 || activity1State.step3) {
+                    drawActivity1Canvas();
+                }
+                if (activity2State.partA || activity2State.partB || activity2State.partC) {
+                    drawActivity2Canvas();
+                }
+                requestAnimationFrame(animate);
+            }
+            
+            // Start animation
+            animate();
+            
+            // Redraw canvases when theme changes
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    setTimeout(() => {
+                        drawActivity1Canvas();
+                        drawActivity2Canvas();
+                        drawActivity3Canvas();
+                        drawActivity4Canvas();
+                    }, 100);
+                });
+            }
+        });
+    </script>
+
+<!-- Add the service worker registration script -->
+<script>
+    // Register service worker with better error handling
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch(function(error) {
+                console.log('Service Worker registration failed:', error);
+            });
+        });
+    }
+</script>
+
+<!-- Add noscript fallback -->
+<noscript>
+    <style>
+        .MH-header-controls { display: none; }
+        .MH-solution { display: block; }
+        .MH-canvas { border: 2px solid #ccc; background-color: #f9f9f9; }
+    </style>
+    <div class="MH-warning">
+        JavaScript is recommended for the full experience, but content is still accessible.
+    </div>
+</noscript>
+</body>
+</html>

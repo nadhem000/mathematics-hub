@@ -1,0 +1,1771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Geometry - Homothety</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#4A90E2" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#8E44AD" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#4A90E2">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    
+    <style>
+        /* Page-specific color palette - Blue + Purple Theme */
+        :root {
+            --primary: #4A90E2;        /* Cornflower Blue */
+            --primary-light: #7BAAF7;  /* Light Blue */
+            --primary-dark: #357ABD;   /* Darker Blue */
+            --secondary: #8E44AD;      /* Dark Purple */
+            --secondary-light: #AF7AC5; /* Light Purple */
+            --secondary-dark: #6C3483;  /* Darker Purple */
+            --accent: #E67E22;
+            --warning: #E74C3C;
+            --info: #2ECC71;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #FFFFFF;
+            --surface: #F8F9FA;
+            --border: #E9ECEF;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        [data-theme="dark"] {
+            --primary: #357ABD;
+            --primary-light: #4A90E2;
+            --primary-dark: #2C3E50;
+            --secondary: #6C3483;
+            --secondary-light: #8E44AD;
+            --secondary-dark: #4A235A;
+            --accent: #D35400;
+            --warning: #C0392B;
+            --info: #27AE60;
+            --text: #FFFFFF;
+            --text-light: #CCCCCC;
+            --background: #121212;
+            --surface: #1E1E1E;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        /* KaTeX styling */
+        .katex { 
+            font-size: 1.1em; 
+        }
+        
+        .katex-display { 
+            margin: 1em 0; 
+            text-align: center;
+        }
+        
+        .katex-display > .katex { 
+            display: inline-block;
+            text-align: center;
+        }
+
+        /* Equation styling */
+        .MH-equation {
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            margin: 0.5em 0;
+            padding: 0;
+            display: inline-block;
+            direction: ltr !important;
+            unicode-bidi: isolate;
+        }
+        
+        [dir="rtl"] .MH-equation {
+            text-align: left;
+            unicode-bidi: plaintext;
+        }
+
+        /* Canvas container styling */
+        .MH-canvas-container {
+            margin: 2em 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .MH-canvas {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background-color: var(--surface);
+            max-width: 100%;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+
+        .MH-canvas-title {
+            font-weight: bold;
+            margin-bottom: 0.5em;
+            color: var(--primary);
+        }
+
+        .MH-canvas-instructions {
+            font-size: 0.9em;
+            color: var(--text-light);
+            margin-top: 0.5em;
+            font-style: italic;
+        }
+
+        /* Geometry specific styling */
+        .MH-construction-step {
+            margin: 1.5em 0;
+            padding: 1em;
+            background-color: var(--surface);
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+        }
+
+        .MH-construction-step h4 {
+            margin-top: 0;
+            color: var(--primary-dark);
+        }
+
+        .MH-vector-notation {
+            font-family: 'KaTeX_Math', 'Cambria Math', serif;
+            font-style: italic;
+            color: var(--secondary);
+        }
+
+        .MH-point-label {
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .MH-transformation-notation {
+            background-color: rgba(78, 144, 226, 0.1);
+            padding: 0.5em;
+            border-radius: 4px;
+            font-family: 'KaTeX_Math', 'Cambria Math', serif;
+            margin: 0.5em 0;
+        }
+
+        /* Responsive canvas */
+        @media (max-width: 768px) {
+            .MH-canvas {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+
+        /* Homothety specific */
+        .MH-homothety-center {
+            font-weight: bold;
+            color: var(--warning);
+        }
+
+        .MH-homothety-ratio {
+            font-weight: bold;
+            color: var(--info);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                    <!-- Notification Button -->
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+                        <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Geo_homothety1.title">Homothety: Part 1</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y2Geo_homothety1.subtitle">Properties and Applications</h2>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_homothety1.introduction">Introduction</h2>
+            <p data-i18n="MH.lesson_Y2Geo_homothety1.introText1">Homothety is a geometric transformation that enlarges or reduces figures while preserving their shape. It's a fundamental concept in geometry with applications in similarity, scaling, and geometric constructions.</p>
+            <p data-i18n="MH.lesson_Y2Geo_homothety1.introText2">In this lesson, we will explore the definition, properties, and constructions related to homothety through a series of exercises.</p>
+        </section>
+
+        <!-- Exercise du Rappel -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_homothety1.exerciseRecallTitle">Recall Exercise</h2>
+            
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_homothety1.exercise1Statement">1) In the figure below, A and B are two distinct points on line (xy). Let k be a real number and let M be the point defined by \(\overrightarrow{AM} = k \overrightarrow{AB}\). Determine the position of point M on line (xy) in each of the following cases:</p>
+            </div>
+
+            <!-- Diagram 1: Points on a line -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_homothety1.diagram1Title">Figure: Points A and B on line (xy)</div>
+                <canvas id="exercise1Canvas" width="600" height="300" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_homothety1.diagram1Instructions">Points A and B on line (xy). M is defined by \(\overrightarrow{AM} = k \overrightarrow{AB}\).</div>
+            </div>
+
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety1.exercise1a">a) k < 0</h4>
+                    <button class="MH-solution-btn" onclick="showExercise1Case('negative')" data-i18n="MH.lesson_Y2Geo_homothety1.showConstruction">Show Construction</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety1.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                    <div class="MH-solution" id="solution1">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety1.solution1a">When k < 0, \(\overrightarrow{AM}\) has opposite direction to \(\overrightarrow{AB}\). Therefore, point M lies on line (AB) but on the opposite side of A relative to B.</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety1.equation1a">\(\overrightarrow{AM} = k \overrightarrow{AB}\) with k < 0 ⇒ M is on line (AB) on the side opposite to B</div>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety1.exercise1b">b) k ∈ [0, 1]</h4>
+                    <button class="MH-solution-btn" onclick="showExercise1Case('zeroToOne')" data-i18n="MH.lesson_Y2Geo_homothety1.showConstruction">Show Construction</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety1.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                    <div class="MH-solution" id="solution2">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety1.solution1b">When 0 ≤ k ≤ 1, point M lies on segment [AB]. Specifically:</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety1.solution1b1">If k = 0, then M = A</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety1.solution1b2">If k = 1, then M = B</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety1.solution1b3">If 0 < k < 1, M is between A and B</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety1.exercise1c">c) k > 1</h4>
+                    <button class="MH-solution-btn" onclick="showExercise1Case('greaterThanOne')" data-i18n="MH.lesson_Y2Geo_homothety1.showConstruction">Show Construction</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety1.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                    <div class="MH-solution" id="solution3">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety1.solution1c">When k > 1, \(\overrightarrow{AM}\) has the same direction as \(\overrightarrow{AB}\) but is longer. Therefore, point M lies on line (AB) beyond point B.</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety1.equation1c">\(\overrightarrow{AM} = k \overrightarrow{AB}\) with k > 1 ⇒ M is on line (AB) beyond B</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part I: Definition -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_homothety1.part1Title">Part I: Definition of Homothety</h2>
+            
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_homothety1.activity2Title">Activity 2: Parallelogram Analysis</p>
+                <p data-i18n="MH.lesson_Y2Geo_homothety1.activity2Statement">Let ABCD be a parallelogram and E and F points such that \(\overrightarrow{AF} = 3\overrightarrow{AB}\) and \(\overrightarrow{DE} = -\frac{1}{2}\overrightarrow{DA}\). Answer true or false, justifying your answer.</p>
+            </div>
+
+            <!-- Diagram 2: Parallelogram with points E and F -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_homothety1.diagram2Title">Figure: Parallelogram ABCD with points E and F</div>
+                <canvas id="activity2Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_homothety1.diagram2Instructions">Parallelogram ABCD with \(\overrightarrow{AF} = 3\overrightarrow{AB}\) and \(\overrightarrow{DE} = -\frac{1}{2}\overrightarrow{DA}\).</div>
+            </div>
+
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety1.question2a">a) Points A, D, and E are collinear.</h4>
+                    <button class="MH-solution-btn" onclick="showActivity2Part('a')" data-i18n="MH.lesson_Y2Geo_homothety1.showConstruction">Show Construction</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety1.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+                    <div class="MH-solution" id="solution4">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety1.solution2a"><strong>TRUE.</strong> Since \(\overrightarrow{DE} = -\frac{1}{2}\overrightarrow{DA}\), vectors \(\overrightarrow{DE}\) and \(\overrightarrow{DA}\) are collinear. Therefore, points D, E, and A are on the same line.</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety1.equation2a">\(\overrightarrow{DE} = -\frac{1}{2}\overrightarrow{DA} \Rightarrow \overrightarrow{DE} \parallel \overrightarrow{DA} \Rightarrow D, E, A \text{ collinear}\)</div>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety1.question2b">b) Vectors \(\overrightarrow{AD}\) and \(\overrightarrow{BF}\) are collinear.</h4>
+                    <button class="MH-solution-btn" onclick="showActivity2Part('b')" data-i18n="MH.lesson_Y2Geo_homothety1.showConstruction">Show Construction</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety1.showSolution" onclick="toggleSolution(5)">Show Solution</button>
+                    <div class="MH-solution" id="solution5">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety1.solution2b"><strong>TRUE.</strong> In parallelogram ABCD, \(\overrightarrow{AD} = \overrightarrow{BC}\). Since \(\overrightarrow{AF} = 3\overrightarrow{AB}\), point F lies on line (AB) beyond B. Thus \(\overrightarrow{BF} = 2\overrightarrow{AB}\), which is parallel to \(\overrightarrow{AB}\). Since \(\overrightarrow{AD} \parallel \overrightarrow{BC} \parallel \overrightarrow{AB}\), vectors \(\overrightarrow{AD}\) and \(\overrightarrow{BF}\) are collinear.</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety1.equation2b">\(\overrightarrow{AD} = \overrightarrow{BC} \parallel \overrightarrow{AB} \parallel \overrightarrow{BF} \Rightarrow \overrightarrow{AD} \parallel \overrightarrow{BF}\)</div>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety1.question2c">c) Vectors \(\overrightarrow{AB}\) and \(\overrightarrow{CD}\) are not collinear.</h4>
+                    <button class="MH-solution-btn" onclick="showActivity2Part('c')" data-i18n="MH.lesson_Y2Geo_homothety1.showConstruction">Show Construction</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety1.showSolution" onclick="toggleSolution(6)">Show Solution</button>
+                    <div class="MH-solution" id="solution6">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety1.solution2c"><strong>FALSE.</strong> In parallelogram ABCD, opposite sides are parallel: \(\overrightarrow{AB} \parallel \overrightarrow{DC}\) (or \(\overrightarrow{CD}\)). Therefore, vectors \(\overrightarrow{AB}\) and \(\overrightarrow{CD}\) are collinear (in fact, \(\overrightarrow{AB} = \overrightarrow{DC}\)).</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety1.equation2c">In parallelogram: \(\overrightarrow{AB} = \overrightarrow{DC} \Rightarrow \overrightarrow{AB} \parallel \overrightarrow{CD}\)</div>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety1.question2d">d) Vectors \(2\overrightarrow{CD}\) and \(\overrightarrow{AB}\) are collinear.</h4>
+                    <button class="MH-solution-btn" onclick="showActivity2Part('d')" data-i18n="MH.lesson_Y2Geo_homothety1.showConstruction">Show Construction</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety1.showSolution" onclick="toggleSolution(7)">Show Solution</button>
+                    <div class="MH-solution" id="solution7">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety1.solution2d"><strong>TRUE.</strong> As established, \(\overrightarrow{AB} = \overrightarrow{DC}\). Therefore, \(2\overrightarrow{CD} = -2\overrightarrow{DC} = -2\overrightarrow{AB}\). Since one vector is a scalar multiple of the other (\(-2\)), they are collinear.</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety1.equation2d">\(2\overrightarrow{CD} = -2\overrightarrow{DC} = -2\overrightarrow{AB} \Rightarrow 2\overrightarrow{CD} \parallel \overrightarrow{AB}\)</div>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety1.question2e">e) Vectors \(\overrightarrow{EC}\) and \(\overrightarrow{EF}\) are collinear.</h4>
+                    <button class="MH-solution-btn" onclick="showActivity2Part('e')" data-i18n="MH.lesson_Y2Geo_homothety1.showConstruction">Show Construction</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety1.showSolution" onclick="toggleSolution(8)">Show Solution</button>
+                    <div class="MH-solution" id="solution8">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety1.solution2e"><strong>FALSE.</strong> We need to check if these vectors are parallel. Let's express them in terms of known vectors. Since E is on line DA, and C and F are fixed, generally these vectors are not collinear unless specific conditions hold (which they don't in a general parallelogram).</p>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety1.question2f">f) Points E, C, and F are collinear.</h4>
+                    <button class="MH-solution-btn" onclick="showActivity2Part('f')" data-i18n="MH.lesson_Y2Geo_homothety1.showConstruction">Show Construction</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety1.showSolution" onclick="toggleSolution(9)">Show Solution</button>
+                    <div class="MH-solution" id="solution9">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety1.solution2f"><strong>FALSE.</strong> Generally, E lies on line DA, C is a vertex of the parallelogram, and F lies on line AB extended. These three points are not collinear in a general parallelogram configuration.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Geo_homothety1.definitionTitle">Definition of Homothety</h3>
+                <p data-i18n="MH.lesson_Y2Geo_homothety1.definitionText">Let I be a point and k a non-zero real number. The transformation that maps every point M in the plane to the unique point M' such that \(\overrightarrow{IM'} = k \overrightarrow{IM}\) is called a <strong>homothety</strong> with center I and ratio k. It is denoted by h(I, k).</p>
+                <div class="MH-transformation-notation" data-i18n="MH.lesson_Y2Geo_homothety1.definitionNotation">
+                    h(I, k): P → P<br>
+                    M ↦ M' = h(I, k)(M) such that \(\overrightarrow{IM'} = k \overrightarrow{IM}\)
+                </div>
+                <p data-i18n="MH.lesson_Y2Geo_homothety1.definitionTerminology">M' is called the <strong>image</strong> of point M by the homothety h(I, k).<br>M is called an <strong>antecedent</strong> (or preimage) of M' by the homothety h(I, k).</p>
+            </div>
+
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_homothety1.consequencesTitle">Consequences</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety1.consequence1">A point and its image are aligned with the center of the homothety.</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety1.consequence2">h(I, k)(I) = I. We say that I is a <strong>fixed point</strong> (invariant point) of h.</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety1.consequence3">h(I, k)(M) = M' ⇔ \(\overrightarrow{IM'} = k \overrightarrow{IM}\) ⇔ \(\overrightarrow{IM} = \frac{1}{k} \overrightarrow{IM'}\).</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety1.consequence4">Every point in the plane has a unique antecedent under a homothety.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Part II: Construction of the Image of a Point by a Homothety -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_homothety1.part2Title">Part II: Construction of the Image of a Point by a Homothety</h2>
+            
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_homothety1.activity3Title">Activity 3: Recognizing a Transformation</p>
+                <p data-i18n="MH.lesson_Y2Geo_homothety1.activity3Statement">Let A and B be two distinct points in the plane and let I be the barycenter of (A, 1) and (B, 4). Let M be a point in the plane and M' the point defined by \(\overrightarrow{MM'} = \overrightarrow{MA} + 4\overrightarrow{MB}\). Identify the transformation f of the plane that maps point M to point M'.</p>
+            </div>
+
+            <!-- Diagram 3: Barycenter and transformation -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_homothety1.diagram3Title">Figure: Points A, B, I (barycenter) and M, M'</div>
+                <canvas id="activity3Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_homothety1.diagram3Instructions">I is barycenter of (A,1) and (B,4). M' satisfies \(\overrightarrow{MM'} = \overrightarrow{MA} + 4\overrightarrow{MB}\).</div>
+            </div>
+
+            <div class="MH-construction-step">
+                <button class="MH-solution-btn" onclick="constructActivity3()" data-i18n="MH.lesson_Y2Geo_homothety1.showConstruction">Show Construction</button>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety1.showSolution" onclick="toggleSolution(10)">Show Solution</button>
+                <div class="MH-solution" id="solution10">
+                    <p data-i18n="MH.lesson_Y2Geo_homothety1.solution3">First, note that I being the barycenter of (A,1) and (B,4) means:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety1.equation3a">\(\overrightarrow{IA} + 4\overrightarrow{IB} = \overrightarrow{0}\) or \(\overrightarrow{AI} = \frac{4}{5}\overrightarrow{AB}\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety1.solution3b">Now, rewrite \(\overrightarrow{MM'}\):</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety1.equation3b">\(\overrightarrow{MM'} = \overrightarrow{MA} + 4\overrightarrow{MB}\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety1.solution3c">Using Chasles relation, express in terms of I:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety1.equation3c">\(\overrightarrow{MA} = \overrightarrow{MI} + \overrightarrow{IA}\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety1.equation3d">\(\overrightarrow{MB} = \overrightarrow{MI} + \overrightarrow{IB}\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety1.solution3d">Thus:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety1.equation3e">\(\overrightarrow{MM'} = (\overrightarrow{MI} + \overrightarrow{IA}) + 4(\overrightarrow{MI} + \overrightarrow{IB}) = 5\overrightarrow{MI} + (\overrightarrow{IA} + 4\overrightarrow{IB})\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety1.solution3e">But \(\overrightarrow{IA} + 4\overrightarrow{IB} = \overrightarrow{0}\) by definition of I as barycenter. Therefore:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety1.equation3f">\(\overrightarrow{MM'} = 5\overrightarrow{MI}\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety1.solution3f">This shows that \(\overrightarrow{IM'} = \overrightarrow{IM} + \overrightarrow{MM'} = \overrightarrow{IM} + 5\overrightarrow{MI} = \overrightarrow{IM} - 5\overrightarrow{IM} = -4\overrightarrow{IM}\).</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety1.solution3g">Thus \(\overrightarrow{IM'} = -4\overrightarrow{IM}\), which means f is the homothety with center I and ratio -4:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety1.equation3g">f = h(I, -4)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part III: Characteristic Property -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_homothety1.part3Title">Part III: Characteristic Property of Homothety</h2>
+            
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_homothety1.activity4Title">Activity 4: Distance Transformation</p>
+                <p data-i18n="MH.lesson_Y2Geo_homothety1.activity4Statement">Let h be a homothety with center I and ratio k, and let M and N be two points in the plane. Denote M' = h(M) and N' = h(N). Express \(\overrightarrow{M'N'}\) in terms of \(\overrightarrow{MN}\).</p>
+            </div>
+
+            <!-- Diagram 4: Homothety transforming two points -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_homothety1.diagram4Title">Figure: Homothety transforming points M and N to M' and N'</div>
+                <canvas id="activity4Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_homothety1.diagram4Instructions">Points M and N transformed by homothety h(I,k) to M' and N'.</div>
+            </div>
+
+            <div class="MH-construction-step">
+                <button class="MH-solution-btn" onclick="constructActivity4()" data-i18n="MH.lesson_Y2Geo_homothety1.showConstruction">Show Construction</button>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety1.showSolution" onclick="toggleSolution(11)">Show Solution</button>
+                <div class="MH-solution" id="solution11">
+                    <p data-i18n="MH.lesson_Y2Geo_homothety1.solution4">By definition of homothety:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety1.equation4a">\(\overrightarrow{IM'} = k \overrightarrow{IM}\) and \(\overrightarrow{IN'} = k \overrightarrow{IN}\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety1.solution4b">Now compute \(\overrightarrow{M'N'}\):</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety1.equation4b">\(\overrightarrow{M'N'} = \overrightarrow{M'I} + \overrightarrow{IN'} = -\overrightarrow{IM'} + \overrightarrow{IN'}\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety1.equation4c">\(\overrightarrow{M'N'} = -k \overrightarrow{IM} + k \overrightarrow{IN} = k(\overrightarrow{IN} - \overrightarrow{IM}) = k \overrightarrow{MN}\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety1.solution4c">Therefore, \(\overrightarrow{M'N'} = k \overrightarrow{MN}\).</p>
+                </div>
+            </div>
+
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Geo_homothety1.consequences2Title">Consequences</h3>
+                <p data-i18n="MH.lesson_Y2Geo_homothety1.consequences2Text">If A' and B' are the respective images of two distinct points A and B under a homothety with ratio k, then:</p>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety1.consequence2a">Line (AB) is parallel to line (A'B')</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety1.consequence2b">A'B' = |k| × AB (the distance is multiplied by the absolute value of k)</li>
+                </ul>
+                <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety1.equationConsequences">\(\overrightarrow{A'B'} = k \overrightarrow{AB}\) and \(A'B' = |k| \times AB\)</div>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_homothety1.summaryTitle">Comprehensive Summary</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Geo_homothety1.summary1Title">Definition of Homothety</h3>
+                <p data-i18n="MH.lesson_Y2Geo_homothety1.summary1Text">A homothety with center I and non-zero ratio k is the transformation h(I, k) that maps any point M to the unique point M' such that:</p>
+                <div class="MH-transformation-notation" data-i18n="MH.lesson_Y2Geo_homothety1.summaryNotation1">
+                    h(I, k)(M) = M' ⇔ \(\overrightarrow{IM'} = k \overrightarrow{IM}\)
+                </div>
+            </div>
+
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_homothety1.summary2Title">Key Properties</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety1.summary2a">The center I is a fixed point: h(I, k)(I) = I</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety1.summary2b">A point and its image are aligned with the center</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety1.summary2c">For any points M, N with images M', N': \(\overrightarrow{M'N'} = k \overrightarrow{MN}\)</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety1.summary2d">Lines are transformed to parallel lines: (AB) ∥ (A'B')</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety1.summary2e">Distances are multiplied by |k|: A'B' = |k| × AB</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety1.summary2f">Every point has a unique antecedent under a homothety</li>
+                </ul>
+            </div>
+            
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Geo_homothety1.conclusionTitle">Conclusion</h3>
+                <div class="MH-important">
+                    <h3 data-i18n="MH.lesson_Y2Geo_homothety1.keyConceptsTitle">Key Concepts Mastered</h3>
+                    <ul>
+                        <li data-i18n="MH.lesson_Y2Geo_homothety1.concept1">Definition and notation of homothety</li>
+                        <li data-i18n="MH.lesson_Y2Geo_homothety1.concept2">Position of a point defined by a scalar multiple of a vector</li>
+                        <li data-i18n="MH.lesson_Y2Geo_homothety1.concept3">Recognition of homothety from vector expressions</li>
+                        <li data-i18n="MH.lesson_Y2Geo_homothety1.concept4">Characteristic property: \(\overrightarrow{M'N'} = k \overrightarrow{MN}\)</li>
+                        <li data-i18n="MH.lesson_Y2Geo_homothety1.concept5">Parallelism preservation: (AB) ∥ (A'B')</li>
+                        <li data-i18n="MH.lesson_Y2Geo_homothety1.concept6">Distance scaling: A'B' = |k| × AB</li>
+                        <li data-i18n="MH.lesson_Y2Geo_homothety1.concept7">Fixed point property of the center</li>
+                        <li data-i18n="MH.lesson_Y2Geo_homothety1.concept8">Construction of images under homothety</li>
+                    </ul>
+                </div>
+                <p data-i18n="MH.lesson_Y2Geo_homothety1.finalThought">Homothety is a fundamental geometric transformation that scales figures while preserving their shape and angles. Understanding homotheties is essential for studying similarity, scaling problems, and many applications in geometry and real-world contexts such as maps, models, and perspective drawings.</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+    
+    <script>
+        // HOMOTHETY LESSON TRANSLATIONS
+        // HOMOTHETY LESSON TRANSLATIONS
+const homothetyTranslations = {
+    'en': {
+        // General translations
+        'MH.general.homeTooltip': 'Go to Homepage',
+        'MH.general.install': 'Install App',
+        'MH.general.installSuccess': 'Mathematics Hub installed successfully!',
+        'MH.general.enableNotifications': 'Enable Notifications',
+        'MH.general.notificationEnabled': 'Notifications enabled! You will now receive updates.',
+        'MH.general.title': 'Mathematics Hub',
+        'MH.general.theme': 'Theme',
+        'MH.general.language': 'Language',
+        'MH.lesson_Y2Geo_homothety1.showSolution': 'Show Solution',
+        'MH.lesson_Y2Geo_homothety1.hideSolution': 'Hide Solution',
+        'MH.lesson_Y2Geo_homothety1.showConstruction': 'Show Construction',
+        
+        // Geometry lesson specific translations
+        'MH.lesson_Y2Geo_homothety1.title': 'Homothety: Part 1',
+        'MH.lesson_Y2Geo_homothety1.subtitle': 'Properties and Applications',
+        'MH.lesson_Y2Geo_homothety1.introduction': 'Introduction',
+        'MH.lesson_Y2Geo_homothety1.introText1': 'Homothety is a geometric transformation that enlarges or reduces figures while preserving their shape. It\'s a fundamental concept in geometry with applications in similarity, scaling, and geometric constructions.',
+        'MH.lesson_Y2Geo_homothety1.introText2': 'In this lesson, we will explore the definition, properties, and constructions related to homothety through a series of exercises.',
+        
+        // Exercise du Rappel
+        'MH.lesson_Y2Geo_homothety1.exerciseRecallTitle': 'Recall Exercise',
+        'MH.lesson_Y2Geo_homothety1.exercise1Statement': String.raw`1) In the figure below, A and B are two distinct points on line (xy). Let k be a real number and let M be the point defined by \(\overrightarrow{AM} = k \overrightarrow{AB}\). Determine the position of point M on line (xy) in each of the following cases:`,
+        'MH.lesson_Y2Geo_homothety1.diagram1Title': 'Figure: Points A and B on line (xy)',
+        'MH.lesson_Y2Geo_homothety1.diagram1Instructions': String.raw`Points A and B on line (xy). M is defined by \(\overrightarrow{AM} = k \overrightarrow{AB}\).`,
+        'MH.lesson_Y2Geo_homothety1.exercise1a': 'a) k < 0',
+        'MH.lesson_Y2Geo_homothety1.exercise1b': String.raw`b) k ∈ [0, 1]`,
+        'MH.lesson_Y2Geo_homothety1.exercise1c': 'c) k > 1',
+        
+        // Solutions for Exercise 1
+        'MH.lesson_Y2Geo_homothety1.solution1a': String.raw`When k < 0, \(\overrightarrow{AM}\) has opposite direction to \(\overrightarrow{AB}\). Therefore, point M lies on line (AB) but on the opposite side of A relative to B.`,
+        'MH.lesson_Y2Geo_homothety1.equation1a': String.raw`\(\overrightarrow{AM} = k \overrightarrow{AB}\) with k < 0 ⇒ M is on line (AB) on the side opposite to B`,
+        'MH.lesson_Y2Geo_homothety1.solution1b': 'When 0 ≤ k ≤ 1, point M lies on segment [AB]. Specifically:',
+        'MH.lesson_Y2Geo_homothety1.solution1b1': 'If k = 0, then M = A',
+        'MH.lesson_Y2Geo_homothety1.solution1b2': 'If k = 1, then M = B',
+        'MH.lesson_Y2Geo_homothety1.solution1b3': 'If 0 < k < 1, M is between A and B',
+        'MH.lesson_Y2Geo_homothety1.solution1c': String.raw`When k > 1, \(\overrightarrow{AM}\) has the same direction as \(\overrightarrow{AB}\) but is longer. Therefore, point M lies on line (AB) beyond point B.`,
+        'MH.lesson_Y2Geo_homothety1.equation1c': String.raw`\(\overrightarrow{AM} = k \overrightarrow{AB}\) with k > 1 ⇒ M is on line (AB) beyond B`,
+        
+        // Part I: Definition
+        'MH.lesson_Y2Geo_homothety1.part1Title': 'Part I: Definition of Homothety',
+        'MH.lesson_Y2Geo_homothety1.activity2Title': 'Activity 2: Parallelogram Analysis',
+        'MH.lesson_Y2Geo_homothety1.activity2Statement': String.raw`Let ABCD be a parallelogram and E and F points such that \(\overrightarrow{AF} = 3\overrightarrow{AB}\) and \(\overrightarrow{DE} = -\frac{1}{2}\overrightarrow{DA}\). Answer true or false, justifying your answer.`,
+        'MH.lesson_Y2Geo_homothety1.diagram2Title': 'Figure: Parallelogram ABCD with points E and F',
+        'MH.lesson_Y2Geo_homothety1.diagram2Instructions': String.raw`Parallelogram ABCD with \(\overrightarrow{AF} = 3\overrightarrow{AB}\) and \(\overrightarrow{DE} = -\frac{1}{2}\overrightarrow{DA}\).`,
+        
+        // Questions for Activity 2
+        'MH.lesson_Y2Geo_homothety1.question2a': 'a) Points A, D, and E are collinear.',
+        'MH.lesson_Y2Geo_homothety1.question2b': String.raw`b) Vectors \(\overrightarrow{AD}\) and \(\overrightarrow{BF}\) are collinear.`,
+        'MH.lesson_Y2Geo_homothety1.question2c': String.raw`c) Vectors \(\overrightarrow{AB}\) and \(\overrightarrow{CD}\) are not collinear.`,
+        'MH.lesson_Y2Geo_homothety1.question2d': String.raw`d) Vectors \(2\overrightarrow{CD}\) and \(\overrightarrow{AB}\) are collinear.`,
+        'MH.lesson_Y2Geo_homothety1.question2e': String.raw`e) Vectors \(\overrightarrow{EC}\) and \(\overrightarrow{EF}\) are collinear.`,
+        'MH.lesson_Y2Geo_homothety1.question2f': 'f) Points E, C, and F are collinear.',
+        
+        // Solutions for Activity 2
+        'MH.lesson_Y2Geo_homothety1.solution2a': String.raw`TRUE. Since \(\overrightarrow{DE} = -\frac{1}{2}\overrightarrow{DA}\), vectors \(\overrightarrow{DE}\) and \(\overrightarrow{DA}\) are collinear. Therefore, points D, E, and A are on the same line.`,
+        'MH.lesson_Y2Geo_homothety1.equation2a': String.raw`\(\overrightarrow{DE} = -\frac{1}{2}\overrightarrow{DA} \Rightarrow \overrightarrow{DE} \parallel \overrightarrow{DA} \Rightarrow D, E, A \text{ collinear}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution2b': String.raw`TRUE. In parallelogram ABCD, \(\overrightarrow{AD} = \overrightarrow{BC}\). Since \(\overrightarrow{AF} = 3\overrightarrow{AB}\), point F lies on line (AB) beyond B. Thus \(\overrightarrow{BF} = 2\overrightarrow{AB}\), which is parallel to \(\overrightarrow{AB}\). Since \(\overrightarrow{AD} \parallel \overrightarrow{BC} \parallel \overrightarrow{AB}\), vectors \(\overrightarrow{AD}\) and \(\overrightarrow{BF}\) are collinear.`,
+        'MH.lesson_Y2Geo_homothety1.equation2b': String.raw`\(\overrightarrow{AD} = \overrightarrow{BC} \parallel \overrightarrow{AB} \parallel \overrightarrow{BF} \Rightarrow \overrightarrow{AD} \parallel \overrightarrow{BF}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution2c': String.raw`FALSE. In parallelogram ABCD, opposite sides are parallel: \(\overrightarrow{AB} \parallel \overrightarrow{DC}\) (or \(\overrightarrow{CD}\)). Therefore, vectors \(\overrightarrow{AB}\) and \(\overrightarrow{CD}\) are collinear (in fact, \(\overrightarrow{AB} = \overrightarrow{DC}\)).`,
+        'MH.lesson_Y2Geo_homothety1.equation2c': String.raw`In parallelogram: \(\overrightarrow{AB} = \overrightarrow{DC} \Rightarrow \overrightarrow{AB} \parallel \overrightarrow{CD}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution2d': String.raw`TRUE. As established, \(\overrightarrow{AB} = \overrightarrow{DC}\). Therefore, \(2\overrightarrow{CD} = -2\overrightarrow{DC} = -2\overrightarrow{AB}\). Since one vector is a scalar multiple of the other (\(-2\)), they are collinear.`,
+        'MH.lesson_Y2Geo_homothety1.equation2d': String.raw`\(2\overrightarrow{CD} = -2\overrightarrow{DC} = -2\overrightarrow{AB} \Rightarrow 2\overrightarrow{CD} \parallel \overrightarrow{AB}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution2e': String.raw`FALSE. We need to check if these vectors are parallel. Let's express them in terms of known vectors. Since E is on line DA, and C and F are fixed, generally these vectors are not collinear unless specific conditions hold (which they don't in a general parallelogram).`,
+        'MH.lesson_Y2Geo_homothety1.solution2f': 'FALSE. Generally, E lies on line DA, C is a vertex of the parallelogram, and F lies on line AB extended. These three points are not collinear in a general parallelogram configuration.',
+        
+        // Definition
+        'MH.lesson_Y2Geo_homothety1.definitionTitle': 'Definition of Homothety',
+        'MH.lesson_Y2Geo_homothety1.definitionText': String.raw`Let I be a point and k a non-zero real number. The transformation that maps every point M in the plane to the unique point M' such that \(\overrightarrow{IM'} = k \overrightarrow{IM}\) is called a homothety with center I and ratio k. It is denoted by h(I, k).`,
+        'MH.lesson_Y2Geo_homothety1.definitionNotation': String.raw`h(I, k): P → P<br>M ↦ M' = h(I, k)(M) such that \(\overrightarrow{IM'} = k \overrightarrow{IM}\)`,
+        'MH.lesson_Y2Geo_homothety1.definitionTerminology': String.raw`M' is called the image of point M by the homothety h(I, k).<br>M is called an antecedent (or preimage) of M' by the homothety h(I, k).`,
+        
+        // Consequences
+        'MH.lesson_Y2Geo_homothety1.consequencesTitle': 'Consequences',
+        'MH.lesson_Y2Geo_homothety1.consequence1': 'A point and its image are aligned with the center of the homothety.',
+        'MH.lesson_Y2Geo_homothety1.consequence2': String.raw`h(I, k)(I) = I. We say that I is a fixed point (invariant point) of h.`,
+        'MH.lesson_Y2Geo_homothety1.consequence3': String.raw`h(I, k)(M) = M' ⇔ \(\overrightarrow{IM'} = k \overrightarrow{IM}\) ⇔ \(\overrightarrow{IM} = \frac{1}{k} \overrightarrow{IM'}\).`,
+        'MH.lesson_Y2Geo_homothety1.consequence4': 'Every point in the plane has a unique antecedent under a homothety.',
+        
+        // Part II: Construction
+        'MH.lesson_Y2Geo_homothety1.part2Title': 'Part II: Construction of the Image of a Point by a Homothety',
+        'MH.lesson_Y2Geo_homothety1.activity3Title': 'Activity 3: Recognizing a Transformation',
+        'MH.lesson_Y2Geo_homothety1.activity3Statement': String.raw`Let A and B be two distinct points in the plane and let I be the barycenter of (A, 1) and (B, 4). Let M be a point in the plane and M' the point defined by \(\overrightarrow{MM'} = \overrightarrow{MA} + 4\overrightarrow{MB}\). Identify the transformation f of the plane that maps point M to point M'.`,
+        'MH.lesson_Y2Geo_homothety1.diagram3Title': 'Figure: Points A, B, I (barycenter) and M, M\'',
+        'MH.lesson_Y2Geo_homothety1.diagram3Instructions': String.raw`I is barycenter of (A,1) and (B,4). M' satisfies \(\overrightarrow{MM'} = \overrightarrow{MA} + 4\overrightarrow{MB}\).`,
+        
+        // Solution for Activity 3
+        'MH.lesson_Y2Geo_homothety1.solution3': 'First, note that I being the barycenter of (A,1) and (B,4) means:',
+        'MH.lesson_Y2Geo_homothety1.equation3a': String.raw`\(\overrightarrow{IA} + 4\overrightarrow{IB} = \overrightarrow{0}\) or \(\overrightarrow{AI} = \frac{4}{5}\overrightarrow{AB}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution3b': String.raw`Now, rewrite \(\overrightarrow{MM'}\):`,
+        'MH.lesson_Y2Geo_homothety1.equation3b': String.raw`\(\overrightarrow{MM'} = \overrightarrow{MA} + 4\overrightarrow{MB}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution3c': 'Using Chasles relation, express in terms of I:',
+        'MH.lesson_Y2Geo_homothety1.equation3c': String.raw`\(\overrightarrow{MA} = \overrightarrow{MI} + \overrightarrow{IA}\)`,
+        'MH.lesson_Y2Geo_homothety1.equation3d': String.raw`\(\overrightarrow{MB} = \overrightarrow{MI} + \overrightarrow{IB}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution3d': 'Thus:',
+        'MH.lesson_Y2Geo_homothety1.equation3e': String.raw`\(\overrightarrow{MM'} = (\overrightarrow{MI} + \overrightarrow{IA}) + 4(\overrightarrow{MI} + \overrightarrow{IB}) = 5\overrightarrow{MI} + (\overrightarrow{IA} + 4\overrightarrow{IB})\)`,
+        'MH.lesson_Y2Geo_homothety1.solution3e': String.raw`But \(\overrightarrow{IA} + 4\overrightarrow{IB} = \overrightarrow{0}\) by definition of I as barycenter. Therefore:`,
+        'MH.lesson_Y2Geo_homothety1.equation3f': String.raw`\(\overrightarrow{MM'} = 5\overrightarrow{MI}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution3f': String.raw`This shows that \(\overrightarrow{IM'} = \overrightarrow{IM} + \overrightarrow{MM'} = \overrightarrow{IM} + 5\overrightarrow{MI} = \overrightarrow{IM} - 5\overrightarrow{IM} = -4\overrightarrow{IM}\).`,
+        'MH.lesson_Y2Geo_homothety1.solution3g': String.raw`Thus \(\overrightarrow{IM'} = -4\overrightarrow{IM}\), which means f is the homothety with center I and ratio -4:`,
+        'MH.lesson_Y2Geo_homothety1.equation3g': String.raw`f = h(I, -4)`,
+        
+        // Part III: Characteristic Property
+        'MH.lesson_Y2Geo_homothety1.part3Title': 'Part III: Characteristic Property of Homothety',
+        'MH.lesson_Y2Geo_homothety1.activity4Title': 'Activity 4: Distance Transformation',
+        'MH.lesson_Y2Geo_homothety1.activity4Statement': String.raw`Let h be a homothety with center I and ratio k, and let M and N be two points in the plane. Denote M' = h(M) and N' = h(N). Express \(\overrightarrow{M'N'}\) in terms of \(\overrightarrow{MN}\).`,
+        'MH.lesson_Y2Geo_homothety1.diagram4Title': 'Figure: Homothety transforming points M and N to M\' and N\'',
+        'MH.lesson_Y2Geo_homothety1.diagram4Instructions': String.raw`Points M and N transformed by homothety h(I,k) to M' and N'.`,
+        
+        // Solution for Activity 4
+        'MH.lesson_Y2Geo_homothety1.solution4': 'By definition of homothety:',
+        'MH.lesson_Y2Geo_homothety1.equation4a': String.raw`\(\overrightarrow{IM'} = k \overrightarrow{IM}\) and \(\overrightarrow{IN'} = k \overrightarrow{IN}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution4b': String.raw`Now compute \(\overrightarrow{M'N'}\):`,
+        'MH.lesson_Y2Geo_homothety1.equation4b': String.raw`\(\overrightarrow{M'N'} = \overrightarrow{M'I} + \overrightarrow{IN'} = -\overrightarrow{IM'} + \overrightarrow{IN'}\)`,
+        'MH.lesson_Y2Geo_homothety1.equation4c': String.raw`\(\overrightarrow{M'N'} = -k \overrightarrow{IM} + k \overrightarrow{IN} = k(\overrightarrow{IN} - \overrightarrow{IM}) = k \overrightarrow{MN}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution4c': String.raw`Therefore, \(\overrightarrow{M'N'} = k \overrightarrow{MN}\).`,
+        
+        // Consequences 2
+        'MH.lesson_Y2Geo_homothety1.consequences2Title': 'Consequences',
+        'MH.lesson_Y2Geo_homothety1.consequences2Text': String.raw`If A' and B' are the respective images of two distinct points A and B under a homothety with ratio k, then:`,
+        'MH.lesson_Y2Geo_homothety1.consequence2a': 'Line (AB) is parallel to line (A\'B\')',
+        'MH.lesson_Y2Geo_homothety1.consequence2b': String.raw`A'B' = |k| × AB (the distance is multiplied by the absolute value of k)`,
+        'MH.lesson_Y2Geo_homothety1.equationConsequences': String.raw`\(\overrightarrow{A'B'} = k \overrightarrow{AB}\) and \(A'B' = |k| \times AB\)`,
+        
+        // Summary
+        'MH.lesson_Y2Geo_homothety1.summaryTitle': 'Comprehensive Summary',
+        'MH.lesson_Y2Geo_homothety1.summary1Title': 'Definition of Homothety',
+        'MH.lesson_Y2Geo_homothety1.summary1Text': String.raw`A homothety with center I and non-zero ratio k is the transformation h(I, k) that maps any point M to the unique point M' such that:`,
+        'MH.lesson_Y2Geo_homothety1.summaryNotation1': String.raw`h(I, k)(M) = M' ⇔ \(\overrightarrow{IM'} = k \overrightarrow{IM}\)`,
+        'MH.lesson_Y2Geo_homothety1.summary2Title': 'Key Properties',
+        'MH.lesson_Y2Geo_homothety1.summary2a': String.raw`The center I is a fixed point: h(I, k)(I) = I`,
+        'MH.lesson_Y2Geo_homothety1.summary2b': 'A point and its image are aligned with the center',
+        'MH.lesson_Y2Geo_homothety1.summary2c': String.raw`For any points M, N with images M', N': \(\overrightarrow{M'N'} = k \overrightarrow{MN}\)`,
+        'MH.lesson_Y2Geo_homothety1.summary2d': String.raw`Lines are transformed to parallel lines: (AB) ∥ (A'B')`,
+        'MH.lesson_Y2Geo_homothety1.summary2e': String.raw`Distances are multiplied by |k|: A'B' = |k| × AB`,
+        'MH.lesson_Y2Geo_homothety1.summary2f': 'Every point has a unique antecedent under a homothety',
+        'MH.lesson_Y2Geo_homothety1.conclusionTitle': 'Conclusion',
+        'MH.lesson_Y2Geo_homothety1.keyConceptsTitle': 'Key Concepts Mastered',
+        'MH.lesson_Y2Geo_homothety1.concept1': 'Definition and notation of homothety',
+        'MH.lesson_Y2Geo_homothety1.concept2': 'Position of a point defined by a scalar multiple of a vector',
+        'MH.lesson_Y2Geo_homothety1.concept3': 'Recognition of homothety from vector expressions',
+        'MH.lesson_Y2Geo_homothety1.concept4': String.raw`Characteristic property: \(\overrightarrow{M'N'} = k \overrightarrow{MN}\)`,
+        'MH.lesson_Y2Geo_homothety1.concept5': String.raw`Parallelism preservation: (AB) ∥ (A'B')`,
+        'MH.lesson_Y2Geo_homothety1.concept6': String.raw`Distance scaling: A'B' = |k| × AB`,
+        'MH.lesson_Y2Geo_homothety1.concept7': 'Fixed point property of the center',
+        'MH.lesson_Y2Geo_homothety1.concept8': 'Construction of images under homothety',
+        'MH.lesson_Y2Geo_homothety1.finalThought': 'Homothety is a fundamental geometric transformation that scales figures while preserving their shape and angles. Understanding homotheties is essential for studying similarity, scaling problems, and many applications in geometry and real-world contexts such as maps, models, and perspective drawings.',
+        
+        // Footer
+        'MH.footer.developer': 'Developer',
+        'MH.footer.version': 'Version',
+        'MH.footer.links': 'Links',
+        'MH.footer.terms': 'Terms of Use',
+        'MH.footer.privacy': 'Privacy Policy'
+    },
+    'ar': {
+        // ترجمات عامة
+        'MH.general.homeTooltip': 'الذهاب إلى الصفحة الرئيسية',
+        'MH.general.install': 'تثبيت التطبيق',
+        'MH.general.installSuccess': 'تم تثبيت Mathematics Hub بنجاح!',
+        'MH.general.enableNotifications': 'تفعيل الإشعارات',
+        'MH.general.notificationEnabled': 'تم تفعيل الإشعارات! ستتلقى التحديثات الآن.',
+        'MH.general.title': 'مركز الرياضيات',
+        'MH.general.theme': 'السمة',
+        'MH.general.language': 'اللغة',
+        'MH.lesson_Y2Geo_homothety1.showSolution': 'إظهار الحل',
+        'MH.lesson_Y2Geo_homothety1.hideSolution': 'إخفاء الحل',
+        'MH.lesson_Y2Geo_homothety1.showConstruction': 'إظهار الإنشاء',
+        
+        // ترجمات درس التماثل
+        'MH.lesson_Y2Geo_homothety1.title': 'التماثل: الجزء 1',
+        'MH.lesson_Y2Geo_homothety1.subtitle': 'الخصائص والتطبيقات',
+        'MH.lesson_Y2Geo_homothety1.introduction': 'المقدمة',
+        'MH.lesson_Y2Geo_homothety1.introText1': 'التماثل هو تحويل هندسي يكبر أو يصغر الأشكال مع الحفاظ على شكلها. إنه مفهوم أساسي في الهندسة مع تطبيقات في التشابه، القياس، والإنشاءات الهندسية.',
+        'MH.lesson_Y2Geo_homothety1.introText2': 'في هذا الدرس، سنستكشف تعريف وخصائص وإنشاءات التماثل من خلال سلسلة من التمارين.',
+        
+        // تمرين التذكر
+        'MH.lesson_Y2Geo_homothety1.exerciseRecallTitle': 'تمرين التذكر',
+        'MH.lesson_Y2Geo_homothety1.exercise1Statement': String.raw`1) في الشكل أدناه، A و B هما نقطتان مختلفتان على المستقيم (xy). ليكن k عددًا حقيقيًا وليكن M النقطة المعرفة بـ \(\overrightarrow{AM} = k \overrightarrow{AB}\). حدد موقع النقطة M على المستقيم (xy) في كل من الحالات التالية:`,
+        'MH.lesson_Y2Geo_homothety1.diagram1Title': 'الشكل: النقطتان A و B على المستقيم (xy)',
+        'MH.lesson_Y2Geo_homothety1.diagram1Instructions': String.raw`النقطتان A و B على المستقيم (xy). M معرفة بـ \(\overrightarrow{AM} = k \overrightarrow{AB}\).`,
+        'MH.lesson_Y2Geo_homothety1.exercise1a': 'أ) k < 0',
+        'MH.lesson_Y2Geo_homothety1.exercise1b': String.raw`ب) k ∈ [0, 1]`,
+        'MH.lesson_Y2Geo_homothety1.exercise1c': 'ج) k > 1',
+        
+        // حلول التمرين 1
+        'MH.lesson_Y2Geo_homothety1.solution1a': String.raw`عندما k < 0، \(\overrightarrow{AM}\) له اتجاه معاكس لـ \(\overrightarrow{AB}\). لذلك، النقطة M تقع على المستقيم (AB) ولكن على الجانب المقابل لـ A بالنسبة إلى B.`,
+        'MH.lesson_Y2Geo_homothety1.equation1a': String.raw`\(\overrightarrow{AM} = k \overrightarrow{AB}\) مع k < 0 ⇒ M على المستقيم (AB) على الجانب المقابل لـ B`,
+        'MH.lesson_Y2Geo_homothety1.solution1b': 'عندما 0 ≤ k ≤ 1، النقطة M تقع على القطعة [AB]. على وجه التحديد:',
+        'MH.lesson_Y2Geo_homothety1.solution1b1': 'إذا k = 0، فإن M = A',
+        'MH.lesson_Y2Geo_homothety1.solution1b2': 'إذا k = 1، فإن M = B',
+        'MH.lesson_Y2Geo_homothety1.solution1b3': 'إذا 0 < k < 1، M بين A و B',
+        'MH.lesson_Y2Geo_homothety1.solution1c': String.raw`عندما k > 1، \(\overrightarrow{AM}\) له نفس اتجاه \(\overrightarrow{AB}\) ولكنه أطول. لذلك، النقطة M تقع على المستقيم (AB) بعد النقطة B.`,
+        'MH.lesson_Y2Geo_homothety1.equation1c': String.raw`\(\overrightarrow{AM} = k \overrightarrow{AB}\) مع k > 1 ⇒ M على المستقيم (AB) بعد B`,
+        
+        // الجزء الأول: التعريف
+        'MH.lesson_Y2Geo_homothety1.part1Title': 'الجزء الأول: تعريف التماثل',
+        'MH.lesson_Y2Geo_homothety1.activity2Title': 'النشاط 2: تحليل متوازي الأضلاع',
+        'MH.lesson_Y2Geo_homothety1.activity2Statement': String.raw`ليكن ABCD متوازي أضلاع و E و F نقطتان بحيث \(\overrightarrow{AF} = 3\overrightarrow{AB}\) و \(\overrightarrow{DE} = -\frac{1}{2}\overrightarrow{DA}\). أجب بصحيح أو خطأ، مبررًا إجابتك.`,
+        'MH.lesson_Y2Geo_homothety1.diagram2Title': 'الشكل: متوازي الأضلاع ABCD مع النقطتين E و F',
+        'MH.lesson_Y2Geo_homothety1.diagram2Instructions': String.raw`متوازي الأضلاع ABCD مع \(\overrightarrow{AF} = 3\overrightarrow{AB}\) و \(\overrightarrow{DE} = -\frac{1}{2}\overrightarrow{DA}\).`,
+        
+        // أسئلة النشاط 2
+        'MH.lesson_Y2Geo_homothety1.question2a': 'أ) النقاط A، D، و E على استقامة واحدة.',
+        'MH.lesson_Y2Geo_homothety1.question2b': String.raw`ب) المتجهان \(\overrightarrow{AD}\) و \(\overrightarrow{BF}\) متوازيان.`,
+        'MH.lesson_Y2Geo_homothety1.question2c': String.raw`ج) المتجهان \(\overrightarrow{AB}\) و \(\overrightarrow{CD}\) غير متوازيين.`,
+        'MH.lesson_Y2Geo_homothety1.question2d': String.raw`د) المتجهان \(2\overrightarrow{CD}\) و \(\overrightarrow{AB}\) متوازيان.`,
+        'MH.lesson_Y2Geo_homothety1.question2e': String.raw`ه) المتجهان \(\overrightarrow{EC}\) و \(\overrightarrow{EF}\) متوازيان.`,
+        'MH.lesson_Y2Geo_homothety1.question2f': 'و) النقاط E، C، و F على استقامة واحدة.',
+        
+        // حلول النشاط 2
+        'MH.lesson_Y2Geo_homothety1.solution2a': String.raw`صحيح. بما أن \(\overrightarrow{DE} = -\frac{1}{2}\overrightarrow{DA}\)، فإن المتجهين \(\overrightarrow{DE}\) و \(\overrightarrow{DA}\) متوازيان. لذلك، النقاط D، E، و A على نفس المستقيم.`,
+        'MH.lesson_Y2Geo_homothety1.equation2a': String.raw`\(\overrightarrow{DE} = -\frac{1}{2}\overrightarrow{DA} \Rightarrow \overrightarrow{DE} \parallel \overrightarrow{DA} \Rightarrow D, E, A \text{ على استقامة واحدة}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution2b': String.raw`صحيح. في متوازي الأضلاع ABCD، \(\overrightarrow{AD} = \overrightarrow{BC}\). بما أن \(\overrightarrow{AF} = 3\overrightarrow{AB}\)، فإن النقطة F تقع على المستقيم (AB) بعد B. إذن \(\overrightarrow{BF} = 2\overrightarrow{AB}\)، وهو موازٍ لـ \(\overrightarrow{AB}\). بما أن \(\overrightarrow{AD} \parallel \overrightarrow{BC} \parallel \overrightarrow{AB}\)، فإن المتجهين \(\overrightarrow{AD}\) و \(\overrightarrow{BF}\) متوازيان.`,
+        'MH.lesson_Y2Geo_homothety1.equation2b': String.raw`\(\overrightarrow{AD} = \overrightarrow{BC} \parallel \overrightarrow{AB} \parallel \overrightarrow{BF} \Rightarrow \overrightarrow{AD} \parallel \overrightarrow{BF}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution2c': String.raw`خطأ. في متوازي الأضلاع ABCD، الأضلاع المتقابلة متوازية: \(\overrightarrow{AB} \parallel \overrightarrow{DC}\) (أو \(\overrightarrow{CD}\)). لذلك، المتجهان \(\overrightarrow{AB}\) و \(\overrightarrow{CD}\) متوازيان (في الواقع، \(\overrightarrow{AB} = \overrightarrow{DC}\)).`,
+        'MH.lesson_Y2Geo_homothety1.equation2c': String.raw`في متوازي الأضلاع: \(\overrightarrow{AB} = \overrightarrow{DC} \Rightarrow \overrightarrow{AB} \parallel \overrightarrow{CD}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution2d': String.raw`صحيح. كما ثبت، \(\overrightarrow{AB} = \overrightarrow{DC}\). لذلك، \(2\overrightarrow{CD} = -2\overrightarrow{DC} = -2\overrightarrow{AB}\). بما أن أحد المتجهين مضاعف عددي للآخر (\(-2\))، فهما متوازيان.`,
+        'MH.lesson_Y2Geo_homothety1.equation2d': String.raw`\(2\overrightarrow{CD} = -2\overrightarrow{DC} = -2\overrightarrow{AB} \Rightarrow 2\overrightarrow{CD} \parallel \overrightarrow{AB}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution2e': String.raw`خطأ. نحتاج إلى التحقق مما إذا كان هذان المتجهان متوازيين. لنعبر عنهما بدلالة متجهات معروفة. بما أن E على المستقيم DA، و C و F ثابتتان، عادةً ما يكون هذان المتجهان غير متوازيين إلا إذا تحققت شروط معينة (وهي غير متحققة في متوازي أضلاع عام).`,
+        'MH.lesson_Y2Geo_homothety1.solution2f': 'خطأ. عادةً، E تقع على المستقيم DA، C هي رأس من متوازي الأضلاع، و F تقع على امتداد المستقيم AB. هذه النقاط الثلاث ليست على استقامة واحدة في تكوين متوازي أضلاع عام.',
+        
+        // التعريف
+        'MH.lesson_Y2Geo_homothety1.definitionTitle': 'تعريف التماثل',
+        'MH.lesson_Y2Geo_homothety1.definitionText': String.raw`لتكن I نقطة و k عددًا حقيقيًا غير صفري. التحويل الذي يربط كل نقطة M في المستوى بالنقطة الوحيدة M' بحيث \(\overrightarrow{IM'} = k \overrightarrow{IM}\) يُسمى تماثلًا بمركز I ونسبة k. يُرمز له بـ h(I, k).`,
+        'MH.lesson_Y2Geo_homothety1.definitionNotation': String.raw`h(I, k): P → P<br>M ↦ M' = h(I, k)(M) بحيث \(\overrightarrow{IM'} = k \overrightarrow{IM}\)`,
+        'MH.lesson_Y2Geo_homothety1.definitionTerminology': String.raw`M' هي صورة النقطة M بالتماثل h(I, k).<br>M هي سابقة (أو صورة عكسية) للنقطة M' بالتماثل h(I, k).`,
+        
+        // النتائج
+        'MH.lesson_Y2Geo_homothety1.consequencesTitle': 'النتائج',
+        'MH.lesson_Y2Geo_homothety1.consequence1': 'النقطة وصورتها على استقامة واحدة مع مركز التماثل.',
+        'MH.lesson_Y2Geo_homothety1.consequence2': String.raw`h(I, k)(I) = I. نقول أن I نقطة ثابتة (نقطة غير متغيرة) لـ h.`,
+        'MH.lesson_Y2Geo_homothety1.consequence3': String.raw`h(I, k)(M) = M' ⇔ \(\overrightarrow{IM'} = k \overrightarrow{IM}\) ⇔ \(\overrightarrow{IM} = \frac{1}{k} \overrightarrow{IM'}\).`,
+        'MH.lesson_Y2Geo_homothety1.consequence4': 'كل نقطة في المستوى لها سابقة وحيدة تحت تماثل.',
+        
+        // الجزء الثاني: الإنشاء
+        'MH.lesson_Y2Geo_homothety1.part2Title': 'الجزء الثاني: إنشاء صورة نقطة بتماثل',
+        'MH.lesson_Y2Geo_homothety1.activity3Title': 'النشاط 3: التعرف على تحويل',
+        'MH.lesson_Y2Geo_homothety1.activity3Statement': String.raw`لتكن A و B نقطتين مختلفتين في المستوى وليكن I مركز ثقل (A, 1) و (B, 4). لتكن M نقطة في المستوى و M' النقطة المعرفة بـ \(\overrightarrow{MM'} = \overrightarrow{MA} + 4\overrightarrow{MB}\). حدد التحويل f للمستوى الذي يربط النقطة M بالنقطة M'.`,
+        'MH.lesson_Y2Geo_homothety1.diagram3Title': 'الشكل: النقاط A، B، I (مركز الثقل) و M، M\'',
+        'MH.lesson_Y2Geo_homothety1.diagram3Instructions': String.raw`I هو مركز ثقل (A,1) و (B,4). M' تحقق \(\overrightarrow{MM'} = \overrightarrow{MA} + 4\overrightarrow{MB}\).`,
+        
+        // حل النشاط 3
+        'MH.lesson_Y2Geo_homothety1.solution3': 'أولاً، لاحظ أن كون I مركز ثقل لـ (A,1) و (B,4) يعني:',
+        'MH.lesson_Y2Geo_homothety1.equation3a': String.raw`\(\overrightarrow{IA} + 4\overrightarrow{IB} = \overrightarrow{0}\) أو \(\overrightarrow{AI} = \frac{4}{5}\overrightarrow{AB}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution3b': String.raw`الآن، أعد كتابة \(\overrightarrow{MM'}\):`,
+        'MH.lesson_Y2Geo_homothety1.equation3b': String.raw`\(\overrightarrow{MM'} = \overrightarrow{MA} + 4\overrightarrow{MB}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution3c': 'باستخدام علاقة شال، عبر بدلالة I:',
+        'MH.lesson_Y2Geo_homothety1.equation3c': String.raw`\(\overrightarrow{MA} = \overrightarrow{MI} + \overrightarrow{IA}\)`,
+        'MH.lesson_Y2Geo_homothety1.equation3d': String.raw`\(\overrightarrow{MB} = \overrightarrow{MI} + \overrightarrow{IB}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution3d': 'إذن:',
+        'MH.lesson_Y2Geo_homothety1.equation3e': String.raw`\(\overrightarrow{MM'} = (\overrightarrow{MI} + \overrightarrow{IA}) + 4(\overrightarrow{MI} + \overrightarrow{IB}) = 5\overrightarrow{MI} + (\overrightarrow{IA} + 4\overrightarrow{IB})\)`,
+        'MH.lesson_Y2Geo_homothety1.solution3e': String.raw`لكن \(\overrightarrow{IA} + 4\overrightarrow{IB} = \overrightarrow{0}\) حسب تعريف I كمركز ثقل. لذلك:`,
+        'MH.lesson_Y2Geo_homothety1.equation3f': String.raw`\(\overrightarrow{MM'} = 5\overrightarrow{MI}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution3f': String.raw`هذا يظهر أن \(\overrightarrow{IM'} = \overrightarrow{IM} + \overrightarrow{MM'} = \overrightarrow{IM} + 5\overrightarrow{MI} = \overrightarrow{IM} - 5\overrightarrow{IM} = -4\overrightarrow{IM}\).`,
+        'MH.lesson_Y2Geo_homothety1.solution3g': String.raw`إذن \(\overrightarrow{IM'} = -4\overrightarrow{IM}\)، مما يعني أن f هو التماثل بمركز I ونسبة -4:`,
+        'MH.lesson_Y2Geo_homothety1.equation3g': String.raw`f = h(I, -4)`,
+        
+        // الجزء الثالث: الخاصية المميزة
+        'MH.lesson_Y2Geo_homothety1.part3Title': 'الجزء الثالث: الخاصية المميزة للتماثل',
+        'MH.lesson_Y2Geo_homothety1.activity4Title': 'النشاط 4: تحويل المسافة',
+        'MH.lesson_Y2Geo_homothety1.activity4Statement': String.raw`ليكن h تماثلًا بمركز I ونسبة k، وليكن M و N نقطتين في المستوى. نرمز M' = h(M) و N' = h(N). عبر عن \(\overrightarrow{M'N'}\) بدلالة \(\overrightarrow{MN}\).`,
+        'MH.lesson_Y2Geo_homothety1.diagram4Title': 'الشكل: التماثل يحول النقطتين M و N إلى M\' و N\'',
+        'MH.lesson_Y2Geo_homothety1.diagram4Instructions': String.raw`النقطتان M و N محولتان بالتماثل h(I,k) إلى M' و N'.`,
+        
+        // حل النشاط 4
+        'MH.lesson_Y2Geo_homothety1.solution4': 'حسب تعريف التماثل:',
+        'MH.lesson_Y2Geo_homothety1.equation4a': String.raw`\(\overrightarrow{IM'} = k \overrightarrow{IM}\) و \(\overrightarrow{IN'} = k \overrightarrow{IN}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution4b': String.raw`الآن احسب \(\overrightarrow{M'N'}\):`,
+        'MH.lesson_Y2Geo_homothety1.equation4b': String.raw`\(\overrightarrow{M'N'} = \overrightarrow{M'I} + \overrightarrow{IN'} = -\overrightarrow{IM'} + \overrightarrow{IN'}\)`,
+        'MH.lesson_Y2Geo_homothety1.equation4c': String.raw`\(\overrightarrow{M'N'} = -k \overrightarrow{IM} + k \overrightarrow{IN} = k(\overrightarrow{IN} - \overrightarrow{IM}) = k \overrightarrow{MN}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution4c': String.raw`لذلك، \(\overrightarrow{M'N'} = k \overrightarrow{MN}\).`,
+        
+        // النتائج 2
+        'MH.lesson_Y2Geo_homothety1.consequences2Title': 'النتائج',
+        'MH.lesson_Y2Geo_homothety1.consequences2Text': String.raw`إذا كانت A' و B' هما الصورتان على التوالي لنقطتين مختلفتين A و B تحت تماثل بنسبة k، فإن:`,
+        'MH.lesson_Y2Geo_homothety1.consequence2a': 'المستقيم (AB) يوازي المستقيم (A\'B\')',
+        'MH.lesson_Y2Geo_homothety1.consequence2b': String.raw`A'B' = |k| × AB (المسافة مضروبة في القيمة المطلقة لـ k)`,
+        'MH.lesson_Y2Geo_homothety1.equationConsequences': String.raw`\(\overrightarrow{A'B'} = k \overrightarrow{AB}\) و \(A'B' = |k| \times AB\)`,
+        
+        // الملخص
+        'MH.lesson_Y2Geo_homothety1.summaryTitle': 'ملخص شامل',
+        'MH.lesson_Y2Geo_homothety1.summary1Title': 'تعريف التماثل',
+        'MH.lesson_Y2Geo_homothety1.summary1Text': String.raw`التماثل بمركز I ونسبة k غير صفرية هو التحويل h(I, k) الذي يربط أي نقطة M بالنقطة الوحيدة M' بحيث:`,
+        'MH.lesson_Y2Geo_homothety1.summaryNotation1': String.raw`h(I, k)(M) = M' ⇔ \(\overrightarrow{IM'} = k \overrightarrow{IM}\)`,
+        'MH.lesson_Y2Geo_homothety1.summary2Title': 'الخصائص الرئيسية',
+        'MH.lesson_Y2Geo_homothety1.summary2a': String.raw`المركز I نقطة ثابتة: h(I, k)(I) = I`,
+        'MH.lesson_Y2Geo_homothety1.summary2b': 'النقطة وصورتها على استقامة واحدة مع المركز',
+        'MH.lesson_Y2Geo_homothety1.summary2c': String.raw`لأي نقطتين M، N مع صورتهما M\'، N\': \(\overrightarrow{M'N'} = k \overrightarrow{MN}\)`,
+        'MH.lesson_Y2Geo_homothety1.summary2d': String.raw`المستقيمات تتحول إلى مستقيمات متوازية: (AB) ∥ (A\'B\')`,
+        'MH.lesson_Y2Geo_homothety1.summary2e': String.raw`المسافات تضرب في |k|: A\'B\' = |k| × AB`,
+        'MH.lesson_Y2Geo_homothety1.summary2f': 'كل نقطة لها سابقة وحيدة تحت تماثل',
+        'MH.lesson_Y2Geo_homothety1.conclusionTitle': 'الخلاصة',
+        'MH.lesson_Y2Geo_homothety1.keyConceptsTitle': 'المفاهيم الرئيسية التي تم إتقانها',
+        'MH.lesson_Y2Geo_homothety1.concept1': 'تعريف ورمز التماثل',
+        'MH.lesson_Y2Geo_homothety1.concept2': 'موقع نقطة معرفة بمضاعف عددي لمتجه',
+        'MH.lesson_Y2Geo_homothety1.concept3': 'التعرف على التماثل من التعبيرات المتجهية',
+        'MH.lesson_Y2Geo_homothety1.concept4': String.raw`الخاصية المميزة: \(\overrightarrow{M'N'} = k \overrightarrow{MN}\)`,
+        'MH.lesson_Y2Geo_homothety1.concept5': String.raw`الحفاظ على التوازي: (AB) ∥ (A'B')`,
+        'MH.lesson_Y2Geo_homothety1.concept6': String.raw`تحجيم المسافة: A'B' = |k| × AB`,
+        'MH.lesson_Y2Geo_homothety1.concept7': 'خاصية النقطة الثابتة للمركز',
+        'MH.lesson_Y2Geo_homothety1.concept8': 'إنشاء الصور تحت التماثل',
+        'MH.lesson_Y2Geo_homothety1.finalThought': 'التماثل هو تحويل هندسي أساسي يكبر أو يصغر الأشكال مع الحفاظ على شكلها وزواياها. فهم التماثلات ضروري لدراسة التشابه، مشاكل القياس، والعديد من التطبيقات في الهندسة والسياقات الواقعية مثل الخرائط، النماذج، والرسومات المنظورية.',
+        
+        // التذييل
+        'MH.footer.developer': 'المطور',
+        'MH.footer.version': 'الإصدار',
+        'MH.footer.links': 'الروابط',
+        'MH.footer.terms': 'شروط الاستخدام',
+        'MH.footer.privacy': 'سياسة الخصوصية'
+    },
+    'fr': {
+        // Traductions générales
+        'MH.general.homeTooltip': 'Aller à l\'accueil',
+        'MH.general.install': 'Installer l\'App',
+        'MH.general.installSuccess': 'Mathematics Hub installé avec succès!',
+        'MH.general.enableNotifications': 'Activer les notifications',
+        'MH.general.notificationEnabled': 'Notifications activées! Vous recevrez maintenant des mises à jour.',
+        'MH.general.title': 'Centre de Mathématiques',
+        'MH.general.theme': 'Thème',
+        'MH.general.language': 'Langue',
+        'MH.lesson_Y2Geo_homothety1.showSolution': 'Afficher la Solution',
+        'MH.lesson_Y2Geo_homothety1.hideSolution': 'Masquer la Solution',
+        'MH.lesson_Y2Geo_homothety1.showConstruction': 'Afficher la Construction',
+        
+        // Traductions de la leçon d'homothétie
+        'MH.lesson_Y2Geo_homothety1.title': 'Homothétie : Partie 1',
+        'MH.lesson_Y2Geo_homothety1.subtitle': 'Propriétés et Applications',
+        'MH.lesson_Y2Geo_homothety1.introduction': 'Introduction',
+        'MH.lesson_Y2Geo_homothety1.introText1': 'L\'homothétie est une transformation géométrique qui agrandit ou réduit les figures tout en préservant leur forme. C\'est un concept fondamental en géométrie avec des applications en similitude, mise à l\'échelle et constructions géométriques.',
+        'MH.lesson_Y2Geo_homothety1.introText2': 'Dans cette leçon, nous explorerons la définition, les propriétés et les constructions liées à l\'homothétie à travers une série d\'exercices.',
+        
+        // Exercice du Rappel
+        'MH.lesson_Y2Geo_homothety1.exerciseRecallTitle': 'Exercice de Rappel',
+        'MH.lesson_Y2Geo_homothety1.exercise1Statement': String.raw`1) Dans la figure ci-dessous, A et B sont deux points distincts de la droite (xy). Soit k un réel et soit M le point défini par \(\overrightarrow{AM} = k \overrightarrow{AB}\). Préciser dans chacun des cas suivants la position du point M sur la droite (xy).`,
+        'MH.lesson_Y2Geo_homothety1.diagram1Title': 'Figure : Points A et B sur la droite (xy)',
+        'MH.lesson_Y2Geo_homothety1.diagram1Instructions': String.raw`Points A et B sur la droite (xy). M est défini par \(\overrightarrow{AM} = k \overrightarrow{AB}\).`,
+        'MH.lesson_Y2Geo_homothety1.exercise1a': 'a) k < 0',
+        'MH.lesson_Y2Geo_homothety1.exercise1b': String.raw`b) k ∈ [0, 1]`,
+        'MH.lesson_Y2Geo_homothety1.exercise1c': 'c) k > 1',
+        
+        // Solutions pour l'Exercice 1
+        'MH.lesson_Y2Geo_homothety1.solution1a': String.raw`Lorsque k < 0, \(\overrightarrow{AM}\) a une direction opposée à \(\overrightarrow{AB}\). Donc, le point M se trouve sur la droite (AB) mais du côté opposé de A par rapport à B.`,
+        'MH.lesson_Y2Geo_homothety1.equation1a': String.raw`\(\overrightarrow{AM} = k \overrightarrow{AB}\) avec k < 0 ⇒ M est sur la droite (AB) du côté opposé à B`,
+        'MH.lesson_Y2Geo_homothety1.solution1b': 'Lorsque 0 ≤ k ≤ 1, le point M se trouve sur le segment [AB]. Plus précisément :',
+        'MH.lesson_Y2Geo_homothety1.solution1b1': 'Si k = 0, alors M = A',
+        'MH.lesson_Y2Geo_homothety1.solution1b2': 'Si k = 1, alors M = B',
+        'MH.lesson_Y2Geo_homothety1.solution1b3': 'Si 0 < k < 1, M est entre A et B',
+        'MH.lesson_Y2Geo_homothety1.solution1c': String.raw`Lorsque k > 1, \(\overrightarrow{AM}\) a la même direction que \(\overrightarrow{AB}\) mais est plus long. Donc, le point M se trouve sur la droite (AB) au-delà du point B.`,
+        'MH.lesson_Y2Geo_homothety1.equation1c': String.raw`\(\overrightarrow{AM} = k \overrightarrow{AB}\) avec k > 1 ⇒ M est sur la droite (AB) au-delà de B`,
+        
+        // Partie I : Définition
+        'MH.lesson_Y2Geo_homothety1.part1Title': 'Partie I : Définition de l\'Homothétie',
+        'MH.lesson_Y2Geo_homothety1.activity2Title': 'Activité 2 : Analyse d\'un Parallélogramme',
+        'MH.lesson_Y2Geo_homothety1.activity2Statement': String.raw`Soient ABCD un parallélogramme et E et F les points tels que \(\overrightarrow{AF} = 3\overrightarrow{AB}\) et \(\overrightarrow{DE} = -\frac{1}{2}\overrightarrow{DA}\). Répondre par vrai ou faux, en justifiant votre réponse.`,
+        'MH.lesson_Y2Geo_homothety1.diagram2Title': 'Figure : Parallélogramme ABCD avec points E et F',
+        'MH.lesson_Y2Geo_homothety1.diagram2Instructions': String.raw`Parallélogramme ABCD avec \(\overrightarrow{AF} = 3\overrightarrow{AB}\) et \(\overrightarrow{DE} = -\frac{1}{2}\overrightarrow{DA}\).`,
+        
+        // Questions pour l'Activité 2
+        'MH.lesson_Y2Geo_homothety1.question2a': 'a) Les points A, D et E sont alignés.',
+        'MH.lesson_Y2Geo_homothety1.question2b': String.raw`b) Les vecteurs \(\overrightarrow{AD}\) et \(\overrightarrow{BF}\) sont colinéaires.`,
+        'MH.lesson_Y2Geo_homothety1.question2c': String.raw`c) Les vecteurs \(\overrightarrow{AB}\) et \(\overrightarrow{CD}\) ne sont pas colinéaires.`,
+        'MH.lesson_Y2Geo_homothety1.question2d': String.raw`d) Les vecteurs \(2\overrightarrow{CD}\) et \(\overrightarrow{AB}\) sont colinéaires.`,
+        'MH.lesson_Y2Geo_homothety1.question2e': String.raw`e) Les vecteurs \(\overrightarrow{EC}\) et \(\overrightarrow{EF}\) sont colinéaires.`,
+        'MH.lesson_Y2Geo_homothety1.question2f': 'f) Les points E, C et F sont alignés.',
+        
+        // Solutions pour l'Activité 2
+        'MH.lesson_Y2Geo_homothety1.solution2a': String.raw`VRAI. Puisque \(\overrightarrow{DE} = -\frac{1}{2}\overrightarrow{DA}\), les vecteurs \(\overrightarrow{DE}\) et \(\overrightarrow{DA}\) sont colinéaires. Donc, les points D, E et A sont alignés.`,
+        'MH.lesson_Y2Geo_homothety1.equation2a': String.raw`\(\overrightarrow{DE} = -\frac{1}{2}\overrightarrow{DA} \Rightarrow \overrightarrow{DE} \parallel \overrightarrow{DA} \Rightarrow D, E, A \text{ alignés}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution2b': String.raw`VRAI. Dans le parallélogramme ABCD, \(\overrightarrow{AD} = \overrightarrow{BC}\). Puisque \(\overrightarrow{AF} = 3\overrightarrow{AB}\), le point F se trouve sur la droite (AB) au-delà de B. Ainsi \(\overrightarrow{BF} = 2\overrightarrow{AB}\), qui est parallèle à \(\overrightarrow{AB}\). Puisque \(\overrightarrow{AD} \parallel \overrightarrow{BC} \parallel \overrightarrow{AB}\), les vecteurs \(\overrightarrow{AD}\) et \(\overrightarrow{BF}\) sont colinéaires.`,
+        'MH.lesson_Y2Geo_homothety1.equation2b': String.raw`\(\overrightarrow{AD} = \overrightarrow{BC} \parallel \overrightarrow{AB} \parallel \overrightarrow{BF} \Rightarrow \overrightarrow{AD} \parallel \overrightarrow{BF}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution2c': String.raw`FAUX. Dans un parallélogramme ABCD, les côtés opposés sont parallèles : \(\overrightarrow{AB} \parallel \overrightarrow{DC}\) (ou \(\overrightarrow{CD}\)). Donc, les vecteurs \(\overrightarrow{AB}\) et \(\overrightarrow{CD}\) sont colinéaires (en fait, \(\overrightarrow{AB} = \overrightarrow{DC}\)).`,
+        'MH.lesson_Y2Geo_homothety1.equation2c': String.raw`Dans un parallélogramme : \(\overrightarrow{AB} = \overrightarrow{DC} \Rightarrow \overrightarrow{AB} \parallel \overrightarrow{CD}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution2d': String.raw`VRAI. Comme établi, \(\overrightarrow{AB} = \overrightarrow{DC}\). Donc, \(2\overrightarrow{CD} = -2\overrightarrow{DC} = -2\overrightarrow{AB}\). Puisqu'un vecteur est un multiple scalaire de l'autre (\(-2\)), ils sont colinéaires.`,
+        'MH.lesson_Y2Geo_homothety1.equation2d': String.raw`\(2\overrightarrow{CD} = -2\overrightarrow{DC} = -2\overrightarrow{AB} \Rightarrow 2\overrightarrow{CD} \parallel \overrightarrow{AB}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution2e': String.raw`FAUX. Il faut vérifier si ces vecteurs sont parallèles. Exprimons-les en fonction de vecteurs connus. Puisque E est sur la droite DA, et que C et F sont fixes, généralement ces vecteurs ne sont pas colinéaires sauf conditions spécifiques (qui ne sont pas remplies dans un parallélogramme général).`,
+        'MH.lesson_Y2Geo_homothety1.solution2f': 'FAUX. Généralement, E se trouve sur la droite DA, C est un sommet du parallélogramme, et F se trouve sur le prolongement de la droite AB. Ces trois points ne sont pas alignés dans une configuration générale de parallélogramme.',
+        
+        // Définition
+        'MH.lesson_Y2Geo_homothety1.definitionTitle': 'Définition de l\'Homothétie',
+        'MH.lesson_Y2Geo_homothety1.definitionText': String.raw`Soit I un point et k un réel non nul. L'application qui à tout point M du plan associe l'unique point M' tel que \(\overrightarrow{IM'} = k \overrightarrow{IM}\) est appelée homothétie de centre I et de rapport k. Elle est notée h(I, k).`,
+        'MH.lesson_Y2Geo_homothety1.definitionNotation': String.raw`h(I, k) : P → P<br>M ↦ M' = h(I, k)(M) telle que \(\overrightarrow{IM'} = k \overrightarrow{IM}\)`,
+        'MH.lesson_Y2Geo_homothety1.definitionTerminology': String.raw`M' est appelé l'image du point M par l'homothétie h(I, k).<br>M est appelé antécédent de M' par l'homothétie h(I, k).`,
+        
+        // Conséquences
+        'MH.lesson_Y2Geo_homothety1.consequencesTitle': 'Conséquences',
+        'MH.lesson_Y2Geo_homothety1.consequence1': 'Un point et son image sont alignés avec le centre de l\'homothétie.',
+        'MH.lesson_Y2Geo_homothety1.consequence2': String.raw`h(I, k)(I) = I. On dit que I est un point invariant par h.`,
+        'MH.lesson_Y2Geo_homothety1.consequence3': String.raw`h(I, k)(M) = M' ⇔ \(\overrightarrow{IM'} = k \overrightarrow{IM}\) ⇔ \(\overrightarrow{IM} = \frac{1}{k} \overrightarrow{IM'}\).`,
+        'MH.lesson_Y2Geo_homothety1.consequence4': 'Tout point du plan admet un unique antécédent par une homothétie.',
+        
+        // Partie II : Construction
+        'MH.lesson_Y2Geo_homothety1.part2Title': 'Partie II : Construction de l\'image d\'un point par une homothétie',
+        'MH.lesson_Y2Geo_homothety1.activity3Title': 'Activité 3 : Reconnaissance d\'une transformation',
+        'MH.lesson_Y2Geo_homothety1.activity3Statement': String.raw`Soient A et B deux points distincts du plan et soit I le barycentre de (A, 1) et (B, 4). Soit M un point du plan et M' le point défini par \(\overrightarrow{MM'} = \overrightarrow{MA} + 4\overrightarrow{MB}\). Reconnaître l'application f du plan qui associe au point M le point M'.`,
+        'MH.lesson_Y2Geo_homothety1.diagram3Title': 'Figure : Points A, B, I (barycentre) et M, M\'',
+        'MH.lesson_Y2Geo_homothety1.diagram3Instructions': String.raw`I est barycentre de (A,1) et (B,4). M' satisfait \(\overrightarrow{MM'} = \overrightarrow{MA} + 4\overrightarrow{MB}\).`,
+        
+        // Solution pour l'Activité 3
+        'MH.lesson_Y2Geo_homothety1.solution3': 'D\'abord, notez que I étant le barycentre de (A,1) et (B,4) signifie :',
+        'MH.lesson_Y2Geo_homothety1.equation3a': String.raw`\(\overrightarrow{IA} + 4\overrightarrow{IB} = \overrightarrow{0}\) ou \(\overrightarrow{AI} = \frac{4}{5}\overrightarrow{AB}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution3b': String.raw`Maintenant, réécrivons \(\overrightarrow{MM'}\) :`,
+        'MH.lesson_Y2Geo_homothety1.equation3b': String.raw`\(\overrightarrow{MM'} = \overrightarrow{MA} + 4\overrightarrow{MB}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution3c': 'En utilisant la relation de Chasles, exprimons en fonction de I :',
+        'MH.lesson_Y2Geo_homothety1.equation3c': String.raw`\(\overrightarrow{MA} = \overrightarrow{MI} + \overrightarrow{IA}\)`,
+        'MH.lesson_Y2Geo_homothety1.equation3d': String.raw`\(\overrightarrow{MB} = \overrightarrow{MI} + \overrightarrow{IB}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution3d': 'Ainsi :',
+        'MH.lesson_Y2Geo_homothety1.equation3e': String.raw`\(\overrightarrow{MM'} = (\overrightarrow{MI} + \overrightarrow{IA}) + 4(\overrightarrow{MI} + \overrightarrow{IB}) = 5\overrightarrow{MI} + (\overrightarrow{IA} + 4\overrightarrow{IB})\)`,
+        'MH.lesson_Y2Geo_homothety1.solution3e': String.raw`Mais \(\overrightarrow{IA} + 4\overrightarrow{IB} = \overrightarrow{0}\) par définition de I comme barycentre. Donc :`,
+        'MH.lesson_Y2Geo_homothety1.equation3f': String.raw`\(\overrightarrow{MM'} = 5\overrightarrow{MI}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution3f': String.raw`Cela montre que \(\overrightarrow{IM'} = \overrightarrow{IM} + \overrightarrow{MM'} = \overrightarrow{IM} + 5\overrightarrow{MI} = \overrightarrow{IM} - 5\overrightarrow{IM} = -4\overrightarrow{IM}\).`,
+        'MH.lesson_Y2Geo_homothety1.solution3g': String.raw`Ainsi \(\overrightarrow{IM'} = -4\overrightarrow{IM}\), ce qui signifie que f est l'homothétie de centre I et de rapport -4 :`,
+        'MH.lesson_Y2Geo_homothety1.equation3g': String.raw`f = h(I, -4)`,
+        
+        // Partie III : Propriété caractéristique
+        'MH.lesson_Y2Geo_homothety1.part3Title': 'Partie III : Propriété caractéristique de l\'homothétie',
+        'MH.lesson_Y2Geo_homothety1.activity4Title': 'Activité 4 : Transformation des distances',
+        'MH.lesson_Y2Geo_homothety1.activity4Statement': String.raw`Soit h une homothétie de centre I et de rapport k et soient M et N deux points du plan. On note M' = h(M) et N' = h(N). Exprimer \(\overrightarrow{M'N'}\) en fonction de \(\overrightarrow{MN}\).`,
+        'MH.lesson_Y2Geo_homothety1.diagram4Title': 'Figure : Homothétie transformant les points M et N en M\' et N\'',
+        'MH.lesson_Y2Geo_homothety1.diagram4Instructions': String.raw`Points M et N transformés par l'homothétie h(I,k) en M' et N'.`,
+        
+        // Solution pour l'Activité 4
+        'MH.lesson_Y2Geo_homothety1.solution4': 'Par définition de l\'homothétie :',
+        'MH.lesson_Y2Geo_homothety1.equation4a': String.raw`\(\overrightarrow{IM'} = k \overrightarrow{IM}\) et \(\overrightarrow{IN'} = k \overrightarrow{IN}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution4b': String.raw`Maintenant calculons \(\overrightarrow{M'N'}\) :`,
+        'MH.lesson_Y2Geo_homothety1.equation4b': String.raw`\(\overrightarrow{M'N'} = \overrightarrow{M'I} + \overrightarrow{IN'} = -\overrightarrow{IM'} + \overrightarrow{IN'}\)`,
+        'MH.lesson_Y2Geo_homothety1.equation4c': String.raw`\(\overrightarrow{M'N'} = -k \overrightarrow{IM} + k \overrightarrow{IN} = k(\overrightarrow{IN} - \overrightarrow{IM}) = k \overrightarrow{MN}\)`,
+        'MH.lesson_Y2Geo_homothety1.solution4c': String.raw`Donc, \(\overrightarrow{M'N'} = k \overrightarrow{MN}\).`,
+        
+        // Conséquences 2
+        'MH.lesson_Y2Geo_homothety1.consequences2Title': 'Conséquences',
+        'MH.lesson_Y2Geo_homothety1.consequences2Text': String.raw`Si A' et B' sont les images respectives de deux points distincts A et B par une homothétie de rapport k alors :`,
+        'MH.lesson_Y2Geo_homothety1.consequence2a': 'La droite (AB) est parallèle à la droite (A\'B\')',
+        'MH.lesson_Y2Geo_homothety1.consequence2b': String.raw`A'B' = |k| × AB (la distance est multipliée par la valeur absolue de k)`,
+        'MH.lesson_Y2Geo_homothety1.equationConsequences': String.raw`\(\overrightarrow{A'B'} = k \overrightarrow{AB}\) et \(A'B' = |k| \times AB\)`,
+        
+        // Résumé
+        'MH.lesson_Y2Geo_homothety1.summaryTitle': 'Résumé Complet',
+        'MH.lesson_Y2Geo_homothety1.summary1Title': 'Définition de l\'Homothétie',
+        'MH.lesson_Y2Geo_homothety1.summary1Text': String.raw`Une homothétie de centre I et de rapport k non nul est la transformation h(I, k) qui à tout point M associe l'unique point M' tel que :`,
+        'MH.lesson_Y2Geo_homothety1.summaryNotation1': String.raw`h(I, k)(M) = M' ⇔ \(\overrightarrow{IM'} = k \overrightarrow{IM}\)`,
+        'MH.lesson_Y2Geo_homothety1.summary2Title': 'Propriétés Clés',
+        'MH.lesson_Y2Geo_homothety1.summary2a': String.raw`Le centre I est un point fixe : h(I, k)(I) = I`,
+        'MH.lesson_Y2Geo_homothety1.summary2b': 'Un point et son image sont alignés avec le centre',
+        'MH.lesson_Y2Geo_homothety1.summary2c': String.raw`Pour tous points M, N d'images M', N' : \(\overrightarrow{M'N'} = k \overrightarrow{MN}\)`,
+        'MH.lesson_Y2Geo_homothety1.summary2d': String.raw`Les droites sont transformées en droites parallèles : (AB) ∥ (A'B')`,
+        'MH.lesson_Y2Geo_homothety1.summary2e': String.raw`Les distances sont multipliées par |k| : A'B' = |k| × AB`,
+        'MH.lesson_Y2Geo_homothety1.summary2f': 'Tout point admet un unique antécédent par une homothétie',
+        'MH.lesson_Y2Geo_homothety1.conclusionTitle': 'Conclusion',
+        'MH.lesson_Y2Geo_homothety1.keyConceptsTitle': 'Concepts Clés Maîtrisés',
+        'MH.lesson_Y2Geo_homothety1.concept1': 'Définition et notation de l\'homothétie',
+        'MH.lesson_Y2Geo_homothety1.concept2': 'Position d\'un point défini par un multiple scalaire d\'un vecteur',
+        'MH.lesson_Y2Geo_homothety1.concept3': 'Reconnaissance d\'une homothétie à partir d\'expressions vectorielles',
+        'MH.lesson_Y2Geo_homothety1.concept4': String.raw`Propriété caractéristique : \(\overrightarrow{M'N'} = k \overrightarrow{MN}\)`,
+        'MH.lesson_Y2Geo_homothety1.concept5': String.raw`Préservation du parallélisme : (AB) ∥ (A'B')`,
+        'MH.lesson_Y2Geo_homothety1.concept6': String.raw`Mise à l'échelle des distances : A'B' = |k| × AB`,
+        'MH.lesson_Y2Geo_homothety1.concept7': 'Propriété du point fixe du centre',
+        'MH.lesson_Y2Geo_homothety1.concept8': 'Construction d\'images par homothétie',
+        'MH.lesson_Y2Geo_homothety1.finalThought': 'L\'homothétie est une transformation géométrique fondamentale qui met à l\'échelle les figures tout en préservant leur forme et leurs angles. Comprendre les homothéties est essentiel pour étudier la similitude, les problèmes de mise à l\'échelle et de nombreuses applications en géométrie et dans des contextes réels tels que les cartes, les modèles et les dessins en perspective.',
+        
+        // Pied de page
+        'MH.footer.developer': 'Développeur',
+        'MH.footer.version': 'Version',
+        'MH.footer.links': 'Liens',
+        'MH.footer.terms': 'Conditions d\'Utilisation',
+        'MH.footer.privacy': 'Politique de Confidentialité'
+    }
+};
+
+        // Merge with existing translations if they exist
+        if (typeof translations !== 'undefined') {
+            Object.keys(homothetyTranslations).forEach(lang => {
+                if (translations[lang]) {
+                    translations[lang] = {...translations[lang], ...homothetyTranslations[lang]};
+                } else {
+                    translations[lang] = homothetyTranslations[lang];
+                }
+            });
+        } else {
+            var translations = homothetyTranslations;
+        }
+
+        // Canvas drawing functions
+        let exercise1State = {negative: false, zeroToOne: false, greaterThanOne: false};
+        let activity2State = {a: false, b: false, c: false, d: false, e: false, f: false};
+        let activity3State = {constructed: false};
+        let activity4State = {constructed: false};
+        
+        function drawExercise1Canvas() {
+            const canvas = document.getElementById('exercise1Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw line (xy)
+            const lineStart = {x: width * 0.1, y: height * 0.5};
+            const lineEnd = {x: width * 0.9, y: height * 0.5};
+            
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(lineStart.x, lineStart.y);
+            ctx.lineTo(lineEnd.x, lineEnd.y);
+            ctx.stroke();
+            
+            // Draw points A and B
+            const A = {x: width * 0.3, y: height * 0.5};
+            const B = {x: width * 0.6, y: height * 0.5};
+            
+            const basePoints = [
+                {coord: A, label: 'A', color: '#E74C3C'},
+                {coord: B, label: 'B', color: '#2ECC71'}
+            ];
+            
+            basePoints.forEach(point => {
+                ctx.fillStyle = point.color;
+                ctx.beginPath();
+                ctx.arc(point.coord.x, point.coord.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(point.label, point.coord.x, point.coord.y - 20);
+            });
+            
+            // Draw vector AB
+            ctx.strokeStyle = '#2ECC71';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(A.x, A.y);
+            ctx.lineTo(B.x, B.y);
+            ctx.stroke();
+            
+            // Draw arrowhead for AB
+            drawArrowhead(ctx, B.x, B.y, Math.atan2(B.y - A.y, B.x - A.x));
+            
+            // Draw M positions based on state
+            if (exercise1State.negative) {
+                // k < 0: M on opposite side of A
+                const M = {x: A.x - 0.5 * (B.x - A.x), y: A.y};
+                
+                ctx.fillStyle = '#8E44AD';
+                ctx.beginPath();
+                ctx.arc(M.x, M.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.fillText('M (k<0)', M.x, M.y - 20);
+                
+                // Draw vector AM
+                ctx.strokeStyle = '#8E44AD';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(A.x, A.y);
+                ctx.lineTo(M.x, M.y);
+                ctx.stroke();
+                drawArrowhead(ctx, M.x, M.y, Math.atan2(M.y - A.y, M.x - A.x));
+            }
+            
+            if (exercise1State.zeroToOne) {
+                // k ∈ [0,1]: M between A and B
+                const M = {x: A.x + 0.3 * (B.x - A.x), y: A.y};
+                
+                ctx.fillStyle = '#E67E22';
+                ctx.beginPath();
+                ctx.arc(M.x, M.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.fillText('M (0≤k≤1)', M.x, M.y + 20);
+                
+                // Draw vector AM
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(A.x, A.y);
+                ctx.lineTo(M.x, M.y);
+                ctx.stroke();
+                drawArrowhead(ctx, M.x, M.y, Math.atan2(M.y - A.y, M.x - A.x));
+            }
+            
+            if (exercise1State.greaterThanOne) {
+                // k > 1: M beyond B
+                const M = {x: B.x + 0.5 * (B.x - A.x), y: B.y};
+                
+                ctx.fillStyle = '#3498DB';
+                ctx.beginPath();
+                ctx.arc(M.x, M.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.fillText('M (k>1)', M.x, M.y - 20);
+                
+                // Draw vector AM
+                ctx.strokeStyle = '#3498DB';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(A.x, A.y);
+                ctx.lineTo(M.x, M.y);
+                ctx.stroke();
+                drawArrowhead(ctx, M.x, M.y, Math.atan2(M.y - A.y, M.x - A.x));
+            }
+            
+            // Label the line
+            ctx.fillStyle = '#666666';
+            ctx.font = '14px Arial';
+            ctx.fillText('(xy)', width * 0.95, height * 0.5 - 10);
+        }
+        
+        function drawActivity2Canvas() {
+            const canvas = document.getElementById('activity2Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define parallelogram vertices
+            const A = {x: width * 0.2, y: height * 0.6};
+            const B = {x: width * 0.6, y: height * 0.6};
+            const C = {x: width * 0.8, y: height * 0.3};
+            const D = {x: width * 0.4, y: height * 0.3};
+            
+            // Draw parallelogram
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(A.x, A.y);
+            ctx.lineTo(B.x, B.y);
+            ctx.lineTo(C.x, C.y);
+            ctx.lineTo(D.x, D.y);
+            ctx.closePath();
+            ctx.stroke();
+            
+            // Draw points A, B, C, D
+            const vertices = [
+                {coord: A, label: 'A', color: '#E74C3C'},
+                {coord: B, label: 'B', color: '#2ECC71'},
+                {coord: C, label: 'C', color: '#3498DB'},
+                {coord: D, label: 'D', color: '#9B59B6'}
+            ];
+            
+            vertices.forEach(point => {
+                ctx.fillStyle = point.color;
+                ctx.beginPath();
+                ctx.arc(point.coord.x, point.coord.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                let offsetY = -20;
+                if (point.label === 'C' || point.label === 'D') offsetY = 20;
+                ctx.fillText(point.label, point.coord.x, point.coord.y + offsetY);
+            });
+            
+            // Draw point F: AF = 3AB
+            const F = {
+                x: A.x + 3 * (B.x - A.x),
+                y: A.y + 3 * (B.y - A.y)
+            };
+            
+            // Draw point E: DE = -1/2 DA
+            const E = {
+                x: D.x - 0.5 * (A.x - D.x),
+                y: D.y - 0.5 * (A.y - D.y)
+            };
+            
+            // Draw points E and F
+            ctx.fillStyle = '#E67E22';
+            ctx.beginPath();
+            ctx.arc(E.x, E.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('E', E.x, E.y - 20);
+            
+            ctx.fillStyle = '#1ABC9C';
+            ctx.beginPath();
+            ctx.arc(F.x, F.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.fillText('F', F.x, F.y + 20);
+            
+            // Draw vectors based on active parts
+            if (activity2State.a) {
+                // Show A, D, E alignment
+                ctx.strokeStyle = '#E74C3C';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(A.x, A.y);
+                ctx.lineTo(D.x, D.y);
+                ctx.lineTo(E.x, E.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            }
+            
+            if (activity2State.b) {
+                // Show AD and BF vectors
+                ctx.strokeStyle = '#E74C3C';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(A.x, A.y);
+                ctx.lineTo(D.x, D.y);
+                ctx.stroke();
+                drawArrowhead(ctx, D.x, D.y, Math.atan2(D.y - A.y, D.x - A.x));
+                
+                ctx.strokeStyle = '#2ECC71';
+                ctx.beginPath();
+                ctx.moveTo(B.x, B.y);
+                ctx.lineTo(F.x, F.y);
+                ctx.stroke();
+                drawArrowhead(ctx, F.x, F.y, Math.atan2(F.y - B.y, F.x - B.x));
+                
+                // Show they are parallel
+                ctx.strokeStyle = '#666666';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                ctx.beginPath();
+                const midAD = {x: (A.x + D.x)/2, y: (A.y + D.y)/2};
+                const midBF = {x: (B.x + F.x)/2, y: (B.y + F.y)/2};
+                ctx.moveTo(midAD.x, midAD.y);
+                ctx.lineTo(midBF.x, midBF.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            }
+            
+            if (activity2State.c || activity2State.d) {
+                // Show AB and CD vectors
+                ctx.strokeStyle = '#E74C3C';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                ctx.beginPath();
+                ctx.moveTo(A.x, A.y);
+                ctx.lineTo(B.x, B.y);
+                ctx.stroke();
+                
+                ctx.strokeStyle = '#3498DB';
+                ctx.beginPath();
+                ctx.moveTo(C.x, C.y);
+                ctx.lineTo(D.x, D.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // For part d: show 2CD
+                if (activity2State.d) {
+                    const doubleCD = {
+                        x: D.x + 2 * (C.x - D.x),
+                        y: D.y + 2 * (C.y - D.y)
+                    };
+                    
+                    ctx.strokeStyle = '#8E44AD';
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash([3, 3]);
+                    ctx.beginPath();
+                    ctx.moveTo(D.x, D.y);
+                    ctx.lineTo(doubleCD.x, doubleCD.y);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                    drawArrowhead(ctx, doubleCD.x, doubleCD.y, Math.atan2(doubleCD.y - D.y, doubleCD.x - D.x));
+                    
+                    ctx.fillStyle = '#8E44AD';
+                    ctx.font = '12px Arial';
+                    ctx.fillText('2CD', (D.x + doubleCD.x)/2, (D.y + doubleCD.y)/2 - 10);
+                }
+            }
+            
+            if (activity2State.e) {
+                // Show EC and EF vectors
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(E.x, E.y);
+                ctx.lineTo(C.x, C.y);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(E.x, E.y);
+                ctx.lineTo(F.x, F.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Show they are not parallel
+                ctx.strokeStyle = '#E74C3C';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([1, 1]);
+                const angle1 = Math.atan2(C.y - E.y, C.x - E.x);
+                const angle2 = Math.atan2(F.y - E.y, F.x - E.x);
+                ctx.fillStyle = '#E74C3C';
+                ctx.font = '12px Arial';
+                ctx.fillText(`∠ = ${Math.abs(angle1 - angle2).toFixed(2)} rad`, E.x + 30, E.y - 30);
+            }
+            
+            if (activity2State.f) {
+                // Show E, C, F alignment check
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.moveTo(E.x, E.y);
+                ctx.lineTo(C.x, C.y);
+                ctx.lineTo(F.x, F.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Show they are not collinear
+                ctx.fillStyle = '#E74C3C';
+                ctx.font = '12px Arial';
+                ctx.fillText('Non alignés', (E.x + C.x + F.x)/3, (E.y + C.y + F.y)/3);
+            }
+        }
+        
+        function drawActivity3Canvas() {
+            const canvas = document.getElementById('activity3Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define points A and B
+            const A = {x: width * 0.2, y: height * 0.7};
+            const B = {x: width * 0.8, y: height * 0.7};
+            
+            // Calculate I as barycenter of (A,1) and (B,4)
+            const I = {
+                x: (1*A.x + 4*B.x) / 5,
+                y: (1*A.y + 4*B.y) / 5
+            };
+            
+            // Define point M
+            const M = {x: width * 0.4, y: height * 0.3};
+            
+            // Draw points A, B, I, M
+            const points = [
+                {coord: A, label: 'A', color: '#E74C3C'},
+                {coord: B, label: 'B', color: '#2ECC71'},
+                {coord: I, label: 'I', color: '#3498DB'},
+                {coord: M, label: 'M', color: '#E67E22'}
+            ];
+            
+            points.forEach(point => {
+                ctx.fillStyle = point.color;
+                ctx.beginPath();
+                ctx.arc(point.coord.x, point.coord.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                let offsetY = -20;
+                if (point.label === 'A' || point.label === 'B') offsetY = 20;
+                ctx.fillText(point.label, point.coord.x, point.coord.y + offsetY);
+            });
+            
+            // Draw M' if constructed
+            if (activity3State.constructed) {
+                // Calculate M': MM' = MA + 4MB
+                // But we know this simplifies to IM' = -4IM
+                const Mprime = {
+                    x: I.x - 4 * (M.x - I.x),
+                    y: I.y - 4 * (M.y - I.y)
+                };
+                
+                ctx.fillStyle = '#8E44AD';
+                ctx.beginPath();
+                ctx.arc(Mprime.x, Mprime.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('M\'', Mprime.x, Mprime.y - 20);
+                
+                // Draw vectors
+                // Draw IM and IM'
+                ctx.strokeStyle = '#3498DB';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(M.x, M.y);
+                ctx.stroke();
+                drawArrowhead(ctx, M.x, M.y, Math.atan2(M.y - I.y, M.x - I.x));
+                
+                ctx.strokeStyle = '#8E44AD';
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(Mprime.x, Mprime.y);
+                ctx.stroke();
+                drawArrowhead(ctx, Mprime.x, Mprime.y, Math.atan2(Mprime.y - I.y, Mprime.x - I.x));
+                
+                // Draw the homothety relationship
+                ctx.fillStyle = '#666666';
+                ctx.font = '14px Arial';
+                ctx.fillText('IM\' = -4 IM', (I.x + Mprime.x)/2, (I.y + Mprime.y)/2 - 15);
+                
+                // Show that I is the center
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(M.x, M.y);
+                ctx.lineTo(Mprime.x, Mprime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Label the transformation
+                ctx.fillStyle = '#E74C3C';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('h(I, -4)', width/2, height * 0.9);
+            }
+        }
+        
+        function drawActivity4Canvas() {
+            const canvas = document.getElementById('activity4Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define center I
+            const I = {x: width * 0.5, y: height * 0.5};
+            
+            // Define points M and N
+            const M = {x: width * 0.3, y: height * 0.3};
+            const N = {x: width * 0.7, y: height * 0.7};
+            
+            // Define ratio k (use k = 1.5 for visualization)
+            const k = 1.5;
+            
+            // Calculate images M' and N'
+            const Mprime = {
+                x: I.x + k * (M.x - I.x),
+                y: I.y + k * (M.y - I.y)
+            };
+            
+            const Nprime = {
+                x: I.x + k * (N.x - I.x),
+                y: I.y + k * (N.y - I.y)
+            };
+            
+            // Draw center I
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(I.x, I.y, 8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('I', I.x, I.y - 25);
+            
+            // Draw original points
+            ctx.fillStyle = '#2ECC71';
+            ctx.beginPath();
+            ctx.arc(M.x, M.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('M', M.x, M.y - 20);
+            
+            ctx.fillStyle = '#3498DB';
+            ctx.beginPath();
+            ctx.arc(N.x, N.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('N', N.x, N.y + 20);
+            
+            // Draw images if constructed
+            if (activity4State.constructed) {
+                ctx.fillStyle = '#8E44AD';
+                ctx.beginPath();
+                ctx.arc(Mprime.x, Mprime.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('M\'', Mprime.x, Mprime.y - 20);
+                
+                ctx.fillStyle = '#1ABC9C';
+                ctx.beginPath();
+                ctx.arc(Nprime.x, Nprime.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('N\'', Nprime.x, Nprime.y + 20);
+                
+                // Draw lines from center to points
+                ctx.strokeStyle = '#666666';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                
+                // IM and IM'
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(M.x, M.y);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(Mprime.x, Mprime.y);
+                ctx.stroke();
+                
+                // IN and IN'
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(N.x, N.y);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(Nprime.x, Nprime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw original segment MN
+                ctx.strokeStyle = '#2ECC71';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(M.x, M.y);
+                ctx.lineTo(N.x, N.y);
+                ctx.stroke();
+                
+                // Draw image segment M'N'
+                ctx.strokeStyle = '#8E44AD';
+                ctx.beginPath();
+                ctx.moveTo(Mprime.x, Mprime.y);
+                ctx.lineTo(Nprime.x, Nprime.y);
+                ctx.stroke();
+                
+                // Show they are parallel
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                const midMN = {x: (M.x + N.x)/2, y: (M.y + N.y)/2};
+                const midMprimeNprime = {x: (Mprime.x + Nprime.x)/2, y: (Mprime.y + Nprime.y)/2};
+                ctx.beginPath();
+                ctx.moveTo(midMN.x, midMN.y);
+                ctx.lineTo(midMprimeNprime.x, midMprimeNprime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Show the ratio
+                ctx.fillStyle = '#666666';
+                ctx.font = '14px Arial';
+                ctx.fillText(`M'N' = ${k} MN`, (midMprimeNprime.x + midMN.x)/2, (midMprimeNprime.y + midMN.y)/2 - 10);
+                
+                // Show the homothety notation
+                ctx.fillStyle = '#E74C3C';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText(`h(I, ${k})`, width/2, height * 0.1);
+            }
+        }
+        
+        // Helper function to draw arrowhead
+        function drawArrowhead(ctx, x, y, angle) {
+            const headlen = 10;
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angle);
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(-headlen, -headlen/2);
+            ctx.moveTo(0, 0);
+            ctx.lineTo(-headlen, headlen/2);
+            ctx.stroke();
+            ctx.restore();
+        }
+        
+        // Construction functions
+        function showExercise1Case(caseType) {
+            switch(caseType) {
+                case 'negative':
+                    exercise1State.negative = true;
+                    break;
+                case 'zeroToOne':
+                    exercise1State.zeroToOne = true;
+                    break;
+                case 'greaterThanOne':
+                    exercise1State.greaterThanOne = true;
+                    break;
+            }
+            drawExercise1Canvas();
+        }
+        
+        function showActivity2Part(part) {
+            activity2State[part] = true;
+            drawActivity2Canvas();
+        }
+        
+        function constructActivity3() {
+            activity3State.constructed = true;
+            drawActivity3Canvas();
+        }
+        
+        function constructActivity4() {
+            activity4State.constructed = true;
+            drawActivity4Canvas();
+        }
+        
+        // Solution toggle function
+        function toggleSolution(problemNumber) {
+            const solution = document.getElementById(`solution${problemNumber}`);
+            const button = solution.previousElementSibling;
+            const currentLang = MHThemeManager ? MHThemeManager.getCurrentLanguage() : 'en';
+            
+            if (solution.style.display === 'block' || solution.style.display === '') {
+                solution.style.display = 'none';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_homothety1.showSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_homothety1.showSolution'];
+                } else {
+                    button.textContent = 'Show Solution';
+                }
+            } else {
+                solution.style.display = 'block';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_homothety1.hideSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_homothety1.hideSolution'];
+                } else {
+                    button.textContent = 'Hide Solution';
+                }
+                
+                // Re-render KaTeX for newly visible equations
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(solution, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\(', right: '\\)', display: false},
+                            {left: '\\[', right: '\\]', display: true}
+                        ],
+                        throwOnError: false
+                    });
+                }
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize KaTeX auto-render
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+
+            // Draw initial canvases
+            drawExercise1Canvas();
+            drawActivity2Canvas();
+            drawActivity3Canvas();
+            drawActivity4Canvas();
+
+            // Initialize solutions as hidden and set button text
+            const currentLang = MHThemeManager ? MHThemeManager.getCurrentLanguage() : 'en';
+            for (let i = 1; i <= 11; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                const button = solution ? solution.previousElementSibling : null;
+                
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+                
+                // Set initial button text
+                if (button && translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_homothety1.showSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_homothety1.showSolution'];
+                }
+            }
+            
+            // Redraw canvases when theme changes
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    setTimeout(() => {
+                        drawExercise1Canvas();
+                        drawActivity2Canvas();
+                        drawActivity3Canvas();
+                        drawActivity4Canvas();
+                    }, 100);
+                });
+            }
+        });
+    </script>
+
+<!-- Add the service worker registration script -->
+<script>
+    // Register service worker with better error handling
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch(function(error) {
+                console.log('Service Worker registration failed:', error);
+            });
+        });
+    }
+</script>
+
+<!-- Add noscript fallback -->
+<noscript>
+    <style>
+        .MH-header-controls { display: none; }
+        .MH-solution { display: block; }
+        .MH-canvas { border: 2px solid #ccc; background-color: #f9f9f9; }
+    </style>
+    <div class="MH-warning">
+        JavaScript is recommended for the full experience, but content is still accessible.
+    </div>
+</noscript>
+</body>
+</html>

@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Geometry - Image of a Circle and Conservation of Contact</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#4A90E2" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#8E44AD" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#4A90E2">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    
+    <style>
+        /* Page-specific color palette - Blue + Purple Theme */
+        :root {
+            --primary: #4A90E2;        /* Cornflower Blue */
+            --primary-light: #7BAAF7;  /* Light Blue */
+            --primary-dark: #357ABD;   /* Darker Blue */
+            --secondary: #8E44AD;      /* Dark Purple */
+            --secondary-light: #AF7AC5; /* Light Purple */
+            --secondary-dark: #6C3483;  /* Darker Purple */
+            --accent: #E67E22;
+            --warning: #E74C3C;
+            --info: #2ECC71;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #FFFFFF;
+            --surface: #F8F9FA;
+            --border: #E9ECEF;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        [data-theme="dark"] {
+            --primary: #357ABD;
+            --primary-light: #4A90E2;
+            --primary-dark: #2C3E50;
+            --secondary: #6C3483;
+            --secondary-light: #8E44AD;
+            --secondary-dark: #4A235A;
+            --accent: #D35400;
+            --warning: #C0392B;
+            --info: #27AE60;
+            --text: #FFFFFF;
+            --text-light: #CCCCCC;
+            --background: #121212;
+            --surface: #1E1E1E;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        /* KaTeX styling */
+        .katex { 
+            font-size: 1.1em; 
+        }
+        
+        .katex-display { 
+            margin: 1em 0; 
+            text-align: center;
+        }
+        
+        .katex-display > .katex { 
+            display: inline-block;
+            text-align: center;
+        }
+
+        /* Equation styling */
+        .MH-equation {
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            margin: 0.5em 0;
+            padding: 0;
+            display: inline-block;
+            direction: ltr !important;
+            unicode-bidi: isolate;
+        }
+        
+        [dir="rtl"] .MH-equation {
+            text-align: left;
+            unicode-bidi: plaintext;
+        }
+
+        /* Canvas container styling */
+        .MH-canvas-container {
+            margin: 2em 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .MH-canvas {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background-color: var(--surface);
+            max-width: 100%;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+
+        .MH-canvas-title {
+            font-weight: bold;
+            margin-bottom: 0.5em;
+            color: var(--primary);
+        }
+
+        .MH-canvas-instructions {
+            font-size: 0.9em;
+            color: var(--text-light);
+            margin-top: 0.5em;
+            font-style: italic;
+        }
+
+        /* Geometry specific styling */
+        .MH-construction-step {
+            margin: 1.5em 0;
+            padding: 1em;
+            background-color: var(--surface);
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+        }
+
+        .MH-construction-step h4 {
+            margin-top: 0;
+            color: var(--primary-dark);
+        }
+
+        .MH-vector-notation {
+            font-family: 'KaTeX_Math', 'Cambria Math', serif;
+            font-style: italic;
+            color: var(--secondary);
+        }
+
+        .MH-point-label {
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .MH-transformation-notation {
+            background-color: rgba(78, 144, 226, 0.1);
+            padding: 0.5em;
+            border-radius: 4px;
+            font-family: 'KaTeX_Math', 'Cambria Math', serif;
+            margin: 0.5em 0;
+        }
+
+        /* Circle and tangent styling */
+        .MH-circle {
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .MH-circle-original {
+            stroke: var(--primary);
+        }
+
+        .MH-circle-image {
+            stroke: var(--secondary);
+        }
+
+        .MH-tangent-line {
+            stroke: var(--accent);
+            stroke-width: 2;
+        }
+
+        .MH-tangent-point {
+            fill: var(--warning);
+        }
+
+        .MH-vector {
+            stroke: var(--info);
+            stroke-width: 3;
+            stroke-dasharray: none;
+        }
+
+        /* Responsive canvas */
+        @media (max-width: 768px) {
+            .MH-canvas {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                    <!-- Notification Button -->
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+                        <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Geo_transl4a.title">Translation: Part 4</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y2Geo_transl4a.subtitle">Image of a Circle and Conservation of Contact</h2>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_transl4a.introduction">Introduction</h2>
+            <p data-i18n="MH.lesson_Y2Geo_transl4a.introText1">In this lesson, we will study how translations affect circles and tangency. We will prove that the image of a circle under translation is another congruent circle, and that translations preserve tangency between circles and lines.</p>
+            <p data-i18n="MH.lesson_Y2Geo_transl4a.introText2">These properties are essential for understanding how geometric figures behave under transformations and have important applications in problem-solving.</p>
+        </section>
+
+        <!-- Part X: Image of a Circle -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_transl4a.partXTitle">Part X: Image of a Circle under Translation</h2>
+            
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_transl4a.partXIntro">A translation transforms a circle into another circle with the same radius. The center of the image circle is the image of the original center.</p>
+            </div>
+
+            <!-- Activity 1 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl4a.activity1Title">Activity 1: Image of a Circle</h3>
+                
+                <!-- Diagram 1: Circle and its image under translation -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_transl4a.diagram1Title">Figure: Circle C and its image C' under translation t</div>
+                    <canvas id="activity1Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_transl4a.diagram1Instructions">Circle C with center O is translated by vector u to circle C' with center O'. Points M and N' demonstrate the correspondence between points on the circles.</div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl4a.step1aTitle">1) Let t be a translation of vector \(\vec{u}\), C a circle with center O and radius R, and O' = t(O) the image of O under t. Let C' be the circle with center O' and radius R.</h4>
+                    <p data-i18n="MH.lesson_Y2Geo_transl4a.step1aQuestion">Let M be a point on C and M' = t(M). Show that M' belongs to C'.</p>
+                    <button class="MH-solution-btn" onclick="constructActivity1Part1()" data-i18n="MH.lesson_Y2Geo_transl4a.constructButton">Construct</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl4a.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                    <div class="MH-solution" id="solution1">
+                        <p data-i18n="MH.lesson_Y2Geo_transl4a.step1aSolution">Since M is on circle C, we have:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl4a.equation1a">\(OM = R\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl4a.step1aSolution2">By definition of translation t:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl4a.equation1b">\(\overrightarrow{OO'} = \vec{u}\) and \(\overrightarrow{MM'} = \vec{u}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl4a.step1aSolution3">Therefore:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl4a.equation1c">\(\overrightarrow{O'M'} = \overrightarrow{O'O} + \overrightarrow{OM} + \overrightarrow{MM'}\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl4a.equation1d">\(\overrightarrow{O'M'} = -\vec{u} + \overrightarrow{OM} + \vec{u} = \overrightarrow{OM}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl4a.step1aSolution4">Thus \(O'M' = OM = R\), which means M' is on circle C'.</p>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl4a.step1bTitle">2) Let N' be a point on C' and N the antecedent of N' by t (i.e., N = t⁻¹(N')). Show that N belongs to C.</h4>
+                    <button class="MH-solution-btn" onclick="constructActivity1Part2()" data-i18n="MH.lesson_Y2Geo_transl4a.constructButton">Construct</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl4a.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                    <div class="MH-solution" id="solution2">
+                        <p data-i18n="MH.lesson_Y2Geo_transl4a.step1bSolution">Since N' is on circle C', we have:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl4a.equation1e">\(O'N' = R\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl4a.step1bSolution2">By definition of translation, N = t⁻¹(N') means that t(N) = N', so:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl4a.equation1f">\(\overrightarrow{NN'} = \vec{u}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl4a.step1bSolution3">Also, since O' = t(O), we have \(\overrightarrow{OO'} = \vec{u}\). Therefore:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl4a.equation1g">\(\overrightarrow{ON} = \overrightarrow{OO'} + \overrightarrow{O'N'}\)? Wait, let's calculate carefully:</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl4a.equation1h">\(\overrightarrow{ON} = \overrightarrow{OO'} + \overrightarrow{O'N'} + \overrightarrow{N'N}\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl4a.equation1i">\(\overrightarrow{ON} = \vec{u} + \overrightarrow{O'N'} - \vec{u} = \overrightarrow{O'N'}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl4a.step1bSolution4">Thus \(ON = O'N' = R\), which means N is on circle C.</p>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl4a.step1cTitle">3) What can we conclude?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl4a.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                    <div class="MH-solution" id="solution3">
+                        <p data-i18n="MH.lesson_Y2Geo_transl4a.step1cSolution">From parts (1) and (2), we can conclude:</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Geo_transl4a.conclusion1a">Every point on circle C has its image on circle C'</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl4a.conclusion1b">Every point on circle C' has its antecedent on circle C</li>
+                        </ul>
+                        <p data-i18n="MH.lesson_Y2Geo_transl4a.step1cSolution2">This establishes a bijection between the points of C and C' under the translation t. Therefore, the image of circle C under translation t is exactly circle C'.</p>
+                        <div class="MH-transformation-notation" data-i18n="MH.lesson_Y2Geo_transl4a.notation1">
+                            If C is a circle with center O and radius R, and t is a translation of vector \(\vec{u}\), then:<br>
+                            \(t(C) = C'\) where C' is the circle with center \(O' = t(O)\) and radius R.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part XI: Conservation of Contact -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_transl4a.partXITitle">Part XI: Conservation of Contact under Translation</h2>
+            
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_transl4a.partXIIntro">Translations preserve tangency: if a line is tangent to a circle, then the image of the line under translation is tangent to the image of the circle.</p>
+            </div>
+
+            <!-- Activity 2 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl4a.activity2Title">Activity 2: Conservation of Tangency</h3>
+                
+                <!-- Diagram 2: Tangent line and its image -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_transl4a.diagram2Title">Figure: Circle C with tangent line Δ at point M, and their images under translation</div>
+                    <canvas id="activity2Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_transl4a.diagram2Instructions">Circle C with tangent line Δ at point M. Under translation t, they become circle C' and line Δ' tangent at point M'.</div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl4a.step2Title">Let C be a circle and Δ a line tangent to C at point M. Let t be a translation. We denote by C', Δ', and M' the respective images of C, Δ, and M under t.</h4>
+                    <p data-i18n="MH.lesson_Y2Geo_transl4a.step2Question">Show that Δ' is tangent to C' at point M'.</p>
+                    <button class="MH-solution-btn" onclick="constructActivity2()" data-i18n="MH.lesson_Y2Geo_transl4a.constructButton">Construct</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl4a.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+                    <div class="MH-solution" id="solution4">
+                        <p data-i18n="MH.lesson_Y2Geo_transl4a.step2Solution">We need to show two things:</p>
+                        <ol>
+                            <li data-i18n="MH.lesson_Y2Geo_transl4a.step2Sol1">M' is on both C' and Δ'</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl4a.step2Sol2">Δ' is tangent to C' at M'</li>
+                        </ol>
+                        
+                        <p data-i18n="MH.lesson_Y2Geo_transl4a.step2Solution2">1) Since M is on C, by Activity 1, M' = t(M) is on C'. Also, since M is on Δ, and Δ' = t(Δ) is the image of Δ under translation, M' is on Δ'.</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Geo_transl4a.step2Solution3">2) To show Δ' is tangent to C' at M', we need to show that Δ' is perpendicular to the radius O'M' at M'.</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Geo_transl4a.step2Solution4">Since Δ is tangent to C at M, Δ is perpendicular to radius OM at M.</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Geo_transl4a.step2Solution5">Let \(\vec{v}\) be a direction vector of Δ. Since Δ ⟂ OM at M, we have:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl4a.equation2a">\(\vec{v} \cdot \overrightarrow{OM} = 0\) (dot product)</div>
+                        
+                        <p data-i18n="MH.lesson_Y2Geo_transl4a.step2Solution6">Under translation t with vector \(\vec{u}\):</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl4a.equation2b">\(\overrightarrow{O'M'} = \overrightarrow{OM}\) (as shown in Activity 1)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl4a.equation2c">\(\vec{v}' = \vec{v}\) (translations preserve direction vectors)</div>
+                        
+                        <p data-i18n="MH.lesson_Y2Geo_transl4a.step2Solution7">Therefore:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl4a.equation2d">\(\vec{v}' \cdot \overrightarrow{O'M'} = \vec{v} \cdot \overrightarrow{OM} = 0\)</div>
+                        
+                        <p data-i18n="MH.lesson_Y2Geo_transl4a.step2Solution8">This shows that Δ' is perpendicular to O'M' at M', so Δ' is tangent to C' at M'.</p>
+                        
+                        <div class="MH-important">
+                            <p data-i18n="MH.lesson_Y2Geo_transl4a.step2Conclusion">Thus, translations preserve tangency between circles and lines.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_transl4a.summaryTitle">Comprehensive Summary</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl4a.summary1Title">Image of a Circle under Translation</h3>
+                <p data-i18n="MH.lesson_Y2Geo_transl4a.summary1Text">Let t be a translation of vector \(\vec{u}\), and let C be a circle with center O and radius R. The image of C under t is:</p>
+                <div class="MH-transformation-notation" data-i18n="MH.lesson_Y2Geo_transl4a.summaryNotation1">
+                    \(t(C) = C'\) where C' is the circle with center \(O' = t(O)\) and radius R.
+                </div>
+                <p data-i18n="MH.lesson_Y2Geo_transl4a.summary1Text2">The translation establishes a bijection between the points of C and C'. For any point M on C, M' = t(M) is on C', and for any point N' on C', N = t⁻¹(N') is on C.</p>
+            </div>
+
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl4a.summary2Title">Conservation of Tangency</h3>
+                <p data-i18n="MH.lesson_Y2Geo_transl4a.summary2Text">Translations preserve tangency between circles and lines. If a line Δ is tangent to a circle C at point M, then under any translation t:</p>
+                <div class="MH-transformation-notation" data-i18n="MH.lesson_Y2Geo_transl4a.summaryNotation2">
+                    The image line Δ' = t(Δ) is tangent to the image circle C' = t(C) at point M' = t(M).
+                </div>
+                <p data-i18n="MH.lesson_Y2Geo_transl4a.summary2Text2">This property follows from the fact that translations preserve perpendicularity and distances.</p>
+            </div>
+
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl4a.summary3Title">General Consequences</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Geo_transl4a.summary3Item1">Translations preserve the shape and size of circles (they are isometric transformations)</li>
+                    <li data-i18n="MH.lesson_Y2Geo_transl4a.summary3Item2">The image of a circle under translation is a congruent circle</li>
+                    <li data-i18n="MH.lesson_Y2Geo_transl4a.summary3Item3">Tangency relations are preserved under translations</li>
+                    <li data-i18n="MH.lesson_Y2Geo_transl4a.summary3Item4">These properties make translations useful in geometric constructions and proofs</li>
+                </ul>
+            </div>
+            
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl4a.conclusionTitle">Conclusion</h3>
+                <div class="MH-important">
+                    <h3 data-i18n="MH.lesson_Y2Geo_transl4a.keyConceptsTitle">Key Concepts Mastered</h3>
+                    <ul>
+                        <li data-i18n="MH.lesson_Y2Geo_transl4a.concept1">Image of a circle under translation is a congruent circle</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl4a.concept2">Proof that translation preserves circle properties</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl4a.concept3">Conservation of tangency under translations</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl4a.concept4">Vector methods for proving geometric properties</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl4a.concept5">Bijection between points of original and translated circles</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl4a.concept6">Applications of translation properties to geometric problems</li>
+                    </ul>
+                </div>
+                <p data-i18n="MH.lesson_Y2Geo_transl4a.finalThought">The properties studied in this lesson demonstrate that translations are rigid motions that preserve all metric properties of geometric figures. Understanding how circles and tangency behave under translations is essential for solving complex geometric problems and for applications in fields such as computer graphics, engineering, and architecture.</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+    
+    <script>
+        // GEOMETRY LESSON TRANSLATIONS
+        const geometryTranslations4 = {
+            'en': {
+                // General translations
+                'MH.general.homeTooltip': 'Go to Homepage',
+                'MH.general.install': 'Install App',
+                'MH.general.installSuccess': 'Mathematics Hub installed successfully!',
+                'MH.general.enableNotifications': 'Enable Notifications',
+                'MH.general.notificationEnabled': 'Notifications enabled! You will now receive updates.',
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Theme',
+                'MH.general.language': 'Language',
+                'MH.lesson_Y2Geo_transl4a.showSolution': 'Show Solution',
+                'MH.lesson_Y2Geo_transl4a.hideSolution': 'Hide Solution',
+                
+                // Geometry lesson specific translations
+                'MH.lesson_Y2Geo_transl4a.title': 'Translation: Part 4',
+                'MH.lesson_Y2Geo_transl4a.subtitle': 'Image of a Circle and Conservation of Contact',
+                'MH.lesson_Y2Geo_transl4a.introduction': 'Introduction',
+                'MH.lesson_Y2Geo_transl4a.introText1': 'In this lesson, we will study how translations affect circles and tangency. We will prove that the image of a circle under translation is another congruent circle, and that translations preserve tangency between circles and lines.',
+                'MH.lesson_Y2Geo_transl4a.introText2': 'These properties are essential for understanding how geometric figures behave under transformations and have important applications in problem-solving.',
+                
+                // Part X
+                'MH.lesson_Y2Geo_transl4a.partXTitle': 'Part X: Image of a Circle under Translation',
+                'MH.lesson_Y2Geo_transl4a.partXIntro': 'A translation transforms a circle into another circle with the same radius. The center of the image circle is the image of the original center.',
+                
+                // Activity 1
+                'MH.lesson_Y2Geo_transl4a.activity1Title': 'Activity 1: Image of a Circle',
+                'MH.lesson_Y2Geo_transl4a.diagram1Title': 'Figure: Circle C and its image C\' under translation t',
+                'MH.lesson_Y2Geo_transl4a.diagram1Instructions': 'Circle C with center O is translated by vector u to circle C\' with center O\'. Points M and N\' demonstrate the correspondence between points on the circles.',
+                'MH.lesson_Y2Geo_transl4a.step1aTitle': String.raw`1) Let t be a translation of vector \(\vec{u}\), C a circle with center O and radius R, and O' = t(O) the image of O under t. Let C' be the circle with center O' and radius R.`,
+                'MH.lesson_Y2Geo_transl4a.step1aQuestion': 'Let M be a point on C and M\' = t(M). Show that M\' belongs to C\'.',
+                'MH.lesson_Y2Geo_transl4a.step1aSolution': 'Since M is on circle C, we have:',
+                'MH.lesson_Y2Geo_transl4a.equation1a': String.raw`\(OM = R\)`,
+                'MH.lesson_Y2Geo_transl4a.step1aSolution2': 'By definition of translation t:',
+                'MH.lesson_Y2Geo_transl4a.equation1b': String.raw`\(\overrightarrow{OO'} = \vec{u}\) and \(\overrightarrow{MM'} = \vec{u}\)`,
+                'MH.lesson_Y2Geo_transl4a.step1aSolution3': 'Therefore:',
+                'MH.lesson_Y2Geo_transl4a.equation1c': String.raw`\(\overrightarrow{O'M'} = \overrightarrow{O'O} + \overrightarrow{OM} + \overrightarrow{MM'}\)`,
+                'MH.lesson_Y2Geo_transl4a.equation1d': String.raw`\(\overrightarrow{O'M'} = -\vec{u} + \overrightarrow{OM} + \vec{u} = \overrightarrow{OM}\)`,
+                'MH.lesson_Y2Geo_transl4a.step1aSolution4': String.raw`Thus \(O'M' = OM = R\), which means M' is on circle C'.`,
+                'MH.lesson_Y2Geo_transl4a.step1bTitle': String.raw`2) Let N' be a point on C' and N the antecedent of N' by t (i.e., N = t⁻¹(N')). Show that N belongs to C.`,
+                'MH.lesson_Y2Geo_transl4a.step1bSolution': 'Since N\' is on circle C\', we have:',
+                'MH.lesson_Y2Geo_transl4a.equation1e': String.raw`\(O'N' = R\)`,
+                'MH.lesson_Y2Geo_transl4a.step1bSolution2': 'By definition of translation, N = t⁻¹(N\') means that t(N) = N\', so:',
+                'MH.lesson_Y2Geo_transl4a.equation1f': String.raw`\(\overrightarrow{NN'} = \vec{u}\)`,
+                'MH.lesson_Y2Geo_transl4a.step1bSolution3': String.raw`Also, since O' = t(O), we have \(\overrightarrow{OO'} = \vec{u}\). Therefore:`,
+                'MH.lesson_Y2Geo_transl4a.equation1g': String.raw`\(\overrightarrow{ON} = \overrightarrow{OO'} + \overrightarrow{O'N'} + \overrightarrow{N'N}\)`,
+                'MH.lesson_Y2Geo_transl4a.equation1h': String.raw`\(\overrightarrow{ON} = \vec{u} + \overrightarrow{O'N'} - \vec{u} = \overrightarrow{O'N'}\)`,
+                'MH.lesson_Y2Geo_transl4a.step1bSolution4': String.raw`Thus \(ON = O'N' = R\), which means N is on circle C.`,
+                'MH.lesson_Y2Geo_transl4a.step1cTitle': '3) What can we conclude?',
+                'MH.lesson_Y2Geo_transl4a.step1cSolution': 'From parts (1) and (2), we can conclude:',
+                'MH.lesson_Y2Geo_transl4a.conclusion1a': 'Every point on circle C has its image on circle C\'',
+                'MH.lesson_Y2Geo_transl4a.conclusion1b': 'Every point on circle C\' has its antecedent on circle C',
+                'MH.lesson_Y2Geo_transl4a.step1cSolution2': 'This establishes a bijection between the points of C and C\' under the translation t. Therefore, the image of circle C under translation t is exactly circle C\'.',
+                'MH.lesson_Y2Geo_transl4a.notation1': String.raw`If C is a circle with center O and radius R, and t is a translation of vector \(\vec{u}\), then:<br>\(t(C) = C'\) where C' is the circle with center \(O' = t(O)\) and radius R.`,
+                
+                // Part XI
+                'MH.lesson_Y2Geo_transl4a.partXITitle': 'Part XI: Conservation of Contact under Translation',
+                'MH.lesson_Y2Geo_transl4a.partXIIntro': 'Translations preserve tangency: if a line is tangent to a circle, then the image of the line under translation is tangent to the image of the circle.',
+                
+                // Activity 2
+                'MH.lesson_Y2Geo_transl4a.activity2Title': 'Activity 2: Conservation of Tangency',
+                'MH.lesson_Y2Geo_transl4a.diagram2Title': 'Figure: Circle C with tangent line Δ at point M, and their images under translation',
+                'MH.lesson_Y2Geo_transl4a.diagram2Instructions': 'Circle C with tangent line Δ at point M. Under translation t, they become circle C\' and line Δ\' tangent at point M\'.',
+                'MH.lesson_Y2Geo_transl4a.step2Title': 'Let C be a circle and Δ a line tangent to C at point M. Let t be a translation. We denote by C\', Δ\', and M\' the respective images of C, Δ, and M under t.',
+                'MH.lesson_Y2Geo_transl4a.step2Question': 'Show that Δ\' is tangent to C\' at point M\'.',
+                'MH.lesson_Y2Geo_transl4a.step2Solution': 'We need to show two things:',
+                'MH.lesson_Y2Geo_transl4a.step2Sol1': 'M\' is on both C\' and Δ\'',
+                'MH.lesson_Y2Geo_transl4a.step2Sol2': 'Δ\' is tangent to C\' at M\'',
+                'MH.lesson_Y2Geo_transl4a.step2Solution2': '1) Since M is on C, by Activity 1, M\' = t(M) is on C\'. Also, since M is on Δ, and Δ\' = t(Δ) is the image of Δ under translation, M\' is on Δ\'.',
+                'MH.lesson_Y2Geo_transl4a.step2Solution3': '2) To show Δ\' is tangent to C\' at M\', we need to show that Δ\' is perpendicular to the radius O\'M\' at M\'.',
+                'MH.lesson_Y2Geo_transl4a.step2Solution4': 'Since Δ is tangent to C at M, Δ is perpendicular to radius OM at M.',
+                'MH.lesson_Y2Geo_transl4a.step2Solution5': String.raw`Let \(\vec{v}\) be a direction vector of Δ. Since Δ ⟂ OM at M, we have:`,
+                'MH.lesson_Y2Geo_transl4a.equation2a': String.raw`\(\vec{v} \cdot \overrightarrow{OM} = 0\) (dot product)`,
+                'MH.lesson_Y2Geo_transl4a.step2Solution6': String.raw`Under translation t with vector \(\vec{u}\):`,
+                'MH.lesson_Y2Geo_transl4a.equation2b': String.raw`\(\overrightarrow{O'M'} = \overrightarrow{OM}\) (as shown in Activity 1)`,
+                'MH.lesson_Y2Geo_transl4a.equation2c': String.raw`\(\vec{v}' = \vec{v}\) (translations preserve direction vectors)`,
+                'MH.lesson_Y2Geo_transl4a.step2Solution7': 'Therefore:',
+                'MH.lesson_Y2Geo_transl4a.equation2d': String.raw`\(\vec{v}' \cdot \overrightarrow{O'M'} = \vec{v} \cdot \overrightarrow{OM} = 0\)`,
+                'MH.lesson_Y2Geo_transl4a.step2Solution8': 'This shows that Δ\' is perpendicular to O\'M\' at M\', so Δ\' is tangent to C\' at M\'.',
+                'MH.lesson_Y2Geo_transl4a.step2Conclusion': 'Thus, translations preserve tangency between circles and lines.',
+                
+                // Summary
+                'MH.lesson_Y2Geo_transl4a.summaryTitle': 'Comprehensive Summary',
+                'MH.lesson_Y2Geo_transl4a.summary1Title': 'Image of a Circle under Translation',
+                'MH.lesson_Y2Geo_transl4a.summary1Text': String.raw`Let t be a translation of vector \(\vec{u}\), and let C be a circle with center O and radius R. The image of C under t is:`,
+                'MH.lesson_Y2Geo_transl4a.summaryNotation1': String.raw`\(t(C) = C'\) where C' is the circle with center \(O' = t(O)\) and radius R.`,
+                'MH.lesson_Y2Geo_transl4a.summary1Text2': 'The translation establishes a bijection between the points of C and C\'. For any point M on C, M\' = t(M) is on C\', and for any point N\' on C\', N = t⁻¹(N\') is on C.',
+                'MH.lesson_Y2Geo_transl4a.summary2Title': 'Conservation of Tangency',
+                'MH.lesson_Y2Geo_transl4a.summary2Text': 'Translations preserve tangency between circles and lines. If a line Δ is tangent to a circle C at point M, then under any translation t:',
+                'MH.lesson_Y2Geo_transl4a.summaryNotation2': 'The image line Δ\' = t(Δ) is tangent to the image circle C\' = t(C) at point M\' = t(M).',
+                'MH.lesson_Y2Geo_transl4a.summary2Text2': 'This property follows from the fact that translations preserve perpendicularity and distances.',
+                'MH.lesson_Y2Geo_transl4a.summary3Title': 'General Consequences',
+                'MH.lesson_Y2Geo_transl4a.summary3Item1': 'Translations preserve the shape and size of circles (they are isometric transformations)',
+                'MH.lesson_Y2Geo_transl4a.summary3Item2': 'The image of a circle under translation is a congruent circle',
+                'MH.lesson_Y2Geo_transl4a.summary3Item3': 'Tangency relations are preserved under translations',
+                'MH.lesson_Y2Geo_transl4a.summary3Item4': 'These properties make translations useful in geometric constructions and proofs',
+                'MH.lesson_Y2Geo_transl4a.conclusionTitle': 'Conclusion',
+                'MH.lesson_Y2Geo_transl4a.keyConceptsTitle': 'Key Concepts Mastered',
+                'MH.lesson_Y2Geo_transl4a.concept1': 'Image of a circle under translation is a congruent circle',
+                'MH.lesson_Y2Geo_transl4a.concept2': 'Proof that translation preserves circle properties',
+                'MH.lesson_Y2Geo_transl4a.concept3': 'Conservation of tangency under translations',
+                'MH.lesson_Y2Geo_transl4a.concept4': 'Vector methods for proving geometric properties',
+                'MH.lesson_Y2Geo_transl4a.concept5': 'Bijection between points of original and translated circles',
+                'MH.lesson_Y2Geo_transl4a.concept6': 'Applications of translation properties to geometric problems',
+                'MH.lesson_Y2Geo_transl4a.finalThought': 'The properties studied in this lesson demonstrate that translations are rigid motions that preserve all metric properties of geometric figures. Understanding how circles and tangency behave under translations is essential for solving complex geometric problems and for applications in fields such as computer graphics, engineering, and architecture.',
+                
+                // Footer
+                'MH.footer.developer': 'Developer',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Links',
+                'MH.footer.terms': 'Terms of Use',
+                'MH.footer.privacy': 'Privacy Policy',
+                
+                // Construction button
+                'MH.lesson_Y2Geo_transl4a.constructButton': 'Construct'
+            },
+            'ar': {
+                // ترجمات عامة
+                'MH.general.homeTooltip': 'الذهاب إلى الصفحة الرئيسية',
+                'MH.general.install': 'تثبيت التطبيق',
+                'MH.general.installSuccess': 'تم تثبيت Mathematics Hub بنجاح!',
+                'MH.general.enableNotifications': 'تفعيل الإشعارات',
+                'MH.general.notificationEnabled': 'تم تفعيل الإشعارات! ستتلقى التحديثات الآن.',
+                'MH.general.title': 'مركز الرياضيات',
+                'MH.general.theme': 'السمة',
+                'MH.general.language': 'اللغة',
+                'MH.lesson_Y2Geo_transl4a.showSolution': 'إظهار الحل',
+                'MH.lesson_Y2Geo_transl4a.hideSolution': 'إخفاء الحل',
+                
+                // ترجمات درس الهندسة
+                'MH.lesson_Y2Geo_transl4a.title': 'الإنسحاب: الجزء 4',
+                'MH.lesson_Y2Geo_transl4a.subtitle': 'صورة دائرة والحفاظ على التماس',
+                'MH.lesson_Y2Geo_transl4a.introduction': 'المقدمة',
+                'MH.lesson_Y2Geo_transl4a.introText1': 'في هذا الدرس، سندرس كيف تؤثر الانسحابات على الدوائر والتماس. سنثبت أن صورة دائرة تحت انسحاب هي دائرة أخرى متطابقة، وأن الانسحابات تحافظ على التماس بين الدوائر والخطوط.',
+                'MH.lesson_Y2Geo_transl4a.introText2': 'هذه الخصائص أساسية لفهم كيفية تصرف الأشكال الهندسية تحت التحويلات ولها تطبيقات مهمة في حل المسائل.',
+                
+                // الجزء X
+                'MH.lesson_Y2Geo_transl4a.partXTitle': 'الجزء العاشر: صورة دائرة تحت انسحاب',
+                'MH.lesson_Y2Geo_transl4a.partXIntro': 'الانسحاب يحول دائرة إلى دائرة أخرى بنفس نصف القطر. مركز الدائرة الصورة هو صورة المركز الأصلي.',
+                
+                // النشاط 1
+                'MH.lesson_Y2Geo_transl4a.activity1Title': 'النشاط 1: صورة دائرة',
+                'MH.lesson_Y2Geo_transl4a.diagram1Title': 'الشكل: الدائرة C وصورتها C\' تحت الانسحاب t',
+                'MH.lesson_Y2Geo_transl4a.diagram1Instructions': 'الدائرة C بمركز O تُنقل بمتجه u إلى الدائرة C\' بمركز O\'. النقطتان M و N\' توضحان التطابق بين نقاط الدوائر.',
+                'MH.lesson_Y2Geo_transl4a.step1aTitle': String.raw`1) لتكن t انسحابًا بمتجه \(\vec{u}\)، و C دائرة بمركز O ونصف قطر R، و O' = t(O) صورة O تحت t. لتكن C' الدائرة بمركز O' ونصف قطر R.`,
+                'MH.lesson_Y2Geo_transl4a.step1aQuestion': 'لتكن M نقطة على C و M\' = t(M). أظهر أن M\' تنتمي إلى C\'.',
+                'MH.lesson_Y2Geo_transl4a.step1aSolution': 'بما أن M على الدائرة C، لدينا:',
+                'MH.lesson_Y2Geo_transl4a.equation1a': String.raw`\(OM = R\)`,
+                'MH.lesson_Y2Geo_transl4a.step1aSolution2': 'حسب تعريف الانسحاب t:',
+                'MH.lesson_Y2Geo_transl4a.equation1b': String.raw`\(\overrightarrow{OO'} = \vec{u}\) و \(\overrightarrow{MM'} = \vec{u}\)`,
+                'MH.lesson_Y2Geo_transl4a.step1aSolution3': 'لذلك:',
+                'MH.lesson_Y2Geo_transl4a.equation1c': String.raw`\(\overrightarrow{O'M'} = \overrightarrow{O'O} + \overrightarrow{OM} + \overrightarrow{MM'}\)`,
+                'MH.lesson_Y2Geo_transl4a.equation1d': String.raw`\(\overrightarrow{O'M'} = -\vec{u} + \overrightarrow{OM} + \vec{u} = \overrightarrow{OM}\)`,
+                'MH.lesson_Y2Geo_transl4a.step1aSolution4': String.raw`إذن \(O'M' = OM = R\)، مما يعني أن M' على الدائرة C'.`,
+                'MH.lesson_Y2Geo_transl4a.step1bTitle': String.raw`2) لتكن N' نقطة على C' و N سابقة N' بـ t (أي N = t⁻¹(N')). أظهر أن N تنتمي إلى C.`,
+                'MH.lesson_Y2Geo_transl4a.step1bSolution': 'بما أن N\' على الدائرة C\'، لدينا:',
+                'MH.lesson_Y2Geo_transl4a.equation1e': String.raw`\(O'N' = R\)`,
+                'MH.lesson_Y2Geo_transl4a.step1bSolution2': 'حسب تعريف الانسحاب، N = t⁻¹(N\') تعني أن t(N) = N\'، إذن:',
+                'MH.lesson_Y2Geo_transl4a.equation1f': String.raw`\(\overrightarrow{NN'} = \vec{u}\)`,
+                'MH.lesson_Y2Geo_transl4a.step1bSolution3': String.raw`أيضًا، بما أن O' = t(O)، لدينا \(\overrightarrow{OO'} = \vec{u}\). لذلك:`,
+                'MH.lesson_Y2Geo_transl4a.equation1g': String.raw`\(\overrightarrow{ON} = \overrightarrow{OO'} + \overrightarrow{O'N'} + \overrightarrow{N'N}\)`,
+                'MH.lesson_Y2Geo_transl4a.equation1h': String.raw`\(\overrightarrow{ON} = \vec{u} + \overrightarrow{O'N'} - \vec{u} = \overrightarrow{O'N'}\)`,
+                'MH.lesson_Y2Geo_transl4a.step1bSolution4': String.raw`إذن \(ON = O'N' = R\)، مما يعني أن N على الدائرة C.`,
+                'MH.lesson_Y2Geo_transl4a.step1cTitle': '3) ماذا يمكننا أن نستنتج؟',
+                'MH.lesson_Y2Geo_transl4a.step1cSolution': 'من الجزأين (1) و (2)، يمكننا أن نستنتج:',
+                'MH.lesson_Y2Geo_transl4a.conclusion1a': 'كل نقطة على الدائرة C لها صورتها على الدائرة C\'',
+                'MH.lesson_Y2Geo_transl4a.conclusion1b': 'كل نقطة على الدائرة C\' لها سابقتها على الدائرة C',
+                'MH.lesson_Y2Geo_transl4a.step1cSolution2': 'هذا يؤسس تطابقًا حيويًا بين نقاط C و C\' تحت الانسحاب t. لذلك، صورة الدائرة C تحت الانسحاب t هي بالضبط الدائرة C\'.',
+                'MH.lesson_Y2Geo_transl4a.notation1': String.raw`إذا كانت C دائرة بمركز O ونصف قطر R، و t انسحابًا بمتجه \(\vec{u}\)، فإن:<br>\(t(C) = C'\) حيث C' هي الدائرة بمركز \(O' = t(O)\) ونصف قطر R.`,
+                
+                // الجزء XI
+                'MH.lesson_Y2Geo_transl4a.partXITitle': 'الجزء الحادي عشر: الحفاظ على التماس تحت الانسحاب',
+                'MH.lesson_Y2Geo_transl4a.partXIIntro': 'الانسحابات تحافظ على التماس: إذا كان خط مماسًا لدائرة، فإن صورة الخط تحت الانسحاب تكون مماسة لصورة الدائرة.',
+                
+                // النشاط 2
+                'MH.lesson_Y2Geo_transl4a.activity2Title': 'النشاط 2: الحفاظ على التماس',
+                'MH.lesson_Y2Geo_transl4a.diagram2Title': 'الشكل: الدائرة C مع الخط المماس Δ عند النقطة M، وصورهما تحت الانسحاب',
+                'MH.lesson_Y2Geo_transl4a.diagram2Instructions': 'الدائرة C مع الخط المماس Δ عند النقطة M. تحت الانسحاب t، تصبح الدائرة C\' والخط Δ\' مماسًا عند النقطة M\'.',
+                'MH.lesson_Y2Geo_transl4a.step2Title': 'لتكن C دائرة و Δ خطًا مماسًا لـ C عند النقطة M. لتكن t انسحابًا. نرمز بـ C\' و Δ\' و M\' لصور C و Δ و M على التوالي تحت t.',
+                'MH.lesson_Y2Geo_transl4a.step2Question': 'أظهر أن Δ\' مماس لـ C\' عند النقطة M\'.',
+                'MH.lesson_Y2Geo_transl4a.step2Solution': 'نحتاج إلى إظهار شيئين:',
+                'MH.lesson_Y2Geo_transl4a.step2Sol1': 'M\' على كل من C\' و Δ\'',
+                'MH.lesson_Y2Geo_transl4a.step2Sol2': 'Δ\' مماس لـ C\' عند M\'',
+                'MH.lesson_Y2Geo_transl4a.step2Solution2': '1) بما أن M على C، حسب النشاط 1، M\' = t(M) على C\'. أيضًا، بما أن M على Δ، و Δ\' = t(Δ) هي صورة Δ تحت الانسحاب، فإن M\' على Δ\'.',
+                'MH.lesson_Y2Geo_transl4a.step2Solution3': '2) لإظهار أن Δ\' مماس لـ C\' عند M\'، نحتاج إلى إظهار أن Δ\' عمودي على نصف القطر O\'M\' عند M\'.',
+                'MH.lesson_Y2Geo_transl4a.step2Solution4': 'بما أن Δ مماس لـ C عند M، فإن Δ عمودي على نصف القطر OM عند M.',
+                'MH.lesson_Y2Geo_transl4a.step2Solution5': String.raw`ليكن \(\vec{v}\) متجه اتجاه Δ. بما أن Δ ⟂ OM عند M، لدينا:`,
+                'MH.lesson_Y2Geo_transl4a.equation2a': String.raw`\(\vec{v} \cdot \overrightarrow{OM} = 0\) (ضرب نقطي)`,
+                'MH.lesson_Y2Geo_transl4a.step2Solution6': String.raw`تحت الانسحاب t بمتجه \(\vec{u}\):`,
+                'MH.lesson_Y2Geo_transl4a.equation2b': String.raw`\(\overrightarrow{O'M'} = \overrightarrow{OM}\) (كما هو موضح في النشاط 1)`,
+                'MH.lesson_Y2Geo_transl4a.equation2c': String.raw`\(\vec{v}' = \vec{v}\) (الانسحابات تحافظ على متجهات الاتجاه)`,
+                'MH.lesson_Y2Geo_transl4a.step2Solution7': 'لذلك:',
+                'MH.lesson_Y2Geo_transl4a.equation2d': String.raw`\(\vec{v}' \cdot \overrightarrow{O'M'} = \vec{v} \cdot \overrightarrow{OM} = 0\)`,
+                'MH.lesson_Y2Geo_transl4a.step2Solution8': 'هذا يظهر أن Δ\' عمودي على O\'M\' عند M\'، إذن Δ\' مماس لـ C\' عند M\'.',
+                'MH.lesson_Y2Geo_transl4a.step2Conclusion': 'وبالتالي، الانسحابات تحافظ على التماس بين الدوائر والخطوط.',
+                
+                // الملخص
+                'MH.lesson_Y2Geo_transl4a.summaryTitle': 'ملخص شامل',
+                'MH.lesson_Y2Geo_transl4a.summary1Title': 'صورة دائرة تحت انسحاب',
+                'MH.lesson_Y2Geo_transl4a.summary1Text': String.raw`لتكن t انسحابًا بمتجه \(\vec{u}\)، و لتكن C دائرة بمركز O ونصف قطر R. صورة C تحت t هي:`,
+                'MH.lesson_Y2Geo_transl4a.summaryNotation1': String.raw`\(t(C) = C'\) حيث C' هي الدائرة بمركز \(O' = t(O)\) ونصف قطر R.`,
+                'MH.lesson_Y2Geo_transl4a.summary1Text2': 'الانسحاب يؤسس تطابقًا حيويًا بين نقاط C و C\'. لأي نقطة M على C، M\' = t(M) على C\'، ولأي نقطة N\' على C\'، N = t⁻¹(N\') على C.',
+                'MH.lesson_Y2Geo_transl4a.summary2Title': 'الحفاظ على التماس',
+                'MH.lesson_Y2Geo_transl4a.summary2Text': 'الانسحابات تحافظ على التماس بين الدوائر والخطوط. إذا كان خط Δ مماسًا لدائرة C عند نقطة M، فإنه تحت أي انسحاب t:',
+                'MH.lesson_Y2Geo_transl4a.summaryNotation2': 'الخط الصورة Δ\' = t(Δ) يكون مماسًا للدائرة الصورة C\' = t(C) عند النقطة M\' = t(M).',
+                'MH.lesson_Y2Geo_transl4a.summary2Text2': 'هذه الخاصية تنتج من حقيقة أن الانسحابات تحافظ على التعامد والمسافات.',
+                'MH.lesson_Y2Geo_transl4a.summary3Title': 'نتائج عامة',
+                'MH.lesson_Y2Geo_transl4a.summary3Item1': 'الانسحابات تحافظ على شكل وحجم الدوائر (هي تحويلات متساوية القياس)',
+                'MH.lesson_Y2Geo_transl4a.summary3Item2': 'صورة دائرة تحت انسحاب هي دائرة مطابقة',
+                'MH.lesson_Y2Geo_transl4a.summary3Item3': 'علاقات التماس تُحفظ تحت الانسحابات',
+                'MH.lesson_Y2Geo_transl4a.summary3Item4': 'هذه الخصائص تجعل الانسحابات مفيدة في الإنشاءات والبراهين الهندسية',
+                'MH.lesson_Y2Geo_transl4a.conclusionTitle': 'الخلاصة',
+                'MH.lesson_Y2Geo_transl4a.keyConceptsTitle': 'المفاهيم الرئيسية التي تم إتقانها',
+                'MH.lesson_Y2Geo_transl4a.concept1': 'صورة دائرة تحت انسحاب هي دائرة مطابقة',
+                'MH.lesson_Y2Geo_transl4a.concept2': 'إثبات أن الانسحاب يحافظ على خصائص الدائرة',
+                'MH.lesson_Y2Geo_transl4a.concept3': 'الحفاظ على التماس تحت الانسحابات',
+                'MH.lesson_Y2Geo_transl4a.concept4': 'طرق متجهية لإثبات الخصائص الهندسية',
+                'MH.lesson_Y2Geo_transl4a.concept5': 'تطابق حيوي بين نقاط الدوائر الأصلية والمترجمة',
+                'MH.lesson_Y2Geo_transl4a.concept6': 'تطبيقات خصائص الانسحاب على المسائل الهندسية',
+                'MH.lesson_Y2Geo_transl4a.finalThought': 'الخصائص التي درسناها في هذا الدرس تظهر أن الانسحابات هي حركات صلبة تحافظ على جميع الخصائص المترية للأشكال الهندسية. فهم كيفية تصرف الدوائر والتماس تحت الانسحابات أساسي لحل المسائل الهندسية المعقدة وللتطبيقات في مجالات مثل الرسومات الحاسوبية والهندسة والعمارة.',
+                
+                // التذييل
+                'MH.footer.developer': 'المطور',
+                'MH.footer.version': 'الإصدار',
+                'MH.footer.links': 'الروابط',
+                'MH.footer.terms': 'شروط الاستخدام',
+                'MH.footer.privacy': 'سياسة الخصوصية',
+                
+                // زر الإنشاء
+                'MH.lesson_Y2Geo_transl4a.constructButton': 'ابنِ'
+            },
+            'fr': {
+                // Traductions générales
+                'MH.general.homeTooltip': 'Aller à l\'accueil',
+                'MH.general.install': 'Installer l\'App',
+                'MH.general.installSuccess': 'Mathematics Hub installé avec succès!',
+                'MH.general.enableNotifications': 'Activer les notifications',
+                'MH.general.notificationEnabled': 'Notifications activées! Vous recevrez maintenant des mises à jour.',
+                'MH.general.title': 'Centre de Mathématiques',
+                'MH.general.theme': 'Thème',
+                'MH.general.language': 'Langue',
+                'MH.lesson_Y2Geo_transl4a.showSolution': 'Afficher la Solution',
+                'MH.lesson_Y2Geo_transl4a.hideSolution': 'Masquer la Solution',
+                
+                // Traductions de la leçon de géométrie
+                'MH.lesson_Y2Geo_transl4a.title': 'Translation : Partie 4',
+                'MH.lesson_Y2Geo_transl4a.subtitle': 'Image d\'un Cercle et Conservation du Contact',
+                'MH.lesson_Y2Geo_transl4a.introduction': 'Introduction',
+                'MH.lesson_Y2Geo_transl4a.introText1': 'Dans cette leçon, nous étudierons comment les translations affectent les cercles et la tangence. Nous prouverons que l\'image d\'un cercle par translation est un autre cercle congruent, et que les translations conservent la tangence entre cercles et droites.',
+                'MH.lesson_Y2Geo_transl4a.introText2': 'Ces propriétés sont essentielles pour comprendre comment les figures géométriques se comportent sous les transformations et ont des applications importantes en résolution de problèmes.',
+                
+                // Partie X
+                'MH.lesson_Y2Geo_transl4a.partXTitle': 'Partie X : Image d\'un Cercle par Translation',
+                'MH.lesson_Y2Geo_transl4a.partXIntro': 'Une translation transforme un cercle en un autre cercle de même rayon. Le centre du cercle image est l\'image du centre original.',
+                
+                // Activité 1
+                'MH.lesson_Y2Geo_transl4a.activity1Title': 'Activité 1 : Image d\'un Cercle',
+                'MH.lesson_Y2Geo_transl4a.diagram1Title': 'Figure : Cercle C et son image C\' par translation t',
+                'MH.lesson_Y2Geo_transl4a.diagram1Instructions': 'Le cercle C de centre O est translaté par le vecteur u en cercle C\' de centre O\'. Les points M et N\' démontrent la correspondance entre les points des cercles.',
+                'MH.lesson_Y2Geo_transl4a.step1aTitle': String.raw`1) Soit t une translation de vecteur \(\vec{u}\), C un cercle de centre O et de rayon R, et O' = t(O) l'image de O par t. Soit C' le cercle de centre O' et de même rayon que C.`,
+                'MH.lesson_Y2Geo_transl4a.step1aQuestion': 'Soit M un point de C et M\' = t(M). Montrer que M\' ∈ C\'.',
+                'MH.lesson_Y2Geo_transl4a.step1aSolution': 'Puisque M est sur le cercle C, on a :',
+                'MH.lesson_Y2Geo_transl4a.equation1a': String.raw`\(OM = R\)`,
+                'MH.lesson_Y2Geo_transl4a.step1aSolution2': 'Par définition de la translation t :',
+                'MH.lesson_Y2Geo_transl4a.equation1b': String.raw`\(\overrightarrow{OO'} = \vec{u}\) et \(\overrightarrow{MM'} = \vec{u}\)`,
+                'MH.lesson_Y2Geo_transl4a.step1aSolution3': 'Donc :',
+                'MH.lesson_Y2Geo_transl4a.equation1c': String.raw`\(\overrightarrow{O'M'} = \overrightarrow{O'O} + \overrightarrow{OM} + \overrightarrow{MM'}\)`,
+                'MH.lesson_Y2Geo_transl4a.equation1d': String.raw`\(\overrightarrow{O'M'} = -\vec{u} + \overrightarrow{OM} + \vec{u} = \overrightarrow{OM}\)`,
+                'MH.lesson_Y2Geo_transl4a.step1aSolution4': String.raw`Ainsi \(O'M' = OM = R\), ce qui signifie que M' est sur le cercle C'.`,
+                'MH.lesson_Y2Geo_transl4a.step1bTitle': String.raw`2) Soit N' un point de C' et N l'antécédent de N' par t (c'est-à-dire N = t⁻¹(N')). Montrer que N ∈ C.`,
+                'MH.lesson_Y2Geo_transl4a.step1bSolution': 'Puisque N\' est sur le cercle C\', on a :',
+                'MH.lesson_Y2Geo_transl4a.equation1e': String.raw`\(O'N' = R\)`,
+                'MH.lesson_Y2Geo_transl4a.step1bSolution2': 'Par définition de la translation, N = t⁻¹(N\') signifie que t(N) = N\', donc :',
+                'MH.lesson_Y2Geo_transl4a.equation1f': String.raw`\(\overrightarrow{NN'} = \vec{u}\)`,
+                'MH.lesson_Y2Geo_transl4a.step1bSolution3': String.raw`De plus, puisque O' = t(O), on a \(\overrightarrow{OO'} = \vec{u}\). Donc :`,
+                'MH.lesson_Y2Geo_transl4a.equation1g': String.raw`\(\overrightarrow{ON} = \overrightarrow{OO'} + \overrightarrow{O'N'} + \overrightarrow{N'N}\)`,
+                'MH.lesson_Y2Geo_transl4a.equation1h': String.raw`\(\overrightarrow{ON} = \vec{u} + \overrightarrow{O'N'} - \vec{u} = \overrightarrow{O'N'}\)`,
+                'MH.lesson_Y2Geo_transl4a.step1bSolution4': String.raw`Ainsi \(ON = O'N' = R\), ce qui signifie que N est sur le cercle C.`,
+                'MH.lesson_Y2Geo_transl4a.step1cTitle': '3) Que peut-on conclure ?',
+                'MH.lesson_Y2Geo_transl4a.step1cSolution': 'Des parties (1) et (2), on peut conclure :',
+                'MH.lesson_Y2Geo_transl4a.conclusion1a': 'Tout point du cercle C a son image sur le cercle C\'',
+                'MH.lesson_Y2Geo_transl4a.conclusion1b': 'Tout point du cercle C\' a son antécédent sur le cercle C',
+                'MH.lesson_Y2Geo_transl4a.step1cSolution2': 'Ceci établit une bijection entre les points de C et C\' par la translation t. Par conséquent, l\'image du cercle C par translation t est exactement le cercle C\'.',
+                'MH.lesson_Y2Geo_transl4a.notation1': String.raw`Si C est un cercle de centre O et de rayon R, et t une translation de vecteur \(\vec{u}\), alors :<br>\(t(C) = C'\) où C' est le cercle de centre \(O' = t(O)\) et de rayon R.`,
+                
+                // Partie XI
+                'MH.lesson_Y2Geo_transl4a.partXITitle': 'Partie XI : Conservation du Contact par Translation',
+                'MH.lesson_Y2Geo_transl4a.partXIIntro': 'Les translations conservent la tangence : si une droite est tangente à un cercle, alors l\'image de la droite par translation est tangente à l\'image du cercle.',
+                
+                // Activité 2
+                'MH.lesson_Y2Geo_transl4a.activity2Title': 'Activité 2 : Conservation de la Tangence',
+                'MH.lesson_Y2Geo_transl4a.diagram2Title': 'Figure : Cercle C avec droite tangente Δ au point M, et leurs images par translation',
+                'MH.lesson_Y2Geo_transl4a.diagram2Instructions': 'Cercle C avec droite tangente Δ au point M. Par translation t, ils deviennent cercle C\' et droite Δ\' tangente au point M\'.',
+                'MH.lesson_Y2Geo_transl4a.step2Title': 'Soit C un cercle et Δ une droite tangente à C en un point M. Soit t une translation. On désigne par C\', Δ\' et M\' les images respectives de C, Δ et M par t.',
+                'MH.lesson_Y2Geo_transl4a.step2Question': 'Montrer que Δ\' est tangente à C\' en M\'.',
+                'MH.lesson_Y2Geo_transl4a.step2Solution': 'Il faut montrer deux choses :',
+                'MH.lesson_Y2Geo_transl4a.step2Sol1': 'M\' est sur C\' et sur Δ\'',
+                'MH.lesson_Y2Geo_transl4a.step2Sol2': 'Δ\' est tangente à C\' en M\'',
+                'MH.lesson_Y2Geo_transl4a.step2Solution2': '1) Puisque M est sur C, d\'après l\'Activité 1, M\' = t(M) est sur C\'. De plus, puisque M est sur Δ, et Δ\' = t(Δ) est l\'image de Δ par translation, M\' est sur Δ\'.',
+                'MH.lesson_Y2Geo_transl4a.step2Solution3': '2) Pour montrer que Δ\' est tangente à C\' en M\', il faut montrer que Δ\' est perpendiculaire au rayon O\'M\' en M\'.',
+                'MH.lesson_Y2Geo_transl4a.step2Solution4': 'Puisque Δ est tangente à C en M, Δ est perpendiculaire au rayon OM en M.',
+                'MH.lesson_Y2Geo_transl4a.step2Solution5': String.raw`Soit \(\vec{v}\) un vecteur directeur de Δ. Puisque Δ ⟂ OM en M, on a :`,
+                'MH.lesson_Y2Geo_transl4a.equation2a': String.raw`\(\vec{v} \cdot \overrightarrow{OM} = 0\) (produit scalaire)`,
+                'MH.lesson_Y2Geo_transl4a.step2Solution6': String.raw`Par translation t de vecteur \(\vec{u}\) :`,
+                'MH.lesson_Y2Geo_transl4a.equation2b': String.raw`\(\overrightarrow{O'M'} = \overrightarrow{OM}\) (comme montré dans l'Activité 1)`,
+                'MH.lesson_Y2Geo_transl4a.equation2c': String.raw`\(\vec{v}' = \vec{v}\) (les translations conservent les vecteurs directeurs)`,
+                'MH.lesson_Y2Geo_transl4a.step2Solution7': 'Donc :',
+                'MH.lesson_Y2Geo_transl4a.equation2d': String.raw`\(\vec{v}' \cdot \overrightarrow{O'M'} = \vec{v} \cdot \overrightarrow{OM} = 0\)`,
+                'MH.lesson_Y2Geo_transl4a.step2Solution8': 'Ceci montre que Δ\' est perpendiculaire à O\'M\' en M\', donc Δ\' est tangente à C\' en M\'.',
+                'MH.lesson_Y2Geo_transl4a.step2Conclusion': 'Ainsi, les translations conservent la tangence entre cercles et droites.',
+                
+                // Résumé
+                'MH.lesson_Y2Geo_transl4a.summaryTitle': 'Résumé Complet',
+                'MH.lesson_Y2Geo_transl4a.summary1Title': 'Image d\'un Cercle par Translation',
+                'MH.lesson_Y2Geo_transl4a.summary1Text': String.raw`Soit t une translation de vecteur \(\vec{u}\), et soit C un cercle de centre O et de rayon R. L'image de C par t est :`,
+                'MH.lesson_Y2Geo_transl4a.summaryNotation1': String.raw`\(t(C) = C'\) où C' est le cercle de centre \(O' = t(O)\) et de rayon R.`,
+                'MH.lesson_Y2Geo_transl4a.summary1Text2': 'La translation établit une bijection entre les points de C et C\'. Pour tout point M de C, M\' = t(M) est sur C\', et pour tout point N\' de C\', N = t⁻¹(N\') est sur C.',
+                'MH.lesson_Y2Geo_transl4a.summary2Title': 'Conservation de la Tangence',
+                'MH.lesson_Y2Geo_transl4a.summary2Text': 'Les translations conservent la tangence entre cercles et droites. Si une droite Δ est tangente à un cercle C en un point M, alors pour toute translation t :',
+                'MH.lesson_Y2Geo_transl4a.summaryNotation2': 'La droite image Δ\' = t(Δ) est tangente au cercle image C\' = t(C) au point M\' = t(M).',
+                'MH.lesson_Y2Geo_transl4a.summary2Text2': 'Cette propriété découle du fait que les translations conservent la perpendicularité et les distances.',
+                'MH.lesson_Y2Geo_transl4a.summary3Title': 'Conséquences Générales',
+                'MH.lesson_Y2Geo_transl4a.summary3Item1': 'Les translations conservent la forme et la taille des cercles (ce sont des transformations isométriques)',
+                'MH.lesson_Y2Geo_transl4a.summary3Item2': 'L\'image d\'un cercle par translation est un cercle congruent',
+                'MH.lesson_Y2Geo_transl4a.summary3Item3': 'Les relations de tangence sont conservées par translations',
+                'MH.lesson_Y2Geo_transl4a.summary3Item4': 'Ces propriétés rendent les translations utiles dans les constructions et preuves géométriques',
+                'MH.lesson_Y2Geo_transl4a.conclusionTitle': 'Conclusion',
+                'MH.lesson_Y2Geo_transl4a.keyConceptsTitle': 'Concepts Clés Maîtrisés',
+                'MH.lesson_Y2Geo_transl4a.concept1': 'L\'image d\'un cercle par translation est un cercle congruent',
+                'MH.lesson_Y2Geo_transl4a.concept2': 'Preuve que la translation conserve les propriétés du cercle',
+                'MH.lesson_Y2Geo_transl4a.concept3': 'Conservation de la tangence par translations',
+                'MH.lesson_Y2Geo_transl4a.concept4': 'Méthodes vectorielles pour prouver les propriétés géométriques',
+                'MH.lesson_Y2Geo_transl4a.concept5': 'Bijection entre les points des cercles originaux et translatés',
+                'MH.lesson_Y2Geo_transl4a.concept6': 'Applications des propriétés des translations aux problèmes géométriques',
+                'MH.lesson_Y2Geo_transl4a.finalThought': 'Les propriétés étudiées dans cette leçon démontrent que les translations sont des déplacements rigides qui conservent toutes les propriétés métriques des figures géométriques. Comprendre comment les cercles et la tangence se comportent sous les translations est essentiel pour résoudre des problèmes géométriques complexes et pour des applications dans des domaines tels que l\'infographie, l\'ingénierie et l\'architecture.',
+                
+                // Pied de page
+                'MH.footer.developer': 'Développeur',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Liens',
+                'MH.footer.terms': 'Conditions d\'Utilisation',
+                'MH.footer.privacy': 'Politique de Confidentialité',
+                
+                // Bouton de construction
+                'MH.lesson_Y2Geo_transl4a.constructButton': 'Construire'
+            }
+        };
+
+        // Merge with existing translations if they exist
+        if (typeof translations !== 'undefined') {
+            Object.keys(geometryTranslations4).forEach(lang => {
+                if (translations[lang]) {
+                    translations[lang] = {...translations[lang], ...geometryTranslations4[lang]};
+                } else {
+                    translations[lang] = geometryTranslations4[lang];
+                }
+            });
+        } else {
+            var translations = geometryTranslations4;
+        }
+
+        // Canvas drawing functions
+        let activity1State = {part1: false, part2: false};
+        let activity2State = {constructed: false};
+        
+        function drawActivity1Canvas() {
+            const canvas = document.getElementById('activity1Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define original circle
+            const O = {x: width * 0.3, y: height * 0.5};
+            const R = 80;
+            
+            // Define translation vector
+            const u = {x: 150, y: 0};
+            
+            // Define image circle
+            const Oprime = {x: O.x + u.x, y: O.y + u.y};
+            
+            // Draw original circle
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(O.x, O.y, R, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // Draw image circle
+            ctx.strokeStyle = '#8E44AD';
+            ctx.beginPath();
+            ctx.arc(Oprime.x, Oprime.y, R, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // Draw centers
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(O.x, O.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.fillStyle = '#9B59B6';
+            ctx.beginPath();
+            ctx.arc(Oprime.x, Oprime.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Label centers
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('O', O.x, O.y - 20);
+            ctx.fillText('O\'', Oprime.x, Oprime.y - 20);
+            
+            // Draw translation vector
+            ctx.strokeStyle = '#E67E22';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(O.x, O.y);
+            ctx.lineTo(Oprime.x, Oprime.y);
+            ctx.stroke();
+            
+            // Draw arrowhead
+            drawArrowhead(ctx, Oprime.x, Oprime.y, Math.atan2(u.y, u.x));
+            
+            // Draw point M and M' if part1 is true
+            if (activity1State.part1) {
+                const M = {x: O.x + R * Math.cos(Math.PI/4), y: O.y + R * Math.sin(Math.PI/4)};
+                const Mprime = {x: M.x + u.x, y: M.y + u.y};
+                
+                // Draw M
+                ctx.fillStyle = '#2ECC71';
+                ctx.beginPath();
+                ctx.arc(M.x, M.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('M', M.x, M.y - 15);
+                
+                // Draw M'
+                ctx.fillStyle = '#1ABC9C';
+                ctx.beginPath();
+                ctx.arc(Mprime.x, Mprime.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('M\'', Mprime.x, Mprime.y - 15);
+                
+                // Draw vector from M to M'
+                ctx.strokeStyle = '#2ECC71';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(M.x, M.y);
+                ctx.lineTo(Mprime.x, Mprime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw radius O'M'
+                ctx.strokeStyle = '#8E44AD';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                ctx.beginPath();
+                ctx.moveTo(Oprime.x, Oprime.y);
+                ctx.lineTo(Mprime.x, Mprime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Show that O'M' = R
+                const midOprimeMprime = {
+                    x: (Oprime.x + Mprime.x) / 2,
+                    y: (Oprime.y + Mprime.y) / 2
+                };
+                ctx.fillStyle = '#8E44AD';
+                ctx.font = '14px Arial';
+                ctx.fillText('R', midOprimeMprime.x, midOprimeMprime.y - 10);
+            }
+            
+            // Draw point N' and N if part2 is true
+            if (activity1State.part2) {
+                const Nprime = {x: Oprime.x + R * Math.cos(Math.PI*3/4), y: Oprime.y + R * Math.sin(Math.PI*3/4)};
+                const N = {x: Nprime.x - u.x, y: Nprime.y - u.y};
+                
+                // Draw N'
+                ctx.fillStyle = '#E67E22';
+                ctx.beginPath();
+                ctx.arc(Nprime.x, Nprime.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('N\'', Nprime.x, Nprime.y + 20);
+                
+                // Draw N
+                ctx.fillStyle = '#D35400';
+                ctx.beginPath();
+                ctx.arc(N.x, N.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('N', N.x, N.y + 20);
+                
+                // Draw vector from N to N'
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(N.x, N.y);
+                ctx.lineTo(Nprime.x, Nprime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw radius ON
+                ctx.strokeStyle = '#4A90E2';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                ctx.beginPath();
+                ctx.moveTo(O.x, O.y);
+                ctx.lineTo(N.x, N.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Show that ON = R
+                const midON = {
+                    x: (O.x + N.x) / 2,
+                    y: (O.y + N.y) / 2
+                };
+                ctx.fillStyle = '#4A90E2';
+                ctx.font = '14px Arial';
+                ctx.fillText('R', midON.x, midON.y - 10);
+            }
+        }
+        
+        function drawActivity2Canvas() {
+            const canvas = document.getElementById('activity2Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define original circle
+            const O = {x: width * 0.3, y: height * 0.5};
+            const R = 80;
+            
+            // Define tangent point M on circle
+            const M = {x: O.x + R, y: O.y};
+            
+            // Define tangent line Δ (horizontal line through M)
+            const deltaPoint1 = {x: M.x - 100, y: M.y};
+            const deltaPoint2 = {x: M.x + 100, y: M.y};
+            
+            // Define translation vector
+            const u = {x: 150, y: 50};
+            
+            // Define images under translation
+            const Oprime = {x: O.x + u.x, y: O.y + u.y};
+            const Mprime = {x: M.x + u.x, y: M.y + u.y};
+            const deltaPrimePoint1 = {x: deltaPoint1.x + u.x, y: deltaPoint1.y + u.y};
+            const deltaPrimePoint2 = {x: deltaPoint2.x + u.x, y: deltaPoint2.y + u.y};
+            
+            // Draw original circle
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(O.x, O.y, R, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // Draw original tangent line
+            ctx.strokeStyle = '#E67E22';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(deltaPoint1.x, deltaPoint1.y);
+            ctx.lineTo(deltaPoint2.x, deltaPoint2.y);
+            ctx.stroke();
+            
+            // Draw original center and tangent point
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(O.x, O.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.fillStyle = '#E67E22';
+            ctx.beginPath();
+            ctx.arc(M.x, M.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Draw radius OM (perpendicular to tangent)
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+            ctx.beginPath();
+            ctx.moveTo(O.x, O.y);
+            ctx.lineTo(M.x, M.y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Label original points
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('O', O.x, O.y - 20);
+            ctx.fillText('M', M.x, M.y - 15);
+            ctx.fillText('Δ', deltaPoint1.x + 50, deltaPoint1.y - 15);
+            
+            // Draw image circle
+            ctx.strokeStyle = '#8E44AD';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(Oprime.x, Oprime.y, R, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // Draw image tangent line
+            ctx.strokeStyle = '#D35400';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([3, 3]);
+            ctx.beginPath();
+            ctx.moveTo(deltaPrimePoint1.x, deltaPrimePoint1.y);
+            ctx.lineTo(deltaPrimePoint2.x, deltaPrimePoint2.y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Draw image center and tangent point
+            ctx.fillStyle = '#9B59B6';
+            ctx.beginPath();
+            ctx.arc(Oprime.x, Oprime.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.fillStyle = '#D35400';
+            ctx.beginPath();
+            ctx.arc(Mprime.x, Mprime.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Draw radius O'M' (perpendicular to tangent)
+            ctx.strokeStyle = '#8E44AD';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+            ctx.beginPath();
+            ctx.moveTo(Oprime.x, Oprime.y);
+            ctx.lineTo(Mprime.x, Mprime.y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Label image points
+            ctx.fillText('O\'', Oprime.x, Oprime.y - 20);
+            ctx.fillText('M\'', Mprime.x, Mprime.y - 15);
+            ctx.fillText('Δ\'', deltaPrimePoint1.x + 50, deltaPrimePoint1.y - 15);
+            
+            // Draw translation vectors
+            ctx.strokeStyle = '#E67E22';
+            ctx.lineWidth = 3;
+            
+            // Vector from O to O'
+            ctx.beginPath();
+            ctx.moveTo(O.x, O.y);
+            ctx.lineTo(Oprime.x, Oprime.y);
+            ctx.stroke();
+            drawArrowhead(ctx, Oprime.x, Oprime.y, Math.atan2(u.y, u.x));
+            
+            // Vector from M to M'
+            ctx.beginPath();
+            ctx.moveTo(M.x, M.y);
+            ctx.lineTo(Mprime.x, Mprime.y);
+            ctx.stroke();
+            drawArrowhead(ctx, Mprime.x, Mprime.y, Math.atan2(u.y, u.x));
+            
+            // If constructed, show perpendicularity
+            if (activity2State.constructed) {
+                // Show that Δ is perpendicular to OM
+                ctx.strokeStyle = '#E74C3C';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([5, 5]);
+                
+                // Draw right angle at M
+                const angleSize = 15;
+                ctx.beginPath();
+                ctx.moveTo(M.x - angleSize, M.y);
+                ctx.lineTo(M.x - angleSize, M.y - angleSize);
+                ctx.lineTo(M.x, M.y - angleSize);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Show that Δ' is perpendicular to O'M'
+                ctx.strokeStyle = '#9B59B6';
+                ctx.setLineDash([5, 5]);
+                
+                // Draw right angle at M'
+                ctx.beginPath();
+                ctx.moveTo(Mprime.x - angleSize, Mprime.y);
+                ctx.lineTo(Mprime.x - angleSize, Mprime.y - angleSize);
+                ctx.lineTo(Mprime.x, Mprime.y - angleSize);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Add text indicating perpendicularity
+                ctx.fillStyle = '#E74C3C';
+                ctx.font = '12px Arial';
+                ctx.fillText('⟂', M.x - 25, M.y - 25);
+                
+                ctx.fillStyle = '#9B59B6';
+                ctx.fillText('⟂', Mprime.x - 25, Mprime.y - 25);
+            }
+        }
+        
+        // Helper function to draw arrowhead
+        function drawArrowhead(ctx, x, y, angle) {
+            const headlen = 10;
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angle);
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(-headlen, -headlen/2);
+            ctx.moveTo(0, 0);
+            ctx.lineTo(-headlen, headlen/2);
+            ctx.stroke();
+            ctx.restore();
+        }
+        
+        // Construction functions
+        function constructActivity1Part1() {
+            activity1State.part1 = true;
+            drawActivity1Canvas();
+        }
+        
+        function constructActivity1Part2() {
+            activity1State.part2 = true;
+            drawActivity1Canvas();
+        }
+        
+        function constructActivity2() {
+            activity2State.constructed = true;
+            drawActivity2Canvas();
+        }
+        
+        // Solution toggle function
+        function toggleSolution(problemNumber) {
+            const solution = document.getElementById(`solution${problemNumber}`);
+            const button = solution.previousElementSibling;
+            const currentLang = MHThemeManager ? MHThemeManager.getCurrentLanguage() : 'en';
+            
+            if (solution.style.display === 'block' || solution.style.display === '') {
+                solution.style.display = 'none';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_transl4a.showSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_transl4a.showSolution'];
+                } else {
+                    button.textContent = 'Show Solution';
+                }
+            } else {
+                solution.style.display = 'block';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_transl4a.hideSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_transl4a.hideSolution'];
+                } else {
+                    button.textContent = 'Hide Solution';
+                }
+                
+                // Re-render KaTeX for newly visible equations
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(solution, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\(', right: '\\)', display: false},
+                            {left: '\\[', right: '\\]', display: true}
+                        ],
+                        throwOnError: false
+                    });
+                }
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize KaTeX auto-render
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+
+            // Draw initial canvases
+            drawActivity1Canvas();
+            drawActivity2Canvas();
+
+            // Initialize solutions as hidden and set button text
+            const currentLang = MHThemeManager ? MHThemeManager.getCurrentLanguage() : 'en';
+            for (let i = 1; i <= 4; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                const button = solution ? solution.previousElementSibling : null;
+                
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+                
+                // Set initial button text
+                if (button && translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_transl4a.showSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_transl4a.showSolution'];
+                }
+            }
+            
+            // Redraw canvases when theme changes
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    setTimeout(() => {
+                        drawActivity1Canvas();
+                        drawActivity2Canvas();
+                    }, 100);
+                });
+            }
+        });
+    </script>
+
+<!-- Add the service worker registration script -->
+<script>
+    // Register service worker with better error handling
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch(function(error) {
+                console.log('Service Worker registration failed:', error);
+            });
+        });
+    }
+</script>
+
+<!-- Add noscript fallback -->
+<noscript>
+    <style>
+        .MH-header-controls { display: none; }
+        .MH-solution { display: block; }
+        .MH-canvas { border: 2px solid #ccc; background-color: #f9f9f9; }
+    </style>
+    <div class="MH-warning">
+        JavaScript is recommended for the full experience, but content is still accessible.
+    </div>
+</noscript>
+</body>
+</html>

@@ -1,0 +1,2145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Geometry - Translation Properties (Part 3)</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#4A90E2" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#8E44AD" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#4A90E2">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    
+    <style>
+        /* Page-specific color palette - Blue + Purple Theme */
+        :root {
+            --primary: #4A90E2;        /* Cornflower Blue */
+            --primary-light: #7BAAF7;  /* Light Blue */
+            --primary-dark: #357ABD;   /* Darker Blue */
+            --secondary: #8E44AD;      /* Dark Purple */
+            --secondary-light: #AF7AC5; /* Light Purple */
+            --secondary-dark: #6C3483;  /* Darker Purple */
+            --accent: #E67E22;
+            --warning: #E74C3C;
+            --info: #2ECC71;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #FFFFFF;
+            --surface: #F8F9FA;
+            --border: #E9ECEF;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        [data-theme="dark"] {
+            --primary: #357ABD;
+            --primary-light: #4A90E2;
+            --primary-dark: #2C3E50;
+            --secondary: #6C3483;
+            --secondary-light: #8E44AD;
+            --secondary-dark: #4A235A;
+            --accent: #D35400;
+            --warning: #C0392B;
+            --info: #27AE60;
+            --text: #FFFFFF;
+            --text-light: #CCCCCC;
+            --background: #121212;
+            --surface: #1E1E1E;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        /* KaTeX styling */
+        .katex { 
+            font-size: 1.1em; 
+        }
+        
+        .katex-display { 
+            margin: 1em 0; 
+            text-align: center;
+        }
+        
+        .katex-display > .katex { 
+            display: inline-block;
+            text-align: center;
+        }
+
+        /* Equation styling */
+        .MH-equation {
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            margin: 0.5em 0;
+            padding: 0;
+            display: inline-block;
+            direction: ltr !important;
+            unicode-bidi: isolate;
+        }
+        
+        [dir="rtl"] .MH-equation {
+            text-align: left;
+            unicode-bidi: plaintext;
+        }
+
+        /* Canvas container styling */
+        .MH-canvas-container {
+            margin: 2em 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .MH-canvas {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background-color: var(--surface);
+            max-width: 100%;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+
+        .MH-canvas-title {
+            font-weight: bold;
+            margin-bottom: 0.5em;
+            color: var(--primary);
+        }
+
+        .MH-canvas-instructions {
+            font-size: 0.9em;
+            color: var(--text-light);
+            margin-top: 0.5em;
+            font-style: italic;
+        }
+
+        /* Geometry specific styling */
+        .MH-construction-step {
+            margin: 1.5em 0;
+            padding: 1em;
+            background-color: var(--surface);
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+        }
+
+        .MH-construction-step h4 {
+            margin-top: 0;
+            color: var(--primary-dark);
+        }
+
+        .MH-vector-notation {
+            font-family: 'KaTeX_Math', 'Cambria Math', serif;
+            font-style: italic;
+            color: var(--secondary);
+        }
+
+        .MH-point-label {
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .MH-transformation-notation {
+            background-color: rgba(78, 144, 226, 0.1);
+            padding: 0.5em;
+            border-radius: 4px;
+            font-family: 'KaTeX_Math', 'Cambria Math', serif;
+            margin: 0.5em 0;
+        }
+
+        /* Responsive canvas */
+        @media (max-width: 768px) {
+            .MH-canvas {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                    <!-- Notification Button -->
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+                        <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Geo_transl3a.title">Translation: Part 3</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y2Geo_transl3a.subtitle">Advanced Translation Properties: Midpoint, Barycenter, Parallelism and Angles</h2>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_transl3a.introduction">Introduction</h2>
+            <p data-i18n="MH.lesson_Y2Geo_transl3a.introText1">In this third lesson on translations, we will explore advanced properties including conservation of midpoints, barycenters, parallelism, orthogonality, and angles.</p>
+            <p data-i18n="MH.lesson_Y2Geo_transl3a.introText2">These properties demonstrate why translations are among the most fundamental transformations in geometry, preserving essential geometric relationships while moving figures in the plane.</p>
+        </section>
+
+        <!-- Part VI: Conservation of Midpoint -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_transl3a.part6Title">Part VI: Conservation of the Midpoint</h2>
+            
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_transl3a.part6Intro">Translations preserve midpoints: the image of the midpoint of a segment is the midpoint of the image segment.</p>
+            </div>
+
+            <!-- Activity 1 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl3a.activity1Title">Activity 1: Midpoint Conservation</h3>
+                
+                <!-- Diagram 1: Triangle ABC with midpoints -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_transl3a.diagram1Title">Figure: Triangle ABC with midpoints M, N, P</div>
+                    <canvas id="activity1Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_transl3a.diagram1Instructions">Triangle ABC with midpoints M, N, P. Translation t has vector MC.</div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl3a.step1aTitle">1) Let ABC be a triangle and M, N, and P the respective midpoints of segments [BC], [AC], and [AB]. Let t be the translation of vector \(\overrightarrow{MC}\).</h4>
+                    <p data-i18n="MH.lesson_Y2Geo_transl3a.step1aQuestion">a) Determine t(B) and t(P).<br>b) Let Q be the image of A under t. Show that points M, N, and Q are collinear. Specify the position of point N on segment [MQ].</p>
+                    <button class="MH-solution-btn" onclick="constructActivity1Part1()" data-i18n="MH.lesson_Y2Geo_transl3a.constructButton">Construct</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl3a.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                    <div class="MH-solution" id="solution1">
+                        <p data-i18n="MH.lesson_Y2Geo_transl3a.step1aSolution">a) Since t is translation by vector \(\overrightarrow{MC}\):</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl3a.equation1a">\(t(B) = B'\) such that \(\overrightarrow{BB'} = \overrightarrow{MC}\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl3a.equation1b">Since M is midpoint of [BC], \(\overrightarrow{BM} = \overrightarrow{MC}\), so \(B' = M\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl3a.equation1c">\(t(P) = P'\) such that \(\overrightarrow{PP'} = \overrightarrow{MC}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl3a.step1aSolution2">b) Q = t(A) with \(\overrightarrow{AQ} = \overrightarrow{MC}\). Since N is midpoint of [AC], we have \(\overrightarrow{AN} = \overrightarrow{NC}\).</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl3a.equation1d">\(\overrightarrow{MQ} = \overrightarrow{MC} + \overrightarrow{CQ} = \overrightarrow{MC} + \overrightarrow{CA} + \overrightarrow{AQ} = \overrightarrow{MC} + \overrightarrow{CA} + \overrightarrow{MC} = 2\overrightarrow{MC} + \overrightarrow{CA}\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl3a.equation1e">\(\overrightarrow{MN} = \overrightarrow{MC} + \overrightarrow{CN} = \overrightarrow{MC} + \frac{1}{2}\overrightarrow{CA}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl3a.step1aSolution3">Thus \(\overrightarrow{MN} = \frac{1}{2}\overrightarrow{MQ}\), so M, N, Q are collinear with N as midpoint of [MQ].</p>
+                    </div>
+                </div>
+
+                <!-- Diagram 2: Points I, J, O and their images -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_transl3a.diagram2Title">Figure: Points I, J, O and their images I', J', O' under translation</div>
+                    <canvas id="activity1bCanvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_transl3a.diagram2Instructions">Points I and J with midpoint O. Their images I', J', O' under translation t.</div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl3a.step1bTitle">2) Let I and J be two distinct points and O the midpoint of [IJ]. Let I', J', and O' be their respective images under a translation t.</h4>
+                    <p data-i18n="MH.lesson_Y2Geo_transl3a.step1bQuestion">Show that O' is the midpoint of [I'J'].</p>
+                    <button class="MH-solution-btn" onclick="constructActivity1Part2()" data-i18n="MH.lesson_Y2Geo_transl3a.constructButton">Construct</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl3a.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                    <div class="MH-solution" id="solution2">
+                        <p data-i18n="MH.lesson_Y2Geo_transl3a.step1bSolution">Let \(\vec{u}\) be the translation vector of t. Then:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl3a.equation1f">\(\overrightarrow{II'} = \vec{u}\), \(\overrightarrow{JJ'} = \vec{u}\), \(\overrightarrow{OO'} = \vec{u}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl3a.step1bSolution2">Since O is midpoint of [IJ], we have \(\overrightarrow{OI} + \overrightarrow{OJ} = \vec{0}\) or \(\overrightarrow{OI} = -\overrightarrow{OJ}\).</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl3a.equation1g">\(\overrightarrow{O'I'} = \overrightarrow{O'O} + \overrightarrow{OI} + \overrightarrow{II'} = -\vec{u} + \overrightarrow{OI} + \vec{u} = \overrightarrow{OI}\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl3a.equation1h">\(\overrightarrow{O'J'} = \overrightarrow{O'O} + \overrightarrow{OJ} + \overrightarrow{JJ'} = -\vec{u} + \overrightarrow{OJ} + \vec{u} = \overrightarrow{OJ}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl3a.step1bSolution3">Therefore \(\overrightarrow{O'I'} = -\overrightarrow{O'J'}\), so O' is midpoint of [I'J'].</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part VII: Conservation of Barycenter -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_transl3a.part7Title">Part VII: Conservation of Barycenter</h2>
+            
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_transl3a.part7Intro">Translations preserve barycenters: the image of a barycenter is the barycenter of the images with the same weights.</p>
+            </div>
+
+            <!-- Activity 2 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl3a.activity2Title">Activity 2: Barycenter Conservation</h3>
+                
+                <!-- Diagram 3: Triangle ABC with translation -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_transl3a.diagram3Title">Figure: Triangle ABC with translation by vector \(\overrightarrow{BC}\)</div>
+                    <canvas id="activity2Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_transl3a.diagram3Instructions">Triangle ABC with O midpoint of [BC]. Images A', C', O' under translation t with vector \(\overrightarrow{BC}\).</div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl3a.step2aTitle">1) Let ABC be a triangle, O the midpoint of [BC], and t the translation of vector \(\overrightarrow{BC}\).</h4>
+                    <p data-i18n="MH.lesson_Y2Geo_transl3a.step2aQuestion">Construct points A', C', and O' as images of A, C, and O respectively under t.</p>
+                    <button class="MH-solution-btn" onclick="constructActivity2Part1()" data-i18n="MH.lesson_Y2Geo_transl3a.constructButton">Construct A', C', O'</button>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl3a.step2bTitle">2) Let M be the intersection point of lines (BA') and (AO).</h4>
+                    <p data-i18n="MH.lesson_Y2Geo_transl3a.step2bQuestion">Show that M is the centroid (center of gravity) of triangle ABC.</p>
+                    <button class="MH-solution-btn" onclick="constructActivity2Part2()" data-i18n="MH.lesson_Y2Geo_transl3a.constructButton">Construct M</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl3a.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                    <div class="MH-solution" id="solution3">
+                        <p data-i18n="MH.lesson_Y2Geo_transl3a.step2bSolution">Since t translates by \(\overrightarrow{BC}\), we have A' = t(A) so \(\overrightarrow{AA'} = \overrightarrow{BC}\).</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl3a.equation2a">In parallelogram AA'CB, (BA') and (AC) are diagonals intersecting at their midpoint.</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl3a.step2bSolution2">Line (AO) is median from A to [BC]. The intersection M of (BA') and (AO) is the centroid because:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl3a.equation2b">In triangle ABC, medians intersect at centroid. Since (BA') is line through B parallel to (AC) through A', and (AO) is median, their intersection divides median in ratio 2:1 from vertex.</div>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl3a.step2cTitle">3) Let N be the intersection point of (AC') and (A'O').</h4>
+                    <p data-i18n="MH.lesson_Y2Geo_transl3a.step2cQuestion">a) What does N represent for triangle A'CC'?<br>b) Show that N is the image of point M under translation t.</p>
+                    <button class="MH-solution-btn" onclick="constructActivity2Part3()" data-i18n="MH.lesson_Y2Geo_transl3a.constructButton">Construct N</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl3a.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+                    <div class="MH-solution" id="solution4">
+                        <p data-i18n="MH.lesson_Y2Geo_transl3a.step2cSolution">a) N is the centroid of triangle A'CC'. Since A' = t(A), C' = t(C), and t preserves barycenters.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl3a.step2cSolution2">b) Since t preserves intersections and M is centroid of ABC, N = t(M) is centroid of t(ABC) = A'BC'.</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl3a.equation2c">\(\overrightarrow{MN} = \overrightarrow{BC} = \vec{u}\)</div>
+                    </div>
+                </div>
+
+                <!-- Diagram 4: Barycenter conservation -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_transl3a.diagram4Title">Figure: Barycenter G of (I,a) and (J,b) and its image G'</div>
+                    <canvas id="activity2bCanvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_transl3a.diagram4Instructions">Points I, J with barycenter G. Their images I', J', G' under translation t.</div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl3a.step2dTitle">4) Let I and J be two points in the plane and a, b two real numbers such that a + b ≠ 0. Let G be the barycenter of (I, a) and (J, b). Let I', J', and G' be the respective images of I, J, and G under a translation.</h4>
+                    <p data-i18n="MH.lesson_Y2Geo_transl3a.step2dQuestion">Show that G' is the barycenter of (I', a) and (J', b).</p>
+                    <button class="MH-solution-btn" onclick="constructActivity2Part4()" data-i18n="MH.lesson_Y2Geo_transl3a.constructButton">Construct</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl3a.showSolution" onclick="toggleSolution(5)">Show Solution</button>
+                    <div class="MH-solution" id="solution5">
+                        <p data-i18n="MH.lesson_Y2Geo_transl3a.step2dSolution">Let \(\vec{u}\) be translation vector. By definition of barycenter:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl3a.equation2d">\(a\overrightarrow{GI} + b\overrightarrow{GJ} = \vec{0}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl3a.step2dSolution2">Under translation t: I' = I + \(\vec{u}\), J' = J + \(\vec{u}\), G' = G + \(\vec{u}\).</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl3a.equation2e">\(a\overrightarrow{G'I'} + b\overrightarrow{G'J'} = a(\overrightarrow{G'G} + \overrightarrow{GI} + \overrightarrow{II'}) + b(\overrightarrow{G'G} + \overrightarrow{GJ} + \overrightarrow{JJ'})\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl3a.equation2f">\(= a(-\vec{u} + \overrightarrow{GI} + \vec{u}) + b(-\vec{u} + \overrightarrow{GJ} + \vec{u}) = a\overrightarrow{GI} + b\overrightarrow{GJ} = \vec{0}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl3a.step2dSolution3">Thus G' is barycenter of (I', a) and (J', b).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part VIII: Conservation of Parallelism and Orthogonality -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_transl3a.part8Title">Part VIII: Conservation of Parallelism and Orthogonality</h2>
+            
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_transl3a.part8Intro">Translations preserve parallelism and orthogonality between lines, as well as tangency between lines and circles.</p>
+            </div>
+
+            <!-- Activity 3 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl3a.activity3Title">Activity 3: Isometric Triangles and Quadrilaterals</h3>
+                
+                <!-- Diagram 5: Triangle MNP and its image -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_transl3a.diagram5Title">Figure: Triangle MNP and its image M'N'P' under translation</div>
+                    <canvas id="activity3Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_transl3a.diagram5Instructions">Triangle MNP and its translated image M'N'P'. Show they are isometric.</div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl3a.step3aTitle">1) Let MNP be a triangle and M'N'P' its image under a translation.</h4>
+                    <p data-i18n="MH.lesson_Y2Geo_transl3a.step3aQuestion">Show that triangles MNP and M'N'P' are isometric (congruent).</p>
+                    <button class="MH-solution-btn" onclick="constructActivity3Part1()" data-i18n="MH.lesson_Y2Geo_transl3a.constructButton">Construct</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl3a.showSolution" onclick="toggleSolution(6)">Show Solution</button>
+                    <div class="MH-solution" id="solution6">
+                        <p data-i18n="MH.lesson_Y2Geo_transl3a.step3aSolution">Since translation preserves distances:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl3a.equation3a">\(MN = M'N'\), \(NP = N'P'\), \(PM = P'M'\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl3a.step3aSolution2">Therefore by SSS (Side-Side-Side) criterion, triangles MNP and M'N'P' are congruent.</p>
+                    </div>
+                </div>
+
+                <!-- Diagram 6: Rectangle ABCD and its image -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_transl3a.diagram6Title">Figure: Rectangle ABCD and its image A'B'C'D' under translation</div>
+                    <canvas id="activity3bCanvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_transl3a.diagram6Instructions">Rectangle ABCD and its translated image A'B'C'D'.</div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl3a.step3bTitle">2) Let ABCD be a quadrilateral and A'B'C'D' its image under a translation.</h4>
+                    <p data-i18n="MH.lesson_Y2Geo_transl3a.step3bQuestion">Determine the nature of quadrilateral A'B'C'D' in each case:<br>a) ABCD is a rectangle.<br>b) ABCD is a rhombus.</p>
+                    <button class="MH-solution-btn" onclick="constructActivity3Part2()" data-i18n="MH.lesson_Y2Geo_transl3a.constructButton">Construct</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl3a.showSolution" onclick="toggleSolution(7)">Show Solution</button>
+                    <div class="MH-solution" id="solution7">
+                        <p data-i18n="MH.lesson_Y2Geo_transl3a.step3bSolution">a) If ABCD is a rectangle, then A'B'C'D' is also a rectangle because:</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Geo_transl3a.step3bSol1">Translation preserves lengths, so opposite sides remain equal</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl3a.step3bSol2">Translation preserves angles, so all angles remain 90°</li>
+                        </ul>
+                        <p data-i18n="MH.lesson_Y2Geo_transl3a.step3bSolution2">b) If ABCD is a rhombus, then A'B'C'D' is also a rhombus because:</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Geo_transl3a.step3bSol3">Translation preserves lengths, so all sides remain equal</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl3a.step3bSol4">Translation preserves parallelism, so opposite sides remain parallel</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl3a.step3cTitle">3) What can we say about the image of a polygon under a translation?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl3a.showSolution" onclick="toggleSolution(8)">Show Solution</button>
+                    <div class="MH-solution" id="solution8">
+                        <p data-i18n="MH.lesson_Y2Geo_transl3a.step3cSolution">The image of any polygon under a translation is:</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Geo_transl3a.step3cSol1">Congruent to the original polygon (same shape and size)</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl3a.step3cSol2">All corresponding sides are parallel</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl3a.step3cSol3">All corresponding angles are equal</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl3a.step3cSol4">The orientation is preserved</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part IX: Conservation of Angles -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_transl3a.part9Title">Part IX: Conservation of Angles</h2>
+            
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_transl3a.part9Intro">Translations preserve angle measures: the image of an angle is an angle with the same measure.</p>
+            </div>
+
+            <!-- Activity 4 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl3a.activity4Title">Activity 4: Angle Conservation</h3>
+                
+                <!-- Diagram 7: Angle xOy and its image -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_transl3a.diagram7Title">Figure: Angle xOy and its image x'O'y' under translation</div>
+                    <canvas id="activity4Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_transl3a.diagram7Instructions">Angle ∠xOy and its translated image ∠x'O'y'. Show they are equal.</div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl3a.step4Title">Let t be a translation of vector \(\vec{u}\) and [Ox, Oy] an angle sector. Let [O'x') and [O'y') be the respective images of half-lines [Ox) and [Oy) under translation t.</h4>
+                    <p data-i18n="MH.lesson_Y2Geo_transl3a.step4Question">Show that \(\angle xOy = \angle x'O'y'\).</p>
+                    <button class="MH-solution-btn" onclick="constructActivity4()" data-i18n="MH.lesson_Y2Geo_transl3a.constructButton">Construct</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl3a.showSolution" onclick="toggleSolution(9)">Show Solution</button>
+                    <div class="MH-solution" id="solution9">
+                        <p data-i18n="MH.lesson_Y2Geo_transl3a.step4Solution">Let \(\vec{u} = \overrightarrow{OO'}\). Then for any point X on [Ox) and Y on [Oy), we have:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl3a.equation4a">\(X' = t(X) = X + \vec{u}\), \(Y' = t(Y) = Y + \vec{u}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl3a.step4Solution2">Consider triangles OXY and O'X'Y'. We have:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl3a.equation4b">\(\overrightarrow{O'X'} = \overrightarrow{O'O} + \overrightarrow{OX} + \overrightarrow{XX'} = -\vec{u} + \overrightarrow{OX} + \vec{u} = \overrightarrow{OX}\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl3a.equation4c">\(\overrightarrow{O'Y'} = \overrightarrow{OY}\) (similarly)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl3a.step4Solution3">Thus triangles OXY and O'X'Y' have corresponding sides equal, so they are congruent. Therefore, \(\angle XOY = \angle X'O'Y'\).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_transl3a.summaryTitle">Comprehensive Summary</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl3a.summary1Title">Conservation of Barycenter</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Geo_transl3a.summary1Item1">Translation preserves the midpoint.</li>
+                    <li data-i18n="MH.lesson_Y2Geo_transl3a.summary1Item2">Translation preserves the barycenter.</li>
+                </ul>
+            </div>
+
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl3a.summary2Title">Conservation of Parallelism, Orthogonality and Contact</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Geo_transl3a.summary2Item1">The images under a translation of two parallel lines are two parallel lines.</li>
+                    <li data-i18n="MH.lesson_Y2Geo_transl3a.summary2Item2">The images under a translation of two perpendicular lines are two perpendicular lines.</li>
+                    <li data-i18n="MH.lesson_Y2Geo_transl3a.summary2Item3">If a line and a circle are tangent, then their images under a translation are tangent.</li>
+                </ul>
+            </div>
+
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl3a.summary3Title">Conservation of Angles</h3>
+                <p data-i18n="MH.lesson_Y2Geo_transl3a.summary3Text">Translations preserve angle measures: the image of an angle is an angle with the same measure.</p>
+            </div>
+            
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl3a.conclusionTitle">Conclusion</h3>
+                <div class="MH-important">
+                    <h3 data-i18n="MH.lesson_Y2Geo_transl3a.keyConceptsTitle">Key Concepts Mastered</h3>
+                    <ul>
+                        <li data-i18n="MH.lesson_Y2Geo_transl3a.concept1">Conservation of midpoints under translations</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl3a.concept2">Conservation of barycenters under translations</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl3a.concept3">Translation of centroids in triangles</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl3a.concept4">Preservation of parallelism and orthogonality</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl3a.concept5">Isometric nature of translated figures</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl3a.concept6">Angle conservation under translations</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl3a.concept7">Properties of translated quadrilaterals</li>
+                    </ul>
+                </div>
+                <p data-i18n="MH.lesson_Y2Geo_transl3a.finalThought">The properties studied in this lesson complete our understanding of translations as isometric transformations. Their ability to preserve midpoints, barycenters, parallelism, orthogonality, and angles while moving figures makes them indispensable tools in geometric proofs, constructions, and applications across mathematics and physics.</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+    
+    <script>
+        // GEOMETRY LESSON TRANSLATIONS - Part 3
+        const geometryTranslations3 = {
+            'en': {
+                // General translations
+                'MH.general.homeTooltip': 'Go to Homepage',
+                'MH.general.install': 'Install App',
+                'MH.general.installSuccess': 'Mathematics Hub installed successfully!',
+                'MH.general.enableNotifications': 'Enable Notifications',
+                'MH.general.notificationEnabled': 'Notifications enabled! You will now receive updates.',
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Theme',
+                'MH.general.language': 'Language',
+                'MH.lesson_Y2Geo_transl3a.showSolution': 'Show Solution',
+                'MH.lesson_Y2Geo_transl3a.hideSolution': 'Hide Solution',
+                'MH.lesson_Y2Geo_transl3a.constructButton': 'Construct',
+                
+                // Geometry lesson specific translations
+                'MH.lesson_Y2Geo_transl3a.title': 'Translation: Part 3',
+                'MH.lesson_Y2Geo_transl3a.subtitle': 'Advanced Translation Properties: Midpoint, Barycenter, Parallelism and Angles',
+                'MH.lesson_Y2Geo_transl3a.introduction': 'Introduction',
+                'MH.lesson_Y2Geo_transl3a.introText1': 'In this third lesson on translations, we will explore advanced properties including conservation of midpoints, barycenters, parallelism, orthogonality, and angles.',
+                'MH.lesson_Y2Geo_transl3a.introText2': 'These properties demonstrate why translations are among the most fundamental transformations in geometry, preserving essential geometric relationships while moving figures in the plane.',
+                
+                // Part VI
+                'MH.lesson_Y2Geo_transl3a.part6Title': 'Part VI: Conservation of the Midpoint',
+                'MH.lesson_Y2Geo_transl3a.part6Intro': 'Translations preserve midpoints: the image of the midpoint of a segment is the midpoint of the image segment.',
+                
+                // Activity 1
+                'MH.lesson_Y2Geo_transl3a.activity1Title': 'Activity 1: Midpoint Conservation',
+                'MH.lesson_Y2Geo_transl3a.diagram1Title': 'Figure: Triangle ABC with midpoints M, N, P',
+                'MH.lesson_Y2Geo_transl3a.diagram1Instructions': 'Triangle ABC with midpoints M, N, P. Translation t has vector MC.',
+                'MH.lesson_Y2Geo_transl3a.diagram2Title': 'Figure: Points I, J, O and their images I\', J\', O\' under translation',
+                'MH.lesson_Y2Geo_transl3a.diagram2Instructions': 'Points I and J with midpoint O. Their images I\', J\', O\' under translation t.',
+                'MH.lesson_Y2Geo_transl3a.step1aTitle': String.raw`1) Let ABC be a triangle and M, N, and P the respective midpoints of segments [BC], [AC], and [AB]. Let t be the translation of vector \(\overrightarrow{MC}\).`,
+                'MH.lesson_Y2Geo_transl3a.step1aQuestion': 'a) Determine t(B) and t(P).<br>b) Let Q be the image of A under t. Show that points M, N, and Q are collinear. Specify the position of point N on segment [MQ].',
+                'MH.lesson_Y2Geo_transl3a.step1aSolution': 'a) Since t is translation by vector \(\overrightarrow{MC}\):',
+                'MH.lesson_Y2Geo_transl3a.equation1a': String.raw`\(t(B) = B'\) such that \(\overrightarrow{BB'} = \overrightarrow{MC}\)`,
+                'MH.lesson_Y2Geo_transl3a.equation1b': String.raw`Since M is midpoint of [BC], \(\overrightarrow{BM} = \overrightarrow{MC}\), so \(B' = M\)`,
+                'MH.lesson_Y2Geo_transl3a.equation1c': String.raw`\(t(P) = P'\) such that \(\overrightarrow{PP'} = \overrightarrow{MC}\)`,
+                'MH.lesson_Y2Geo_transl3a.step1aSolution2': 'b) Q = t(A) with \(\overrightarrow{AQ} = \overrightarrow{MC}\). Since N is midpoint of [AC], we have \(\overrightarrow{AN} = \overrightarrow{NC}\).',
+                'MH.lesson_Y2Geo_transl3a.equation1d': String.raw`\(\overrightarrow{MQ} = \overrightarrow{MC} + \overrightarrow{CQ} = \overrightarrow{MC} + \overrightarrow{CA} + \overrightarrow{AQ} = \overrightarrow{MC} + \overrightarrow{CA} + \overrightarrow{MC} = 2\overrightarrow{MC} + \overrightarrow{CA}\)`,
+                'MH.lesson_Y2Geo_transl3a.equation1e': String.raw`\(\overrightarrow{MN} = \overrightarrow{MC} + \overrightarrow{CN} = \overrightarrow{MC} + \frac{1}{2}\overrightarrow{CA}\)`,
+                'MH.lesson_Y2Geo_transl3a.step1aSolution3': String.raw`Thus \(\overrightarrow{MN} = \frac{1}{2}\overrightarrow{MQ}\), so M, N, Q are collinear with N as midpoint of [MQ].`,
+                'MH.lesson_Y2Geo_transl3a.step1bTitle': String.raw`2) Let I and J be two distinct points and O the midpoint of [IJ]. Let I', J', and O' be their respective images under a translation t.`,
+                'MH.lesson_Y2Geo_transl3a.step1bQuestion': 'Show that O\' is the midpoint of [I\'J\'].',
+                'MH.lesson_Y2Geo_transl3a.step1bSolution': String.raw`Let \(\vec{u}\) be the translation vector of t. Then:`,
+                'MH.lesson_Y2Geo_transl3a.equation1f': String.raw`\(\overrightarrow{II'} = \vec{u}\), \(\overrightarrow{JJ'} = \vec{u}\), \(\overrightarrow{OO'} = \vec{u}\)`,
+                'MH.lesson_Y2Geo_transl3a.step1bSolution2': 'Since O is midpoint of [IJ], we have \(\overrightarrow{OI} + \overrightarrow{OJ} = \vec{0}\) or \(\overrightarrow{OI} = -\overrightarrow{OJ}\).',
+                'MH.lesson_Y2Geo_transl3a.equation1g': String.raw`\(\overrightarrow{O'I'} = \overrightarrow{O'O} + \overrightarrow{OI} + \overrightarrow{II'} = -\vec{u} + \overrightarrow{OI} + \vec{u} = \overrightarrow{OI}\)`,
+                'MH.lesson_Y2Geo_transl3a.equation1h': String.raw`\(\overrightarrow{O'J'} = \overrightarrow{O'O} + \overrightarrow{OJ} + \overrightarrow{JJ'} = -\vec{u} + \overrightarrow{OJ} + \vec{u} = \overrightarrow{OJ}\)`,
+                'MH.lesson_Y2Geo_transl3a.step1bSolution3': String.raw`Therefore \(\overrightarrow{O'I'} = -\overrightarrow{O'J'}\), so O' is midpoint of [I'J'].`,
+                
+                // Part VII
+                'MH.lesson_Y2Geo_transl3a.part7Title': 'Part VII: Conservation of Barycenter',
+                'MH.lesson_Y2Geo_transl3a.part7Intro': 'Translations preserve barycenters: the image of a barycenter is the barycenter of the images with the same weights.',
+                
+                // Activity 2
+                'MH.lesson_Y2Geo_transl3a.activity2Title': 'Activity 2: Barycenter Conservation',
+                'MH.lesson_Y2Geo_transl3a.diagram3Title': String.raw`Figure: Triangle ABC with translation by vector \(\overrightarrow{BC}\)`,
+                'MH.lesson_Y2Geo_transl3a.diagram3Instructions': String.raw`Triangle ABC with O midpoint of [BC]. Images A', C', O' under translation t with vector \(\overrightarrow{BC}\).`,
+                'MH.lesson_Y2Geo_transl3a.diagram4Title': 'Figure: Barycenter G of (I,a) and (J,b) and its image G\'',
+                'MH.lesson_Y2Geo_transl3a.diagram4Instructions': 'Points I, J with barycenter G. Their images I\', J\', G\' under translation t.',
+                'MH.lesson_Y2Geo_transl3a.step2aTitle': String.raw`1) Let ABC be a triangle, O the midpoint of [BC], and t the translation of vector \(\overrightarrow{BC}\).`,
+                'MH.lesson_Y2Geo_transl3a.step2aQuestion': 'Construct points A\', C\', and O\' as images of A, C, and O respectively under t.',
+                'MH.lesson_Y2Geo_transl3a.step2bTitle': '2) Let M be the intersection point of lines (BA\') and (AO).',
+                'MH.lesson_Y2Geo_transl3a.step2bQuestion': 'Show that M is the centroid (center of gravity) of triangle ABC.',
+                'MH.lesson_Y2Geo_transl3a.step2bSolution': String.raw`Since t translates by \(\overrightarrow{BC}\), we have A' = t(A) so \(\overrightarrow{AA'} = \overrightarrow{BC}\).`,
+                'MH.lesson_Y2Geo_transl3a.equation2a': 'In parallelogram AA\'CB, (BA\') and (AC) are diagonals intersecting at their midpoint.',
+                'MH.lesson_Y2Geo_transl3a.step2bSolution2': 'Line (AO) is median from A to [BC]. The intersection M of (BA\') and (AO) is the centroid because:',
+                'MH.lesson_Y2Geo_transl3a.equation2b': 'In triangle ABC, medians intersect at centroid. Since (BA\') is line through B parallel to (AC) through A\', and (AO) is median, their intersection divides median in ratio 2:1 from vertex.',
+                'MH.lesson_Y2Geo_transl3a.step2cTitle': '3) Let N be the intersection point of (AC\') and (A\'O\').',
+                'MH.lesson_Y2Geo_transl3a.step2cQuestion': 'a) What does N represent for triangle A\'CC\'?<br>b) Show that N is the image of point M under translation t.',
+                'MH.lesson_Y2Geo_transl3a.step2cSolution': 'a) N is the centroid of triangle A\'CC\'. Since A\' = t(A), C\' = t(C), and t preserves barycenters.',
+                'MH.lesson_Y2Geo_transl3a.step2cSolution2': 'b) Since t preserves intersections and M is centroid of ABC, N = t(M) is centroid of t(ABC) = A\'BC\'.',
+                'MH.lesson_Y2Geo_transl3a.equation2c': String.raw`\(\overrightarrow{MN} = \overrightarrow{BC} = \vec{u}\)`,
+                'MH.lesson_Y2Geo_transl3a.step2dTitle': String.raw`4) Let I and J be two points in the plane and a, b two real numbers such that a + b ≠ 0. Let G be the barycenter of (I, a) and (J, b). Let I', J', and G' be the respective images of I, J, and G under a translation.`,
+                'MH.lesson_Y2Geo_transl3a.step2dQuestion': 'Show that G\' is the barycenter of (I\', a) and (J\', b).',
+                'MH.lesson_Y2Geo_transl3a.step2dSolution': String.raw`Let \(\vec{u}\) be translation vector. By definition of barycenter:`,
+                'MH.lesson_Y2Geo_transl3a.equation2d': String.raw`\(a\overrightarrow{GI} + b\overrightarrow{GJ} = \vec{0}\)`,
+                'MH.lesson_Y2Geo_transl3a.step2dSolution2': String.raw`Under translation t: I' = I + \(\vec{u}\), J' = J + \(\vec{u}\), G' = G + \(\vec{u}\).`,
+                'MH.lesson_Y2Geo_transl3a.equation2e': String.raw`\(a\overrightarrow{G'I'} + b\overrightarrow{G'J'} = a(\overrightarrow{G'G} + \overrightarrow{GI} + \overrightarrow{II'}) + b(\overrightarrow{G'G} + \overrightarrow{GJ} + \overrightarrow{JJ'})\)`,
+                'MH.lesson_Y2Geo_transl3a.equation2f': String.raw`\(= a(-\vec{u} + \overrightarrow{GI} + \vec{u}) + b(-\vec{u} + \overrightarrow{GJ} + \vec{u}) = a\overrightarrow{GI} + b\overrightarrow{GJ} = \vec{0}\)`,
+                'MH.lesson_Y2Geo_transl3a.step2dSolution3': 'Thus G\' is barycenter of (I\', a) and (J\', b).',
+                
+                // Part VIII
+                'MH.lesson_Y2Geo_transl3a.part8Title': 'Part VIII: Conservation of Parallelism and Orthogonality',
+                'MH.lesson_Y2Geo_transl3a.part8Intro': 'Translations preserve parallelism and orthogonality between lines, as well as tangency between lines and circles.',
+                
+                // Activity 3
+                'MH.lesson_Y2Geo_transl3a.activity3Title': 'Activity 3: Isometric Triangles and Quadrilaterals',
+                'MH.lesson_Y2Geo_transl3a.diagram5Title': 'Figure: Triangle MNP and its image M\'N\'P\' under translation',
+                'MH.lesson_Y2Geo_transl3a.diagram5Instructions': 'Triangle MNP and its translated image M\'N\'P\'. Show they are isometric.',
+                'MH.lesson_Y2Geo_transl3a.diagram6Title': 'Figure: Rectangle ABCD and its image A\'B\'C\'D\' under translation',
+                'MH.lesson_Y2Geo_transl3a.diagram6Instructions': 'Rectangle ABCD and its translated image A\'B\'C\'D\'.',
+                'MH.lesson_Y2Geo_transl3a.step3aTitle': '1) Let MNP be a triangle and M\'N\'P\' its image under a translation.',
+                'MH.lesson_Y2Geo_transl3a.step3aQuestion': 'Show that triangles MNP and M\'N\'P\' are isometric (congruent).',
+                'MH.lesson_Y2Geo_transl3a.step3aSolution': 'Since translation preserves distances:',
+                'MH.lesson_Y2Geo_transl3a.equation3a': '\(MN = M\'N\'\), \(NP = N\'P\'\), \(PM = P\'M\'\)',
+                'MH.lesson_Y2Geo_transl3a.step3aSolution2': 'Therefore by SSS (Side-Side-Side) criterion, triangles MNP and M\'N\'P\' are congruent.',
+                'MH.lesson_Y2Geo_transl3a.step3bTitle': '2) Let ABCD be a quadrilateral and A\'B\'C\'D\' its image under a translation.',
+                'MH.lesson_Y2Geo_transl3a.step3bQuestion': 'Determine the nature of quadrilateral A\'B\'C\'D\' in each case:<br>a) ABCD is a rectangle.<br>b) ABCD is a rhombus.',
+                'MH.lesson_Y2Geo_transl3a.step3bSolution': 'a) If ABCD is a rectangle, then A\'B\'C\'D\' is also a rectangle because:',
+                'MH.lesson_Y2Geo_transl3a.step3bSol1': 'Translation preserves lengths, so opposite sides remain equal',
+                'MH.lesson_Y2Geo_transl3a.step3bSol2': 'Translation preserves angles, so all angles remain 90°',
+                'MH.lesson_Y2Geo_transl3a.step3bSolution2': 'b) If ABCD is a rhombus, then A\'B\'C\'D\' is also a rhombus because:',
+                'MH.lesson_Y2Geo_transl3a.step3bSol3': 'Translation preserves lengths, so all sides remain equal',
+                'MH.lesson_Y2Geo_transl3a.step3bSol4': 'Translation preserves parallelism, so opposite sides remain parallel',
+                'MH.lesson_Y2Geo_transl3a.step3cTitle': '3) What can we say about the image of a polygon under a translation?',
+                'MH.lesson_Y2Geo_transl3a.step3cSolution': 'The image of any polygon under a translation is:',
+                'MH.lesson_Y2Geo_transl3a.step3cSol1': 'Congruent to the original polygon (same shape and size)',
+                'MH.lesson_Y2Geo_transl3a.step3cSol2': 'All corresponding sides are parallel',
+                'MH.lesson_Y2Geo_transl3a.step3cSol3': 'All corresponding angles are equal',
+                'MH.lesson_Y2Geo_transl3a.step3cSol4': 'The orientation is preserved',
+                
+                // Part IX
+                'MH.lesson_Y2Geo_transl3a.part9Title': 'Part IX: Conservation of Angles',
+                'MH.lesson_Y2Geo_transl3a.part9Intro': 'Translations preserve angle measures: the image of an angle is an angle with the same measure.',
+                
+                // Activity 4
+                'MH.lesson_Y2Geo_transl3a.activity4Title': 'Activity 4: Angle Conservation',
+                'MH.lesson_Y2Geo_transl3a.diagram7Title': 'Figure: Angle xOy and its image x\'O\'y\' under translation',
+                'MH.lesson_Y2Geo_transl3a.diagram7Instructions': 'Angle ∠xOy and its translated image ∠x\'O\'y\'. Show they are equal.',
+                'MH.lesson_Y2Geo_transl3a.step4Title': String.raw`Let t be a translation of vector \(\vec{u}\) and [Ox, Oy] an angle sector. Let [O'x') and [O'y') be the respective images of half-lines [Ox) and [Oy) under translation t.`,
+                'MH.lesson_Y2Geo_transl3a.step4Question': String.raw`Show that \(\angle xOy = \angle x'O'y'\).`,
+                'MH.lesson_Y2Geo_transl3a.step4Solution': String.raw`Let \(\vec{u} = \overrightarrow{OO'}\). Then for any point X on [Ox) and Y on [Oy), we have:`,
+                'MH.lesson_Y2Geo_transl3a.equation4a': String.raw`\(X' = t(X) = X + \vec{u}\), \(Y' = t(Y) = Y + \vec{u}\)`,
+                'MH.lesson_Y2Geo_transl3a.step4Solution2': 'Consider triangles OXY and O\'X\'Y\'. We have:',
+                'MH.lesson_Y2Geo_transl3a.equation4b': String.raw`\(\overrightarrow{O'X'} = \overrightarrow{O'O} + \overrightarrow{OX} + \overrightarrow{XX'} = -\vec{u} + \overrightarrow{OX} + \vec{u} = \overrightarrow{OX}\)`,
+                'MH.lesson_Y2Geo_transl3a.equation4c': String.raw`\(\overrightarrow{O'Y'} = \overrightarrow{OY}\) (similarly)`,
+                'MH.lesson_Y2Geo_transl3a.step4Solution3': 'Thus triangles OXY and O\'X\'Y\' have corresponding sides equal, so they are congruent. Therefore, \(\angle XOY = \angle X\'O\'Y\'\).',
+                
+                // Summary
+                'MH.lesson_Y2Geo_transl3a.summaryTitle': 'Comprehensive Summary',
+                'MH.lesson_Y2Geo_transl3a.summary1Title': 'Conservation of Barycenter',
+                'MH.lesson_Y2Geo_transl3a.summary1Item1': 'Translation preserves the midpoint.',
+                'MH.lesson_Y2Geo_transl3a.summary1Item2': 'Translation preserves the barycenter.',
+                'MH.lesson_Y2Geo_transl3a.summary2Title': 'Conservation of Parallelism, Orthogonality and Contact',
+                'MH.lesson_Y2Geo_transl3a.summary2Item1': 'The images under a translation of two parallel lines are two parallel lines.',
+                'MH.lesson_Y2Geo_transl3a.summary2Item2': 'The images under a translation of two perpendicular lines are two perpendicular lines.',
+                'MH.lesson_Y2Geo_transl3a.summary2Item3': 'If a line and a circle are tangent, then their images under a translation are tangent.',
+                'MH.lesson_Y2Geo_transl3a.summary3Title': 'Conservation of Angles',
+                'MH.lesson_Y2Geo_transl3a.summary3Text': 'Translations preserve angle measures: the image of an angle is an angle with the same measure.',
+                'MH.lesson_Y2Geo_transl3a.conclusionTitle': 'Conclusion',
+                'MH.lesson_Y2Geo_transl3a.keyConceptsTitle': 'Key Concepts Mastered',
+                'MH.lesson_Y2Geo_transl3a.concept1': 'Conservation of midpoints under translations',
+                'MH.lesson_Y2Geo_transl3a.concept2': 'Conservation of barycenters under translations',
+                'MH.lesson_Y2Geo_transl3a.concept3': 'Translation of centroids in triangles',
+                'MH.lesson_Y2Geo_transl3a.concept4': 'Preservation of parallelism and orthogonality',
+                'MH.lesson_Y2Geo_transl3a.concept5': 'Isometric nature of translated figures',
+                'MH.lesson_Y2Geo_transl3a.concept6': 'Angle conservation under translations',
+                'MH.lesson_Y2Geo_transl3a.concept7': 'Properties of translated quadrilaterals',
+                'MH.lesson_Y2Geo_transl3a.finalThought': 'The properties studied in this lesson complete our understanding of translations as isometric transformations. Their ability to preserve midpoints, barycenters, parallelism, orthogonality, and angles while moving figures makes them indispensable tools in geometric proofs, constructions, and applications across mathematics and physics.',
+                
+                // Footer
+                'MH.footer.developer': 'Developer',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Links',
+                'MH.footer.terms': 'Terms of Use',
+                'MH.footer.privacy': 'Privacy Policy'
+            },
+            'ar': {
+                // ترجمات عامة
+                'MH.general.homeTooltip': 'الذهاب إلى الصفحة الرئيسية',
+                'MH.general.install': 'تثبيت التطبيق',
+                'MH.general.installSuccess': 'تم تثبيت Mathematics Hub بنجاح!',
+                'MH.general.enableNotifications': 'تفعيل الإشعارات',
+                'MH.general.notificationEnabled': 'تم تفعيل الإشعارات! ستتلقى التحديثات الآن.',
+                'MH.general.title': 'مركز الرياضيات',
+                'MH.general.theme': 'السمة',
+                'MH.general.language': 'اللغة',
+                'MH.lesson_Y2Geo_transl3a.showSolution': 'إظهار الحل',
+                'MH.lesson_Y2Geo_transl3a.hideSolution': 'إخفاء الحل',
+                'MH.lesson_Y2Geo_transl3a.constructButton': 'ابنِ',
+                
+                // ترجمات درس الهندسة
+                'MH.lesson_Y2Geo_transl3a.title': 'الإنسحاب: الجزء 3',
+                'MH.lesson_Y2Geo_transl3a.subtitle': 'خصائص متقدمة للانسحاب: منتصف القطعة، مركز الثقل، التوازي والزوايا',
+                'MH.lesson_Y2Geo_transl3a.introduction': 'المقدمة',
+                'MH.lesson_Y2Geo_transl3a.introText1': 'في هذا الدرس الثالث عن الانسحابات، سنستكشف خصائص متقدمة تشمل الحفاظ على منتصف القطعة، مركز الثقل، التوازي، التعامد، والزوايا.',
+                'MH.lesson_Y2Geo_transl3a.introText2': 'تظهر هذه الخصائص سبب كون الانسحابات من أهم التحويلات في الهندسة، حيث تحافظ على العلاقات الهندسية الأساسية أثناء نقل الأشكال في المستوى.',
+                
+                // الجزء السادس
+                'MH.lesson_Y2Geo_transl3a.part6Title': 'الجزء السادس: الحفاظ على منتصف القطعة',
+                'MH.lesson_Y2Geo_transl3a.part6Intro': 'الانسحابات تحافظ على منتصف القطعة: صورة منتصف قطعة هي منتصف صورة القطعة.',
+                
+                // النشاط 1
+                'MH.lesson_Y2Geo_transl3a.activity1Title': 'النشاط 1: الحفاظ على منتصف القطعة',
+                'MH.lesson_Y2Geo_transl3a.diagram1Title': 'الشكل: المثلث ABC مع منتصفات M، N، P',
+                'MH.lesson_Y2Geo_transl3a.diagram1Instructions': 'المثلث ABC مع منتصفات M، N، P. الانسحاب t له المتجه MC.',
+                'MH.lesson_Y2Geo_transl3a.diagram2Title': 'الشكل: النقاط I، J، O وصورها I\'، J\'، O\' تحت الانسحاب',
+                'MH.lesson_Y2Geo_transl3a.diagram2Instructions': 'النقطتان I و J مع المنتصف O. صورهم I\'، J\'، O\' تحت الانسحاب t.',
+                'MH.lesson_Y2Geo_transl3a.step1aTitle': String.raw`1) ليكن ABC مثلثًا و M، N، P منتصفات القطع [BC]، [AC]، [AB] على التوالي. ليكن t الانسحاب بمتجه \(\overrightarrow{MC}\).`,
+                'MH.lesson_Y2Geo_transl3a.step1aQuestion': 'أ) حدد t(B) و t(P).<br>ب) لتكن Q صورة A تحت t. أظهر أن النقاط M، N، Q على استقامة واحدة. حدد موقع النقطة N على القطعة [MQ].',
+                'MH.lesson_Y2Geo_transl3a.step1aSolution': 'أ) بما أن t انسحاب بمتجه \\(\\overrightarrow{MC}\\):',
+                'MH.lesson_Y2Geo_transl3a.equation1a': String.raw`\(t(B) = B'\) بحيث \(\overrightarrow{BB'} = \overrightarrow{MC}\)`,
+                'MH.lesson_Y2Geo_transl3a.equation1b': String.raw`بما أن M منتصف [BC]، \(\overrightarrow{BM} = \overrightarrow{MC}\)، إذن \(B' = M\)`,
+                'MH.lesson_Y2Geo_transl3a.equation1c': String.raw`\(t(P) = P'\) بحيث \(\overrightarrow{PP'} = \overrightarrow{MC}\)`,
+                'MH.lesson_Y2Geo_transl3a.step1aSolution2': 'ب) Q = t(A) حيث \\(\\overrightarrow{AQ} = \\overrightarrow{MC}\\). بما أن N منتصف [AC]، لدينا \\(\\overrightarrow{AN} = \\overrightarrow{NC}\\).',
+                'MH.lesson_Y2Geo_transl3a.equation1d': String.raw`\(\overrightarrow{MQ} = \overrightarrow{MC} + \overrightarrow{CQ} = \overrightarrow{MC} + \overrightarrow{CA} + \overrightarrow{AQ} = \overrightarrow{MC} + \overrightarrow{CA} + \overrightarrow{MC} = 2\overrightarrow{MC} + \overrightarrow{CA}\)`,
+                'MH.lesson_Y2Geo_transl3a.equation1e': String.raw`\(\overrightarrow{MN} = \overrightarrow{MC} + \overrightarrow{CN} = \overrightarrow{MC} + \frac{1}{2}\overrightarrow{CA}\)`,
+                'MH.lesson_Y2Geo_transl3a.step1aSolution3': String.raw`إذن \(\overrightarrow{MN} = \frac{1}{2}\overrightarrow{MQ}\)، لذا M، N، Q على استقامة واحدة و N منتصف [MQ].`,
+                'MH.lesson_Y2Geo_transl3a.step1bTitle': String.raw`2) لتكن I و J نقطتين مختلفتين و O منتصف [IJ]. لتكن I'، J'، O' صورهم على التوالي تحت انسحاب t.`,
+                'MH.lesson_Y2Geo_transl3a.step1bQuestion': 'أظهر أن O\' منتصف [I\'J\'].',
+                'MH.lesson_Y2Geo_transl3a.step1bSolution': String.raw`ليكن \(\vec{u}\) متجه الانسحاب t. إذن:`,
+                'MH.lesson_Y2Geo_transl3a.equation1f': String.raw`\(\overrightarrow{II'} = \vec{u}\)، \(\overrightarrow{JJ'} = \vec{u}\)، \(\overrightarrow{OO'} = \vec{u}\)`,
+                'MH.lesson_Y2Geo_transl3a.step1bSolution2': 'بما أن O منتصف [IJ]، لدينا \\(\\overrightarrow{OI} + \\overrightarrow{OJ} = \\vec{0}\\) أو \\(\\overrightarrow{OI} = -\\overrightarrow{OJ}\\).',
+                'MH.lesson_Y2Geo_transl3a.equation1g': String.raw`\(\overrightarrow{O'I'} = \overrightarrow{O'O} + \overrightarrow{OI} + \overrightarrow{II'} = -\vec{u} + \overrightarrow{OI} + \vec{u} = \overrightarrow{OI}\)`,
+                'MH.lesson_Y2Geo_transl3a.equation1h': String.raw`\(\overrightarrow{O'J'} = \overrightarrow{O'O} + \overrightarrow{OJ} + \overrightarrow{JJ'} = -\vec{u} + \overrightarrow{OJ} + \vec{u} = \overrightarrow{OJ}\)`,
+                'MH.lesson_Y2Geo_transl3a.step1bSolution3': String.raw`لذلك \(\overrightarrow{O'I'} = -\overrightarrow{O'J'}\)، إذن O' منتصف [I'J'].`,
+                
+                // الجزء السابع
+                'MH.lesson_Y2Geo_transl3a.part7Title': 'الجزء السابع: الحفاظ على مركز الثقل',
+                'MH.lesson_Y2Geo_transl3a.part7Intro': 'الانسحابات تحافظ على مراكز الثقل: صورة مركز الثقل هي مركز ثقل الصور بنفس الأوزان.',
+                
+                // النشاط 2
+                'MH.lesson_Y2Geo_transl3a.activity2Title': 'النشاط 2: الحفاظ على مركز الثقل',
+                'MH.lesson_Y2Geo_transl3a.diagram3Title': String.raw`الشكل: المثلث ABC مع الانسحاب بمتجه \(\overrightarrow{BC}\)`,
+                'MH.lesson_Y2Geo_transl3a.diagram3Instructions': String.raw`المثلث ABC مع O منتصف [BC]. صور A'، C'، O' تحت الانسحاب t بمتجه \(\overrightarrow{BC}\).`,
+                'MH.lesson_Y2Geo_transl3a.diagram4Title': 'الشكل: مركز الثقل G لـ (I,a) و (J,b) وصورته G\'',
+                'MH.lesson_Y2Geo_transl3a.diagram4Instructions': 'النقطتان I، J مع مركز الثقل G. صورهم I\'، J\'، G\' تحت الانسحاب t.',
+                'MH.lesson_Y2Geo_transl3a.step2aTitle': String.raw`1) ليكن ABC مثلثًا، O منتصف [BC]، و t الانسحاب بمتجه \(\overrightarrow{BC}\).`,
+                'MH.lesson_Y2Geo_transl3a.step2aQuestion': 'ابنِ النقاط A\'، C\'، O\' كصور لـ A، C، O على التوالي تحت t.',
+                'MH.lesson_Y2Geo_transl3a.step2bTitle': '2) لتكن M نقطة تقاطع المستقيمين (BA\') و (AO).',
+                'MH.lesson_Y2Geo_transl3a.step2bQuestion': 'أظهر أن M مركز ثقل المثلث ABC.',
+                'MH.lesson_Y2Geo_transl3a.step2bSolution': String.raw`بما أن t ينسحب بـ \(\overrightarrow{BC}\)، لدينا A' = t(A) لذا \(\overrightarrow{AA'} = \overrightarrow{BC}\).`,
+                'MH.lesson_Y2Geo_transl3a.equation2a': 'في متوازي الأضلاع AA\'CB، (BA\') و (AC) قطران يتقاطعان في منتصفهما.',
+                'MH.lesson_Y2Geo_transl3a.step2bSolution2': 'الخط (AO) متوسط من A إلى [BC]. تقاطع M لـ (BA\') و (AO) هو مركز الثقل لأن:',
+                'MH.lesson_Y2Geo_transl3a.equation2b': 'في المثلث ABC، المتوسطات تتقاطع في مركز الثقل. بما أن (BA\') خط يمر بـ B يوازي (AC) عبر A\'، و (AO) متوسط، فإن تقاطعهما يقسم المتوسط بنسبة 2:1 من الرأس.',
+                'MH.lesson_Y2Geo_transl3a.step2cTitle': '3) لتكن N نقطة تقاطع (AC\') و (A\'O\').',
+                'MH.lesson_Y2Geo_transl3a.step2cQuestion': 'أ) ماذا تمثل N بالنسبة للمثلث A\'CC\'؟<br>ب) أظهر أن N صورة النقطة M تحت الانسحاب t.',
+                'MH.lesson_Y2Geo_transl3a.step2cSolution': 'أ) N مركز ثقل المثلث A\'CC\'. بما أن A\' = t(A)، C\' = t(C)، والانسحاب يحافظ على مراكز الثقل.',
+                'MH.lesson_Y2Geo_transl3a.step2cSolution2': 'ب) بما أن الانسحاب يحافظ على التقاطعات و M مركز ثقل ABC، فإن N = t(M) هو مركز ثقل t(ABC) = A\'BC\'.',
+                'MH.lesson_Y2Geo_transl3a.equation2c': String.raw`\(\overrightarrow{MN} = \overrightarrow{BC} = \vec{u}\)`,
+                'MH.lesson_Y2Geo_transl3a.step2dTitle': String.raw`4) لتكن I و J نقطتين في المستوى و a، b عددين حقيقيين بحيث a + b ≠ 0. ليكن G مركز ثقل (I, a) و (J, b). لتكن I'، J'، G' صور I، J، G على التوالي تحت انسحاب.`,
+                'MH.lesson_Y2Geo_transl3a.step2dQuestion': 'أظهر أن G\' مركز ثقل (I\'، a) و (J\'، b).',
+                'MH.lesson_Y2Geo_transl3a.step2dSolution': String.raw`ليكن \(\vec{u}\) متجه الانسحاب. حسب تعريف مركز الثقل:`,
+                'MH.lesson_Y2Geo_transl3a.equation2d': String.raw`\(a\overrightarrow{GI} + b\overrightarrow{GJ} = \vec{0}\)`,
+                'MH.lesson_Y2Geo_transl3a.step2dSolution2': String.raw`تحت الانسحاب t: I' = I + \(\vec{u}\)، J' = J + \(\vec{u}\)، G' = G + \(\vec{u}\).`,
+                'MH.lesson_Y2Geo_transl3a.equation2e': String.raw`\(a\overrightarrow{G'I'} + b\overrightarrow{G'J'} = a(\overrightarrow{G'G} + \overrightarrow{GI} + \overrightarrow{II'}) + b(\overrightarrow{G'G} + \overrightarrow{GJ} + \overrightarrow{JJ'})\)`,
+                'MH.lesson_Y2Geo_transl3a.equation2f': String.raw`\(= a(-\vec{u} + \overrightarrow{GI} + \vec{u}) + b(-\vec{u} + \overrightarrow{GJ} + \vec{u}) = a\overrightarrow{GI} + b\overrightarrow{GJ} = \vec{0}\)`,
+                'MH.lesson_Y2Geo_transl3a.step2dSolution3': 'إذن G\' مركز ثقل (I\'، a) و (J\'، b).',
+                
+                // الجزء الثامن
+                'MH.lesson_Y2Geo_transl3a.part8Title': 'الجزء الثامن: الحفاظ على التوازي والتعامد',
+                'MH.lesson_Y2Geo_transl3a.part8Intro': 'الانسحابات تحافظ على التوازي والتعامد بين المستقيمين، وكذلك التماس بين المستقيم والدائرة.',
+                
+                // النشاط 3
+                'MH.lesson_Y2Geo_transl3a.activity3Title': 'النشاط 3: مثلثات وأرباع متساوية القياس',
+                'MH.lesson_Y2Geo_transl3a.diagram5Title': 'الشكل: المثلث MNP وصورته M\'N\'P\' تحت الانسحاب',
+                'MH.lesson_Y2Geo_transl3a.diagram5Instructions': 'المثلث MNP وصورته المنقولة M\'N\'P\'. أظهر أنهما متساويا القياس.',
+                'MH.lesson_Y2Geo_transl3a.diagram6Title': 'الشكل: المستطيل ABCD وصورته A\'B\'C\'D\' تحت الانسحاب',
+                'MH.lesson_Y2Geo_transl3a.diagram6Instructions': 'المستطيل ABCD وصورته المنقولة A\'B\'C\'D\'.',
+                'MH.lesson_Y2Geo_transl3a.step3aTitle': '1) ليكن MNP مثلثًا و M\'N\'P\' صورته تحت انسحاب.',
+                'MH.lesson_Y2Geo_transl3a.step3aQuestion': 'أظهر أن المثلثين MNP و M\'N\'P\' متساويا القياس (متطابقان).',
+                'MH.lesson_Y2Geo_transl3a.step3aSolution': 'بما أن الانسحاب يحافظ على المسافات:',
+                'MH.lesson_Y2Geo_transl3a.equation3a': '\(MN = M\'N\'\)، \(NP = N\'P\'\)، \(PM = P\'M\'\)',
+                'MH.lesson_Y2Geo_transl3a.step3aSolution2': 'لذلك حسب معيار الضلع-الضلع-الضلع (SSS)، المثلثان MNP و M\'N\'P\' متطابقان.',
+                'MH.lesson_Y2Geo_transl3a.step3bTitle': '2) ليكن ABCD رباعي أضلاع و A\'B\'C\'D\' صورته تحت انسحاب.',
+                'MH.lesson_Y2Geo_transl3a.step3bQuestion': 'حدد طبيعة الرباعي A\'B\'C\'D\' في كل حالة:<br>أ) ABCD مستطيل.<br>ب) ABCD معين.',
+                'MH.lesson_Y2Geo_transl3a.step3bSolution': 'أ) إذا كان ABCD مستطيلاً، فإن A\'B\'C\'D\' مستطيل أيضًا لأن:',
+                'MH.lesson_Y2Geo_transl3a.step3bSol1': 'الانسحاب يحافظ على الأطوال، لذا تبقى الأضلاع المتقابلة متساوية',
+                'MH.lesson_Y2Geo_transl3a.step3bSol2': 'الانسحاب يحافظ على الزوايا، لذا تبقى جميع الزوايا 90°',
+                'MH.lesson_Y2Geo_transl3a.step3bSolution2': 'ب) إذا كان ABCD معينًا، فإن A\'B\'C\'D\' معين أيضًا لأن:',
+                'MH.lesson_Y2Geo_transl3a.step3bSol3': 'الانسحاب يحافظ على الأطوال، لذا تبقى جميع الأضلاع متساوية',
+                'MH.lesson_Y2Geo_transl3a.step3bSol4': 'الانسحاب يحافظ على التوازي، لذا تبقى الأضلاع المتقابلة متوازية',
+                'MH.lesson_Y2Geo_transl3a.step3cTitle': '3) ماذا يمكننا قوله عن صورة مضلع تحت انسحاب؟',
+                'MH.lesson_Y2Geo_transl3a.step3cSolution': 'صورة أي مضلع تحت انسحاب هي:',
+                'MH.lesson_Y2Geo_transl3a.step3cSol1': 'متساوية القياس مع المضلع الأصلي (نفس الشكل والحجم)',
+                'MH.lesson_Y2Geo_transl3a.step3cSol2': 'جميع الأضلاع المتناظرة متوازية',
+                'MH.lesson_Y2Geo_transl3a.step3cSol3': 'جميع الزوايا المتناظرة متساوية',
+                'MH.lesson_Y2Geo_transl3a.step3cSol4': 'الاتجاه محفوظ',
+                
+                // الجزء التاسع
+                'MH.lesson_Y2Geo_transl3a.part9Title': 'الجزء التاسع: الحفاظ على الزوايا',
+                'MH.lesson_Y2Geo_transl3a.part9Intro': 'الانسحابات تحافظ على قياسات الزوايا: صورة زاوية هي زاوية بنفس القياس.',
+                
+                // النشاط 4
+                'MH.lesson_Y2Geo_transl3a.activity4Title': 'النشاط 4: الحفاظ على الزوايا',
+                'MH.lesson_Y2Geo_transl3a.diagram7Title': 'الشكل: الزاوية xOy وصورتها x\'O\'y\' تحت الانسحاب',
+                'MH.lesson_Y2Geo_transl3a.diagram7Instructions': 'الزاوية ∠xOy وصورتها المنقولة ∠x\'O\'y\'. أظهر أنهما متساويتان.',
+                'MH.lesson_Y2Geo_transl3a.step4Title': String.raw`ليكن t انسحابًا بمتجه \(\vec{u}\) و [Ox, Oy] قطاع زاوية. لتكن [O'x') و [O'y') صورتي نصفي المستقيمين [Ox) و [Oy) على التوالي تحت الانسحاب t.`,
+                'MH.lesson_Y2Geo_transl3a.step4Question': String.raw`أظهر أن \(\angle xOy = \angle x'O'y'\).`,
+                'MH.lesson_Y2Geo_transl3a.step4Solution': String.raw`ليكن \(\vec{u} = \overrightarrow{OO'}\). إذن لأي نقطة X على [Ox) و Y على [Oy)، لدينا:`,
+                'MH.lesson_Y2Geo_transl3a.equation4a': String.raw`\(X' = t(X) = X + \vec{u}\)، \(Y' = t(Y) = Y + \vec{u}\)`,
+                'MH.lesson_Y2Geo_transl3a.step4Solution2': 'اعتبر المثلثين OXY و O\'X\'Y\'. لدينا:',
+                'MH.lesson_Y2Geo_transl3a.equation4b': String.raw`\(\overrightarrow{O'X'} = \overrightarrow{O'O} + \overrightarrow{OX} + \overrightarrow{XX'} = -\vec{u} + \overrightarrow{OX} + \vec{u} = \overrightarrow{OX}\)`,
+                'MH.lesson_Y2Geo_transl3a.equation4c': String.raw`\(\overrightarrow{O'Y'} = \overrightarrow{OY}\) (بالمثل)`,
+                'MH.lesson_Y2Geo_transl3a.step4Solution3': String.raw`إذن المثلثان OXY و O'X'Y' لهما أضلاع متناظرة متساوية، لذا هما متطابقان. لذلك، \(\angle xOy = \angle x'O'y'\).`,
+                
+                // الملخص
+                'MH.lesson_Y2Geo_transl3a.summaryTitle': 'ملخص شامل',
+                'MH.lesson_Y2Geo_transl3a.summary1Title': 'الحفاظ على مركز الثقل',
+                'MH.lesson_Y2Geo_transl3a.summary1Item1': 'الانسحاب يحافظ على منتصف القطعة.',
+                'MH.lesson_Y2Geo_transl3a.summary1Item2': 'الانسحاب يحافظ على مركز الثقل.',
+                'MH.lesson_Y2Geo_transl3a.summary2Title': 'الحفاظ على التوازي والتعامد والتماس',
+                'MH.lesson_Y2Geo_transl3a.summary2Item1': 'صورا مستقيمين متوازيين تحت انسحاب هما مستقيمان متوازيان.',
+                'MH.lesson_Y2Geo_transl3a.summary2Item2': 'صورا مستقيمين متعامدين تحت انسحاب هما مستقيمان متعامدان.',
+                'MH.lesson_Y2Geo_transl3a.summary2Item3': 'إذا كان مستقيم ودائرة متماسين، فإن صورتهما تحت انسحاب تكونان متماسين.',
+                'MH.lesson_Y2Geo_transl3a.summary3Title': 'الحفاظ على الزوايا',
+                'MH.lesson_Y2Geo_transl3a.summary3Text': 'الانسحابات تحافظ على قياسات الزوايا: صورة زاوية هي زاوية بنفس القياس.',
+                'MH.lesson_Y2Geo_transl3a.conclusionTitle': 'الخلاصة',
+                'MH.lesson_Y2Geo_transl3a.keyConceptsTitle': 'المفاهيم الرئيسية التي تم إتقانها',
+                'MH.lesson_Y2Geo_transl3a.concept1': 'الحفاظ على منتصف القطعة تحت الانسحابات',
+                'MH.lesson_Y2Geo_transl3a.concept2': 'الحفاظ على مراكز الثقل تحت الانسحابات',
+                'MH.lesson_Y2Geo_transl3a.concept3': 'ترجمة مراكز ثقل المثلثات',
+                'MH.lesson_Y2Geo_transl3a.concept4': 'الحفاظ على التوازي والتعامد',
+                'MH.lesson_Y2Geo_transl3a.concept5': 'طبيعة الأشكال المنقولة المتساوية القياس',
+                'MH.lesson_Y2Geo_transl3a.concept6': 'الحفاظ على الزوايا تحت الانسحابات',
+                'MH.lesson_Y2Geo_transl3a.concept7': 'خصائص الرباعيات المنقولة',
+                'MH.lesson_Y2Geo_transl3a.finalThought': 'الخصائص التي درسناها في هذا الدرس تكمل فهمنا للانسحابات كتحويلات متساوية القياس. قدرتها على الحفاظ على منتصف القطعة، مراكز الثقل، التوازي، التعامد، والزوايا أثناء نقل الأشكال تجعلها أدوات لا غنى عنها في البراهين والإنشاءات الهندسية وتطبيقاتها عبر الرياضيات والفيزياء.',
+                
+                // التذييل
+                'MH.footer.developer': 'المطور',
+                'MH.footer.version': 'الإصدار',
+                'MH.footer.links': 'الروابط',
+                'MH.footer.terms': 'شروط الاستخدام',
+                'MH.footer.privacy': 'سياسة الخصوصية'
+            },
+            'fr': {
+                // Traductions générales
+                'MH.general.homeTooltip': 'Aller à l\'accueil',
+                'MH.general.install': 'Installer l\'App',
+                'MH.general.installSuccess': 'Mathematics Hub installé avec succès!',
+                'MH.general.enableNotifications': 'Activer les notifications',
+                'MH.general.notificationEnabled': 'Notifications activées! Vous recevrez maintenant des mises à jour.',
+                'MH.general.title': 'Centre de Mathématiques',
+                'MH.general.theme': 'Thème',
+                'MH.general.language': 'Langue',
+                'MH.lesson_Y2Geo_transl3a.showSolution': 'Afficher la Solution',
+                'MH.lesson_Y2Geo_transl3a.hideSolution': 'Masquer la Solution',
+                'MH.lesson_Y2Geo_transl3a.constructButton': 'Construire',
+                
+                // Traductions de la leçon de géométrie
+                'MH.lesson_Y2Geo_transl3a.title': 'Translation : Partie 3',
+                'MH.lesson_Y2Geo_transl3a.subtitle': 'Propriétés Avancées des Translations : Milieu, Barycentre, Parallélisme et Angles',
+                'MH.lesson_Y2Geo_transl3a.introduction': 'Introduction',
+                'MH.lesson_Y2Geo_transl3a.introText1': 'Dans cette troisième leçon sur les translations, nous explorerons des propriétés avancées incluant la conservation du milieu, du barycentre, du parallélisme, de l\'orthogonalité et des angles.',
+                'MH.lesson_Y2Geo_transl3a.introText2': 'Ces propriétés démontrent pourquoi les translations sont parmi les transformations les plus fondamentales en géométrie, préservant les relations géométriques essentielles tout en déplaçant les figures dans le plan.',
+                
+                // Partie VI
+                'MH.lesson_Y2Geo_transl3a.part6Title': 'Partie VI : Conservation du milieu',
+                'MH.lesson_Y2Geo_transl3a.part6Intro': 'Les translations conservent les milieux : l\'image du milieu d\'un segment est le milieu du segment image.',
+                
+                // Activité 1
+                'MH.lesson_Y2Geo_transl3a.activity1Title': 'Activité 1 : Conservation du milieu',
+                'MH.lesson_Y2Geo_transl3a.diagram1Title': 'Figure : Triangle ABC avec milieux M, N, P',
+                'MH.lesson_Y2Geo_transl3a.diagram1Instructions': 'Triangle ABC avec milieux M, N, P. Translation t de vecteur MC.',
+                'MH.lesson_Y2Geo_transl3a.diagram2Title': 'Figure : Points I, J, O et leurs images I\', J\', O\' par translation',
+                'MH.lesson_Y2Geo_transl3a.diagram2Instructions': 'Points I et J avec milieu O. Leurs images I\', J\', O\' par translation t.',
+                'MH.lesson_Y2Geo_transl3a.step1aTitle': String.raw`1) Soient ABC un triangle et M, N et P les milieux respectifs des segments [BC], [AC] et [AB]. On note t la translation de vecteur \(\overrightarrow{MC}\).`,
+                'MH.lesson_Y2Geo_transl3a.step1aQuestion': 'a) Déterminer t(B) et t(P).<br>b) Soit Q l\'image de A par t. Montrer que les points M, N et Q sont alignés. Préciser la position du point N sur le segment [MQ].',
+                'MH.lesson_Y2Geo_transl3a.step1aSolution': 'a) Puisque t est translation de vecteur \\(\\overrightarrow{MC}\\) :',
+                'MH.lesson_Y2Geo_transl3a.equation1a': String.raw`\(t(B) = B'\) tel que \(\overrightarrow{BB'} = \overrightarrow{MC}\)`,
+                'MH.lesson_Y2Geo_transl3a.equation1b': String.raw`Puisque M est milieu de [BC], \(\overrightarrow{BM} = \overrightarrow{MC}\), donc \(B' = M\)`,
+                'MH.lesson_Y2Geo_transl3a.equation1c': String.raw`\(t(P) = P'\) tel que \(\overrightarrow{PP'} = \overrightarrow{MC}\)`,
+                'MH.lesson_Y2Geo_transl3a.step1aSolution2': 'b) Q = t(A) avec \\(\\overrightarrow{AQ} = \\overrightarrow{MC}\\). Puisque N est milieu de [AC], on a \\(\\overrightarrow{AN} = \\overrightarrow{NC}\\).',
+                'MH.lesson_Y2Geo_transl3a.equation1d': String.raw`\(\overrightarrow{MQ} = \overrightarrow{MC} + \overrightarrow{CQ} = \overrightarrow{MC} + \overrightarrow{CA} + \overrightarrow{AQ} = \overrightarrow{MC} + \overrightarrow{CA} + \overrightarrow{MC} = 2\overrightarrow{MC} + \overrightarrow{CA}\)`,
+                'MH.lesson_Y2Geo_transl3a.equation1e': String.raw`\(\overrightarrow{MN} = \overrightarrow{MC} + \overrightarrow{CN} = \overrightarrow{MC} + \frac{1}{2}\overrightarrow{CA}\)`,
+                'MH.lesson_Y2Geo_transl3a.step1aSolution3': String.raw`Ainsi \(\overrightarrow{MN} = \frac{1}{2}\overrightarrow{MQ}\), donc M, N, Q sont alignés avec N milieu de [MQ].`,
+                'MH.lesson_Y2Geo_transl3a.step1bTitle': String.raw`2) Soient I et J deux points distincts et O le milieu de [IJ]. On désigne par I', J' et O' leurs images respectives par une translation t.`,
+                'MH.lesson_Y2Geo_transl3a.step1bQuestion': 'Montrer que O\' est le milieu de [I\'J\'].',
+                'MH.lesson_Y2Geo_transl3a.step1bSolution': String.raw`Soit \(\vec{u}\) le vecteur de translation t. Alors :`,
+                'MH.lesson_Y2Geo_transl3a.equation1f': String.raw`\(\overrightarrow{II'} = \vec{u}\), \(\overrightarrow{JJ'} = \vec{u}\), \(\overrightarrow{OO'} = \vec{u}\)`,
+                'MH.lesson_Y2Geo_transl3a.step1bSolution2': 'Puisque O est milieu de [IJ], on a \\(\\overrightarrow{OI} + \\overrightarrow{OJ} = \\vec{0}\\) ou \\(\\overrightarrow{OI} = -\\overrightarrow{OJ}\\).',
+                'MH.lesson_Y2Geo_transl3a.equation1g': String.raw`\(\overrightarrow{O'I'} = \overrightarrow{O'O} + \overrightarrow{OI} + \overrightarrow{II'} = -\vec{u} + \overrightarrow{OI} + \vec{u} = \overrightarrow{OI}\)`,
+                'MH.lesson_Y2Geo_transl3a.equation1h': String.raw`\(\overrightarrow{O'J'} = \overrightarrow{O'O} + \overrightarrow{OJ} + \overrightarrow{JJ'} = -\vec{u} + \overrightarrow{OJ} + \vec{u} = \overrightarrow{OJ}\)`,
+                'MH.lesson_Y2Geo_transl3a.step1bSolution3': String.raw`Donc \(\overrightarrow{O'I'} = -\overrightarrow{O'J'}\), ainsi O' est milieu de [I'J'].`,
+                
+                // Partie VII
+                'MH.lesson_Y2Geo_transl3a.part7Title': 'Partie VII : Conservation du barycentre',
+                'MH.lesson_Y2Geo_transl3a.part7Intro': 'Les translations conservent les barycentres : l\'image d\'un barycentre est le barycentre des images avec les mêmes coefficients.',
+                
+                // Activité 2
+                'MH.lesson_Y2Geo_transl3a.activity2Title': 'Activité 2 : Conservation du barycentre',
+                'MH.lesson_Y2Geo_transl3a.diagram3Title': String.raw`Figure : Triangle ABC avec translation de vecteur \(\overrightarrow{BC}\)`,
+                'MH.lesson_Y2Geo_transl3a.diagram3Instructions': String.raw`Triangle ABC avec O milieu de [BC]. Images A', C', O' par translation t de vecteur \(\overrightarrow{BC}\).`,
+                'MH.lesson_Y2Geo_transl3a.diagram4Title': 'Figure : Barycentre G de (I,a) et (J,b) et son image G\'',
+                'MH.lesson_Y2Geo_transl3a.diagram4Instructions': 'Points I, J avec barycentre G. Leurs images I\', J\', G\' par translation t.',
+                'MH.lesson_Y2Geo_transl3a.step2aTitle': String.raw`1) Soit ABC un triangle, O le milieu de [BC] et t la translation de vecteur \(\overrightarrow{BC}\).`,
+                'MH.lesson_Y2Geo_transl3a.step2aQuestion': 'Construire les points A\', C\' et O\' images respectives de A, C et O par t.',
+                'MH.lesson_Y2Geo_transl3a.step2bTitle': '2) On désigne par M le point d\'intersection des droites (BA\') et (AO).',
+                'MH.lesson_Y2Geo_transl3a.step2bQuestion': 'Montrer que M est le centre de gravité du triangle ABC.',
+                'MH.lesson_Y2Geo_transl3a.step2bSolution': String.raw`Puisque t translate de \(\overrightarrow{BC}\), on a A' = t(A) donc \(\overrightarrow{AA'} = \overrightarrow{BC}\).`,
+                'MH.lesson_Y2Geo_transl3a.equation2a': 'Dans le parallélogramme AA\'CB, (BA\') et (AC) sont des diagonales se coupant en leur milieu.',
+                'MH.lesson_Y2Geo_transl3a.step2bSolution2': 'La droite (AO) est médiane de A vers [BC]. L\'intersection M de (BA\') et (AO) est le centre de gravité car :',
+                'MH.lesson_Y2Geo_transl3a.equation2b': 'Dans le triangle ABC, les médianes se coupent au centre de gravité. Puisque (BA\') est la droite passant par B parallèle à (AC) passant par A\', et (AO) est médiane, leur intersection divise la médiane dans le rapport 2:1 depuis le sommet.',
+                'MH.lesson_Y2Geo_transl3a.step2cTitle': '3) Soit N le point d\'intersection de (AC\') et (A\'O\').',
+                'MH.lesson_Y2Geo_transl3a.step2cQuestion': 'a) Que représente N pour le triangle A\'CC\' ?<br>b) Montrer que N est l\'image du point M par la translation t.',
+                'MH.lesson_Y2Geo_transl3a.step2cSolution': 'a) N est le centre de gravité du triangle A\'CC\'. Puisque A\' = t(A), C\' = t(C), et t conserve les barycentres.',
+                'MH.lesson_Y2Geo_transl3a.step2cSolution2': 'b) Puisque t conserve les intersections et M est centre de gravité de ABC, N = t(M) est centre de gravité de t(ABC) = A\'BC\'.',
+                'MH.lesson_Y2Geo_transl3a.equation2c': String.raw`\(\overrightarrow{MN} = \overrightarrow{BC} = \vec{u}\)`,
+                'MH.lesson_Y2Geo_transl3a.step2dTitle': String.raw`4) Soient I et J deux points du plan et a et b deux réels tels que a + b ≠ 0. On désigne par G le barycentre de (I, a) et (J, b) et par I', J' et G' les images respectives de I, J et G par une translation.`,
+                'MH.lesson_Y2Geo_transl3a.step2dQuestion': 'Montrer que G\' est le barycentre de (I\', a) et (J\', b).',
+                'MH.lesson_Y2Geo_transl3a.step2dSolution': String.raw`Soit \(\vec{u}\) le vecteur de translation. Par définition du barycentre :`,
+                'MH.lesson_Y2Geo_transl3a.equation2d': String.raw`\(a\overrightarrow{GI} + b\overrightarrow{GJ} = \vec{0}\)`,
+                'MH.lesson_Y2Geo_transl3a.step2dSolution2': String.raw`Par translation t : I' = I + \(\vec{u}\), J' = J + \(\vec{u}\), G' = G + \(\vec{u}\).`,
+                'MH.lesson_Y2Geo_transl3a.equation2e': String.raw`\(a\overrightarrow{G'I'} + b\overrightarrow{G'J'} = a(\overrightarrow{G'G} + \overrightarrow{GI} + \overrightarrow{II'}) + b(\overrightarrow{G'G} + \overrightarrow{GJ} + \overrightarrow{JJ'})\)`,
+                'MH.lesson_Y2Geo_transl3a.equation2f': String.raw`\(= a(-\vec{u} + \overrightarrow{GI} + \vec{u}) + b(-\vec{u} + \overrightarrow{GJ} + \vec{u}) = a\overrightarrow{GI} + b\overrightarrow{GJ} = \vec{0}\)`,
+                'MH.lesson_Y2Geo_transl3a.step2dSolution3': 'Ainsi G\' est barycentre de (I\', a) et (J\', b).',
+                
+                // Partie VIII
+                'MH.lesson_Y2Geo_transl3a.part8Title': 'Partie VIII : Conservation du parallélisme et de l\'orthogonalité',
+                'MH.lesson_Y2Geo_transl3a.part8Intro': 'Les translations conservent le parallélisme et l\'orthogonalité entre droites, ainsi que la tangence entre une droite et un cercle.',
+                
+                // Activité 3
+                'MH.lesson_Y2Geo_transl3a.activity3Title': 'Activité 3 : Triangles et quadrilatères isométriques',
+                'MH.lesson_Y2Geo_transl3a.diagram5Title': 'Figure : Triangle MNP et son image M\'N\'P\' par translation',
+                'MH.lesson_Y2Geo_transl3a.diagram5Instructions': 'Triangle MNP et son image translatée M\'N\'P\'. Montrer qu\'ils sont isométriques.',
+                'MH.lesson_Y2Geo_transl3a.diagram6Title': 'Figure : Rectangle ABCD et son image A\'B\'C\'D\' par translation',
+                'MH.lesson_Y2Geo_transl3a.diagram6Instructions': 'Rectangle ABCD et son image translatée A\'B\'C\'D\'.',
+                'MH.lesson_Y2Geo_transl3a.step3aTitle': '1) Soit MNP un triangle et M\'N\'P\' son image par une translation.',
+                'MH.lesson_Y2Geo_transl3a.step3aQuestion': 'Montrer que les triangles MNP et M\'N\'P\' sont isométriques (congrus).',
+                'MH.lesson_Y2Geo_transl3a.step3aSolution': 'Puisque la translation conserve les distances :',
+                'MH.lesson_Y2Geo_transl3a.equation3a': '\(MN = M\'N\'\), \(NP = N\'P\'\), \(PM = P\'M\'\)',
+                'MH.lesson_Y2Geo_transl3a.step3aSolution2': 'Donc par le critère CCC (Côté-Côté-Côté), les triangles MNP et M\'N\'P\' sont congrus.',
+                'MH.lesson_Y2Geo_transl3a.step3bTitle': '2) Soit ABCD un quadrilatère et A\'B\'C\'D\' son image par une translation.',
+                'MH.lesson_Y2Geo_transl3a.step3bQuestion': 'Déterminer la nature du quadrilatère A\'B\'C\'D\' dans chacun des cas suivants :<br>a) ABCD est un rectangle.<br>b) ABCD est un losange.',
+                'MH.lesson_Y2Geo_transl3a.step3bSolution': 'a) Si ABCD est un rectangle, alors A\'B\'C\'D\' est aussi un rectangle car :',
+                'MH.lesson_Y2Geo_transl3a.step3bSol1': 'La translation conserve les longueurs, donc les côtés opposés restent égaux',
+                'MH.lesson_Y2Geo_transl3a.step3bSol2': 'La translation conserve les angles, donc tous les angles restent 90°',
+                'MH.lesson_Y2Geo_transl3a.step3bSolution2': 'b) Si ABCD est un losange, alors A\'B\'C\'D\' est aussi un losange car :',
+                'MH.lesson_Y2Geo_transl3a.step3bSol3': 'La translation conserve les longueurs, donc tous les côtés restent égaux',
+                'MH.lesson_Y2Geo_transl3a.step3bSol4': 'La translation conserve le parallélisme, donc les côtés opposés restent parallèles',
+                'MH.lesson_Y2Geo_transl3a.step3cTitle': '3) Que peut-on dire de l\'image d\'un polygone par une translation ?',
+                'MH.lesson_Y2Geo_transl3a.step3cSolution': 'L\'image de tout polygone par une translation est :',
+                'MH.lesson_Y2Geo_transl3a.step3cSol1': 'Congruente au polygone original (même forme et taille)',
+                'MH.lesson_Y2Geo_transl3a.step3cSol2': 'Tous les côtés correspondants sont parallèles',
+                'MH.lesson_Y2Geo_transl3a.step3cSol3': 'Tous les angles correspondants sont égaux',
+                'MH.lesson_Y2Geo_transl3a.step3cSol4': 'L\'orientation est conservée',
+                
+                // Partie IX
+                'MH.lesson_Y2Geo_transl3a.part9Title': 'Partie IX : Conservation des angles',
+                'MH.lesson_Y2Geo_transl3a.part9Intro': 'Les translations conservent les mesures d\'angles : l\'image d\'un angle est un angle de même mesure.',
+                
+                // Activité 4
+                'MH.lesson_Y2Geo_transl3a.activity4Title': 'Activité 4 : Conservation des angles',
+                'MH.lesson_Y2Geo_transl3a.diagram7Title': 'Figure : Angle xOy et son image x\'O\'y\' par translation',
+                'MH.lesson_Y2Geo_transl3a.diagram7Instructions': 'Angle ∠xOy et son image translatée ∠x\'O\'y\'. Montrer qu\'ils sont égaux.',
+                'MH.lesson_Y2Geo_transl3a.step4Title': String.raw`Soit t une translation de vecteur \(\vec{u}\) et [Ox , Oy] un secteur. On désigne par [O' x') et [O' y') les images respectives des demi-droites [Ox) et [Oy) par la translation t.`,
+                'MH.lesson_Y2Geo_transl3a.step4Question': String.raw`Montrer que \(\angle xOy = \angle x'O'y'\).`,
+                'MH.lesson_Y2Geo_transl3a.step4Solution': String.raw`Soit \(\vec{u} = \overrightarrow{OO'}\). Alors pour tout point X sur [Ox) et Y sur [Oy), on a :`,
+                'MH.lesson_Y2Geo_transl3a.equation4a': String.raw`\(X' = t(X) = X + \vec{u}\), \(Y' = t(Y) = Y + \vec{u}\)`,
+                'MH.lesson_Y2Geo_transl3a.step4Solution2': 'Considérons les triangles OXY et O\'X\'Y\'. On a :',
+                'MH.lesson_Y2Geo_transl3a.equation4b': String.raw`\(\overrightarrow{O'X'} = \overrightarrow{O'O} + \overrightarrow{OX} + \overrightarrow{XX'} = -\vec{u} + \overrightarrow{OX} + \vec{u} = \overrightarrow{OX}\)`,
+                'MH.lesson_Y2Geo_transl3a.equation4c': String.raw`\(\overrightarrow{O'Y'} = \overrightarrow{OY}\) (de même)`,
+                'MH.lesson_Y2Geo_transl3a.step4Solution3': 'Ainsi les triangles OXY et O\'X\'Y\' ont des côtés correspondants égaux, donc ils sont congrus. Par conséquent, \(\angle XOY = \angle X\'O\'Y\'\).',
+                
+                // Résumé
+                'MH.lesson_Y2Geo_transl3a.summaryTitle': 'Résumé Complet',
+                'MH.lesson_Y2Geo_transl3a.summary1Title': 'Conservation du barycentre',
+                'MH.lesson_Y2Geo_transl3a.summary1Item1': 'La translation conserve le milieu.',
+                'MH.lesson_Y2Geo_transl3a.summary1Item2': 'La translation conserve le barycentre.',
+                'MH.lesson_Y2Geo_transl3a.summary2Title': 'Conservation du parallélisme, de l\'orthogonalité et du contact',
+                'MH.lesson_Y2Geo_transl3a.summary2Item1': 'Les images par une translation de deux droites parallèles sont deux droites parallèles.',
+                'MH.lesson_Y2Geo_transl3a.summary2Item2': 'Les images par une translation de deux droites perpendiculaires sont deux droites perpendiculaires.',
+                'MH.lesson_Y2Geo_transl3a.summary2Item3': 'Si une droite et un cercle sont tangents, alors leurs images par une translation sont tangents.',
+                'MH.lesson_Y2Geo_transl3a.summary3Title': 'Conservation des angles',
+                'MH.lesson_Y2Geo_transl3a.summary3Text': 'Les translations conservent les mesures d\'angles : l\'image d\'un angle est un angle de même mesure.',
+                'MH.lesson_Y2Geo_transl3a.conclusionTitle': 'Conclusion',
+                'MH.lesson_Y2Geo_transl3a.keyConceptsTitle': 'Concepts Clés Maîtrisés',
+                'MH.lesson_Y2Geo_transl3a.concept1': 'Conservation des milieux par les translations',
+                'MH.lesson_Y2Geo_transl3a.concept2': 'Conservation des barycentres par les translations',
+                'MH.lesson_Y2Geo_transl3a.concept3': 'Translation des centres de gravité des triangles',
+                'MH.lesson_Y2Geo_transl3a.concept4': 'Préservation du parallélisme et de l\'orthogonalité',
+                'MH.lesson_Y2Geo_transl3a.concept5': 'Nature isométrique des figures translatées',
+                'MH.lesson_Y2Geo_transl3a.concept6': 'Conservation des angles par les translations',
+                'MH.lesson_Y2Geo_transl3a.concept7': 'Propriétés des quadrilatères translatés',
+                'MH.lesson_Y2Geo_transl3a.finalThought': 'Les propriétés étudiées dans cette leçon complètent notre compréhension des translations comme transformations isométriques. Leur capacité à conserver les milieux, barycentres, parallélisme, orthogonalité et angles tout en déplaçant les figures en fait des outils indispensables dans les preuves géométriques, constructions et applications à travers les mathématiques et la physique.',
+                
+                // Pied de page
+                'MH.footer.developer': 'Développeur',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Liens',
+                'MH.footer.terms': 'Conditions d\'Utilisation',
+                'MH.footer.privacy': 'Politique de Confidentialité'
+            }
+        };
+
+        // Merge with existing translations if they exist
+        if (typeof translations !== 'undefined') {
+            Object.keys(geometryTranslations3).forEach(lang => {
+                if (translations[lang]) {
+                    translations[lang] = {...translations[lang], ...geometryTranslations3[lang]};
+                } else {
+                    translations[lang] = geometryTranslations3[lang];
+                }
+            });
+        } else {
+            var translations = geometryTranslations3;
+        }
+
+        // Canvas drawing functions
+        let activity1State = {part1: false, part2: false};
+        let activity2State = {part1: false, part2: false, part3: false, part4: false};
+        let activity3State = {part1: false, part2: false};
+        let activity4State = {constructed: false};
+        
+        function drawActivity1Canvas() {
+            const canvas = document.getElementById('activity1Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define triangle ABC
+            const A = {x: width * 0.3, y: height * 0.7};
+            const B = {x: width * 0.7, y: height * 0.7};
+            const C = {x: width * 0.5, y: height * 0.3};
+            
+            // Midpoints
+            const M = {x: (B.x + C.x) / 2, y: (B.y + C.y) / 2};
+            const N = {x: (A.x + C.x) / 2, y: (A.y + C.y) / 2};
+            const P = {x: (A.x + B.x) / 2, y: (A.y + B.y) / 2};
+            
+            // Draw triangle
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(A.x, A.y);
+            ctx.lineTo(B.x, B.y);
+            ctx.lineTo(C.x, C.y);
+            ctx.closePath();
+            ctx.stroke();
+            
+            // Draw midpoints
+            const midpoints = [
+                {coord: M, label: 'M', color: '#E74C3C'},
+                {coord: N, label: 'N', color: '#2ECC71'},
+                {coord: P, label: 'P', color: '#3498DB'}
+            ];
+            
+            midpoints.forEach(point => {
+                ctx.fillStyle = point.color;
+                ctx.beginPath();
+                ctx.arc(point.coord.x, point.coord.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(point.label, point.coord.x, point.coord.y - 15);
+            });
+            
+            // Draw vertices
+            const vertices = [
+                {coord: A, label: 'A', color: '#4A90E2'},
+                {coord: B, label: 'B', color: '#4A90E2'},
+                {coord: C, label: 'C', color: '#4A90E2'}
+            ];
+            
+            vertices.forEach(point => {
+                ctx.fillStyle = point.color;
+                ctx.beginPath();
+                ctx.arc(point.coord.x, point.coord.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                let offsetY = -15;
+                if (point.label === 'A') offsetY = 15;
+                ctx.fillText(point.label, point.coord.x, point.coord.y + offsetY);
+            });
+            
+            // Draw translation if constructed
+            if (activity1State.part1) {
+                // Translation vector MC
+                const MC = {x: C.x - M.x, y: C.y - M.y};
+                
+                // Q = t(A)
+                const Q = {x: A.x + MC.x, y: A.y + MC.y};
+                
+                // Draw Q
+                ctx.fillStyle = '#9B59B6';
+                ctx.beginPath();
+                ctx.arc(Q.x, Q.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('Q', Q.x, Q.y + 15);
+                
+                // Draw vector from A to Q
+                ctx.strokeStyle = '#9B59B6';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(A.x, A.y);
+                ctx.lineTo(Q.x, Q.y);
+                ctx.stroke();
+                
+                // Draw arrowhead
+                drawArrowhead(ctx, Q.x, Q.y, Math.atan2(MC.y, MC.x));
+                
+                // Draw line MQ
+                ctx.strokeStyle = '#8E44AD';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(M.x, M.y);
+                ctx.lineTo(Q.x, Q.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Show that N is on MQ
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.arc(N.x, N.y, 8, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+        }
+        
+        function drawActivity1bCanvas() {
+            const canvas = document.getElementById('activity1bCanvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define points I, J, O (midpoint)
+            const I = {x: width * 0.3, y: height * 0.5};
+            const J = {x: width * 0.7, y: height * 0.5};
+            const O = {x: (I.x + J.x) / 2, y: (I.y + J.y) / 2};
+            
+            // Draw original points
+            const originalPoints = [
+                {coord: I, label: 'I', color: '#E74C3C'},
+                {coord: J, label: 'J', color: '#2ECC71'},
+                {coord: O, label: 'O', color: '#3498DB'}
+            ];
+            
+            originalPoints.forEach(point => {
+                ctx.fillStyle = point.color;
+                ctx.beginPath();
+                ctx.arc(point.coord.x, point.coord.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                let offsetY = -15;
+                if (point.label === 'O') offsetY = 15;
+                ctx.fillText(point.label, point.coord.x, point.coord.y + offsetY);
+            });
+            
+            // Draw segment IJ
+            ctx.strokeStyle = '#666666';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(I.x, I.y);
+            ctx.lineTo(J.x, J.y);
+            ctx.stroke();
+            
+            // Draw images if constructed
+            if (activity1State.part2) {
+                // Translation vector
+                const u = {x: 50, y: 50};
+                
+                // Images
+                const Iprime = {x: I.x + u.x, y: I.y + u.y};
+                const Jprime = {x: J.x + u.x, y: J.y + u.y};
+                const Oprime = {x: O.x + u.x, y: O.y + u.y};
+                
+                // Draw images
+                const imagePoints = [
+                    {coord: Iprime, label: 'I\'', color: '#E74C3C'},
+                    {coord: Jprime, label: 'J\'', color: '#2ECC71'},
+                    {coord: Oprime, label: 'O\'', color: '#3498DB'}
+                ];
+                
+                imagePoints.forEach(point => {
+                    ctx.fillStyle = point.color;
+                    ctx.beginPath();
+                    ctx.arc(point.coord.x, point.coord.y, 5, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#333333';
+                    ctx.font = 'bold 14px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    let offsetY = 15;
+                    if (point.label === 'O\'') offsetY = -15;
+                    ctx.fillText(point.label, point.coord.x, point.coord.y + offsetY);
+                });
+                
+                // Draw segment I'J'
+                ctx.strokeStyle = '#666666';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(Iprime.x, Iprime.y);
+                ctx.lineTo(Jprime.x, Jprime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw translation vectors
+                ctx.strokeStyle = '#9B59B6';
+                ctx.lineWidth = 2;
+                [I, J, O].forEach((point, i) => {
+                    const prime = [Iprime, Jprime, Oprime][i];
+                    ctx.beginPath();
+                    ctx.moveTo(point.x, point.y);
+                    ctx.lineTo(prime.x, prime.y);
+                    ctx.stroke();
+                    
+                    drawArrowhead(ctx, prime.x, prime.y, Math.atan2(u.y, u.x));
+                });
+                
+                // Highlight that O' is midpoint of I'J'
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.moveTo(Oprime.x - 10, Oprime.y - 10);
+                ctx.lineTo(Oprime.x + 10, Oprime.y + 10);
+                ctx.moveTo(Oprime.x + 10, Oprime.y - 10);
+                ctx.lineTo(Oprime.x - 10, Oprime.y + 10);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            }
+        }
+        
+        function drawActivity2Canvas() {
+            const canvas = document.getElementById('activity2Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define triangle ABC
+            const A = {x: width * 0.3, y: height * 0.7};
+            const B = {x: width * 0.7, y: height * 0.7};
+            const C = {x: width * 0.5, y: height * 0.3};
+            
+            // O is midpoint of BC
+            const O = {x: (B.x + C.x) / 2, y: (B.y + C.y) / 2};
+            
+            // Draw triangle
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(A.x, A.y);
+            ctx.lineTo(B.x, B.y);
+            ctx.lineTo(C.x, C.y);
+            ctx.closePath();
+            ctx.stroke();
+            
+            // Draw points
+            const points = [
+                {coord: A, label: 'A', color: '#E74C3C'},
+                {coord: B, label: 'B', color: '#2ECC71'},
+                {coord: C, label: 'C', color: '#3498DB'},
+                {coord: O, label: 'O', color: '#9B59B6'}
+            ];
+            
+            points.forEach(point => {
+                ctx.fillStyle = point.color;
+                ctx.beginPath();
+                ctx.arc(point.coord.x, point.coord.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                let offsetY = -15;
+                if (point.label === 'A') offsetY = 15;
+                if (point.label === 'O') offsetY = 15;
+                ctx.fillText(point.label, point.coord.x, point.coord.y + offsetY);
+            });
+            
+            // Draw images if constructed
+            if (activity2State.part1 || activity2State.part2 || activity2State.part3) {
+                // Translation vector BC
+                const BC = {x: C.x - B.x, y: C.y - B.y};
+                
+                // Images
+                const Aprime = {x: A.x + BC.x, y: A.y + BC.y};
+                const Cprime = {x: C.x + BC.x, y: C.y + BC.y};
+                const Oprime = {x: O.x + BC.x, y: O.y + BC.y};
+                
+                // Draw images
+                const imagePoints = [
+                    {coord: Aprime, label: 'A\'', color: '#E74C3C'},
+                    {coord: Cprime, label: 'C\'', color: '#3498DB'},
+                    {coord: Oprime, label: 'O\'', color: '#9B59B6'}
+                ];
+                
+                imagePoints.forEach(point => {
+                    ctx.fillStyle = point.color;
+                    ctx.beginPath();
+                    ctx.arc(point.coord.x, point.coord.y, 5, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#333333';
+                    ctx.font = 'bold 14px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    let offsetY = 15;
+                    if (point.label === 'A\'') offsetY = -15;
+                    ctx.fillText(point.label, point.coord.x, point.coord.y + offsetY);
+                });
+                
+                // Draw translation vectors
+                ctx.strokeStyle = '#9B59B6';
+                ctx.lineWidth = 2;
+                [A, C, O].forEach((point, i) => {
+                    const prime = [Aprime, Cprime, Oprime][i];
+                    ctx.beginPath();
+                    ctx.moveTo(point.x, point.y);
+                    ctx.lineTo(prime.x, prime.y);
+                    ctx.stroke();
+                    
+                    drawArrowhead(ctx, prime.x, prime.y, Math.atan2(BC.y, BC.x));
+                });
+                
+                // Draw line BA' and AO if part 2
+                if (activity2State.part2) {
+                    // M = intersection of (BA') and (AO)
+                    // Calculate intersection of lines BA' and AO
+                    const M = lineIntersection(B, Aprime, A, O);
+                    
+                    // Draw lines
+                    ctx.strokeStyle = '#E67E22';
+                    ctx.lineWidth = 1;
+                    ctx.setLineDash([2, 2]);
+                    
+                    // Line BA'
+                    ctx.beginPath();
+                    ctx.moveTo(B.x, B.y);
+                    ctx.lineTo(Aprime.x, Aprime.y);
+                    ctx.stroke();
+                    
+                    // Line AO
+                    ctx.beginPath();
+                    ctx.moveTo(A.x, A.y);
+                    ctx.lineTo(O.x, O.y);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                    
+                    // Draw point M
+                    if (M) {
+                        ctx.fillStyle = '#E67E22';
+                        ctx.beginPath();
+                        ctx.arc(M.x, M.y, 6, 0, Math.PI * 2);
+                        ctx.fill();
+                        
+                        ctx.fillStyle = '#333333';
+                        ctx.font = 'bold 14px Arial';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText('M', M.x, M.y - 15);
+                    }
+                }
+                
+                // Draw lines AC' and A'O' if part 3
+                if (activity2State.part3) {
+                    // N = intersection of (AC') and (A'O')
+                    const N = lineIntersection(A, Cprime, Aprime, Oprime);
+                    
+                    // Draw lines
+                    ctx.strokeStyle = '#1ABC9C';
+                    ctx.lineWidth = 1;
+                    ctx.setLineDash([2, 2]);
+                    
+                    // Line AC'
+                    ctx.beginPath();
+                    ctx.moveTo(A.x, A.y);
+                    ctx.lineTo(Cprime.x, Cprime.y);
+                    ctx.stroke();
+                    
+                    // Line A'O'
+                    ctx.beginPath();
+                    ctx.moveTo(Aprime.x, Aprime.y);
+                    ctx.lineTo(Oprime.x, Oprime.y);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                    
+                    // Draw point N
+                    if (N) {
+                        ctx.fillStyle = '#1ABC9C';
+                        ctx.beginPath();
+                        ctx.arc(N.x, N.y, 6, 0, Math.PI * 2);
+                        ctx.fill();
+                        
+                        ctx.fillStyle = '#333333';
+                        ctx.font = 'bold 14px Arial';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText('N', N.x, N.y + 15);
+                    }
+                }
+            }
+        }
+        
+        function drawActivity2bCanvas() {
+            const canvas = document.getElementById('activity2bCanvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define points I, J and barycenter G
+            const I = {x: width * 0.3, y: height * 0.6};
+            const J = {x: width * 0.7, y: height * 0.6};
+            const a = 2, b = 1; // weights
+            
+            // G = barycenter of (I, a) and (J, b)
+            const G = {
+                x: (a * I.x + b * J.x) / (a + b),
+                y: (a * I.y + b * J.y) / (a + b)
+            };
+            
+            // Draw original points
+            const originalPoints = [
+                {coord: I, label: 'I', color: '#E74C3C'},
+                {coord: J, label: 'J', color: '#2ECC71'},
+                {coord: G, label: 'G', color: '#3498DB'}
+            ];
+            
+            originalPoints.forEach(point => {
+                ctx.fillStyle = point.color;
+                ctx.beginPath();
+                ctx.arc(point.coord.x, point.coord.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                let offsetY = -15;
+                if (point.label === 'G') offsetY = 15;
+                ctx.fillText(point.label, point.coord.x, point.coord.y + offsetY);
+            });
+            
+            // Draw segment IJ
+            ctx.strokeStyle = '#666666';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(I.x, I.y);
+            ctx.lineTo(J.x, J.y);
+            ctx.stroke();
+            
+            // Draw images if constructed
+            if (activity2State.part4) {
+                // Translation vector
+                const u = {x: 0, y: -100};
+                
+                // Images
+                const Iprime = {x: I.x + u.x, y: I.y + u.y};
+                const Jprime = {x: J.x + u.x, y: J.y + u.y};
+                const Gprime = {x: G.x + u.x, y: G.y + u.y};
+                
+                // Draw images
+                const imagePoints = [
+                    {coord: Iprime, label: 'I\'', color: '#E74C3C'},
+                    {coord: Jprime, label: 'J\'', color: '#2ECC71'},
+                    {coord: Gprime, label: 'G\'', color: '#3498DB'}
+                ];
+                
+                imagePoints.forEach(point => {
+                    ctx.fillStyle = point.color;
+                    ctx.beginPath();
+                    ctx.arc(point.coord.x, point.coord.y, 5, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#333333';
+                    ctx.font = 'bold 14px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    let offsetY = 15;
+                    if (point.label === 'G\'') offsetY = -15;
+                    ctx.fillText(point.label, point.coord.x, point.coord.y + offsetY);
+                });
+                
+                // Draw segment I'J'
+                ctx.strokeStyle = '#666666';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(Iprime.x, Iprime.y);
+                ctx.lineTo(Jprime.x, Jprime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw translation vectors
+                ctx.strokeStyle = '#9B59B6';
+                ctx.lineWidth = 2;
+                [I, J, G].forEach((point, i) => {
+                    const prime = [Iprime, Jprime, Gprime][i];
+                    ctx.beginPath();
+                    ctx.moveTo(point.x, point.y);
+                    ctx.lineTo(prime.x, prime.y);
+                    ctx.stroke();
+                    
+                    drawArrowhead(ctx, prime.x, prime.y, Math.atan2(u.y, u.x));
+                });
+                
+                // Show that G' is barycenter of (I', a) and (J', b)
+                ctx.fillStyle = '#333333';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(`a = ${a}, b = ${b}`, width/2, height - 20);
+                ctx.fillText('G\' is barycenter of (I\', a) and (J\', b)', width/2, height - 5);
+            }
+        }
+        
+        function drawActivity3Canvas() {
+            const canvas = document.getElementById('activity3Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define triangle MNP
+            const M = {x: width * 0.3, y: height * 0.6};
+            const N = {x: width * 0.6, y: height * 0.6};
+            const P = {x: width * 0.45, y: height * 0.3};
+            
+            // Draw triangle MNP
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(M.x, M.y);
+            ctx.lineTo(N.x, N.y);
+            ctx.lineTo(P.x, P.y);
+            ctx.closePath();
+            ctx.stroke();
+            
+            // Draw vertices
+            const vertices = [
+                {coord: M, label: 'M', color: '#E74C3C'},
+                {coord: N, label: 'N', color: '#2ECC71'},
+                {coord: P, label: 'P', color: '#3498DB'}
+            ];
+            
+            vertices.forEach(point => {
+                ctx.fillStyle = point.color;
+                ctx.beginPath();
+                ctx.arc(point.coord.x, point.coord.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                let offsetY = -15;
+                if (point.label === 'M') offsetY = 15;
+                ctx.fillText(point.label, point.coord.x, point.coord.y + offsetY);
+            });
+            
+            // Draw translated triangle if constructed
+            if (activity3State.part1) {
+                // Translation vector
+                const u = {x: 100, y: 0};
+                
+                // Translated vertices
+                const Mprime = {x: M.x + u.x, y: M.y + u.y};
+                const Nprime = {x: N.x + u.x, y: N.y + u.y};
+                const Pprime = {x: P.x + u.x, y: P.y + u.y};
+                
+                // Draw triangle M'N'P'
+                ctx.strokeStyle = '#8E44AD';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(Mprime.x, Mprime.y);
+                ctx.lineTo(Nprime.x, Nprime.y);
+                ctx.lineTo(Pprime.x, Pprime.y);
+                ctx.closePath();
+                ctx.stroke();
+                
+                // Draw translated vertices
+                const translatedVertices = [
+                    {coord: Mprime, label: 'M\'', color: '#E74C3C'},
+                    {coord: Nprime, label: 'N\'', color: '#2ECC71'},
+                    {coord: Pprime, label: 'P\'', color: '#3498DB'}
+                ];
+                
+                translatedVertices.forEach(point => {
+                    ctx.fillStyle = point.color;
+                    ctx.beginPath();
+                    ctx.arc(point.coord.x, point.coord.y, 5, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#333333';
+                    ctx.font = 'bold 14px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    let offsetY = 15;
+                    if (point.label === 'M\'') offsetY = -15;
+                    ctx.fillText(point.label, point.coord.x, point.coord.y + offsetY);
+                });
+                
+                // Show corresponding sides are equal
+                ctx.strokeStyle = '#666666';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                
+                // MN = M'N'
+                const midMN = {x: (M.x + N.x) / 2, y: (M.y + N.y) / 2};
+                const midMprimeNprime = {x: (Mprime.x + Nprime.x) / 2, y: (Mprime.y + Nprime.y) / 2};
+                ctx.beginPath();
+                ctx.moveTo(midMN.x, midMN.y);
+                ctx.lineTo(midMprimeNprime.x, midMprimeNprime.y);
+                ctx.stroke();
+                
+                ctx.fillStyle = '#666666';
+                ctx.font = '12px Arial';
+                ctx.fillText('MN = M\'N\'', (midMN.x + midMprimeNprime.x) / 2, (midMN.y + midMprimeNprime.y) / 2 - 10);
+                
+                // Show triangles are congruent
+                ctx.setLineDash([]);
+                ctx.fillStyle = '#E67E22';
+                ctx.font = '14px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('Triangles are congruent (isometric)', width/2, 20);
+            }
+        }
+        
+        function drawActivity3bCanvas() {
+            const canvas = document.getElementById('activity3bCanvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define rectangle ABCD
+            const A = {x: width * 0.2, y: height * 0.3};
+            const B = {x: width * 0.4, y: height * 0.3};
+            const C = {x: width * 0.4, y: height * 0.6};
+            const D = {x: width * 0.2, y: height * 0.6};
+            
+            // Draw rectangle ABCD
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(A.x, A.y);
+            ctx.lineTo(B.x, B.y);
+            ctx.lineTo(C.x, C.y);
+            ctx.lineTo(D.x, D.y);
+            ctx.closePath();
+            ctx.stroke();
+            
+            // Mark right angles
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 1;
+            const angleSize = 10;
+            
+            // Angle at A
+            ctx.beginPath();
+            ctx.moveTo(A.x + angleSize, A.y);
+            ctx.lineTo(A.x + angleSize, A.y + angleSize);
+            ctx.lineTo(A.x, A.y + angleSize);
+            ctx.stroke();
+            
+            // Draw vertices
+            const vertices = [
+                {coord: A, label: 'A', color: '#E74C3C'},
+                {coord: B, label: 'B', color: '#2ECC71'},
+                {coord: C, label: 'C', color: '#3498DB'},
+                {coord: D, label: 'D', color: '#9B59B6'}
+            ];
+            
+            vertices.forEach(point => {
+                ctx.fillStyle = point.color;
+                ctx.beginPath();
+                ctx.arc(point.coord.x, point.coord.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                let offsetX = 0, offsetY = 0;
+                if (point.label === 'A') { offsetX = -15; offsetY = -15; }
+                if (point.label === 'B') { offsetX = 15; offsetY = -15; }
+                if (point.label === 'C') { offsetX = 15; offsetY = 15; }
+                if (point.label === 'D') { offsetX = -15; offsetY = 15; }
+                ctx.fillText(point.label, point.coord.x + offsetX, point.coord.y + offsetY);
+            });
+            
+            // Draw translated rectangle if constructed
+            if (activity3State.part2) {
+                // Translation vector
+                const u = {x: 200, y: 0};
+                
+                // Translated vertices
+                const Aprime = {x: A.x + u.x, y: A.y + u.y};
+                const Bprime = {x: B.x + u.x, y: B.y + u.y};
+                const Cprime = {x: C.x + u.x, y: C.y + u.y};
+                const Dprime = {x: D.x + u.x, y: D.y + u.y};
+                
+                // Draw rectangle A'B'C'D'
+                ctx.strokeStyle = '#8E44AD';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(Aprime.x, Aprime.y);
+                ctx.lineTo(Bprime.x, Bprime.y);
+                ctx.lineTo(Cprime.x, Cprime.y);
+                ctx.lineTo(Dprime.x, Dprime.y);
+                ctx.closePath();
+                ctx.stroke();
+                
+                // Mark right angles in translated rectangle
+                ctx.strokeStyle = '#8E44AD';
+                
+                // Angle at A'
+                ctx.beginPath();
+                ctx.moveTo(Aprime.x + angleSize, Aprime.y);
+                ctx.lineTo(Aprime.x + angleSize, Aprime.y + angleSize);
+                ctx.lineTo(Aprime.x, Aprime.y + angleSize);
+                ctx.stroke();
+                
+                // Draw translated vertices
+                const translatedVertices = [
+                    {coord: Aprime, label: 'A\'', color: '#E74C3C'},
+                    {coord: Bprime, label: 'B\'', color: '#2ECC71'},
+                    {coord: Cprime, label: 'C\'', color: '#3498DB'},
+                    {coord: Dprime, label: 'D\'', color: '#9B59B6'}
+                ];
+                
+                translatedVertices.forEach(point => {
+                    ctx.fillStyle = point.color;
+                    ctx.beginPath();
+                    ctx.arc(point.coord.x, point.coord.y, 5, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#333333';
+                    ctx.font = 'bold 14px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    let offsetX = 0, offsetY = 0;
+                    if (point.label === 'A\'') { offsetX = -15; offsetY = -15; }
+                    if (point.label === 'B\'') { offsetX = 15; offsetY = -15; }
+                    if (point.label === 'C\'') { offsetX = 15; offsetY = 15; }
+                    if (point.label === 'D\'') { offsetX = -15; offsetY = 15; }
+                    ctx.fillText(point.label, point.coord.x + offsetX, point.coord.y + offsetY);
+                });
+                
+                // Show rectangle properties preserved
+                ctx.fillStyle = '#E67E22';
+                ctx.font = '14px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('Rectangle remains a rectangle after translation', width/2, height - 20);
+            }
+        }
+        
+        function drawActivity4Canvas() {
+            const canvas = document.getElementById('activity4Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define angle xOy
+            const O = {x: width * 0.3, y: height * 0.5};
+            const angle = Math.PI / 3; // 60 degrees
+            
+            // Points on the rays
+            const x = {
+                x: O.x + 100 * Math.cos(angle/2),
+                y: O.y - 100 * Math.sin(angle/2)
+            };
+            
+            const y = {
+                x: O.x + 100 * Math.cos(-angle/2),
+                y: O.y - 100 * Math.sin(-angle/2)
+            };
+            
+            // Draw angle xOy
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            
+            // Ray Ox
+            ctx.beginPath();
+            ctx.moveTo(O.x, O.y);
+            ctx.lineTo(x.x, x.y);
+            ctx.stroke();
+            
+            // Ray Oy
+            ctx.beginPath();
+            ctx.moveTo(O.x, O.y);
+            ctx.lineTo(y.x, y.y);
+            ctx.stroke();
+            
+            // Draw arc showing angle
+            ctx.strokeStyle = '#E67E22';
+            ctx.lineWidth = 1;
+            const arcRadius = 40;
+            ctx.beginPath();
+            ctx.arc(O.x, O.y, arcRadius, -angle/2, angle/2);
+            ctx.stroke();
+            
+            // Draw points
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(O.x, O.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillText('O', O.x, O.y - 15);
+            
+            ctx.fillStyle = '#2ECC71';
+            ctx.beginPath();
+            ctx.arc(x.x, x.y, 4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillText('x', x.x + 10, x.y - 10);
+            
+            ctx.beginPath();
+            ctx.arc(y.x, y.y, 4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillText('y', y.x - 15, y.y - 10);
+            
+            // Draw translated angle if constructed
+            if (activity4State.constructed) {
+                // Translation vector
+                const u = {x: 200, y: 50};
+                
+                // Translated points
+                const Oprime = {x: O.x + u.x, y: O.y + u.y};
+                const xprime = {x: x.x + u.x, y: x.y + u.y};
+                const yprime = {x: y.x + u.x, y: y.y + u.y};
+                
+                // Draw translated angle x'O'y'
+                ctx.strokeStyle = '#8E44AD';
+                ctx.lineWidth = 2;
+                
+                // Ray O'x'
+                ctx.beginPath();
+                ctx.moveTo(Oprime.x, Oprime.y);
+                ctx.lineTo(xprime.x, xprime.y);
+                ctx.stroke();
+                
+                // Ray O'y'
+                ctx.beginPath();
+                ctx.moveTo(Oprime.x, Oprime.y);
+                ctx.lineTo(yprime.x, yprime.y);
+                ctx.stroke();
+                
+                // Draw arc showing angle
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.arc(Oprime.x, Oprime.y, arcRadius, -angle/2, angle/2);
+                ctx.stroke();
+                
+                // Draw translated points
+                ctx.fillStyle = '#9B59B6';
+                ctx.beginPath();
+                ctx.arc(Oprime.x, Oprime.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('O\'', Oprime.x, Oprime.y + 15);
+                
+                ctx.fillStyle = '#1ABC9C';
+                ctx.beginPath();
+                ctx.arc(xprime.x, xprime.y, 4, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('x\'', xprime.x + 10, xprime.y + 10);
+                
+                ctx.beginPath();
+                ctx.arc(yprime.x, yprime.y, 4, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('y\'', yprime.x - 15, yprime.y + 10);
+                
+                // Show that angles are equal
+                ctx.fillStyle = '#333333';
+                ctx.font = '14px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('∠xOy = ∠x\'O\'y\'', width/2, 20);
+                
+                // Draw translation vector
+                ctx.strokeStyle = '#9B59B6';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(O.x, O.y);
+                ctx.lineTo(Oprime.x, Oprime.y);
+                ctx.stroke();
+                drawArrowhead(ctx, Oprime.x, Oprime.y, Math.atan2(u.y, u.x));
+            }
+        }
+        
+        // Helper function to draw arrowhead
+        function drawArrowhead(ctx, x, y, angle) {
+            const headlen = 10;
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angle);
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(-headlen, -headlen/2);
+            ctx.moveTo(0, 0);
+            ctx.lineTo(-headlen, headlen/2);
+            ctx.stroke();
+            ctx.restore();
+        }
+        
+        // Helper function to find intersection of two lines
+        function lineIntersection(p1, p2, p3, p4) {
+            // Line 1: p1 to p2, Line 2: p3 to p4
+            const denom = (p1.x - p2.x) * (p3.y - p4.y) - (p1.y - p2.y) * (p3.x - p4.x);
+            if (Math.abs(denom) < 0.0001) return null; // Lines are parallel
+            
+            const x = ((p1.x * p2.y - p1.y * p2.x) * (p3.x - p4.x) - (p1.x - p2.x) * (p3.x * p4.y - p3.y * p4.x)) / denom;
+            const y = ((p1.x * p2.y - p1.y * p2.x) * (p3.y - p4.y) - (p1.y - p2.y) * (p3.x * p4.y - p3.y * p4.x)) / denom;
+            
+            return {x, y};
+        }
+        
+        // Construction functions
+        function constructActivity1Part1() {
+            activity1State.part1 = true;
+            drawActivity1Canvas();
+        }
+        
+        function constructActivity1Part2() {
+            activity1State.part2 = true;
+            drawActivity1bCanvas();
+        }
+        
+        function constructActivity2Part1() {
+            activity2State.part1 = true;
+            drawActivity2Canvas();
+        }
+        
+        function constructActivity2Part2() {
+            activity2State.part2 = true;
+            drawActivity2Canvas();
+        }
+        
+        function constructActivity2Part3() {
+            activity2State.part3 = true;
+            drawActivity2Canvas();
+        }
+        
+        function constructActivity2Part4() {
+            activity2State.part4 = true;
+            drawActivity2bCanvas();
+        }
+        
+        function constructActivity3Part1() {
+            activity3State.part1 = true;
+            drawActivity3Canvas();
+        }
+        
+        function constructActivity3Part2() {
+            activity3State.part2 = true;
+            drawActivity3bCanvas();
+        }
+        
+        function constructActivity4() {
+            activity4State.constructed = true;
+            drawActivity4Canvas();
+        }
+        
+        // Solution toggle function
+        function toggleSolution(problemNumber) {
+            const solution = document.getElementById(`solution${problemNumber}`);
+            const button = solution.previousElementSibling;
+            const currentLang = MHThemeManager ? MHThemeManager.getCurrentLanguage() : 'en';
+            
+            if (solution.style.display === 'block' || solution.style.display === '') {
+                solution.style.display = 'none';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_transl3a.showSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_transl3a.showSolution'];
+                } else {
+                    button.textContent = 'Show Solution';
+                }
+            } else {
+                solution.style.display = 'block';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_transl3a.hideSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_transl3a.hideSolution'];
+                } else {
+                    button.textContent = 'Hide Solution';
+                }
+                
+                // Re-render KaTeX for newly visible equations
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(solution, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\(', right: '\\)', display: false},
+                            {left: '\\[', right: '\\]', display: true}
+                        ],
+                        throwOnError: false
+                    });
+                }
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize KaTeX auto-render
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+
+            // Draw initial canvases
+            drawActivity1Canvas();
+            drawActivity1bCanvas();
+            drawActivity2Canvas();
+            drawActivity2bCanvas();
+            drawActivity3Canvas();
+            drawActivity3bCanvas();
+            drawActivity4Canvas();
+
+            // Initialize solutions as hidden and set button text
+            const currentLang = MHThemeManager ? MHThemeManager.getCurrentLanguage() : 'en';
+            for (let i = 1; i <= 9; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                const button = solution ? solution.previousElementSibling : null;
+                
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+                
+                // Set initial button text
+                if (button && translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_transl3a.showSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_transl3a.showSolution'];
+                }
+            }
+            
+            // Redraw canvases when theme changes
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    setTimeout(() => {
+                        drawActivity1Canvas();
+                        drawActivity1bCanvas();
+                        drawActivity2Canvas();
+                        drawActivity2bCanvas();
+                        drawActivity3Canvas();
+                        drawActivity3bCanvas();
+                        drawActivity4Canvas();
+                    }, 100);
+                });
+            }
+        });
+    </script>
+
+<!-- Add the service worker registration script -->
+<script>
+    // Register service worker with better error handling
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch(function(error) {
+                console.log('Service Worker registration failed:', error);
+            });
+        });
+    }
+</script>
+
+<!-- Add noscript fallback -->
+<noscript>
+    <style>
+        .MH-header-controls { display: none; }
+        .MH-solution { display: block; }
+        .MH-canvas { border: 2px solid #ccc; background-color: #f9f9f9; }
+    </style>
+    <div class="MH-warning">
+        JavaScript is recommended for the full experience, but content is still accessible.
+    </div>
+</noscript>
+</body>
+</html>

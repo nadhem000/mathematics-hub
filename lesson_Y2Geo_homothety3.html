@@ -1,0 +1,2620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Geometry - Homothety Part 3 (Exercises)</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#4A90E2" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#8E44AD" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#4A90E2">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    
+    <style>
+        /* Page-specific color palette - Blue + Purple Theme */
+        :root {
+            --primary: #4A90E2;        /* Cornflower Blue */
+            --primary-light: #7BAAF7;  /* Light Blue */
+            --primary-dark: #357ABD;   /* Darker Blue */
+            --secondary: #8E44AD;      /* Dark Purple */
+            --secondary-light: #AF7AC5; /* Light Purple */
+            --secondary-dark: #6C3483;  /* Darker Purple */
+            --accent: #E67E22;
+            --warning: #E74C3C;
+            --info: #2ECC71;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #FFFFFF;
+            --surface: #F8F9FA;
+            --border: #E9ECEF;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        [data-theme="dark"] {
+            --primary: #357ABD;
+            --primary-light: #4A90E2;
+            --primary-dark: #2C3E50;
+            --secondary: #6C3483;
+            --secondary-light: #8E44AD;
+            --secondary-dark: #4A235A;
+            --accent: #D35400;
+            --warning: #C0392B;
+            --info: #27AE60;
+            --text: #FFFFFF;
+            --text-light: #CCCCCC;
+            --background: #121212;
+            --surface: #1E1E1E;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        /* KaTeX styling */
+        .katex { 
+            font-size: 1.1em; 
+        }
+        
+        .katex-display { 
+            margin: 1em 0; 
+            text-align: center;
+        }
+        
+        .katex-display > .katex { 
+            display: inline-block;
+            text-align: center;
+        }
+
+        /* Equation styling */
+        .MH-equation {
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            margin: 0.5em 0;
+            padding: 0;
+            display: inline-block;
+            direction: ltr !important;
+            unicode-bidi: isolate;
+        }
+        
+        [dir="rtl"] .MH-equation {
+            text-align: left;
+            unicode-bidi: plaintext;
+        }
+
+        /* Canvas container styling */
+        .MH-canvas-container {
+            margin: 2em 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .MH-canvas {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background-color: var(--surface);
+            max-width: 100%;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+
+        .MH-canvas-title {
+            font-weight: bold;
+            margin-bottom: 0.5em;
+            color: var(--primary);
+        }
+
+        .MH-canvas-instructions {
+            font-size: 0.9em;
+            color: var(--text-light);
+            margin-top: 0.5em;
+            font-style: italic;
+        }
+
+        /* Geometry specific styling */
+        .MH-construction-step {
+            margin: 1.5em 0;
+            padding: 1em;
+            background-color: var(--surface);
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+        }
+
+        .MH-construction-step h4 {
+            margin-top: 0;
+            color: var(--primary-dark);
+        }
+
+        .MH-vector-notation {
+            font-family: 'KaTeX_Math', 'Cambria Math', serif;
+            font-style: italic;
+            color: var(--secondary);
+        }
+
+        .MH-point-label {
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .MH-transformation-notation {
+            background-color: rgba(78, 144, 226, 0.1);
+            padding: 0.5em;
+            border-radius: 4px;
+            font-family: 'KaTeX_Math', 'Cambria Math', serif;
+            margin: 0.5em 0;
+        }
+
+        /* Responsive canvas */
+        @media (max-width: 768px) {
+            .MH-canvas {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+
+        /* Homothety specific */
+        .MH-homothety-center {
+            font-weight: bold;
+            color: var(--warning);
+        }
+
+        .MH-homothety-ratio {
+            font-weight: bold;
+            color: var(--info);
+        }
+
+        /* Multiple figures grid for Activity 3 */
+        .MH-figures-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5em;
+            margin: 1.5em 0;
+        }
+
+        .MH-figure-container {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 1em;
+            background-color: var(--surface);
+            text-align: center;
+        }
+
+        .MH-figure-label {
+            font-weight: bold;
+            margin-bottom: 0.5em;
+            color: var(--secondary);
+        }
+
+        /* Rectangle specific styling */
+        .MH-rectangle {
+            border: 2px dashed var(--info);
+            padding: 0.5em;
+            margin: 0.5em 0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                    <!-- Notification Button -->
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+                        <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Geo_homothety3.title">Homothety: Part 3</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y2Geo_homothety3.subtitle">Exercises and Problems</h2>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_homothety3.introduction">Introduction</h2>
+            <p data-i18n="MH.lesson_Y2Geo_homothety3.introText1">In this lesson, we will apply homothety concepts to solve various types of problems. The exercises cover construction problems, alignment proofs, identification of homothetic figures, and properties preservation under homothety.</p>
+            <p data-i18n="MH.lesson_Y2Geo_homothety3.introText2">Through these exercises, you will develop your skills in recognizing homotheties, constructing images, and proving geometric properties using homothety transformations.</p>
+        </section>
+
+        <!-- IX. Construction Problem -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_homothety3.activity1Title">IX. Construction Problem</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Geo_homothety3.activity1StatementTitle">Activity 1</h3>
+                <p data-i18n="MH.lesson_Y2Geo_homothety3.activity1Statement">Let D and Δ be two intersecting lines. Let I be a point belonging neither to D nor to Δ.</p>
+                <ol>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety3.activity1Part1a">a) Construct the line D', image of D by the homothety h with center I and ratio 2.<br>Let M' be the intersection point of lines D' and Δ.</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety3.activity1Part1b">b) Construct the point M, antecedent of point M' by h.</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety3.activity1Part2">Construct a point A on D and a point B on Δ such that \(\overrightarrow{IB} = 3\overrightarrow{IA}\).</li>
+                </ol>
+            </div>
+
+            <!-- Diagram 1: Construction Problem -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_homothety3.diagram1Title">Figure: Lines D and Δ intersecting, point I not on either line</div>
+                <canvas id="activity1Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_homothety3.diagram1Instructions">Construct line D' = h(I,2)(D), find M' = D'∩Δ, then find M = h⁻¹(M'). Construct A on D and B on Δ such that IB = 3IA.</div>
+            </div>
+
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety3.constructionStep1">Construction Steps</h4>
+                    <button class="MH-solution-btn" onclick="constructActivity1()" data-i18n="MH.lesson_Y2Geo_homothety3.showConstruction">Show Construction</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety3.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                    <div class="MH-solution" id="solution1">
+                        <ol>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety3.solution1a">To construct D' = h(I,2)(D):
+                                <ul>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution1a1">Choose two distinct points P and Q on line D.</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution1a2">Construct their images P' and Q' by homothety h(I,2): Draw rays IP and IQ, then mark P' and Q' such that IP' = 2×IP and IQ' = 2×IQ.</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution1a3">Line D' is the line passing through P' and Q'.</li>
+                                </ul>
+                            </li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety3.solution1b">M' is the intersection of D' and Δ.</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety3.solution1c">To find M = h⁻¹(M'):
+                                <ul>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution1c1">Since h has ratio 2, its inverse h⁻¹ has ratio 1/2.</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution1c2">Construct M on line IM' such that IM = (1/2)IM' (or equivalently, M' is between I and M with IM = (1/2)IM').</li>
+                                </ul>
+                            </li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety3.solution1d">To construct A on D and B on Δ with \(\overrightarrow{IB} = 3\overrightarrow{IA}\):
+                                <ul>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution1d1">Choose any point A on line D.</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution1d2">Construct B as the image of A by homothety h(I,3): Draw ray IA and mark B such that IB = 3×IA.</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution1d3">Since B must lie on Δ, adjust A along D until B falls on Δ.</li>
+                                </ul>
+                            </li>
+                        </ol>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety3.equation1">
+                            Key relations: \(\overrightarrow{IM'} = 2\overrightarrow{IM}\) and \(\overrightarrow{IB} = 3\overrightarrow{IA}\)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- X. Alignment Problem -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_homothety3.activity2Title">X. Alignment Problem</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Geo_homothety3.activity2StatementTitle">Activity 2</h3>
+                <p data-i18n="MH.lesson_Y2Geo_homothety3.activity2Statement">Let C and C' be two circles with respective centers O and O', intersecting at points A and B. Let I be the intersection point of lines (AB) and (OO').</p>
+                <ol>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety3.activity2Part1">Show that point I is the midpoint of segment [OO'].</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety3.activity2Part2">Line (AO) meets circle C again at E, and line (AO') meets circle C' again at F.<br>Show that points E, B, and F are collinear.</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety3.activity2Part3">Line (BO) meets circle C again at G, and line (BO') meets circle C' again at H.<br>Show that quadrilateral EFGH is a rectangle.</li>
+                </ol>
+            </div>
+
+            <!-- Diagram 2: Two Intersecting Circles -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_homothety3.diagram2Title">Figure: Two circles C and C' intersecting at A and B</div>
+                <canvas id="activity2Canvas" width="600" height="500" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_homothety3.diagram2Instructions">Circles with centers O and O', intersecting at A and B. I = (AB)∩(OO'). Points E, F, G, H as described.</div>
+            </div>
+
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety3.solution2Title">Solution</h4>
+                    <button class="MH-solution-btn" onclick="constructActivity2()" data-i18n="MH.lesson_Y2Geo_homothety3.showConstruction">Show Construction</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety3.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                    <div class="MH-solution" id="solution2">
+                        <ol>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety3.solution2a">
+                                <strong>Proof that I is midpoint of [OO']:</strong>
+                                <ul>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution2a1">Consider homothety h with center A that maps circle C to circle C'.</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution2a2">Since A is common to both circles, the homothety maps A to itself.</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution2a3">Point B on C maps to B on C' (since B is common).</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution2a4">Center O of C maps to center O' of C'. Therefore, A, O, O' are collinear.</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution2a5">Similarly, consider homothety with center B: B, O, O' are collinear.</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution2a6">Thus line OO' passes through both A and B, so OO' = AB, and I = AB ∩ OO' is indeed the intersection.</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution2a7">Since the two homotheties (with centers A and B) are inverses, I is the midpoint of OO'.</li>
+                                </ul>
+                                <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety3.equation2a">
+                                    \(\overrightarrow{O'I} = -\overrightarrow{OI}\) or \(I = \text{midpoint}(OO')\)
+                                </div>
+                            </li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety3.solution2b">
+                                <strong>Proof that E, B, F are collinear:</strong>
+                                <ul>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution2b1">Consider homothety h₁ with center A mapping C to C'.</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution2b2">Under h₁: O → O', and the line AO (diameter of C) maps to line AO' (diameter of C').</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution2b3">Point E (intersection of AO with C, other than A) maps to point F (intersection of AO' with C', other than A).</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution2b4">Since B is fixed point of h₁ (as common point), and E, B, F are aligned with the center A, they are collinear.</li>
+                                </ul>
+                                <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety3.equation2b">
+                                    \(h₁(A,k): E \mapsto F\) with \(A, E, B, F\) collinear
+                                </div>
+                            </li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety3.solution2c">
+                                <strong>Proof that EFGH is a rectangle:</strong>
+                                <ul>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution2c1">Similarly, consider homothety h₂ with center B mapping C to C'.</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution2c2">Under h₂: O → O', and line BO maps to line BO'.</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution2c3">Point G (intersection of BO with C, other than B) maps to point H (intersection of BO' with C', other than B).</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution2c4">Now, consider quadrilateral EFGH: 
+                                        <ul>
+                                            <li data-i18n="MH.lesson_Y2Geo_homothety3.solution2c4a">EF is diameter of circle through A (since AE is diameter of C and AF is diameter of C').</li>
+                                            <li data-i18n="MH.lesson_Y2Geo_homothety3.solution2c4b">GH is diameter of circle through B (since BG is diameter of C and BH is diameter of C').</li>
+                                            <li data-i18n="MH.lesson_Y2Geo_homothety3.solution2c4c">Since AB is common chord and OO' is line of centers, and I is midpoint of OO', we have symmetry.</li>
+                                            <li data-i18n="MH.lesson_Y2Geo_homothety3.solution2c4d">Angles E and G are right angles (angles in semicircles).</li>
+                                            <li data-i18n="MH.lesson_Y2Geo_homothety3.solution2c4e">Similarly, angles F and H are right angles.</li>
+                                        </ul>
+                                    </li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution2c5">Thus EFGH has four right angles, so it is a rectangle.</li>
+                                </ul>
+                                <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety3.equation2c">
+                                    \(\widehat{E} = \widehat{F} = \widehat{G} = \widehat{H} = 90^\circ\) ⇒ EFGH is a rectangle
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- XI. Enlargement/Reduction -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_homothety3.activity3Title">XI. Enlargement – Reduction – Homothetic Figures</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Geo_homothety3.activity3StatementTitle">Activity 3</h3>
+                <p data-i18n="MH.lesson_Y2Geo_homothety3.activity3Statement">Each of the figures F₁, F₂, F₃, and F₄ is an enlargement or reduction of figure F. For each of them, determine whether it is or is not the image of F by a homothety.</p>
+                <div class="MH-definition">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety3.definitionTitle">Definition</h4>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety3.definitionText">Two figures are said to be homothetic if one is the image of the other by a homothety.</p>
+                </div>
+            </div>
+
+            <!-- Diagram 3: Multiple Figures -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_homothety3.diagram3Title">Figure: Original figure F and its potential homothetic images F₁, F₂, F₃, F₄</div>
+                <canvas id="activity3Canvas" width="600" height="500" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_homothety3.diagram3Instructions">Determine which figures are homothetic to F (same shape, different size, with lines through corresponding points concurrent).</div>
+            </div>
+
+            <div class="MH-figures-grid">
+                <div class="MH-figure-container">
+                    <div class="MH-figure-label">Figure F</div>
+                    <canvas id="figureFCanvas" width="200" height="150"></canvas>
+                </div>
+                <div class="MH-figure-container">
+                    <div class="MH-figure-label">Figure F₁</div>
+                    <canvas id="figureF1Canvas" width="200" height="150"></canvas>
+                </div>
+                <div class="MH-figure-container">
+                    <div class="MH-figure-label">Figure F₂</div>
+                    <canvas id="figureF2Canvas" width="200" height="150"></canvas>
+                </div>
+                <div class="MH-figure-container">
+                    <div class="MH-figure-label">Figure F₃</div>
+                    <canvas id="figureF3Canvas" width="200" height="150"></canvas>
+                </div>
+                <div class="MH-figure-container">
+                    <div class="MH-figure-label">Figure F₄</div>
+                    <canvas id="figureF4Canvas" width="200" height="150"></canvas>
+                </div>
+            </div>
+
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety3.solution3Title">Analysis</h4>
+                    <button class="MH-solution-btn" onclick="constructActivity3()" data-i18n="MH.lesson_Y2Geo_homothety3.showConstruction">Show Construction</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety3.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                    <div class="MH-solution" id="solution3">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety3.solution3Intro">To determine if a figure is homothetic to F:</p>
+                        <ol>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety3.solution3a"><strong>Check shape preservation:</strong> All angles must be preserved. Corresponding sides must be parallel.</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety3.solution3b"><strong>Check scaling factor:</strong> The ratio of corresponding lengths must be constant (same for all pairs).</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety3.solution3c"><strong>Check center existence:</strong> Lines joining corresponding points must be concurrent at a single center point.</li>
+                        </ol>
+                        
+                        <h5 data-i18n="MH.lesson_Y2Geo_homothety3.analysisResults">Analysis Results:</h5>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety3.resultF1">F₁: Is a homothety of F (center exists, all sides parallel, constant ratio).</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety3.resultF2">F₂: Is NOT a homothety of F (shape is distorted, angles not preserved).</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety3.resultF3">F₃: Is a homothety of F (but with negative ratio - reduction with inversion).</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety3.resultF4">F₄: Is NOT a homothety of F (lines joining corresponding points not concurrent).</li>
+                        </ul>
+                        
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety3.equation3">
+                            Homothety condition: \(\frac{A'B'}{AB} = \frac{B'C'}{BC} = \frac{C'D'}{CD} = |k|\) and \((AA'), (BB'), (CC'), (DD')\) concurrent
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- XII. Conservation of Angles -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_homothety3.activity4Title">XII. Conservation of Angles</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Geo_homothety3.activity4StatementTitle">Activity 4</h3>
+                <p data-i18n="MH.lesson_Y2Geo_homothety3.activity4Statement">Let h be a homothety with center O and ratio k. Let ABC be a triangle.</p>
+                <ol>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety3.activity4Part1">Construct triangle A'B'C', image of ABC by h.</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety3.activity4Part2">a) Construct triangle A'B''C'', image of ABC by the translation with vector \(\overrightarrow{AA'}\).<br>
+                       b) Show that triangles ABC and A'B''C'' are isometric (congruent).</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety3.activity4Part3">Deduce that \(\widehat{BAC} = \widehat{B'A'C'}\).<br>What can we conclude?</li>
+                </ol>
+            </div>
+
+            <!-- Diagram 4: Triangle and its Homothetic Image -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_homothety3.diagram4Title">Figure: Triangle ABC and its images by homothety and translation</div>
+                <canvas id="activity4Canvas" width="600" height="500" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_homothety3.diagram4Instructions">Triangle ABC, its homothetic image A'B'C' (center O, ratio k), and translated image A'B''C'' (vector AA').</div>
+            </div>
+
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety3.solution4Title">Solution</h4>
+                    <button class="MH-solution-btn" onclick="constructActivity4()" data-i18n="MH.lesson_Y2Geo_homothety3.showConstruction">Show Construction</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety3.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+                    <div class="MH-solution" id="solution4">
+                        <ol>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety3.solution4a">
+                                <strong>Construction of A'B'C':</strong>
+                                <ul>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution4a1">Draw rays OA, OB, OC.</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution4a2">Mark A', B', C' on these rays such that OA' = k×OA, OB' = k×OB, OC' = k×OC.</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution4a3">Connect A', B', C' to form triangle A'B'C'.</li>
+                                </ul>
+                            </li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety3.solution4b">
+                                <strong>Construction of A'B''C'':</strong>
+                                <ul>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution4b1">The translation with vector \(\overrightarrow{AA'}\) maps A to A'.</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution4b2">Apply the same translation to B and C to get B'' and C'' such that \(\overrightarrow{AB''} = \overrightarrow{AA'} + \overrightarrow{AB}\) and \(\overrightarrow{AC''} = \overrightarrow{AA'} + \overrightarrow{AC}\).</li>
+                                </ul>
+                            </li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety3.solution4c">
+                                <strong>Proof that ABC ≅ A'B''C'':</strong>
+                                <ul>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution4c1">By definition of translation: \(\overrightarrow{AA'} = \overrightarrow{BB''} = \overrightarrow{CC''}\).</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution4c2">Therefore, AB = A'B'', BC = B''C'', CA = C''A' (translation preserves distances).</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution4c3">Thus triangles ABC and A'B''C'' have equal corresponding sides, so they are congruent (isometric).</li>
+                                </ul>
+                                <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety3.equation4a">
+                                    \(\overrightarrow{AA'} = \overrightarrow{BB''} = \overrightarrow{CC''}\) ⇒ AB = A'B'', BC = B''C'', CA = C''A'
+                                </div>
+                            </li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety3.solution4d">
+                                <strong>Deduction that \(\widehat{BAC} = \widehat{B'A'C'}\):</strong>
+                                <ul>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution4d1">Since ABC ≅ A'B''C'', we have \(\widehat{BAC} = \widehat{B''A'C''}\).</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution4d2">But A'B''C'' is obtained from A'B'C' by translation (or is parallel to it).</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution4d3">Actually, B''C'' is parallel to B'C' (since both are parallel to BC).</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution4d4">Thus \(\widehat{B''A'C''} = \widehat{B'A'C'}\) (corresponding angles with parallel lines).</li>
+                                </ul>
+                                <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety3.equation4b">
+                                    \(\widehat{BAC} = \widehat{B''A'C''} = \widehat{B'A'C'}\)
+                                </div>
+                            </li>
+                        </ol>
+                        <div class="MH-important">
+                            <p data-i18n="MH.lesson_Y2Geo_homothety3.conclusion4"><strong>Conclusion:</strong> A homothety preserves angles. More generally, homotheties are angle-preserving transformations (they are conformal).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- XIII. Conservation of Parallelism and Orthogonality -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_homothety3.activity5Title">XIII. Conservation of Parallelism and Orthogonality</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Geo_homothety3.activity5StatementTitle">Activity 5</h3>
+                <p data-i18n="MH.lesson_Y2Geo_homothety3.activity5Statement">Let h be a homothety with center I and ratio k. Let D and Δ be two lines, and let D' and Δ' be their respective images by h. What can we say about D' and Δ' in each of the following cases:</p>
+                <ol>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety3.activity5Part1">a) D and Δ are parallel?</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety3.activity5Part2">b) D and Δ are perpendicular?</li>
+                </ol>
+            </div>
+
+            <!-- Diagram 5: Lines and their Images -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_homothety3.diagram5Title">Figure: Lines D and Δ and their homothetic images D' and Δ'</div>
+                <canvas id="activity5Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_homothety3.diagram5Instructions">Show cases: parallel lines remain parallel, perpendicular lines remain perpendicular under homothety.</div>
+            </div>
+
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety3.solution5Title">Solution</h4>
+                    <button class="MH-solution-btn" onclick="constructActivity5()" data-i18n="MH.lesson_Y2Geo_homothety3.showConstruction">Show Construction</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety3.showSolution" onclick="toggleSolution(5)">Show Solution</button>
+                    <div class="MH-solution" id="solution5">
+                        <ol>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety3.solution5a">
+                                <strong>Case a: D ∥ Δ</strong>
+                                <ul>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution5a1">Let D and Δ be two parallel lines.</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution5a2">Take two points A and B on D, and two points C and D on Δ (with AB parallel to CD).</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution5a3">Their images A', B', C', D' satisfy: \(\overrightarrow{A'B'} = k\overrightarrow{AB}\) and \(\overrightarrow{C'D'} = k\overrightarrow{CD}\).</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution5a4">Since \(\overrightarrow{AB} \parallel \overrightarrow{CD}\), we have \(\overrightarrow{A'B'} \parallel \overrightarrow{C'D'}\).</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution5a5">Thus D' (line through A' and B') is parallel to Δ' (line through C' and D').</li>
+                                </ul>
+                                <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety3.equation5a">
+                                    \(D \parallel Δ \Rightarrow \overrightarrow{AB} \parallel \overrightarrow{CD} \Rightarrow \overrightarrow{A'B'} \parallel \overrightarrow{C'D'} \Rightarrow D' \parallel Δ'\)
+                                </div>
+                            </li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety3.solution5b">
+                                <strong>Case b: D ⟂ Δ</strong>
+                                <ul>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution5b1">Let D and Δ be two perpendicular lines (D ⟂ Δ).</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution5b2">Take two points A and B on D, and two points C and D on Δ such that AB ⟂ CD.</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution5b3">From Activity 4, we know homothety preserves angles.</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution5b4">Specifically, the angle between lines D and Δ is preserved.</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety3.solution5b5">Thus D' ⟂ Δ' (the image lines remain perpendicular).</li>
+                                </ul>
+                                <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety3.equation5b">
+                                    \(D \perp Δ \Rightarrow \widehat{(D,Δ)} = 90^\circ \Rightarrow \widehat{(D',Δ')} = 90^\circ \Rightarrow D' \perp Δ'\)
+                                </div>
+                            </li>
+                        </ol>
+                        <div class="MH-important">
+                            <h5 data-i18n="MH.lesson_Y2Geo_homothety3.conclusion5Title">General Conclusion</h5>
+                            <p data-i18n="MH.lesson_Y2Geo_homothety3.conclusion5Text">Homothety preserves:</p>
+                            <ul>
+                                <li data-i18n="MH.lesson_Y2Geo_homothety3.conclusion5a">Parallelism (parallel lines map to parallel lines)</li>
+                                <li data-i18n="MH.lesson_Y2Geo_homothety3.conclusion5b">Angles (including right angles, so perpendicularity is preserved)</li>
+                                <li data-i18n="MH.lesson_Y2Geo_homothety3.conclusion5c">Shape (figures remain similar)</li>
+                                <li data-i18n="MH.lesson_Y2Geo_homothety3.conclusion5d">Orientation if k > 0, reversed if k < 0</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_homothety3.summaryTitle">Comprehensive Summary</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Geo_homothety3.keyPropertiesTitle">Key Properties Demonstrated</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety3.property1">Construction of images of lines and points by homothety</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety3.property2">Use of homothety to prove alignment and midpoint properties</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety3.property3">Recognition of homothetic figures (preservation of shape)</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety3.property4">Homothety preserves angles (is conformal)</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety3.property5">Homothety preserves parallelism and perpendicularity</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety3.property6">Combination of homothety with translation to establish congruence</li>
+                </ul>
+            </div>
+            
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Geo_homothety3.conclusionTitle">Conclusion</h3>
+                <p data-i18n="MH.lesson_Y2Geo_homothety3.finalThought">Through these exercises, we have explored the practical applications of homothety in solving geometric problems. Homothety is not just a theoretical concept but a powerful tool for constructions, proofs, and transformations. The preservation of angles, parallelism, and shape under homothety makes it fundamental to the study of similarity in geometry. Mastery of these concepts provides a strong foundation for more advanced geometric transformations and their applications in various fields including engineering, architecture, and computer graphics.</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+    
+    <script>
+        // HOMOTHETY PART 3 LESSON TRANSLATIONS
+        const homothety3Translations = {
+            'en': {
+                // General translations
+                'MH.general.homeTooltip': 'Go to Homepage',
+                'MH.general.install': 'Install App',
+                'MH.general.installSuccess': 'Mathematics Hub installed successfully!',
+                'MH.general.enableNotifications': 'Enable Notifications',
+                'MH.general.notificationEnabled': 'Notifications enabled! You will now receive updates.',
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Theme',
+                'MH.general.language': 'Language',
+                'MH.lesson_Y2Geo_homothety3.showSolution': 'Show Solution',
+                'MH.lesson_Y2Geo_homothety3.hideSolution': 'Hide Solution',
+                'MH.lesson_Y2Geo_homothety3.showConstruction': 'Show Construction',
+                
+                // Lesson specific translations
+                'MH.lesson_Y2Geo_homothety3.title': 'Homothety: Part 3',
+                'MH.lesson_Y2Geo_homothety3.subtitle': 'Exercises and Problems',
+                'MH.lesson_Y2Geo_homothety3.introduction': 'Introduction',
+                'MH.lesson_Y2Geo_homothety3.introText1': 'In this lesson, we will apply homothety concepts to solve various types of problems. The exercises cover construction problems, alignment proofs, identification of homothetic figures, and properties preservation under homothety.',
+                'MH.lesson_Y2Geo_homothety3.introText2': 'Through these exercises, you will develop your skills in recognizing homotheties, constructing images, and proving geometric properties using homothety transformations.',
+                
+                // Activity 1: Construction Problem
+                'MH.lesson_Y2Geo_homothety3.activity1Title': 'IX. Construction Problem',
+                'MH.lesson_Y2Geo_homothety3.activity1StatementTitle': 'Activity 1',
+                'MH.lesson_Y2Geo_homothety3.activity1Statement': 'Let D and Δ be two intersecting lines. Let I be a point belonging neither to D nor to Δ.',
+                'MH.lesson_Y2Geo_homothety3.activity1Part1a': 'a) Construct the line D\', image of D by the homothety h with center I and ratio 2.<br>Let M\' be the intersection point of lines D\' and Δ.',
+                'MH.lesson_Y2Geo_homothety3.activity1Part1b': 'b) Construct the point M, antecedent of point M\' by h.',
+                'MH.lesson_Y2Geo_homothety3.activity1Part2': 'Construct a point A on D and a point B on Δ such that \(\overrightarrow{IB} = 3\overrightarrow{IA}\).',
+                'MH.lesson_Y2Geo_homothety3.diagram1Title': 'Figure: Lines D and Δ intersecting, point I not on either line',
+                'MH.lesson_Y2Geo_homothety3.diagram1Instructions': 'Construct line D\' = h(I,2)(D), find M\' = D\'∩Δ, then find M = h⁻¹(M\'). Construct A on D and B on Δ such that IB = 3IA.',
+                'MH.lesson_Y2Geo_homothety3.constructionStep1': 'Construction Steps',
+                'MH.lesson_Y2Geo_homothety3.solution1a': 'To construct D\' = h(I,2)(D):',
+                'MH.lesson_Y2Geo_homothety3.solution1a1': 'Choose two distinct points P and Q on line D.',
+                'MH.lesson_Y2Geo_homothety3.solution1a2': 'Construct their images P\' and Q\' by homothety h(I,2): Draw rays IP and IQ, then mark P\' and Q\' such that IP\' = 2×IP and IQ\' = 2×IQ.',
+                'MH.lesson_Y2Geo_homothety3.solution1a3': 'Line D\' is the line passing through P\' and Q\'.',
+                'MH.lesson_Y2Geo_homothety3.solution1b': 'M\' is the intersection of D\' and Δ.',
+                'MH.lesson_Y2Geo_homothety3.solution1c': 'To find M = h⁻¹(M\'):',
+                'MH.lesson_Y2Geo_homothety3.solution1c1': 'Since h has ratio 2, its inverse h⁻¹ has ratio 1/2.',
+                'MH.lesson_Y2Geo_homothety3.solution1c2': 'Construct M on line IM\' such that IM = (1/2)IM\' (or equivalently, M\' is between I and M with IM = (1/2)IM\').',
+                'MH.lesson_Y2Geo_homothety3.solution1d': 'To construct A on D and B on Δ with \(\overrightarrow{IB} = 3\overrightarrow{IA}\):',
+                'MH.lesson_Y2Geo_homothety3.solution1d1': 'Choose any point A on line D.',
+                'MH.lesson_Y2Geo_homothety3.solution1d2': 'Construct B as the image of A by homothety h(I,3): Draw ray IA and mark B such that IB = 3×IA.',
+                'MH.lesson_Y2Geo_homothety3.solution1d3': 'Since B must lie on Δ, adjust A along D until B falls on Δ.',
+                'MH.lesson_Y2Geo_homothety3.equation1': 'Key relations: \(\overrightarrow{IM\'} = 2\overrightarrow{IM}\) and \(\overrightarrow{IB} = 3\overrightarrow{IA}\)',
+                
+                // Activity 2: Alignment Problem
+                'MH.lesson_Y2Geo_homothety3.activity2Title': 'X. Alignment Problem',
+                'MH.lesson_Y2Geo_homothety3.activity2StatementTitle': 'Activity 2',
+                'MH.lesson_Y2Geo_homothety3.activity2Statement': 'Let C and C\' be two circles with respective centers O and O\', intersecting at points A and B. Let I be the intersection point of lines (AB) and (OO\').',
+                'MH.lesson_Y2Geo_homothety3.activity2Part1': 'Show that point I is the midpoint of segment [OO\'].',
+                'MH.lesson_Y2Geo_homothety3.activity2Part2': 'Line (AO) meets circle C again at E, and line (AO\') meets circle C\' again at F.<br>Show that points E, B, and F are collinear.',
+                'MH.lesson_Y2Geo_homothety3.activity2Part3': 'Line (BO) meets circle C again at G, and line (BO\') meets circle C\' again at H.<br>Show that quadrilateral EFGH is a rectangle.',
+                'MH.lesson_Y2Geo_homothety3.diagram2Title': 'Figure: Two circles C and C\' intersecting at A and B',
+                'MH.lesson_Y2Geo_homothety3.diagram2Instructions': 'Circles with centers O and O\', intersecting at A and B. I = (AB)∩(OO\'). Points E, F, G, H as described.',
+                'MH.lesson_Y2Geo_homothety3.solution2Title': 'Solution',
+                'MH.lesson_Y2Geo_homothety3.solution2a': 'Proof that I is midpoint of [OO\']:',
+                'MH.lesson_Y2Geo_homothety3.solution2a1': 'Consider homothety h with center A that maps circle C to circle C\'.',
+                'MH.lesson_Y2Geo_homothety3.solution2a2': 'Since A is common to both circles, the homothety maps A to itself.',
+                'MH.lesson_Y2Geo_homothety3.solution2a3': 'Point B on C maps to B on C\' (since B is common).',
+                'MH.lesson_Y2Geo_homothety3.solution2a4': 'Center O of C maps to center O\' of C\'. Therefore, A, O, O\' are collinear.',
+                'MH.lesson_Y2Geo_homothety3.solution2a5': 'Similarly, consider homothety with center B: B, O, O\' are collinear.',
+                'MH.lesson_Y2Geo_homothety3.solution2a6': 'Thus line OO\' passes through both A and B, so OO\' = AB, and I = AB ∩ OO\' is indeed the intersection.',
+                'MH.lesson_Y2Geo_homothety3.solution2a7': 'Since the two homotheties (with centers A and B) are inverses, I is the midpoint of OO\'.',
+                'MH.lesson_Y2Geo_homothety3.equation2a': '\(\overrightarrow{O\'I} = -\overrightarrow{OI}\) or \(I = \text{midpoint}(OO\')\)',
+                'MH.lesson_Y2Geo_homothety3.solution2b': 'Proof that E, B, F are collinear:',
+                'MH.lesson_Y2Geo_homothety3.solution2b1': 'Consider homothety h₁ with center A mapping C to C\'.',
+                'MH.lesson_Y2Geo_homothety3.solution2b2': 'Under h₁: O → O\', and the line AO (diameter of C) maps to line AO\' (diameter of C\').',
+                'MH.lesson_Y2Geo_homothety3.solution2b3': 'Point E (intersection of AO with C, other than A) maps to point F (intersection of AO\' with C\', other than A).',
+                'MH.lesson_Y2Geo_homothety3.solution2b4': 'Since B is fixed point of h₁ (as common point), and E, B, F are aligned with the center A, they are collinear.',
+                'MH.lesson_Y2Geo_homothety3.equation2b': '\(h₁(A,k): E \mapsto F\) with \(A, E, B, F\) collinear',
+                'MH.lesson_Y2Geo_homothety3.solution2c': 'Proof that EFGH is a rectangle:',
+                'MH.lesson_Y2Geo_homothety3.solution2c1': 'Similarly, consider homothety h₂ with center B mapping C to C\'.',
+                'MH.lesson_Y2Geo_homothety3.solution2c2': 'Under h₂: O → O\', and line BO maps to line BO\'.',
+                'MH.lesson_Y2Geo_homothety3.solution2c3': 'Point G (intersection of BO with C, other than B) maps to point H (intersection of BO\' with C\', other than B).',
+                'MH.lesson_Y2Geo_homothety3.solution2c4': 'Now, consider quadrilateral EFGH: ',
+                'MH.lesson_Y2Geo_homothety3.solution2c4a': 'EF is diameter of circle through A (since AE is diameter of C and AF is diameter of C\').',
+                'MH.lesson_Y2Geo_homothety3.solution2c4b': 'GH is diameter of circle through B (since BG is diameter of C and BH is diameter of C\').',
+                'MH.lesson_Y2Geo_homothety3.solution2c4c': 'Since AB is common chord and OO\' is line of centers, and I is midpoint of OO\', we have symmetry.',
+                'MH.lesson_Y2Geo_homothety3.solution2c4d': 'Angles E and G are right angles (angles in semicircles).',
+                'MH.lesson_Y2Geo_homothety3.solution2c4e': 'Similarly, angles F and H are right angles.',
+                'MH.lesson_Y2Geo_homothety3.solution2c5': 'Thus EFGH has four right angles, so it is a rectangle.',
+                'MH.lesson_Y2Geo_homothety3.equation2c': '\(\widehat{E} = \widehat{F} = \widehat{G} = \widehat{H} = 90^\circ\) ⇒ EFGH is a rectangle',
+                
+                // Activity 3: Enlargement/Reduction
+                'MH.lesson_Y2Geo_homothety3.activity3Title': 'XI. Enlargement – Reduction – Homothetic Figures',
+                'MH.lesson_Y2Geo_homothety3.activity3StatementTitle': 'Activity 3',
+                'MH.lesson_Y2Geo_homothety3.activity3Statement': 'Each of the figures F₁, F₂, F₃, and F₄ is an enlargement or reduction of figure F. For each of them, determine whether it is or is not the image of F by a homothety.',
+                'MH.lesson_Y2Geo_homothety3.definitionTitle': 'Definition',
+                'MH.lesson_Y2Geo_homothety3.definitionText': 'Two figures are said to be homothetic if one is the image of the other by a homothety.',
+                'MH.lesson_Y2Geo_homothety3.diagram3Title': 'Figure: Original figure F and its potential homothetic images F₁, F₂, F₃, F₄',
+                'MH.lesson_Y2Geo_homothety3.diagram3Instructions': 'Determine which figures are homothetic to F (same shape, different size, with lines through corresponding points concurrent).',
+                'MH.lesson_Y2Geo_homothety3.solution3Title': 'Analysis',
+                'MH.lesson_Y2Geo_homothety3.solution3Intro': 'To determine if a figure is homothetic to F:',
+                'MH.lesson_Y2Geo_homothety3.solution3a': 'Check shape preservation: All angles must be preserved. Corresponding sides must be parallel.',
+                'MH.lesson_Y2Geo_homothety3.solution3b': 'Check scaling factor: The ratio of corresponding lengths must be constant (same for all pairs).',
+                'MH.lesson_Y2Geo_homothety3.solution3c': 'Check center existence: Lines joining corresponding points must be concurrent at a single center point.',
+                'MH.lesson_Y2Geo_homothety3.analysisResults': 'Analysis Results:',
+                'MH.lesson_Y2Geo_homothety3.resultF1': 'F₁: Is a homothety of F (center exists, all sides parallel, constant ratio).',
+                'MH.lesson_Y2Geo_homothety3.resultF2': 'F₂: Is NOT a homothety of F (shape is distorted, angles not preserved).',
+                'MH.lesson_Y2Geo_homothety3.resultF3': 'F₃: Is a homothety of F (but with negative ratio - reduction with inversion).',
+                'MH.lesson_Y2Geo_homothety3.resultF4': 'F₄: Is NOT a homothety of F (lines joining corresponding points not concurrent).',
+                'MH.lesson_Y2Geo_homothety3.equation3': 'Homothety condition: \(\frac{A\'B\'}{AB} = \frac{B\'C\'}{BC} = \frac{C\'D\'}{CD} = |k|\) and \((AA\'), (BB\'), (CC\'), (DD\')\) concurrent',
+                
+                // Activity 4: Conservation of Angles
+                'MH.lesson_Y2Geo_homothety3.activity4Title': 'XII. Conservation of Angles',
+                'MH.lesson_Y2Geo_homothety3.activity4StatementTitle': 'Activity 4',
+                'MH.lesson_Y2Geo_homothety3.activity4Statement': 'Let h be a homothety with center O and ratio k. Let ABC be a triangle.',
+                'MH.lesson_Y2Geo_homothety3.activity4Part1': 'Construct triangle A\'B\'C\', image of ABC by h.',
+                'MH.lesson_Y2Geo_homothety3.activity4Part2': 'a) Construct triangle A\'B\'\'C\'\', image of ABC by the translation with vector \(\overrightarrow{AA\'}\).<br>b) Show that triangles ABC and A\'B\'\'C\'\' are isometric (congruent).',
+                'MH.lesson_Y2Geo_homothety3.activity4Part3': 'Deduce that \(\widehat{BAC} = \widehat{B\'A\'C\'}\).<br>What can we conclude?',
+                'MH.lesson_Y2Geo_homothety3.diagram4Title': 'Figure: Triangle ABC and its images by homothety and translation',
+                'MH.lesson_Y2Geo_homothety3.diagram4Instructions': 'Triangle ABC, its homothetic image A\'B\'C\' (center O, ratio k), and translated image A\'B\'\'C\'\' (vector AA\').',
+                'MH.lesson_Y2Geo_homothety3.solution4Title': 'Solution',
+                'MH.lesson_Y2Geo_homothety3.solution4a': 'Construction of A\'B\'C\':',
+                'MH.lesson_Y2Geo_homothety3.solution4a1': 'Draw rays OA, OB, OC.',
+                'MH.lesson_Y2Geo_homothety3.solution4a2': 'Mark A\', B\', C\' on these rays such that OA\' = k×OA, OB\' = k×OB, OC\' = k×OC.',
+                'MH.lesson_Y2Geo_homothety3.solution4a3': 'Connect A\', B\', C\' to form triangle A\'B\'C\'.',
+                'MH.lesson_Y2Geo_homothety3.solution4b': 'Construction of A\'B\'\'C\'\':',
+                'MH.lesson_Y2Geo_homothety3.solution4b1': 'The translation with vector \(\overrightarrow{AA\'}\) maps A to A\'.',
+                'MH.lesson_Y2Geo_homothety3.solution4b2': 'Apply the same translation to B and C to get B\'\' and C\'\' such that \(\overrightarrow{AB\'\'} = \overrightarrow{AA\'} + \overrightarrow{AB}\) and \(\overrightarrow{AC\'\'} = \overrightarrow{AA\'} + \overrightarrow{AC}\).',
+                'MH.lesson_Y2Geo_homothety3.solution4c': 'Proof that ABC ≅ A\'B\'\'C\'\':',
+                'MH.lesson_Y2Geo_homothety3.solution4c1': 'By definition of translation: \(\overrightarrow{AA\'} = \overrightarrow{BB\'\'} = \overrightarrow{CC\'\'}\).',
+                'MH.lesson_Y2Geo_homothety3.solution4c2': 'Therefore, AB = A\'B\'\', BC = B\'\'C\'\', CA = C\'\'A\' (translation preserves distances).',
+                'MH.lesson_Y2Geo_homothety3.solution4c3': 'Thus triangles ABC and A\'B\'\'C\'\' have equal corresponding sides, so they are congruent (isometric).',
+                'MH.lesson_Y2Geo_homothety3.equation4a': '\(\overrightarrow{AA\'} = \overrightarrow{BB\'\'} = \overrightarrow{CC\'\'}\) ⇒ AB = A\'B\'\', BC = B\'\'C\'\', CA = C\'\'A\'',
+                'MH.lesson_Y2Geo_homothety3.solution4d': 'Deduction that \(\widehat{BAC} = \widehat{B\'A\'C\'}\):',
+                'MH.lesson_Y2Geo_homothety3.solution4d1': 'Since ABC ≅ A\'B\'\'C\'\', we have \(\widehat{BAC} = \widehat{B\'\'A\'C\'\'}\).',
+                'MH.lesson_Y2Geo_homothety3.solution4d2': 'But A\'B\'\'C\'\' is obtained from A\'B\'C\' by translation (or is parallel to it).',
+                'MH.lesson_Y2Geo_homothety3.solution4d3': 'Actually, B\'\'C\'\' is parallel to B\'C\' (since both are parallel to BC).',
+                'MH.lesson_Y2Geo_homothety3.solution4d4': 'Thus \(\widehat{B\'\'A\'C\'\'} = \widehat{B\'A\'C\'}\) (corresponding angles with parallel lines).',
+                'MH.lesson_Y2Geo_homothety3.equation4b': '\(\widehat{BAC} = \widehat{B\'\'A\'C\'\'} = \widehat{B\'A\'C\'}\)',
+                'MH.lesson_Y2Geo_homothety3.conclusion4': 'Conclusion: A homothety preserves angles. More generally, homotheties are angle-preserving transformations (they are conformal).',
+                
+                // Activity 5: Conservation of Parallelism and Orthogonality
+                'MH.lesson_Y2Geo_homothety3.activity5Title': 'XIII. Conservation of Parallelism and Orthogonality',
+                'MH.lesson_Y2Geo_homothety3.activity5StatementTitle': 'Activity 5',
+                'MH.lesson_Y2Geo_homothety3.activity5Statement': 'Let h be a homothety with center I and ratio k. Let D and Δ be two lines, and let D\' and Δ\' be their respective images by h. What can we say about D\' and Δ\' in each of the following cases:',
+                'MH.lesson_Y2Geo_homothety3.activity5Part1': 'a) D and Δ are parallel?',
+                'MH.lesson_Y2Geo_homothety3.activity5Part2': 'b) D and Δ are perpendicular?',
+                'MH.lesson_Y2Geo_homothety3.diagram5Title': 'Figure: Lines D and Δ and their homothetic images D\' and Δ\'',
+                'MH.lesson_Y2Geo_homothety3.diagram5Instructions': 'Show cases: parallel lines remain parallel, perpendicular lines remain perpendicular under homothety.',
+                'MH.lesson_Y2Geo_homothety3.solution5Title': 'Solution',
+                'MH.lesson_Y2Geo_homothety3.solution5a': 'Case a: D ∥ Δ',
+                'MH.lesson_Y2Geo_homothety3.solution5a1': 'Let D and Δ be two parallel lines.',
+                'MH.lesson_Y2Geo_homothety3.solution5a2': 'Take two points A and B on D, and two points C and D on Δ (with AB parallel to CD).',
+                'MH.lesson_Y2Geo_homothety3.solution5a3': 'Their images A\', B\', C\', D\' satisfy: \(\overrightarrow{A\'B\'} = k\overrightarrow{AB}\) and \(\overrightarrow{C\'D\'} = k\overrightarrow{CD}\).',
+                'MH.lesson_Y2Geo_homothety3.solution5a4': 'Since \(\overrightarrow{AB} \parallel \overrightarrow{CD}\), we have \(\overrightarrow{A\'B\'} \parallel \overrightarrow{C\'D\'}\).',
+                'MH.lesson_Y2Geo_homothety3.solution5a5': 'Thus D\' (line through A\' and B\') is parallel to Δ\' (line through C\' and D\').',
+                'MH.lesson_Y2Geo_homothety3.equation5a': '\(D \parallel Δ \Rightarrow \overrightarrow{AB} \parallel \overrightarrow{CD} \Rightarrow \overrightarrow{A\'B\'} \parallel \overrightarrow{C\'D\'} \Rightarrow D\' \parallel Δ\'\)',
+                'MH.lesson_Y2Geo_homothety3.solution5b': 'Case b: D ⟂ Δ',
+                'MH.lesson_Y2Geo_homothety3.solution5b1': 'Let D and Δ be two perpendicular lines (D ⟂ Δ).',
+                'MH.lesson_Y2Geo_homothety3.solution5b2': 'Take two points A and B on D, and two points C and D on Δ such that AB ⟂ CD.',
+                'MH.lesson_Y2Geo_homothety3.solution5b3': 'From Activity 4, we know homothety preserves angles.',
+                'MH.lesson_Y2Geo_homothety3.solution5b4': 'Specifically, the angle between lines D and Δ is preserved.',
+                'MH.lesson_Y2Geo_homothety3.solution5b5': 'Thus D\' ⟂ Δ\' (the image lines remain perpendicular).',
+                'MH.lesson_Y2Geo_homothety3.equation5b': '\(D \perp Δ \Rightarrow \widehat{(D,Δ)} = 90^\circ \Rightarrow \widehat{(D\',Δ\')} = 90^\circ \Rightarrow D\' \perp Δ\'\)',
+                'MH.lesson_Y2Geo_homothety3.conclusion5Title': 'General Conclusion',
+                'MH.lesson_Y2Geo_homothety3.conclusion5Text': 'Homothety preserves:',
+                'MH.lesson_Y2Geo_homothety3.conclusion5a': 'Parallelism (parallel lines map to parallel lines)',
+                'MH.lesson_Y2Geo_homothety3.conclusion5b': 'Angles (including right angles, so perpendicularity is preserved)',
+                'MH.lesson_Y2Geo_homothety3.conclusion5c': 'Shape (figures remain similar)',
+                'MH.lesson_Y2Geo_homothety3.conclusion5d': 'Orientation if k > 0, reversed if k < 0',
+                
+                // Summary
+                'MH.lesson_Y2Geo_homothety3.summaryTitle': 'Comprehensive Summary',
+                'MH.lesson_Y2Geo_homothety3.keyPropertiesTitle': 'Key Properties Demonstrated',
+                'MH.lesson_Y2Geo_homothety3.property1': 'Construction of images of lines and points by homothety',
+                'MH.lesson_Y2Geo_homothety3.property2': 'Use of homothety to prove alignment and midpoint properties',
+                'MH.lesson_Y2Geo_homothety3.property3': 'Recognition of homothetic figures (preservation of shape)',
+                'MH.lesson_Y2Geo_homothety3.property4': 'Homothety preserves angles (is conformal)',
+                'MH.lesson_Y2Geo_homothety3.property5': 'Homothety preserves parallelism and perpendicularity',
+                'MH.lesson_Y2Geo_homothety3.property6': 'Combination of homothety with translation to establish congruence',
+                'MH.lesson_Y2Geo_homothety3.conclusionTitle': 'Conclusion',
+                'MH.lesson_Y2Geo_homothety3.finalThought': 'Through these exercises, we have explored the practical applications of homothety in solving geometric problems. Homothety is not just a theoretical concept but a powerful tool for constructions, proofs, and transformations. The preservation of angles, parallelism, and shape under homothety makes it fundamental to the study of similarity in geometry. Mastery of these concepts provides a strong foundation for more advanced geometric transformations and their applications in various fields including engineering, architecture, and computer graphics.',
+                
+                // Footer
+                'MH.footer.developer': 'Developer',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Links',
+                'MH.footer.terms': 'Terms of Use',
+                'MH.footer.privacy': 'Privacy Policy'
+            },
+            'ar': {
+                // ترجمات عامة
+                'MH.general.homeTooltip': 'الذهاب إلى الصفحة الرئيسية',
+                'MH.general.install': 'تثبيت التطبيق',
+                'MH.general.installSuccess': 'تم تثبيت Mathematics Hub بنجاح!',
+                'MH.general.enableNotifications': 'تفعيل الإشعارات',
+                'MH.general.notificationEnabled': 'تم تفعيل الإشعارات! ستتلقى التحديثات الآن.',
+                'MH.general.title': 'مركز الرياضيات',
+                'MH.general.theme': 'السمة',
+                'MH.general.language': 'اللغة',
+                'MH.lesson_Y2Geo_homothety3.showSolution': 'إظهار الحل',
+                'MH.lesson_Y2Geo_homothety3.hideSolution': 'إخفاء الحل',
+                'MH.lesson_Y2Geo_homothety3.showConstruction': 'إظهار الإنشاء',
+                
+                // ترجمات الدرس الثالث في التماثل
+                'MH.lesson_Y2Geo_homothety3.title': 'التماثل: الجزء 3',
+                'MH.lesson_Y2Geo_homothety3.subtitle': 'تمارين ومشاكل',
+                'MH.lesson_Y2Geo_homothety3.introduction': 'المقدمة',
+                'MH.lesson_Y2Geo_homothety3.introText1': 'في هذا الدرس، سنطبق مفاهيم التماثل لحل أنواع مختلفة من المشاكل. التمارين تغطي مشاكل الإنشاء، براهين الانسجام، تحديد الأشكال المتشابهة بالتماثل، وحفظ الخصائص تحت التحويل بالتماثل.',
+                'MH.lesson_Y2Geo_homothety3.introText2': 'من خلال هذه التمارين، ستطور مهاراتك في التعرف على التحويلات بالتماثل، إنشاء الصور، وإثبات الخصائص الهندسية باستخدام تحويلات التماثل.',
+                
+                // النشاط 1: مشكلة الإنشاء
+                'MH.lesson_Y2Geo_homothety3.activity1Title': 'التاسع. مشكلة الإنشاء',
+                'MH.lesson_Y2Geo_homothety3.activity1StatementTitle': 'النشاط 1',
+                'MH.lesson_Y2Geo_homothety3.activity1Statement': 'لتكن D و Δ مستقيمين متقاطعين. لتكن I نقطة لا تنتمي لا إلى D ولا إلى Δ.',
+                'MH.lesson_Y2Geo_homothety3.activity1Part1a': 'أ) أنشئ المستقيم D\'، صورة المستقيم D بالتماثل h الذي مركزه I ونسبته 2.<br>وليكن M\' نقطة تقاطع المستقيمين D\' و Δ.',
+                'MH.lesson_Y2Geo_homothety3.activity1Part1b': 'ب) أنشئ النقطة M، السابقة للنقطة M\' بالتماثل h.',
+                'MH.lesson_Y2Geo_homothety3.activity1Part2': 'أنشئ نقطة A على D ونقطة B على Δ بحيث \(\overrightarrow{IB} = 3\overrightarrow{IA}\).',
+                'MH.lesson_Y2Geo_homothety3.diagram1Title': 'الشكل: المستقيمان D و Δ متقاطعان، النقطة I لا تقع على أي منهما',
+                'MH.lesson_Y2Geo_homothety3.diagram1Instructions': 'أنشئ المستقيم D\' = h(I,2)(D)، أوجد M\' = D\'∩Δ، ثم أوجد M = h⁻¹(M\'). أنشئ A على D و B على Δ بحيث IB = 3IA.',
+                'MH.lesson_Y2Geo_homothety3.constructionStep1': 'خطوات الإنشاء',
+                'MH.lesson_Y2Geo_homothety3.solution1a': 'لإنشاء D\' = h(I,2)(D):',
+                'MH.lesson_Y2Geo_homothety3.solution1a1': 'اختر نقطتين مختلفتين P و Q على المستقيم D.',
+                'MH.lesson_Y2Geo_homothety3.solution1a2': 'أنشئ صورتهما P\' و Q\' بالتماثل h(I,2): ارسم الشعاعين IP و IQ، ثم علّم P\' و Q\' بحيث IP\' = 2×IP و IQ\' = 2×IQ.',
+                'MH.lesson_Y2Geo_homothety3.solution1a3': 'المستقيم D\' هو المستقيم المار بـ P\' و Q\'.',
+                'MH.lesson_Y2Geo_homothety3.solution1b': 'M\' هو تقاطع D\' و Δ.',
+                'MH.lesson_Y2Geo_homothety3.solution1c': 'لإيجاد M = h⁻¹(M\'):',
+                'MH.lesson_Y2Geo_homothety3.solution1c1': 'بما أن نسبة h هي 2، فإن معكوسها h⁻¹ له نسبة 1/2.',
+                'MH.lesson_Y2Geo_homothety3.solution1c2': 'أنشئ M على المستقيم IM\' بحيث IM = (1/2)IM\' (أو بشكل مكافئ، M\' بين I و M مع IM = (1/2)IM\').',
+                'MH.lesson_Y2Geo_homothety3.solution1d': 'لإنشاء A على D و B على Δ مع \(\overrightarrow{IB} = 3\overrightarrow{IA}\):',
+                'MH.lesson_Y2Geo_homothety3.solution1d1': 'اختر أي نقطة A على المستقيم D.',
+                'MH.lesson_Y2Geo_homothety3.solution1d2': 'أنشئ B كصورة لـ A بالتماثل h(I,3): ارسم الشعاع IA وعلّم B بحيث IB = 3×IA.',
+                'MH.lesson_Y2Geo_homothety3.solution1d3': 'بما أن B يجب أن تقع على Δ، اضبط A على طول D حتى تقع B على Δ.',
+                'MH.lesson_Y2Geo_homothety3.equation1': 'العلاقات الرئيسية: \(\overrightarrow{IM\'} = 2\overrightarrow{IM}\) و \(\overrightarrow{IB} = 3\overrightarrow{IA}\)',
+                
+                // النشاط 2: مشكلة الانسجام
+                'MH.lesson_Y2Geo_homothety3.activity2Title': 'العاشر. مشكلة الانسجام',
+                'MH.lesson_Y2Geo_homothety3.activity2StatementTitle': 'النشاط 2',
+                'MH.lesson_Y2Geo_homothety3.activity2Statement': 'لتكن C و C\' دائرتين مركزاهما على التوالي O و O\'، تتقاطعان عند النقطتين A و B. لتكن I نقطة تقاطع المستقيمين (AB) و (OO\').',
+                'MH.lesson_Y2Geo_homothety3.activity2Part1': 'أثبت أن النقطة I هي منتصف القطعة [OO\'].',
+                'MH.lesson_Y2Geo_homothety3.activity2Part2': 'المستقيم (AO) يقطع الدائرة C مرة أخرى عند E، والمستقيم (AO\') يقطع الدائرة C\' مرة أخرى عند F.<br>أثبت أن النقاط E، B، و F على استقامة واحدة.',
+                'MH.lesson_Y2Geo_homothety3.activity2Part3': 'المستقيم (BO) يقطع الدائرة C مرة أخرى عند G، والمستقيم (BO\') يقطع الدائرة C\' مرة أخرى عند H.<br>أثبت أن الرباعي EFGH مستطيل.',
+                'MH.lesson_Y2Geo_homothety3.diagram2Title': 'الشكل: دائرتان C و C\' تتقاطعان عند A و B',
+                'MH.lesson_Y2Geo_homothety3.diagram2Instructions': 'دائرتان مركزاهما O و O\'، تتقاطعان عند A و B. I = (AB)∩(OO\'). النقاط E، F، G، H كما وصف.',
+                'MH.lesson_Y2Geo_homothety3.solution2Title': 'الحل',
+                'MH.lesson_Y2Geo_homothety3.solution2a': 'إثبات أن I هي منتصف [OO\']:',
+                'MH.lesson_Y2Geo_homothety3.solution2a1': 'فكر في التماثل h الذي مركزه A والذي يحول الدائرة C إلى الدائرة C\'.',
+                'MH.lesson_Y2Geo_homothety3.solution2a2': 'بما أن A مشتركة بين الدائرتين، فإن التماثل يحول A إلى نفسها.',
+                'MH.lesson_Y2Geo_homothety3.solution2a3': 'النقطة B على C تتحول إلى B على C\' (بما أن B مشتركة).',
+                'MH.lesson_Y2Geo_homothety3.solution2a4': 'المركز O لـ C يتحول إلى المركز O\' لـ C\'. لذلك، A، O، O\' على استقامة واحدة.',
+                'MH.lesson_Y2Geo_homothety3.solution2a5': 'بالمثل، فكر في التماثل الذي مركزه B: B، O، O\' على استقامة واحدة.',
+                'MH.lesson_Y2Geo_homothety3.solution2a6': 'وبالتالي المستقيم OO\' يمر بـ A و B، إذن OO\' = AB، و I = AB ∩ OO\' هو بالفعل نقطة التقاطع.',
+                'MH.lesson_Y2Geo_homothety3.solution2a7': 'بما أن التماثلين (بمركزيه A و B) معكوسان، فإن I هي منتصف OO\'.',
+                'MH.lesson_Y2Geo_homothety3.equation2a': '\(\overrightarrow{O\'I} = -\overrightarrow{OI}\) أو \(I = \text{منتصف}(OO\')\)',
+                'MH.lesson_Y2Geo_homothety3.solution2b': 'إثبات أن E، B، F على استقامة واحدة:',
+                'MH.lesson_Y2Geo_homothety3.solution2b1': 'فكر في التماثل h₁ الذي مركزه A يحول C إلى C\'.',
+                'MH.lesson_Y2Geo_homothety3.solution2b2': 'تحت h₁: O → O\'، والمستقيم AO (قطر الدائرة C) يتحول إلى المستقيم AO\' (قطر الدائرة C\').',
+                'MH.lesson_Y2Geo_homothety3.solution2b3': 'النقطة E (تقاطع AO مع C، غير A) تتحول إلى النقطة F (تقاطع AO\' مع C\'، غير A).',
+                'MH.lesson_Y2Geo_homothety3.solution2b4': 'بما أن B نقطة ثابتة لـ h₁ (كنقطة مشتركة)، و E، B، F مصطفة مع المركز A، فإنها على استقامة واحدة.',
+                'MH.lesson_Y2Geo_homothety3.equation2b': '\(h₁(A,k): E \mapsto F\) مع \(A, E, B, F\) على استقامة واحدة',
+                'MH.lesson_Y2Geo_homothety3.solution2c': 'إثبات أن EFGH مستطيل:',
+                'MH.lesson_Y2Geo_homothety3.solution2c1': 'بالمثل، فكر في التماثل h₂ الذي مركزه B يحول C إلى C\'.',
+                'MH.lesson_Y2Geo_homothety3.solution2c2': 'تحت h₂: O → O\'، والمستقيم BO يتحول إلى المستقيم BO\'.',
+                'MH.lesson_Y2Geo_homothety3.solution2c3': 'النقطة G (تقاطع BO مع C، غير B) تتحول إلى النقطة H (تقاطع BO\' مع C\'، غير B).',
+                'MH.lesson_Y2Geo_homothety3.solution2c4': 'الآن، فكر في الرباعي EFGH: ',
+                'MH.lesson_Y2Geo_homothety3.solution2c4a': 'EF هو قطر الدائرة المارة بـ A (بما أن AE قطر لـ C و AF قطر لـ C\').',
+                'MH.lesson_Y2Geo_homothety3.solution2c4b': 'GH هو قطر الدائرة المارة بـ B (بما أن BG قطر لـ C و BH قطر لـ C\').',
+                'MH.lesson_Y2Geo_homothety3.solution2c4c': 'بما أن AB وتر مشترك و OO\' هو خط المراكز، و I منتصف OO\'، لدينا تماثل.',
+                'MH.lesson_Y2Geo_homothety3.solution2c4d': 'الزوايا E و G قائمة (زوايا في أنصاف دوائر).',
+                'MH.lesson_Y2Geo_homothety3.solution2c4e': 'بالمثل، الزوايا F و H قائمة.',
+                'MH.lesson_Y2Geo_homothety3.solution2c5': 'وبالتالي EFGH له أربع زوايا قائمة، إذن هو مستطيل.',
+                'MH.lesson_Y2Geo_homothety3.equation2c': '\(\widehat{E} = \widehat{F} = \widehat{G} = \widehat{H} = 90^\circ\) ⇒ EFGH مستطيل',
+                
+                // النشاط 3: تكبير/تصغير
+                'MH.lesson_Y2Geo_homothety3.activity3Title': 'الحادي عشر. تكبير – تصغير – أشكال متشابهة بالتماثل',
+                'MH.lesson_Y2Geo_homothety3.activity3StatementTitle': 'النشاط 3',
+                'MH.lesson_Y2Geo_homothety3.activity3Statement': 'كل من الأشكال F₁، F₂، F₃، و F₄ هو تكبير أو تصغير للشكل F. لكل منها، حدد ما إذا كانت صورة للشكل F بتماثل أم لا.',
+                'MH.lesson_Y2Geo_homothety3.definitionTitle': 'تعريف',
+                'MH.lesson_Y2Geo_homothety3.definitionText': 'يقال أن شكلين متشابهين بالتماثل إذا كان أحدهما صورة للآخر بتماثل.',
+                'MH.lesson_Y2Geo_homothety3.diagram3Title': 'الشكل: الشكل الأصلي F وصوره المحتملة بالتماثل F₁، F₂، F₃، F₄',
+                'MH.lesson_Y2Geo_homothety3.diagram3Instructions': 'حدد أي الأشكال متشابه بالتماثل مع F (نفس الشكل، حجم مختلف، مع المستقيمات المارة بالنقاط المتناظرة متلاقية في نقطة واحدة).',
+                'MH.lesson_Y2Geo_homothety3.solution3Title': 'التحليل',
+                'MH.lesson_Y2Geo_homothety3.solution3Intro': 'لتحديد ما إذا كان شكل متشابه بالتماثل مع F:',
+                'MH.lesson_Y2Geo_homothety3.solution3a': 'تحقق من حفظ الشكل: جميع الزوايا يجب أن تُحفظ. الأضلاع المتناظرة يجب أن تكون متوازية.',
+                'MH.lesson_Y2Geo_homothety3.solution3b': 'تحقق من عامل التحجيم: نسبة الأطوال المتناظرة يجب أن تكون ثابتة (نفسها لجميع الأزواج).',
+                'MH.lesson_Y2Geo_homothety3.solution3c': 'تحقق من وجود المركز: المستقيمات الواصلة بين النقاط المتناظرة يجب أن تتلاقى في نقطة مركز واحدة.',
+                'MH.lesson_Y2Geo_homothety3.analysisResults': 'نتائج التحليل:',
+                'MH.lesson_Y2Geo_homothety3.resultF1': 'F₁: هو تماثل للشكل F (يوجد مركز، جميع الأضلاع متوازية، نسبة ثابتة).',
+                'MH.lesson_Y2Geo_homothety3.resultF2': 'F₂: ليس تماثل للشكل F (الشكل مشوه، الزوايا لم تُحفظ).',
+                'MH.lesson_Y2Geo_homothety3.resultF3': 'F₃: هو تماثل للشكل F (لكن بنسبة سالبة - تصغير مع انعكاس).',
+                'MH.lesson_Y2Geo_homothety3.resultF4': 'F₄: ليس تماثل للشكل F (المستقيمات الواصلة بين النقاط المتناظرة غير متلاقية في نقطة واحدة).',
+                'MH.lesson_Y2Geo_homothety3.equation3': 'شرط التماثل: \(\frac{A\'B\'}{AB} = \frac{B\'C\'}{BC} = \frac{C\'D\'}{CD} = |k|\) و \((AA\'), (BB\'), (CC\'), (DD\')\) متلاقية',
+                
+                // النشاط 4: حفظ الزوايا
+                'MH.lesson_Y2Geo_homothety3.activity4Title': 'الثاني عشر. حفظ الزوايا',
+                'MH.lesson_Y2Geo_homothety3.activity4StatementTitle': 'النشاط 4',
+                'MH.lesson_Y2Geo_homothety3.activity4Statement': 'لتكن h تماثل مركزه O ونسبته k. لتكن ABC مثلثًا.',
+                'MH.lesson_Y2Geo_homothety3.activity4Part1': 'أنشئ المثلث A\'B\'C\'، صورة ABC بالتماثل h.',
+                'MH.lesson_Y2Geo_homothety3.activity4Part2': 'أ) أنشئ المثلث A\'B\'\'C\'\'، صورة ABC بالإزاحة ذات المتجه \(\overrightarrow{AA\'}\).<br>ب) أثبت أن المثلثين ABC و A\'B\'\'C\'\' متطابقان.',
+                'MH.lesson_Y2Geo_homothety3.activity4Part3': 'استنتج أن \(\widehat{BAC} = \widehat{B\'A\'C\'}\).<br>ماذا يمكننا أن نستنتج؟',
+                'MH.lesson_Y2Geo_homothety3.diagram4Title': 'الشكل: المثلث ABC وصوره بالتماثل والإزاحة',
+                'MH.lesson_Y2Geo_homothety3.diagram4Instructions': 'المثلث ABC، صورته بالتماثل A\'B\'C\' (المركز O، النسبة k)، وصورته بالإزاحة A\'B\'\'C\'\' (المتجه AA\').',
+                'MH.lesson_Y2Geo_homothety3.solution4Title': 'الحل',
+                'MH.lesson_Y2Geo_homothety3.solution4a': 'إنشاء A\'B\'C\':',
+                'MH.lesson_Y2Geo_homothety3.solution4a1': 'ارسم الأشعة OA، OB، OC.',
+                'MH.lesson_Y2Geo_homothety3.solution4a2': 'علّم A\'، B\'، C\' على هذه الأشعة بحيث OA\' = k×OA، OB\' = k×OB، OC\' = k×OC.',
+                'MH.lesson_Y2Geo_homothety3.solution4a3': 'صل A\'، B\'، C\' لتشكيل المثلث A\'B\'C\'.',
+                'MH.lesson_Y2Geo_homothety3.solution4b': 'إنشاء A\'B\'\'C\'\':',
+                'MH.lesson_Y2Geo_homothety3.solution4b1': 'الإزاحة ذات المتجه \(\overrightarrow{AA\'}\) تحول A إلى A\'.',
+                'MH.lesson_Y2Geo_homothety3.solution4b2': 'طبق نفس الإزاحة على B و C للحصول على B\'\' و C\'\' بحيث \(\overrightarrow{AB\'\'} = \overrightarrow{AA\'} + \overrightarrow{AB}\) و \(\overrightarrow{AC\'\'} = \overrightarrow{AA\'} + \overrightarrow{AC}\).',
+                'MH.lesson_Y2Geo_homothety3.solution4c': 'إثبات أن ABC ≅ A\'B\'\'C\'\':',
+                'MH.lesson_Y2Geo_homothety3.solution4c1': 'حسب تعريف الإزاحة: \(\overrightarrow{AA\'} = \overrightarrow{BB\'\'} = \overrightarrow{CC\'\'}\).',
+                'MH.lesson_Y2Geo_homothety3.solution4c2': 'لذلك، AB = A\'B\'\'، BC = B\'\'C\'\'، CA = C\'\'A\' (الإزاحة تحفظ المسافات).',
+                'MH.lesson_Y2Geo_homothety3.solution4c3': 'وبالتالي المثلثان ABC و A\'B\'\'C\'\' لهما أضلاع متناظرة متساوية، إذن هما متطابقان.',
+                'MH.lesson_Y2Geo_homothety3.equation4a': '\(\overrightarrow{AA\'} = \overrightarrow{BB\'\'} = \overrightarrow{CC\'\'}\) ⇒ AB = A\'B\'\', BC = B\'\'C\'\', CA = C\'\'A\'',
+                'MH.lesson_Y2Geo_homothety3.solution4d': 'استنتاج أن \(\widehat{BAC} = \widehat{B\'A\'C\'}\):',
+                'MH.lesson_Y2Geo_homothety3.solution4d1': 'بما أن ABC ≅ A\'B\'\'C\'\'، لدينا \(\widehat{BAC} = \widehat{B\'\'A\'C\'\'}\).',
+                'MH.lesson_Y2Geo_homothety3.solution4d2': 'لكن A\'B\'\'C\'\' تم الحصول عليه من A\'B\'C\' بإزاحة (أو موازٍ له).',
+                'MH.lesson_Y2Geo_homothety3.solution4d3': 'في الواقع، B\'\'C\'\' موازٍ لـ B\'C\' (بما أن كلاهما موازٍ لـ BC).',
+                'MH.lesson_Y2Geo_homothety3.solution4d4': 'وبالتالي \(\widehat{B\'\'A\'C\'\'} = \widehat{B\'A\'C\'}\) (زوايا متناظرة مع مستقيمات متوازية).',
+                'MH.lesson_Y2Geo_homothety3.equation4b': '\(\widehat{BAC} = \widehat{B\'\'A\'C\'\'} = \widehat{B\'A\'C\'}\)',
+                'MH.lesson_Y2Geo_homothety3.conclusion4': 'الاستنتاج: التماثل يحفظ الزوايا. بشكل عام، التحويلات بالتماثل تحفظ الزوايا (هي تحويلات محافظة على الزوايا).',
+                
+                // النشاط 5: حفظ التوازي والتعامد
+                'MH.lesson_Y2Geo_homothety3.activity5Title': 'الثالث عشر. حفظ التوازي والتعامد',
+                'MH.lesson_Y2Geo_homothety3.activity5StatementTitle': 'النشاط 5',
+                'MH.lesson_Y2Geo_homothety3.activity5Statement': 'لتكن h تماثل مركزه I ونسبته k. لتكن D و Δ مستقيمين، وليكن D\' و Δ\' صورتهما على التوالي بالتماثل h. ماذا يمكننا أن نقول عن D\' و Δ\' في كل من الحالتين التاليتين:',
+                'MH.lesson_Y2Geo_homothety3.activity5Part1': 'أ) D و Δ متوازيان؟',
+                'MH.lesson_Y2Geo_homothety3.activity5Part2': 'ب) D و Δ متعامدان؟',
+                'MH.lesson_Y2Geo_homothety3.diagram5Title': 'الشكل: المستقيمان D و Δ وصورتاهما بالتماثل D\' و Δ\'',
+                'MH.lesson_Y2Geo_homothety3.diagram5Instructions': 'أظهر الحالات: المستقيمان المتوازيان يبقان متوازيين، المستقيمان المتعامدان يبقان متعامدين تحت التماثل.',
+                'MH.lesson_Y2Geo_homothety3.solution5Title': 'الحل',
+                'MH.lesson_Y2Geo_homothety3.solution5a': 'الحالة أ: D ∥ Δ',
+                'MH.lesson_Y2Geo_homothety3.solution5a1': 'لتكن D و Δ مستقيمين متوازيين.',
+                'MH.lesson_Y2Geo_homothety3.solution5a2': 'خذ نقطتين A و B على D، ونقطتين C و D على Δ (مع AB موازٍ لـ CD).',
+                'MH.lesson_Y2Geo_homothety3.solution5a3': 'صورهما A\'، B\'، C\'، D\' تحقق: \(\overrightarrow{A\'B\'} = k\overrightarrow{AB}\) و \(\overrightarrow{C\'D\'} = k\overrightarrow{CD}\).',
+                'MH.lesson_Y2Geo_homothety3.solution5a4': 'بما أن \(\overrightarrow{AB} \parallel \overrightarrow{CD}\)، لدينا \(\overrightarrow{A\'B\'} \parallel \overrightarrow{C\'D\'}\).',
+                'MH.lesson_Y2Geo_homothety3.solution5a5': 'وبالتالي D\' (المستقيم المار بـ A\' و B\') موازٍ لـ Δ\' (المستقيم المار بـ C\' و D\').',
+                'MH.lesson_Y2Geo_homothety3.equation5a': '\(D \parallel Δ \Rightarrow \overrightarrow{AB} \parallel \overrightarrow{CD} \Rightarrow \overrightarrow{A\'B\'} \parallel \overrightarrow{C\'D\'} \Rightarrow D\' \parallel Δ\'\)',
+                'MH.lesson_Y2Geo_homothety3.solution5b': 'الحالة ب: D ⟂ Δ',
+                'MH.lesson_Y2Geo_homothety3.solution5b1': 'لتكن D و Δ مستقيمين متعامدين (D ⟂ Δ).',
+                'MH.lesson_Y2Geo_homothety3.solution5b2': 'خذ نقطتين A و B على D، ونقطتين C و D على Δ بحيث AB ⟂ CD.',
+                'MH.lesson_Y2Geo_homothety3.solution5b3': 'من النشاط 4، نعلم أن التماثل يحفظ الزوايا.',
+                'MH.lesson_Y2Geo_homothety3.solution5b4': 'تحديدًا، الزاوية بين المستقيمين D و Δ تُحفظ.',
+                'MH.lesson_Y2Geo_homothety3.solution5b5': 'وبالتالي D\' ⟂ Δ\' (المستقيمان الصوران يبقان متعامدين).',
+                'MH.lesson_Y2Geo_homothety3.equation5b': '\(D \perp Δ \Rightarrow \widehat{(D,Δ)} = 90^\circ \Rightarrow \widehat{(D\',Δ\')} = 90^\circ \Rightarrow D\' \perp Δ\'\)',
+                'MH.lesson_Y2Geo_homothety3.conclusion5Title': 'استنتاج عام',
+                'MH.lesson_Y2Geo_homothety3.conclusion5Text': 'التماثل يحفظ:',
+                'MH.lesson_Y2Geo_homothety3.conclusion5a': 'التوازي (المستقيمات المتوازية تتحول إلى مستقيمات متوازية)',
+                'MH.lesson_Y2Geo_homothety3.conclusion5b': 'الزوايا (بما في ذلك الزوايا القائمة، لذا التعامد يُحفظ)',
+                'MH.lesson_Y2Geo_homothety3.conclusion5c': 'الشكل (الأشكال تبقى متشابهة)',
+                'MH.lesson_Y2Geo_homothety3.conclusion5d': 'الاتجاه إذا k > 0، معكوس إذا k < 0',
+                
+                // الملخص
+                'MH.lesson_Y2Geo_homothety3.summaryTitle': 'ملخص شامل',
+                'MH.lesson_Y2Geo_homothety3.keyPropertiesTitle': 'الخصائص الرئيسية المثبتة',
+                'MH.lesson_Y2Geo_homothety3.property1': 'إنشاء صور المستقيمات والنقاط بالتماثل',
+                'MH.lesson_Y2Geo_homothety3.property2': 'استخدام التماثل لإثبات خصائص الانسجام ونقاط المنتصف',
+                'MH.lesson_Y2Geo_homothety3.property3': 'التعرف على الأشكال المتشابهة بالتماثل (حفظ الشكل)',
+                'MH.lesson_Y2Geo_homothety3.property4': 'التماثل يحفظ الزوايا (هو تحويل محافظ على الزوايا)',
+                'MH.lesson_Y2Geo_homothety3.property5': 'التماثل يحفظ التوازي والتعامد',
+                'MH.lesson_Y2Geo_homothety3.property6': 'دمج التماثل مع الإزاحة لإثبات التطابق',
+                'MH.lesson_Y2Geo_homothety3.conclusionTitle': 'الخاتمة',
+                'MH.lesson_Y2Geo_homothety3.finalThought': 'من خلال هذه التمارين، استكشفنا التطبيقات العملية للتماثل في حل المشاكل الهندسية. التماثل ليس مجرد مفهوم نظري بل أداة قوية للإنشاءات، البراهين، والتحويلات. حفظ الزوايا، التوازي، والشكل تحت التماثل يجعله أساسيًا في دراسة التشابه في الهندسة. إتقان هذه المفاهيم يوفر أساسًا قويًا لتحويلات هندسية أكثر تقدمًا وتطبيقاتها في مجالات مختلفة تشمل الهندسة، العمارة، والرسومات الحاسوبية.',
+                
+                // التذييل
+                'MH.footer.developer': 'المطور',
+                'MH.footer.version': 'الإصدار',
+                'MH.footer.links': 'الروابط',
+                'MH.footer.terms': 'شروط الاستخدام',
+                'MH.footer.privacy': 'سياسة الخصوصية'
+            },
+            'fr': {
+                // Traductions générales
+                'MH.general.homeTooltip': 'Aller à l\'accueil',
+                'MH.general.install': 'Installer l\'App',
+                'MH.general.installSuccess': 'Mathematics Hub installé avec succès!',
+                'MH.general.enableNotifications': 'Activer les notifications',
+                'MH.general.notificationEnabled': 'Notifications activées! Vous recevrez maintenant des mises à jour.',
+                'MH.general.title': 'Centre de Mathématiques',
+                'MH.general.theme': 'Thème',
+                'MH.general.language': 'Langue',
+                'MH.lesson_Y2Geo_homothety3.showSolution': 'Afficher la Solution',
+                'MH.lesson_Y2Geo_homothety3.hideSolution': 'Masquer la Solution',
+                'MH.lesson_Y2Geo_homothety3.showConstruction': 'Afficher la Construction',
+                
+                // Traductions de la leçon d'homothétie partie 3
+                'MH.lesson_Y2Geo_homothety3.title': 'Homothétie : Partie 3',
+                'MH.lesson_Y2Geo_homothety3.subtitle': 'Exercices et Problèmes',
+                'MH.lesson_Y2Geo_homothety3.introduction': 'Introduction',
+                'MH.lesson_Y2Geo_homothety3.introText1': 'Dans cette leçon, nous appliquerons les concepts d\'homothétie pour résoudre divers types de problèmes. Les exercices couvrent des problèmes de construction, des preuves d\'alignement, l\'identification de figures homothétiques, et la préservation des propriétés sous homothétie.',
+                'MH.lesson_Y2Geo_homothety3.introText2': 'À travers ces exercices, vous développerez vos compétences dans la reconnaissance des homothéties, la construction d\'images, et la preuve de propriétés géométriques utilisant les transformations homothétiques.',
+                
+                // Activité 1: Problème de construction
+                'MH.lesson_Y2Geo_homothety3.activity1Title': 'IX. Problème de construction',
+                'MH.lesson_Y2Geo_homothety3.activity1StatementTitle': 'Activité 1',
+                'MH.lesson_Y2Geo_homothety3.activity1Statement': 'Soient D et Δ deux droites sécantes. Soit I un point n\'appartenant ni à D ni à Δ.',
+                'MH.lesson_Y2Geo_homothety3.activity1Part1a': 'a) Construire la droite D\', image de D par l\'homothétie h de centre I et de rapport 2.<br>On désigne par M\' le point d\'intersection des droites D\' et Δ.',
+                'MH.lesson_Y2Geo_homothety3.activity1Part1b': 'b) Construire le point M antécédent du point M\' par h.',
+                'MH.lesson_Y2Geo_homothety3.activity1Part2': 'Construire un point A de D et un point B de Δ tels que \(\overrightarrow{IB} = 3\overrightarrow{IA}\).',
+                'MH.lesson_Y2Geo_homothety3.diagram1Title': 'Figure : Droites D et Δ sécantes, point I n\'appartenant à aucune des deux',
+                'MH.lesson_Y2Geo_homothety3.diagram1Instructions': 'Construire D\' = h(I,2)(D), trouver M\' = D\'∩Δ, puis trouver M = h⁻¹(M\'). Construire A sur D et B sur Δ tels que IB = 3IA.',
+                'MH.lesson_Y2Geo_homothety3.constructionStep1': 'Étapes de construction',
+                'MH.lesson_Y2Geo_homothety3.solution1a': 'Pour construire D\' = h(I,2)(D) :',
+                'MH.lesson_Y2Geo_homothety3.solution1a1': 'Choisir deux points distincts P et Q sur la droite D.',
+                'MH.lesson_Y2Geo_homothety3.solution1a2': 'Construire leurs images P\' et Q\' par l\'homothétie h(I,2) : Tracer les rayons IP et IQ, puis marquer P\' et Q\' tels que IP\' = 2×IP et IQ\' = 2×IQ.',
+                'MH.lesson_Y2Geo_homothety3.solution1a3': 'La droite D\' est la droite passant par P\' et Q\'.',
+                'MH.lesson_Y2Geo_homothety3.solution1b': 'M\' est l\'intersection de D\' et Δ.',
+                'MH.lesson_Y2Geo_homothety3.solution1c': 'Pour trouver M = h⁻¹(M\') :',
+                'MH.lesson_Y2Geo_homothety3.solution1c1': 'Puisque h a pour rapport 2, son inverse h⁻¹ a pour rapport 1/2.',
+                'MH.lesson_Y2Geo_homothety3.solution1c2': 'Construire M sur la droite IM\' tel que IM = (1/2)IM\' (ou de manière équivalente, M\' est entre I et M avec IM = (1/2)IM\').',
+                'MH.lesson_Y2Geo_homothety3.solution1d': 'Pour construire A sur D et B sur Δ avec \(\overrightarrow{IB} = 3\overrightarrow{IA}\) :',
+                'MH.lesson_Y2Geo_homothety3.solution1d1': 'Choisir un point quelconque A sur la droite D.',
+                'MH.lesson_Y2Geo_homothety3.solution1d2': 'Construire B comme image de A par l\'homothétie h(I,3) : Tracer le rayon IA et marquer B tel que IB = 3×IA.',
+                'MH.lesson_Y2Geo_homothety3.solution1d3': 'Puisque B doit appartenir à Δ, ajuster A le long de D jusqu\'à ce que B tombe sur Δ.',
+                'MH.lesson_Y2Geo_homothety3.equation1': 'Relations clés : \(\overrightarrow{IM\'} = 2\overrightarrow{IM}\) et \(\overrightarrow{IB} = 3\overrightarrow{IA}\)',
+                
+                // Activité 2: Problème d'alignement
+                'MH.lesson_Y2Geo_homothety3.activity2Title': 'X. Problème d\'alignement',
+                'MH.lesson_Y2Geo_homothety3.activity2StatementTitle': 'Activité 2',
+                'MH.lesson_Y2Geo_homothety3.activity2Statement': 'Soient C et C\' deux cercles de centres respectifs O et O\', sécants en A et B. Soit I le point d\'intersection de (AB) et (OO\').',
+                'MH.lesson_Y2Geo_homothety3.activity2Part1': 'Montrer que le point I est le milieu du segment [OO\'].',
+                'MH.lesson_Y2Geo_homothety3.activity2Part2': 'La droite (AO) recoupe le cercle C en E et la droite (AO\') recoupe le cercle C\' en F.<br>Montrer que les points E, B et F sont alignés.',
+                'MH.lesson_Y2Geo_homothety3.activity2Part3': 'La droite (BO) recoupe le cercle C en G et la droite (BO\') recoupe le cercle C\' en H.<br>Montrer que le quadrilatère EFGH est un rectangle.',
+                'MH.lesson_Y2Geo_homothety3.diagram2Title': 'Figure : Deux cercles C et C\' sécants en A et B',
+                'MH.lesson_Y2Geo_homothety3.diagram2Instructions': 'Cercles de centres O et O\', sécants en A et B. I = (AB)∩(OO\'). Points E, F, G, H comme décrit.',
+                'MH.lesson_Y2Geo_homothety3.solution2Title': 'Solution',
+                'MH.lesson_Y2Geo_homothety3.solution2a': 'Preuve que I est milieu de [OO\'] :',
+                'MH.lesson_Y2Geo_homothety3.solution2a1': 'Considérer l\'homothétie h de centre A qui envoie le cercle C sur le cercle C\'.',
+                'MH.lesson_Y2Geo_homothety3.solution2a2': 'Puisque A est commun aux deux cercles, l\'homothétie envoie A sur lui-même.',
+                'MH.lesson_Y2Geo_homothety3.solution2a3': 'Le point B sur C est envoyé sur B sur C\' (puisque B est commun).',
+                'MH.lesson_Y2Geo_homothety3.solution2a4': 'Le centre O de C est envoyé sur le centre O\' de C\'. Donc A, O, O\' sont alignés.',
+                'MH.lesson_Y2Geo_homothety3.solution2a5': 'De même, considérer l\'homothétie de centre B : B, O, O\' sont alignés.',
+                'MH.lesson_Y2Geo_homothety3.solution2a6': 'Ainsi la droite OO\' passe à la fois par A et B, donc OO\' = AB, et I = AB ∩ OO\' est bien l\'intersection.',
+                'MH.lesson_Y2Geo_homothety3.solution2a7': 'Puisque les deux homothéties (de centres A et B) sont inverses, I est le milieu de OO\'.',
+                'MH.lesson_Y2Geo_homothety3.equation2a': '\(\overrightarrow{O\'I} = -\overrightarrow{OI}\) ou \(I = \text{milieu}(OO\')\)',
+                'MH.lesson_Y2Geo_homothety3.solution2b': 'Preuve que E, B, F sont alignés :',
+                'MH.lesson_Y2Geo_homothety3.solution2b1': 'Considérer l\'homothétie h₁ de centre A envoyant C sur C\'.',
+                'MH.lesson_Y2Geo_homothety3.solution2b2': 'Sous h₁ : O → O\', et la droite AO (diamètre de C) est envoyée sur la droite AO\' (diamètre de C\').',
+                'MH.lesson_Y2Geo_homothety3.solution2b3': 'Le point E (intersection de AO avec C, autre que A) est envoyé sur le point F (intersection de AO\' avec C\', autre que A).',
+                'MH.lesson_Y2Geo_homothety3.solution2b4': 'Puisque B est point fixe de h₁ (en tant que point commun), et que E, B, F sont alignés avec le centre A, ils sont alignés.',
+                'MH.lesson_Y2Geo_homothety3.equation2b': '\(h₁(A,k) : E \mapsto F\) avec \(A, E, B, F\) alignés',
+                'MH.lesson_Y2Geo_homothety3.solution2c': 'Preuve que EFGH est un rectangle :',
+                'MH.lesson_Y2Geo_homothety3.solution2c1': 'De même, considérer l\'homothétie h₂ de centre B envoyant C sur C\'.',
+                'MH.lesson_Y2Geo_homothety3.solution2c2': 'Sous h₂ : O → O\', et la droite BO est envoyée sur la droite BO\'.',
+                'MH.lesson_Y2Geo_homothety3.solution2c3': 'Le point G (intersection de BO avec C, autre que B) est envoyé sur le point H (intersection de BO\' avec C\', autre que B).',
+                'MH.lesson_Y2Geo_homothety3.solution2c4': 'Maintenant, considérer le quadrilatère EFGH : ',
+                'MH.lesson_Y2Geo_homothety3.solution2c4a': 'EF est diamètre du cercle passant par A (puisque AE est diamètre de C et AF est diamètre de C\').',
+                'MH.lesson_Y2Geo_homothety3.solution2c4b': 'GH est diamètre du cercle passant par B (puisque BG est diamètre de C et BH est diamètre de C\').',
+                'MH.lesson_Y2Geo_homothety3.solution2c4c': 'Puisque AB est corde commune et OO\' est la ligne des centres, et I est milieu de OO\', on a une symétrie.',
+                'MH.lesson_Y2Geo_homothety3.solution2c4d': 'Les angles E et G sont droits (angles inscrits dans des demi-cercles).',
+                'MH.lesson_Y2Geo_homothety3.solution2c4e': 'De même, les angles F et H sont droits.',
+                'MH.lesson_Y2Geo_homothety3.solution2c5': 'Ainsi EFGH a quatre angles droits, c\'est donc un rectangle.',
+                'MH.lesson_Y2Geo_homothety3.equation2c': '\(\widehat{E} = \widehat{F} = \widehat{G} = \widehat{H} = 90^\circ\) ⇒ EFGH est un rectangle',
+                
+                // Activité 3: Agrandissement/Réduction
+                'MH.lesson_Y2Geo_homothety3.activity3Title': 'XI. Agrandissement – Réduction – Figures homothétiques',
+                'MH.lesson_Y2Geo_homothety3.activity3StatementTitle': 'Activité 3',
+                'MH.lesson_Y2Geo_homothety3.activity3Statement': 'Chacune des figures F₁, F₂, F₃ et F₄ est un agrandissement ou une réduction de la figure F. Dire pour chacune d\'elles, si elle est ou non l\'image de F par une homothétie.',
+                'MH.lesson_Y2Geo_homothety3.definitionTitle': 'Définition',
+                'MH.lesson_Y2Geo_homothety3.definitionText': 'Deux figures sont dites homothétiques, si l\'une est l\'image de l\'autre par une homothétie.',
+                'MH.lesson_Y2Geo_homothety3.diagram3Title': 'Figure : Figure originale F et ses images potentielles par homothétie F₁, F₂, F₃, F₄',
+                'MH.lesson_Y2Geo_homothety3.diagram3Instructions': 'Déterminer quelles figures sont homothétiques à F (même forme, taille différente, avec les droites joignant les points correspondants concourantes).',
+                'MH.lesson_Y2Geo_homothety3.solution3Title': 'Analyse',
+                'MH.lesson_Y2Geo_homothety3.solution3Intro': 'Pour déterminer si une figure est homothétique à F :',
+                'MH.lesson_Y2Geo_homothety3.solution3a': 'Vérifier la conservation de la forme : Tous les angles doivent être conservés. Les côtés correspondants doivent être parallèles.',
+                'MH.lesson_Y2Geo_homothety3.solution3b': 'Vérifier le facteur d\'échelle : Le rapport des longueurs correspondantes doit être constant (identique pour toutes les paires).',
+                'MH.lesson_Y2Geo_homothety3.solution3c': 'Vérifier l\'existence d\'un centre : Les droites joignant les points correspondants doivent être concourantes en un point centre unique.',
+                'MH.lesson_Y2Geo_homothety3.analysisResults': 'Résultats de l\'analyse :',
+                'MH.lesson_Y2Geo_homothety3.resultF1': 'F₁ : Est une homothétie de F (centre existe, tous les côtés parallèles, rapport constant).',
+                'MH.lesson_Y2Geo_homothety3.resultF2': 'F₂ : N\'est PAS une homothétie de F (forme déformée, angles non conservés).',
+                'MH.lesson_Y2Geo_homothety3.resultF3': 'F₃ : Est une homothétie de F (mais avec rapport négatif - réduction avec inversion).',
+                'MH.lesson_Y2Geo_homothety3.resultF4': 'F₄ : N\'est PAS une homothétie de F (droites joignant les points correspondants non concourantes).',
+                'MH.lesson_Y2Geo_homothety3.equation3': 'Condition d\'homothétie : \(\frac{A\'B\'}{AB} = \frac{B\'C\'}{BC} = \frac{C\'D\'}{CD} = |k|\) et \((AA\'), (BB\'), (CC\'), (DD\')\) concourantes',
+                
+                // Activité 4: Conservation des angles
+                'MH.lesson_Y2Geo_homothety3.activity4Title': 'XII. Conservation des angles',
+                'MH.lesson_Y2Geo_homothety3.activity4StatementTitle': 'Activité 4',
+                'MH.lesson_Y2Geo_homothety3.activity4Statement': 'Soit h une homothétie de centre O et de rapport k. Soit ABC un triangle.',
+                'MH.lesson_Y2Geo_homothety3.activity4Part1': 'Construire le triangle A\'B\'C\', image de ABC par h.',
+                'MH.lesson_Y2Geo_homothety3.activity4Part2': 'a) Construire le triangle A\' B\'\' C\'\', image de ABC par la translation de vecteur \(\overrightarrow{AA\'}\).<br>b) Montrer que les triangles ABC et A\'B\'\'C\'\' sont isométriques.',
+                'MH.lesson_Y2Geo_homothety3.activity4Part3': 'Déduire que \(\widehat{BAC} = \widehat{B\'A\'C\'}\).<br>Que peut-on conclure ?',
+                'MH.lesson_Y2Geo_homothety3.diagram4Title': 'Figure : Triangle ABC et ses images par homothétie et translation',
+                'MH.lesson_Y2Geo_homothety3.diagram4Instructions': 'Triangle ABC, son image homothétique A\'B\'C\' (centre O, rapport k), et son image translatée A\'B\'\'C\'\' (vecteur AA\').',
+                'MH.lesson_Y2Geo_homothety3.solution4Title': 'Solution',
+                'MH.lesson_Y2Geo_homothety3.solution4a': 'Construction de A\'B\'C\' :',
+                'MH.lesson_Y2Geo_homothety3.solution4a1': 'Tracer les rayons OA, OB, OC.',
+                'MH.lesson_Y2Geo_homothety3.solution4a2': 'Marquer A\', B\', C\' sur ces rayons tels que OA\' = k×OA, OB\' = k×OB, OC\' = k×OC.',
+                'MH.lesson_Y2Geo_homothety3.solution4a3': 'Relier A\', B\', C\' pour former le triangle A\'B\'C\'.',
+                'MH.lesson_Y2Geo_homothety3.solution4b': 'Construction de A\'B\'\'C\'\' :',
+                'MH.lesson_Y2Geo_homothety3.solution4b1': 'La translation de vecteur \(\overrightarrow{AA\'}\) envoie A sur A\'.',
+                'MH.lesson_Y2Geo_homothety3.solution4b2': 'Appliquer la même translation à B et C pour obtenir B\'\' et C\'\' tels que \(\overrightarrow{AB\'\'} = \overrightarrow{AA\'} + \overrightarrow{AB}\) et \(\overrightarrow{AC\'\'} = \overrightarrow{AA\'} + \overrightarrow{AC}\).',
+                'MH.lesson_Y2Geo_homothety3.solution4c': 'Preuve que ABC ≅ A\'B\'\'C\'\' :',
+                'MH.lesson_Y2Geo_homothety3.solution4c1': 'Par définition de la translation : \(\overrightarrow{AA\'} = \overrightarrow{BB\'\'} = \overrightarrow{CC\'\'}\).',
+                'MH.lesson_Y2Geo_homothety3.solution4c2': 'Donc AB = A\'B\'\', BC = B\'\'C\'\', CA = C\'\'A\' (la translation conserve les distances).',
+                'MH.lesson_Y2Geo_homothety3.solution4c3': 'Ainsi les triangles ABC et A\'B\'\'C\'\' ont leurs côtés correspondants égaux, donc ils sont congrus (isométriques).',
+                'MH.lesson_Y2Geo_homothety3.equation4a': '\(\overrightarrow{AA\'} = \overrightarrow{BB\'\'} = \overrightarrow{CC\'\'}\) ⇒ AB = A\'B\'\', BC = B\'\'C\'\', CA = C\'\'A\'',
+                'MH.lesson_Y2Geo_homothety3.solution4d': 'Déduction que \(\widehat{BAC} = \widehat{B\'A\'C\'}\) :',
+                'MH.lesson_Y2Geo_homothety3.solution4d1': 'Puisque ABC ≅ A\'B\'\'C\'\', on a \(\widehat{BAC} = \widehat{B\'\'A\'C\'\'}\).',
+                'MH.lesson_Y2Geo_homothety3.solution4d2': 'Mais A\'B\'\'C\'\' est obtenu à partir de A\'B\'C\' par translation (ou lui est parallèle).',
+                'MH.lesson_Y2Geo_homothety3.solution4d3': 'En fait, B\'\'C\'\' est parallèle à B\'C\' (puisque tous deux sont parallèles à BC).',
+                'MH.lesson_Y2Geo_homothety3.solution4d4': 'Donc \(\widehat{B\'\'A\'C\'\'} = \widehat{B\'A\'C\'}\) (angles correspondants avec des droites parallèles).',
+                'MH.lesson_Y2Geo_homothety3.equation4b': '\(\widehat{BAC} = \widehat{B\'\'A\'C\'\'} = \widehat{B\'A\'C\'}\)',
+                'MH.lesson_Y2Geo_homothety3.conclusion4': 'Conclusion : Une homothétie conserve les angles. Plus généralement, les homothéties sont des transformations qui conservent les angles (elles sont conformes).',
+                
+                // Activité 5: Conservation du parallélisme et de l'orthogonalité
+                'MH.lesson_Y2Geo_homothety3.activity5Title': 'XIII. Conservation du parallélisme et de l\'orthogonalité',
+                'MH.lesson_Y2Geo_homothety3.activity5StatementTitle': 'Activité 5',
+                'MH.lesson_Y2Geo_homothety3.activity5Statement': 'Soit h une homothétie de centre I et de rapport k. Soient D et Δ deux droites et soient D\' et Δ\' leurs images respectives par h. Que peut-on dire de D\' et Δ\' dans chacun des cas suivants :',
+                'MH.lesson_Y2Geo_homothety3.activity5Part1': 'a) D et Δ sont parallèles ?',
+                'MH.lesson_Y2Geo_homothety3.activity5Part2': 'b) D et Δ sont perpendiculaires ?',
+                'MH.lesson_Y2Geo_homothety3.diagram5Title': 'Figure : Droites D et Δ et leurs images homothétiques D\' et Δ\'',
+                'MH.lesson_Y2Geo_homothety3.diagram5Instructions': 'Montrer les cas : les droites parallèles restent parallèles, les droites perpendiculaires restent perpendiculaires sous homothétie.',
+                'MH.lesson_Y2Geo_homothety3.solution5Title': 'Solution',
+                'MH.lesson_Y2Geo_homothety3.solution5a': 'Cas a : D ∥ Δ',
+                'MH.lesson_Y2Geo_homothety3.solution5a1': 'Soient D et Δ deux droites parallèles.',
+                'MH.lesson_Y2Geo_homothety3.solution5a2': 'Prendre deux points A et B sur D, et deux points C et D sur Δ (avec AB parallèle à CD).',
+                'MH.lesson_Y2Geo_homothety3.solution5a3': 'Leurs images A\', B\', C\', D\' vérifient : \(\overrightarrow{A\'B\'} = k\overrightarrow{AB}\) et \(\overrightarrow{C\'D\'} = k\overrightarrow{CD}\).',
+                'MH.lesson_Y2Geo_homothety3.solution5a4': 'Puisque \(\overrightarrow{AB} \parallel \overrightarrow{CD}\), on a \(\overrightarrow{A\'B\'} \parallel \overrightarrow{C\'D\'}\).',
+                'MH.lesson_Y2Geo_homothety3.solution5a5': 'Ainsi D\' (droite passant par A\' et B\') est parallèle à Δ\' (droite passant par C\' et D\').',
+                'MH.lesson_Y2Geo_homothety3.equation5a': '\(D \parallel Δ \Rightarrow \overrightarrow{AB} \parallel \overrightarrow{CD} \Rightarrow \overrightarrow{A\'B\'} \parallel \overrightarrow{C\'D\'} \Rightarrow D\' \parallel Δ\'\)',
+                'MH.lesson_Y2Geo_homothety3.solution5b': 'Cas b : D ⟂ Δ',
+                'MH.lesson_Y2Geo_homothety3.solution5b1': 'Soient D et Δ deux droites perpendiculaires (D ⟂ Δ).',
+                'MH.lesson_Y2Geo_homothety3.solution5b2': 'Prendre deux points A et B sur D, et deux points C et D sur Δ tels que AB ⟂ CD.',
+                'MH.lesson_Y2Geo_homothety3.solution5b3': 'D\'après l\'Activité 4, on sait que l\'homothétie conserve les angles.',
+                'MH.lesson_Y2Geo_homothety3.solution5b4': 'Spécifiquement, l\'angle entre les droites D et Δ est conservé.',
+                'MH.lesson_Y2Geo_homothety3.solution5b5': 'Ainsi D\' ⟂ Δ\' (les droites images restent perpendiculaires).',
+                'MH.lesson_Y2Geo_homothety3.equation5b': '\(D \perp Δ \Rightarrow \widehat{(D,Δ)} = 90^\circ \Rightarrow \widehat{(D\',Δ\')} = 90^\circ \Rightarrow D\' \perp Δ\'\)',
+                'MH.lesson_Y2Geo_homothety3.conclusion5Title': 'Conclusion générale',
+                'MH.lesson_Y2Geo_homothety3.conclusion5Text': 'L\'homothétie conserve :',
+                'MH.lesson_Y2Geo_homothety3.conclusion5a': 'Le parallélisme (les droites parallèles sont envoyées sur des droites parallèles)',
+                'MH.lesson_Y2Geo_homothety3.conclusion5b': 'Les angles (y compris les angles droits, donc la perpendicularité est conservée)',
+                'MH.lesson_Y2Geo_homothety3.conclusion5c': 'La forme (les figures restent semblables)',
+                'MH.lesson_Y2Geo_homothety3.conclusion5d': 'L\'orientation si k > 0, inversée si k < 0',
+                
+                // Résumé
+                'MH.lesson_Y2Geo_homothety3.summaryTitle': 'Résumé complet',
+                'MH.lesson_Y2Geo_homothety3.keyPropertiesTitle': 'Propriétés clés démontrées',
+                'MH.lesson_Y2Geo_homothety3.property1': 'Construction des images de droites et de points par homothétie',
+                'MH.lesson_Y2Geo_homothety3.property2': 'Utilisation de l\'homothétie pour prouver des propriétés d\'alignement et de milieu',
+                'MH.lesson_Y2Geo_homothety3.property3': 'Reconnaissance de figures homothétiques (conservation de la forme)',
+                'MH.lesson_Y2Geo_homothety3.property4': 'L\'homothétie conserve les angles (elle est conforme)',
+                'MH.lesson_Y2Geo_homothety3.property5': 'L\'homothétie conserve le parallélisme et la perpendicularité',
+                'MH.lesson_Y2Geo_homothety3.property6': 'Combinaison d\'homothétie et de translation pour établir une congruence',
+                'MH.lesson_Y2Geo_homothety3.conclusionTitle': 'Conclusion',
+                'MH.lesson_Y2Geo_homothety3.finalThought': 'À travers ces exercices, nous avons exploré les applications pratiques de l\'homothétie dans la résolution de problèmes géométriques. L\'homothétie n\'est pas seulement un concept théorique mais un outil puissant pour les constructions, les preuves et les transformations. La conservation des angles, du parallélisme et de la forme sous homothétie en fait un concept fondamental pour l\'étude de la similitude en géométrie. La maîtrise de ces concepts fournit une base solide pour des transformations géométriques plus avancées et leurs applications dans divers domaines incluant l\'ingénierie, l\'architecture et l\'infographie.',
+                
+                // Pied de page
+                'MH.footer.developer': 'Développeur',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Liens',
+                'MH.footer.terms': 'Conditions d\'Utilisation',
+                'MH.footer.privacy': 'Politique de Confidentialité'
+            }
+        };
+
+        // Merge with existing translations if they exist
+        if (typeof translations !== 'undefined') {
+            Object.keys(homothety3Translations).forEach(lang => {
+                if (translations[lang]) {
+                    translations[lang] = {...translations[lang], ...homothety3Translations[lang]};
+                } else {
+                    translations[lang] = homothety3Translations[lang];
+                }
+            });
+        } else {
+            var translations = homothety3Translations;
+        }
+
+        // Canvas drawing functions for all activities
+        let activity1State = {constructed: false};
+        let activity2State = {constructed: false};
+        let activity3State = {constructed: false};
+        let activity4State = {constructed: false};
+        let activity5State = {constructed: false};
+        
+        // Helper function to draw arrowhead
+        function drawArrowhead(ctx, x, y, angle) {
+            const headlen = 10;
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angle);
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(-headlen, -headlen/2);
+            ctx.moveTo(0, 0);
+            ctx.lineTo(-headlen, headlen/2);
+            ctx.stroke();
+            ctx.restore();
+        }
+        
+        // Activity 1: Construction Problem
+        function drawActivity1Canvas() {
+            const canvas = document.getElementById('activity1Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw two intersecting lines D and Δ
+            const D = {
+                start: {x: width * 0.1, y: height * 0.8},
+                end: {x: width * 0.9, y: height * 0.2}
+            };
+            
+            const Δ = {
+                start: {x: width * 0.1, y: height * 0.3},
+                end: {x: width * 0.9, y: height * 0.7}
+            };
+            
+            // Draw lines D and Δ
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(D.start.x, D.start.y);
+            ctx.lineTo(D.end.x, D.end.y);
+            ctx.stroke();
+            ctx.fillStyle = '#4A90E2';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('D', D.end.x - 20, D.end.y + 20);
+            
+            ctx.strokeStyle = '#8E44AD';
+            ctx.beginPath();
+            ctx.moveTo(Δ.start.x, Δ.start.y);
+            ctx.lineTo(Δ.end.x, Δ.end.y);
+            ctx.stroke();
+            ctx.fillStyle = '#8E44AD';
+            ctx.fillText('Δ', Δ.end.x - 20, Δ.end.y - 10);
+            
+            // Draw point I (not on either line)
+            const I = {x: width * 0.4, y: height * 0.5};
+            
+            // Draw point I
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(I.x, I.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('I', I.x + 15, I.y - 15);
+            
+            if (activity1State.constructed) {
+                // Homothety with center I and ratio 2
+                const ratio = 2;
+                
+                // Choose two points on D for construction
+                const P = {x: width * 0.3, y: height * 0.7};
+                const Q = {x: width * 0.7, y: height * 0.3};
+                
+                // Their images P' and Q'
+                const Pprime = {
+                    x: I.x + ratio * (P.x - I.x),
+                    y: I.y + ratio * (P.y - I.y)
+                };
+                
+                const Qprime = {
+                    x: I.x + ratio * (Q.x - I.x),
+                    y: I.y + ratio * (Q.y - I.y)
+                };
+                
+                // Draw D' (line through P' and Q')
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.moveTo(Pprime.x, Pprime.y);
+                ctx.lineTo(Qprime.x, Qprime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.fillStyle = '#E67E22';
+                ctx.fillText('D\'', (Pprime.x + Qprime.x)/2 + 20, (Pprime.y + Qprime.y)/2);
+                
+                // Draw P, Q, P', Q'
+                const points = [
+                    {coord: P, label: 'P', color: '#4A90E2'},
+                    {coord: Q, label: 'Q', color: '#4A90E2'},
+                    {coord: Pprime, label: 'P\'', color: '#E67E22'},
+                    {coord: Qprime, label: 'Q\'', color: '#E67E22'}
+                ];
+                
+                points.forEach(point => {
+                    ctx.fillStyle = point.color;
+                    ctx.beginPath();
+                    ctx.arc(point.coord.x, point.coord.y, 4, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = '#333333';
+                    ctx.font = '12px Arial';
+                    ctx.fillText(point.label, point.coord.x + 8, point.coord.y + 8);
+                });
+                
+                // Draw rays from I to P and Q (and beyond for P' and Q')
+                ctx.strokeStyle = '#666666';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(Pprime.x * 1.2, Pprime.y * 1.2);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(Qprime.x * 1.2, Qprime.y * 1.2);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Find M' = D' ∩ Δ
+                // Simple intersection calculation (for visualization)
+                const Mprime = {x: width * 0.5, y: height * 0.5}; // approximate intersection
+                
+                // Draw M'
+                ctx.fillStyle = '#2ECC71';
+                ctx.beginPath();
+                ctx.arc(Mprime.x, Mprime.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('M\'', Mprime.x + 15, Mprime.y - 15);
+                
+                // Find M = h⁻¹(M') with ratio 1/2
+                const Minv = {
+                    x: I.x + (1/ratio) * (Mprime.x - I.x),
+                    y: I.y + (1/ratio) * (Mprime.y - I.y)
+                };
+                
+                // Draw M
+                ctx.fillStyle = '#3498DB';
+                ctx.beginPath();
+                ctx.arc(Minv.x, Minv.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('M', Minv.x + 15, Minv.y + 15);
+                
+                // Draw relationship I-M-M'
+                ctx.strokeStyle = '#666666';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(Minv.x, Minv.y);
+                ctx.lineTo(Mprime.x, Mprime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw A on D and B on Δ with IB = 3IA
+                // Choose A on D
+                const A = {x: width * 0.2, y: height * 0.73};
+                // B = h(I,3)(A)
+                const B = {
+                    x: I.x + 3 * (A.x - I.x),
+                    y: I.y + 3 * (A.y - I.y)
+                };
+                
+                // Adjust A so that B lies on Δ (for visualization, we'll cheat a bit)
+                const Aadj = {x: width * 0.25, y: height * 0.69};
+                const Badj = {
+                    x: I.x + 3 * (Aadj.x - I.x),
+                    y: I.y + 3 * (Aadj.y - I.y)
+                };
+                
+                // Draw A and B
+                ctx.fillStyle = '#8E44AD';
+                ctx.beginPath();
+                ctx.arc(Aadj.x, Aadj.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('A', Aadj.x - 15, Aadj.y - 10);
+                
+                ctx.fillStyle = '#1ABC9C';
+                ctx.beginPath();
+                ctx.arc(Badj.x, Badj.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('B', Badj.x + 15, Badj.y - 10);
+                
+                // Draw relationship I-A-B
+                ctx.strokeStyle = '#8E44AD';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(Aadj.x, Aadj.y);
+                ctx.lineTo(Badj.x, Badj.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Show ratios
+                ctx.fillStyle = '#666666';
+                ctx.font = '14px Arial';
+                ctx.fillText('IM\' = 2 IM', (I.x + Mprime.x)/2, (I.y + Mprime.y)/2 - 10);
+                ctx.fillText('IB = 3 IA', (I.x + Badj.x)/2, (I.y + Badj.y)/2 + 20);
+            }
+        }
+        
+        // Activity 2: Alignment Problem (Two Circles)
+        function drawActivity2Canvas() {
+            const canvas = document.getElementById('activity2Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw two circles C and C' intersecting at A and B
+            const O = {x: width * 0.3, y: height * 0.5}; // Center of C
+            const Oprime = {x: width * 0.7, y: height * 0.5}; // Center of C'
+            const radius = 120;
+            
+            // Draw circles
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(O.x, O.y, radius, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.fillStyle = '#4A90E2';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('C', O.x, O.y - radius - 10);
+            
+            ctx.strokeStyle = '#8E44AD';
+            ctx.beginPath();
+            ctx.arc(Oprime.x, Oprime.y, radius, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.fillStyle = '#8E44AD';
+            ctx.fillText('C\'', Oprime.x, Oprime.y - radius - 10);
+            
+            // Draw centers
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(O.x, O.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('O', O.x + 15, O.y - 10);
+            
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(Oprime.x, Oprime.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('O\'', Oprime.x + 15, Oprime.y - 10);
+            
+            // Draw intersection points A and B
+            // For visualization, place A and B symmetrically
+            const A = {x: width * 0.4, y: height * 0.65};
+            const B = {x: width * 0.6, y: height * 0.35};
+            
+            // Draw A and B
+            ctx.fillStyle = '#2ECC71';
+            ctx.beginPath();
+            ctx.arc(A.x, A.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('A', A.x + 15, A.y + 15);
+            
+            ctx.fillStyle = '#3498DB';
+            ctx.beginPath();
+            ctx.arc(B.x, B.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('B', B.x + 15, B.y - 15);
+            
+            // Draw line AB
+            ctx.strokeStyle = '#666666';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([3, 3]);
+            ctx.beginPath();
+            ctx.moveTo(A.x, A.y);
+            ctx.lineTo(B.x, B.y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Draw line OO'
+            ctx.strokeStyle = '#666666';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+            ctx.beginPath();
+            ctx.moveTo(O.x, O.y);
+            ctx.lineTo(Oprime.x, Oprime.y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Intersection I = AB ∩ OO'
+            const I = {x: width * 0.5, y: height * 0.5};
+            
+            // Draw I
+            ctx.fillStyle = '#E67E22';
+            ctx.beginPath();
+            ctx.arc(I.x, I.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('I', I.x + 15, I.y + 15);
+            
+            if (activity2State.constructed) {
+                // Draw points E, F, G, H
+                // E: intersection of AO with circle C (other than A)
+                const E = {
+                    x: O.x - (A.x - O.x),
+                    y: O.y - (A.y - O.y)
+                };
+                
+                // F: intersection of AO' with circle C' (other than A)
+                const F = {
+                    x: Oprime.x + (A.x - Oprime.x) * 1.5,
+                    y: Oprime.y + (A.y - Oprime.y) * 1.5
+                };
+                
+                // G: intersection of BO with circle C (other than B)
+                const G = {
+                    x: O.x - (B.x - O.x),
+                    y: O.y - (B.y - O.y)
+                };
+                
+                // H: intersection of BO' with circle C' (other than B)
+                const H = {
+                    x: Oprime.x + (B.x - Oprime.x) * 1.5,
+                    y: Oprime.y + (B.y - Oprime.y) * 1.5
+                };
+                
+                // Draw lines AO, AO', BO, BO'
+                ctx.strokeStyle = '#666666';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([1, 1]);
+                
+                // AO
+                ctx.beginPath();
+                ctx.moveTo(A.x, A.y);
+                ctx.lineTo(O.x, O.y);
+                ctx.lineTo(E.x, E.y);
+                ctx.stroke();
+                
+                // AO'
+                ctx.beginPath();
+                ctx.moveTo(A.x, A.y);
+                ctx.lineTo(Oprime.x, Oprime.y);
+                ctx.lineTo(F.x, F.y);
+                ctx.stroke();
+                
+                // BO
+                ctx.beginPath();
+                ctx.moveTo(B.x, B.y);
+                ctx.lineTo(O.x, O.y);
+                ctx.lineTo(G.x, G.y);
+                ctx.stroke();
+                
+                // BO'
+                ctx.beginPath();
+                ctx.moveTo(B.x, B.y);
+                ctx.lineTo(Oprime.x, Oprime.y);
+                ctx.lineTo(H.x, H.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw points E, F, G, H
+                const points = [
+                    {coord: E, label: 'E', color: '#E74C3C'},
+                    {coord: F, label: 'F', color: '#2ECC71'},
+                    {coord: G, label: 'G', color: '#3498DB'},
+                    {coord: H, label: 'H', color: '#8E44AD'}
+                ];
+                
+                points.forEach(point => {
+                    ctx.fillStyle = point.color;
+                    ctx.beginPath();
+                    ctx.arc(point.coord.x, point.coord.y, 6, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = '#333333';
+                    ctx.font = 'bold 16px Arial';
+                    let offsetX = 15, offsetY = 15;
+                    if (point.label === 'E') offsetY = -15;
+                    if (point.label === 'G') offsetX = -15;
+                    ctx.fillText(point.label, point.coord.x + offsetX, point.coord.y + offsetY);
+                });
+                
+                // Draw quadrilateral EFGH
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.moveTo(E.x, E.y);
+                ctx.lineTo(F.x, F.y);
+                ctx.lineTo(H.x, H.y);
+                ctx.lineTo(G.x, G.y);
+                ctx.closePath();
+                ctx.stroke();
+                
+                // Show that E, B, F are collinear
+                ctx.strokeStyle = '#2ECC71';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.moveTo(E.x, E.y);
+                ctx.lineTo(B.x, B.y);
+                ctx.lineTo(F.x, F.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.fillStyle = '#2ECC71';
+                ctx.font = '14px Arial';
+                ctx.fillText('E, B, F alignés', (E.x + F.x)/2, (E.y + F.y)/2 - 10);
+                
+                // Show that G, B, H are collinear
+                ctx.strokeStyle = '#3498DB';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.moveTo(G.x, G.y);
+                ctx.lineTo(B.x, B.y);
+                ctx.lineTo(H.x, H.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Show that I is midpoint of OO'
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(O.x, O.y);
+                ctx.lineTo(I.x, I.y);
+                ctx.lineTo(Oprime.x, Oprime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.fillStyle = '#E67E22';
+                ctx.font = '14px Arial';
+                ctx.fillText('I milieu de [OO\']', I.x + 20, I.y - 20);
+                
+                // Show rectangle properties
+                // Check angles (visually indicate right angles)
+                ctx.fillStyle = '#8E44AD';
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText('EFGH est un rectangle', width/2, height * 0.9);
+                
+                // Draw right angle indicators
+                const drawRightAngle = (x, y, angle) => {
+                    ctx.save();
+                    ctx.translate(x, y);
+                    ctx.rotate(angle);
+                    ctx.strokeStyle = '#E74C3C';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(15, 0);
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(0, 15);
+                    ctx.stroke();
+                    ctx.restore();
+                };
+                
+                // Draw right angles at E, F, G, H (approximate positions)
+                drawRightAngle(E.x, E.y, Math.PI/4);
+                drawRightAngle(F.x, F.y, -Math.PI/4);
+                drawRightAngle(G.x, G.y, 3*Math.PI/4);
+                drawRightAngle(H.x, H.y, -3*Math.PI/4);
+            }
+        }
+        
+        // Activity 3: Figures F, F₁, F₂, F₃, F₄
+        function drawActivity3Canvas() {
+            const canvas = document.getElementById('activity3Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw a grid of figures
+            const centerX = width / 2;
+            const centerY = height / 2;
+            
+            // Draw reference lines to show homothety centers
+            if (activity3State.constructed) {
+                // Draw lines from center of homothety to corresponding points
+                ctx.strokeStyle = '#666666';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                
+                // For F₁ (homothety with positive ratio > 1)
+                const center1 = {x: width * 0.2, y: height * 0.8};
+                const pointF = {x: width * 0.3, y: height * 0.6};
+                const pointF1 = {x: width * 0.4, y: height * 0.4};
+                
+                ctx.beginPath();
+                ctx.moveTo(center1.x, center1.y);
+                ctx.lineTo(pointF.x, pointF.y);
+                ctx.lineTo(pointF1.x, pointF1.y);
+                ctx.stroke();
+                ctx.fillStyle = '#E74C3C';
+                ctx.font = '12px Arial';
+                ctx.fillText('Centre homothétie F₁', center1.x - 60, center1.y);
+                
+                // For F₃ (homothety with negative ratio)
+                const center3 = {x: width * 0.8, y: height * 0.2};
+                const pointF3 = {x: width * 0.7, y: height * 0.4};
+                
+                ctx.beginPath();
+                ctx.moveTo(center3.x, center3.y);
+                ctx.lineTo(pointF.x, pointF.y);
+                ctx.lineTo(pointF3.x, pointF3.y);
+                ctx.stroke();
+                ctx.fillText('Centre homothétie F₃', center3.x + 10, center3.y);
+                
+                ctx.setLineDash([]);
+                
+                // Show that for F₂ and F₄, lines are not concurrent
+                ctx.strokeStyle = '#E74C3C';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([5, 5]);
+                
+                // F₂ (not homothetic)
+                const pointF2 = {x: width * 0.5, y: height * 0.7};
+                ctx.beginPath();
+                ctx.moveTo(width * 0.1, height * 0.9);
+                ctx.lineTo(pointF.x, pointF.y);
+                ctx.lineTo(pointF2.x, pointF2.y);
+                ctx.stroke();
+                
+                // Another line to show non-concurrency
+                ctx.beginPath();
+                ctx.moveTo(width * 0.9, height * 0.1);
+                ctx.lineTo(pointF.x + 20, pointF.y - 20);
+                ctx.lineTo(pointF2.x + 20, pointF2.y - 20);
+                ctx.stroke();
+                ctx.fillStyle = '#E74C3C';
+                ctx.font = '12px Arial';
+                ctx.fillText('Non concourantes', pointF2.x, pointF2.y + 30);
+                
+                ctx.setLineDash([]);
+            }
+            
+            // Draw title
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Analyse des figures F, F₁, F₂, F₃, F₄', centerX, 30);
+            ctx.textAlign = 'left';
+        }
+        
+        // Draw individual figures for the grid
+        function drawFigureF() {
+            const canvas = document.getElementById('figureFCanvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw a simple polygon for figure F
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(width * 0.3, height * 0.2);
+            ctx.lineTo(width * 0.7, height * 0.2);
+            ctx.lineTo(width * 0.8, height * 0.5);
+            ctx.lineTo(width * 0.6, height * 0.8);
+            ctx.lineTo(width * 0.4, height * 0.8);
+            ctx.lineTo(width * 0.2, height * 0.5);
+            ctx.closePath();
+            ctx.stroke();
+            
+            // Label
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('F', width/2, height * 0.9);
+        }
+        
+        function drawFigureF1() {
+            const canvas = document.getElementById('figureF1Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw F₁ as a homothetic image of F (enlargement)
+            ctx.strokeStyle = '#2ECC71';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(width * 0.2, height * 0.1);
+            ctx.lineTo(width * 0.8, height * 0.1);
+            ctx.lineTo(width * 0.9, height * 0.5);
+            ctx.lineTo(width * 0.7, height * 0.9);
+            ctx.lineTo(width * 0.3, height * 0.9);
+            ctx.lineTo(width * 0.1, height * 0.5);
+            ctx.closePath();
+            ctx.stroke();
+            
+            // Label
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('F₁ (homothétique)', width/2, height * 0.05);
+        }
+        
+        function drawFigureF2() {
+            const canvas = document.getElementById('figureF2Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw F₂ as a non-homothetic figure (distorted)
+            ctx.strokeStyle = '#E74C3C';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(width * 0.3, height * 0.2);
+            ctx.lineTo(width * 0.7, height * 0.2);
+            ctx.lineTo(width * 0.9, height * 0.4); // Different angle
+            ctx.lineTo(width * 0.6, height * 0.8);
+            ctx.lineTo(width * 0.4, height * 0.8);
+            ctx.lineTo(width * 0.1, height * 0.4); // Different angle
+            ctx.closePath();
+            ctx.stroke();
+            
+            // Label
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('F₂ (non homothétique)', width/2, height * 0.05);
+        }
+        
+        function drawFigureF3() {
+            const canvas = document.getElementById('figureF3Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw F₃ as a homothetic image of F (reduction with inversion, k < 0)
+            ctx.strokeStyle = '#8E44AD';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(width * 0.4, height * 0.3);
+            ctx.lineTo(width * 0.6, height * 0.3);
+            ctx.lineTo(width * 0.7, height * 0.5);
+            ctx.lineTo(width * 0.6, height * 0.7);
+            ctx.lineTo(width * 0.4, height * 0.7);
+            ctx.lineTo(width * 0.3, height * 0.5);
+            ctx.closePath();
+            ctx.stroke();
+            
+            // Label
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('F₃ (homothétique k<0)', width/2, height * 0.05);
+        }
+        
+        function drawFigureF4() {
+            const canvas = document.getElementById('figureF4Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw F₄ as a non-homothetic figure (similar shape but no center)
+            ctx.strokeStyle = '#E67E22';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(width * 0.35, height * 0.25);
+            ctx.lineTo(width * 0.65, height * 0.25);
+            ctx.lineTo(width * 0.75, height * 0.55);
+            ctx.lineTo(width * 0.55, height * 0.85);
+            ctx.lineTo(width * 0.45, height * 0.85);
+            ctx.lineTo(width * 0.25, height * 0.55);
+            ctx.closePath();
+            ctx.stroke();
+            
+            // Label
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('F₄ (non homothétique)', width/2, height * 0.05);
+        }
+        
+        // Activity 4: Conservation of Angles
+        function drawActivity4Canvas() {
+            const canvas = document.getElementById('activity4Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw triangle ABC
+            const A = {x: width * 0.2, y: height * 0.7};
+            const B = {x: width * 0.4, y: height * 0.3};
+            const C = {x: width * 0.8, y: height * 0.6};
+            
+            // Draw triangle ABC
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(A.x, A.y);
+            ctx.lineTo(B.x, B.y);
+            ctx.lineTo(C.x, C.y);
+            ctx.closePath();
+            ctx.stroke();
+            
+            // Label vertices
+            const vertices = [
+                {coord: A, label: 'A', color: '#E74C3C'},
+                {coord: B, label: 'B', color: '#2ECC71'},
+                {coord: C, label: 'C', color: '#3498DB'}
+            ];
+            
+            vertices.forEach(point => {
+                ctx.fillStyle = point.color;
+                ctx.beginPath();
+                ctx.arc(point.coord.x, point.coord.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                let offsetX = 15, offsetY = 15;
+                if (point.label === 'A') offsetY = -15;
+                if (point.label === 'B') { offsetX = -15; offsetY = -15; }
+                ctx.fillText(point.label, point.coord.x + offsetX, point.coord.y + offsetY);
+            });
+            
+            // Draw center O for homothety
+            const O = {x: width * 0.5, y: height * 0.5};
+            
+            // Draw O
+            ctx.fillStyle = '#E67E22';
+            ctx.beginPath();
+            ctx.arc(O.x, O.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('O', O.x + 15, O.y + 15);
+            
+            if (activity4State.constructed) {
+                // Homothety ratio
+                const k = 1.5;
+                
+                // Calculate images A', B', C'
+                const Aprime = {
+                    x: O.x + k * (A.x - O.x),
+                    y: O.y + k * (A.y - O.y)
+                };
+                
+                const Bprime = {
+                    x: O.x + k * (B.x - O.x),
+                    y: O.y + k * (B.y - O.y)
+                };
+                
+                const Cprime = {
+                    x: O.x + k * (C.x - O.x),
+                    y: O.y + k * (C.y - O.y)
+                };
+                
+                // Draw triangle A'B'C'
+                ctx.strokeStyle = '#8E44AD';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(Aprime.x, Aprime.y);
+                ctx.lineTo(Bprime.x, Bprime.y);
+                ctx.lineTo(Cprime.x, Cprime.y);
+                ctx.closePath();
+                ctx.stroke();
+                
+                // Label A', B', C'
+                const primedVertices = [
+                    {coord: Aprime, label: 'A\'', color: '#8E44AD'},
+                    {coord: Bprime, label: 'B\'', color: '#1ABC9C'},
+                    {coord: Cprime, label: 'C\'', color: '#9B59B6'}
+                ];
+                
+                primedVertices.forEach(point => {
+                    ctx.fillStyle = point.color;
+                    ctx.beginPath();
+                    ctx.arc(point.coord.x, point.coord.y, 6, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = '#333333';
+                    ctx.font = 'bold 16px Arial';
+                    let offsetX = 15, offsetY = 15;
+                    if (point.label === 'A\'') offsetY = -15;
+                    if (point.label === 'B\'') { offsetX = -15; offsetY = -15; }
+                    ctx.fillText(point.label, point.coord.x + offsetX, point.coord.y + offsetY);
+                });
+                
+                // Draw rays from O to vertices
+                ctx.strokeStyle = '#666666';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                
+                // OA and OA'
+                ctx.beginPath();
+                ctx.moveTo(O.x, O.y);
+                ctx.lineTo(A.x, A.y);
+                ctx.lineTo(Aprime.x, Aprime.y);
+                ctx.stroke();
+                
+                // OB and OB'
+                ctx.beginPath();
+                ctx.moveTo(O.x, O.y);
+                ctx.lineTo(B.x, B.y);
+                ctx.lineTo(Bprime.x, Bprime.y);
+                ctx.stroke();
+                
+                // OC and OC'
+                ctx.beginPath();
+                ctx.moveTo(O.x, O.y);
+                ctx.lineTo(C.x, C.y);
+                ctx.lineTo(Cprime.x, Cprime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw translation of ABC by vector AA' to get A'B''C''
+                const Bdoubleprime = {
+                    x: Aprime.x + (B.x - A.x),
+                    y: Aprime.y + (B.y - A.y)
+                };
+                
+                const Cdoubleprime = {
+                    x: Aprime.x + (C.x - A.x),
+                    y: Aprime.y + (C.y - A.y)
+                };
+                
+                // Draw triangle A'B''C''
+                ctx.strokeStyle = '#2ECC71';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.moveTo(Aprime.x, Aprime.y);
+                ctx.lineTo(Bdoubleprime.x, Bdoubleprime.y);
+                ctx.lineTo(Cdoubleprime.x, Cdoubleprime.y);
+                ctx.closePath();
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Label B'' and C''
+                ctx.fillStyle = '#2ECC71';
+                ctx.beginPath();
+                ctx.arc(Bdoubleprime.x, Bdoubleprime.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('B\'\'', Bdoubleprime.x - 20, Bdoubleprime.y - 15);
+                
+                ctx.fillStyle = '#2ECC71';
+                ctx.beginPath();
+                ctx.arc(Cdoubleprime.x, Cdoubleprime.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('C\'\'', Cdoubleprime.x + 15, Cdoubleprime.y + 15);
+                
+                // Show that ABC ≅ A'B''C''
+                ctx.strokeStyle = '#E74C3C';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                
+                // Show corresponding sides are equal
+                // AB = A'B''
+                const midAB = {x: (A.x + B.x)/2, y: (A.y + B.y)/2};
+                const midAprimeBdoubleprime = {x: (Aprime.x + Bdoubleprime.x)/2, y: (Aprime.y + Bdoubleprime.y)/2};
+                ctx.beginPath();
+                ctx.moveTo(midAB.x, midAB.y);
+                ctx.lineTo(midAprimeBdoubleprime.x, midAprimeBdoubleprime.y);
+                ctx.stroke();
+                ctx.fillStyle = '#E74C3C';
+                ctx.font = '12px Arial';
+                ctx.fillText('AB = A\'B\'\'', (midAB.x + midAprimeBdoubleprime.x)/2, 
+                           (midAB.y + midAprimeBdoubleprime.y)/2 - 10);
+                
+                // Show that angle BAC = angle B'A'C'
+                // Draw arcs for angles
+                ctx.strokeStyle = '#8E44AD';
+                ctx.lineWidth = 2;
+                
+                // Angle BAC
+                const angleBAC = Math.atan2(C.y - A.y, C.x - A.x) - Math.atan2(B.y - A.y, B.x - A.x);
+                ctx.beginPath();
+                ctx.arc(A.x, A.y, 30, Math.atan2(B.y - A.y, B.x - A.x), Math.atan2(C.y - A.y, C.x - A.x));
+                ctx.stroke();
+                ctx.fillStyle = '#8E44AD';
+                ctx.font = '14px Arial';
+                ctx.fillText('α', A.x + 40, A.y - 10);
+                
+                // Angle B'A'C'
+                ctx.beginPath();
+                ctx.arc(Aprime.x, Aprime.y, 30, 
+                       Math.atan2(Bprime.y - Aprime.y, Bprime.x - Aprime.x),
+                       Math.atan2(Cprime.y - Aprime.y, Cprime.x - Aprime.x));
+                ctx.stroke();
+                ctx.fillText('α', Aprime.x + 50, Aprime.y - 20);
+                
+                // Show the equality
+                ctx.fillStyle = '#E74C3C';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('∠BAC = ∠B\'A\'C\'', width/2, height * 0.9);
+            }
+        }
+        
+        // Activity 5: Conservation of Parallelism and Orthogonality
+        function drawActivity5Canvas() {
+            const canvas = document.getElementById('activity5Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw center I
+            const I = {x: width * 0.5, y: height * 0.5};
+            
+            // Draw I
+            ctx.fillStyle = '#E67E22';
+            ctx.beginPath();
+            ctx.arc(I.x, I.y, 8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('I', I.x + 20, I.y - 15);
+            
+            if (activity5State.constructed) {
+                // Case a: Parallel lines
+                // Draw two parallel lines D and Δ
+                const D = {
+                    start: {x: width * 0.1, y: height * 0.3},
+                    end: {x: width * 0.9, y: height * 0.3}
+                };
+                
+                const Δ = {
+                    start: {x: width * 0.1, y: height * 0.7},
+                    end: {x: width * 0.9, y: height * 0.7}
+                };
+                
+                // Draw D and Δ
+                ctx.strokeStyle = '#4A90E2';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(D.start.x, D.start.y);
+                ctx.lineTo(D.end.x, D.end.y);
+                ctx.stroke();
+                ctx.fillStyle = '#4A90E2';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('D', D.end.x - 20, D.end.y - 10);
+                
+                ctx.beginPath();
+                ctx.moveTo(Δ.start.x, Δ.start.y);
+                ctx.lineTo(Δ.end.x, Δ.end.y);
+                ctx.stroke();
+                ctx.fillText('Δ', Δ.end.x - 20, Δ.end.y + 20);
+                
+                // Draw homothety images D' and Δ' (with ratio 1.5)
+                const k = 1.5;
+                
+                // Choose two points on D for construction
+                const P1 = {x: width * 0.2, y: height * 0.3};
+                const P2 = {x: width * 0.8, y: height * 0.3};
+                
+                // Their images
+                const P1prime = {
+                    x: I.x + k * (P1.x - I.x),
+                    y: I.y + k * (P1.y - I.y)
+                };
+                
+                const P2prime = {
+                    x: I.x + k * (P2.x - I.x),
+                    y: I.y + k * (P2.y - I.y)
+                };
+                
+                // Draw D'
+                ctx.strokeStyle = '#8E44AD';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.moveTo(P1prime.x, P1prime.y);
+                ctx.lineTo(P2prime.x, P2prime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.fillStyle = '#8E44AD';
+                ctx.fillText('D\'', P2prime.x - 20, P2prime.y - 10);
+                
+                // Choose two points on Δ
+                const Q1 = {x: width * 0.2, y: height * 0.7};
+                const Q2 = {x: width * 0.8, y: height * 0.7};
+                
+                // Their images
+                const Q1prime = {
+                    x: I.x + k * (Q1.x - I.x),
+                    y: I.y + k * (Q1.y - I.y)
+                };
+                
+                const Q2prime = {
+                    x: I.x + k * (Q2.x - I.x),
+                    y: I.y + k * (Q2.y - I.y)
+                };
+                
+                // Draw Δ'
+                ctx.beginPath();
+                ctx.moveTo(Q1prime.x, Q1prime.y);
+                ctx.lineTo(Q2prime.x, Q2prime.y);
+                ctx.stroke();
+                ctx.fillText('Δ\'', Q2prime.x - 20, Q2prime.y + 20);
+                
+                // Show that D' ∥ Δ' (they remain parallel)
+                ctx.strokeStyle = '#2ECC71';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                // Draw a line to indicate parallelism
+                ctx.beginPath();
+                ctx.moveTo((P1prime.x + P2prime.x)/2, (P1prime.y + P2prime.y)/2);
+                ctx.lineTo((Q1prime.x + Q2prime.x)/2, (Q1prime.y + Q2prime.y)/2);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.fillStyle = '#2ECC71';
+                ctx.font = '14px Arial';
+                ctx.fillText('D\' ∥ Δ\'', width * 0.8, height * 0.5);
+                
+                // Case b: Perpendicular lines (in another part of the canvas)
+                // Draw two perpendicular lines D2 and Δ2
+                const D2 = {
+                    start: {x: width * 0.1, y: height * 0.1},
+                    end: {x: width * 0.4, y: height * 0.4}
+                };
+                
+                const Δ2 = {
+                    start: {x: width * 0.4, y: height * 0.1},
+                    end: {x: width * 0.1, y: height * 0.4}
+                };
+                
+                // Draw D2 and Δ2
+                ctx.strokeStyle = '#E74C3C';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(D2.start.x, D2.start.y);
+                ctx.lineTo(D2.end.x, D2.end.y);
+                ctx.stroke();
+                ctx.fillStyle = '#E74C3C';
+                ctx.fillText('D₂', D2.end.x + 10, D2.end.y);
+                
+                ctx.beginPath();
+                ctx.moveTo(Δ2.start.x, Δ2.start.y);
+                ctx.lineTo(Δ2.end.x, Δ2.end.y);
+                ctx.stroke();
+                ctx.fillText('Δ₂', Δ2.end.x - 20, Δ2.end.y);
+                
+                // Draw right angle indicator at intersection
+                ctx.strokeStyle = '#E74C3C';
+                ctx.lineWidth = 2;
+                const intersection = {x: width * 0.25, y: height * 0.25};
+                ctx.beginPath();
+                ctx.moveTo(intersection.x - 10, intersection.y);
+                ctx.lineTo(intersection.x, intersection.y);
+                ctx.lineTo(intersection.x, intersection.y - 10);
+                ctx.stroke();
+                
+                // Draw homothety images D2' and Δ2' (with ratio 0.8)
+                const k2 = 0.8;
+                
+                // Choose points on D2 and Δ2
+                const R1 = {x: width * 0.2, y: height * 0.2};
+                const R2 = {x: width * 0.3, y: height * 0.3};
+                
+                const S1 = {x: width * 0.3, y: height * 0.2};
+                const S2 = {x: width * 0.2, y: height * 0.3};
+                
+                // Their images
+                const R1prime = {
+                    x: I.x + k2 * (R1.x - I.x),
+                    y: I.y + k2 * (R1.y - I.y)
+                };
+                
+                const R2prime = {
+                    x: I.x + k2 * (R2.x - I.x),
+                    y: I.y + k2 * (R2.y - I.y)
+                };
+                
+                const S1prime = {
+                    x: I.x + k2 * (S1.x - I.x),
+                    y: I.y + k2 * (S1.y - I.y)
+                };
+                
+                const S2prime = {
+                    x: I.x + k2 * (S2.x - I.x),
+                    y: I.y + k2 * (S2.y - I.y)
+                };
+                
+                // Draw D2' and Δ2'
+                ctx.strokeStyle = '#9B59B6';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.moveTo(R1prime.x, R1prime.y);
+                ctx.lineTo(R2prime.x, R2prime.y);
+                ctx.stroke();
+                ctx.fillStyle = '#9B59B6';
+                ctx.fillText('D₂\'', R2prime.x + 10, R2prime.y);
+                
+                ctx.beginPath();
+                ctx.moveTo(S1prime.x, S1prime.y);
+                ctx.lineTo(S2prime.x, S2prime.y);
+                ctx.stroke();
+                ctx.fillText('Δ₂\'', S2prime.x - 20, S2prime.y);
+                ctx.setLineDash([]);
+                
+                // Draw right angle indicator for images
+                const intersectionPrime = {
+                    x: I.x + k2 * (intersection.x - I.x),
+                    y: I.y + k2 * (intersection.y - I.y)
+                };
+                
+                ctx.strokeStyle = '#9B59B6';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(intersectionPrime.x - 10, intersectionPrime.y);
+                ctx.lineTo(intersectionPrime.x, intersectionPrime.y);
+                ctx.lineTo(intersectionPrime.x, intersectionPrime.y - 10);
+                ctx.stroke();
+                
+                // Show that D2' ⟂ Δ2'
+                ctx.fillStyle = '#E74C3C';
+                ctx.font = '14px Arial';
+                ctx.fillText('D₂\' ⟂ Δ₂\'', intersectionPrime.x + 30, intersectionPrime.y - 30);
+                
+                // Draw rays from I to show homothety
+                ctx.strokeStyle = '#666666';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                
+                // From I to a point on D and its image
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(P1.x, P1.y);
+                ctx.lineTo(P1prime.x, P1prime.y);
+                ctx.stroke();
+                
+                // From I to a point on Δ and its image
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(Q1.x, Q1.y);
+                ctx.lineTo(Q1prime.x, Q1prime.y);
+                ctx.stroke();
+                
+                ctx.setLineDash([]);
+                
+                // Title for each case
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Cas a: Droites parallèles', width * 0.25, height * 0.15);
+                ctx.fillText('Cas b: Droites perpendiculaires', width * 0.7, height * 0.15);
+                
+                // General conclusion
+                ctx.fillStyle = '#E67E22';
+                ctx.font = 'bold 18px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('Homothétie conserve parallélisme et perpendicularité', width/2, height * 0.9);
+                ctx.textAlign = 'left';
+            }
+        }
+        
+        // Construction functions for each activity
+        function constructActivity1() {
+            activity1State.constructed = true;
+            drawActivity1Canvas();
+        }
+        
+        function constructActivity2() {
+            activity2State.constructed = true;
+            drawActivity2Canvas();
+        }
+        
+        function constructActivity3() {
+            activity3State.constructed = true;
+            drawActivity3Canvas();
+            drawFigureF();
+            drawFigureF1();
+            drawFigureF2();
+            drawFigureF3();
+            drawFigureF4();
+        }
+        
+        function constructActivity4() {
+            activity4State.constructed = true;
+            drawActivity4Canvas();
+        }
+        
+        function constructActivity5() {
+            activity5State.constructed = true;
+            drawActivity5Canvas();
+        }
+        
+        // Solution toggle function
+        function toggleSolution(problemNumber) {
+            const solution = document.getElementById(`solution${problemNumber}`);
+            const button = solution.previousElementSibling;
+            const currentLang = MHThemeManager ? MHThemeManager.getCurrentLanguage() : 'en';
+            
+            if (solution.style.display === 'block' || solution.style.display === '') {
+                solution.style.display = 'none';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_homothety3.showSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_homothety3.showSolution'];
+                } else {
+                    button.textContent = 'Show Solution';
+                }
+            } else {
+                solution.style.display = 'block';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_homothety3.hideSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_homothety3.hideSolution'];
+                } else {
+                    button.textContent = 'Hide Solution';
+                }
+                
+                // Re-render KaTeX for newly visible equations
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(solution, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\(', right: '\\)', display: false},
+                            {left: '\\[', right: '\\]', display: true}
+                        ],
+                        throwOnError: false
+                    });
+                }
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize KaTeX auto-render
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+
+            // Draw initial canvases
+            drawActivity1Canvas();
+            drawActivity2Canvas();
+            drawActivity3Canvas();
+            drawActivity4Canvas();
+            drawActivity5Canvas();
+            drawFigureF();
+            drawFigureF1();
+            drawFigureF2();
+            drawFigureF3();
+            drawFigureF4();
+
+            // Initialize solutions as hidden and set button text
+            const currentLang = MHThemeManager ? MHThemeManager.getCurrentLanguage() : 'en';
+            for (let i = 1; i <= 5; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                const button = solution ? solution.previousElementSibling : null;
+                
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+                
+                // Set initial button text
+                if (button && translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_homothety3.showSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_homothety3.showSolution'];
+                }
+            }
+            
+            // Redraw canvases when theme changes
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    setTimeout(() => {
+                        drawActivity1Canvas();
+                        drawActivity2Canvas();
+                        drawActivity3Canvas();
+                        drawActivity4Canvas();
+                        drawActivity5Canvas();
+                        drawFigureF();
+                        drawFigureF1();
+                        drawFigureF2();
+                        drawFigureF3();
+                        drawFigureF4();
+                    }, 100);
+                });
+            }
+        });
+    </script>
+
+<!-- Add the service worker registration script -->
+<script>
+    // Register service worker with better error handling
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch(function(error) {
+                console.log('Service Worker registration failed:', error);
+            });
+        });
+    }
+</script>
+
+<!-- Add noscript fallback -->
+<noscript>
+    <style>
+        .MH-header-controls { display: none; }
+        .MH-solution { display: block; }
+        .MH-canvas { border: 2px solid #ccc; background-color: #f9f9f9; }
+    </style>
+    <div class="MH-warning">
+        JavaScript is recommended for the full experience, but content is still accessible.
+    </div>
+</noscript>
+</body>
+</html>

@@ -1,0 +1,2264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Geometry - Translation Exercises (Part 6)</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#4A90E2" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#8E44AD" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#4A90E2">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    
+    <style>
+        /* Page-specific color palette - Blue + Purple Theme */
+        :root {
+            --primary: #4A90E2;        /* Cornflower Blue */
+            --primary-light: #7BAAF7;  /* Light Blue */
+            --primary-dark: #357ABD;   /* Darker Blue */
+            --secondary: #8E44AD;      /* Dark Purple */
+            --secondary-light: #AF7AC5; /* Light Purple */
+            --secondary-dark: #6C3483;  /* Darker Purple */
+            --accent: #E67E22;
+            --warning: #E74C3C;
+            --info: #2ECC71;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #FFFFFF;
+            --surface: #F8F9FA;
+            --border: #E9ECEF;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        [data-theme="dark"] {
+            --primary: #357ABD;
+            --primary-light: #4A90E2;
+            --primary-dark: #2C3E50;
+            --secondary: #6C3483;
+            --secondary-light: #8E44AD;
+            --secondary-dark: #4A235A;
+            --accent: #D35400;
+            --warning: #C0392B;
+            --info: #27AE60;
+            --text: #FFFFFF;
+            --text-light: #CCCCCC;
+            --background: #121212;
+            --surface: #1E1E1E;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        /* KaTeX styling */
+        .katex { 
+            font-size: 1.1em; 
+        }
+        
+        .katex-display { 
+            margin: 1em 0; 
+            text-align: center;
+        }
+        
+        .katex-display > .katex { 
+            display: inline-block;
+            text-align: center;
+        }
+
+        /* Equation styling */
+        .MH-equation {
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            margin: 0.5em 0;
+            padding: 0;
+            display: inline-block;
+            direction: ltr !important;
+            unicode-bidi: isolate;
+        }
+        
+        [dir="rtl"] .MH-equation {
+            text-align: left;
+            unicode-bidi: plaintext;
+        }
+
+        /* Canvas container styling */
+        .MH-canvas-container {
+            margin: 2em 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .MH-canvas {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background-color: var(--surface);
+            max-width: 100%;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+
+        .MH-canvas-title {
+            font-weight: bold;
+            margin-bottom: 0.5em;
+            color: var(--primary);
+        }
+
+        .MH-canvas-instructions {
+            font-size: 0.9em;
+            color: var(--text-light);
+            margin-top: 0.5em;
+            font-style: italic;
+        }
+
+        /* Exercise specific styling */
+        .MH-exercise {
+            margin: 2em 0;
+            padding: 1.5em;
+            background-color: var(--surface);
+            border-radius: 8px;
+            border-left: 5px solid var(--primary);
+        }
+
+        .MH-exercise-number {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1.2em;
+            margin-bottom: 1em;
+        }
+
+        .MH-exercise-statement {
+            margin-bottom: 1.5em;
+            line-height: 1.6;
+        }
+
+        .MH-exercise-hint {
+            background-color: rgba(78, 144, 226, 0.1);
+            padding: 1em;
+            border-radius: 4px;
+            margin: 1em 0;
+            border-left: 3px solid var(--accent);
+        }
+
+        .MH-exercise-hint-title {
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 0.5em;
+        }
+
+        .MH-construction-step {
+            margin: 1.5em 0;
+            padding: 1em;
+            background-color: rgba(142, 68, 173, 0.05);
+            border-left: 4px solid var(--secondary);
+            border-radius: 4px;
+        }
+
+        .MH-construction-step h4 {
+            margin-top: 0;
+            color: var(--secondary-dark);
+        }
+
+        .MH-vector-notation {
+            font-family: 'KaTeX_Math', 'Cambria Math', serif;
+            font-style: italic;
+            color: var(--secondary);
+        }
+
+        .MH-point-label {
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .MH-transformation-notation {
+            background-color: rgba(78, 144, 226, 0.1);
+            padding: 0.5em;
+            border-radius: 4px;
+            font-family: 'KaTeX_Math', 'Cambria Math', serif;
+            margin: 0.5em 0;
+        }
+
+        /* Geometry specific styling */
+        .MH-circle {
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .MH-circle-original {
+            stroke: var(--primary);
+        }
+
+        .MH-circle-image {
+            stroke: var(--secondary);
+        }
+
+        .MH-line {
+            stroke: var(--text-light);
+            stroke-width: 2;
+        }
+
+        .MH-parallel-line {
+            stroke: var(--secondary-light);
+            stroke-width: 1;
+            stroke-dasharray: 5, 5;
+        }
+
+        .MH-perpendicular-line {
+            stroke: var(--accent);
+            stroke-width: 2;
+        }
+
+        .MH-segment {
+            stroke: var(--info);
+            stroke-width: 3;
+        }
+
+        .MH-vector {
+            stroke: var(--warning);
+            stroke-width: 3;
+            stroke-dasharray: none;
+        }
+
+        /* Responsive canvas */
+        @media (max-width: 768px) {
+            .MH-canvas {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                    <!-- Notification Button -->
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+                        <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Geo_transl6a.title">Translation: Part 6</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y2Geo_transl6a.subtitle">Translation Exercises</h2>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_transl6a.introduction">Introduction</h2>
+            <p data-i18n="MH.lesson_Y2Geo_transl6a.introText1">In this sixth lesson on translations, we will solve a variety of exercises that apply the concepts and properties of translations. These exercises will challenge your understanding and problem-solving skills.</p>
+            <p data-i18n="MH.lesson_Y2Geo_transl6a.introText2">Each exercise is presented with a diagram and hints. Try to solve them on your own before checking the solutions.</p>
+        </section>
+
+        <!-- Part XIV: Exercises -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_transl6a.partXIVTitle">Part XIV: Exercises on Translations</h2>
+            
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_transl6a.partXIVIntro">These exercises require applying translation properties to solve geometric construction and proof problems. Use the interactive diagrams to explore each problem.</p>
+            </div>
+
+            <!-- Exercise 1 -->
+            <div class="MH-exercise">
+                <div class="MH-exercise-number" data-i18n="MH.lesson_Y2Geo_transl6a.exercise1Number">Exercise 1</div>
+                
+                <div class="MH-exercise-statement" data-i18n="MH.lesson_Y2Geo_transl6a.exercise1Statement">
+                    In the adjacent figure, C and C' are two circles intersecting at A and B. Construct a point M on C and a point M' on C' such that A is the midpoint of [MM'].
+                </div>
+                
+                <!-- Diagram 1: Two intersecting circles -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_transl6a.diagram1Title">Figure: Two circles C and C' intersecting at A and B</div>
+                    <canvas id="exercise1Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_transl6a.diagram1Instructions">Circles C and C' intersect at A and B. Construct M on C and M' on C' such that A is midpoint of MM'.</div>
+                </div>
+
+                <div class="MH-exercise-hint">
+                    <div class="MH-exercise-hint-title" data-i18n="MH.lesson_Y2Geo_transl6a.hint">Hint</div>
+                    <div data-i18n="MH.lesson_Y2Geo_transl6a.exercise1Hint">Use the image of C by the half-turn (central symmetry) about point A.</div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl6a.solution">Solution</h4>
+                    <button class="MH-solution-btn" onclick="constructExercise1()" data-i18n="MH.lesson_Y2Geo_transl6a.constructButton">Construct</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl6a.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                    <div class="MH-solution" id="solution1">
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise1Solution1">Let \(S_A\) be the half-turn (central symmetry) about point A. We know that \(S_A\) is an isometry that maps any point P to P' such that A is the midpoint of [PP'].</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise1Solution2">If we take M on circle C, then M' = \(S_A(M)\) is such that A is the midpoint of [MM']. We need M' to lie on C'.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise1Solution3">Therefore, M' must belong to both \(S_A(C)\) and C'. So M' is an intersection point of \(S_A(C)\) and C'.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise1Solution4">Construction steps:</p>
+                        <ol>
+                            <li data-i18n="MH.lesson_Y2Geo_transl6a.exercise1Step1">Construct the image of circle C under \(S_A\) (half-turn about A)</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl6a.exercise1Step2">Find the intersection points of \(S_A(C)\) and C' (besides A)</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl6a.exercise1Step3">Let M' be one of these intersection points</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl6a.exercise1Step4">Construct M = \(S_A(M')\) (which lies on C)</li>
+                        </ol>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise1Solution5">Since A is the center of symmetry, it is the midpoint of [MM'] by construction.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercise 2 -->
+            <div class="MH-exercise">
+                <div class="MH-exercise-number" data-i18n="MH.lesson_Y2Geo_transl6a.exercise2Number">Exercise 2</div>
+                
+                <div class="MH-exercise-statement" data-i18n="MH.lesson_Y2Geo_transl6a.exercise2Statement">
+                    A bridge problem: In the adjacent figure, lines D and D' represent the (parallel) banks of a river. Where should the bridge [MN] (perpendicular to the river banks) be constructed so that the path from village A to village B is as short as possible?
+                </div>
+                
+                <!-- Diagram 2: River with parallel banks and two villages -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_transl6a.diagram2Title">Figure: River with parallel banks D and D', villages A and B</div>
+                    <canvas id="exercise2Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_transl6a.diagram2Instructions">Lines D and D' are parallel river banks. A and B are villages. Find optimal bridge MN perpendicular to banks.</div>
+                </div>
+
+                <div class="MH-exercise-hint">
+                    <div class="MH-exercise-hint-title" data-i18n="MH.lesson_Y2Geo_transl6a.hint">Hint</div>
+                    <div data-i18n="MH.lesson_Y2Geo_transl6a.exercise2Hint">Notice that:
+                        <ul>
+                            <li>\(\overrightarrow{MN}\) is a constant vector (perpendicular to the banks, fixed length equal to river width)</li>
+                            <li>AM = A'N, where A' is the image of A by the translation of vector \(\overrightarrow{MN}\)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl6a.solution">Solution</h4>
+                    <button class="MH-solution-btn" onclick="constructExercise2()" data-i18n="MH.lesson_Y2Geo_transl6a.constructButton">Construct</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl6a.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                    <div class="MH-solution" id="solution2">
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise2Solution1">Let w be the width of the river (distance between D and D'). The bridge MN is perpendicular to the banks, so \(MN = w\) and \(\overrightarrow{MN}\) is constant (same direction and magnitude for any position of the bridge).</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise2Solution2">Let t be the translation of vector \(\overrightarrow{MN}\). Then A' = t(A) is the image of A under this translation.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise2Solution3">The total path from A to B via the bridge is: \(AM + MN + NB\)</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise2Solution4">Since MN = w is constant, minimizing the total path is equivalent to minimizing \(AM + NB\).</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise2Solution5">But note that \(AM = A'N\) (since A' = t(A) and N = t(M), so \(\overrightarrow{A'N} = \overrightarrow{AM}\)).</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise2Solution6">Therefore, \(AM + NB = A'N + NB\).</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise2Solution7">The shortest path from A' to B is a straight line. So we should choose N such that A', N, and B are collinear.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise2Solution8">Construction steps:</p>
+                        <ol>
+                            <li data-i18n="MH.lesson_Y2Geo_transl6a.exercise2Step1">Translate point A by the vector perpendicular to D and D' with magnitude w (the river width) to get A'</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl6a.exercise2Step2">Draw line A'B</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl6a.exercise2Step3">Let N be the intersection of A'B with the far bank D'</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl6a.exercise2Step4">Construct M by translating N back by the opposite vector (so MN is perpendicular to banks)</li>
+                        </ol>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise2Solution9">This gives the optimal position for the bridge.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercise 3 -->
+            <div class="MH-exercise">
+                <div class="MH-exercise-number" data-i18n="MH.lesson_Y2Geo_transl6a.exercise3Number">Exercise 3</div>
+                
+                <div class="MH-exercise-statement" data-i18n="MH.lesson_Y2Geo_transl6a.exercise3Statement">
+                    Let D be a line, A a point in the plane, and l a positive real number. Construct a circle passing through A that intersects line D at two points which are endpoints of a segment of length l.
+                </div>
+                
+                <!-- Diagram 3: Line D, point A, and circle intersecting D in segment of length l -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_transl6a.diagram3Title">Figure: Line D, point A, and circle through A intersecting D in segment of length l</div>
+                    <canvas id="exercise3Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_transl6a.diagram3Instructions">Construct circle through A that cuts D in a chord of length l.</div>
+                </div>
+
+                <div class="MH-exercise-hint">
+                    <div class="MH-exercise-hint-title" data-i18n="MH.lesson_Y2Geo_transl6a.hint">Hint</div>
+                    <div data-i18n="MH.lesson_Y2Geo_transl6a.exercise3Hint">
+                        <ul>
+                            <li>Start by constructing a circle C that cuts D in a segment of length l (temporarily ignoring the condition "C passes through A").</li>
+                            <li>Find a translation that transforms C into a circle passing through A and still cutting D in a segment of length l.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl6a.solution">Solution</h4>
+                    <button class="MH-solution-btn" onclick="constructExercise3()" data-i18n="MH.lesson_Y2Geo_transl6a.constructButton">Construct</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl6a.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                    <div class="MH-solution" id="solution3">
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise3Solution1">Let C be a circle that cuts D in a segment of length l. The center O of such a circle must lie on a line parallel to D at a distance \(d = \sqrt{R^2 - (l/2)^2}\) from D, where R is the radius of C.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise3Solution2">We can construct one such circle C₀ with center O₀ on the perpendicular bisector of any segment of length l on D.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise3Solution3">Now we need a circle C that passes through A and cuts D in a segment of length l. Let t be a translation that sends C₀ to C. Since translations preserve distances, if C₀ cuts D in a segment of length l, then C = t(C₀) also cuts D in a segment of length l.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise3Solution4">We need to find a translation t such that A ∈ t(C₀). This means A is the image of some point on C₀ under t.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise3Solution5">Construction steps:</p>
+                        <ol>
+                            <li data-i18n="MH.lesson_Y2Geo_transl6a.exercise3Step1">Construct any circle C₀ that cuts D in a segment of length l</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl6a.exercise3Step2">Choose any point P on C₀</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl6a.exercise3Step3">Let t be the translation that sends P to A: \(\overrightarrow{PA}\)</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl6a.exercise3Step4">Then C = t(C₀) is a circle passing through A (since t(P) = A) and cutting D in a segment of length l</li>
+                        </ol>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise3Solution6">Note: There are two possible circles (depending on which side of D we place the center).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercise 4 -->
+            <div class="MH-exercise">
+                <div class="MH-exercise-number" data-i18n="MH.lesson_Y2Geo_transl6a.exercise4Number">Exercise 4</div>
+                
+                <div class="MH-exercise-statement" data-i18n="MH.lesson_Y2Geo_transl6a.exercise4Statement">
+                    Let ABCD be a parallelogram and E a point not on line (BC). The parallel to line (BE) through A and the parallel to line (CE) through D intersect at point F. Show that EF = BA.
+                </div>
+                
+                <!-- Diagram 4: Parallelogram ABCD with point E and intersection F -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_transl6a.diagram4Title">Figure: Parallelogram ABCD with point E, lines through A and D parallel to BE and CE respectively</div>
+                    <canvas id="exercise4Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_transl6a.diagram4Instructions">Parallelogram ABCD. Point E not on BC. Lines: through A parallel to BE, through D parallel to CE. They intersect at F.</div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl6a.solution">Solution</h4>
+                    <button class="MH-solution-btn" onclick="constructExercise4()" data-i18n="MH.lesson_Y2Geo_transl6a.constructButton">Construct</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl6a.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+                    <div class="MH-solution" id="solution4">
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise4Solution1">Consider the translation t that sends B to A. Since ABCD is a parallelogram, we have \(\overrightarrow{BA} = \overrightarrow{CD}\).</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise4Solution2">Under translation t: B → A, and since t preserves directions, line (BE) is mapped to a line through A parallel to (BE), which is exactly the line through A in the problem statement.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise4Solution3">Similarly, consider the translation t' that sends C to D. Since \(\overrightarrow{CD} = \overrightarrow{BA}\), t' has the same vector as t.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise4Solution4">Under t': C → D, and line (CE) is mapped to a line through D parallel to (CE), which is the other line in the problem.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise4Solution5">Now, let F be the intersection of these two lines. Since both lines are images of lines through E under translations with the same vector \(\overrightarrow{BA}\), point F is the image of E under this translation.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise4Solution6">Therefore, \(\overrightarrow{EF} = \overrightarrow{BA}\), which implies EF = BA and EF ∥ BA.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise4Solution7">Formally:
+                            <br>Line through A parallel to BE: t(BE) where t is translation by \(\overrightarrow{BA}\)
+                            <br>Line through D parallel to CE: t'(CE) where t' is translation by \(\overrightarrow{CD} = \overrightarrow{BA}\)
+                            <br>Since E is on both original lines, t(E) is on the first line and t'(E) is on the second line.
+                            <br>But t(E) = t'(E) because both translations have the same vector.
+                            <br>Thus F = t(E) = t'(E), so \(\overrightarrow{EF} = \overrightarrow{BA}\).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercise 5 -->
+            <div class="MH-exercise">
+                <div class="MH-exercise-number" data-i18n="MH.lesson_Y2Geo_transl6a.exercise5Number">Exercise 5</div>
+                
+                <div class="MH-exercise-statement" data-i18n="MH.lesson_Y2Geo_transl6a.exercise5Statement">
+                    Let C be a circle with center O and radius R, and let D be a line. For every point M on C, draw the circle C_M with center M and radius R, then draw the tangents to C_M that are parallel to D. What is the set described by the points of contact of these tangents with the circles C_M?
+                </div>
+                
+                <!-- Diagram 5: Circle C, line D, and circles C_M with tangents parallel to D -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_transl6a.diagram5Title">Figure: Circle C with center O, line D, and circles C_M centered on C with tangents parallel to D</div>
+                    <canvas id="exercise5Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_transl6a.diagram5Instructions">For M on circle C, draw circle C_M with center M and radius R. Draw tangents to C_M parallel to D. Locus of contact points?</div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl6a.solution">Solution</h4>
+                    <button class="MH-solution-btn" onclick="constructExercise5()" data-i18n="MH.lesson_Y2Geo_transl6a.constructButton">Construct</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl6a.showSolution" onclick="toggleSolution(5)">Show Solution</button>
+                    <div class="MH-solution" id="solution5">
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise5Solution1">Let M be a point on circle C. Circle C_M has center M and radius R.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise5Solution2">The tangents to C_M parallel to D come in two parallel lines (one on each side of C_M). Let T be one of the contact points.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise5Solution3">Since the tangent at T is parallel to D, the radius MT is perpendicular to D.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise5Solution4">Thus T lies on the line through M perpendicular to D. Also, MT = R (radius of C_M).</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise5Solution5">Now consider the translation t that sends O to M. Since M is on circle C with center O and radius R, we have OM = R.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise5Solution6">Under translation t, point O goes to M. What happens to the contact point T?</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise5Solution7">Let T₀ be the point on the line through O perpendicular to D such that OT₀ = R (there are two such points, one on each side of O).</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise5Solution8">Then T = t(T₀), because:
+                            <br>- t preserves distances: MT = OT₀ = R
+                            <br>- t preserves directions: Since \(\overrightarrow{OM}\) is arbitrary (M moves on circle C), but we know MT is perpendicular to D, and OT₀ is also perpendicular to D</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise5Solution9">Thus as M varies on circle C, T varies on the circle with center O and radius \(R\sqrt{2}\) (since OT = OM + MT in vector sense, but careful: OT₀ has length R, and O to T is O to M plus M to T, which are not necessarily collinear).</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise5Solution10">Actually, more precisely: \(\overrightarrow{OT} = \overrightarrow{OM} + \overrightarrow{MT}\), where \(|\overrightarrow{OM}| = R\) and \(|\overrightarrow{MT}| = R\), and \(\overrightarrow{MT} \perp D\).</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise5Solution11">Since M moves on circle C (center O, radius R), and MT has constant length R and fixed direction (perpendicular to D), T moves on a circle with center O and radius \(R\sqrt{2}\) only if OM and MT are perpendicular. But they're not necessarily perpendicular.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise5Solution12">The correct answer: The set of contact points is two lines parallel to D at distance R from O (one on each side of O). Let's prove this:</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise5Solution13">Let D' be the line through O perpendicular to D. Let T₀ be a point on D' such that OT₀ = R. For any M on circle C, the contact point T satisfies \(\overrightarrow{MT} = \overrightarrow{OT₀}\) (same length R and direction perpendicular to D).</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise5Solution14">So \(\overrightarrow{OT} = \overrightarrow{OM} + \overrightarrow{OT₀}\). As M varies on circle C, \(\overrightarrow{OM}\) varies, but \(\overrightarrow{OT₀}\) is fixed. Thus T varies on the circle with center T₀ and radius R.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise5Solution15">Wait, that's not right either. Let's think differently: The condition is that MT ⟂ D and MT = R. So T is on the line through M perpendicular to D, at distance R from M.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise5Solution16">This means T is obtained from M by a translation of fixed vector \(\vec{v}\) (perpendicular to D, length R). There are two possible vectors: \(\vec{v}\) and \(-\vec{v}\).</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise5Solution17">Thus T = M + \(\vec{v}\) or T = M - \(\vec{v}\), where M varies on circle C.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise5Solution18">Therefore, the set of all such T is the translation of circle C by vector \(\vec{v}\) and by vector -\(\vec{v}\). These are two circles congruent to C, with centers O+\(\vec{v}\) and O-\(\vec{v}\).</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise5Solution19">So the locus is two circles.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercise 6 -->
+            <div class="MH-exercise">
+                <div class="MH-exercise-number" data-i18n="MH.lesson_Y2Geo_transl6a.exercise6Number">Exercise 6</div>
+                
+                <div class="MH-exercise-statement" data-i18n="MH.lesson_Y2Geo_transl6a.exercise6Statement">
+                    Let A and B be two points on a circle C. Construct two points M and N on C such that ABMN is a trapezoid with bases [AB] and [MN] and AB = 2MN.
+                </div>
+                
+                <!-- Diagram 6: Circle C with points A, B and trapezoid ABMN -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_transl6a.diagram6Title">Figure: Circle C with points A and B, trapezoid ABMN with bases AB and MN</div>
+                    <canvas id="exercise6Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_transl6a.diagram6Instructions">Construct M and N on circle C such that ABMN is trapezoid with AB ∥ MN and AB = 2MN.</div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl6a.solution">Solution</h4>
+                    <button class="MH-solution-btn" onclick="constructExercise6()" data-i18n="MH.lesson_Y2Geo_transl6a.constructButton">Construct</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl6a.showSolution" onclick="toggleSolution(6)">Show Solution</button>
+                    <div class="MH-solution" id="solution6">
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise6Solution1">Since ABMN is a trapezoid with bases [AB] and [MN], we have AB ∥ MN.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise6Solution2">The condition AB = 2MN means that MN = AB/2.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise6Solution3">Consider the midpoint I of [AB]. Since A and B are on circle C, I is inside the circle (unless AB is a diameter, then I is the center).</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise6Solution4">Now, MN is parallel to AB and half its length. So if we let J be the midpoint of [MN], then IJ is perpendicular to AB (and to MN).</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise6Solution5">Also, M and N are symmetric with respect to the line through the center O perpendicular to AB (since they're on the circle and MN ∥ AB).</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise6Solution6">Let d be the distance between lines AB and MN. Then by the Pythagorean theorem in the right triangle formed by the radius, half of MN, and distance from center to MN, we can find d.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise6Solution7">Let R be the radius of circle C, and let h be the distance from O to line AB. Then:
+                            <br>\(R^2 = h^2 + (AB/2)^2\)
+                            <br>For line MN at distance d from AB (with MN on the opposite side of AB from O, or same side depending on configuration):
+                            <br>\(R^2 = (h ± d)^2 + (MN/2)^2 = (h ± d)^2 + (AB/4)^2\)</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise6Solution8">Subtracting: \(0 = (h ± d)^2 - h^2 + (AB/4)^2 - (AB/2)^2\)
+                            <br>\((h ± d)^2 - h^2 = (AB/2)^2 - (AB/4)^2 = (3/16)AB^2\)
+                            <br>\(d^2 ± 2hd = (3/16)AB^2\)</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise6Solution9">This quadratic in d can be solved. Alternatively, we can use translations:</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise6Solution10">Let t be the translation that sends A to the midpoint of AB. Then t(AB) is a segment parallel to AB of length AB/2 starting at the midpoint of AB.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise6Solution11">We need MN to be this translated segment, with M and N on circle C. So M and N are intersection points of circle C with the line parallel to AB at appropriate distance.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise6Solution12">Construction steps:</p>
+                        <ol>
+                            <li data-i18n="MH.lesson_Y2Geo_transl6a.exercise6Step1">Find midpoint I of AB</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl6a.exercise6Step2">Construct line through I parallel to AB (this is the midline of the trapezoid)</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl6a.exercise6Step3">On this line, mark points J and J' such that IJ = IJ' = AB/4 (since MN = AB/2, its half is AB/4)</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl6a.exercise6Step4">Through J and J', draw lines parallel to AB (these are possible positions for MN)</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl6a.exercise6Step5">Find intersections of these lines with circle C to get M and N</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl6a.exercise6Step6">Check which pair gives ABMN as a trapezoid (with A, B, M, N in that order around the circle)</li>
+                        </ol>
+                        <p data-i18n="MH.lesson_Y2Geo_transl6a.exercise6Solution13">There are generally two solutions (one with MN on each side of AB).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_transl6a.summaryTitle">Summary of Key Techniques</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl6a.summary1Title">Translation Techniques Used in These Exercises</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Geo_transl6a.summary1Item1">Using translations to construct points with specific midpoint properties (Exercise 1)</li>
+                    <li data-i18n="MH.lesson_Y2Geo_transl6a.summary1Item2">Applying translations to minimize path length (Exercise 2 - bridge problem)</li>
+                    <li data-i18n="MH.lesson_Y2Geo_transl6a.summary1Item3">Translating geometric figures to satisfy additional conditions (Exercise 3)</li>
+                    <li data-i18n="MH.lesson_Y2Geo_transl6a.summary1Item4">Using translations to prove length equalities in complex configurations (Exercise 4)</li>
+                    <li data-i18n="MH.lesson_Y2Geo_transl6a.summary1Item5">Analyzing loci using translations (Exercise 5)</li>
+                    <li data-i18n="MH.lesson_Y2Geo_transl6a.summary1Item6">Constructing figures with specific metric relationships using translations (Exercise 6)</li>
+                </ul>
+            </div>
+
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl6a.summary2Title">Problem-Solving Strategies</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Geo_transl6a.summary2Item1">Identify fixed vectors in the problem that suggest translations</li>
+                    <li data-i18n="MH.lesson_Y2Geo_transl6a.summary2Item2">Use translations to transform difficult conditions into simpler ones</li>
+                    <li data-i18n="MH.lesson_Y2Geo_transl6a.summary2Item3">Look for parallel lines and equal vectors as indicators of translations</li>
+                    <li data-i18n="MH.lesson_Y2Geo_transl6a.summary2Item4">When constructing, build a simpler figure first then translate it to meet conditions</li>
+                </ul>
+            </div>
+            
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl6a.conclusionTitle">Conclusion</h3>
+                <p data-i18n="MH.lesson_Y2Geo_transl6a.finalThought">These exercises demonstrate the power of translations in solving diverse geometric problems. From construction to proof to optimization, translations provide a powerful tool for simplifying complex geometric relationships. Mastering these techniques will greatly enhance your problem-solving abilities in geometry.</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+    
+    <script>
+        // GEOMETRY LESSON TRANSLATIONS - Part 6 (Exercises) - CORRECTED VERSION
+const geometryTranslations6 = {
+    'en': {
+        // General translations
+        'MH.general.homeTooltip': 'Go to Homepage',
+        'MH.general.install': 'Install App',
+        'MH.general.installSuccess': 'Mathematics Hub installed successfully!',
+        'MH.general.enableNotifications': 'Enable Notifications',
+        'MH.general.notificationEnabled': 'Notifications enabled! You will now receive updates.',
+        'MH.general.title': 'Mathematics Hub',
+        'MH.general.theme': 'Theme',
+        'MH.general.language': 'Language',
+        'MH.lesson_Y2Geo_transl6a.showSolution': 'Show Solution',
+        'MH.lesson_Y2Geo_transl6a.hideSolution': 'Hide Solution',
+        'MH.lesson_Y2Geo_transl6a.constructButton': 'Construct',
+        'MH.lesson_Y2Geo_transl6a.solution': 'Solution',
+        'MH.lesson_Y2Geo_transl6a.hint': 'Hint',
+        
+        // Geometry lesson specific translations
+        'MH.lesson_Y2Geo_transl6a.title': 'Translation: Part 6',
+        'MH.lesson_Y2Geo_transl6a.subtitle': 'Translation Exercises',
+        'MH.lesson_Y2Geo_transl6a.introduction': 'Introduction',
+        'MH.lesson_Y2Geo_transl6a.introText1': 'In this sixth lesson on translations, we will solve a variety of exercises that apply the concepts and properties of translations. These exercises will challenge your understanding and problem-solving skills.',
+        'MH.lesson_Y2Geo_transl6a.introText2': 'Each exercise is presented with a diagram and hints. Try to solve them on your own before checking the solutions.',
+        
+        // Part XIV
+        'MH.lesson_Y2Geo_transl6a.partXIVTitle': 'Part XIV: Exercises on Translations',
+        'MH.lesson_Y2Geo_transl6a.partXIVIntro': 'These exercises require applying translation properties to solve geometric construction and proof problems. Use the interactive diagrams to explore each problem.',
+        
+        // Exercise 1
+        'MH.lesson_Y2Geo_transl6a.exercise1Number': 'Exercise 1',
+        'MH.lesson_Y2Geo_transl6a.exercise1Statement': 'In the adjacent figure, C and C\' are two circles intersecting at A and B. Construct a point M on C and a point M\' on C\' such that A is the midpoint of [MM\'].',
+        'MH.lesson_Y2Geo_transl6a.diagram1Title': 'Figure: Two circles C and C\' intersecting at A and B',
+        'MH.lesson_Y2Geo_transl6a.diagram1Instructions': 'Circles C and C\' intersect at A and B. Construct M on C and M\' on C\' such that A is midpoint of MM\'.',
+        'MH.lesson_Y2Geo_transl6a.exercise1Hint': 'Use the image of C by the half-turn (central symmetry) about point A.',
+        'MH.lesson_Y2Geo_transl6a.exercise1Solution1': String.raw`Let \(S_A\) be the half-turn (central symmetry) about point A. We know that \(S_A\) is an isometry that maps any point P to P' such that A is the midpoint of [PP'].`,
+        'MH.lesson_Y2Geo_transl6a.exercise1Solution2': String.raw`If we take M on circle C, then M' = \(S_A(M)\) is such that A is the midpoint of [MM']. We need M' to lie on C'.`,
+        'MH.lesson_Y2Geo_transl6a.exercise1Solution3': String.raw`Therefore, M' must belong to both \(S_A(C)\) and C'. So M' is an intersection point of \(S_A(C)\) and C'.`,
+        'MH.lesson_Y2Geo_transl6a.exercise1Solution4': 'Construction steps:',
+        'MH.lesson_Y2Geo_transl6a.exercise1Step1': 'Construct the image of circle C under \(S_A\) (half-turn about A)',
+        'MH.lesson_Y2Geo_transl6a.exercise1Step2': 'Find the intersection points of \(S_A(C)\) and C\' (besides A)',
+        'MH.lesson_Y2Geo_transl6a.exercise1Step3': 'Let M\' be one of these intersection points',
+        'MH.lesson_Y2Geo_transl6a.exercise1Step4': 'Construct M = \(S_A(M\')\) (which lies on C)',
+        'MH.lesson_Y2Geo_transl6a.exercise1Solution5': 'Since A is the center of symmetry, it is the midpoint of [MM\'] by construction.',
+        
+        // Exercise 2
+        'MH.lesson_Y2Geo_transl6a.exercise2Number': 'Exercise 2',
+        'MH.lesson_Y2Geo_transl6a.exercise2Statement': 'A bridge problem: In the adjacent figure, lines D and D\' represent the (parallel) banks of a river. Where should the bridge [MN] (perpendicular to the river banks) be constructed so that the path from village A to village B is as short as possible?',
+        'MH.lesson_Y2Geo_transl6a.diagram2Title': 'Figure: River with parallel banks D and D\', villages A and B',
+        'MH.lesson_Y2Geo_transl6a.diagram2Instructions': 'Lines D and D\' are parallel river banks. A and B are villages. Find optimal bridge MN perpendicular to banks.',
+        'MH.lesson_Y2Geo_transl6a.exercise2Hint': String.raw`Notice that:
+<ul>
+<li>\(\overrightarrow{MN}\) is a constant vector (perpendicular to the banks, fixed length equal to river width)</li>
+<li>AM = A'N, where A' is the image of A by the translation of vector \(\overrightarrow{MN}\)</li>
+</ul>`,
+        'MH.lesson_Y2Geo_transl6a.exercise2Solution1': String.raw`Let w be the width of the river (distance between D and D'). The bridge MN is perpendicular to the banks, so \(MN = w\) and \(\overrightarrow{MN}\) is constant (same direction and magnitude for any position of the bridge).`,
+        'MH.lesson_Y2Geo_transl6a.exercise2Solution2': String.raw`Let t be the translation of vector \(\overrightarrow{MN}\). Then A' = t(A) is the image of A under this translation.`,
+        'MH.lesson_Y2Geo_transl6a.exercise2Solution3': String.raw`The total path from A to B via the bridge is: \(AM + MN + NB\)`,
+        'MH.lesson_Y2Geo_transl6a.exercise2Solution4': String.raw`Since MN = w is constant, minimizing the total path is equivalent to minimizing \(AM + NB\).`,
+        'MH.lesson_Y2Geo_transl6a.exercise2Solution5': String.raw`But note that \(AM = A'N\) (since A' = t(A) and N = t(M), so \(\overrightarrow{A'N} = \overrightarrow{AM}\)).`,
+        'MH.lesson_Y2Geo_transl6a.exercise2Solution6': String.raw`Therefore, \(AM + NB = A'N + NB\).`,
+        'MH.lesson_Y2Geo_transl6a.exercise2Solution7': String.raw`The shortest path from A' to B is a straight line. So we should choose N such that A', N, and B are collinear.`,
+        'MH.lesson_Y2Geo_transl6a.exercise2Solution8': 'Construction steps:',
+        'MH.lesson_Y2Geo_transl6a.exercise2Step1': 'Translate point A by the vector perpendicular to D and D\' with magnitude w (the river width) to get A\'',
+        'MH.lesson_Y2Geo_transl6a.exercise2Step2': 'Draw line A\'B',
+        'MH.lesson_Y2Geo_transl6a.exercise2Step3': 'Let N be the intersection of A\'B with the far bank D\'',
+        'MH.lesson_Y2Geo_transl6a.exercise2Step4': 'Construct M by translating N back by the opposite vector (so MN is perpendicular to banks)',
+        'MH.lesson_Y2Geo_transl6a.exercise2Solution9': 'This gives the optimal position for the bridge.',
+        
+        // Exercise 3
+        'MH.lesson_Y2Geo_transl6a.exercise3Number': 'Exercise 3',
+        'MH.lesson_Y2Geo_transl6a.exercise3Statement': 'Let D be a line, A a point in the plane, and l a positive real number. Construct a circle passing through A that intersects line D at two points which are endpoints of a segment of length l.',
+        'MH.lesson_Y2Geo_transl6a.diagram3Title': 'Figure: Line D, point A, and circle through A intersecting D in segment of length l',
+        'MH.lesson_Y2Geo_transl6a.diagram3Instructions': 'Construct circle through A that cuts D in a chord of length l.',
+        'MH.lesson_Y2Geo_transl6a.exercise3Hint': String.raw`<ul>
+<li>Start by constructing a circle C that cuts D in a segment of length l (temporarily ignoring the condition "C passes through A").</li>
+<li>Find a translation that transforms C into a circle passing through A and still cutting D in a segment of length l.</li>
+</ul>`,
+        'MH.lesson_Y2Geo_transl6a.exercise3Solution1': String.raw`Let C be a circle that cuts D in a segment of length l. The center O of such a circle must lie on a line parallel to D at a distance \(d = \sqrt{R^2 - (l/2)^2}\) from D, where R is the radius of C.`,
+        'MH.lesson_Y2Geo_transl6a.exercise3Solution2': String.raw`We can construct one such circle C₀ with center O₀ on the perpendicular bisector of any segment of length l on D.`,
+        'MH.lesson_Y2Geo_transl6a.exercise3Solution3': String.raw`Now we need a circle C that passes through A and cuts D in a segment of length l. Let t be a translation that sends C₀ to C. Since translations preserve distances, if C₀ cuts D in a segment of length l, then C = t(C₀) also cuts D in a segment of length l.`,
+        'MH.lesson_Y2Geo_transl6a.exercise3Solution4': String.raw`We need to find a translation t such that A ∈ t(C₀). This means A is the image of some point on C₀ under t.`,
+        'MH.lesson_Y2Geo_transl6a.exercise3Solution5': 'Construction steps:',
+        'MH.lesson_Y2Geo_transl6a.exercise3Step1': 'Construct any circle C₀ that cuts D in a segment of length l',
+        'MH.lesson_Y2Geo_transl6a.exercise3Step2': 'Choose any point P on C₀',
+        'MH.lesson_Y2Geo_transl6a.exercise3Step3': String.raw`Let t be the translation that sends P to A: \(\overrightarrow{PA}\)`,
+        'MH.lesson_Y2Geo_transl6a.exercise3Step4': String.raw`Then C = t(C₀) is a circle passing through A (since t(P) = A) and cutting D in a segment of length l`,
+        'MH.lesson_Y2Geo_transl6a.exercise3Solution6': 'Note: There are two possible circles (depending on which side of D we place the center).',
+        
+        // Exercise 4
+        'MH.lesson_Y2Geo_transl6a.exercise4Number': 'Exercise 4',
+        'MH.lesson_Y2Geo_transl6a.exercise4Statement': 'Let ABCD be a parallelogram and E a point not on line (BC). The parallel to line (BE) through A and the parallel to line (CE) through D intersect at point F. Show that EF = BA.',
+        'MH.lesson_Y2Geo_transl6a.diagram4Title': 'Figure: Parallelogram ABCD with point E, lines through A and D parallel to BE and CE respectively',
+        'MH.lesson_Y2Geo_transl6a.diagram4Instructions': 'Parallelogram ABCD. Point E not on BC. Lines: through A parallel to BE, through D parallel to CE. They intersect at F.',
+        'MH.lesson_Y2Geo_transl6a.exercise4Solution1': String.raw`Consider the translation t that sends B to A. Since ABCD is a parallelogram, we have \(\overrightarrow{BA} = \overrightarrow{CD}\).`,
+        'MH.lesson_Y2Geo_transl6a.exercise4Solution2': String.raw`Under translation t: B → A, and since t preserves directions, line (BE) is mapped to a line through A parallel to (BE), which is exactly the line through A in the problem statement.`,
+        'MH.lesson_Y2Geo_transl6a.exercise4Solution3': String.raw`Similarly, consider the translation t' that sends C to D. Since \(\overrightarrow{CD} = \overrightarrow{BA}\), t' has the same vector as t.`,
+        'MH.lesson_Y2Geo_transl6a.exercise4Solution4': String.raw`Under t': C → D, and line (CE) is mapped to a line through D parallel to (CE), which is the other line in the problem.`,
+        'MH.lesson_Y2Geo_transl6a.exercise4Solution5': String.raw`Now, let F be the intersection of these two lines. Since both lines are images of lines through E under translations with the same vector \(\overrightarrow{BA}\), point F is the image of E under this translation.`,
+        'MH.lesson_Y2Geo_transl6a.exercise4Solution6': String.raw`Therefore, \(\overrightarrow{EF} = \overrightarrow{BA}\), which implies EF = BA and EF ∥ BA.`,
+        'MH.lesson_Y2Geo_transl6a.exercise4Solution7': String.raw`Formally:<br>Line through A parallel to BE: t(BE) where t is translation by \(\overrightarrow{BA}\)<br>Line through D parallel to CE: t'(CE) where t' is translation by \(\overrightarrow{CD} = \overrightarrow{BA}\)<br>Since E is on both original lines, t(E) is on the first line and t'(E) is on the second line.<br>But t(E) = t'(E) because both translations have the same vector.<br>Thus F = t(E) = t'(E), so \(\overrightarrow{EF} = \overrightarrow{BA}\).`,
+        
+        // Exercise 5
+        'MH.lesson_Y2Geo_transl6a.exercise5Number': 'Exercise 5',
+        'MH.lesson_Y2Geo_transl6a.exercise5Statement': 'Let C be a circle with center O and radius R, and let D be a line. For every point M on C, draw the circle C_M with center M and radius R, then draw the tangents to C_M that are parallel to D. What is the set described by the points of contact of these tangents with the circles C_M?',
+        'MH.lesson_Y2Geo_transl6a.diagram5Title': 'Figure: Circle C with center O, line D, and circles C_M centered on C with tangents parallel to D',
+        'MH.lesson_Y2Geo_transl6a.diagram5Instructions': 'For M on circle C, draw circle C_M with center M and radius R. Draw tangents to C_M parallel to D. Locus of contact points?',
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution1': String.raw`Let M be a point on circle C. Circle C_M has center M and radius R.`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution2': String.raw`The tangents to C_M parallel to D come in two parallel lines (one on each side of C_M). Let T be one of the contact points.`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution3': String.raw`Since the tangent at T is parallel to D, the radius MT is perpendicular to D.`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution4': String.raw`Thus T lies on the line through M perpendicular to D. Also, MT = R (radius of C_M).`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution5': String.raw`Now consider the translation t that sends O to M. Since M is on circle C with center O and radius R, we have OM = R.`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution6': 'Under translation t, point O goes to M. What happens to the contact point T?',
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution7': String.raw`Let T₀ be the point on the line through O perpendicular to D such that OT₀ = R (there are two such points, one on each side of O).`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution8': String.raw`Then T = t(T₀), because:<br>- t preserves distances: MT = OT₀ = R<br>- t preserves directions: Since \(\overrightarrow{OM}\) is arbitrary (M moves on circle C), but we know MT is perpendicular to D, and OT₀ is also perpendicular to D`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution9': String.raw`Thus as M varies on circle C, T varies on the circle with center O and radius \(R\sqrt{2}\) (since OT = OM + MT in vector sense, but careful: OT₀ has length R, and O to T is O to M plus M to T, which are not necessarily collinear).`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution10': String.raw`Actually, more precisely: \(\overrightarrow{OT} = \overrightarrow{OM} + \overrightarrow{MT}\), where \(|\overrightarrow{OM}| = R\) and \(|\overrightarrow{MT}| = R\), and \(\overrightarrow{MT} \perp D\).`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution11': String.raw`Since M moves on circle C (center O, radius R), and MT has constant length R and fixed direction (perpendicular to D), T moves on a circle with center O and radius \(R\sqrt{2}\) only if OM and MT are perpendicular. But they're not necessarily perpendicular.`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution12': 'The correct answer: The set of contact points is two lines parallel to D at distance R from O (one on each side of O). Let\'s prove this:',
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution13': String.raw`Let D' be the line through O perpendicular to D. Let T₀ be a point on D' such that OT₀ = R. For any M on circle C, the contact point T satisfies \(\overrightarrow{MT} = \overrightarrow{OT₀}\) (same length R and direction perpendicular to D).`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution14': String.raw`So \(\overrightarrow{OT} = \overrightarrow{OM} + \overrightarrow{OT₀}\). As M varies on circle C, \(\overrightarrow{OM}\) varies, but \(\overrightarrow{OT₀}\) is fixed. Thus T varies on the circle with center T₀ and radius R.`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution15': 'Wait, that\'s not right either. Let\'s think differently: The condition is that MT ⟂ D and MT = R. So T is on the line through M perpendicular to D, at distance R from M.',
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution16': String.raw`This means T is obtained from M by a translation of fixed vector \(\vec{v}\) (perpendicular to D, length R). There are two possible vectors: \(\vec{v}\) and \(-\vec{v}\).`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution17': String.raw`Thus T = M + \(\vec{v}\) or T = M - \(\vec{v}\), where M varies on circle C.`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution18': String.raw`Therefore, the set of all such T is the translation of circle C by vector \(\vec{v}\) and by vector -\(\vec{v}\). These are two circles congruent to C, with centers O+\(\vec{v}\) and O-\(\vec{v}\).`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution19': 'So the locus is two circles.',
+        
+        // Exercise 6
+        'MH.lesson_Y2Geo_transl6a.exercise6Number': 'Exercise 6',
+        'MH.lesson_Y2Geo_transl6a.exercise6Statement': 'Let A and B be two points on a circle C. Construct two points M and N on C such that ABMN is a trapezoid with bases [AB] and [MN] and AB = 2MN.',
+        'MH.lesson_Y2Geo_transl6a.diagram6Title': 'Figure: Circle C with points A and B, trapezoid ABMN with bases AB and MN',
+        'MH.lesson_Y2Geo_transl6a.diagram6Instructions': 'Construct M and N on circle C such that ABMN is trapezoid with AB ∥ MN and AB = 2MN.',
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution1': 'Since ABMN is a trapezoid with bases [AB] and [MN], we have AB ∥ MN.',
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution2': 'The condition AB = 2MN means that MN = AB/2.',
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution3': 'Consider the midpoint I of [AB]. Since A and B are on circle C, I is inside the circle (unless AB is a diameter, then I is the center).',
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution4': String.raw`Now, MN is parallel to AB and half its length. So if we let J be the midpoint of [MN], then IJ is perpendicular to AB (and to MN).`,
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution5': String.raw`Also, M and N are symmetric with respect to the line through the center O perpendicular to AB (since they're on the circle and MN ∥ AB).`,
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution6': String.raw`Let d be the distance between lines AB and MN. Then by the Pythagorean theorem in the right triangle formed by the radius, half of MN, and distance from center to MN, we can find d.`,
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution7': String.raw`Let R be the radius of circle C, and let h be the distance from O to line AB. Then:<br>\(R^2 = h^2 + (AB/2)^2\)<br>For line MN at distance d from AB (with MN on the opposite side of AB from O, or same side depending on configuration):<br>\(R^2 = (h ± d)^2 + (MN/2)^2 = (h ± d)^2 + (AB/4)^2\)`,
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution8': String.raw`Subtracting: \(0 = (h ± d)^2 - h^2 + (AB/4)^2 - (AB/2)^2\)<br>\((h ± d)^2 - h^2 = (AB/2)^2 - (AB/4)^2 = (3/16)AB^2\)<br>\(d^2 ± 2hd = (3/16)AB^2\)`,
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution9': 'This quadratic in d can be solved. Alternatively, we can use translations:',
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution10': String.raw`Let t be the translation that sends A to the midpoint of AB. Then t(AB) is a segment parallel to AB of length AB/2 starting at the midpoint of AB.`,
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution11': String.raw`We need MN to be this translated segment, with M and N on circle C. So M and N are intersection points of circle C with the line parallel to AB at appropriate distance.`,
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution12': 'Construction steps:',
+        'MH.lesson_Y2Geo_transl6a.exercise6Step1': 'Find midpoint I of AB',
+        'MH.lesson_Y2Geo_transl6a.exercise6Step2': 'Construct line through I parallel to AB (this is the midline of the trapezoid)',
+        'MH.lesson_Y2Geo_transl6a.exercise6Step3': String.raw`On this line, mark points J and J' such that IJ = IJ' = AB/4 (since MN = AB/2, its half is AB/4)`,
+        'MH.lesson_Y2Geo_transl6a.exercise6Step4': 'Through J and J\', draw lines parallel to AB (these are possible positions for MN)',
+        'MH.lesson_Y2Geo_transl6a.exercise6Step5': 'Find intersections of these lines with circle C to get M and N',
+        'MH.lesson_Y2Geo_transl6a.exercise6Step6': 'Check which pair gives ABMN as a trapezoid (with A, B, M, N in that order around the circle)',
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution13': 'There are generally two solutions (one with MN on each side of AB).',
+        
+        // Summary
+        'MH.lesson_Y2Geo_transl6a.summaryTitle': 'Summary of Key Techniques',
+        'MH.lesson_Y2Geo_transl6a.summary1Title': 'Translation Techniques Used in These Exercises',
+        'MH.lesson_Y2Geo_transl6a.summary1Item1': 'Using translations to construct points with specific midpoint properties (Exercise 1)',
+        'MH.lesson_Y2Geo_transl6a.summary1Item2': 'Applying translations to minimize path length (Exercise 2 - bridge problem)',
+        'MH.lesson_Y2Geo_transl6a.summary1Item3': 'Translating geometric figures to satisfy additional conditions (Exercise 3)',
+        'MH.lesson_Y2Geo_transl6a.summary1Item4': 'Using translations to prove length equalities in complex configurations (Exercise 4)',
+        'MH.lesson_Y2Geo_transl6a.summary1Item5': 'Analyzing loci using translations (Exercise 5)',
+        'MH.lesson_Y2Geo_transl6a.summary1Item6': 'Constructing figures with specific metric relationships using translations (Exercise 6)',
+        'MH.lesson_Y2Geo_transl6a.summary2Title': 'Problem-Solving Strategies',
+        'MH.lesson_Y2Geo_transl6a.summary2Item1': 'Identify fixed vectors in the problem that suggest translations',
+        'MH.lesson_Y2Geo_transl6a.summary2Item2': 'Use translations to transform difficult conditions into simpler ones',
+        'MH.lesson_Y2Geo_transl6a.summary2Item3': 'Look for parallel lines and equal vectors as indicators of translations',
+        'MH.lesson_Y2Geo_transl6a.summary2Item4': 'When constructing, build a simpler figure first then translate it to meet conditions',
+        'MH.lesson_Y2Geo_transl6a.conclusionTitle': 'Conclusion',
+        'MH.lesson_Y2Geo_transl6a.finalThought': 'These exercises demonstrate the power of translations in solving diverse geometric problems. From construction to proof to optimization, translations provide a powerful tool for simplifying complex geometric relationships. Mastering these techniques will greatly enhance your problem-solving abilities in geometry.',
+        
+        // Footer
+        'MH.footer.developer': 'Developer',
+        'MH.footer.version': 'Version',
+        'MH.footer.links': 'Links',
+        'MH.footer.terms': 'Terms of Use',
+        'MH.footer.privacy': 'Privacy Policy'
+    },
+    'ar': {
+        // ترجمات عامة
+        'MH.general.homeTooltip': 'الذهاب إلى الصفحة الرئيسية',
+        'MH.general.install': 'تثبيت التطبيق',
+        'MH.general.installSuccess': 'تم تثبيت Mathematics Hub بنجاح!',
+        'MH.general.enableNotifications': 'تفعيل الإشعارات',
+        'MH.general.notificationEnabled': 'تم تفعيل الإشعارات! ستتلقى التحديثات الآن.',
+        'MH.general.title': 'مركز الرياضيات',
+        'MH.general.theme': 'السمة',
+        'MH.general.language': 'اللغة',
+        'MH.lesson_Y2Geo_transl6a.showSolution': 'إظهار الحل',
+        'MH.lesson_Y2Geo_transl6a.hideSolution': 'إخفاء الحل',
+        'MH.lesson_Y2Geo_transl6a.constructButton': 'ابنِ',
+        'MH.lesson_Y2Geo_transl6a.solution': 'الحل',
+        'MH.lesson_Y2Geo_transl6a.hint': 'تلميح',
+        
+        // ترجمات درس الهندسة
+        'MH.lesson_Y2Geo_transl6a.title': 'الإنسحاب: الجزء 6',
+        'MH.lesson_Y2Geo_transl6a.subtitle': 'تمارين على الانسحاب',
+        'MH.lesson_Y2Geo_transl6a.introduction': 'المقدمة',
+        'MH.lesson_Y2Geo_transl6a.introText1': 'في هذا الدرس السادس عن الانسحابات، سنحل مجموعة متنوعة من التمارين التي تطبق مفاهيم وخواص الانسحابات. هذه التمارين ستختبر فهمك ومهاراتك في حل المسائل.',
+        'MH.lesson_Y2Geo_transl6a.introText2': 'كل تمرين معروض برسم وتلميحات. حاول حلها بنفسك قبل التحقق من الحلول.',
+        
+        // الجزء الرابع عشر
+        'MH.lesson_Y2Geo_transl6a.partXIVTitle': 'الجزء الرابع عشر: تمارين على الانسحابات',
+        'MH.lesson_Y2Geo_transl6a.partXIVIntro': 'تتطلب هذه التمارين تطبيق خواص الانسحابات لحل مسائل الإنشاء والإثبات الهندسية. استخدم الرسوم التفاعلية لاستكشاف كل مسألة.',
+        
+        // التمرين 1
+        'MH.lesson_Y2Geo_transl6a.exercise1Number': 'التمرين 1',
+        'MH.lesson_Y2Geo_transl6a.exercise1Statement': 'في الشكل المجاور، C و C\' دائرتان تتقاطعان في النقطتين A و B. ابنِ نقطة M على C ونقطة M\' على C\' بحيث تكون A منتصف [MM\'].',
+        'MH.lesson_Y2Geo_transl6a.diagram1Title': 'الشكل: دائرتان C و C\' تتقاطعان في A و B',
+        'MH.lesson_Y2Geo_transl6a.diagram1Instructions': 'دائرتان C و C\' تتقاطعان في A و B. ابنِ M على C و M\' على C\' بحيث تكون A منتصف MM\'.',
+        'MH.lesson_Y2Geo_transl6a.exercise1Hint': 'استخدم صورة C بالدوران النصفي (التماثل المركزي) حول النقطة A.',
+        'MH.lesson_Y2Geo_transl6a.exercise1Solution1': String.raw`ليكن \(S_A\) الدوران النصفي (التماثل المركزي) حول النقطة A. نعلم أن \(S_A\) هو تحاكٍ يطابق أي نقطة P إلى P' بحيث تكون A منتصف [PP'].`,
+        'MH.lesson_Y2Geo_transl6a.exercise1Solution2': String.raw`إذا أخذنا M على الدائرة C، فإن M' = \(S_A(M)\) تكون بحيث A منتصف [MM']. نحتاج إلى أن تقع M' على C'.`,
+        'MH.lesson_Y2Geo_transl6a.exercise1Solution3': String.raw`لذلك، يجب أن تنتمي M' إلى كل من \(S_A(C)\) و C'. إذن M' هي نقطة تقاطع \(S_A(C)\) و C'.`,
+        'MH.lesson_Y2Geo_transl6a.exercise1Solution4': 'خطوات الإنشاء:',
+        'MH.lesson_Y2Geo_transl6a.exercise1Step1': String.raw`ابنِ صورة الدائرة C تحت \(S_A\) (الدوران النصفي حول A)`,
+        'MH.lesson_Y2Geo_transl6a.exercise1Step2': String.raw`أوجد نقاط تقاطع \(S_A(C)\) و C' (بخلاف A)`,
+        'MH.lesson_Y2Geo_transl6a.exercise1Step3': 'ليكن M\' إحدى نقاط التقاطع هذه',
+        'MH.lesson_Y2Geo_transl6a.exercise1Step4': String.raw`ابنِ M = \(S_A(M\')\) (والتي تقع على C)`,
+        'MH.lesson_Y2Geo_transl6a.exercise1Solution5': 'بما أن A مركز التماثل، فهي منتصف [MM\'] بالإنشاء.',
+        
+        // التمرين 2
+        'MH.lesson_Y2Geo_transl6a.exercise2Number': 'التمرين 2',
+        'MH.lesson_Y2Geo_transl6a.exercise2Statement': 'مسألة جسر: في الشكل المجاور، المستقيمان D و D\' يمثلان ضفتي نهر (متوازيتين). أين يجب بناء الجسر [MN] (المتعامد على ضفتي النهر) بحيث يكون المسار من القرية A إلى القرية B أقصر ما يمكن؟',
+        'MH.lesson_Y2Geo_transl6a.diagram2Title': 'الشكل: نهر بضفتين متوازيتين D و D\'، قريتان A و B',
+        'MH.lesson_Y2Geo_transl6a.diagram2Instructions': 'المستقيمان D و D\' هما ضفتا النهر المتوازيتان. A و B قريتان. أوجد الجسر الأمثل MN المتعامد على الضفتين.',
+        'MH.lesson_Y2Geo_transl6a.exercise2Hint': String.raw`لاحظ أن:
+<ul>
+<li>\(\overrightarrow{MN}\) متجه ثابت (عمودي على الضفتين، طول ثابت يساوي عرض النهر)</li>
+<li>AM = A'N، حيث A' هي صورة A بالانسحاب الذي متجهه \(\overrightarrow{MN}\)</li>
+</ul>`,
+        'MH.lesson_Y2Geo_transl6a.exercise2Solution1': String.raw`ليكن w عرض النهر (المسافة بين D و D\'). الجسر MN عمودي على الضفتين، إذن \(MN = w\) و \(\overrightarrow{MN}\) ثابت (نفس الاتجاه والطول لأي موقع للجسر).`,
+        'MH.lesson_Y2Geo_transl6a.exercise2Solution2': String.raw`ليكن t الانسحاب بمتجه \(\overrightarrow{MN}\). إذن A' = t(A) هي صورة A تحت هذا الانسحاب.`,
+        'MH.lesson_Y2Geo_transl6a.exercise2Solution3': String.raw`المسار الكلي من A إلى B عبر الجسر هو: \(AM + MN + NB\)`,
+        'MH.lesson_Y2Geo_transl6a.exercise2Solution4': String.raw`بما أن MN = w ثابت، فإن تصغير المسار الكلي يعادل تصغير \(AM + NB\).`,
+        'MH.lesson_Y2Geo_transl6a.exercise2Solution5': String.raw`ولكن لاحظ أن \(AM = A'N\) (بما أن A' = t(A) و N = t(M)، إذن \(\overrightarrow{A'N} = \overrightarrow{AM}\)).`,
+        'MH.lesson_Y2Geo_transl6a.exercise2Solution6': String.raw`لذلك، \(AM + NB = A'N + NB\).`,
+        'MH.lesson_Y2Geo_transl6a.exercise2Solution7': String.raw`أقصر مسار من A' إلى B هو الخط المستقيم. لذا يجب اختيار N بحيث تكون A' و N و B على استقامة واحدة.`,
+        'MH.lesson_Y2Geo_transl6a.exercise2Solution8': 'خطوات الإنشاء:',
+        'MH.lesson_Y2Geo_transl6a.exercise2Step1': 'انسخ النقطة A بمتجه عمودي على D و D\' طوله w (عرض النهر) للحصول على A\'',
+        'MH.lesson_Y2Geo_transl6a.exercise2Step2': 'ارسم المستقيم A\'B',
+        'MH.lesson_Y2Geo_transl6a.exercise2Step3': 'ليكن N نقطة تقاطع A\'B مع الضفة البعيدة D\'',
+        'MH.lesson_Y2Geo_transl6a.exercise2Step4': 'ابنِ M بنسخ N بالمتجه المعاكس (حتى يكون MN عموديًا على الضفتين)',
+        'MH.lesson_Y2Geo_transl6a.exercise2Solution9': 'هذا يعطي الموقع الأمثل للجسر.',
+        
+        // التمرين 3
+        'MH.lesson_Y2Geo_transl6a.exercise3Number': 'التمرين 3',
+        'MH.lesson_Y2Geo_transl6a.exercise3Statement': 'ليكن D مستقيمًا، A نقطة في المستوى، و l عدد حقيقي موجب. ابنِ دائرة تمر بالنقطة A وتقطع المستقيم D في نقطتين هما طرفا قطعة طولها l.',
+        'MH.lesson_Y2Geo_transl6a.diagram3Title': 'الشكل: المستقيم D، النقطة A، ودائرة تمر بـ A وتقطع D في قطعة طول l',
+        'MH.lesson_Y2Geo_transl6a.diagram3Instructions': 'ابنِ دائرة تمر بـ A وتقطع D في وتر طوله l.',
+        'MH.lesson_Y2Geo_transl6a.exercise3Hint': String.raw`<ul>
+<li>ابدأ بإنشاء دائرة C تقطع D في قطعة طول l (متجاهلًا مؤقتًا شرط "تمر C بـ A").</li>
+<li>أوجد انسحابًا يحول C إلى دائرة تمر بـ A وتظل تقطع D في قطعة طول l.</li>
+</ul>`,
+        'MH.lesson_Y2Geo_transl6a.exercise3Solution1': String.raw`لتكن C دائرة تقطع D في قطعة طول l. مركز O لهذه الدائرة يجب أن يقع على مستقيم موازٍ لـ D على مسافة \(d = \sqrt{R^2 - (l/2)^2}\) من D، حيث R هو نصف قطر C.`,
+        'MH.lesson_Y2Geo_transl6a.exercise3Solution2': String.raw`يمكننا إنشاء دائرة واحدة كهذه C₀ مركزها O₀ على المنصف العمودي لأي قطعة طولها l على D.`,
+        'MH.lesson_Y2Geo_transl6a.exercise3Solution3': String.raw`الآن نحتاج دائرة C تمر بـ A وتقطع D في قطعة طول l. ليكن t انسحابًا يرسل C₀ إلى C. بما أن الانسحابات تحافظ على المسافات، إذا قطعت C₀ D في قطعة طول l، فإن C = t(C₀) ستقطع أيضًا D في قطعة طول l.`,
+        'MH.lesson_Y2Geo_transl6a.exercise3Solution4': String.raw`نحتاج إلى إيجاد انسحاب t بحيث A ∈ t(C₀). هذا يعني أن A هي صورة نقطة ما على C₀ تحت t.`,
+        'MH.lesson_Y2Geo_transl6a.exercise3Solution5': 'خطوات الإنشاء:',
+        'MH.lesson_Y2Geo_transl6a.exercise3Step1': 'ابنِ أي دائرة C₀ تقطع D في قطعة طول l',
+        'MH.lesson_Y2Geo_transl6a.exercise3Step2': 'اختر أي نقطة P على C₀',
+        'MH.lesson_Y2Geo_transl6a.exercise3Step3': String.raw`ليكن t الانسحاب الذي يرسل P إلى A: \(\overrightarrow{PA}\)`,
+        'MH.lesson_Y2Geo_transl6a.exercise3Step4': String.raw`إذن C = t(C₀) هي دائرة تمر بـ A (بما أن t(P) = A) وتقطع D في قطعة طول l`,
+        'MH.lesson_Y2Geo_transl6a.exercise3Solution6': 'ملاحظة: هناك دائرتان ممكنتان (حسب أي جانب من D نضع المركز).',
+        
+        // التمرين 4
+        'MH.lesson_Y2Geo_transl6a.exercise4Number': 'التمرين 4',
+        'MH.lesson_Y2Geo_transl6a.exercise4Statement': 'ليكن ABCD متوازي أضلاع و E نقطة لا تقع على المستقيم (BC). المستقيم الموازي لـ (BE) المار بـ A والمستقيم الموازي لـ (CE) المار بـ D يتقاطعان في النقطة F. بين أن EF = BA.',
+        'MH.lesson_Y2Geo_transl6a.diagram4Title': 'الشكل: متوازي الأضلاع ABCD مع النقطة E، مستقيمات عبر A و D موازية لـ BE و CE على التوالي',
+        'MH.lesson_Y2Geo_transl6a.diagram4Instructions': 'متوازي أضلاع ABCD. النقطة E ليست على BC. المستقيمات: عبر A موازٍ لـ BE، عبر D موازٍ لـ CE. يتقاطعان في F.',
+        'MH.lesson_Y2Geo_transl6a.exercise4Solution1': String.raw`ضع في الاعتبار الانسحاب t الذي يرسل B إلى A. بما أن ABCD متوازي أضلاع، لدينا \(\overrightarrow{BA} = \overrightarrow{CD}\).`,
+        'MH.lesson_Y2Geo_transl6a.exercise4Solution2': String.raw`تحت الانسحاب t: B → A، وبما أن t يحفظ الاتجاهات، المستقيم (BE) يطابق إلى مستقيم عبر A موازٍ لـ (BE)، وهو بالضبط المستقيم عبر A في نص المسألة.`,
+        'MH.lesson_Y2Geo_transl6a.exercise4Solution3': String.raw`بالمثل، ضع في الاعتبار الانسحاب t' الذي يرسل C إلى D. بما أن \(\overrightarrow{CD} = \overrightarrow{BA}\)، فإن t' له نفس متجه t.`,
+        'MH.lesson_Y2Geo_transl6a.exercise4Solution4': String.raw`تحت t': C → D، والمستقيم (CE) يطابق إلى مستقيم عبر D موازٍ لـ (CE)، وهو المستقيم الآخر في المسألة.`,
+        'MH.lesson_Y2Geo_transl6a.exercise4Solution5': String.raw`الآن، ليكن F نقطة تقاطع هذين المستقيمين. بما أن كلا المستقيمين هما صور مستقيمين يمران بـ E تحت انسحابات بنفس المتجه \(\overrightarrow{BA}\)، فإن النقطة F هي صورة E تحت هذا الانسحاب.`,
+        'MH.lesson_Y2Geo_transl6a.exercise4Solution6': String.raw`لذلك، \(\overrightarrow{EF} = \overrightarrow{BA}\)، مما يعني EF = BA و EF ∥ BA.`,
+        'MH.lesson_Y2Geo_transl6a.exercise4Solution7': String.raw`رسميًا:<br>المستقيم عبر A الموازي لـ BE: t(BE) حيث t انسحاب بمتجه \(\overrightarrow{BA}\)<br>المستقيم عبر D الموازي لـ CE: t'(CE) حيث t' انسحاب بمتجه \(\overrightarrow{CD} = \overrightarrow{BA}\)<br>بما أن E على كلا المستقيمين الأصليين، t(E) على المستقيم الأول و t'(E) على المستقيم الثاني.<br>لكن t(E) = t'(E) لأن كلا الانسحابين لهما نفس المتجه.<br>إذن F = t(E) = t'(E)، لذا \(\overrightarrow{EF} = \overrightarrow{BA}\).`,
+        
+        // التمرين 5
+        'MH.lesson_Y2Geo_transl6a.exercise5Number': 'التمرين 5',
+        'MH.lesson_Y2Geo_transl6a.exercise5Statement': 'لتكن C دائرة مركزها O ونصف قطرها R، وليكن D مستقيمًا. لكل نقطة M على C، ارسم الدائرة C_M مركزها M ونصف قطرها R، ثم ارسم المماسات لـ C_M الموازية لـ D. ما هو المجموعة الموصوفة بنقاط التماس هذه المماسات مع الدوائر C_M؟',
+        'MH.lesson_Y2Geo_transl6a.diagram5Title': 'الشكل: دائرة C مركزها O، مستقيم D، ودوائر C_M مركزها على C بمماسات موازية لـ D',
+        'MH.lesson_Y2Geo_transl6a.diagram5Instructions': 'لكل M على دائرة C، ارسم دائرة C_M مركزها M ونصف قطرها R. ارسم مماسات لـ C_M موازية لـ D. محور نقاط التماس؟',
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution1': String.raw`لتكن M نقطة على دائرة C. الدائرة C_M مركزها M ونصف قطرها R.`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution2': String.raw`المماسات لـ C_M الموازية لـ D تأتي في مستقيمين متوازيين (واحد على كل جانب من C_M). لتكن T إحدى نقاط التماس.`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution3': String.raw`بما أن المماس عند T موازٍ لـ D، فإن نصف القطر MT عمودي على D.`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution4': String.raw`إذن T تقع على المستقيم المار بـ M العمودي على D. أيضًا، MT = R (نصف قطر C_M).`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution5': String.raw`الآن ضع في الاعتبار الانسحاب t الذي يرسل O إلى M. بما أن M على دائرة C مركزها O ونصف قطرها R، لدينا OM = R.`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution6': 'تحت الانسحاب t، النقطة O تذهب إلى M. ماذا يحدث لنقطة التماس T؟',
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution7': String.raw`لتكن T₀ نقطة على المستقيم المار بـ O العمودي على D بحيث OT₀ = R (هناك نقطتان كهاتين، واحدة على كل جانب من O).`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution8': String.raw`إذن T = t(T₀)، لأن:<br>- t يحافظ على المسافات: MT = OT₀ = R<br>- t يحافظ على الاتجاهات: بما أن \(\overrightarrow{OM}\) عشوائي (M تتحرك على دائرة C)، لكننا نعلم أن MT عمودي على D، و OT₀ أيضًا عمودي على D`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution9': String.raw`إذن بينما تختلف M على دائرة C، تختلف T على الدائرة مركزها O ونصف قطرها \(R\sqrt{2}\) (بما أن OT = OM + MT بالمعنى المتجهي، لكن انتبه: OT₀ طولها R، و O إلى T هي O إلى M زائد M إلى T، وهما ليسا بالضرورة على استقامة واحدة).`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution10': String.raw`في الواقع، بشكل أدق: \(\overrightarrow{OT} = \overrightarrow{OM} + \overrightarrow{MT}\)، حيث \(|\overrightarrow{OM}| = R\) و \(|\overrightarrow{MT}| = R\)، و \(\overrightarrow{MT} \perp D\).`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution11': String.raw`بما أن M تتحرك على دائرة C (مركز O، نصف قطر R)، و MT له طول ثابت R واتجاه ثابت (عمودي على D)، تتحرك T على دائرة مركزها O ونصف قطرها \(R\sqrt{2}\) فقط إذا كان OM و MT متعامدين. لكنهما ليسا بالضرورة متعامدين.`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution12': 'الإجابة الصحيحة: مجموعة نقاط التماس هي مستقيمان موازيان لـ D على مسافة R من O (واحد على كل جانب من O). لنثبت هذا:',
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution13': String.raw`ليكن D\' المستقيم المار بـ O العمودي على D. لتكن T₀ نقطة على D\' بحيث OT₀ = R. لأي M على دائرة C، نقطة التماس T تحقق \(\overrightarrow{MT} = \overrightarrow{OT₀}\) (نفس الطول R والاتجاه العمودي على D).`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution14': String.raw`إذن \(\overrightarrow{OT} = \overrightarrow{OM} + \overrightarrow{OT₀}\). بينما تختلف M على دائرة C، \(\overrightarrow{OM}\) تختلف، لكن \(\overrightarrow{OT₀}\) ثابت. إذن تختلف T على الدائرة مركزها T₀ ونصف قطرها R.`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution15': 'انتظر، هذا ليس صحيحًا أيضًا. لنفكر بشكل مختلف: الشرط هو أن MT ⟂ D و MT = R. إذن T على المستقيم المار بـ M العمودي على D، على مسافة R من M.',
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution16': String.raw`هذا يعني أن T تُحصل من M بانسحاب بمتجه ثابت \(\vec{v}\) (عمودي على D، طوله R). هناك متجهان ممكنان: \(\vec{v}\) و \(-\vec{v}\).`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution17': String.raw`إذن T = M + \(\vec{v}\) أو T = M - \(\vec{v}\)، حيث M تختلف على دائرة C.`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution18': String.raw`لذلك، مجموعة كل هذه النقاط T هي انسحاب دائرة C بمتجه \(\vec{v}\) وبمتجه -\(\vec{v}\). هاتان دائرتان متطابقتان مع C، مركازهما O+\(\vec{v}\) و O-\(\vec{v}\).`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution19': 'إذن المحور هو دائرتان.',
+        
+        // التمرين 6
+        'MH.lesson_Y2Geo_transl6a.exercise6Number': 'التمرين 6',
+        'MH.lesson_Y2Geo_transl6a.exercise6Statement': 'ليكن A و B نقطتين على دائرة C. ابنِ نقطتين M و N على C بحيث يكون ABMN شبه منحرف قاعدتاه [AB] و [MN] و AB = 2MN.',
+        'MH.lesson_Y2Geo_transl6a.diagram6Title': 'الشكل: دائرة C مع النقطتين A و B، شبه المنحرف ABMN بقاعدتي AB و MN',
+        'MH.lesson_Y2Geo_transl6a.diagram6Instructions': 'ابنِ M و N على دائرة C بحيث يكون ABMN شبه منحرف مع AB ∥ MN و AB = 2MN.',
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution1': 'بما أن ABMN شبه منحرف قاعدتاه [AB] و [MN]، لدينا AB ∥ MN.',
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution2': 'الشرط AB = 2MN يعني أن MN = AB/2.',
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution3': 'ضع في الاعتبار منتصف I لـ [AB]. بما أن A و B على دائرة C، فإن I داخل الدائرة (ما لم يكن AB قطرًا، حينها I هو المركز).',
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution4': String.raw`الآن، MN موازٍ لـ AB وطوله نصفه. لذا إذا جعلنا J منتصف [MN]، فإن IJ عمودي على AB (وعلى MN).`,
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution5': String.raw`أيضًا، M و N متماثلتان بالنسبة للمستقيم المار بالمركز O العمودي على AB (بما أنهما على الدائرة و MN ∥ AB).`,
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution6': String.raw`ليكن d المسافة بين المستقيمين AB و MN. ثم بواسطة مبرهنة فيثاغورس في المثلث القائم المكون من نصف القطر، نصف MN، والمسافة من المركز إلى MN، يمكننا إيجاد d.`,
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution7': String.raw`ليكن R نصف قطر دائرة C، وليكن h المسافة من O إلى المستقيم AB. إذن:<br>\(R^2 = h^2 + (AB/2)^2\)<br>للمستقيم MN على مسافة d من AB (مع MN على الجانب المعاكس لـ AB من O، أو نفس الجانب حسب التكوين):<br>\(R^2 = (h ± d)^2 + (MN/2)^2 = (h ± d)^2 + (AB/4)^2\)`,
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution8': String.raw`بطرح: \(0 = (h ± d)^2 - h^2 + (AB/4)^2 - (AB/2)^2\)<br>\((h ± d)^2 - h^2 = (AB/2)^2 - (AB/4)^2 = (3/16)AB^2\)<br>\(d^2 ± 2hd = (3/16)AB^2\)`,
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution9': 'يمكن حل هذه المعادلة التربيعية في d. بدلاً من ذلك، يمكننا استخدام الانسحابات:',
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution10': String.raw`ليكن t الانسحاب الذي يرسل A إلى منتصف AB. إذن t(AB) هي قطعة موازية لـ AB طولها AB/2 تبدأ من منتصف AB.`,
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution11': String.raw`نحتاج أن تكون MN هي هذه القطعة المنقولة، مع كون M و N على دائرة C. إذن M و N هما نقطتا تقاطع دائرة C مع المستقيم الموازي لـ AB على المسافة المناسبة.`,
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution12': 'خطوات الإنشاء:',
+        'MH.lesson_Y2Geo_transl6a.exercise6Step1': 'أوجد منتصف I لـ AB',
+        'MH.lesson_Y2Geo_transl6a.exercise6Step2': 'ابنِ المستقيم المار بـ I الموازي لـ AB (هذا هو خط الوسط لشبه المنحرف)',
+        'MH.lesson_Y2Geo_transl6a.exercise6Step3': String.raw`على هذا المستقيم، حدد النقطتين J و J\' بحيث IJ = IJ\' = AB/4 (بما أن MN = AB/2، فنصفه AB/4)`,
+        'MH.lesson_Y2Geo_transl6a.exercise6Step4': 'ارسم عبر J و J\' مستقيمات موازية لـ AB (هذه مواقع ممكنة لـ MN)',
+        'MH.lesson_Y2Geo_transl6a.exercise6Step5': 'أوجد تقاطعات هذه المستقيمات مع دائرة C للحصول على M و N',
+        'MH.lesson_Y2Geo_transl6a.exercise6Step6': 'تحقق أي زوج يعطي ABMN كشبه منحرف (مع A و B و M و N بهذا الترتيب حول الدائرة)',
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution13': 'هناك عمومًا حلان (واحد مع MN على كل جانب من AB).',
+        
+        // الخلاصة
+        'MH.lesson_Y2Geo_transl6a.summaryTitle': 'ملخص التقنيات الرئيسية',
+        'MH.lesson_Y2Geo_transl6a.summary1Title': 'تقنيات الانسحاب المستخدمة في هذه التمارين',
+        'MH.lesson_Y2Geo_transl6a.summary1Item1': 'استخدام الانسحابات لإنشاء نقاط بخصائص منتصف محددة (التمرين 1)',
+        'MH.lesson_Y2Geo_transl6a.summary1Item2': 'تطبيق الانسحابات لتصغير طول المسار (التمرين 2 - مسألة الجسر)',
+        'MH.lesson_Y2Geo_transl6a.summary1Item3': 'نسخ أشكال هندسية لتلبية شروط إضافية (التمرين 3)',
+        'MH.lesson_Y2Geo_transl6a.summary1Item4': 'استخدام الانسحابات لإثبات تساوي الأطوال في تركيبات معقدة (التمرين 4)',
+        'MH.lesson_Y2Geo_transl6a.summary1Item5': 'تحليل المحاور باستخدام الانسحابات (التمرين 5)',
+        'MH.lesson_Y2Geo_transl6a.summary1Item6': 'إنشاء أشكال بعلاقات مترية محددة باستخدام الانسحابات (التمرين 6)',
+        'MH.lesson_Y2Geo_transl6a.summary2Title': 'استراتيجيات حل المسائل',
+        'MH.lesson_Y2Geo_transl6a.summary2Item1': 'حدد المتجهات الثابتة في المسألة التي تشير إلى انسحابات',
+        'MH.lesson_Y2Geo_transl6a.summary2Item2': 'استخدم الانسحابات لتحويل شروط صعبة إلى شروط أبسط',
+        'MH.lesson_Y2Geo_transl6a.summary2Item3': 'ابحث عن مستقيمات متوازية ومتجهات متساوية كمؤشرات على انسحابات',
+        'MH.lesson_Y2Geo_transl6a.summary2Item4': 'عند الإنشاء، ابنِ شكلًا أبسط أولاً ثم انسخه لتلبية الشروط',
+        'MH.lesson_Y2Geo_transl6a.conclusionTitle': 'الخاتمة',
+        'MH.lesson_Y2Geo_transl6a.finalThought': 'هذه التمارين تظهر قوة الانسحابات في حل مسائل هندسية متنوعة. من الإنشاء إلى الإثبات إلى التحسين، تقدم الانسحابات أداة قوية لتبسيط العلاقات الهندسية المعقدة. إتقان هذه التقنيات سيعزز بشكل كبير قدراتك في حل المسائل في الهندسة.',
+        
+        // التذييل
+        'MH.footer.developer': 'المطور',
+        'MH.footer.version': 'الإصدار',
+        'MH.footer.links': 'روابط',
+        'MH.footer.terms': 'شروط الاستخدام',
+        'MH.footer.privacy': 'سياسة الخصوصية'
+    },
+    'fr': {
+        // Traductions générales
+        'MH.general.homeTooltip': 'Aller à l\'accueil',
+        'MH.general.install': 'Installer l\'App',
+        'MH.general.installSuccess': 'Mathematics Hub installé avec succès!',
+        'MH.general.enableNotifications': 'Activer les notifications',
+        'MH.general.notificationEnabled': 'Notifications activées! Vous recevrez maintenant des mises à jour.',
+        'MH.general.title': 'Centre de Mathématiques',
+        'MH.general.theme': 'Thème',
+        'MH.general.language': 'Langue',
+        'MH.lesson_Y2Geo_transl6a.showSolution': 'Afficher la Solution',
+        'MH.lesson_Y2Geo_transl6a.hideSolution': 'Masquer la Solution',
+        'MH.lesson_Y2Geo_transl6a.constructButton': 'Construire',
+        'MH.lesson_Y2Geo_transl6a.solution': 'Solution',
+        'MH.lesson_Y2Geo_transl6a.hint': 'Indication',
+        
+        // Traductions de la leçon de géométrie
+        'MH.lesson_Y2Geo_transl6a.title': 'Translation : Partie 6',
+        'MH.lesson_Y2Geo_transl6a.subtitle': 'Exercices sur les Translations',
+        'MH.lesson_Y2Geo_transl6a.introduction': 'Introduction',
+        'MH.lesson_Y2Geo_transl6a.introText1': 'Dans cette sixième leçon sur les translations, nous résoudrons une variété d\'exercices qui appliquent les concepts et propriétés des translations. Ces exercices mettront au défi votre compréhension et vos compétences en résolution de problèmes.',
+        'MH.lesson_Y2Geo_transl6a.introText2': 'Chaque exercice est présenté avec un diagramme et des indications. Essayez de les résoudre par vous-même avant de vérifier les solutions.',
+        
+        // Partie XIV
+        'MH.lesson_Y2Geo_transl6a.partXIVTitle': 'Partie XIV : Exercices sur les Translations',
+        'MH.lesson_Y2Geo_transl6a.partXIVIntro': 'Ces exercices nécessitent l\'application des propriétés des translations pour résoudre des problèmes de construction et de preuve géométriques. Utilisez les diagrammes interactifs pour explorer chaque problème.',
+        
+        // Exercice 1
+        'MH.lesson_Y2Geo_transl6a.exercise1Number': 'Exercice 1',
+        'MH.lesson_Y2Geo_transl6a.exercise1Statement': 'Dans la figure ci-contre, C et C\' sont deux cercles sécants en A et B. Construire un point M sur C et un point M\' sur C\' tels que A soit le milieu de [MM\'].',
+        'MH.lesson_Y2Geo_transl6a.diagram1Title': 'Figure : Deux cercles C et C\' sécants en A et B',
+        'MH.lesson_Y2Geo_transl6a.diagram1Instructions': 'Cercles C et C\' sécants en A et B. Construire M sur C et M\' sur C\' tels que A soit milieu de MM\'.',
+        'MH.lesson_Y2Geo_transl6a.exercise1Hint': 'Utiliser l\'image de C par la symétrie centrale de centre A.',
+        'MH.lesson_Y2Geo_transl6a.exercise1Solution1': String.raw`Soit \(S_A\) la symétrie centrale de centre A. On sait que \(S_A\) est une isométrie qui envoie tout point P sur P\' tel que A est le milieu de [PP'].`,
+        'MH.lesson_Y2Geo_transl6a.exercise1Solution2': String.raw`Si on prend M sur le cercle C, alors M' = \(S_A(M)\) est tel que A est le milieu de [MM']. On veut que M' soit sur C'.`,
+        'MH.lesson_Y2Geo_transl6a.exercise1Solution3': String.raw`Donc M' doit appartenir à la fois à \(S_A(C)\) et à C'. Ainsi M' est un point d'intersection de \(S_A(C)\) et C'.`,
+        'MH.lesson_Y2Geo_transl6a.exercise1Solution4': 'Étapes de construction :',
+        'MH.lesson_Y2Geo_transl6a.exercise1Step1': String.raw`Construire l'image du cercle C par \(S_A\) (symétrie centrale de centre A)`,
+        'MH.lesson_Y2Geo_transl6a.exercise1Step2': String.raw`Trouver les points d'intersection de \(S_A(C)\) et C' (autres que A)`,
+        'MH.lesson_Y2Geo_transl6a.exercise1Step3': 'Soit M\' un de ces points d\'intersection',
+        'MH.lesson_Y2Geo_transl6a.exercise1Step4': String.raw`Construire M = \(S_A(M\')\) (qui est sur C)`,
+        'MH.lesson_Y2Geo_transl6a.exercise1Solution5': 'Puisque A est le centre de symétrie, c\'est le milieu de [MM\'] par construction.',
+        
+        // Exercice 2
+        'MH.lesson_Y2Geo_transl6a.exercise2Number': 'Exercice 2',
+        'MH.lesson_Y2Geo_transl6a.exercise2Statement': 'Un problème de pont : Dans la figure ci-contre, les droites D et D\' représentent les berges (parallèles) d\'une rivière. Où faut-il construire le pont [MN] (perpendiculaire aux berges de la rivière) pour que le trajet du village A au village B soit le plus court possible ?',
+        'MH.lesson_Y2Geo_transl6a.diagram2Title': 'Figure : Rivière avec berges parallèles D et D\', villages A et B',
+        'MH.lesson_Y2Geo_transl6a.diagram2Instructions': 'Droites D et D\' sont les berges parallèles de la rivière. A et B sont des villages. Trouver le pont MN optimal perpendiculaire aux berges.',
+        'MH.lesson_Y2Geo_transl6a.exercise2Hint': String.raw`Remarquer que :
+<ul>
+<li>\(\overrightarrow{MN}\) est un vecteur constant (perpendiculaire aux berges, longueur fixe égale à la largeur de la rivière)</li>
+<li>AM = A'N, où A' est l\'image de A par la translation de vecteur \(\overrightarrow{MN}\)</li>
+</ul>`,
+        'MH.lesson_Y2Geo_transl6a.exercise2Solution1': String.raw`Soit w la largeur de la rivière (distance entre D et D'). Le pont MN est perpendiculaire aux berges, donc \(MN = w\) et \(\overrightarrow{MN}\) est constant (même direction et grandeur pour toute position du pont).`,
+        'MH.lesson_Y2Geo_transl6a.exercise2Solution2': String.raw`Soit t la translation de vecteur \(\overrightarrow{MN}\). Alors A' = t(A) est l'image de A par cette translation.`,
+        'MH.lesson_Y2Geo_transl6a.exercise2Solution3': String.raw`Le trajet total de A à B via le pont est : \(AM + MN + NB\)`,
+        'MH.lesson_Y2Geo_transl6a.exercise2Solution4': String.raw`Puisque MN = w est constant, minimiser le trajet total équivaut à minimiser \(AM + NB\).`,
+        'MH.lesson_Y2Geo_transl6a.exercise2Solution5': String.raw`Mais notez que \(AM = A'N\) (puisque A' = t(A) et N = t(M), donc \(\overrightarrow{A'N} = \overrightarrow{AM}\)).`,
+        'MH.lesson_Y2Geo_transl6a.exercise2Solution6': String.raw`Par conséquent, \(AM + NB = A'N + NB\).`,
+        'MH.lesson_Y2Geo_transl6a.exercise2Solution7': String.raw`Le chemin le plus court de A' à B est une ligne droite. Donc on doit choisir N tel que A', N et B soient alignés.`,
+        'MH.lesson_Y2Geo_transl6a.exercise2Solution8': 'Étapes de construction :',
+        'MH.lesson_Y2Geo_transl6a.exercise2Step1': 'Translater le point A par le vecteur perpendiculaire à D et D\' de grandeur w (la largeur de la rivière) pour obtenir A\'',
+        'MH.lesson_Y2Geo_transl6a.exercise2Step2': 'Tracer la droite A\'B',
+        'MH.lesson_Y2Geo_transl6a.exercise2Step3': 'Soit N l\'intersection de A\'B avec la berge éloignée D\'',
+        'MH.lesson_Y2Geo_transl6a.exercise2Step4': 'Construire M en translatant N par le vecteur opposé (pour que MN soit perpendiculaire aux berges)',
+        'MH.lesson_Y2Geo_transl6a.exercise2Solution9': 'Cela donne la position optimale pour le pont.',
+        
+        // Exercice 3
+        'MH.lesson_Y2Geo_transl6a.exercise3Number': 'Exercice 3',
+        'MH.lesson_Y2Geo_transl6a.exercise3Statement': 'Soit D une droite, A un point du plan, et l un nombre réel positif. Construire un cercle passant par A qui coupe la droite D en deux points qui sont les extrémités d\'un segment de longueur l.',
+        'MH.lesson_Y2Geo_transl6a.diagram3Title': 'Figure : Droite D, point A, et cercle passant par A coupant D en un segment de longueur l',
+        'MH.lesson_Y2Geo_transl6a.diagram3Instructions': 'Construire un cercle passant par A qui coupe D en une corde de longueur l.',
+        'MH.lesson_Y2Geo_transl6a.exercise3Hint': String.raw`<ul>
+<li>Commencez par construire un cercle C qui coupe D en un segment de longueur l (en ignorant temporairement la condition "C passe par A").</li>
+<li>Trouvez une translation qui transforme C en un cercle passant par A et coupant toujours D en un segment de longueur l.</li>
+</ul>`,
+        'MH.lesson_Y2Geo_transl6a.exercise3Solution1': String.raw`Soit C un cercle qui coupe D en un segment de longueur l. Le centre O d'un tel cercle doit se trouver sur une droite parallèle à D à une distance \(d = \sqrt{R^2 - (l/2)^2}\) de D, où R est le rayon de C.`,
+        'MH.lesson_Y2Geo_transl6a.exercise3Solution2': String.raw`Nous pouvons construire un tel cercle C₀ de centre O₀ sur la médiatrice de n'importe quel segment de longueur l sur D.`,
+        'MH.lesson_Y2Geo_transl6a.exercise3Solution3': String.raw`Maintenant nous avons besoin d'un cercle C passant par A et coupant D en un segment de longueur l. Soit t une translation qui envoie C₀ sur C. Puisque les translations préservent les distances, si C₀ coupe D en un segment de longueur l, alors C = t(C₀) coupera aussi D en un segment de longueur l.`,
+        'MH.lesson_Y2Geo_transl6a.exercise3Solution4': String.raw`Nous devons trouver une translation t telle que A ∈ t(C₀). Cela signifie que A est l'image d'un point de C₀ par t.`,
+        'MH.lesson_Y2Geo_transl6a.exercise3Solution5': 'Étapes de construction :',
+        'MH.lesson_Y2Geo_transl6a.exercise3Step1': 'Construire un cercle C₀ quelconque qui coupe D en un segment de longueur l',
+        'MH.lesson_Y2Geo_transl6a.exercise3Step2': 'Choisir un point P sur C₀',
+        'MH.lesson_Y2Geo_transl6a.exercise3Step3': String.raw`Soit t la translation qui envoie P sur A : \(\overrightarrow{PA}\)`,
+        'MH.lesson_Y2Geo_transl6a.exercise3Step4': String.raw`Alors C = t(C₀) est un cercle passant par A (puisque t(P) = A) et coupant D en un segment de longueur l`,
+        'MH.lesson_Y2Geo_transl6a.exercise3Solution6': 'Note : Il y a deux cercles possibles (selon de quel côté de D on place le centre).',
+        
+        // Exercice 4
+        'MH.lesson_Y2Geo_transl6a.exercise4Number': 'Exercice 4',
+        'MH.lesson_Y2Geo_transl6a.exercise4Statement': 'Soit ABCD un parallélogramme et E un point n\'appartenant pas à la droite (BC). La parallèle à la droite (BE) passant par A et la parallèle à la droite (CE) passant par D se coupent au point F. Montrer que EF = BA.',
+        'MH.lesson_Y2Geo_transl6a.diagram4Title': 'Figure : Parallélogramme ABCD avec point E, droites passant par A et D parallèles à BE et CE respectivement',
+        'MH.lesson_Y2Geo_transl6a.diagram4Instructions': 'Parallélogramme ABCD. Point E non sur BC. Droites : passant par A parallèle à BE, passant par D parallèle à CE. Elles se coupent en F.',
+        'MH.lesson_Y2Geo_transl6a.exercise4Solution1': String.raw`Considérons la translation t qui envoie B sur A. Puisque ABCD est un parallélogramme, on a \(\overrightarrow{BA} = \overrightarrow{CD}\).`,
+        'MH.lesson_Y2Geo_transl6a.exercise4Solution2': String.raw`Par la translation t : B → A, et puisque t conserve les directions, la droite (BE) est envoyée sur une droite passant par A parallèle à (BE), qui est exactement la droite passant par A dans l'énoncé.`,
+        'MH.lesson_Y2Geo_transl6a.exercise4Solution3': String.raw`De même, considérons la translation t' qui envoie C sur D. Puisque \(\overrightarrow{CD} = \overrightarrow{BA}\), t' a le même vecteur que t.`,
+        'MH.lesson_Y2Geo_transl6a.exercise4Solution4': String.raw`Par t' : C → D, et la droite (CE) est envoyée sur une droite passant par D parallèle à (CE), qui est l'autre droite dans le problème.`,
+        'MH.lesson_Y2Geo_transl6a.exercise4Solution5': String.raw`Maintenant, soit F l'intersection de ces deux droites. Puisque les deux droites sont des images de droites passant par E par des translations de même vecteur \(\overrightarrow{BA}\), le point F est l'image de E par cette translation.`,
+        'MH.lesson_Y2Geo_transl6a.exercise4Solution6': String.raw`Donc, \(\overrightarrow{EF} = \overrightarrow{BA}\), ce qui implique EF = BA et EF ∥ BA.`,
+        'MH.lesson_Y2Geo_transl6a.exercise4Solution7': String.raw`Formellement :<br>Droite passant par A parallèle à BE : t(BE) où t est translation par \(\overrightarrow{BA}\)<br>Droite passant par D parallèle à CE : t'(CE) où t' est translation par \(\overrightarrow{CD} = \overrightarrow{BA}\)<br>Puisque E est sur les deux droites originales, t(E) est sur la première droite et t'(E) est sur la seconde.<br>Mais t(E) = t'(E) car les deux translations ont le même vecteur.<br>Ainsi F = t(E) = t'(E), donc \(\overrightarrow{EF} = \overrightarrow{BA}\).`,
+        
+        // Exercice 5
+        'MH.lesson_Y2Geo_transl6a.exercise5Number': 'Exercice 5',
+        'MH.lesson_Y2Geo_transl6a.exercise5Statement': 'Soit C un cercle de centre O et de rayon R, et soit D une droite. Pour tout point M sur C, tracer le cercle C_M de centre M et de rayon R, puis tracer les tangentes à C_M qui sont parallèles à D. Quel est l\'ensemble décrit par les points de contact de ces tangentes avec les cercles C_M ?',
+        'MH.lesson_Y2Geo_transl6a.diagram5Title': 'Figure : Cercle C de centre O, droite D, et cercles C_M centrés sur C avec tangentes parallèles à D',
+        'MH.lesson_Y2Geo_transl6a.diagram5Instructions': 'Pour M sur le cercle C, tracer le cercle C_M de centre M et de rayon R. Tracer les tangentes à C_M parallèles à D. Lieu des points de contact ?',
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution1': String.raw`Soit M un point sur le cercle C. Le cercle C_M a pour centre M et pour rayon R.`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution2': String.raw`Les tangentes à C_M parallèles à D sont deux droites parallèles (une de chaque côté de C_M). Soit T un des points de contact.`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution3': String.raw`Puisque la tangente en T est parallèle à D, le rayon MT est perpendiculaire à D.`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution4': String.raw`Ainsi T se trouve sur la droite passant par M perpendiculaire à D. De plus, MT = R (rayon de C_M).`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution5': String.raw`Considérons maintenant la translation t qui envoie O sur M. Puisque M est sur le cercle C de centre O et de rayon R, on a OM = R.`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution6': 'Par la translation t, le point O va en M. Qu\'arrive-t-il au point de contact T ?',
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution7': String.raw`Soit T₀ le point sur la droite passant par O perpendiculaire à D tel que OT₀ = R (il y a deux tels points, un de chaque côté de O).`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution8': String.raw`Alors T = t(T₀), car :<br>- t conserve les distances : MT = OT₀ = R<br>- t conserve les directions : Puisque \(\overrightarrow{OM}\) est arbitraire (M se déplace sur le cercle C), mais on sait que MT est perpendiculaire à D, et OT₀ est aussi perpendiculaire à D`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution9': String.raw`Ainsi, lorsque M varie sur le cercle C, T varie sur le cercle de centre O et de rayon \(R\sqrt{2}\) (puisque OT = OM + MT en sens vectoriel, mais attention : OT₀ a pour longueur R, et O à T est O à M plus M à T, qui ne sont pas nécessairement colinéaires).`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution10': String.raw`En fait, plus précisément : \(\overrightarrow{OT} = \overrightarrow{OM} + \overrightarrow{MT}\), où \(|\overrightarrow{OM}| = R\) et \(|\overrightarrow{MT}| = R\), et \(\overrightarrow{MT} \perp D\).`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution11': String.raw`Puisque M se déplace sur le cercle C (centre O, rayon R), et que MT a une longueur constante R et une direction fixe (perpendiculaire à D), T se déplace sur un cercle de centre O et de rayon \(R\sqrt{2}\) seulement si OM et MT sont perpendiculaires. Mais ils ne le sont pas nécessairement.`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution12': 'La réponse correcte : L\'ensemble des points de contact est deux droites parallèles à D à la distance R de O (une de chaque côté de O). Prouvons ceci :',
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution13': String.raw`Soit D' la droite passant par O perpendiculaire à D. Soit T₀ un point sur D' tel que OT₀ = R. Pour tout M sur le cercle C, le point de contact T vérifie \(\overrightarrow{MT} = \overrightarrow{OT₀}\) (même longueur R et direction perpendiculaire à D).`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution14': String.raw`Donc \(\overrightarrow{OT} = \overrightarrow{OM} + \overrightarrow{OT₀}\). Comme M varie sur le cercle C, \(\overrightarrow{OM}\) varie, mais \(\overrightarrow{OT₀}\) est fixe. Ainsi T varie sur le cercle de centre T₀ et de rayon R.`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution15': 'Attendez, ce n\'est pas correct non plus. Réfléchissons différemment : La condition est que MT ⟂ D et MT = R. Donc T est sur la droite passant par M perpendiculaire à D, à la distance R de M.',
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution16': String.raw`Cela signifie que T est obtenu à partir de M par une translation de vecteur fixe \(\vec{v}\) (perpendiculaire à D, de longueur R). Il y a deux vecteurs possibles : \(\vec{v}\) et \(-\vec{v}\).`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution17': String.raw`Ainsi T = M + \(\vec{v}\) ou T = M - \(\vec{v}\), où M varie sur le cercle C.`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution18': String.raw`Par conséquent, l'ensemble de tous ces T est la translation du cercle C par le vecteur \(\vec{v}\) et par le vecteur -\(\vec{v}\). Ce sont deux cercles congruents à C, de centres O+\(\vec{v}\) et O-\(\vec{v}\).`,
+        'MH.lesson_Y2Geo_transl6a.exercise5Solution19': 'Donc le lieu est deux cercles.',
+        
+        // Exercice 6
+        'MH.lesson_Y2Geo_transl6a.exercise6Number': 'Exercice 6',
+        'MH.lesson_Y2Geo_transl6a.exercise6Statement': 'Soient A et B deux points sur un cercle C. Construire deux points M et N sur C tels que ABMN soit un trapèze avec les bases [AB] et [MN] et AB = 2MN.',
+        'MH.lesson_Y2Geo_transl6a.diagram6Title': 'Figure : Cercle C avec points A et B, trapèze ABMN avec bases AB et MN',
+        'MH.lesson_Y2Geo_transl6a.diagram6Instructions': 'Construire M et N sur le cercle C tels que ABMN soit un trapèze avec AB ∥ MN et AB = 2MN.',
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution1': 'Puisque ABMN est un trapèze avec les bases [AB] et [MN], on a AB ∥ MN.',
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution2': 'La condition AB = 2MN signifie que MN = AB/2.',
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution3': 'Considérons le milieu I de [AB]. Puisque A et B sont sur le cercle C, I est à l\'intérieur du cercle (sauf si AB est un diamètre, alors I est le centre).',
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution4': String.raw`Maintenant, MN est parallèle à AB et de moitié de sa longueur. Donc si on note J le milieu de [MN], alors IJ est perpendiculaire à AB (et à MN).`,
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution5': String.raw`De plus, M et N sont symétriques par rapport à la droite passant par le centre O perpendiculaire à AB (puisqu'ils sont sur le cercle et MN ∥ AB).`,
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution6': String.raw`Soit d la distance entre les droites AB et MN. Alors par le théorème de Pythagore dans le triangle rectangle formé par le rayon, la moitié de MN, et la distance du centre à MN, on peut trouver d.`,
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution7': String.raw`Soit R le rayon du cercle C, et soit h la distance de O à la droite AB. Alors :<br>\(R^2 = h^2 + (AB/2)^2\)<br>Pour la droite MN à la distance d de AB (avec MN du côté opposé de AB par rapport à O, ou du même côté selon la configuration) :<br>\(R^2 = (h ± d)^2 + (MN/2)^2 = (h ± d)^2 + (AB/4)^2\)`,
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution8': String.raw`En soustrayant : \(0 = (h ± d)^2 - h^2 + (AB/4)^2 - (AB/2)^2\)<br>\((h ± d)^2 - h^2 = (AB/2)^2 - (AB/4)^2 = (3/16)AB^2\)<br>\(d^2 ± 2hd = (3/16)AB^2\)`,
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution9': 'Cette équation quadratique en d peut être résolue. Alternativement, on peut utiliser les translations :',
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution10': String.raw`Soit t la translation qui envoie A au milieu de AB. Alors t(AB) est un segment parallèle à AB de longueur AB/2 commençant au milieu de AB.`,
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution11': String.raw`Nous avons besoin que MN soit ce segment translaté, avec M et N sur le cercle C. Donc M et N sont les points d'intersection du cercle C avec la droite parallèle à AB à la distance appropriée.`,
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution12': 'Étapes de construction :',
+        'MH.lesson_Y2Geo_transl6a.exercise6Step1': 'Trouver le milieu I de AB',
+        'MH.lesson_Y2Geo_transl6a.exercise6Step2': 'Construire la droite passant par I parallèle à AB (c\'est la ligne médiane du trapèze)',
+        'MH.lesson_Y2Geo_transl6a.exercise6Step3': String.raw`Sur cette droite, marquer les points J et J' tels que IJ = IJ' = AB/4 (puisque MN = AB/2, sa moitié est AB/4)`,
+        'MH.lesson_Y2Geo_transl6a.exercise6Step4': 'Par J et J\', tracer des droites parallèles à AB (ce sont des positions possibles pour MN)',
+        'MH.lesson_Y2Geo_transl6a.exercise6Step5': 'Trouver les intersections de ces droites avec le cercle C pour obtenir M et N',
+        'MH.lesson_Y2Geo_transl6a.exercise6Step6': 'Vérifier quelle paire donne ABMN comme un trapèze (avec A, B, M, N dans cet ordre autour du cercle)',
+        'MH.lesson_Y2Geo_transl6a.exercise6Solution13': 'Il y a généralement deux solutions (une avec MN de chaque côté de AB).',
+        
+        // Résumé
+        'MH.lesson_Y2Geo_transl6a.summaryTitle': 'Résumé des Techniques Clés',
+        'MH.lesson_Y2Geo_transl6a.summary1Title': 'Techniques de Translation Utilisées dans ces Exercices',
+        'MH.lesson_Y2Geo_transl6a.summary1Item1': 'Utiliser les translations pour construire des points avec des propriétés de milieu spécifiques (Exercice 1)',
+        'MH.lesson_Y2Geo_transl6a.summary1Item2': 'Appliquer les translations pour minimiser la longueur d\'un chemin (Exercice 2 - problème du pont)',
+        'MH.lesson_Y2Geo_transl6a.summary1Item3': 'Translater des figures géométriques pour satisfaire des conditions supplémentaires (Exercice 3)',
+        'MH.lesson_Y2Geo_transl6a.summary1Item4': 'Utiliser les translations pour prouver des égalités de longueurs dans des configurations complexes (Exercice 4)',
+        'MH.lesson_Y2Geo_transl6a.summary1Item5': 'Analyser des lieux géométriques à l\'aide des translations (Exercice 5)',
+        'MH.lesson_Y2Geo_transl6a.summary1Item6': 'Construire des figures avec des relations métriques spécifiques en utilisant des translations (Exercice 6)',
+        'MH.lesson_Y2Geo_transl6a.summary2Title': 'Stratégies de Résolution de Problèmes',
+        'MH.lesson_Y2Geo_transl6a.summary2Item1': 'Identifier les vecteurs fixes dans le problème qui suggèrent des translations',
+        'MH.lesson_Y2Geo_transl6a.summary2Item2': 'Utiliser les translations pour transformer des conditions difficiles en conditions plus simples',
+        'MH.lesson_Y2Geo_transl6a.summary2Item3': 'Chercher des droites parallèles et des vecteurs égaux comme indicateurs de translations',
+        'MH.lesson_Y2Geo_transl6a.summary2Item4': 'Lors de la construction, construire d\'abord une figure plus simple puis la translater pour satisfaire les conditions',
+        'MH.lesson_Y2Geo_transl6a.conclusionTitle': 'Conclusion',
+        'MH.lesson_Y2Geo_transl6a.finalThought': 'Ces exercices démontrent la puissance des translations pour résoudre divers problèmes géométriques. De la construction à la preuve en passant par l\'optimisation, les translations offrent un outil puissant pour simplifier les relations géométriques complexes. Maîtriser ces techniques améliorera grandement vos capacités de résolution de problèmes en géométrie.',
+        
+        // Pied de page
+        'MH.footer.developer': 'Développeur',
+        'MH.footer.version': 'Version',
+        'MH.footer.links': 'Liens',
+        'MH.footer.terms': 'Conditions d\'utilisation',
+        'MH.footer.privacy': 'Politique de confidentialité'
+    }
+};
+
+        // Merge with existing translations if they exist
+        if (typeof translations !== 'undefined') {
+            Object.keys(geometryTranslations6).forEach(lang => {
+                if (translations[lang]) {
+                    translations[lang] = {...translations[lang], ...geometryTranslations6[lang]};
+                } else {
+                    translations[lang] = geometryTranslations6[lang];
+                }
+            });
+        } else {
+            var translations = geometryTranslations6;
+        }
+
+        // Canvas drawing functions
+        let exerciseStates = {
+            1: {constructed: false},
+            2: {constructed: false},
+            3: {constructed: false},
+            4: {constructed: false},
+            5: {constructed: false},
+            6: {constructed: false}
+        };
+        
+        // Helper function to draw arrowhead
+        function drawArrowhead(ctx, x, y, angle) {
+            const headlen = 10;
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angle);
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(-headlen, -headlen/2);
+            ctx.moveTo(0, 0);
+            ctx.lineTo(-headlen, headlen/2);
+            ctx.stroke();
+            ctx.restore();
+        }
+        
+        // Exercise 1 drawing function
+        function drawExercise1Canvas() {
+            const canvas = document.getElementById('exercise1Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define two intersecting circles
+            const O1 = {x: width * 0.4, y: height * 0.5};
+            const O2 = {x: width * 0.6, y: height * 0.5};
+            const R1 = 100;
+            const R2 = 80;
+            
+            // Calculate intersection points
+            const d = Math.sqrt((O2.x - O1.x)**2 + (O2.y - O1.y)**2);
+            const a = (R1**2 - R2**2 + d**2) / (2*d);
+            const h = Math.sqrt(R1**2 - a**2);
+            
+            const A = {
+                x: O1.x + a*(O2.x - O1.x)/d + h*(O2.y - O1.y)/d,
+                y: O1.y + a*(O2.y - O1.y)/d - h*(O2.x - O1.x)/d
+            };
+            
+            const B = {
+                x: O1.x + a*(O2.x - O1.x)/d - h*(O2.y - O1.y)/d,
+                y: O1.y + a*(O2.y - O1.y)/d + h*(O2.x - O1.x)/d
+            };
+            
+            // Draw circles
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(O1.x, O1.y, R1, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.fillText('C', O1.x - R1 - 10, O1.y);
+            
+            ctx.strokeStyle = '#8E44AD';
+            ctx.beginPath();
+            ctx.arc(O2.x, O2.y, R2, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.fillText('C\'', O2.x + R2 + 10, O2.y);
+            
+            // Draw intersection points
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(A.x, A.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillText('A', A.x + 10, A.y - 10);
+            
+            ctx.beginPath();
+            ctx.arc(B.x, B.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillText('B', B.x + 10, B.y + 15);
+            
+            // If constructed, show M and M'
+            if (exerciseStates[1].constructed) {
+                // For demonstration, choose M on circle C
+                const angle = Math.PI/3; // 60 degrees
+                const M = {
+                    x: O1.x + R1 * Math.cos(angle),
+                    y: O1.y + R1 * Math.sin(angle)
+                };
+                
+                // M' is symmetric of M with respect to A
+                const Mprime = {
+                    x: 2*A.x - M.x,
+                    y: 2*A.y - M.y
+                };
+                
+                // Draw M
+                ctx.fillStyle = '#2ECC71';
+                ctx.beginPath();
+                ctx.arc(M.x, M.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('M', M.x - 15, M.y - 10);
+                
+                // Draw M'
+                ctx.fillStyle = '#1ABC9C';
+                ctx.beginPath();
+                ctx.arc(Mprime.x, Mprime.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('M\'', Mprime.x + 10, Mprime.y);
+                
+                // Draw segment MM'
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(M.x, M.y);
+                ctx.lineTo(Mprime.x, Mprime.y);
+                ctx.stroke();
+                
+                // Mark A as midpoint
+                ctx.fillStyle = '#E74C3C';
+                ctx.beginPath();
+                ctx.arc(A.x, A.y, 8, 0, Math.PI * 2);
+                ctx.stroke();
+                
+                // Show that M' is on C' (or near it)
+                const distMprimeToO2 = Math.sqrt((Mprime.x - O2.x)**2 + (Mprime.y - O2.y)**2);
+                if (Math.abs(distMprimeToO2 - R2) < 5) {
+                    ctx.fillStyle = '#27AE60';
+                    ctx.fillText('✓ M\' on C\'', Mprime.x + 15, Mprime.y + 15);
+                }
+                
+                // Draw symmetric circle S_A(C)
+                ctx.strokeStyle = '#4A90E2';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.arc(A.x + (O1.x - A.x), A.y + (O1.y - A.y), R1, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.fillText('S_A(C)', A.x + (O1.x - A.x), A.y + (O1.y - A.y) - R1 - 10);
+            }
+        }
+        
+        // Exercise 2 drawing function
+        function drawExercise2Canvas() {
+            const canvas = document.getElementById('exercise2Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // River banks (parallel lines)
+            const riverWidth = 60;
+            const D = {
+                y: height * 0.4,
+                startX: width * 0.1,
+                endX: width * 0.9
+            };
+            
+            const Dprime = {
+                y: D.y + riverWidth,
+                startX: width * 0.1,
+                endX: width * 0.9
+            };
+            
+            // Villages
+            const A = {x: width * 0.2, y: height * 0.2};
+            const B = {x: width * 0.8, y: height * 0.7};
+            
+            // Draw river banks
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(D.startX, D.y);
+            ctx.lineTo(D.endX, D.y);
+            ctx.stroke();
+            ctx.fillText('D (rive nord)', D.endX - 80, D.y - 10);
+            
+            ctx.beginPath();
+            ctx.moveTo(Dprime.startX, Dprime.y);
+            ctx.lineTo(Dprime.endX, Dprime.y);
+            ctx.stroke();
+            ctx.fillText('D\' (rive sud)', Dprime.endX - 80, Dprime.y + 15);
+            
+            // Draw river area
+            ctx.fillStyle = 'rgba(52, 152, 219, 0.2)';
+            ctx.fillRect(D.startX, D.y, D.endX - D.startX, riverWidth);
+            
+            // Draw villages
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(A.x, A.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillText('A', A.x + 10, A.y - 10);
+            
+            ctx.fillStyle = '#2ECC71';
+            ctx.beginPath();
+            ctx.arc(B.x, B.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillText('B', B.x + 10, B.y - 10);
+            
+            // If constructed, show optimal bridge
+            if (exerciseStates[2].constructed) {
+                // Translate A by river width to get A'
+                const Aprime = {x: A.x, y: A.y + riverWidth};
+                
+                // Draw A'
+                ctx.fillStyle = '#E74C3C';
+                ctx.globalAlpha = 0.7;
+                ctx.beginPath();
+                ctx.arc(Aprime.x, Aprime.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('A\'', Aprime.x + 10, Aprime.y - 10);
+                ctx.globalAlpha = 1;
+                
+                // Draw line A'B
+                ctx.strokeStyle = '#9B59B6';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.moveTo(Aprime.x, Aprime.y);
+                ctx.lineTo(B.x, B.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Find intersection of A'B with D'
+                // Line A'B: parametric form
+                const t = (Dprime.y - Aprime.y) / (B.y - Aprime.y);
+                const N = {
+                    x: Aprime.x + t * (B.x - Aprime.x),
+                    y: Dprime.y
+                };
+                
+                // Find M (directly above N on D)
+                const M = {x: N.x, y: D.y};
+                
+                // Draw bridge
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                ctx.moveTo(M.x, M.y);
+                ctx.lineTo(N.x, N.y);
+                ctx.stroke();
+                
+                // Draw points M and N
+                ctx.fillStyle = '#1ABC9C';
+                ctx.beginPath();
+                ctx.arc(M.x, M.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('M', M.x + 10, M.y);
+                
+                ctx.beginPath();
+                ctx.arc(N.x, N.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('N', N.x + 10, N.y);
+                
+                // Draw path A-M-N-B
+                ctx.strokeStyle = '#E74C3C';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(A.x, A.y);
+                ctx.lineTo(M.x, M.y);
+                ctx.lineTo(N.x, N.y);
+                ctx.lineTo(B.x, B.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Show that this is shortest path
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText('Chemin optimal', width/2, 30);
+            }
+        }
+        
+        // Exercise 3 drawing function
+        function drawExercise3Canvas() {
+            const canvas = document.getElementById('exercise3Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            const l = 100; // Length of segment on D
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Line D
+            const D_y = height * 0.6;
+            const D_startX = width * 0.1;
+            const D_endX = width * 0.9;
+            
+            // Point A
+            const A = {x: width * 0.5, y: height * 0.3};
+            
+            // Draw line D
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(D_startX, D_y);
+            ctx.lineTo(D_endX, D_y);
+            ctx.stroke();
+            ctx.fillText('D', D_endX - 20, D_y - 10);
+            
+            // Draw point A
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(A.x, A.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillText('A', A.x + 10, A.y - 10);
+            
+            // Draw segment of length l on D for reference
+            const segCenterX = width * 0.3;
+            ctx.strokeStyle = '#666666';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+            ctx.beginPath();
+            ctx.moveTo(segCenterX - l/2, D_y);
+            ctx.lineTo(segCenterX + l/2, D_y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            ctx.fillStyle = '#666666';
+            ctx.fillText('l', segCenterX, D_y - 10);
+            
+            // If constructed, show circle
+            if (exerciseStates[3].constructed) {
+                // Construct a circle that cuts D in segment of length l
+                // Choose center O0 such that distance to D is sqrt(R^2 - (l/2)^2)
+                const R = 120;
+                const d = Math.sqrt(R**2 - (l/2)**2);
+                
+                // Center O0 (above D)
+                const O0 = {x: width * 0.3, y: D_y - d};
+                
+                // Draw circle C0
+                ctx.strokeStyle = '#8E44AD';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.arc(O0.x, O0.y, R, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.fillText('C₀', O0.x, O0.y - R - 10);
+                
+                // Show it cuts D in segment of length l
+                // Intersection points
+                const chordCenterX = O0.x;
+                const x1 = chordCenterX - l/2;
+                const x2 = chordCenterX + l/2;
+                
+                ctx.fillStyle = '#8E44AD';
+                ctx.beginPath();
+                ctx.arc(x1, D_y, 4, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.beginPath();
+                ctx.arc(x2, D_y, 4, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Choose point P on C0
+                const P = {x: O0.x + R * Math.cos(Math.PI/4), y: O0.y + R * Math.sin(Math.PI/4)};
+                
+                // Draw P
+                ctx.fillStyle = '#3498DB';
+                ctx.beginPath();
+                ctx.arc(P.x, P.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('P', P.x + 10, P.y);
+                
+                // Translation vector PA
+                const translation = {x: A.x - P.x, y: A.y - P.y};
+                
+                // Draw translation vector
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(P.x, P.y);
+                ctx.lineTo(A.x, A.y);
+                ctx.stroke();
+                drawArrowhead(ctx, A.x, A.y, Math.atan2(translation.y, translation.x));
+                
+                // Apply translation to circle C0 to get circle through A
+                const O = {x: O0.x + translation.x, y: O0.y + translation.y};
+                
+                // Draw translated circle
+                ctx.strokeStyle = '#4A90E2';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(O.x, O.y, R, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.fillText('C (passant par A)', O.x, O.y - R - 10);
+                
+                // Show it also cuts D in segment of length l
+                const chordCenterX2 = O.x;
+                const x1_2 = chordCenterX2 - l/2;
+                const x2_2 = chordCenterX2 + l/2;
+                
+                ctx.fillStyle = '#4A90E2';
+                ctx.beginPath();
+                ctx.arc(x1_2, D_y, 4, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.beginPath();
+                ctx.arc(x2_2, D_y, 4, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Verify A is on circle
+                const distAtoO = Math.sqrt((A.x - O.x)**2 + (A.y - O.y)**2);
+                if (Math.abs(distAtoO - R) < 2) {
+                    ctx.fillStyle = '#27AE60';
+                    ctx.fillText('✓ A sur C', A.x + 15, A.y + 15);
+                }
+            }
+        }
+        
+        // Exercise 4 drawing function
+        function drawExercise4Canvas() {
+            const canvas = document.getElementById('exercise4Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Parallelogram ABCD
+            const A = {x: width * 0.3, y: height * 0.6};
+            const B = {x: width * 0.5, y: height * 0.6};
+            const C = {x: width * 0.6, y: height * 0.4};
+            const D = {x: width * 0.4, y: height * 0.4};
+            
+            // Point E (not on BC)
+            const E = {x: width * 0.7, y: height * 0.7};
+            
+            // Draw parallelogram
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(A.x, A.y);
+            ctx.lineTo(B.x, B.y);
+            ctx.lineTo(C.x, C.y);
+            ctx.lineTo(D.x, D.y);
+            ctx.closePath();
+            ctx.stroke();
+            
+            // Draw vertices
+            const vertices = [
+                {point: A, label: 'A'},
+                {point: B, label: 'B'},
+                {point: C, label: 'C'},
+                {point: D, label: 'D'}
+            ];
+            
+            vertices.forEach(v => {
+                ctx.fillStyle = '#E74C3C';
+                ctx.beginPath();
+                ctx.arc(v.point.x, v.point.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText(v.label, v.point.x + 8, v.point.y - 8);
+            });
+            
+            // Draw point E
+            ctx.fillStyle = '#2ECC71';
+            ctx.beginPath();
+            ctx.arc(E.x, E.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillText('E', E.x + 8, E.y - 8);
+            
+            // Draw line BC
+            ctx.strokeStyle = '#666666';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(B.x, B.y);
+            ctx.lineTo(C.x, C.y);
+            ctx.stroke();
+            ctx.fillText('(BC)', (B.x + C.x)/2 + 10, (B.y + C.y)/2);
+            
+            // If constructed, show lines and point F
+            if (exerciseStates[4].constructed) {
+                // Line through A parallel to BE
+                // Vector BE
+                const BE_vec = {x: E.x - B.x, y: E.y - B.y};
+                
+                // Line through A with direction BE_vec
+                const line1_start = {x: A.x - 100, y: A.y - 100 * (BE_vec.y/BE_vec.x)};
+                const line1_end = {x: A.x + 100, y: A.y + 100 * (BE_vec.y/BE_vec.x)};
+                
+                // Line through D parallel to CE
+                // Vector CE
+                const CE_vec = {x: E.x - C.x, y: E.y - C.y};
+                
+                // Line through D with direction CE_vec
+                const line2_start = {x: D.x - 100, y: D.y - 100 * (CE_vec.y/CE_vec.x)};
+                const line2_end = {x: D.x + 100, y: D.y + 100 * (CE_vec.y/CE_vec.x)};
+                
+                // Draw lines
+                ctx.strokeStyle = '#9B59B6';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                
+                // Line through A parallel to BE
+                ctx.beginPath();
+                ctx.moveTo(line1_start.x, line1_start.y);
+                ctx.lineTo(line1_end.x, line1_end.y);
+                ctx.stroke();
+                
+                // Line through D parallel to CE
+                ctx.beginPath();
+                ctx.moveTo(line2_start.x, line2_start.y);
+                ctx.lineTo(line2_end.x, line2_end.y);
+                ctx.stroke();
+                
+                ctx.setLineDash([]);
+                
+                // Find intersection F
+                // Solve for intersection of the two lines
+                const denom = (line1_end.x - line1_start.x) * (line2_end.y - line2_start.y) - 
+                             (line1_end.y - line1_start.y) * (line2_end.x - line2_start.x);
+                
+                let F;
+                if (Math.abs(denom) > 0.001) {
+                    const t = ((line2_start.x - line1_start.x) * (line2_end.y - line2_start.y) -
+                              (line2_start.y - line1_start.y) * (line2_end.x - line2_start.x)) / denom;
+                    
+                    F = {
+                        x: line1_start.x + t * (line1_end.x - line1_start.x),
+                        y: line1_start.y + t * (line1_end.y - line1_start.y)
+                    };
+                } else {
+                    // Lines are parallel (shouldn't happen)
+                    F = {x: (line1_start.x + line2_start.x)/2, y: (line1_start.y + line2_start.y)/2};
+                }
+                
+                // Draw point F
+                ctx.fillStyle = '#E67E22';
+                ctx.beginPath();
+                ctx.arc(F.x, F.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('F', F.x + 10, F.y);
+                
+                // Draw EF and BA
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 2;
+                
+                // EF
+                ctx.beginPath();
+                ctx.moveTo(E.x, E.y);
+                ctx.lineTo(F.x, F.y);
+                ctx.stroke();
+                
+                // BA
+                ctx.beginPath();
+                ctx.moveTo(B.x, B.y);
+                ctx.lineTo(A.x, A.y);
+                ctx.stroke();
+                
+                // Show they are equal
+                const EF_length = Math.sqrt((F.x - E.x)**2 + (F.y - E.y)**2);
+                const BA_length = Math.sqrt((A.x - B.x)**2 + (A.y - B.y)**2);
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = '14px Arial';
+                if (Math.abs(EF_length - BA_length) < 2) {
+                    ctx.fillText(`EF = BA = ${BA_length.toFixed(0)}`, width/2, 30);
+                }
+                
+                // Show translation vectors
+                ctx.strokeStyle = '#3498DB';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 5]);
+                
+                // Vector BA
+                ctx.beginPath();
+                ctx.moveTo(B.x, B.y);
+                ctx.lineTo(A.x, A.y);
+                ctx.stroke();
+                drawArrowhead(ctx, A.x, A.y, Math.atan2(A.y - B.y, A.x - B.x));
+                
+                // Vector EF
+                ctx.beginPath();
+                ctx.moveTo(E.x, E.y);
+                ctx.lineTo(F.x, F.y);
+                ctx.stroke();
+                drawArrowhead(ctx, F.x, F.y, Math.atan2(F.y - E.y, F.x - E.x));
+                
+                ctx.setLineDash([]);
+                
+                ctx.fillStyle = '#3498DB';
+                ctx.fillText('Vecteurs égaux: BA = EF', width/2, 50);
+            }
+        }
+        
+        // Exercise 5 drawing function
+        function drawExercise5Canvas() {
+            const canvas = document.getElementById('exercise5Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Circle C with center O
+            const O = {x: width * 0.5, y: height * 0.5};
+            const R = 100;
+            
+            // Line D
+            const D_angle = Math.PI/6; // 30 degrees
+            const D_length = 200;
+            const D_start = {x: O.x - D_length * Math.cos(D_angle), y: O.y - D_length * Math.sin(D_angle)};
+            const D_end = {x: O.x + D_length * Math.cos(D_angle), y: O.y + D_length * Math.sin(D_angle)};
+            
+            // Draw circle C
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(O.x, O.y, R, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.fillText('C', O.x, O.y - R - 10);
+            ctx.fillText('O', O.x + 10, O.y + 5);
+            
+            // Draw line D
+            ctx.strokeStyle = '#E74C3C';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(D_start.x, D_start.y);
+            ctx.lineTo(D_end.x, D_end.y);
+            ctx.stroke();
+            ctx.fillText('D', D_end.x + 10, D_end.y);
+            
+            // If constructed, show M, C_M, tangents, and contact points
+            if (exerciseStates[5].constructed) {
+                // Choose several points M on circle C
+                const numPoints = 8;
+                const contactPoints = [];
+                
+                // Vector perpendicular to D
+                const perpAngle = D_angle + Math.PI/2;
+                const perpVec = {x: Math.cos(perpAngle), y: Math.sin(perpAngle)};
+                
+                for (let i = 0; i < numPoints; i++) {
+                    const angle = (i / numPoints) * Math.PI * 2;
+                    const M = {
+                        x: O.x + R * Math.cos(angle),
+                        y: O.y + R * Math.sin(angle)
+                    };
+                    
+                    // Draw M
+                    ctx.fillStyle = '#2ECC71';
+                    ctx.globalAlpha = 0.5;
+                    ctx.beginPath();
+                    ctx.arc(M.x, M.y, 4, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Draw circle C_M with center M and radius R
+                    ctx.strokeStyle = '#9B59B6';
+                    ctx.globalAlpha = 0.3;
+                    ctx.beginPath();
+                    ctx.arc(M.x, M.y, R, 0, Math.PI * 2);
+                    ctx.stroke();
+                    
+                    // Draw tangents to C_M parallel to D
+                    // There are two tangents: one on each side
+                    // Contact points are at M ± R * perpVec
+                    const T1 = {
+                        x: M.x + R * perpVec.x,
+                        y: M.y + R * perpVec.y
+                    };
+                    
+                    const T2 = {
+                        x: M.x - R * perpVec.x,
+                        y: M.y - R * perpVec.y
+                    };
+                    
+                    // Draw contact points
+                    ctx.fillStyle = '#E67E22';
+                    ctx.globalAlpha = 0.8;
+                    ctx.beginPath();
+                    ctx.arc(T1.x, T1.y, 4, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.beginPath();
+                    ctx.arc(T2.x, T2.y, 4, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    contactPoints.push(T1, T2);
+                    
+                    // Draw tangent lines (just short segments)
+                    const tangentLength = 80;
+                    ctx.strokeStyle = '#8E44AD';
+                    ctx.globalAlpha = 0.3;
+                    ctx.lineWidth = 1;
+                    
+                    // Tangent through T1
+                    ctx.beginPath();
+                    ctx.moveTo(T1.x - tangentLength * Math.cos(D_angle), T1.y - tangentLength * Math.sin(D_angle));
+                    ctx.lineTo(T1.x + tangentLength * Math.cos(D_angle), T1.y + tangentLength * Math.sin(D_angle));
+                    ctx.stroke();
+                    
+                    // Tangent through T2
+                    ctx.beginPath();
+                    ctx.moveTo(T2.x - tangentLength * Math.cos(D_angle), T2.y - tangentLength * Math.sin(D_angle));
+                    ctx.lineTo(T2.x + tangentLength * Math.cos(D_angle), T2.y + tangentLength * Math.sin(D_angle));
+                    ctx.stroke();
+                }
+                
+                ctx.globalAlpha = 1;
+                
+                // Show locus of contact points
+                if (contactPoints.length > 0) {
+                    // The locus should be two circles: translation of C by R*perpVec and -R*perpVec
+                    const circle1_center = {x: O.x + R * perpVec.x, y: O.y + R * perpVec.y};
+                    const circle2_center = {x: O.x - R * perpVec.x, y: O.y - R * perpVec.y};
+                    
+                    ctx.strokeStyle = '#E74C3C';
+                    ctx.lineWidth = 3;
+                    ctx.setLineDash([5, 5]);
+                    
+                    // First circle
+                    ctx.beginPath();
+                    ctx.arc(circle1_center.x, circle1_center.y, R, 0, Math.PI * 2);
+                    ctx.stroke();
+                    
+                    // Second circle
+                    ctx.beginPath();
+                    ctx.arc(circle2_center.x, circle2_center.y, R, 0, Math.PI * 2);
+                    ctx.stroke();
+                    
+                    ctx.setLineDash([]);
+                    
+                    ctx.fillStyle = '#E74C3C';
+                    ctx.fillText('Lieu des points de contact', width/2, 30);
+                    ctx.fillText('(deux cercles)', width/2, 50);
+                }
+            }
+        }
+        
+        // Exercise 6 drawing function
+        function drawExercise6Canvas() {
+            const canvas = document.getElementById('exercise6Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Circle C
+            const O = {x: width * 0.5, y: height * 0.5};
+            const R = 120;
+            
+            // Points A and B on circle
+            const angleA = Math.PI/3; // 60 degrees
+            const angleB = 2*Math.PI/3; // 120 degrees
+            
+            const A = {x: O.x + R * Math.cos(angleA), y: O.y + R * Math.sin(angleA)};
+            const B = {x: O.x + R * Math.cos(angleB), y: O.y + R * Math.sin(angleB)};
+            
+            // Draw circle C
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(O.x, O.y, R, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.fillText('C', O.x, O.y - R - 10);
+            
+            // Draw points A and B
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(A.x, A.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillText('A', A.x + 10, A.y - 10);
+            
+            ctx.beginPath();
+            ctx.arc(B.x, B.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillText('B', B.x - 15, B.y - 10);
+            
+            // Draw segment AB
+            ctx.strokeStyle = '#666666';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(A.x, A.y);
+            ctx.lineTo(B.x, B.y);
+            ctx.stroke();
+            
+            // If constructed, show trapezoid
+            if (exerciseStates[6].constructed) {
+                // Find midpoint I of AB
+                const I = {x: (A.x + B.x)/2, y: (A.y + B.y)/2};
+                
+                // Draw I
+                ctx.fillStyle = '#9B59B6';
+                ctx.beginPath();
+                ctx.arc(I.x, I.y, 4, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('I', I.x + 10, I.y);
+                
+                // Line through I parallel to AB (midline)
+                const AB_angle = Math.atan2(B.y - A.y, B.x - A.x);
+                const midlineLength = 150;
+                const midline_start = {x: I.x - midlineLength * Math.cos(AB_angle), y: I.y - midlineLength * Math.sin(AB_angle)};
+                const midline_end = {x: I.x + midlineLength * Math.cos(AB_angle), y: I.y + midlineLength * Math.sin(AB_angle)};
+                
+                ctx.strokeStyle = '#9B59B6';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                ctx.beginPath();
+                ctx.moveTo(midline_start.x, midline_start.y);
+                ctx.lineTo(midline_end.x, midline_end.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // AB length
+                const AB_length = Math.sqrt((B.x - A.x)**2 + (B.y - A.y)**2);
+                const MN_length = AB_length / 2;
+                
+                // Points J and J' on midline at distance AB/4 from I
+                const J = {x: I.x + (AB_length/4) * Math.cos(AB_angle + Math.PI/2), y: I.y + (AB_length/4) * Math.sin(AB_angle + Math.PI/2)};
+                const Jprime = {x: I.x - (AB_length/4) * Math.cos(AB_angle + Math.PI/2), y: I.y - (AB_length/4) * Math.sin(AB_angle + Math.PI/2)};
+                
+                // Draw J and J'
+                ctx.fillStyle = '#3498DB';
+                ctx.beginPath();
+                ctx.arc(J.x, J.y, 4, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('J', J.x + 10, J.y);
+                
+                ctx.beginPath();
+                ctx.arc(Jprime.x, Jprime.y, 4, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('J\'', Jprime.x - 15, Jprime.y);
+                
+                // Lines through J and J' parallel to AB
+                const lineThroughJ_start = {x: J.x - MN_length/2 * Math.cos(AB_angle), y: J.y - MN_length/2 * Math.sin(AB_angle)};
+                const lineThroughJ_end = {x: J.x + MN_length/2 * Math.cos(AB_angle), y: J.y + MN_length/2 * Math.sin(AB_angle)};
+                
+                const lineThroughJprime_start = {x: Jprime.x - MN_length/2 * Math.cos(AB_angle), y: Jprime.y - MN_length/2 * Math.sin(AB_angle)};
+                const lineThroughJprime_end = {x: Jprime.x + MN_length/2 * Math.cos(AB_angle), y: Jprime.y + MN_length/2 * Math.sin(AB_angle)};
+                
+                ctx.strokeStyle = '#3498DB';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                
+                // Line through J
+                ctx.beginPath();
+                ctx.moveTo(lineThroughJ_start.x, lineThroughJ_start.y);
+                ctx.lineTo(lineThroughJ_end.x, lineThroughJ_end.y);
+                ctx.stroke();
+                
+                // Line through J'
+                ctx.beginPath();
+                ctx.moveTo(lineThroughJprime_start.x, lineThroughJprime_start.y);
+                ctx.lineTo(lineThroughJprime_end.x, lineThroughJprime_end.y);
+                ctx.stroke();
+                
+                ctx.setLineDash([]);
+                
+                // Find intersection of these lines with circle C to get M and N
+                // For simplicity, we'll approximate
+                // Actually find points on circle with given y-coordinate (for horizontal-ish AB)
+                
+                // For line through J (above AB)
+                // Find intersection of line y = J.y with circle
+                const dx1 = Math.sqrt(R**2 - (J.y - O.y)**2);
+                const M1 = {x: O.x - dx1, y: J.y};
+                const N1 = {x: O.x + dx1, y: J.y};
+                
+                // For line through J' (below AB)
+                const dx2 = Math.sqrt(R**2 - (Jprime.y - O.y)**2);
+                const M2 = {x: O.x - dx2, y: Jprime.y};
+                const N2 = {x: O.x + dx2, y: Jprime.y};
+                
+                // Choose the pair that gives proper trapezoid (M and N on same side of AB)
+                // Use the pair through J (above AB)
+                const M = M1;
+                const N = N1;
+                
+                // Draw M and N
+                ctx.fillStyle = '#2ECC71';
+                ctx.beginPath();
+                ctx.arc(M.x, M.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('M', M.x - 15, M.y - 10);
+                
+                ctx.beginPath();
+                ctx.arc(N.x, N.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('N', N.x + 10, N.y - 10);
+                
+                // Draw trapezoid ABMN
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(A.x, A.y);
+                ctx.lineTo(B.x, B.y);
+                ctx.lineTo(N.x, N.y);
+                ctx.lineTo(M.x, M.y);
+                ctx.closePath();
+                ctx.stroke();
+                
+                // Verify AB ∥ MN
+                const AB_vec = {x: B.x - A.x, y: B.y - A.y};
+                const MN_vec = {x: N.x - M.x, y: N.y - M.y};
+                const crossProduct = AB_vec.x * MN_vec.y - AB_vec.y * MN_vec.x;
+                
+                // Verify AB = 2MN
+                const actual_MN_length = Math.sqrt((N.x - M.x)**2 + (N.y - M.y)**2);
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = '14px Arial';
+                if (Math.abs(crossProduct) < 5) {
+                    ctx.fillText('AB ∥ MN ✓', width/2, 30);
+                }
+                
+                if (Math.abs(AB_length - 2*actual_MN_length) < 5) {
+                    ctx.fillText(`AB = ${AB_length.toFixed(0)}, MN = ${actual_MN_length.toFixed(0)} ✓`, width/2, 50);
+                }
+            }
+        }
+        
+        // Construction functions for each exercise
+        function constructExercise1() {
+            exerciseStates[1].constructed = true;
+            drawExercise1Canvas();
+        }
+        
+        function constructExercise2() {
+            exerciseStates[2].constructed = true;
+            drawExercise2Canvas();
+        }
+        
+        function constructExercise3() {
+            exerciseStates[3].constructed = true;
+            drawExercise3Canvas();
+        }
+        
+        function constructExercise4() {
+            exerciseStates[4].constructed = true;
+            drawExercise4Canvas();
+        }
+        
+        function constructExercise5() {
+            exerciseStates[5].constructed = true;
+            drawExercise5Canvas();
+        }
+        
+        function constructExercise6() {
+            exerciseStates[6].constructed = true;
+            drawExercise6Canvas();
+        }
+        
+        // Solution toggle function
+        function toggleSolution(problemNumber) {
+            const solution = document.getElementById(`solution${problemNumber}`);
+            const button = solution.previousElementSibling;
+            const currentLang = MHThemeManager ? MHThemeManager.getCurrentLanguage() : 'en';
+            
+            if (solution.style.display === 'block' || solution.style.display === '') {
+                solution.style.display = 'none';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_transl6a.showSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_transl6a.showSolution'];
+                } else {
+                    button.textContent = 'Show Solution';
+                }
+            } else {
+                solution.style.display = 'block';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_transl6a.hideSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_transl6a.hideSolution'];
+                } else {
+                    button.textContent = 'Hide Solution';
+                }
+                
+                // Re-render KaTeX for newly visible equations
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(solution, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\(', right: '\\)', display: false},
+                            {left: '\\[', right: '\\]', display: true}
+                        ],
+                        throwOnError: false
+                    });
+                }
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize KaTeX auto-render
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+
+            // Draw initial canvases
+            drawExercise1Canvas();
+            drawExercise2Canvas();
+            drawExercise3Canvas();
+            drawExercise4Canvas();
+            drawExercise5Canvas();
+            drawExercise6Canvas();
+
+            // Initialize solutions as hidden and set button text
+            const currentLang = MHThemeManager ? MHThemeManager.getCurrentLanguage() : 'en';
+            for (let i = 1; i <= 6; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                const button = solution ? solution.previousElementSibling : null;
+                
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+                
+                // Set initial button text
+                if (button && translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_transl6a.showSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_transl6a.showSolution'];
+                }
+            }
+            
+            // Redraw canvases when theme changes
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    setTimeout(() => {
+                        drawExercise1Canvas();
+                        drawExercise2Canvas();
+                        drawExercise3Canvas();
+                        drawExercise4Canvas();
+                        drawExercise5Canvas();
+                        drawExercise6Canvas();
+                    }, 100);
+                });
+            }
+        });
+    </script>
+
+<!-- Add the service worker registration script -->
+<script>
+    // Register service worker with better error handling
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch(function(error) {
+                console.log('Service Worker registration failed:', error);
+            });
+        });
+    }
+</script>
+
+<!-- Add noscript fallback -->
+<noscript>
+    <style>
+        .MH-header-controls { display: none; }
+        .MH-solution { display: block; }
+        .MH-canvas { border: 2px solid #ccc; background-color: #f9f9f9; }
+    </style>
+    <div class="MH-warning">
+        JavaScript is recommended for the full experience, but content is still accessible.
+    </div>
+</noscript>
+</body>
+</html>

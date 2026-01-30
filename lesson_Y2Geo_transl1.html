@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Geometry - Translation</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#4A90E2" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#8E44AD" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#4A90E2">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    
+    <style>
+        /* Page-specific color palette - Blue + Purple Theme */
+        :root {
+            --primary: #4A90E2;        /* Cornflower Blue */
+            --primary-light: #7BAAF7;  /* Light Blue */
+            --primary-dark: #357ABD;   /* Darker Blue */
+            --secondary: #8E44AD;      /* Dark Purple */
+            --secondary-light: #AF7AC5; /* Light Purple */
+            --secondary-dark: #6C3483;  /* Darker Purple */
+            --accent: #E67E22;
+            --warning: #E74C3C;
+            --info: #2ECC71;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #FFFFFF;
+            --surface: #F8F9FA;
+            --border: #E9ECEF;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        [data-theme="dark"] {
+            --primary: #357ABD;
+            --primary-light: #4A90E2;
+            --primary-dark: #2C3E50;
+            --secondary: #6C3483;
+            --secondary-light: #8E44AD;
+            --secondary-dark: #4A235A;
+            --accent: #D35400;
+            --warning: #C0392B;
+            --info: #27AE60;
+            --text: #FFFFFF;
+            --text-light: #CCCCCC;
+            --background: #121212;
+            --surface: #1E1E1E;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        /* KaTeX styling */
+        .katex { 
+            font-size: 1.1em; 
+        }
+        
+        .katex-display { 
+            margin: 1em 0; 
+            text-align: center;
+        }
+        
+        .katex-display > .katex { 
+            display: inline-block;
+            text-align: center;
+        }
+
+        /* Equation styling */
+        .MH-equation {
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            margin: 0.5em 0;
+            padding: 0;
+            display: inline-block;
+            direction: ltr !important;
+            unicode-bidi: isolate;
+        }
+        
+        [dir="rtl"] .MH-equation {
+            text-align: left;
+            unicode-bidi: plaintext;
+        }
+
+        /* Canvas container styling */
+        .MH-canvas-container {
+            margin: 2em 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .MH-canvas {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background-color: var(--surface);
+            max-width: 100%;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+
+        .MH-canvas-title {
+            font-weight: bold;
+            margin-bottom: 0.5em;
+            color: var(--primary);
+        }
+
+        .MH-canvas-instructions {
+            font-size: 0.9em;
+            color: var(--text-light);
+            margin-top: 0.5em;
+            font-style: italic;
+        }
+
+        /* Geometry specific styling */
+        .MH-construction-step {
+            margin: 1.5em 0;
+            padding: 1em;
+            background-color: var(--surface);
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+        }
+
+        .MH-construction-step h4 {
+            margin-top: 0;
+            color: var(--primary-dark);
+        }
+
+        .MH-vector-notation {
+            font-family: 'KaTeX_Math', 'Cambria Math', serif;
+            font-style: italic;
+            color: var(--secondary);
+        }
+
+        .MH-point-label {
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .MH-transformation-notation {
+            background-color: rgba(78, 144, 226, 0.1);
+            padding: 0.5em;
+            border-radius: 4px;
+            font-family: 'KaTeX_Math', 'Cambria Math', serif;
+            margin: 0.5em 0;
+        }
+
+        /* Responsive canvas */
+        @media (max-width: 768px) {
+            .MH-canvas {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                    <!-- Notification Button -->
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+                        <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Geo_transl1a.title">Translation: Part 1</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y2Geo_transl1a.subtitle">Translation and Planar Transformations</h2>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_transl1a.introduction">Introduction</h2>
+            <p data-i18n="MH.lesson_Y2Geo_transl1a.introText1">Transformations of the plane, including translations, symmetries, and rotations, are fundamental concepts in geometry. They allow us to understand how shapes move and relate to each other in space.</p>
+            <p data-i18n="MH.lesson_Y2Geo_transl1a.introText2">In this lesson, we will explore the concept of applications from the plane to itself, study translations in depth, and learn how to construct and analyze geometric transformations.</p>
+        </section>
+
+        <!-- Initial Problem -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_transl1a.initialProblemTitle">Initial Problem: Parallelograms Analysis</h2>
+            
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_transl1a.initialProblemText">In the opposite figure, ACBD and CEDF are two parallelograms. Among the proposed statements, one or more are correct. Which ones?</p>
+            </div>
+
+            <!-- Diagram 1: Two Parallelograms -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_transl1a.diagram1Title">Figure: Two Parallelograms ACBD and CEDF</div>
+                <canvas id="parallelogramCanvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_transl1a.diagram1Instructions">Points A, B, C, D form parallelogram ACBD. Points C, E, D, F form parallelogram CEDF. Point E is inside quadrilateral AEDF.</div>
+            </div>
+
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl1a.statementsTitle">Statements to Analyze</h3>
+                
+                <div class="MH-exercise-part">
+                    <div class="MH-exercise-statement">
+                        <p data-i18n="MH.lesson_Y2Geo_transl1a.statementA"><strong>a)</strong> The axial symmetry with axis (DC) sends A to B and E to F.</p>
+                        <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                        <div class="MH-solution" id="solution1">
+                            <p data-i18n="MH.lesson_Y2Geo_transl1a.solutionA">TRUE. In parallelogram ACBD, (DC) is the perpendicular bisector of [AB]. Also, in parallelogram CEDF, (DC) is the perpendicular bisector of [EF]. Therefore, the axial symmetry with axis (DC) sends A to B and E to F.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="MH-exercise-part">
+                    <div class="MH-exercise-statement">
+                        <p data-i18n="MH.lesson_Y2Geo_transl1a.statementB"><strong>b)</strong> The central symmetry with center at the midpoint of segment [DC] sends A to B, C to D and E to F.</p>
+                        <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                        <div class="MH-solution" id="solution2">
+                            <p data-i18n="MH.lesson_Y2Geo_transl1a.solutionB">TRUE. The midpoint of [DC] is the center of both parallelograms. For parallelogram ACBD, this point is the midpoint of both diagonals [AB] and [CD]. Similarly for parallelogram CEDF, it's the midpoint of [EF] and [CD]. Therefore, the central symmetry with this center sends A to B, C to D, and E to F.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="MH-exercise-part">
+                    <div class="MH-exercise-statement">
+                        <p data-i18n="MH.lesson_Y2Geo_transl1a.statementC"><strong>c)</strong> The translation with vector AD sends C to B and E to F.</p>
+                        <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                        <div class="MH-solution" id="solution3">
+                            <p data-i18n="MH.lesson_Y2Geo_transl1a.solutionC">FALSE. Let's analyze: The translation with vector AD sends point A to D. In parallelogram ACBD, we have AD = BC (opposite sides are equal and parallel). So the translation with vector AD is equivalent to the translation with vector BC. This translation sends C to B (since C + BC = B). However, for point E: In parallelogram CEDF, we have CE = DF and CE ∥ DF. The translation with vector AD sends C to B, but this doesn't necessarily send E to F. Actually, the translation sending C to B has vector CB, which is not equal to EF. Therefore, the statement is false.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part I: Notion of Application of the Plane in Itself -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_transl1a.part1Title">Part I: Notion of Application of the Plane in Itself</h2>
+            
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_transl1a.part1Intro">An application (or transformation) of the plane is a rule that associates to each point M of the plane exactly one point M' of the plane.</p>
+                <div class="MH-transformation-notation" data-i18n="MH.lesson_Y2Geo_transl1a.notation1">
+                    f: P → P<br>
+                    M ↦ M' = f(M)
+                </div>
+                <p data-i18n="MH.lesson_Y2Geo_transl1a.terminology">M' is called the image of M by f. M is called an antecedent (or preimage) of M' by f.</p>
+            </div>
+
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl1a.activity1Title">Activity 1: Constructing Images</h3>
+                <p data-i18n="MH.lesson_Y2Geo_transl1a.activity1Description">Let A and B be two distinct given points and M a point in the plane.</p>
+                
+                <!-- Diagram 2: Activity 1 Construction -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_transl1a.diagram2Title">Construction: Points A, B, and M</div>
+                    <canvas id="activity1Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_transl1a.diagram2Instructions">Click the buttons below to construct points N, P, and Q step by step.</div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl1a.step1aTitle">1) a) Construct point N symmetric to point M with respect to A.</h4>
+                    <button class="MH-solution-btn" onclick="constructN()" data-i18n="MH.lesson_Y2Geo_transl1a.constructButton">Construct N</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+                    <div class="MH-solution" id="solution4">
+                        <p data-i18n="MH.lesson_Y2Geo_transl1a.step1aSolution">Point N is the symmetric of M with respect to A, so A is the midpoint of segment [MN].</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl1a.equation1a">\(\overrightarrow{MA} = \overrightarrow{AN}\) or \(A = \text{midpoint}(M, N)\)</div>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl1a.step1bTitle">b) Construct point P symmetric to point M with respect to line (AB).</h4>
+                    <button class="MH-solution-btn" onclick="constructP()" data-i18n="MH.lesson_Y2Geo_transl1a.constructButton">Construct P</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(5)">Show Solution</button>
+                    <div class="MH-solution" id="solution5">
+                        <p data-i18n="MH.lesson_Y2Geo_transl1a.step1bSolution">Point P is the reflection of M across line (AB). Line (AB) is the perpendicular bisector of [MP].</p>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl1a.step1cTitle">c) Construct point Q such that \(\overrightarrow{MQ} = \overrightarrow{AB}\).</h4>
+                    <button class="MH-solution-btn" onclick="constructQ()" data-i18n="MH.lesson_Y2Geo_transl1a.constructButton">Construct Q</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(6)">Show Solution</button>
+                    <div class="MH-solution" id="solution6">
+                        <p data-i18n="MH.lesson_Y2Geo_transl1a.step1cSolution">Point Q is obtained by translating M by vector \(\overrightarrow{AB}\).</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl1a.equation1c">\(\overrightarrow{MQ} = \overrightarrow{AB}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl1a.step1cSolution2">This means Q = M + \(\overrightarrow{AB}\).</p>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl1a.step2Title">2) Let C be a point distinct from A. Construct a point C' such that triangle ACC' is equilateral. How many such points C' exist?</h4>
+                    <button class="MH-solution-btn" onclick="constructCPrime()" data-i18n="MH.lesson_Y2Geo_transl1a.constructButton">Construct C'</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(7)">Show Solution</button>
+                    <div class="MH-solution" id="solution7">
+                        <p data-i18n="MH.lesson_Y2Geo_transl1a.step2Solution">There are exactly two points C' such that triangle ACC' is equilateral. They are obtained by rotating point C around A by angles of +60° and -60° (or +60° and +300°).</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl1a.equation2">\(AC' = AC\) and \(\angle CAC' = \pm 60^\circ\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl1a.step2Solution2">The two possible positions are symmetric with respect to line (AC).</p>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl1a.step3Title">3) Let D be a point distinct from B. Construct a point B' such that triangle DBB' is right-angled at B'. How many such points B' exist?</h4>
+                    <button class="MH-solution-btn" onclick="constructBPrime()" data-i18n="MH.lesson_Y2Geo_transl1a.constructButton">Construct B'</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(8)">Show Solution</button>
+                    <div class="MH-solution" id="solution8">
+                        <p data-i18n="MH.lesson_Y2Geo_transl1a.step3Solution">There are infinitely many points B' such that triangle DBB' is right-angled at B'. All such points lie on the circle with diameter [DB] (excluding points D and B themselves).</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl1a.equation3">\(\angle DB'B = 90^\circ\) ⇔ B' lies on circle with diameter [DB]</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl1a.step3Solution2">This is the theorem of the right angle inscribed in a semicircle.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part II: Translations -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_transl1a.part2Title">Part II: Translations</h2>
+            
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_transl1a.part2Intro">A translation is a transformation that moves every point of the plane by the same vector.</p>
+                <div class="MH-transformation-notation" data-i18n="MH.lesson_Y2Geo_transl1a.notation2">
+                    Let \(\vec{u}\) be a vector. The translation of vector \(\vec{u}\) is denoted \(t_{\vec{u}}\):<br>
+                    \(t_{\vec{u}}: P \rightarrow P\)<br>
+                    \(M \mapsto M' = t_{\vec{u}}(M)\) such that \(\overrightarrow{MM'} = \vec{u}\)
+                </div>
+            </div>
+
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl1a.activity2Title">Activity 2: Composition of Central Symmetries</h3>
+                <p data-i18n="MH.lesson_Y2Geo_transl1a.activity2Description">Let I and J be two distinct points in the plane. Let M be a point in the plane, denote by M₁ its image under central symmetry Sᵢ (with center I), and by M' the image of M₁ under central symmetry Sⱼ (with center J).</p>
+                
+                <!-- Diagram 3: Activity 2 Construction -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_transl1a.diagram3Title">Construction: Two Central Symmetries</div>
+                    <canvas id="activity2Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_transl1a.diagram3Instructions">Points I and J are centers of symmetry. Click buttons to construct images step by step.</div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl1a.step2aTitle">1) Let C be a point distinct from I and J.</h4>
+                    <p data-i18n="MH.lesson_Y2Geo_transl1a.step2aQuestion">a) Construct point C' image of point C under the transformation t = Sⱼ ∘ Sᵢ.</p>
+                    <button class="MH-solution-btn" onclick="constructCPrime2()" data-i18n="MH.lesson_Y2Geo_transl1a.constructButton">Construct C'</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(9)">Show Solution</button>
+                    <div class="MH-solution" id="solution9">
+                        <p data-i18n="MH.lesson_Y2Geo_transl1a.step2aSolution">First apply central symmetry with center I to C to get C₁, then apply central symmetry with center J to C₁ to get C'.</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl1a.equation4a">\(C_1 = S_I(C)\) with \(\overrightarrow{CC_1} = 2\overrightarrow{CI}\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl1a.equation4b">\(C' = S_J(C_1)\) with \(\overrightarrow{C_1C'} = 2\overrightarrow{C_1J}\)</div>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <p data-i18n="MH.lesson_Y2Geo_transl1a.step2bQuestion">b) Express \(\overrightarrow{CC'}\) in terms of \(\overrightarrow{IJ}\).</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(10)">Show Solution</button>
+                    <div class="MH-solution" id="solution10">
+                        <p data-i18n="MH.lesson_Y2Geo_transl1a.step2bSolution">From the properties of central symmetry:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl1a.equation5a">\(\overrightarrow{CC_1} = 2\overrightarrow{CI}\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl1a.equation5b">\(\overrightarrow{C_1C'} = 2\overrightarrow{C_1J}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl1a.step2bSolution2">Therefore:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl1a.equation5c">\(\overrightarrow{CC'} = \overrightarrow{CC_1} + \overrightarrow{C_1C'} = 2\overrightarrow{CI} + 2\overrightarrow{C_1J}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl1a.step2bSolution3">But \(\overrightarrow{C_1J} = \overrightarrow{C_1I} + \overrightarrow{IJ} = -\overrightarrow{CI} + \overrightarrow{IJ}\) (since C₁ is symmetric to C with respect to I, so I is the midpoint of [CC₁], thus \(\overrightarrow{C_1I} = -\overrightarrow{CI}\))</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl1a.equation5d">\(\overrightarrow{CC'} = 2\overrightarrow{CI} + 2(-\overrightarrow{CI} + \overrightarrow{IJ}) = 2\overrightarrow{IJ}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl1a.step2bSolution4">Thus \(\overrightarrow{CC'} = 2\overrightarrow{IJ}\).</p>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl1a.step2cTitle">2) a) Construct the image M' of a point M under the transformation t.</h4>
+                    <button class="MH-solution-btn" onclick="constructMPrime()" data-i18n="MH.lesson_Y2Geo_transl1a.constructButton">Construct M'</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(11)">Show Solution</button>
+                    <div class="MH-solution" id="solution11">
+                        <p data-i18n="MH.lesson_Y2Geo_transl1a.step2cSolution">Follow the same process: M₁ = Sᵢ(M), then M' = Sⱼ(M₁).</p>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <p data-i18n="MH.lesson_Y2Geo_transl1a.step2dQuestion">b) Show that \(\overrightarrow{MM'} = \overrightarrow{CC'}\).</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1a.showSolution" onclick="toggleSolution(12)">Show Solution</button>
+                    <div class="MH-solution" id="solution12">
+                        <p data-i18n="MH.lesson_Y2Geo_transl1a.step2dSolution">Using the same reasoning as in part 1(b):</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl1a.equation6a">\(\overrightarrow{MM'} = 2\overrightarrow{IJ}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl1a.step2dSolution2">And we already found \(\overrightarrow{CC'} = 2\overrightarrow{IJ}\). Therefore:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl1a.equation6b">\(\overrightarrow{MM'} = \overrightarrow{CC'}\) for all points M, C</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl1a.step2dSolution3">This shows that t = Sⱼ ∘ Sᵢ is actually a translation of vector \(2\overrightarrow{IJ}\).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_transl1a.summaryTitle">Comprehensive Summary</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl1a.summary1Title">Notion of Application of the Plane in Itself</h3>
+                <p data-i18n="MH.lesson_Y2Geo_transl1a.summary1Text">When we associate to each point M of the plane exactly one point M', we define an application (transformation) of the plane into itself.</p>
+                <div class="MH-transformation-notation" data-i18n="MH.lesson_Y2Geo_transl1a.summaryNotation1">
+                    f: P → P<br>
+                    M ↦ M' = f(M)
+                </div>
+                <p data-i18n="MH.lesson_Y2Geo_transl1a.summary1Text2">M' is called the image of point M by the application f.<br>M is called an antecedent (preimage) of point M' by the application f.</p>
+            </div>
+
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl1a.summary2Title">Translations</h3>
+                <p data-i18n="MH.lesson_Y2Geo_transl1a.summary2Text">Let \(\vec{u}\) be a vector. The application of the plane into itself which associates to each point M the unique point M' such that \(\overrightarrow{MM'} = \vec{u}\) is called the translation of vector \(\vec{u}\). It is denoted \(t_{\vec{u}}\).</p>
+                <div class="MH-transformation-notation" data-i18n="MH.lesson_Y2Geo_transl1a.summaryNotation2">
+                    \(t_{\vec{u}}: P \rightarrow P\)<br>
+                    \(M \mapsto t_{\vec{u}}(M) = M'\)
+                </div>
+                <p data-i18n="MH.lesson_Y2Geo_transl1a.summary2Text2">M' is the image of M by \(t_{\vec{u}}\).</p>
+                <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl1a.summaryEquation">\(t_{\vec{u}}(M) = M' \iff \overrightarrow{MM'} = \vec{u}\)</div>
+                
+                <div class="MH-important">
+                    <h3 data-i18n="MH.lesson_Y2Geo_transl1a.keyPropertyTitle">Key Property</h3>
+                    <p data-i18n="MH.lesson_Y2Geo_transl1a.keyPropertyText">The composition of two central symmetries with centers I and J is a translation of vector \(2\overrightarrow{IJ}\):</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl1a.keyPropertyEquation">\(S_J \circ S_I = t_{2\overrightarrow{IJ}}\)</div>
+                </div>
+            </div>
+            
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl1a.conclusionTitle">Conclusion</h3>
+                <div class="MH-important">
+                    <h3 data-i18n="MH.lesson_Y2Geo_transl1a.keyConceptsTitle">Key Concepts Mastered</h3>
+                    <ul>
+                        <li data-i18n="MH.lesson_Y2Geo_transl1a.concept1">Definition of an application (transformation) of the plane</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl1a.concept2">Construction of images under various transformations</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl1a.concept3">Definition and properties of translations</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl1a.concept4">Vector expression of transformations</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl1a.concept5">Composition of central symmetries equals a translation</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl1a.concept6">Analysis of geometric configurations involving transformations</li>
+                    </ul>
+                </div>
+                <p data-i18n="MH.lesson_Y2Geo_transl1a.finalThought">Transformations of the plane are powerful tools for analyzing geometric figures and their properties. Understanding translations and symmetries helps us recognize patterns, prove geometric theorems, and solve complex problems in a systematic way.</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+    
+    <script>
+        // GEOMETRY LESSON TRANSLATIONS
+        const geometryTranslations = {
+            'en': {
+                // General translations
+                'MH.general.homeTooltip': 'Go to Homepage',
+                'MH.general.install': 'Install App',
+                'MH.general.installSuccess': 'Mathematics Hub installed successfully!',
+                'MH.general.enableNotifications': 'Enable Notifications',
+                'MH.general.notificationEnabled': 'Notifications enabled! You will now receive updates.',
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Theme',
+                'MH.general.language': 'Language',
+'MH.lesson_Y2Geo_transl1a.showSolution': 'Show Solution',
+'MH.lesson_Y2Geo_transl1a.hideSolution': 'Hide Solution',
+                
+                // Geometry lesson specific translations
+                'MH.lesson_Y2Geo_transl1a.title': 'Translation: Part 1',
+                'MH.lesson_Y2Geo_transl1a.subtitle': 'Translation and Planar Transformations',
+                'MH.lesson_Y2Geo_transl1a.introduction': 'Introduction',
+                'MH.lesson_Y2Geo_transl1a.introText1': 'Transformations of the plane, including translations, symmetries, and rotations, are fundamental concepts in geometry. They allow us to understand how shapes move and relate to each other in space.',
+                'MH.lesson_Y2Geo_transl1a.introText2': 'In this lesson, we will explore the concept of applications from the plane to itself, study translations in depth, and learn how to construct and analyze geometric transformations.',
+                
+                // Initial Problem
+                'MH.lesson_Y2Geo_transl1a.initialProblemTitle': 'Initial Problem: Parallelograms Analysis',
+                'MH.lesson_Y2Geo_transl1a.initialProblemText': 'In the opposite figure, ACBD and CEDF are two parallelograms. Among the proposed statements, one or more are correct. Which ones?',
+                'MH.lesson_Y2Geo_transl1a.diagram1Title': 'Figure: Two Parallelograms ACBD and CEDF',
+                'MH.lesson_Y2Geo_transl1a.diagram1Instructions': 'Points A, B, C, D form parallelogram ACBD. Points C, E, D, F form parallelogram CEDF. Point E is inside quadrilateral AEDF.',
+                
+                // Statements
+                'MH.lesson_Y2Geo_transl1a.statementsTitle': 'Statements to Analyze',
+                'MH.lesson_Y2Geo_transl1a.statementA': String.raw`<strong>a)</strong> The axial symmetry with axis (DC) sends A to B and E to F.`,
+                'MH.lesson_Y2Geo_transl1a.statementB': String.raw`<strong>b)</strong> The central symmetry with center at the midpoint of segment [DC] sends A to B, C to D and E to F.`,
+                'MH.lesson_Y2Geo_transl1a.statementC': String.raw`<strong>c)</strong> The translation with vector AD sends C to B and E to F.`,
+                
+                // Solutions for statements
+                'MH.lesson_Y2Geo_transl1a.solutionA': 'TRUE. In parallelogram ACBD, (DC) is the perpendicular bisector of [AB]. Also, in parallelogram CEDF, (DC) is the perpendicular bisector of [EF]. Therefore, the axial symmetry with axis (DC) sends A to B and E to F.',
+                'MH.lesson_Y2Geo_transl1a.solutionB': 'TRUE. The midpoint of [DC] is the center of both parallelograms. For parallelogram ACBD, this point is the midpoint of both diagonals [AB] and [CD]. Similarly for parallelogram CEDF, it\'s the midpoint of [EF] and [CD]. Therefore, the central symmetry with this center sends A to B, C to D, and E to F.',
+                'MH.lesson_Y2Geo_transl1a.solutionC': 'FALSE. Let\'s analyze: The translation with vector AD sends point A to D. In parallelogram ACBD, we have AD = BC (opposite sides are equal and parallel). So the translation with vector AD is equivalent to the translation with vector BC. This translation sends C to B (since C + BC = B). However, for point E: In parallelogram CEDF, we have CE = DF and CE ∥ DF. The translation with vector AD sends C to B, but this doesn\'t necessarily send E to F. Actually, the translation sending C to B has vector CB, which is not equal to EF. Therefore, the statement is false.',
+                
+                // Part I
+                'MH.lesson_Y2Geo_transl1a.part1Title': 'Part I: Notion of Application of the Plane in Itself',
+                'MH.lesson_Y2Geo_transl1a.part1Intro': 'An application (or transformation) of the plane is a rule that associates to each point M of the plane exactly one point M\' of the plane.',
+                'MH.lesson_Y2Geo_transl1a.notation1': String.raw`f: P → P<br>M ↦ M' = f(M)`,
+                'MH.lesson_Y2Geo_transl1a.terminology': 'M\' is called the image of M by f. M is called an antecedent (or preimage) of M\' by f.',
+                
+                // Activity 1
+                'MH.lesson_Y2Geo_transl1a.activity1Title': 'Activity 1: Constructing Images',
+                'MH.lesson_Y2Geo_transl1a.activity1Description': 'Let A and B be two distinct given points and M a point in the plane.',
+                'MH.lesson_Y2Geo_transl1a.diagram2Title': 'Construction: Points A, B, and M',
+                'MH.lesson_Y2Geo_transl1a.diagram2Instructions': 'Click the buttons below to construct points N, P, and Q step by step.',
+                'MH.lesson_Y2Geo_transl1a.step1aTitle': '1) a) Construct point N symmetric to point M with respect to A.',
+                'MH.lesson_Y2Geo_transl1a.step1bTitle': 'b) Construct point P symmetric to point M with respect to line (AB).',
+                'MH.lesson_Y2Geo_transl1a.step1cTitle': String.raw`c) Construct point Q such that \(\overrightarrow{MQ} = \overrightarrow{AB}\).`,
+                'MH.lesson_Y2Geo_transl1a.step2Title': '2) Let C be a point distinct from A. Construct a point C\' such that triangle ACC\' is equilateral. How many such points C\' exist?',
+                'MH.lesson_Y2Geo_transl1a.step3Title': '3) Let D be a point distinct from B. Construct a point B\' such that triangle DBB\' is right-angled at B\'. How many such points B\' exist?',
+                
+                // Activity 1 Solutions
+                'MH.lesson_Y2Geo_transl1a.constructButton': 'Construct',
+                'MH.lesson_Y2Geo_transl1a.step1aSolution': 'Point N is the symmetric of M with respect to A, so A is the midpoint of segment [MN].',
+                'MH.lesson_Y2Geo_transl1a.equation1a': String.raw`\(\overrightarrow{MA} = \overrightarrow{AN}\) or \(A = \text{midpoint}(M, N)\)`,
+                'MH.lesson_Y2Geo_transl1a.step1bSolution': 'Point P is the reflection of M across line (AB). Line (AB) is the perpendicular bisector of [MP].',
+                'MH.lesson_Y2Geo_transl1a.step1cSolution': String.raw`Point Q is obtained by translating M by vector \(\overrightarrow{AB}\).`,
+                'MH.lesson_Y2Geo_transl1a.equation1c': String.raw`\(\overrightarrow{MQ} = \overrightarrow{AB}\)`,
+                'MH.lesson_Y2Geo_transl1a.step1cSolution2': String.raw`This means Q = M + \(\overrightarrow{AB}\).`,
+                'MH.lesson_Y2Geo_transl1a.step2Solution': 'There are exactly two points C\' such that triangle ACC\' is equilateral. They are obtained by rotating point C around A by angles of +60° and -60° (or +60° and +300°).',
+                'MH.lesson_Y2Geo_transl1a.equation2': String.raw`\(AC' = AC\) and \(\angle CAC' = \pm 60^\circ\)`,
+                'MH.lesson_Y2Geo_transl1a.step2Solution2': 'The two possible positions are symmetric with respect to line (AC).',
+                'MH.lesson_Y2Geo_transl1a.step3Solution': 'There are infinitely many points B\' such that triangle DBB\' is right-angled at B\'. All such points lie on the circle with diameter [DB] (excluding points D and B themselves).',
+                'MH.lesson_Y2Geo_transl1a.equation3': String.raw`\(\angle DB'B = 90^\circ\) ⇔ B' lies on circle with diameter [DB]`,
+                'MH.lesson_Y2Geo_transl1a.step3Solution2': 'This is the theorem of the right angle inscribed in a semicircle.',
+                
+                // Part II
+                'MH.lesson_Y2Geo_transl1a.part2Title': 'Part II: Translations',
+                'MH.lesson_Y2Geo_transl1a.part2Intro': 'A translation is a transformation that moves every point of the plane by the same vector.',
+                'MH.lesson_Y2Geo_transl1a.notation2': String.raw`Let \(\vec{u}\) be a vector. The translation of vector \(\vec{u}\) is denoted \(t_{\vec{u}}\):<br>\(t_{\vec{u}}: P \rightarrow P\)<br>\(M \mapsto M' = t_{\vec{u}}(M)\) such that \(\overrightarrow{MM'} = \vec{u}\)`,
+                
+                // Activity 2
+                'MH.lesson_Y2Geo_transl1a.activity2Title': 'Activity 2: Composition of Central Symmetries',
+                'MH.lesson_Y2Geo_transl1a.activity2Description': 'Let I and J be two distinct points in the plane. Let M be a point in the plane, denote by M₁ its image under central symmetry Sᵢ (with center I), and by M\' the image of M₁ under central symmetry Sⱼ (with center J).',
+                'MH.lesson_Y2Geo_transl1a.diagram3Title': 'Construction: Two Central Symmetries',
+                'MH.lesson_Y2Geo_transl1a.diagram3Instructions': 'Points I and J are centers of symmetry. Click buttons to construct images step by step.',
+                'MH.lesson_Y2Geo_transl1a.step2aTitle': '1) Let C be a point distinct from I and J.',
+                'MH.lesson_Y2Geo_transl1a.step2aQuestion': 'a) Construct point C\' image of point C under the transformation t = Sⱼ ∘ Sᵢ.',
+                'MH.lesson_Y2Geo_transl1a.step2bQuestion': String.raw`b) Express \(\overrightarrow{CC'}\) in terms of \(\overrightarrow{IJ}\).`,
+                'MH.lesson_Y2Geo_transl1a.step2cTitle': '2) a) Construct the image M\' of a point M under the transformation t.',
+                'MH.lesson_Y2Geo_transl1a.step2dQuestion': String.raw`b) Show that \(\overrightarrow{MM'} = \overrightarrow{CC'}\).`,
+                
+                // Activity 2 Solutions
+                'MH.lesson_Y2Geo_transl1a.step2aSolution': 'First apply central symmetry with center I to C to get C₁, then apply central symmetry with center J to C₁ to get C\'.',
+                'MH.lesson_Y2Geo_transl1a.equation4a': String.raw`\(C_1 = S_I(C)\) with \(\overrightarrow{CC_1} = 2\overrightarrow{CI}\)`,
+                'MH.lesson_Y2Geo_transl1a.equation4b': String.raw`\(C' = S_J(C_1)\) with \(\overrightarrow{C_1C'} = 2\overrightarrow{C_1J}\)`,
+                'MH.lesson_Y2Geo_transl1a.step2bSolution': 'From the properties of central symmetry:',
+                'MH.lesson_Y2Geo_transl1a.equation5a': String.raw`\(\overrightarrow{CC_1} = 2\overrightarrow{CI}\)`,
+                'MH.lesson_Y2Geo_transl1a.equation5b': String.raw`\(\overrightarrow{C_1C'} = 2\overrightarrow{C_1J}\)`,
+                'MH.lesson_Y2Geo_transl1a.step2bSolution2': 'Therefore:',
+                'MH.lesson_Y2Geo_transl1a.equation5c': String.raw`\(\overrightarrow{CC'} = \overrightarrow{CC_1} + \overrightarrow{C_1C'} = 2\overrightarrow{CI} + 2\overrightarrow{C_1J}\)`,
+                'MH.lesson_Y2Geo_transl1a.step2bSolution3': String.raw`But \(\overrightarrow{C_1J} = \overrightarrow{C_1I} + \overrightarrow{IJ} = -\overrightarrow{CI} + \overrightarrow{IJ}\) (since C₁ is symmetric to C with respect to I, so I is the midpoint of [CC₁], thus \(\overrightarrow{C_1I} = -\overrightarrow{CI}\))`,
+                'MH.lesson_Y2Geo_transl1a.equation5d': String.raw`\(\overrightarrow{CC'} = 2\overrightarrow{CI} + 2(-\overrightarrow{CI} + \overrightarrow{IJ}) = 2\overrightarrow{IJ}\)`,
+                'MH.lesson_Y2Geo_transl1a.step2bSolution4': String.raw`Thus \(\overrightarrow{CC'} = 2\overrightarrow{IJ}\).`,
+                'MH.lesson_Y2Geo_transl1a.step2cSolution': 'Follow the same process: M₁ = Sᵢ(M), then M\' = Sⱼ(M₁).',
+                'MH.lesson_Y2Geo_transl1a.step2dSolution': 'Using the same reasoning as in part 1(b):',
+                'MH.lesson_Y2Geo_transl1a.equation6a': String.raw`\(\overrightarrow{MM'} = 2\overrightarrow{IJ}\)`,
+                'MH.lesson_Y2Geo_transl1a.step2dSolution2': String.raw`And we already found \(\overrightarrow{CC'} = 2\overrightarrow{IJ}\). Therefore:`,
+                'MH.lesson_Y2Geo_transl1a.equation6b': String.raw`\(\overrightarrow{MM'} = \overrightarrow{CC'}\) for all points M, C`,
+                'MH.lesson_Y2Geo_transl1a.step2dSolution3': String.raw`This shows that t = Sⱼ ∘ Sᵢ is actually a translation of vector \(2\overrightarrow{IJ}\).`,
+                
+                // Summary
+                'MH.lesson_Y2Geo_transl1a.summaryTitle': 'Comprehensive Summary',
+                'MH.lesson_Y2Geo_transl1a.summary1Title': 'Notion of Application of the Plane in Itself',
+                'MH.lesson_Y2Geo_transl1a.summary1Text': 'When we associate to each point M of the plane exactly one point M\', we define an application (transformation) of the plane into itself.',
+                'MH.lesson_Y2Geo_transl1a.summaryNotation1': String.raw`f: P → P<br>M ↦ M' = f(M)`,
+                'MH.lesson_Y2Geo_transl1a.summary1Text2': 'M\' is called the image of point M by the application f.<br>M is called an antecedent (preimage) of point M\' by the application f.',
+                'MH.lesson_Y2Geo_transl1a.summary2Title': 'Translations',
+                'MH.lesson_Y2Geo_transl1a.summary2Text': String.raw`Let \(\vec{u}\) be a vector. The application of the plane into itself which associates to each point M the unique point M' such that \(\overrightarrow{MM'} = \vec{u}\) is called the translation of vector \(\vec{u}\). It is denoted \(t_{\vec{u}}\).`,
+                'MH.lesson_Y2Geo_transl1a.summaryNotation2': String.raw`\(t_{\vec{u}}: P \rightarrow P\)<br>\(M \mapsto t_{\vec{u}}(M) = M'\)`,
+    'MH.lesson_Y2Geo_transl1a.summary2Text2': String.raw`M' is the image of M by \(t_{\vec{u}}\).`,
+                'MH.lesson_Y2Geo_transl1a.summaryEquation': String.raw`\(t_{\vec{u}}(M) = M' \iff \overrightarrow{MM'} = \vec{u}\)`,
+                'MH.lesson_Y2Geo_transl1a.keyPropertyTitle': 'Key Property',
+                'MH.lesson_Y2Geo_transl1a.keyPropertyText': String.raw`The composition of two central symmetries with centers I and J is a translation of vector \(2\overrightarrow{IJ}\):`,
+                'MH.lesson_Y2Geo_transl1a.keyPropertyEquation': String.raw`\(S_J \circ S_I = t_{2\overrightarrow{IJ}}\)`,
+                'MH.lesson_Y2Geo_transl1a.conclusionTitle': 'Conclusion',
+                'MH.lesson_Y2Geo_transl1a.keyConceptsTitle': 'Key Concepts Mastered',
+                'MH.lesson_Y2Geo_transl1a.concept1': 'Definition of an application (transformation) of the plane',
+                'MH.lesson_Y2Geo_transl1a.concept2': 'Construction of images under various transformations',
+                'MH.lesson_Y2Geo_transl1a.concept3': 'Definition and properties of translations',
+                'MH.lesson_Y2Geo_transl1a.concept4': 'Vector expression of transformations',
+                'MH.lesson_Y2Geo_transl1a.concept5': 'Composition of central symmetries equals a translation',
+                'MH.lesson_Y2Geo_transl1a.concept6': 'Analysis of geometric configurations involving transformations',
+                'MH.lesson_Y2Geo_transl1a.finalThought': 'Transformations of the plane are powerful tools for analyzing geometric figures and their properties. Understanding translations and symmetries helps us recognize patterns, prove geometric theorems, and solve complex problems in a systematic way.',
+                
+                // Footer
+                'MH.footer.developer': 'Developer',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Links',
+                'MH.footer.terms': 'Terms of Use',
+                'MH.footer.privacy': 'Privacy Policy'
+            },
+            'ar': {
+    // ترجمات عامة
+    'MH.general.homeTooltip': 'الذهاب إلى الصفحة الرئيسية',
+    'MH.general.install': 'تثبيت التطبيق',
+    'MH.general.installSuccess': 'تم تثبيت Mathematics Hub بنجاح!',
+    'MH.general.enableNotifications': 'تفعيل الإشعارات',
+    'MH.general.notificationEnabled': 'تم تفعيل الإشعارات! ستتلقى التحديثات الآن.',
+    'MH.general.title': 'مركز الرياضيات',
+    'MH.general.theme': 'السمة',
+    'MH.general.language': 'اللغة',
+'MH.lesson_Y2Geo_transl1a.showSolution': 'إظهار الحل',
+'MH.lesson_Y2Geo_transl1a.hideSolution': 'إخفاء الحل',
+    
+    // ترجمات درس الهندسة
+    'MH.lesson_Y2Geo_transl1a.title': 'الإنسحاب: الجزء 1',
+    'MH.lesson_Y2Geo_transl1a.subtitle': 'الانسحاب وتحويلات المستوى',
+    'MH.lesson_Y2Geo_transl1a.introduction': 'المقدمة',
+    'MH.lesson_Y2Geo_transl1a.introText1': 'تحويلات المستوى، بما في ذلك الانسحابات والتناظرات والدورات، هي مفاهيم أساسية في الهندسة. تتيح لنا فهم كيفية تحرك الأشكال وعلاقتها ببعضها في الفضاء.',
+    'MH.lesson_Y2Geo_transl1a.introText2': 'في هذا الدرس، سنستكشف مفهوم التطبيقات من المستوى إلى نفسه، وندرس الانسحاب بعمق، ونتعلم كيفية بناء وتحليل التحويلات الهندسية.',
+    
+    // المسألة الأولية
+    'MH.lesson_Y2Geo_transl1a.initialProblemTitle': 'المسألة الأولية: تحليل متوازيات الأضلاع',
+    'MH.lesson_Y2Geo_transl1a.initialProblemText': 'في الشكل المقابل، ACBD و CEDF هما متوازيا أضلاع. من بين العبارات المقترحة، واحدة أو أكثر صحيحة. أيها؟',
+    'MH.lesson_Y2Geo_transl1a.diagram1Title': 'الشكل: متوازيا الأضلاع ACBD و CEDF',
+    'MH.lesson_Y2Geo_transl1a.diagram1Instructions': 'النقاط A، B، C، D تشكل متوازي الأضلاع ACBD. النقاط C، E، D، F تشكل متوازي الأضلاع CEDF. النقطة E داخل الرباعي AEDF.',
+    
+    // العبارات
+    'MH.lesson_Y2Geo_transl1a.statementsTitle': 'عبارات للتحليل',
+    'MH.lesson_Y2Geo_transl1a.statementA': String.raw`<strong>أ)</strong> التناظر المحوري ذو المحور (DC) يرسل A إلى B و E إلى F.`,
+    'MH.lesson_Y2Geo_transl1a.statementB': String.raw`<strong>ب)</strong> التناظر المركزي ذو المركز في منتصف القطعة [DC] يرسل A إلى B و C إلى D و E إلى F.`,
+    'MH.lesson_Y2Geo_transl1a.statementC': String.raw`<strong>ج)</strong> الانسحاب بمتجه AD يرسل C إلى B و E إلى F.`,
+    
+    // حلول العبارات
+    'MH.lesson_Y2Geo_transl1a.solutionA': 'صحيح. في متوازي الأضلاع ACBD، (DC) هو المنصف العمودي للقطعة [AB]. أيضًا، في متوازي الأضلاع CEDF، (DC) هو المنصف العمودي للقطعة [EF]. لذلك، التناظر المحوري ذو المحور (DC) يرسل A إلى B و E إلى F.',
+    'MH.lesson_Y2Geo_transl1a.solutionB': 'صحيح. منتصف القطعة [DC] هو مركز كل من متوازيي الأضلاع. بالنسبة لمتوازي الأضلاع ACBD، هذه النقطة هي منتصف القطرين [AB] و [CD]. وبالمثل بالنسبة لمتوازي الأضلاع CEDF، هي منتصف [EF] و [CD]. لذلك، التناظر المركزي بهذا المركز يرسل A إلى B و C إلى D و E إلى F.',
+    'MH.lesson_Y2Geo_transl1a.solutionC': 'خطأ. دعنا نحلل: الانسحاب بمتجه AD يرسل النقطة A إلى D. في متوازي الأضلاع ACBD، لدينا AD = BC (الأضلاع المتقابلة متساوية ومتوازية). لذا الانسحاب بمتجه AD يعادل الانسحاب بمتجه BC. هذا الانسحاب يرسل C إلى B (لأن C + BC = B). لكن بالنسبة للنقطة E: في متوازي الأضلاع CEDF، لدينا CE = DF و CE ∥ DF. الانسحاب بمتجه AD يرسل C إلى B، لكن هذا لا يرسل بالضرورة E إلى F. في الواقع، الانسحاب الذي يرسل C إلى B له المتجه CB، الذي لا يساوي EF. لذلك، العبارة خاطئة.',
+    
+    // الجزء الأول
+    'MH.lesson_Y2Geo_transl1a.part1Title': 'الجزء الأول: مفهوم تطبيق المستوى في نفسه',
+    'MH.lesson_Y2Geo_transl1a.part1Intro': 'التطبيق (أو التحويل) للمستوى هو قاعدة تربط لكل نقطة M من المستوى نقطة واحدة بالضبط M\' من المستوى.',
+    'MH.lesson_Y2Geo_transl1a.notation1': String.raw`f: P → P<br>M ↦ M' = f(M)`,
+    'MH.lesson_Y2Geo_transl1a.terminology': 'تُسمى M\' صورة النقطة M بالتطبيق f. تُسمى النقطة M سابقة (أو صورة عكسية) للنقطة M\' بالتطبيق f.',
+    
+    // النشاط 1
+    'MH.lesson_Y2Geo_transl1a.activity1Title': 'النشاط 1: بناء الصور',
+    'MH.lesson_Y2Geo_transl1a.activity1Description': 'لتكن A و B نقطتين مختلفتين معطاتين و M نقطة في المستوى.',
+    'MH.lesson_Y2Geo_transl1a.diagram2Title': 'البناء: النقاط A، B، و M',
+    'MH.lesson_Y2Geo_transl1a.diagram2Instructions': 'انقر على الأزرار أدناه لبناء النقاط N، P، و Q خطوة بخطوة.',
+    'MH.lesson_Y2Geo_transl1a.step1aTitle': '1) أ) ابنِ النقطة N المتناظرة مع النقطة M بالنسبة إلى A.',
+    'MH.lesson_Y2Geo_transl1a.step1bTitle': 'ب) ابنِ النقطة P المتناظرة مع النقطة M بالنسبة للخط (AB).',
+    'MH.lesson_Y2Geo_transl1a.step1cTitle': String.raw`ج) ابنِ النقطة Q بحيث \(\overrightarrow{MQ} = \overrightarrow{AB}\).`,
+    'MH.lesson_Y2Geo_transl1a.step2Title': '2) لتكن C نقطة مختلفة عن A. ابنِ نقطة C\' بحيث يكون المثلث ACC\' متساوي الأضلاع. كم نقطة C\' موجودة؟',
+    'MH.lesson_Y2Geo_transl1a.step3Title': '3) لتكن D نقطة مختلفة عن B. ابنِ نقطة B\' بحيث يكون المثلث DBB\' قائمًا في B\'. كم نقطة B\' موجودة؟',
+    
+    // حلول النشاط 1
+    'MH.lesson_Y2Geo_transl1a.constructButton': 'ابنِ',
+    'MH.lesson_Y2Geo_transl1a.step1aSolution': 'النقطة N متناظرة مع M بالنسبة إلى A، لذا A هي منتصف القطعة [MN].',
+    'MH.lesson_Y2Geo_transl1a.equation1a': String.raw`\(\overrightarrow{MA} = \overrightarrow{AN}\) أو \(A = \text{منتصف}(M, N)\)`,
+    'MH.lesson_Y2Geo_transl1a.step1bSolution': 'النقطة P هي انعكاس M عبر الخط (AB). الخط (AB) هو المنصف العمودي للقطعة [MP].',
+    'MH.lesson_Y2Geo_transl1a.step1cSolution': String.raw`النقطة Q تُحصل عليها بترجمة M بمتجه \(\overrightarrow{AB}\).`,
+    'MH.lesson_Y2Geo_transl1a.equation1c': String.raw`\(\overrightarrow{MQ} = \overrightarrow{AB}\)`,
+    'MH.lesson_Y2Geo_transl1a.step1cSolution2': String.raw`هذا يعني Q = M + \(\overrightarrow{AB}\).`,
+    'MH.lesson_Y2Geo_transl1a.step2Solution': 'هناك نقطتان بالضبط C\' بحيث يكون المثلث ACC\' متساوي الأضلاع. تُحصلان بتدوير النقطة C حول A بزوايا +60° و -60° (أو +60° و +300°).',
+    'MH.lesson_Y2Geo_transl1a.equation2': String.raw`\(AC' = AC\) و \(\angle CAC' = \pm 60^\circ\)`,
+    'MH.lesson_Y2Geo_transl1a.step2Solution2': 'الموقعان المحتملان متناظران بالنسبة للخط (AC).',
+    'MH.lesson_Y2Geo_transl1a.step3Solution': 'هناك عدد لا نهائي من النقاط B\' بحيث يكون المثلث DBB\' قائمًا في B\'. كل هذه النقاط تقع على الدائرة التي قطرها [DB] (باستثناء النقطتين D و B نفسيهما).',
+    'MH.lesson_Y2Geo_transl1a.equation3': String.raw`\(\angle DB'B = 90^\circ\) ⇔ B' تقع على دائرة قطرها [DB]`,
+    'MH.lesson_Y2Geo_transl1a.step3Solution2': 'هذه هي نظرية الزاوية القائمة المحيطية في نصف دائرة.',
+    
+    // الجزء الثاني
+    'MH.lesson_Y2Geo_transl1a.part2Title': 'الجزء الثاني: الانسحابات',
+    'MH.lesson_Y2Geo_transl1a.part2Intro': 'الانسحاب هو تحويل يحرك كل نقطة من المستوى بنفس المتجه.',
+    'MH.lesson_Y2Geo_transl1a.notation2': String.raw`ليكن \(\vec{u}\) متجهًا. يُرمز للانسحاب بمتجه \(\vec{u}\) بـ \(t_{\vec{u}}\):<br>\(t_{\vec{u}}: P \rightarrow P\)<br>\(M \mapsto M' = t_{\vec{u}}(M)\) بحيث \(\overrightarrow{MM'} = \vec{u}\)`,
+    
+    // النشاط 2
+    'MH.lesson_Y2Geo_transl1a.activity2Title': 'النشاط 2: تركيب تناظرين مركزيين',
+    'MH.lesson_Y2Geo_transl1a.activity2Description': 'لتكن I و J نقطتين مختلفتين في المستوى. لتكن M نقطة في المستوى، نرمز بـ M₁ لصورتها تحت التناظر المركزي Sᵢ (بمركز I)، وبـ M\' لصورة M₁ تحت التناظر المركزي Sⱼ (بمركز J).',
+    'MH.lesson_Y2Geo_transl1a.diagram3Title': 'البناء: تناظران مركزيان',
+    'MH.lesson_Y2Geo_transl1a.diagram3Instructions': 'النقطتان I و J مركزي تناظر. انقر على الأزرار لبناء الصور خطوة بخطوة.',
+    'MH.lesson_Y2Geo_transl1a.step2aTitle': '1) لتكن C نقطة مختلفة عن I و J.',
+    'MH.lesson_Y2Geo_transl1a.step2aQuestion': 'أ) ابنِ النقطة C\' صورة النقطة C تحت التحويل t = Sⱼ ∘ Sᵢ.',
+    'MH.lesson_Y2Geo_transl1a.step2bQuestion': String.raw`ب) عبّر عن \(\overrightarrow{CC'}\) بدلالة \(\overrightarrow{IJ}\).`,
+    'MH.lesson_Y2Geo_transl1a.step2cTitle': '2) أ) ابنِ الصورة M\' لنقطة M تحت التحويل t.',
+    'MH.lesson_Y2Geo_transl1a.step2dQuestion': String.raw`ب) أظهر أن \(\overrightarrow{MM'} = \overrightarrow{CC'}\).`,
+    
+    // حلول النشاط 2
+    'MH.lesson_Y2Geo_transl1a.step2aSolution': 'أولاً طبق التناظر المركزي ذو المركز I على C لتحصل على C₁، ثم طبق التناظر المركزي ذو المركز J على C₁ لتحصل على C\'.',
+    'MH.lesson_Y2Geo_transl1a.equation4a': String.raw`\(C_1 = S_I(C)\) مع \(\overrightarrow{CC_1} = 2\overrightarrow{CI}\)`,
+    'MH.lesson_Y2Geo_transl1a.equation4b': String.raw`\(C' = S_J(C_1)\) مع \(\overrightarrow{C_1C'} = 2\overrightarrow{C_1J}\)`,
+    'MH.lesson_Y2Geo_transl1a.step2bSolution': 'من خصائص التناظر المركزي:',
+    'MH.lesson_Y2Geo_transl1a.equation5a': String.raw`\(\overrightarrow{CC_1} = 2\overrightarrow{CI}\)`,
+    'MH.lesson_Y2Geo_transl1a.equation5b': String.raw`\(\overrightarrow{C_1C'} = 2\overrightarrow{C_1J}\)`,
+    'MH.lesson_Y2Geo_transl1a.step2bSolution2': 'لذلك:',
+    'MH.lesson_Y2Geo_transl1a.equation5c': String.raw`\(\overrightarrow{CC'} = \overrightarrow{CC_1} + \overrightarrow{C_1C'} = 2\overrightarrow{CI} + 2\overrightarrow{C_1J}\)`,
+    'MH.lesson_Y2Geo_transl1a.step2bSolution3': String.raw`لكن \(\overrightarrow{C_1J} = \overrightarrow{C_1I} + \overrightarrow{IJ} = -\overrightarrow{CI} + \overrightarrow{IJ}\) (بما أن C₁ متناظرة مع C بالنسبة إلى I، إذن I هي منتصف [CC₁]، وبالتالي \(\overrightarrow{C_1I} = -\overrightarrow{CI}\))`,
+    'MH.lesson_Y2Geo_transl1a.equation5d': String.raw`\(\overrightarrow{CC'} = 2\overrightarrow{CI} + 2(-\overrightarrow{CI} + \overrightarrow{IJ}) = 2\overrightarrow{IJ}\)`,
+    'MH.lesson_Y2Geo_transl1a.step2bSolution4': String.raw`إذن \(\overrightarrow{CC'} = 2\overrightarrow{IJ}\).`,
+    'MH.lesson_Y2Geo_transl1a.step2cSolution': 'اتبع نفس العملية: M₁ = Sᵢ(M)، ثم M\' = Sⱼ(M₁).',
+    'MH.lesson_Y2Geo_transl1a.step2dSolution': 'باستخدام نفس المنطق كما في الجزء 1(ب):',
+    'MH.lesson_Y2Geo_transl1a.equation6a': String.raw`\(\overrightarrow{MM'} = 2\overrightarrow{IJ}\)`,
+    'MH.lesson_Y2Geo_transl1a.step2dSolution2': String.raw`وقد وجدنا سابقًا \(\overrightarrow{CC'} = 2\overrightarrow{IJ}\). لذلك:`,
+    'MH.lesson_Y2Geo_transl1a.equation6b': String.raw`\(\overrightarrow{MM'} = \overrightarrow{CC'}\) لكل النقاط M, C`,
+    'MH.lesson_Y2Geo_transl1a.step2dSolution3': String.raw`هذا يظهر أن t = Sⱼ ∘ Sᵢ هو في الواقع انسحاب بمتجه \(2\overrightarrow{IJ}\).`,
+    
+    // الملخص
+    'MH.lesson_Y2Geo_transl1a.summaryTitle': 'ملخص شامل',
+    'MH.lesson_Y2Geo_transl1a.summary1Title': 'مفهوم تطبيق المستوى في نفسه',
+    'MH.lesson_Y2Geo_transl1a.summary1Text': 'عندما نربط لكل نقطة M من المستوى نقطة واحدة بالضبط M\'، نعرّف تطبيقًا (تحويلًا) للمستوى في نفسه.',
+    'MH.lesson_Y2Geo_transl1a.summaryNotation1': String.raw`f: P → P<br>M ↦ M' = f(M)`,
+    'MH.lesson_Y2Geo_transl1a.summary1Text2': 'تُسمى M\' صورة النقطة M بالتطبيق f.<br>تُسمى النقطة M سابقة (صورة عكسية) للنقطة M\' بالتطبيق f.',
+    'MH.lesson_Y2Geo_transl1a.summary2Title': 'الانسحابات',
+    'MH.lesson_Y2Geo_transl1a.summary2Text': String.raw`ليكن \(\vec{u}\) متجهًا. التطبيق الذي يربط لكل نقطة M من المستوى النقطة الوحيدة M' بحيث \(\overrightarrow{MM'} = \vec{u}\) يُسمى الانسحاب بمتجه \(\vec{u}\). يُرمز له بـ \(t_{\vec{u}}\).`,
+    'MH.lesson_Y2Geo_transl1a.summaryNotation2': String.raw`\(t_{\vec{u}}: P \rightarrow P\)<br>\(M \mapsto t_{\vec{u}}(M) = M'\)`,
+    'MH.lesson_Y2Geo_transl1a.summary2Text2': String.raw`M\' هي صورة M بـ \(t_{\vec{u}}\).`,
+    'MH.lesson_Y2Geo_transl1a.summaryEquation': String.raw`\(t_{\vec{u}}(M) = M' \iff \overrightarrow{MM'} = \vec{u}\)`,
+    'MH.lesson_Y2Geo_transl1a.keyPropertyTitle': 'خاصية رئيسية',
+    'MH.lesson_Y2Geo_transl1a.keyPropertyText': String.raw`تركيب تناظرين مركزيين بمركزين I و J هو انسحاب بمتجه \(2\overrightarrow{IJ}\):`,
+    'MH.lesson_Y2Geo_transl1a.keyPropertyEquation': String.raw`\(S_J \circ S_I = t_{2\overrightarrow{IJ}}\)`,
+    'MH.lesson_Y2Geo_transl1a.conclusionTitle': 'الخلاصة',
+    'MH.lesson_Y2Geo_transl1a.keyConceptsTitle': 'المفاهيم الرئيسية التي تم إتقانها',
+    'MH.lesson_Y2Geo_transl1a.concept1': 'تعريف تطبيق (تحويل) المستوى',
+    'MH.lesson_Y2Geo_transl1a.concept2': 'بناء الصور تحت تحويلات مختلفة',
+    'MH.lesson_Y2Geo_transl1a.concept3': 'تعريف وخصائص الانسحابات',
+    'MH.lesson_Y2Geo_transl1a.concept4': 'التعبير المتجهي للتحويلات',
+    'MH.lesson_Y2Geo_transl1a.concept5': 'تركيب تناظرين مركزيين يساوي انسحابًا',
+    'MH.lesson_Y2Geo_transl1a.concept6': 'تحليل التكوينات الهندسية التي تتضمن تحويلات',
+    'MH.lesson_Y2Geo_transl1a.finalThought': 'تحويلات المستوى هي أدوات قوية لتحليل الأشكال الهندسية وخصائصها. فهم الانسحابات والتناظرات يساعدنا على التعرف على الأنماط وإثبات النظريات الهندسية وحل المسائل المعقدة بطريقة منهجية.',
+    
+    // التذييل
+    'MH.footer.developer': 'المطور',
+    'MH.footer.version': 'الإصدار',
+    'MH.footer.links': 'الروابط',
+    'MH.footer.terms': 'شروط الاستخدام',
+    'MH.footer.privacy': 'سياسة الخصوصية'
+},
+            'fr': {
+    // Traductions générales
+    'MH.general.homeTooltip': 'Aller à l\'accueil',
+    'MH.general.install': 'Installer l\'App',
+    'MH.general.installSuccess': 'Mathematics Hub installé avec succès!',
+    'MH.general.enableNotifications': 'Activer les notifications',
+    'MH.general.notificationEnabled': 'Notifications activées! Vous recevrez maintenant des mises à jour.',
+    'MH.general.title': 'Centre de Mathématiques',
+    'MH.general.theme': 'Thème',
+    'MH.general.language': 'Langue',
+'MH.lesson_Y2Geo_transl1a.showSolution': 'Afficher la Solution',
+'MH.lesson_Y2Geo_transl1a.hideSolution': 'Masquer la Solution',
+    
+    // Traductions de la leçon de géométrie
+    'MH.lesson_Y2Geo_transl1a.title': 'Translation : Partie 1',
+    'MH.lesson_Y2Geo_transl1a.subtitle': 'Translation et Transformations du Plan',
+    'MH.lesson_Y2Geo_transl1a.introduction': 'Introduction',
+    'MH.lesson_Y2Geo_transl1a.introText1': 'Les transformations du plan, incluant les translations, les symétries et les rotations, sont des concepts fondamentaux en géométrie. Elles nous permettent de comprendre comment les formes se déplacent et sont reliées entre elles dans l\'espace.',
+    'MH.lesson_Y2Geo_transl1a.introText2': 'Dans cette leçon, nous explorerons le concept d\'applications du plan dans lui-même, étudierons en profondeur les translations, et apprendrons comment construire et analyser des transformations géométriques.',
+    
+    // Problème initial
+    'MH.lesson_Y2Geo_transl1a.initialProblemTitle': 'Problème initial : Analyse de Parallélogrammes',
+    'MH.lesson_Y2Geo_transl1a.initialProblemText': 'Dans la figure ci-contre, ACBD et CEDF sont deux parallélogrammes. Parmi les affirmations proposées, une ou plusieurs sont correctes. Lesquelles ?',
+    'MH.lesson_Y2Geo_transl1a.diagram1Title': 'Figure : Deux parallélogrammes ACBD et CEDF',
+    'MH.lesson_Y2Geo_transl1a.diagram1Instructions': 'Les points A, B, C, D forment le parallélogramme ACBD. Les points C, E, D, F forment le parallélogramme CEDF. Le point E est à l\'intérieur du quadrilatère AEDF.',
+    
+    // Affirmations
+    'MH.lesson_Y2Geo_transl1a.statementsTitle': 'Affirmations à analyser',
+    'MH.lesson_Y2Geo_transl1a.statementA': String.raw`<strong>a)</strong> La symétrie axiale, d'axe (DC), envoie A sur B et E sur F.`,
+    'MH.lesson_Y2Geo_transl1a.statementB': String.raw`<strong>b)</strong> La symétrie centrale de centre le milieu du segment [DC], envoie A sur B, C sur D et E sur F.`,
+    'MH.lesson_Y2Geo_transl1a.statementC': String.raw`<strong>c)</strong> La translation de vecteur AD, envoie C sur B et E sur F.`,
+    
+    // Solutions des affirmations
+    'MH.lesson_Y2Geo_transl1a.solutionA': 'VRAI. Dans le parallélogramme ACBD, (DC) est la médiatrice de [AB]. De plus, dans le parallélogramme CEDF, (DC) est la médiatrice de [EF]. Donc la symétrie axiale d\'axe (DC) envoie A sur B et E sur F.',
+    'MH.lesson_Y2Geo_transl1a.solutionB': 'VRAI. Le milieu de [DC] est le centre des deux parallélogrammes. Pour le parallélogramme ACBD, ce point est le milieu des deux diagonales [AB] et [CD]. De même pour le parallélogramme CEDF, c\'est le milieu de [EF] et [CD]. Donc la symétrie centrale de ce centre envoie A sur B, C sur D et E sur F.',
+    'MH.lesson_Y2Geo_transl1a.solutionC': 'FAUX. Analysons : La translation de vecteur AD envoie le point A sur D. Dans le parallélogramme ACBD, on a AD = BC (côtés opposés égaux et parallèles). Donc la translation de vecteur AD est équivalente à la translation de vecteur BC. Cette translation envoie C sur B (puisque C + BC = B). Cependant, pour le point E : Dans le parallélogramme CEDF, on a CE = DF et CE ∥ DF. La translation de vecteur AD envoie C sur B, mais cela n\'envoie pas nécessairement E sur F. En fait, la translation envoyant C sur B a pour vecteur CB, qui n\'est pas égal à EF. Donc l\'affirmation est fausse.',
+    
+    // Partie I
+    'MH.lesson_Y2Geo_transl1a.part1Title': 'Partie I : Notion d\'application du plan dans le plan',
+    'MH.lesson_Y2Geo_transl1a.part1Intro': 'Une application (ou transformation) du plan est une règle qui associe à chaque point M du plan exactement un point M\' du plan.',
+    'MH.lesson_Y2Geo_transl1a.notation1': String.raw`f : P → P<br>M ↦ M' = f(M)`,
+    'MH.lesson_Y2Geo_transl1a.terminology': 'M\' s\'appelle l\'image du point M par l\'application f. M s\'appelle un antécédent (ou préimage) du point M\' par l\'application f.',
+    
+    // Activité 1
+    'MH.lesson_Y2Geo_transl1a.activity1Title': 'Activité 1 : Construction d\'images',
+    'MH.lesson_Y2Geo_transl1a.activity1Description': 'Soient A et B deux points distincts donnés et M un point du plan.',
+    'MH.lesson_Y2Geo_transl1a.diagram2Title': 'Construction : Points A, B et M',
+    'MH.lesson_Y2Geo_transl1a.diagram2Instructions': 'Cliquez sur les boutons ci-dessous pour construire les points N, P et Q étape par étape.',
+    'MH.lesson_Y2Geo_transl1a.step1aTitle': '1) a) Construire le point N symétrique du point M par rapport à A.',
+    'MH.lesson_Y2Geo_transl1a.step1bTitle': 'b) Construire le point P symétrique du point M par rapport à la droite (AB).',
+    'MH.lesson_Y2Geo_transl1a.step1cTitle': String.raw`c) Construire le point Q tel que \(\overrightarrow{MQ} = \overrightarrow{AB}\).`,
+    'MH.lesson_Y2Geo_transl1a.step2Title': '2) Soit C un point distinct de A. Construire un point C\' tel que ACC\' soit un triangle équilatéral. Combien y a-t-il de points C\' répondant à la question ?',
+    'MH.lesson_Y2Geo_transl1a.step3Title': '3) Soit D un point distinct de B. Construire un point B\' tel que le triangle DBB\' soit rectangle en B\'. Combien y a-t-il de points B\' répondant à la question ?',
+    
+    // Solutions Activité 1
+    'MH.lesson_Y2Geo_transl1a.constructButton': 'Construire',
+    'MH.lesson_Y2Geo_transl1a.step1aSolution': 'Le point N est le symétrique de M par rapport à A, donc A est le milieu du segment [MN].',
+    'MH.lesson_Y2Geo_transl1a.equation1a': String.raw`\(\overrightarrow{MA} = \overrightarrow{AN}\) ou \(A = \text{milieu}(M, N)\)`,
+    'MH.lesson_Y2Geo_transl1a.step1bSolution': 'Le point P est le reflet de M par rapport à la droite (AB). La droite (AB) est la médiatrice de [MP].',
+    'MH.lesson_Y2Geo_transl1a.step1cSolution': String.raw`Le point Q est obtenu en translatant M par le vecteur \(\overrightarrow{AB}\).`,
+    'MH.lesson_Y2Geo_transl1a.equation1c': String.raw`\(\overrightarrow{MQ} = \overrightarrow{AB}\)`,
+    'MH.lesson_Y2Geo_transl1a.step1cSolution2': String.raw`Cela signifie Q = M + \(\overrightarrow{AB}\).`,
+    'MH.lesson_Y2Geo_transl1a.step2Solution': 'Il y a exactement deux points C\' tels que le triangle ACC\' soit équilatéral. Ils sont obtenus en faisant tourner le point C autour de A d\'angles de +60° et -60° (ou +60° et +300°).',
+    'MH.lesson_Y2Geo_transl1a.equation2': String.raw`\(AC' = AC\) et \(\angle CAC' = \pm 60^\circ\)`,
+    'MH.lesson_Y2Geo_transl1a.step2Solution2': 'Les deux positions possibles sont symétriques par rapport à la droite (AC).',
+    'MH.lesson_Y2Geo_transl1a.step3Solution': 'Il y a une infinité de points B\' tels que le triangle DBB\' soit rectangle en B\'. Tous ces points se trouvent sur le cercle de diamètre [DB] (à l\'exclusion des points D et B eux-mêmes).',
+    'MH.lesson_Y2Geo_transl1a.equation3': String.raw`\(\angle DB'B = 90^\circ\) ⇔ B' se trouve sur le cercle de diamètre [DB]`,
+    'MH.lesson_Y2Geo_transl1a.step3Solution2': 'C\'est le théorème de l\'angle droit inscrit dans un demi-cercle.',
+    
+    // Partie II
+    'MH.lesson_Y2Geo_transl1a.part2Title': 'Partie II : Translations',
+    'MH.lesson_Y2Geo_transl1a.part2Intro': 'Une translation est une transformation qui déplace chaque point du plan par le même vecteur.',
+    'MH.lesson_Y2Geo_transl1a.notation2': String.raw`Soit \(\vec{u}\) un vecteur. La translation de vecteur \(\vec{u}\) est notée \(t_{\vec{u}}\):<br>\(t_{\vec{u}} : P \rightarrow P\)<br>\(M \mapsto M' = t_{\vec{u}}(M)\) telle que \(\overrightarrow{MM'} = \vec{u}\)`,
+    
+    // Activité 2
+    'MH.lesson_Y2Geo_transl1a.activity2Title': 'Activité 2 : Composition de symétries centrales',
+    'MH.lesson_Y2Geo_transl1a.activity2Description': 'Soient I et J deux points distincts du plan. Soit M un point du plan, on désigne par M₁ son image par la symétrie centrale Sᵢ (de centre I), et par M\' l\'image de M₁ par la symétrie centrale Sⱼ (de centre J).',
+    'MH.lesson_Y2Geo_transl1a.diagram3Title': 'Construction : Deux symétries centrales',
+    'MH.lesson_Y2Geo_transl1a.diagram3Instructions': 'Les points I et J sont des centres de symétrie. Cliquez sur les boutons pour construire les images étape par étape.',
+    'MH.lesson_Y2Geo_transl1a.step2aTitle': '1) Soit C un point distinct de I et de J.',
+    'MH.lesson_Y2Geo_transl1a.step2aQuestion': 'a) Construire le point C\' image du point C par l\'application t = Sⱼ ∘ Sᵢ.',
+    'MH.lesson_Y2Geo_transl1a.step2bQuestion': String.raw`b) Exprimer \(\overrightarrow{CC'}\) en fonction de \(\overrightarrow{IJ}\).`,
+    'MH.lesson_Y2Geo_transl1a.step2cTitle': '2) a) Construire l\'image M\' d\'un point M par l\'application t.',
+    'MH.lesson_Y2Geo_transl1a.step2dQuestion': String.raw`b) Montrer que \(\overrightarrow{MM'} = \overrightarrow{CC'}\).`,
+    
+    // Solutions Activité 2
+    'MH.lesson_Y2Geo_transl1a.step2aSolution': 'D\'abord appliquer la symétrie centrale de centre I à C pour obtenir C₁, puis appliquer la symétrie centrale de centre J à C₁ pour obtenir C\'.',
+    'MH.lesson_Y2Geo_transl1a.equation4a': String.raw`\(C_1 = S_I(C)\) avec \(\overrightarrow{CC_1} = 2\overrightarrow{CI}\)`,
+    'MH.lesson_Y2Geo_transl1a.equation4b': String.raw`\(C' = S_J(C_1)\) avec \(\overrightarrow{C_1C'} = 2\overrightarrow{C_1J}\)`,
+    'MH.lesson_Y2Geo_transl1a.step2bSolution': 'D\'après les propriétés de la symétrie centrale :',
+    'MH.lesson_Y2Geo_transl1a.equation5a': String.raw`\(\overrightarrow{CC_1} = 2\overrightarrow{CI}\)`,
+    'MH.lesson_Y2Geo_transl1a.equation5b': String.raw`\(\overrightarrow{C_1C'} = 2\overrightarrow{C_1J}\)`,
+    'MH.lesson_Y2Geo_transl1a.step2bSolution2': 'Donc :',
+    'MH.lesson_Y2Geo_transl1a.equation5c': String.raw`\(\overrightarrow{CC'} = \overrightarrow{CC_1} + \overrightarrow{C_1C'} = 2\overrightarrow{CI} + 2\overrightarrow{C_1J}\)`,
+    'MH.lesson_Y2Geo_transl1a.step2bSolution3': String.raw`Mais \(\overrightarrow{C_1J} = \overrightarrow{C_1I} + \overrightarrow{IJ} = -\overrightarrow{CI} + \overrightarrow{IJ}\) (car C₁ est symétrique de C par rapport à I, donc I est le milieu de [CC₁], d\'où \(\overrightarrow{C_1I} = -\overrightarrow{CI}\))`,
+    'MH.lesson_Y2Geo_transl1a.equation5d': String.raw`\(\overrightarrow{CC'} = 2\overrightarrow{CI} + 2(-\overrightarrow{CI} + \overrightarrow{IJ}) = 2\overrightarrow{IJ}\)`,
+    'MH.lesson_Y2Geo_transl1a.step2bSolution4': String.raw`Ainsi \(\overrightarrow{CC'} = 2\overrightarrow{IJ}\).`,
+    'MH.lesson_Y2Geo_transl1a.step2cSolution': 'Suivre le même processus : M₁ = Sᵢ(M), puis M\' = Sⱼ(M₁).',
+    'MH.lesson_Y2Geo_transl1a.step2dSolution': 'En utilisant le même raisonnement que dans la partie 1(b) :',
+    'MH.lesson_Y2Geo_transl1a.equation6a': String.raw`\(\overrightarrow{MM'} = 2\overrightarrow{IJ}\)`,
+    'MH.lesson_Y2Geo_transl1a.step2dSolution2': String.raw`Et on a déjà trouvé \(\overrightarrow{CC'} = 2\overrightarrow{IJ}\). Donc :`,
+    'MH.lesson_Y2Geo_transl1a.equation6b': String.raw`\(\overrightarrow{MM'} = \overrightarrow{CC'}\) pour tous points M, C`,
+    'MH.lesson_Y2Geo_transl1a.step2dSolution3': String.raw`Cela montre que t = Sⱼ ∘ Sᵢ est en fait une translation de vecteur \(2\overrightarrow{IJ}\).`,
+    
+    // Résumé
+    'MH.lesson_Y2Geo_transl1a.summaryTitle': 'Résumé Complet',
+    'MH.lesson_Y2Geo_transl1a.summary1Title': 'Notion d\'application du plan dans le plan',
+    'MH.lesson_Y2Geo_transl1a.summary1Text': 'Lorsqu\'on associe à tout point M du plan un seul point M\', on définit une application (transformation) du plan dans lui-même.',
+    'MH.lesson_Y2Geo_transl1a.summaryNotation1': String.raw`f : P → P<br>M ↦ M' = f(M)`,
+    'MH.lesson_Y2Geo_transl1a.summary1Text2': 'M\' s\'appelle l\'image du point M par l\'application f.<br>M s\'appelle un antécédent (préimage) du point M\' par l\'application f.',
+    'MH.lesson_Y2Geo_transl1a.summary2Title': 'Translations',
+    'MH.lesson_Y2Geo_transl1a.summary2Text': String.raw`Soit \(\vec{u}\) un vecteur. L'application du plan dans lui-même qui à tout point M associe l\'unique point M' tel que \(\overrightarrow{MM'} = \vec{u}\) est appelée translation de vecteur \(\vec{u}\). Elle est notée \(t_{\vec{u}}\).`,
+    'MH.lesson_Y2Geo_transl1a.summaryNotation2': String.raw`\(t_{\vec{u}} : P \rightarrow P\)<br>\(M \mapsto t_{\vec{u}}(M) = M'\)`,
+    'MH.lesson_Y2Geo_transl1a.summary2Text2': String.raw`M' est l'image de M par \(t_{\vec{u}}\).`,
+    'MH.lesson_Y2Geo_transl1a.summaryEquation': String.raw`\(t_{\vec{u}}(M) = M' \iff \overrightarrow{MM'} = \vec{u}\)`,
+    'MH.lesson_Y2Geo_transl1a.keyPropertyTitle': 'Propriété Clé',
+    'MH.lesson_Y2Geo_transl1a.keyPropertyText': String.raw`La composition de deux symétries centrales de centres I et J est une translation de vecteur \(2\overrightarrow{IJ}\) :`,
+    'MH.lesson_Y2Geo_transl1a.keyPropertyEquation': String.raw`\(S_J \circ S_I = t_{2\overrightarrow{IJ}}\)`,
+    'MH.lesson_Y2Geo_transl1a.conclusionTitle': 'Conclusion',
+    'MH.lesson_Y2Geo_transl1a.keyConceptsTitle': 'Concepts Clés Maîtrisés',
+    'MH.lesson_Y2Geo_transl1a.concept1': 'Définition d\'une application (transformation) du plan',
+    'MH.lesson_Y2Geo_transl1a.concept2': 'Construction d\'images sous diverses transformations',
+    'MH.lesson_Y2Geo_transl1a.concept3': 'Définition et propriétés des translations',
+    'MH.lesson_Y2Geo_transl1a.concept4': 'Expression vectorielle des transformations',
+    'MH.lesson_Y2Geo_transl1a.concept5': 'Composition de symétries centrales égale une translation',
+    'MH.lesson_Y2Geo_transl1a.concept6': 'Analyse de configurations géométriques impliquant des transformations',
+    'MH.lesson_Y2Geo_transl1a.finalThought': 'Les transformations du plan sont des outils puissants pour analyser les figures géométriques et leurs propriétés. Comprendre les translations et les symétries nous aide à reconnaître des motifs, prouver des théorèmes géométriques et résoudre des problèmes complexes de manière systématique.',
+    
+    // Pied de page
+    'MH.footer.developer': 'Développeur',
+    'MH.footer.version': 'Version',
+    'MH.footer.links': 'Liens',
+    'MH.footer.terms': 'Conditions d\'Utilisation',
+    'MH.footer.privacy': 'Politique de Confidentialité'
+}
+        };
+
+        // Merge with existing translations if they exist
+        if (typeof translations !== 'undefined') {
+            Object.keys(geometryTranslations).forEach(lang => {
+                if (translations[lang]) {
+                    translations[lang] = {...translations[lang], ...geometryTranslations[lang]};
+                } else {
+                    translations[lang] = geometryTranslations[lang];
+                }
+            });
+        } else {
+            var translations = geometryTranslations;
+        }
+
+        // Canvas drawing functions
+        function drawParallelogramCanvas() {
+            const canvas = document.getElementById('parallelogramCanvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define points for parallelogram ACBD
+            const A = {x: width * 0.2, y: height * 0.7};
+            const C = {x: width * 0.4, y: height * 0.5};
+            const B = {x: width * 0.8, y: height * 0.7};
+            const D = {x: width * 0.6, y: height * 0.5};
+            
+            // Define points for parallelogram CEDF
+            const E = {x: width * 0.45, y: height * 0.6};
+            const F = {x: width * 0.65, y: height * 0.6};
+            
+            // Draw parallelogram ACBD
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(A.x, A.y);
+            ctx.lineTo(C.x, C.y);
+            ctx.lineTo(B.x, B.y);
+            ctx.lineTo(D.x, D.y);
+            ctx.closePath();
+            ctx.stroke();
+            
+            // Draw parallelogram CEDF
+            ctx.strokeStyle = '#8E44AD';
+            ctx.beginPath();
+            ctx.moveTo(C.x, C.y);
+            ctx.lineTo(E.x, E.y);
+            ctx.lineTo(D.x, D.y);
+            ctx.lineTo(F.x, F.y);
+            ctx.closePath();
+            ctx.stroke();
+            
+            // Draw quadrilateral AEDF
+            ctx.strokeStyle = '#E67E22';
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(A.x, A.y);
+            ctx.lineTo(E.x, E.y);
+            ctx.lineTo(D.x, D.y);
+            ctx.lineTo(F.x, F.y);
+            ctx.closePath();
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Draw points
+            const points = [
+                {coord: A, label: 'A', color: '#E74C3C'},
+                {coord: B, label: 'B', color: '#2ECC71'},
+                {coord: C, label: 'C', color: '#3498DB'},
+                {coord: D, label: 'D', color: '#9B59B6'},
+                {coord: E, label: 'E', color: '#E67E22'},
+                {coord: F, label: 'F', color: '#1ABC9C'}
+            ];
+            
+            points.forEach(point => {
+                ctx.fillStyle = point.color;
+                ctx.beginPath();
+                ctx.arc(point.coord.x, point.coord.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                // Adjust label positions
+                let offsetX = 0, offsetY = 0;
+                switch(point.label) {
+                    case 'A': offsetX = -20; offsetY = 20; break;
+                    case 'B': offsetX = 20; offsetY = 20; break;
+                    case 'C': offsetX = -20; offsetY = -20; break;
+                    case 'D': offsetX = 20; offsetY = -20; break;
+                    case 'E': offsetX = -15; offsetY = 0; break;
+                    case 'F': offsetX = 15; offsetY = 0; break;
+                }
+                ctx.fillText(point.label, point.coord.x + offsetX, point.coord.y + offsetY);
+            });
+            
+            // Draw line DC
+            ctx.strokeStyle = '#333333';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+            ctx.beginPath();
+            ctx.moveTo(D.x, D.y);
+            ctx.lineTo(C.x, C.y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+        }
+        
+        // Activity 1 Canvas
+        let activity1State = {N: false, P: false, Q: false, CPrime: false, BPrime: false};
+        
+        function drawActivity1Canvas() {
+            const canvas = document.getElementById('activity1Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define base points
+            const A = {x: width * 0.3, y: height * 0.5};
+            const B = {x: width * 0.7, y: height * 0.5};
+            const M = {x: width * 0.4, y: height * 0.3};
+            
+            // Draw line AB
+            ctx.strokeStyle = '#666666';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(A.x, A.y);
+            ctx.lineTo(B.x, B.y);
+            ctx.stroke();
+            
+            // Draw base points
+            const basePoints = [
+                {coord: A, label: 'A', color: '#E74C3C'},
+                {coord: B, label: 'B', color: '#2ECC71'},
+                {coord: M, label: 'M', color: '#3498DB'}
+            ];
+            
+            basePoints.forEach(point => {
+                ctx.fillStyle = point.color;
+                ctx.beginPath();
+                ctx.arc(point.coord.x, point.coord.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(point.label, point.coord.x, point.coord.y - 15);
+            });
+            
+            // Draw point N if constructed
+            if (activity1State.N) {
+                const N = {x: 2 * A.x - M.x, y: 2 * A.y - M.y};
+                ctx.fillStyle = '#9B59B6';
+                ctx.beginPath();
+                ctx.arc(N.x, N.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('N', N.x, N.y - 15);
+                
+                // Draw line MN
+                ctx.strokeStyle = '#9B59B6';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(M.x, M.y);
+                ctx.lineTo(N.x, N.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            }
+            
+            // Draw point P if constructed
+            if (activity1State.P) {
+                // Perpendicular from M to AB
+                const slopeAB = (B.y - A.y) / (B.x - A.x);
+                const perpSlope = -1 / slopeAB;
+                
+                // Intersection point H on AB
+                const Hx = (M.x + perpSlope * M.y - perpSlope * A.y + slopeAB * A.x) / (1 + slopeAB * perpSlope);
+                const Hy = A.y + slopeAB * (Hx - A.x);
+                
+                const P = {x: 2 * Hx - M.x, y: 2 * Hy - M.y};
+                
+                ctx.fillStyle = '#E67E22';
+                ctx.beginPath();
+                ctx.arc(P.x, P.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('P', P.x, P.y - 15);
+                
+                // Draw line MP
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(M.x, M.y);
+                ctx.lineTo(P.x, P.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            }
+            
+            // Draw point Q if constructed
+            if (activity1State.Q) {
+                const Q = {x: M.x + (B.x - A.x), y: M.y + (B.y - A.y)};
+                ctx.fillStyle = '#1ABC9C';
+                ctx.beginPath();
+                ctx.arc(Q.x, Q.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('Q', Q.x, Q.y - 15);
+                
+                // Draw vector from M to Q
+                ctx.strokeStyle = '#1ABC9C';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(M.x, M.y);
+                ctx.lineTo(Q.x, Q.y);
+                ctx.stroke();
+                
+                // Draw arrowhead
+                const angle = Math.atan2(Q.y - M.y, Q.x - M.x);
+                drawArrowhead(ctx, Q.x, Q.y, angle);
+            }
+            
+            // Draw C and C' if constructed
+            if (activity1State.CPrime) {
+                const C = {x: width * 0.5, y: height * 0.2};
+                const C1 = {x: width * 0.3, y: height * 0.8};
+                const C2 = {x: width * 0.7, y: height * 0.8};
+                
+                ctx.fillStyle = '#3498DB';
+                ctx.beginPath();
+                ctx.arc(C.x, C.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('C', C.x, C.y - 15);
+                
+                // Draw two possible C' points
+                ctx.fillStyle = '#9B59B6';
+                [C1, C2].forEach((Cprime, i) => {
+                    ctx.beginPath();
+                    ctx.arc(Cprime.x, Cprime.y, 5, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#333333';
+                    ctx.font = 'bold 14px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(`C'${i+1}`, Cprime.x, Cprime.y - 15);
+                    ctx.fillStyle = '#9B59B6';
+                    
+                    // Draw lines AC'
+                    ctx.strokeStyle = '#9B59B6';
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(A.x, A.y);
+                    ctx.lineTo(Cprime.x, Cprime.y);
+                    ctx.stroke();
+                    
+                    // Draw lines CC'
+                    ctx.strokeStyle = '#9B59B6';
+                    ctx.lineWidth = 1;
+                    ctx.setLineDash([2, 2]);
+                    ctx.beginPath();
+                    ctx.moveTo(C.x, C.y);
+                    ctx.lineTo(Cprime.x, Cprime.y);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                });
+            }
+            
+            // Draw B and B' if constructed
+            if (activity1State.BPrime) {
+                const D = {x: width * 0.8, y: height * 0.2};
+                
+                ctx.fillStyle = '#E67E22';
+                ctx.beginPath();
+                ctx.arc(D.x, D.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('D', D.x, D.y - 15);
+                
+                // Draw circle with diameter DB
+                const centerX = (D.x + B.x) / 2;
+                const centerY = (D.y + B.y) / 2;
+                const radius = Math.sqrt(Math.pow(D.x - B.x, 2) + Math.pow(D.y - B.y, 2)) / 2;
+                
+                ctx.strokeStyle = '#1ABC9C';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+                ctx.stroke();
+                
+                // Draw sample B' points on circle
+                ctx.fillStyle = '#1ABC9C';
+                for (let i = 0; i < 8; i++) {
+                    const angle = (i * Math.PI) / 4;
+                    const Bprime = {
+                        x: centerX + radius * Math.cos(angle),
+                        y: centerY + radius * Math.sin(angle)
+                    };
+                    
+                    // Skip points too close to D or B
+                    const distToD = Math.sqrt(Math.pow(Bprime.x - D.x, 2) + Math.pow(Bprime.y - D.y, 2));
+                    const distToB = Math.sqrt(Math.pow(Bprime.x - B.x, 2) + Math.pow(Bprime.y - B.y, 2));
+                    
+                    if (distToD > 15 && distToB > 15) {
+                        ctx.beginPath();
+                        ctx.arc(Bprime.x, Bprime.y, 4, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+            }
+        }
+        
+        // Activity 2 Canvas
+        let activity2State = {CPrime: false, MPrime: false};
+        
+        function drawActivity2Canvas() {
+            const canvas = document.getElementById('activity2Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define base points
+            const I = {x: width * 0.3, y: height * 0.4};
+            const J = {x: width * 0.7, y: height * 0.6};
+            const C = {x: width * 0.4, y: height * 0.2};
+            const M = {x: width * 0.2, y: height * 0.8};
+            
+            // Draw base points
+            const basePoints = [
+                {coord: I, label: 'I', color: '#E74C3C'},
+                {coord: J, label: 'J', color: '#2ECC71'},
+                {coord: C, label: 'C', color: '#3498DB'},
+                {coord: M, label: 'M', color: '#E67E22'}
+            ];
+            
+            basePoints.forEach(point => {
+                ctx.fillStyle = point.color;
+                ctx.beginPath();
+                ctx.arc(point.coord.x, point.coord.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(point.label, point.coord.x, point.coord.y - 15);
+            });
+            
+            // Draw C' if constructed
+            if (activity2State.CPrime) {
+                // C1 = symmetric of C with respect to I
+                const C1 = {x: 2 * I.x - C.x, y: 2 * I.y - C.y};
+                
+                // C' = symmetric of C1 with respect to J
+                const Cprime = {x: 2 * J.x - C1.x, y: 2 * J.y - C1.y};
+                
+                // Draw C1
+                ctx.fillStyle = '#9B59B6';
+                ctx.beginPath();
+                ctx.arc(C1.x, C1.y, 4, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 12px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('C₁', C1.x, C1.y - 12);
+                
+                // Draw C'
+                ctx.fillStyle = '#1ABC9C';
+                ctx.beginPath();
+                ctx.arc(Cprime.x, Cprime.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('C\'', Cprime.x, Cprime.y - 15);
+                
+                // Draw lines for symmetry
+                ctx.strokeStyle = '#9B59B6';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                ctx.beginPath();
+                ctx.moveTo(C.x, C.y);
+                ctx.lineTo(C1.x, C1.y);
+                ctx.stroke();
+                
+                ctx.strokeStyle = '#1ABC9C';
+                ctx.beginPath();
+                ctx.moveTo(C1.x, C1.y);
+                ctx.lineTo(Cprime.x, Cprime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw vector from C to C'
+                ctx.strokeStyle = '#E74C3C';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(C.x, C.y);
+                ctx.lineTo(Cprime.x, Cprime.y);
+                ctx.stroke();
+                
+                // Draw arrowhead
+                const angle = Math.atan2(Cprime.y - C.y, Cprime.x - C.x);
+                drawArrowhead(ctx, Cprime.x, Cprime.y, angle);
+                
+                // Draw vector from I to J
+                ctx.strokeStyle = '#666666';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(J.x, J.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            }
+            
+            // Draw M' if constructed
+            if (activity2State.MPrime) {
+                // M1 = symmetric of M with respect to I
+                const M1 = {x: 2 * I.x - M.x, y: 2 * I.y - M.y};
+                
+                // M' = symmetric of M1 with respect to J
+                const Mprime = {x: 2 * J.x - M1.x, y: 2 * J.y - M1.y};
+                
+                // Draw M1
+                ctx.fillStyle = '#9B59B6';
+                ctx.beginPath();
+                ctx.arc(M1.x, M1.y, 4, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 12px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('M₁', M1.x, M1.y - 12);
+                
+                // Draw M'
+                ctx.fillStyle = '#1ABC9C';
+                ctx.beginPath();
+                ctx.arc(Mprime.x, Mprime.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('M\'', Mprime.x, Mprime.y - 15);
+                
+                // Draw lines for symmetry
+                ctx.strokeStyle = '#9B59B6';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                ctx.beginPath();
+                ctx.moveTo(M.x, M.y);
+                ctx.lineTo(M1.x, M1.y);
+                ctx.stroke();
+                
+                ctx.strokeStyle = '#1ABC9C';
+                ctx.beginPath();
+                ctx.moveTo(M1.x, M1.y);
+                ctx.lineTo(Mprime.x, Mprime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw vector from M to M'
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(M.x, M.y);
+                ctx.lineTo(Mprime.x, Mprime.y);
+                ctx.stroke();
+                
+                // Draw arrowhead
+                const angle = Math.atan2(Mprime.y - M.y, Mprime.x - M.x);
+                drawArrowhead(ctx, Mprime.x, Mprime.y, angle);
+            }
+        }
+        
+        // Helper function to draw arrowhead
+        function drawArrowhead(ctx, x, y, angle) {
+            const headlen = 10;
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angle);
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(-headlen, -headlen/2);
+            ctx.moveTo(0, 0);
+            ctx.lineTo(-headlen, headlen/2);
+            ctx.stroke();
+            ctx.restore();
+        }
+        
+        // Construction functions for Activity 1
+        function constructN() {
+            activity1State.N = true;
+            drawActivity1Canvas();
+        }
+        
+        function constructP() {
+            activity1State.P = true;
+            drawActivity1Canvas();
+        }
+        
+        function constructQ() {
+            activity1State.Q = true;
+            drawActivity1Canvas();
+        }
+        
+        function constructCPrime() {
+            activity1State.CPrime = true;
+            drawActivity1Canvas();
+        }
+        
+        function constructBPrime() {
+            activity1State.BPrime = true;
+            drawActivity1Canvas();
+        }
+        
+        // Construction functions for Activity 2
+        function constructCPrime2() {
+            activity2State.CPrime = true;
+            drawActivity2Canvas();
+        }
+        
+        function constructMPrime() {
+            activity2State.MPrime = true;
+            drawActivity2Canvas();
+        }
+        
+        // Solution toggle function
+        function toggleSolution(problemNumber) {
+    const solution = document.getElementById(`solution${problemNumber}`);
+    const button = solution.previousElementSibling;
+    const currentLang = MHThemeManager ? MHThemeManager.getCurrentLanguage() : 'en';
+    
+    if (solution.style.display === 'block' || solution.style.display === '') {
+        solution.style.display = 'none';
+        if (translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_transl1a.showSolution']) {
+            button.textContent = translations[currentLang]['MH.lesson_Y2Geo_transl1a.showSolution'];
+        } else {
+            button.textContent = 'Show Solution';
+        }
+    } else {
+        solution.style.display = 'block';
+        if (translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_transl1a.hideSolution']) {
+            button.textContent = translations[currentLang]['MH.lesson_Y2Geo_transl1a.hideSolution'];
+        } else {
+            button.textContent = 'Hide Solution';
+        }
+        
+        // Re-render KaTeX for newly visible equations
+        if (typeof renderMathInElement !== 'undefined') {
+            renderMathInElement(solution, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false},
+                    {left: '\\(', right: '\\)', display: false},
+                    {left: '\\[', right: '\\]', display: true}
+                ],
+                throwOnError: false
+            });
+        }
+    }
+}
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+    // Initialize KaTeX auto-render
+    if (typeof renderMathInElement !== 'undefined') {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false},
+                {left: '\\(', right: '\\)', display: false},
+                {left: '\\[', right: '\\]', display: true}
+            ],
+            throwOnError: false
+        });
+    }
+
+    // Draw initial canvases
+    drawParallelogramCanvas();
+    drawActivity1Canvas();
+    drawActivity2Canvas();
+
+    // Initialize solutions as hidden and set button text
+    const currentLang = MHThemeManager ? MHThemeManager.getCurrentLanguage() : 'en';
+    for (let i = 1; i <= 12; i++) {
+        const solution = document.getElementById(`solution${i}`);
+        const button = solution ? solution.previousElementSibling : null;
+        
+        if (solution) {
+            solution.style.display = 'none';
+        }
+        
+        // Set initial button text
+        if (button && translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_transl1a.showSolution']) {
+            button.textContent = translations[currentLang]['MH.lesson_Y2Geo_transl1a.showSolution'];
+        }
+    }
+    
+    // Redraw canvases when theme changes
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+            setTimeout(() => {
+                drawParallelogramCanvas();
+                drawActivity1Canvas();
+                drawActivity2Canvas();
+            }, 100);
+        });
+    }
+});
+    </script>
+
+<!-- Add the service worker registration script -->
+<script>
+    // Register service worker with better error handling
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch(function(error) {
+                console.log('Service Worker registration failed:', error);
+            });
+        });
+    }
+</script>
+
+<!-- Add noscript fallback -->
+<noscript>
+    <style>
+        .MH-header-controls { display: none; }
+        .MH-solution { display: block; }
+        .MH-canvas { border: 2px solid #ccc; background-color: #f9f9f9; }
+    </style>
+    <div class="MH-warning">
+        JavaScript is recommended for the full experience, but content is still accessible.
+    </div>
+</noscript>
+</body>
+</html>

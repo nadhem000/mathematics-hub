@@ -1,0 +1,1762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Geometry - Translation Properties</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#4A90E2" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#8E44AD" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#4A90E2">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    
+    <style>
+        /* Page-specific color palette - Blue + Purple Theme */
+        :root {
+            --primary: #4A90E2;        /* Cornflower Blue */
+            --primary-light: #7BAAF7;  /* Light Blue */
+            --primary-dark: #357ABD;   /* Darker Blue */
+            --secondary: #8E44AD;      /* Dark Purple */
+            --secondary-light: #AF7AC5; /* Light Purple */
+            --secondary-dark: #6C3483;  /* Darker Purple */
+            --accent: #E67E22;
+            --warning: #E74C3C;
+            --info: #2ECC71;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #FFFFFF;
+            --surface: #F8F9FA;
+            --border: #E9ECEF;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        [data-theme="dark"] {
+            --primary: #357ABD;
+            --primary-light: #4A90E2;
+            --primary-dark: #2C3E50;
+            --secondary: #6C3483;
+            --secondary-light: #8E44AD;
+            --secondary-dark: #4A235A;
+            --accent: #D35400;
+            --warning: #C0392B;
+            --info: #27AE60;
+            --text: #FFFFFF;
+            --text-light: #CCCCCC;
+            --background: #121212;
+            --surface: #1E1E1E;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        /* KaTeX styling */
+        .katex { 
+            font-size: 1.1em; 
+        }
+        
+        .katex-display { 
+            margin: 1em 0; 
+            text-align: center;
+        }
+        
+        .katex-display > .katex { 
+            display: inline-block;
+            text-align: center;
+        }
+
+        /* Equation styling */
+        .MH-equation {
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            margin: 0.5em 0;
+            padding: 0;
+            display: inline-block;
+            direction: ltr !important;
+            unicode-bidi: isolate;
+        }
+        
+        [dir="rtl"] .MH-equation {
+            text-align: left;
+            unicode-bidi: plaintext;
+        }
+
+        /* Canvas container styling */
+        .MH-canvas-container {
+            margin: 2em 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .MH-canvas {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background-color: var(--surface);
+            max-width: 100%;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+
+        .MH-canvas-title {
+            font-weight: bold;
+            margin-bottom: 0.5em;
+            color: var(--primary);
+        }
+
+        .MH-canvas-instructions {
+            font-size: 0.9em;
+            color: var(--text-light);
+            margin-top: 0.5em;
+            font-style: italic;
+        }
+
+        /* Geometry specific styling */
+        .MH-construction-step {
+            margin: 1.5em 0;
+            padding: 1em;
+            background-color: var(--surface);
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+        }
+
+        .MH-construction-step h4 {
+            margin-top: 0;
+            color: var(--primary-dark);
+        }
+
+        .MH-vector-notation {
+            font-family: 'KaTeX_Math', 'Cambria Math', serif;
+            font-style: italic;
+            color: var(--secondary);
+        }
+
+        .MH-point-label {
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .MH-transformation-notation {
+            background-color: rgba(78, 144, 226, 0.1);
+            padding: 0.5em;
+            border-radius: 4px;
+            font-family: 'KaTeX_Math', 'Cambria Math', serif;
+            margin: 0.5em 0;
+        }
+
+        /* Responsive canvas */
+        @media (max-width: 768px) {
+            .MH-canvas {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                    <!-- Notification Button -->
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+                        <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Geo_transl2a.title">Translation: Part 2</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y2Geo_transl2a.subtitle">Translation Properties and Applications</h2>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_transl2a.introduction">Introduction</h2>
+            <p data-i18n="MH.lesson_Y2Geo_transl2a.introText1">In this lesson, we will study the fundamental properties of translations, including distance preservation, conservation of alignment, and how translations affect lines, segments, and half-lines.</p>
+            <p data-i18n="MH.lesson_Y2Geo_transl2a.introText2">These properties are essential for understanding geometric transformations and their applications in problem-solving.</p>
+        </section>
+
+        <!-- Part III: Characteristic Property -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_transl2a.part3Title">Part III: Characteristic Property of Translations</h2>
+            
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_transl2a.part3Intro">A translation is uniquely characterized by its property of preserving distances between points.</p>
+            </div>
+
+            <!-- Activity 1 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl2a.activity1Title">Activity 1: Distance Preservation</h3>
+                
+                <!-- Diagram 1: Translation preserving distance -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_transl2a.diagram1Title">Figure: Translation preserving distance MN = M'N'</div>
+                    <canvas id="activity1Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_transl2a.diagram1Instructions">Points M and N are translated by vector u to M' and N'. Click buttons to show constructions.</div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl2a.step1aTitle">1) Let M and N be two points in the plane with respective images M' and N' under a translation of vector \(\vec{u}\). Show that \(M'N' = MN\).</h4>
+                    <button class="MH-solution-btn" onclick="constructActivity1Part1()" data-i18n="MH.lesson_Y2Geo_transl2a.constructButton">Construct</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl2a.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                    <div class="MH-solution" id="solution1">
+                        <p data-i18n="MH.lesson_Y2Geo_transl2a.step1aSolution">By definition of translation:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl2a.equation1a">\(\overrightarrow{MM'} = \vec{u}\) and \(\overrightarrow{NN'} = \vec{u}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl2a.step1aSolution2">Therefore:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl2a.equation1b">\(\overrightarrow{M'N'} = \overrightarrow{M'M} + \overrightarrow{MN} + \overrightarrow{NN'}\)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl2a.equation1c">\(\overrightarrow{M'N'} = -\vec{u} + \overrightarrow{MN} + \vec{u} = \overrightarrow{MN}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl2a.step1aSolution3">Thus \(\overrightarrow{M'N'} = \overrightarrow{MN}\), so \(M'N' = MN\).</p>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl2a.step1bTitle">2) Let f be an application of the plane, M and N any two points, and M' and N' their respective images under f. Show that if \(M'N' = MN\) for all M, N, then f is a translation.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl2a.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                    <div class="MH-solution" id="solution2">
+                        <p data-i18n="MH.lesson_Y2Geo_transl2a.step1bSolution">Let A be a fixed point and A' = f(A). For any point M with image M' = f(M), we have:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl2a.equation1d">\(A'M' = AM\) (by hypothesis with N = A)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl2a.step1bSolution2">Consider triangle AMM'. Since AM = A'M' and the transformation preserves distances, the only possibility is that quadrilateral AA'M'M is a parallelogram. Therefore:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl2a.equation1e">\(\overrightarrow{MM'} = \overrightarrow{AA'}\) for all M</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl2a.step1bSolution3">This means f is the translation of vector \(\overrightarrow{AA'}\).</p>
+                    </div>
+                </div>
+
+                <div class="MH-important">
+                    <h3 data-i18n="MH.lesson_Y2Geo_transl2a.consequencesTitle">Consequences:</h3>
+                    <ul>
+                        <li data-i18n="MH.lesson_Y2Geo_transl2a.consequence1">For any points M and N with respective images M' and N' under a translation, we have \(MN = M'N'\). We say a translation preserves distances.</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl2a.consequence2">For any distinct points M and N with respective images M' and N' under a translation, the lines (MN) and (M'N') are parallel.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Activity 2 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl2a.activity2Title">Activity 2: Identifying a Translation</h3>
+                
+                <!-- Diagram 2: Vector sum construction -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_transl2a.diagram2Title">Figure: Application f defined by vector sum</div>
+                    <canvas id="activity2Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_transl2a.diagram2Instructions">Points A, B, C are fixed. M is mapped to M' such that \(\overrightarrow{MM'} = \overrightarrow{MA} + \overrightarrow{MB} - 2\overrightarrow{MC}\).</div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl2a.step2Title">Let A, B, and C be three points in the plane and let f be the application defined by:</h4>
+                    <div class="MH-transformation-notation" data-i18n="MH.lesson_Y2Geo_transl2a.notation2">
+                        f: P → P<br>
+                        M ↦ M' such that \(\overrightarrow{MM'} = \overrightarrow{MA} + \overrightarrow{MB} - 2\overrightarrow{MC}\)
+                    </div>
+                    <p data-i18n="MH.lesson_Y2Geo_transl2a.step2Question">Show that f is a translation and determine its vector.</p>
+                    <button class="MH-solution-btn" onclick="constructActivity2()" data-i18n="MH.lesson_Y2Geo_transl2a.constructButton">Construct</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl2a.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                    <div class="MH-solution" id="solution3">
+                        <p data-i18n="MH.lesson_Y2Geo_transl2a.step2Solution">Let's express \(\overrightarrow{MM'}\) in terms of fixed vectors:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl2a.equation2a">\(\overrightarrow{MM'} = \overrightarrow{MA} + \overrightarrow{MB} - 2\overrightarrow{MC}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl2a.step2Solution2">Using Chasles relation:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl2a.equation2b">\(\overrightarrow{MA} = \overrightarrow{MG} + \overrightarrow{GA}\) where G is the midpoint of [AB]</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl2a.equation2c">\(\overrightarrow{MB} = \overrightarrow{MG} + \overrightarrow{GB}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl2a.step2Solution3">Since G is the midpoint, \(\overrightarrow{GA} + \overrightarrow{GB} = \vec{0}\). Also, \(\overrightarrow{GB} = -\overrightarrow{GA}\).</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl2a.equation2d">\(\overrightarrow{MA} + \overrightarrow{MB} = 2\overrightarrow{MG}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl2a.step2Solution4">Thus:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl2a.equation2e">\(\overrightarrow{MM'} = 2\overrightarrow{MG} - 2\overrightarrow{MC} = 2(\overrightarrow{MG} - \overrightarrow{MC}) = 2\overrightarrow{CG}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl2a.step2Solution5">Since \(\overrightarrow{CG}\) is a fixed vector (independent of M), f is the translation of vector \(2\overrightarrow{CG}\).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part IV: Conservation of Alignment -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_transl2a.part4Title">Part IV: Conservation of Alignment</h2>
+            
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_transl2a.part4Intro">Translations preserve collinearity: if three points are aligned, their images under a translation are also aligned.</p>
+            </div>
+
+            <!-- Activity 3 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl2a.activity3Title">Activity 3: Collinearity Preservation</h3>
+                
+                <!-- Diagram 3: Collinear points and their images -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_transl2a.diagram3Title">Figure: Collinear points M, N, P and their images</div>
+                    <canvas id="activity3Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_transl2a.diagram3Instructions">Points M, N, P are collinear. Their images M', N', P' under translation t are also collinear.</div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl2a.step3aTitle">1) Let M, N, and P be three collinear points, and let M', N', and P' be their respective images under a translation t of vector \(\vec{u}\). Show that M', N', and P' are collinear.</h4>
+                    <button class="MH-solution-btn" onclick="constructActivity3Part1()" data-i18n="MH.lesson_Y2Geo_transl2a.constructButton">Construct</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl2a.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+                    <div class="MH-solution" id="solution4">
+                        <p data-i18n="MH.lesson_Y2Geo_transl2a.step3aSolution">Since M, N, P are collinear, there exists a real number k such that:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl2a.equation3a">\(\overrightarrow{NP} = k \cdot \overrightarrow{NM}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl2a.step3aSolution2">Under translation t:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl2a.equation3b">\(\overrightarrow{N'P'} = \overrightarrow{NP}\) (since translation preserves vectors)</div>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl2a.equation3c">\(\overrightarrow{N'M'} = \overrightarrow{NM}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl2a.step3aSolution3">Therefore:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl2a.equation3d">\(\overrightarrow{N'P'} = k \cdot \overrightarrow{N'M'}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl2a.step3aSolution4">This shows that N', P', and M' are collinear.</p>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl2a.step3bTitle">2) Let A, B, and C be three points on a line Δ. Let I and J be two points not on Δ.</h4>
+                    
+                    <!-- Diagram 4: Parallelogram construction -->
+                    <div class="MH-canvas-container">
+                        <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_transl2a.diagram4Title">Figure: Constructing parallelograms AIJH, BIJK, CIJL</div>
+                        <canvas id="activity3bCanvas" width="600" height="400" class="MH-canvas"></canvas>
+                        <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_transl2a.diagram4Instructions">Construct points H, K, L such that AIJH, BIJK, and CIJL are parallelograms.</div>
+                    </div>
+
+                    <p data-i18n="MH.lesson_Y2Geo_transl2a.step3bQuestion">a) Construct points H, K, and L such that AIJH, BIJK, and CIJL are parallelograms.<br>b) Show that points H, K, and L are collinear.</p>
+                    <button class="MH-solution-btn" onclick="constructActivity3Part2()" data-i18n="MH.lesson_Y2Geo_transl2a.constructButton">Construct H, K, L</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl2a.showSolution" onclick="toggleSolution(5)">Show Solution</button>
+                    <div class="MH-solution" id="solution5">
+                        <p data-i18n="MH.lesson_Y2Geo_transl2a.step3bSolution">a) Construction:</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Geo_transl2a.step3bSol1">H is such that \(\overrightarrow{AH} = \overrightarrow{IJ}\) (so AIJH is a parallelogram)</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl2a.step3bSol2">K is such that \(\overrightarrow{BK} = \overrightarrow{IJ}\) (so BIJK is a parallelogram)</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl2a.step3bSol3">L is such that \(\overrightarrow{CL} = \overrightarrow{IJ}\) (so CIJL is a parallelogram)</li>
+                        </ul>
+                        <p data-i18n="MH.lesson_Y2Geo_transl2a.step3bSolution2">b) All three points H, K, L are obtained by translating A, B, C by the same vector \(\overrightarrow{IJ}\). Since A, B, C are collinear on Δ, their images H, K, L under the same translation are also collinear.</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_transl2a.equation3e">\(\overrightarrow{HK} = \overrightarrow{AB}\) and \(\overrightarrow{KL} = \overrightarrow{BC}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_transl2a.step3bSolution3">Since A, B, C are aligned, vectors \(\overrightarrow{AB}\) and \(\overrightarrow{BC}\) are colinear, hence H, K, L are aligned.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part V: Image of a Line, Segment, and Half-Line -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_transl2a.part5Title">Part V: Image of a Line, Segment, and Half-Line</h2>
+            
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_transl2a.part5Intro">Translations transform lines into parallel lines, segments into isometric segments, and half-lines into half-lines.</p>
+            </div>
+
+            <!-- Activity 4 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl2a.activity4Title">Activity 4: Images of Geometric Objects</h3>
+                
+                <!-- Diagram 5: Parallelogram ABCD and translations -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_transl2a.diagram5Title">Figure: Parallelogram ABCD and translation by vector \(\overrightarrow{AC}\)</div>
+                    <canvas id="activity4Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_transl2a.diagram5Instructions">Parallelogram ABCD with Δ parallel to (AC) through B. Determine images of lines under translation t with vector \(\overrightarrow{AC}\).</div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_transl2a.step4aTitle">Let ABCD be a parallelogram and Δ the line parallel to (AC) passing through B. Consider the translation t with vector \(\overrightarrow{AC}\).</h4>
+                    <p data-i18n="MH.lesson_Y2Geo_transl2a.step4aQuestion">1) Determine the image of each of the lines (AB), (AD), and Δ under translation t.<br>2) Construct the image of line (DB) and the image of line (BC) under translation t.</p>
+                    <button class="MH-solution-btn" onclick="constructActivity4()" data-i18n="MH.lesson_Y2Geo_transl2a.constructButton">Construct Images</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_transl2a.showSolution" onclick="toggleSolution(6)">Show Solution</button>
+                    <div class="MH-solution" id="solution6">
+                        <p data-i18n="MH.lesson_Y2Geo_transl2a.step4aSolution">1) Image of lines:</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Geo_transl2a.step4aSol1">Image of (AB): Since A maps to C and B maps to D (in parallelogram ABCD, \(\overrightarrow{AB} = \overrightarrow{DC}\)), the image of line (AB) is line (CD).</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl2a.step4aSol2">Image of (AD): Since A maps to C and D maps to B (since \(\overrightarrow{AD} = \overrightarrow{CB}\)), the image of line (AD) is line (CB).</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl2a.step4aSol3">Image of Δ: Since Δ is parallel to (AC) and passes through B, and translation t sends B to a point B' such that \(\overrightarrow{BB'} = \overrightarrow{AC}\). But in parallelogram ABCD, \(\overrightarrow{AC} = \overrightarrow{BD}\), so B' = D. Thus the image of Δ is the line through D parallel to (AC).</li>
+                        </ul>
+                        <p data-i18n="MH.lesson_Y2Geo_transl2a.step4aSolution2">2) Construction:</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Geo_transl2a.step4aSol4">Image of (DB): Since D maps to B and B maps to D, line (DB) maps to itself (but with reversed orientation).</li>
+                            <li data-i18n="MH.lesson_Y2Geo_transl2a.step4aSol5">Image of (BC): Since B maps to D and C maps to A (since \(\overrightarrow{BC} = \overrightarrow{AD}\)), the image of line (BC) is line (DA).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_transl2a.summaryTitle">Comprehensive Summary</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl2a.summary1Title">Characteristic Property</h3>
+                <p data-i18n="MH.lesson_Y2Geo_transl2a.summary1Text">Let t be an application of the plane and M, N any two points with respective images M', N' under t.</p>
+                <div class="MH-transformation-notation" data-i18n="MH.lesson_Y2Geo_transl2a.summaryNotation1">
+                    (t is a translation) ⇔ (M'N' = MN for all M, N)
+                </div>
+                <p data-i18n="MH.lesson_Y2Geo_transl2a.summary1Text2">This is the defining characteristic of translations: they preserve distances.</p>
+            </div>
+
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl2a.summary2Title">Conservation of Alignment</h3>
+                <p data-i18n="MH.lesson_Y2Geo_transl2a.summary2Text">The images of collinear points under a translation are also collinear. Translations preserve collinearity.</p>
+            </div>
+
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl2a.summary3Title">Images of Geometric Objects</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Geo_transl2a.summary3Item1">The image of a line under a translation is a line parallel to the original line.</li>
+                    <li data-i18n="MH.lesson_Y2Geo_transl2a.summary3Item2">The image of a segment under a translation is a segment that is isometric (equal in length) to the original segment.</li>
+                    <li data-i18n="MH.lesson_Y2Geo_transl2a.summary3Item3">The image of a half-line under a translation is a half-line.</li>
+                </ul>
+            </div>
+            
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Geo_transl2a.conclusionTitle">Conclusion</h3>
+                <div class="MH-important">
+                    <h3 data-i18n="MH.lesson_Y2Geo_transl2a.keyConceptsTitle">Key Concepts Mastered</h3>
+                    <ul>
+                        <li data-i18n="MH.lesson_Y2Geo_transl2a.concept1">Characteristic property of translations: distance preservation</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl2a.concept2">How to prove an application is a translation using vector methods</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl2a.concept3">Conservation of collinearity under translations</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl2a.concept4">Images of lines, segments, and half-lines under translations</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl2a.concept5">Application of translation properties to geometric constructions</li>
+                        <li data-i18n="MH.lesson_Y2Geo_transl2a.concept6">Vector proofs of translation properties</li>
+                    </ul>
+                </div>
+                <p data-i18n="MH.lesson_Y2Geo_transl2a.finalThought">The properties studied in this lesson make translations one of the most fundamental and useful transformations in geometry. Their ability to preserve distances and parallelism while moving figures makes them essential tools in geometric proofs and constructions.</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+    
+    <script>
+        // GEOMETRY LESSON TRANSLATIONS
+        const geometryTranslations2 = {
+            'en': {
+                // General translations
+                'MH.general.homeTooltip': 'Go to Homepage',
+                'MH.general.install': 'Install App',
+                'MH.general.installSuccess': 'Mathematics Hub installed successfully!',
+                'MH.general.enableNotifications': 'Enable Notifications',
+                'MH.general.notificationEnabled': 'Notifications enabled! You will now receive updates.',
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Theme',
+                'MH.general.language': 'Language',
+                'MH.lesson_Y2Geo_transl2a.showSolution': 'Show Solution',
+                'MH.lesson_Y2Geo_transl2a.hideSolution': 'Hide Solution',
+                
+                // Geometry lesson specific translations
+                'MH.lesson_Y2Geo_transl2a.title': 'Translation: Part 2',
+                'MH.lesson_Y2Geo_transl2a.subtitle': 'Translation Properties and Applications',
+                'MH.lesson_Y2Geo_transl2a.introduction': 'Introduction',
+                'MH.lesson_Y2Geo_transl2a.introText1': 'In this lesson, we will study the fundamental properties of translations, including distance preservation, conservation of alignment, and how translations affect lines, segments, and half-lines.',
+                'MH.lesson_Y2Geo_transl2a.introText2': 'These properties are essential for understanding geometric transformations and their applications in problem-solving.',
+                
+                // Part III
+                'MH.lesson_Y2Geo_transl2a.part3Title': 'Part III: Characteristic Property of Translations',
+                'MH.lesson_Y2Geo_transl2a.part3Intro': 'A translation is uniquely characterized by its property of preserving distances between points.',
+                
+                // Activity 1
+                'MH.lesson_Y2Geo_transl2a.activity1Title': 'Activity 1: Distance Preservation',
+                'MH.lesson_Y2Geo_transl2a.diagram1Title': 'Figure: Translation preserving distance MN = M\'N\'',
+                'MH.lesson_Y2Geo_transl2a.diagram1Instructions': 'Points M and N are translated by vector u to M\' and N\'. Click buttons to show constructions.',
+                'MH.lesson_Y2Geo_transl2a.step1aTitle': String.raw`1) Let M and N be two points in the plane with respective images M' and N' under a translation of vector \(\vec{u}\). Show that \(M'N' = MN\).`,
+                'MH.lesson_Y2Geo_transl2a.step1aSolution': 'By definition of translation:',
+                'MH.lesson_Y2Geo_transl2a.equation1a': String.raw`\(\overrightarrow{MM'} = \vec{u}\) and \(\overrightarrow{NN'} = \vec{u}\)`,
+                'MH.lesson_Y2Geo_transl2a.step1aSolution2': 'Therefore:',
+                'MH.lesson_Y2Geo_transl2a.equation1b': String.raw`\(\overrightarrow{M'N'} = \overrightarrow{M'M} + \overrightarrow{MN} + \overrightarrow{NN'}\)`,
+                'MH.lesson_Y2Geo_transl2a.equation1c': String.raw`\(\overrightarrow{M'N'} = -\vec{u} + \overrightarrow{MN} + \vec{u} = \overrightarrow{MN}\)`,
+                'MH.lesson_Y2Geo_transl2a.step1aSolution3': String.raw`Thus \(\overrightarrow{M'N'} = \overrightarrow{MN}\), so \(M'N' = MN\).`,
+                'MH.lesson_Y2Geo_transl2a.step1bTitle': String.raw`2) Let f be an application of the plane, M and N any two points, and M' and N' their respective images under f. Show that if \(M'N' = MN\) for all M, N, then f is a translation.`,
+                'MH.lesson_Y2Geo_transl2a.step1bSolution': 'Let A be a fixed point and A\' = f(A). For any point M with image M\' = f(M), we have:',
+                'MH.lesson_Y2Geo_transl2a.equation1d': String.raw`\(A'M' = AM\) (by hypothesis with N = A)`,
+                'MH.lesson_Y2Geo_transl2a.step1bSolution2': 'Consider triangle AMM\'. Since AM = A\'M\' and the transformation preserves distances, the only possibility is that quadrilateral AA\'M\'M is a parallelogram. Therefore:',
+                'MH.lesson_Y2Geo_transl2a.equation1e': String.raw`\(\overrightarrow{MM'} = \overrightarrow{AA'}\) for all M`,
+                'MH.lesson_Y2Geo_transl2a.step1bSolution3': String.raw`This means f is the translation of vector \(\overrightarrow{AA'}\).`,
+                'MH.lesson_Y2Geo_transl2a.consequencesTitle': 'Consequences:',
+                'MH.lesson_Y2Geo_transl2a.consequence1': String.raw`For any points M and N with respective images M' and N' under a translation, we have \(MN = M'N'\). We say a translation preserves distances.`,
+                'MH.lesson_Y2Geo_transl2a.consequence2': String.raw`For any distinct points M and N with respective images M' and N' under a translation, the lines (MN) and (M'N') are parallel.`,
+                
+                // Activity 2
+                'MH.lesson_Y2Geo_transl2a.activity2Title': 'Activity 2: Identifying a Translation',
+                'MH.lesson_Y2Geo_transl2a.diagram2Title': 'Figure: Application f defined by vector sum',
+                'MH.lesson_Y2Geo_transl2a.diagram2Instructions': String.raw`Points A, B, C are fixed. M is mapped to M' such that \(\overrightarrow{MM'} = \overrightarrow{MA} + \overrightarrow{MB} - 2\overrightarrow{MC}\).`,
+                'MH.lesson_Y2Geo_transl2a.step2Title': 'Let A, B, and C be three points in the plane and let f be the application defined by:',
+                'MH.lesson_Y2Geo_transl2a.notation2': String.raw`f: P → P<br>M ↦ M' such that \(\overrightarrow{MM'} = \overrightarrow{MA} + \overrightarrow{MB} - 2\overrightarrow{MC}\)`,
+                'MH.lesson_Y2Geo_transl2a.step2Question': 'Show that f is a translation and determine its vector.',
+                'MH.lesson_Y2Geo_transl2a.step2Solution': String.raw`Let's express \(\overrightarrow{MM'}\) in terms of fixed vectors:`,
+                'MH.lesson_Y2Geo_transl2a.equation2a': String.raw`\(\overrightarrow{MM'} = \overrightarrow{MA} + \overrightarrow{MB} - 2\overrightarrow{MC}\)`,
+                'MH.lesson_Y2Geo_transl2a.step2Solution2': 'Using Chasles relation:',
+                'MH.lesson_Y2Geo_transl2a.equation2b': String.raw`\(\overrightarrow{MA} = \overrightarrow{MG} + \overrightarrow{GA}\) where G is the midpoint of [AB]`,
+                'MH.lesson_Y2Geo_transl2a.equation2c': String.raw`\(\overrightarrow{MB} = \overrightarrow{MG} + \overrightarrow{GB}\)`,
+                'MH.lesson_Y2Geo_transl2a.step2Solution3': String.raw`Since G is the midpoint, \(\overrightarrow{GA} + \overrightarrow{GB} = \vec{0}\). Also, \(\overrightarrow{GB} = -\overrightarrow{GA}\).`,
+                'MH.lesson_Y2Geo_transl2a.equation2d': String.raw`\(\overrightarrow{MA} + \overrightarrow{MB} = 2\overrightarrow{MG}\)`,
+                'MH.lesson_Y2Geo_transl2a.step2Solution4': 'Thus:',
+                'MH.lesson_Y2Geo_transl2a.equation2e': String.raw`\(\overrightarrow{MM'} = 2\overrightarrow{MG} - 2\overrightarrow{MC} = 2(\overrightarrow{MG} - \overrightarrow{MC}) = 2\overrightarrow{CG}\)`,
+                'MH.lesson_Y2Geo_transl2a.step2Solution5': String.raw`Since \(\overrightarrow{CG}\) is a fixed vector (independent of M), f is the translation of vector \(2\overrightarrow{CG}\).`,
+                
+                // Part IV
+                'MH.lesson_Y2Geo_transl2a.part4Title': 'Part IV: Conservation of Alignment',
+                'MH.lesson_Y2Geo_transl2a.part4Intro': 'Translations preserve collinearity: if three points are aligned, their images under a translation are also aligned.',
+                
+                // Activity 3
+                'MH.lesson_Y2Geo_transl2a.activity3Title': 'Activity 3: Collinearity Preservation',
+                'MH.lesson_Y2Geo_transl2a.diagram3Title': 'Figure: Collinear points M, N, P and their images',
+                'MH.lesson_Y2Geo_transl2a.diagram3Instructions': 'Points M, N, P are collinear. Their images M\', N\', P\' under translation t are also collinear.',
+                'MH.lesson_Y2Geo_transl2a.step3aTitle': String.raw`1) Let M, N, and P be three collinear points, and let M', N', and P' be their respective images under a translation t of vector \(\vec{u}\). Show that M', N', and P' are collinear.`,
+                'MH.lesson_Y2Geo_transl2a.step3aSolution': 'Since M, N, P are collinear, there exists a real number k such that:',
+                'MH.lesson_Y2Geo_transl2a.equation3a': String.raw`\(\overrightarrow{NP} = k \cdot \overrightarrow{NM}\)`,
+                'MH.lesson_Y2Geo_transl2a.step3aSolution2': 'Under translation t:',
+                'MH.lesson_Y2Geo_transl2a.equation3b': String.raw`\(\overrightarrow{N'P'} = \overrightarrow{NP}\) (since translation preserves vectors)`,
+                'MH.lesson_Y2Geo_transl2a.equation3c': String.raw`\(\overrightarrow{N'M'} = \overrightarrow{NM}\)`,
+                'MH.lesson_Y2Geo_transl2a.step3aSolution3': 'Therefore:',
+                'MH.lesson_Y2Geo_transl2a.equation3d': String.raw`\(\overrightarrow{N'P'} = k \cdot \overrightarrow{N'M'}\)`,
+                'MH.lesson_Y2Geo_transl2a.step3aSolution4': 'This shows that N\', P\', and M\' are collinear.',
+                'MH.lesson_Y2Geo_transl2a.step3bTitle': '2) Let A, B, and C be three points on a line Δ. Let I and J be two points not on Δ.',
+                'MH.lesson_Y2Geo_transl2a.diagram4Title': 'Figure: Constructing parallelograms AIJH, BIJK, CIJL',
+                'MH.lesson_Y2Geo_transl2a.diagram4Instructions': 'Construct points H, K, L such that AIJH, BIJK, and CIJL are parallelograms.',
+                'MH.lesson_Y2Geo_transl2a.step3bQuestion': 'a) Construct points H, K, and L such that AIJH, BIJK, and CIJL are parallelograms.<br>b) Show that points H, K, and L are collinear.',
+                'MH.lesson_Y2Geo_transl2a.step3bSolution': 'a) Construction:',
+                'MH.lesson_Y2Geo_transl2a.step3bSol1': String.raw`H is such that \(\overrightarrow{AH} = \overrightarrow{IJ}\) (so AIJH is a parallelogram)`,
+                'MH.lesson_Y2Geo_transl2a.step3bSol2': String.raw`K is such that \(\overrightarrow{BK} = \overrightarrow{IJ}\) (so BIJK is a parallelogram)`,
+                'MH.lesson_Y2Geo_transl2a.step3bSol3': String.raw`L is such that \(\overrightarrow{CL} = \overrightarrow{IJ}\) (so CIJL is a parallelogram)`,
+                'MH.lesson_Y2Geo_transl2a.step3bSolution2': 'b) All three points H, K, L are obtained by translating A, B, C by the same vector \(\overrightarrow{IJ}\). Since A, B, C are collinear on Δ, their images H, K, L under the same translation are also collinear.',
+                'MH.lesson_Y2Geo_transl2a.equation3e': String.raw`\(\overrightarrow{HK} = \overrightarrow{AB}\) and \(\overrightarrow{KL} = \overrightarrow{BC}\)`,
+                'MH.lesson_Y2Geo_transl2a.step3bSolution3': 'Since A, B, C are aligned, vectors \(\overrightarrow{AB}\) and \(\overrightarrow{BC}\) are colinear, hence H, K, L are aligned.',
+                
+                // Part V
+                'MH.lesson_Y2Geo_transl2a.part5Title': 'Part V: Image of a Line, Segment, and Half-Line',
+                'MH.lesson_Y2Geo_transl2a.part5Intro': 'Translations transform lines into parallel lines, segments into isometric segments, and half-lines into half-lines.',
+                
+                // Activity 4
+                'MH.lesson_Y2Geo_transl2a.activity4Title': 'Activity 4: Images of Geometric Objects',
+                'MH.lesson_Y2Geo_transl2a.diagram5Title': String.raw`Figure: Parallelogram ABCD and translation by vector \(\overrightarrow{AC}\)`,
+                'MH.lesson_Y2Geo_transl2a.diagram5Instructions': String.raw`Parallelogram ABCD with Δ parallel to (AC) through B. Determine images of lines under translation t with vector \(\overrightarrow{AC}\).`,
+                'MH.lesson_Y2Geo_transl2a.step4aTitle': String.raw`Let ABCD be a parallelogram and Δ the line parallel to (AC) passing through B. Consider the translation t with vector \(\overrightarrow{AC}\).`,
+                'MH.lesson_Y2Geo_transl2a.step4aQuestion': '1) Determine the image of each of the lines (AB), (AD), and Δ under translation t.<br>2) Construct the image of line (DB) and the image of line (BC) under translation t.',
+                'MH.lesson_Y2Geo_transl2a.step4aSolution': '1) Image of lines:',
+                'MH.lesson_Y2Geo_transl2a.step4aSol1': 'Image of (AB): Since A maps to C and B maps to D (in parallelogram ABCD, \(\overrightarrow{AB} = \overrightarrow{DC}\)), the image of line (AB) is line (CD).',
+                'MH.lesson_Y2Geo_transl2a.step4aSol2': 'Image of (AD): Since A maps to C and D maps to B (since \(\overrightarrow{AD} = \overrightarrow{CB}\)), the image of line (AD) is line (CB).',
+                'MH.lesson_Y2Geo_transl2a.step4aSol3': 'Image of Δ: Since Δ is parallel to (AC) and passes through B, and translation t sends B to a point B\' such that \(\overrightarrow{BB\'} = \overrightarrow{AC}\). But in parallelogram ABCD, \(\overrightarrow{AC} = \overrightarrow{BD}\), so B\' = D. Thus the image of Δ is the line through D parallel to (AC).',
+                'MH.lesson_Y2Geo_transl2a.step4aSolution2': '2) Construction:',
+                'MH.lesson_Y2Geo_transl2a.step4aSol4': 'Image of (DB): Since D maps to B and B maps to D, line (DB) maps to itself (but with reversed orientation).',
+                'MH.lesson_Y2Geo_transl2a.step4aSol5': 'Image of (BC): Since B maps to D and C maps to A (since \(\overrightarrow{BC} = \overrightarrow{AD}\)), the image of line (BC) is line (DA).',
+                
+                // Summary
+                'MH.lesson_Y2Geo_transl2a.summaryTitle': 'Comprehensive Summary',
+                'MH.lesson_Y2Geo_transl2a.summary1Title': 'Characteristic Property',
+                'MH.lesson_Y2Geo_transl2a.summary1Text': 'Let t be an application of the plane and M, N any two points with respective images M\', N\' under t.',
+                'MH.lesson_Y2Geo_transl2a.summaryNotation1': String.raw`(t is a translation) ⇔ (M'N' = MN for all M, N)`,
+                'MH.lesson_Y2Geo_transl2a.summary1Text2': 'This is the defining characteristic of translations: they preserve distances.',
+                'MH.lesson_Y2Geo_transl2a.summary2Title': 'Conservation of Alignment',
+                'MH.lesson_Y2Geo_transl2a.summary2Text': 'The images of collinear points under a translation are also collinear. Translations preserve collinearity.',
+                'MH.lesson_Y2Geo_transl2a.summary3Title': 'Images of Geometric Objects',
+                'MH.lesson_Y2Geo_transl2a.summary3Item1': 'The image of a line under a translation is a line parallel to the original line.',
+                'MH.lesson_Y2Geo_transl2a.summary3Item2': 'The image of a segment under a translation is a segment that is isometric (equal in length) to the original segment.',
+                'MH.lesson_Y2Geo_transl2a.summary3Item3': 'The image of a half-line under a translation is a half-line.',
+                'MH.lesson_Y2Geo_transl2a.conclusionTitle': 'Conclusion',
+                'MH.lesson_Y2Geo_transl2a.keyConceptsTitle': 'Key Concepts Mastered',
+                'MH.lesson_Y2Geo_transl2a.concept1': 'Characteristic property of translations: distance preservation',
+                'MH.lesson_Y2Geo_transl2a.concept2': 'How to prove an application is a translation using vector methods',
+                'MH.lesson_Y2Geo_transl2a.concept3': 'Conservation of collinearity under translations',
+                'MH.lesson_Y2Geo_transl2a.concept4': 'Images of lines, segments, and half-lines under translations',
+                'MH.lesson_Y2Geo_transl2a.concept5': 'Application of translation properties to geometric constructions',
+                'MH.lesson_Y2Geo_transl2a.concept6': 'Vector proofs of translation properties',
+                'MH.lesson_Y2Geo_transl2a.finalThought': 'The properties studied in this lesson make translations one of the most fundamental and useful transformations in geometry. Their ability to preserve distances and parallelism while moving figures makes them essential tools in geometric proofs and constructions.',
+                
+                // Footer
+                'MH.footer.developer': 'Developer',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Links',
+                'MH.footer.terms': 'Terms of Use',
+                'MH.footer.privacy': 'Privacy Policy',
+                
+                // Construction button
+                'MH.lesson_Y2Geo_transl2a.constructButton': 'Construct'
+            },
+            'ar': {
+                // ترجمات عامة
+                'MH.general.homeTooltip': 'الذهاب إلى الصفحة الرئيسية',
+                'MH.general.install': 'تثبيت التطبيق',
+                'MH.general.installSuccess': 'تم تثبيت Mathematics Hub بنجاح!',
+                'MH.general.enableNotifications': 'تفعيل الإشعارات',
+                'MH.general.notificationEnabled': 'تم تفعيل الإشعارات! ستتلقى التحديثات الآن.',
+                'MH.general.title': 'مركز الرياضيات',
+                'MH.general.theme': 'السمة',
+                'MH.general.language': 'اللغة',
+                'MH.lesson_Y2Geo_transl2a.showSolution': 'إظهار الحل',
+                'MH.lesson_Y2Geo_transl2a.hideSolution': 'إخفاء الحل',
+                
+                // ترجمات درس الهندسة
+                'MH.lesson_Y2Geo_transl2a.title': 'الإنسحاب: الجزء 2',
+                'MH.lesson_Y2Geo_transl2a.subtitle': 'خصائص الانسحاب وتطبيقاته',
+                'MH.lesson_Y2Geo_transl2a.introduction': 'المقدمة',
+                'MH.lesson_Y2Geo_transl2a.introText1': 'في هذا الدرس، سندرس الخصائص الأساسية للانسحابات، بما في ذلك الحفاظ على المسافة، والحفاظ على الاستقامة، وكيف تؤثر الانسحابات على الخطوط والقطاعات وأنصاف الخطوط.',
+                'MH.lesson_Y2Geo_transl2a.introText2': 'هذه الخصائص أساسية لفهم التحويلات الهندسية وتطبيقاتها في حل المسائل.',
+                
+                // الجزء الثالث
+                'MH.lesson_Y2Geo_transl2a.part3Title': 'الجزء الثالث: الخاصية المميزة للانسحابات',
+                'MH.lesson_Y2Geo_transl2a.part3Intro': 'يتميز الانسحاب بخاصية الحفاظ على المسافات بين النقاط.',
+                
+                // النشاط 1
+                'MH.lesson_Y2Geo_transl2a.activity1Title': 'النشاط 1: الحفاظ على المسافة',
+                'MH.lesson_Y2Geo_transl2a.diagram1Title': 'الشكل: الانسحاب يحافظ على المسافة MN = M\'N\'',
+                'MH.lesson_Y2Geo_transl2a.diagram1Instructions': 'النقطتان M و N تُنقلان بمتجه u إلى M\' و N\'. انقر على الأزرار لعرض الإنشاءات.',
+                'MH.lesson_Y2Geo_transl2a.step1aTitle': String.raw`1) لتكن M و N نقطتين في المستوى مع صورهما M' و N' على التوالي تحت انسحاب بمتجه \(\vec{u}\). أظهر أن \(M'N' = MN\).`,
+                'MH.lesson_Y2Geo_transl2a.step1aSolution': 'حسب تعريف الانسحاب:',
+                'MH.lesson_Y2Geo_transl2a.equation1a': String.raw`\(\overrightarrow{MM'} = \vec{u}\) و \(\overrightarrow{NN'} = \vec{u}\)`,
+                'MH.lesson_Y2Geo_transl2a.step1aSolution2': 'لذلك:',
+                'MH.lesson_Y2Geo_transl2a.equation1b': String.raw`\(\overrightarrow{M'N'} = \overrightarrow{M'M} + \overrightarrow{MN} + \overrightarrow{NN'}\)`,
+                'MH.lesson_Y2Geo_transl2a.equation1c': String.raw`\(\overrightarrow{M'N'} = -\vec{u} + \overrightarrow{MN} + \vec{u} = \overrightarrow{MN}\)`,
+                'MH.lesson_Y2Geo_transl2a.step1aSolution3': String.raw`إذن \(\overrightarrow{M'N'} = \overrightarrow{MN}\)، لذا \(M'N' = MN\).`,
+                'MH.lesson_Y2Geo_transl2a.step1bTitle': String.raw`2) لتكن f تطبيقًا للمستوى، و M و N نقطتين، و M' و N' صورتهما على التوالي تحت f. أظهر أنه إذا كان \(M'N' = MN\) لكل M و N، فإن f هو انسحاب.`,
+                'MH.lesson_Y2Geo_transl2a.step1bSolution': 'لتكن A نقطة ثابتة و A\' = f(A). لأي نقطة M مع صورة M\' = f(M)، لدينا:',
+                'MH.lesson_Y2Geo_transl2a.equation1d': String.raw`\(A'M' = AM\) (بفرضية N = A)`,
+                'MH.lesson_Y2Geo_transl2a.step1bSolution2': 'اعتبر المثلث AMM\'. بما أن AM = A\'M\' والتحويل يحافظ على المسافات، فإن الإمكانية الوحيدة هي أن الرباعي AA\'M\'M متوازي أضلاع. لذلك:',
+                'MH.lesson_Y2Geo_transl2a.equation1e': String.raw`\(\overrightarrow{MM'} = \overrightarrow{AA'}\) لكل M`,
+                'MH.lesson_Y2Geo_transl2a.step1bSolution3': String.raw`هذا يعني أن f هو الانسحاب بمتجه \(\overrightarrow{AA'}\).`,
+                'MH.lesson_Y2Geo_transl2a.consequencesTitle': 'النتائج:',
+                'MH.lesson_Y2Geo_transl2a.consequence1': String.raw`لأي نقطتين M و N مع صورهما M' و N' على التوالي تحت انسحاب، لدينا \(MN = M'N'\). نقول أن الانسحاب يحافظ على المسافات.`,
+                'MH.lesson_Y2Geo_transl2a.consequence2': String.raw`لأي نقطتين مختلفتين M و N مع صورهما M' و N' على التوالي تحت انسحاب، الخطان (MN) و (M'N') متوازيان.`,
+                
+                // النشاط 2
+                'MH.lesson_Y2Geo_transl2a.activity2Title': 'النشاط 2: تحديد انسحاب',
+                'MH.lesson_Y2Geo_transl2a.diagram2Title': 'الشكل: التطبيق f معرف بمجموع متجهات',
+                'MH.lesson_Y2Geo_transl2a.diagram2Instructions': String.raw`النقاط A و B و C ثابتة. M تُحول إلى M' بحيث \(\overrightarrow{MM'} = \overrightarrow{MA} + \overrightarrow{MB} - 2\overrightarrow{MC}\).`,
+                'MH.lesson_Y2Geo_transl2a.step2Title': 'لتكن A و B و C ثلاث نقاط في المستوى ولتكن f التطبيق المعرفة بـ:',
+                'MH.lesson_Y2Geo_transl2a.notation2': String.raw`f: P → P<br>M ↦ M' بحيث \(\overrightarrow{MM'} = \overrightarrow{MA} + \overrightarrow{MB} - 2\overrightarrow{MC}\)`,
+                'MH.lesson_Y2Geo_transl2a.step2Question': 'أظهر أن f هو انسحاب وحدد متجهه.',
+                'MH.lesson_Y2Geo_transl2a.step2Solution': String.raw`لنعبر عن \(\overrightarrow{MM'}\) بدلالة متجهات ثابتة:`,
+                'MH.lesson_Y2Geo_transl2a.equation2a': String.raw`\(\overrightarrow{MM'} = \overrightarrow{MA} + \overrightarrow{MB} - 2\overrightarrow{MC}\)`,
+                'MH.lesson_Y2Geo_transl2a.step2Solution2': 'باستخدام علاقة شال:',
+                'MH.lesson_Y2Geo_transl2a.equation2b': String.raw`\(\overrightarrow{MA} = \overrightarrow{MG} + \overrightarrow{GA}\) حيث G هو منتصف [AB]`,
+                'MH.lesson_Y2Geo_transl2a.equation2c': String.raw`\(\overrightarrow{MB} = \overrightarrow{MG} + \overrightarrow{GB}\)`,
+                'MH.lesson_Y2Geo_transl2a.step2Solution3': String.raw`بما أن G هو المنتصف، \(\overrightarrow{GA} + \overrightarrow{GB} = \vec{0}\). أيضًا، \(\overrightarrow{GB} = -\overrightarrow{GA}\).`,
+                'MH.lesson_Y2Geo_transl2a.equation2d': String.raw`\(\overrightarrow{MA} + \overrightarrow{MB} = 2\overrightarrow{MG}\)`,
+                'MH.lesson_Y2Geo_transl2a.step2Solution4': 'إذن:',
+                'MH.lesson_Y2Geo_transl2a.equation2e': String.raw`\(\overrightarrow{MM'} = 2\overrightarrow{MG} - 2\overrightarrow{MC} = 2(\overrightarrow{MG} - \overrightarrow{MC}) = 2\overrightarrow{CG}\)`,
+                'MH.lesson_Y2Geo_transl2a.step2Solution5': String.raw`بما أن \(\overrightarrow{CG}\) متجه ثابت (لا يعتمد على M)، فإن f هو الانسحاب بمتجه \(2\overrightarrow{CG}\).`,
+                
+                // الجزء الرابع
+                'MH.lesson_Y2Geo_transl2a.part4Title': 'الجزء الرابع: الحفاظ على الاستقامة',
+                'MH.lesson_Y2Geo_transl2a.part4Intro': 'الانسحابات تحافظ على استقامة النقاط: إذا كانت ثلاث نقاط على استقامة واحدة، فإن صورها تحت انسحاب ستكون على استقامة واحدة أيضًا.',
+                
+                // النشاط 3
+                'MH.lesson_Y2Geo_transl2a.activity3Title': 'النشاط 3: الحفاظ على الاستقامة',
+                'MH.lesson_Y2Geo_transl2a.diagram3Title': 'الشكل: النقاط المستقيمة M و N و P وصورها',
+                'MH.lesson_Y2Geo_transl2a.diagram3Instructions': 'النقاط M و N و P على استقامة واحدة. صورها M\' و N\' و P\' تحت الانسحاب t هي أيضًا على استقامة واحدة.',
+                'MH.lesson_Y2Geo_transl2a.step3aTitle': String.raw`1) لتكن M و N و P ثلاث نقاط على استقامة واحدة، ولتكن M' و N' و P' صورها على التوالي تحت انسحاب t بمتجه \(\vec{u}\). أظهر أن M' و N' و P' على استقامة واحدة.`,
+                'MH.lesson_Y2Geo_transl2a.step3aSolution': 'بما أن M و N و P على استقامة واحدة، يوجد عدد حقيقي k بحيث:',
+                'MH.lesson_Y2Geo_transl2a.equation3a': String.raw`\(\overrightarrow{NP} = k \cdot \overrightarrow{NM}\)`,
+                'MH.lesson_Y2Geo_transl2a.step3aSolution2': 'تحت الانسحاب t:',
+                'MH.lesson_Y2Geo_transl2a.equation3b': String.raw`\(\overrightarrow{N'P'} = \overrightarrow{NP}\) (بما أن الانسحاب يحافظ على المتجهات)`,
+                'MH.lesson_Y2Geo_transl2a.equation3c': String.raw`\(\overrightarrow{N'M'} = \overrightarrow{NM}\)`,
+                'MH.lesson_Y2Geo_transl2a.step3aSolution3': 'لذلك:',
+                'MH.lesson_Y2Geo_transl2a.equation3d': String.raw`\(\overrightarrow{N'P'} = k \cdot \overrightarrow{N'M'}\)`,
+                'MH.lesson_Y2Geo_transl2a.step3aSolution4': 'هذا يظهر أن N\' و P\' و M\' على استقامة واحدة.',
+                'MH.lesson_Y2Geo_transl2a.step3bTitle': '2) لتكن A و B و C ثلاث نقاط على خط Δ. لتكن I و J نقطتين غير واقعتين على Δ.',
+                'MH.lesson_Y2Geo_transl2a.diagram4Title': 'الشكل: إنشاء متوازيات الأضلاع AIJH و BIJK و CIJL',
+                'MH.lesson_Y2Geo_transl2a.diagram4Instructions': 'أنشئ النقاط H و K و L بحيث يكون AIJH و BIJK و CIJL متوازيات أضلاع.',
+                'MH.lesson_Y2Geo_transl2a.step3bQuestion': 'أ) أنشئ النقاط H و K و L بحيث يكون AIJH و BIJK و CIJL متوازيات أضلاع.<br>ب) أظهر أن النقاط H و K و L على استقامة واحدة.',
+                'MH.lesson_Y2Geo_transl2a.step3bSolution': 'أ) الإنشاء:',
+                'MH.lesson_Y2Geo_transl2a.step3bSol1': String.raw`H هي النقطة التي \(\overrightarrow{AH} = \overrightarrow{IJ}\) (لذا AIJH متوازي أضلاع)`,
+                'MH.lesson_Y2Geo_transl2a.step3bSol2': String.raw`K هي النقطة التي \(\overrightarrow{BK} = \overrightarrow{IJ}\) (لذا BIJK متوازي أضلاع)`,
+                'MH.lesson_Y2Geo_transl2a.step3bSol3': String.raw`L هي النقطة التي \(\overrightarrow{CL} = \overrightarrow{IJ}\) (لذا CIJL متوازي أضلاع)`,
+                'MH.lesson_Y2Geo_transl2a.step3bSolution2': 'ب) جميع النقاط H و K و L تم الحصول عليها بترجمة A و B و C بنفس المتجه \(\overrightarrow{IJ}\). بما أن A و B و C على استقامة واحدة على Δ، فإن صورها H و K و L تحت نفس الانسحاب ستكون على استقامة واحدة أيضًا.',
+                'MH.lesson_Y2Geo_transl2a.equation3e': String.raw`\(\overrightarrow{HK} = \overrightarrow{AB}\) و \(\overrightarrow{KL} = \overrightarrow{BC}\)`,
+                'MH.lesson_Y2Geo_transl2a.step3bSolution3': 'بما أن A و B و C على استقامة واحدة، فإن المتجهين \(\overrightarrow{AB}\) و \(\overrightarrow{BC}\) متوازيان، وبالتالي H و K و L على استقامة واحدة.',
+                
+                // الجزء الخامس
+                'MH.lesson_Y2Geo_transl2a.part5Title': 'الجزء الخامس: صورة خط وقطاع ونصف خط',
+                'MH.lesson_Y2Geo_transl2a.part5Intro': 'الانسحابات تحول الخطوط إلى خطوط متوازية، والقطاعات إلى قطاعات متساوية في الطول، وأنصاف الخطوط إلى أنصاف خطوط.',
+                
+                // النشاط 4
+                'MH.lesson_Y2Geo_transl2a.activity4Title': 'النشاط 4: صور الأشكال الهندسية',
+                'MH.lesson_Y2Geo_transl2a.diagram5Title': String.raw`الشكل: متوازي الأضلاع ABCD والانسحاب بمتجه \(\overrightarrow{AC}\)`,
+                'MH.lesson_Y2Geo_transl2a.diagram5Instructions': String.raw`متوازي الأضلاع ABCD مع Δ الموازي لـ (AC) والمار بـ B. حدد صور الخطوط تحت الانسحاب t بمتجه \(\overrightarrow{AC}\).`,
+                'MH.lesson_Y2Geo_transl2a.step4aTitle': String.raw`ليكن ABCD متوازي أضلاع و Δ الخط الموازي لـ (AC) المار بـ B. اعتبر الانسحاب t بمتجه \(\overrightarrow{AC}\).`,
+                'MH.lesson_Y2Geo_transl2a.step4aQuestion': '1) حدد صورة كل من الخطوط (AB) و (AD) و Δ تحت الانسحاب t.<br>2) أنشئ صورة الخط (DB) وصورة الخط (BC) تحت الانسحاب t.',
+                'MH.lesson_Y2Geo_transl2a.step4aSolution': '1) صور الخطوط:',
+                'MH.lesson_Y2Geo_transl2a.step4aSol1': 'صورة (AB): بما أن A تُحول إلى C و B تُحول إلى D (في متوازي الأضلاع ABCD، \(\overrightarrow{AB} = \overrightarrow{DC}\))، فإن صورة الخط (AB) هي الخط (CD).',
+                'MH.lesson_Y2Geo_transl2a.step4aSol2': 'صورة (AD): بما أن A تُحول إلى C و D تُحول إلى B (بما أن \(\overrightarrow{AD} = \overrightarrow{CB}\))، فإن صورة الخط (AD) هي الخط (CB).',
+                'MH.lesson_Y2Geo_transl2a.step4aSol3': 'صورة Δ: بما أن Δ موازٍ لـ (AC) ويمر بـ B، والانسحاب t يرسل B إلى نقطة B\' بحيث \(\overrightarrow{BB\'} = \overrightarrow{AC}\). لكن في متوازي الأضلاع ABCD، \(\overrightarrow{AC} = \overrightarrow{BD}\)، لذا B\' = D. إذن صورة Δ هي الخط المار بـ D الموازي لـ (AC).',
+                'MH.lesson_Y2Geo_transl2a.step4aSolution2': '2) الإنشاء:',
+                'MH.lesson_Y2Geo_transl2a.step4aSol4': 'صورة (DB): بما أن D تُحول إلى B و B تُحول إلى D، فإن الخط (DB) يتحول إلى نفسه (ولكن باتجاه معكوس).',
+                'MH.lesson_Y2Geo_transl2a.step4aSol5': 'صورة (BC): بما أن B تُحول إلى D و C تُحول إلى A (بما أن \(\overrightarrow{BC} = \overrightarrow{AD}\))، فإن صورة الخط (BC) هي الخط (DA).',
+                
+                // الملخص
+                'MH.lesson_Y2Geo_transl2a.summaryTitle': 'ملخص شامل',
+                'MH.lesson_Y2Geo_transl2a.summary1Title': 'الخاصية المميزة',
+                'MH.lesson_Y2Geo_transl2a.summary1Text': 'لتكن t تطبيقًا للمستوى و M و N نقطتين مع صورهما M\' و N\' على التوالي تحت t.',
+                'MH.lesson_Y2Geo_transl2a.summaryNotation1': String.raw`(t هو انسحاب) ⇔ (M'N' = MN لكل M و N)`,
+                'MH.lesson_Y2Geo_transl2a.summary1Text2': 'هذه هي الخاصية المميزة للانسحابات: إنها تحافظ على المسافات.',
+                'MH.lesson_Y2Geo_transl2a.summary2Title': 'الحفاظ على الاستقامة',
+                'MH.lesson_Y2Geo_transl2a.summary2Text': 'صور النقاط المستقيمة تحت انسحاب تكون مستقيمة أيضًا. الانسحابات تحافظ على استقامة النقاط.',
+                'MH.lesson_Y2Geo_transl2a.summary3Title': 'صور الأشكال الهندسية',
+                'MH.lesson_Y2Geo_transl2a.summary3Item1': 'صورة خط تحت انسحاب هي خط موازٍ للخط الأصلي.',
+                'MH.lesson_Y2Geo_transl2a.summary3Item2': 'صورة قطاع تحت انسحاب هي قطاع متساوي في الطول مع القطاع الأصلي.',
+                'MH.lesson_Y2Geo_transl2a.summary3Item3': 'صورة نصف خط تحت انسحاب هي نصف خط.',
+                'MH.lesson_Y2Geo_transl2a.conclusionTitle': 'الخلاصة',
+                'MH.lesson_Y2Geo_transl2a.keyConceptsTitle': 'المفاهيم الرئيسية التي تم إتقانها',
+                'MH.lesson_Y2Geo_transl2a.concept1': 'الخاصية المميزة للانسحابات: الحفاظ على المسافة',
+                'MH.lesson_Y2Geo_transl2a.concept2': 'كيفية إثبات أن تطبيقًا ما هو انسحاب باستخدام الطرائق المتجهية',
+                'MH.lesson_Y2Geo_transl2a.concept3': 'الحفاظ على استقامة النقاط تحت الانسحابات',
+                'MH.lesson_Y2Geo_transl2a.concept4': 'صور الخطوط والقطاعات وأنصاف الخطوط تحت الانسحابات',
+                'MH.lesson_Y2Geo_transl2a.concept5': 'تطبيق خصائص الانسحاب على الإنشاءات الهندسية',
+                'MH.lesson_Y2Geo_transl2a.concept6': 'براهين متجهية لخصائص الانسحاب',
+                'MH.lesson_Y2Geo_transl2a.finalThought': 'الخصائص التي درسناها في هذا الدرس تجعل الانسحابات واحدة من أهم التحويلات وأكثرها فائدة في الهندسة. قدرتها على الحفاظ على المسافات والتوازي أثناء تحريك الأشكال تجعلها أدوات أساسية في البراهين والإنشاءات الهندسية.',
+                
+                // التذييل
+                'MH.footer.developer': 'المطور',
+                'MH.footer.version': 'الإصدار',
+                'MH.footer.links': 'الروابط',
+                'MH.footer.terms': 'شروط الاستخدام',
+                'MH.footer.privacy': 'سياسة الخصوصية',
+                
+                // زر الإنشاء
+                'MH.lesson_Y2Geo_transl2a.constructButton': 'ابنِ'
+            },
+            'fr': {
+                // Traductions générales
+                'MH.general.homeTooltip': 'Aller à l\'accueil',
+                'MH.general.install': 'Installer l\'App',
+                'MH.general.installSuccess': 'Mathematics Hub installé avec succès!',
+                'MH.general.enableNotifications': 'Activer les notifications',
+                'MH.general.notificationEnabled': 'Notifications activées! Vous recevrez maintenant des mises à jour.',
+                'MH.general.title': 'Centre de Mathématiques',
+                'MH.general.theme': 'Thème',
+                'MH.general.language': 'Langue',
+                'MH.lesson_Y2Geo_transl2a.showSolution': 'Afficher la Solution',
+                'MH.lesson_Y2Geo_transl2a.hideSolution': 'Masquer la Solution',
+                
+                // Traductions de la leçon de géométrie
+                'MH.lesson_Y2Geo_transl2a.title': 'Translation : Partie 2',
+                'MH.lesson_Y2Geo_transl2a.subtitle': 'Propriétés et Applications des Translations',
+                'MH.lesson_Y2Geo_transl2a.introduction': 'Introduction',
+                'MH.lesson_Y2Geo_transl2a.introText1': 'Dans cette leçon, nous étudierons les propriétés fondamentales des translations, incluant la conservation des distances, la conservation de l\'alignement, et comment les translations affectent les droites, segments et demi-droites.',
+                'MH.lesson_Y2Geo_transl2a.introText2': 'Ces propriétés sont essentielles pour comprendre les transformations géométriques et leurs applications en résolution de problèmes.',
+                
+                // Partie III
+                'MH.lesson_Y2Geo_transl2a.part3Title': 'Partie III : Propriété Caractéristique des Translations',
+                'MH.lesson_Y2Geo_transl2a.part3Intro': 'Une translation est caractérisée de manière unique par sa propriété de conserver les distances entre les points.',
+                
+                // Activité 1
+                'MH.lesson_Y2Geo_transl2a.activity1Title': 'Activité 1 : Conservation des Distances',
+                'MH.lesson_Y2Geo_transl2a.diagram1Title': 'Figure : Translation conservant la distance MN = M\'N\'',
+                'MH.lesson_Y2Geo_transl2a.diagram1Instructions': 'Les points M et N sont translatés par le vecteur u vers M\' et N\'. Cliquez sur les boutons pour montrer les constructions.',
+                'MH.lesson_Y2Geo_transl2a.step1aTitle': String.raw`1) Soient M et N deux points du plan d'images respectives M' et N' par une translation de vecteur \(\vec{u}\). Montrer que \(M'N' = MN\).`,
+                'MH.lesson_Y2Geo_transl2a.step1aSolution': 'Par définition de la translation :',
+                'MH.lesson_Y2Geo_transl2a.equation1a': String.raw`\(\overrightarrow{MM'} = \vec{u}\) et \(\overrightarrow{NN'} = \vec{u}\)`,
+                'MH.lesson_Y2Geo_transl2a.step1aSolution2': 'Donc :',
+                'MH.lesson_Y2Geo_transl2a.equation1b': String.raw`\(\overrightarrow{M'N'} = \overrightarrow{M'M} + \overrightarrow{MN} + \overrightarrow{NN'}\)`,
+                'MH.lesson_Y2Geo_transl2a.equation1c': String.raw`\(\overrightarrow{M'N'} = -\vec{u} + \overrightarrow{MN} + \vec{u} = \overrightarrow{MN}\)`,
+                'MH.lesson_Y2Geo_transl2a.step1aSolution3': String.raw`Ainsi \(\overrightarrow{M'N'} = \overrightarrow{MN}\), donc \(M'N' = MN\).`,
+                'MH.lesson_Y2Geo_transl2a.step1bTitle': String.raw`2) Soit f une application du plan, M et N deux points quelconques, et M' et N' leurs images respectives par f. Montrer que si \(M'N' = MN\) pour tous M, N, alors f est une translation.`,
+                'MH.lesson_Y2Geo_transl2a.step1bSolution': 'Soit A un point fixe et A\' = f(A). Pour tout point M d\'image M\' = f(M), on a :',
+                'MH.lesson_Y2Geo_transl2a.equation1d': String.raw`\(A'M' = AM\) (par hypothèse avec N = A)`,
+                'MH.lesson_Y2Geo_transl2a.step1bSolution2': 'Considérons le triangle AMM\'. Puisque AM = A\'M\' et la transformation conserve les distances, la seule possibilité est que le quadrilatère AA\'M\'M soit un parallélogramme. Donc :',
+                'MH.lesson_Y2Geo_transl2a.equation1e': String.raw`\(\overrightarrow{MM'} = \overrightarrow{AA'}\) pour tout M`,
+                'MH.lesson_Y2Geo_transl2a.step1bSolution3': String.raw`Cela signifie que f est la translation de vecteur \(\overrightarrow{AA'}\).`,
+                'MH.lesson_Y2Geo_transl2a.consequencesTitle': 'Conséquences :',
+                'MH.lesson_Y2Geo_transl2a.consequence1': String.raw`Pour tous points M et N d'images respectives M' et N' par une translation, on a \(MN = M'N'\). On dit qu'une translation conserve les distances.`,
+                'MH.lesson_Y2Geo_transl2a.consequence2': String.raw`Pour tous points M et N distincts, d'images respectives M' et N' par une translation, les droites (MN) et (M'N') sont parallèles.`,
+                
+                // Activité 2
+                'MH.lesson_Y2Geo_transl2a.activity2Title': 'Activité 2 : Identifier une Translation',
+                'MH.lesson_Y2Geo_transl2a.diagram2Title': 'Figure : Application f définie par une somme vectorielle',
+                'MH.lesson_Y2Geo_transl2a.diagram2Instructions': String.raw`Les points A, B, C sont fixés. M est envoyé sur M' tel que \(\overrightarrow{MM'} = \overrightarrow{MA} + \overrightarrow{MB} - 2\overrightarrow{MC}\).`,
+                'MH.lesson_Y2Geo_transl2a.step2Title': 'Soient A, B et C trois points du plan et soit f l\'application définie par :',
+                'MH.lesson_Y2Geo_transl2a.notation2': String.raw`f : P → P<br>M ↦ M' tel que \(\overrightarrow{MM'} = \overrightarrow{MA} + \overrightarrow{MB} - 2\overrightarrow{MC}\)`,
+                'MH.lesson_Y2Geo_transl2a.step2Question': 'Montrer que f est une translation et déterminer son vecteur.',
+                'MH.lesson_Y2Geo_transl2a.step2Solution': String.raw`Exprimons \(\overrightarrow{MM'}\) en fonction de vecteurs fixes :`,
+                'MH.lesson_Y2Geo_transl2a.equation2a': String.raw`\(\overrightarrow{MM'} = \overrightarrow{MA} + \overrightarrow{MB} - 2\overrightarrow{MC}\)`,
+                'MH.lesson_Y2Geo_transl2a.step2Solution2': 'En utilisant la relation de Chasles :',
+                'MH.lesson_Y2Geo_transl2a.equation2b': String.raw`\(\overrightarrow{MA} = \overrightarrow{MG} + \overrightarrow{GA}\) où G est le milieu de [AB]`,
+                'MH.lesson_Y2Geo_transl2a.equation2c': String.raw`\(\overrightarrow{MB} = \overrightarrow{MG} + \overrightarrow{GB}\)`,
+                'MH.lesson_Y2Geo_transl2a.step2Solution3': String.raw`Puisque G est le milieu, \(\overrightarrow{GA} + \overrightarrow{GB} = \vec{0}\). Aussi, \(\overrightarrow{GB} = -\overrightarrow{GA}\).`,
+                'MH.lesson_Y2Geo_transl2a.equation2d': String.raw`\(\overrightarrow{MA} + \overrightarrow{MB} = 2\overrightarrow{MG}\)`,
+                'MH.lesson_Y2Geo_transl2a.step2Solution4': 'Ainsi :',
+                'MH.lesson_Y2Geo_transl2a.equation2e': String.raw`\(\overrightarrow{MM'} = 2\overrightarrow{MG} - 2\overrightarrow{MC} = 2(\overrightarrow{MG} - \overrightarrow{MC}) = 2\overrightarrow{CG}\)`,
+                'MH.lesson_Y2Geo_transl2a.step2Solution5': String.raw`Puisque \(\overrightarrow{CG}\) est un vecteur fixe (indépendant de M), f est la translation de vecteur \(2\overrightarrow{CG}\).`,
+                
+                // Partie IV
+                'MH.lesson_Y2Geo_transl2a.part4Title': 'Partie IV : Conservation de l\'Alignement',
+                'MH.lesson_Y2Geo_transl2a.part4Intro': 'Les translations conservent l\'alignement : si trois points sont alignés, leurs images par une translation sont également alignées.',
+                
+                // Activité 3
+                'MH.lesson_Y2Geo_transl2a.activity3Title': 'Activité 3 : Conservation de l\'Alignement',
+                'MH.lesson_Y2Geo_transl2a.diagram3Title': 'Figure : Points alignés M, N, P et leurs images',
+                'MH.lesson_Y2Geo_transl2a.diagram3Instructions': 'Les points M, N, P sont alignés. Leurs images M\', N\', P\' par la translation t sont également alignées.',
+                'MH.lesson_Y2Geo_transl2a.step3aTitle': String.raw`1) Soient M, N et P trois points alignés, et soient M', N' et P' leurs images respectives par une translation t de vecteur \(\vec{u}\). Montrer que M', N' et P' sont alignés.`,
+                'MH.lesson_Y2Geo_transl2a.step3aSolution': 'Puisque M, N, P sont alignés, il existe un réel k tel que :',
+                'MH.lesson_Y2Geo_transl2a.equation3a': String.raw`\(\overrightarrow{NP} = k \cdot \overrightarrow{NM}\)`,
+                'MH.lesson_Y2Geo_transl2a.step3aSolution2': 'Par la translation t :',
+                'MH.lesson_Y2Geo_transl2a.equation3b': String.raw`\(\overrightarrow{N'P'} = \overrightarrow{NP}\) (car la translation conserve les vecteurs)`,
+                'MH.lesson_Y2Geo_transl2a.equation3c': String.raw`\(\overrightarrow{N'M'} = \overrightarrow{NM}\)`,
+                'MH.lesson_Y2Geo_transl2a.step3aSolution3': 'Donc :',
+                'MH.lesson_Y2Geo_transl2a.equation3d': String.raw`\(\overrightarrow{N'P'} = k \cdot \overrightarrow{N'M'}\)`,
+                'MH.lesson_Y2Geo_transl2a.step3aSolution4': 'Cela montre que N\', P\' et M\' sont alignés.',
+                'MH.lesson_Y2Geo_transl2a.step3bTitle': '2) Soient A, B et C trois points d\'une droite Δ. Soient I et J deux points non situés sur Δ.',
+                'MH.lesson_Y2Geo_transl2a.diagram4Title': 'Figure : Construction des parallélogrammes AIJH, BIJK, CIJL',
+                'MH.lesson_Y2Geo_transl2a.diagram4Instructions': 'Construire les points H, K, L tels que AIJH, BIJK et CIJL soient des parallélogrammes.',
+                'MH.lesson_Y2Geo_transl2a.step3bQuestion': 'a) Construire les points H, K et L tels que AIJH, BIJK et CIJL soient des parallélogrammes.<br>b) Montrer que les points H, K et L sont alignés.',
+                'MH.lesson_Y2Geo_transl2a.step3bSolution': 'a) Construction :',
+                'MH.lesson_Y2Geo_transl2a.step3bSol1': String.raw`H est tel que \(\overrightarrow{AH} = \overrightarrow{IJ}\) (donc AIJH est un parallélogramme)`,
+                'MH.lesson_Y2Geo_transl2a.step3bSol2': String.raw`K est tel que \(\overrightarrow{BK} = \overrightarrow{IJ}\) (donc BIJK est un parallélogramme)`,
+                'MH.lesson_Y2Geo_transl2a.step3bSol3': String.raw`L est tel que \(\overrightarrow{CL} = \overrightarrow{IJ}\) (donc CIJL est un parallélogramme)`,
+                'MH.lesson_Y2Geo_transl2a.step3bSolution2': 'b) Les trois points H, K, L sont obtenus en translatant A, B, C par le même vecteur \\(\\overrightarrow{IJ}\\). Puisque A, B, C sont alignés sur Δ, leurs images H, K, L par la même translation sont également alignées.',
+                'MH.lesson_Y2Geo_transl2a.equation3e': String.raw`\(\overrightarrow{HK} = \overrightarrow{AB}\) et \(\overrightarrow{KL} = \overrightarrow{BC}\)`,
+                'MH.lesson_Y2Geo_transl2a.step3bSolution3': 'Puisque A, B, C sont alignés, les vecteurs \\(\\overrightarrow{AB}\\) et \\(\\overrightarrow{BC}\\) sont colinéaires, donc H, K, L sont alignés.',
+                
+                // Partie V
+                'MH.lesson_Y2Geo_transl2a.part5Title': 'Partie V : Image d\'une Droite, d\'un Segment et d\'une Demi-Droite',
+                'MH.lesson_Y2Geo_transl2a.part5Intro': 'Les translations transforment les droites en droites parallèles, les segments en segments isométriques, et les demi-droites en demi-droites.',
+                
+                // Activité 4
+                'MH.lesson_Y2Geo_transl2a.activity4Title': 'Activité 4 : Images d\'Objets Géométriques',
+                'MH.lesson_Y2Geo_transl2a.diagram5Title': String.raw`Figure : Parallélogramme ABCD et translation de vecteur \(\overrightarrow{AC}\)`,
+                'MH.lesson_Y2Geo_transl2a.diagram5Instructions': String.raw`Parallélogramme ABCD avec Δ parallèle à (AC) passant par B. Déterminer les images des droites par la translation t de vecteur \(\overrightarrow{AC}\).`,
+                'MH.lesson_Y2Geo_transl2a.step4aTitle': String.raw`Soit ABCD un parallélogramme et Δ la droite parallèle à (AC) passant par B. Considérons la translation t de vecteur \(\overrightarrow{AC}\).`,
+                'MH.lesson_Y2Geo_transl2a.step4aQuestion': '1) Déterminer l\'image de chacune des droites (AB), (AD) et Δ par la translation t.<br>2) Construire l\'image de la droite (DB) et l\'image de la droite (BC) par la translation t.',
+                'MH.lesson_Y2Geo_transl2a.step4aSolution': '1) Images des droites :',
+                'MH.lesson_Y2Geo_transl2a.step4aSol1': 'Image de (AB) : Puisque A est envoyé sur C et B sur D (dans le parallélogramme ABCD, \\(\\overrightarrow{AB} = \\overrightarrow{DC}\\)), l\'image de la droite (AB) est la droite (CD).',
+                'MH.lesson_Y2Geo_transl2a.step4aSol2': 'Image de (AD) : Puisque A est envoyé sur C et D sur B (car \\(\\overrightarrow{AD} = \\overrightarrow{CB}\\)), l\'image de la droite (AD) est la droite (CB).',
+                'MH.lesson_Y2Geo_transl2a.step4aSol3': 'Image de Δ : Puisque Δ est parallèle à (AC) et passe par B, et la translation t envoie B sur un point B\' tel que \\(\\overrightarrow{BB\'} = \\overrightarrow{AC}\\). Mais dans le parallélogramme ABCD, \\(\\overrightarrow{AC} = \\overrightarrow{BD}\\), donc B\' = D. Ainsi l\'image de Δ est la droite passant par D parallèle à (AC).',
+                'MH.lesson_Y2Geo_transl2a.step4aSolution2': '2) Construction :',
+                'MH.lesson_Y2Geo_transl2a.step4aSol4': 'Image de (DB) : Puisque D est envoyé sur B et B sur D, la droite (DB) est envoyée sur elle-même (mais avec orientation inversée).',
+                'MH.lesson_Y2Geo_transl2a.step4aSol5': 'Image de (BC) : Puisque B est envoyé sur D et C sur A (car \\(\\overrightarrow{BC} = \\overrightarrow{AD}\\)), l\'image de la droite (BC) est la droite (DA).',
+                
+                // Résumé
+                'MH.lesson_Y2Geo_transl2a.summaryTitle': 'Résumé Complet',
+                'MH.lesson_Y2Geo_transl2a.summary1Title': 'Propriété Caractéristique',
+                'MH.lesson_Y2Geo_transl2a.summary1Text': 'Soit t une application du plan et M, N deux points quelconques d\'images respectives M\', N\' par t.',
+                'MH.lesson_Y2Geo_transl2a.summaryNotation1': String.raw`(t est une translation) ⇔ (M'N' = MN pour tous M, N)`,
+                'MH.lesson_Y2Geo_transl2a.summary1Text2': 'C\'est la propriété caractéristique des translations : elles conservent les distances.',
+                'MH.lesson_Y2Geo_transl2a.summary2Title': 'Conservation de l\'Alignement',
+                'MH.lesson_Y2Geo_transl2a.summary2Text': 'Les images de points alignés par une translation sont également alignées. Les translations conservent l\'alignement.',
+                'MH.lesson_Y2Geo_transl2a.summary3Title': 'Images d\'Objets Géométriques',
+                'MH.lesson_Y2Geo_transl2a.summary3Item1': 'L\'image d\'une droite par une translation est une droite qui lui est parallèle.',
+                'MH.lesson_Y2Geo_transl2a.summary3Item2': 'L\'image d\'un segment par une translation est un segment qui lui est isométrique (de même longueur).',
+                'MH.lesson_Y2Geo_transl2a.summary3Item3': 'L\'image d\'une demi-droite par une translation est une demi-droite.',
+                'MH.lesson_Y2Geo_transl2a.conclusionTitle': 'Conclusion',
+                'MH.lesson_Y2Geo_transl2a.keyConceptsTitle': 'Concepts Clés Maîtrisés',
+                'MH.lesson_Y2Geo_transl2a.concept1': 'Propriété caractéristique des translations : conservation des distances',
+                'MH.lesson_Y2Geo_transl2a.concept2': 'Comment prouver qu\'une application est une translation en utilisant les méthodes vectorielles',
+                'MH.lesson_Y2Geo_transl2a.concept3': 'Conservation de l\'alignement par les translations',
+                'MH.lesson_Y2Geo_transl2a.concept4': 'Images des droites, segments et demi-droites par les translations',
+                'MH.lesson_Y2Geo_transl2a.concept5': 'Application des propriétés des translations aux constructions géométriques',
+                'MH.lesson_Y2Geo_transl2a.concept6': 'Preuves vectorielles des propriétés des translations',
+                'MH.lesson_Y2Geo_transl2a.finalThought': 'Les propriétés étudiées dans cette leçon font des translations l\'une des transformations les plus fondamentales et utiles en géométrie. Leur capacité à conserver les distances et le parallélisme tout en déplaçant les figures en fait des outils essentiels dans les preuves et constructions géométriques.',
+                
+                // Pied de page
+                'MH.footer.developer': 'Développeur',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Liens',
+                'MH.footer.terms': 'Conditions d\'Utilisation',
+                'MH.footer.privacy': 'Politique de Confidentialité',
+                
+                // Bouton de construction
+                'MH.lesson_Y2Geo_transl2a.constructButton': 'Construire'
+            }
+        };
+
+        // Merge with existing translations if they exist
+        if (typeof translations !== 'undefined') {
+            Object.keys(geometryTranslations2).forEach(lang => {
+                if (translations[lang]) {
+                    translations[lang] = {...translations[lang], ...geometryTranslations2[lang]};
+                } else {
+                    translations[lang] = geometryTranslations2[lang];
+                }
+            });
+        } else {
+            var translations = geometryTranslations2;
+        }
+
+        // Canvas drawing functions
+        let activity1State = {constructed: false};
+        let activity2State = {constructed: false};
+        let activity3State = {part1: false, part2: false};
+        let activity4State = {constructed: false};
+        
+        function drawActivity1Canvas() {
+            const canvas = document.getElementById('activity1Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define points
+            const M = {x: width * 0.3, y: height * 0.4};
+            const N = {x: width * 0.5, y: height * 0.6};
+            const u = {x: 100, y: -50};
+            const Mprime = {x: M.x + u.x, y: M.y + u.y};
+            const Nprime = {x: N.x + u.x, y: N.y + u.y};
+            
+            // Draw original points and line
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(M.x, M.y);
+            ctx.lineTo(N.x, N.y);
+            ctx.stroke();
+            
+            // Draw translated points and line
+            ctx.strokeStyle = '#8E44AD';
+            ctx.beginPath();
+            ctx.moveTo(Mprime.x, Mprime.y);
+            ctx.lineTo(Nprime.x, Nprime.y);
+            ctx.stroke();
+            
+            // Draw vector
+            ctx.strokeStyle = '#E67E22';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(M.x, M.y);
+            ctx.lineTo(Mprime.x, Mprime.y);
+            ctx.stroke();
+            
+            // Draw arrowhead
+            drawArrowhead(ctx, Mprime.x, Mprime.y, Math.atan2(u.y, u.x));
+            
+            // Draw vector at N
+            ctx.beginPath();
+            ctx.moveTo(N.x, N.y);
+            ctx.lineTo(Nprime.x, Nprime.y);
+            ctx.stroke();
+            drawArrowhead(ctx, Nprime.x, Nprime.y, Math.atan2(u.y, u.x));
+            
+            // Draw points
+            const points = [
+                {coord: M, label: 'M', color: '#E74C3C'},
+                {coord: N, label: 'N', color: '#2ECC71'},
+                {coord: Mprime, label: 'M\'', color: '#9B59B6'},
+                {coord: Nprime, label: 'N\'', color: '#1ABC9C'}
+            ];
+            
+            points.forEach(point => {
+                ctx.fillStyle = point.color;
+                ctx.beginPath();
+                ctx.arc(point.coord.x, point.coord.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                let offsetY = -20;
+                if (point.label === 'M\'' || point.label === 'N\'') offsetY = 20;
+                ctx.fillText(point.label, point.coord.x, point.coord.y + offsetY);
+            });
+            
+            // Show distances if constructed
+            if (activity1State.constructed) {
+                // Draw distance MN
+                const midMN = {
+                    x: (M.x + N.x) / 2,
+                    y: (M.y + N.y) / 2
+                };
+                ctx.strokeStyle = '#4A90E2';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([5, 3]);
+                ctx.beginPath();
+                ctx.moveTo(M.x, M.y);
+                ctx.lineTo(N.x, N.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                ctx.fillStyle = '#4A90E2';
+                ctx.font = '14px Arial';
+                ctx.fillText('MN', midMN.x, midMN.y - 10);
+                
+                // Draw distance M'N'
+                const midMprimeNprime = {
+                    x: (Mprime.x + Nprime.x) / 2,
+                    y: (Mprime.y + Nprime.y) / 2
+                };
+                ctx.strokeStyle = '#8E44AD';
+                ctx.setLineDash([5, 3]);
+                ctx.beginPath();
+                ctx.moveTo(Mprime.x, Mprime.y);
+                ctx.lineTo(Nprime.x, Nprime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                ctx.fillStyle = '#8E44AD';
+                ctx.fillText('M\'N\'', midMprimeNprime.x, midMprimeNprime.y + 20);
+            }
+        }
+        
+        function drawActivity2Canvas() {
+            const canvas = document.getElementById('activity2Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define fixed points
+            const A = {x: width * 0.2, y: height * 0.7};
+            const B = {x: width * 0.8, y: height * 0.7};
+            const C = {x: width * 0.5, y: height * 0.3};
+            
+            // Midpoint G of AB
+            const G = {
+                x: (A.x + B.x) / 2,
+                y: (A.y + B.y) / 2
+            };
+            
+            // Vector CG
+            const CG = {
+                x: G.x - C.x,
+                y: G.y - C.y
+            };
+            
+            // Translation vector is 2*CG
+            const translationVector = {
+                x: 2 * CG.x,
+                y: 2 * CG.y
+            };
+            
+            // Draw fixed points
+            const fixedPoints = [
+                {coord: A, label: 'A', color: '#E74C3C'},
+                {coord: B, label: 'B', color: '#2ECC71'},
+                {coord: C, label: 'C', color: '#3498DB'},
+                {coord: G, label: 'G', color: '#9B59B6'}
+            ];
+            
+            fixedPoints.forEach(point => {
+                ctx.fillStyle = point.color;
+                ctx.beginPath();
+                ctx.arc(point.coord.x, point.coord.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(point.label, point.coord.x, point.coord.y - 15);
+            });
+            
+            // Draw segment AB
+            ctx.strokeStyle = '#666666';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(A.x, A.y);
+            ctx.lineTo(B.x, B.y);
+            ctx.stroke();
+            
+            // Draw M and M' if constructed
+            if (activity2State.constructed) {
+                const M = {x: width * 0.4, y: height * 0.5};
+                const Mprime = {
+                    x: M.x + translationVector.x,
+                    y: M.y + translationVector.y
+                };
+                
+                // Draw M and M'
+                ctx.fillStyle = '#E67E22';
+                ctx.beginPath();
+                ctx.arc(M.x, M.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('M', M.x, M.y - 15);
+                
+                ctx.fillStyle = '#1ABC9C';
+                ctx.beginPath();
+                ctx.arc(Mprime.x, Mprime.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillText('M\'', Mprime.x, Mprime.y - 15);
+                
+                // Draw vector from M to M'
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(M.x, M.y);
+                ctx.lineTo(Mprime.x, Mprime.y);
+                ctx.stroke();
+                drawArrowhead(ctx, Mprime.x, Mprime.y, Math.atan2(translationVector.y, translationVector.x));
+                
+                // Draw vectors MA, MB, MC
+                ctx.strokeStyle = '#E74C3C';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                ctx.beginPath();
+                ctx.moveTo(M.x, M.y);
+                ctx.lineTo(A.x, A.y);
+                ctx.stroke();
+                
+                ctx.strokeStyle = '#2ECC71';
+                ctx.beginPath();
+                ctx.moveTo(M.x, M.y);
+                ctx.lineTo(B.x, B.y);
+                ctx.stroke();
+                
+                ctx.strokeStyle = '#3498DB';
+                ctx.beginPath();
+                ctx.moveTo(M.x, M.y);
+                ctx.lineTo(C.x, C.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw vector CG
+                ctx.strokeStyle = '#9B59B6';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(C.x, C.y);
+                ctx.lineTo(G.x, G.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                drawArrowhead(ctx, G.x, G.y, Math.atan2(CG.y, CG.x));
+                
+                ctx.fillStyle = '#9B59B6';
+                ctx.font = '12px Arial';
+                ctx.fillText('CG', (C.x + G.x) / 2, (C.y + G.y) / 2 - 10);
+            }
+        }
+        
+        function drawActivity3Canvas() {
+            const canvas = document.getElementById('activity3Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define collinear points
+            const M = {x: width * 0.2, y: height * 0.5};
+            const N = {x: width * 0.4, y: height * 0.5};
+            const P = {x: width * 0.6, y: height * 0.5};
+            
+            // Translation vector
+            const u = {x: 80, y: 50};
+            
+            // Translated points
+            const Mprime = {x: M.x + u.x, y: M.y + u.y};
+            const Nprime = {x: N.x + u.x, y: N.y + u.y};
+            const Pprime = {x: P.x + u.x, y: P.y + u.y};
+            
+            // Draw original line
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(M.x - 50, M.y);
+            ctx.lineTo(P.x + 50, P.y);
+            ctx.stroke();
+            
+            // Draw translated line
+            ctx.strokeStyle = '#8E44AD';
+            ctx.beginPath();
+            ctx.moveTo(Mprime.x - 50, Mprime.y);
+            ctx.lineTo(Pprime.x + 50, Pprime.y);
+            ctx.stroke();
+            
+            // Draw original points
+            const originalPoints = [
+                {coord: M, label: 'M', color: '#E74C3C'},
+                {coord: N, label: 'N', color: '#2ECC71'},
+                {coord: P, label: 'P', color: '#3498DB'}
+            ];
+            
+            originalPoints.forEach(point => {
+                ctx.fillStyle = point.color;
+                ctx.beginPath();
+                ctx.arc(point.coord.x, point.coord.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(point.label, point.coord.x, point.coord.y - 20);
+            });
+            
+            // Draw translated points
+            const translatedPoints = [
+                {coord: Mprime, label: 'M\'', color: '#9B59B6'},
+                {coord: Nprime, label: 'N\'', color: '#1ABC9C'},
+                {coord: Pprime, label: 'P\'', color: '#E67E22'}
+            ];
+            
+            translatedPoints.forEach(point => {
+                ctx.fillStyle = point.color;
+                ctx.beginPath();
+                ctx.arc(point.coord.x, point.coord.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(point.label, point.coord.x, point.coord.y + 20);
+            });
+            
+            // Draw translation vectors
+            if (activity3State.part1) {
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 2;
+                
+                [M, N, P].forEach((point, i) => {
+                    const prime = [Mprime, Nprime, Pprime][i];
+                    ctx.beginPath();
+                    ctx.moveTo(point.x, point.y);
+                    ctx.lineTo(prime.x, prime.y);
+                    ctx.stroke();
+                    
+                    drawArrowhead(ctx, prime.x, prime.y, Math.atan2(u.y, u.x));
+                });
+                
+                // Show that they remain collinear
+                ctx.strokeStyle = '#8E44AD';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([5, 3]);
+                ctx.beginPath();
+                ctx.moveTo(Mprime.x, Mprime.y);
+                ctx.lineTo(Nprime.x, Nprime.y);
+                ctx.lineTo(Pprime.x, Pprime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            }
+        }
+        
+        function drawActivity3bCanvas() {
+            const canvas = document.getElementById('activity3bCanvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define line Δ with points A, B, C
+            const A = {x: width * 0.2, y: height * 0.6};
+            const B = {x: width * 0.5, y: height * 0.6};
+            const C = {x: width * 0.8, y: height * 0.6};
+            
+            // Points I and J not on Δ
+            const I = {x: width * 0.3, y: height * 0.3};
+            const J = {x: width * 0.7, y: height * 0.3};
+            
+            // Vector IJ
+            const IJ = {x: J.x - I.x, y: J.y - I.y};
+            
+            // Points H, K, L (translation of A, B, C by vector IJ)
+            const H = {x: A.x + IJ.x, y: A.y + IJ.y};
+            const K = {x: B.x + IJ.x, y: B.y + IJ.y};
+            const L = {x: C.x + IJ.x, y: C.y + IJ.y};
+            
+            // Draw line Δ
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(A.x - 50, A.y);
+            ctx.lineTo(C.x + 50, C.y);
+            ctx.stroke();
+            
+            // Draw points on Δ
+            const deltaPoints = [
+                {coord: A, label: 'A', color: '#E74C3C'},
+                {coord: B, label: 'B', color: '#2ECC71'},
+                {coord: C, label: 'C', color: '#3498DB'}
+            ];
+            
+            deltaPoints.forEach(point => {
+                ctx.fillStyle = point.color;
+                ctx.beginPath();
+                ctx.arc(point.coord.x, point.coord.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(point.label, point.coord.x, point.coord.y - 20);
+            });
+            
+            // Draw points I and J
+            ctx.fillStyle = '#9B59B6';
+            ctx.beginPath();
+            ctx.arc(I.x, I.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillText('I', I.x, I.y - 20);
+            
+            ctx.fillStyle = '#1ABC9C';
+            ctx.beginPath();
+            ctx.arc(J.x, J.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillText('J', J.x, J.y - 20);
+            
+            // Draw vector IJ
+            ctx.strokeStyle = '#666666';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([3, 3]);
+            ctx.beginPath();
+            ctx.moveTo(I.x, I.y);
+            ctx.lineTo(J.x, J.y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Draw H, K, L if constructed
+            if (activity3State.part2) {
+                const translatedPoints = [
+                    {coord: H, label: 'H', color: '#E74C3C'},
+                    {coord: K, label: 'K', color: '#2ECC71'},
+                    {coord: L, label: 'L', color: '#3498DB'}
+                ];
+                
+                translatedPoints.forEach(point => {
+                    ctx.fillStyle = point.color;
+                    ctx.beginPath();
+                    ctx.arc(point.coord.x, point.coord.y, 6, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#333333';
+                    ctx.font = 'bold 16px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(point.label, point.coord.x, point.coord.y + 20);
+                });
+                
+                // Draw line through H, K, L
+                ctx.strokeStyle = '#8E44AD';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(H.x - 50, H.y);
+                ctx.lineTo(L.x + 50, L.y);
+                ctx.stroke();
+                
+                // Draw parallelograms
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                
+                // AIJH
+                ctx.beginPath();
+                ctx.moveTo(A.x, A.y);
+                ctx.lineTo(I.x, I.y);
+                ctx.lineTo(J.x, J.y);
+                ctx.lineTo(H.x, H.y);
+                ctx.closePath();
+                ctx.stroke();
+                
+                // BIJK
+                ctx.beginPath();
+                ctx.moveTo(B.x, B.y);
+                ctx.lineTo(I.x, I.y);
+                ctx.lineTo(J.x, J.y);
+                ctx.lineTo(K.x, K.y);
+                ctx.closePath();
+                ctx.stroke();
+                
+                // CIJL
+                ctx.beginPath();
+                ctx.moveTo(C.x, C.y);
+                ctx.lineTo(I.x, I.y);
+                ctx.lineTo(J.x, J.y);
+                ctx.lineTo(L.x, L.y);
+                ctx.closePath();
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw translation vectors
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 2;
+                [A, B, C].forEach((point, i) => {
+                    const translated = [H, K, L][i];
+                    ctx.beginPath();
+                    ctx.moveTo(point.x, point.y);
+                    ctx.lineTo(translated.x, translated.y);
+                    ctx.stroke();
+                    
+                    drawArrowhead(ctx, translated.x, translated.y, Math.atan2(IJ.y, IJ.x));
+                });
+            }
+        }
+        
+        function drawActivity4Canvas() {
+            const canvas = document.getElementById('activity4Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define parallelogram ABCD
+            const A = {x: width * 0.3, y: height * 0.3};
+            const B = {x: width * 0.7, y: height * 0.3};
+            const C = {x: width * 0.8, y: height * 0.7};
+            const D = {x: width * 0.4, y: height * 0.7};
+            
+            // Vector AC
+            const AC = {x: C.x - A.x, y: C.y - A.y};
+            
+            // Line Δ parallel to AC through B
+            // Find two points on Δ
+            const deltaPoint1 = {x: B.x - 100, y: B.y};
+            const deltaPoint2 = {x: B.x + 100, y: B.y};
+            
+            // Draw parallelogram
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(A.x, A.y);
+            ctx.lineTo(B.x, B.y);
+            ctx.lineTo(C.x, C.y);
+            ctx.lineTo(D.x, D.y);
+            ctx.closePath();
+            ctx.stroke();
+            
+            // Draw line Δ
+            ctx.strokeStyle = '#8E44AD';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 3]);
+            ctx.beginPath();
+            ctx.moveTo(deltaPoint1.x, deltaPoint1.y);
+            ctx.lineTo(deltaPoint2.x, deltaPoint2.y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Draw parallelogram vertices
+            const vertices = [
+                {coord: A, label: 'A', color: '#E74C3C'},
+                {coord: B, label: 'B', color: '#2ECC71'},
+                {coord: C, label: 'C', color: '#3498DB'},
+                {coord: D, label: 'D', color: '#9B59B6'}
+            ];
+            
+            vertices.forEach(point => {
+                ctx.fillStyle = point.color;
+                ctx.beginPath();
+                ctx.arc(point.coord.x, point.coord.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                let offsetY = -20;
+                if (point.label === 'C' || point.label === 'D') offsetY = 20;
+                ctx.fillText(point.label, point.coord.x, point.coord.y + offsetY);
+            });
+            
+            // Draw vector AC
+            ctx.strokeStyle = '#E67E22';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(A.x, A.y);
+            ctx.lineTo(C.x, C.y);
+            ctx.stroke();
+            drawArrowhead(ctx, C.x, C.y, Math.atan2(AC.y, AC.x));
+            
+            // Draw translated images if constructed
+            if (activity4State.constructed) {
+                // Image of (AB) is (CD)
+                ctx.strokeStyle = '#E74C3C';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(C.x, C.y);
+                ctx.lineTo(D.x, D.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Image of (AD) is (CB)
+                ctx.strokeStyle = '#2ECC71';
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(C.x, C.y);
+                ctx.lineTo(B.x, B.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Image of Δ is line through D parallel to AC
+                const deltaImagePoint1 = {x: D.x - 100, y: D.y};
+                const deltaImagePoint2 = {x: D.x + 100, y: D.y};
+                
+                ctx.strokeStyle = '#8E44AD';
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(deltaImagePoint1.x, deltaImagePoint1.y);
+                ctx.lineTo(deltaImagePoint2.x, deltaImagePoint2.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Image of (DB) - same line but reversed
+                ctx.strokeStyle = '#9B59B6';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(B.x, B.y);
+                ctx.lineTo(D.x, D.y);
+                ctx.stroke();
+                
+                // Image of (BC) is (DA)
+                ctx.strokeStyle = '#3498DB';
+                ctx.beginPath();
+                ctx.moveTo(D.x, D.y);
+                ctx.lineTo(A.x, A.y);
+                ctx.stroke();
+                
+                // Label the images
+                ctx.fillStyle = '#333333';
+                ctx.font = '14px Arial';
+                
+                // Label for image of (AB)
+                const midCD = {
+                    x: (C.x + D.x) / 2,
+                    y: (C.y + D.y) / 2
+                };
+                ctx.fillText('Image of (AB)', midCD.x, midCD.y - 15);
+                
+                // Label for image of (AD)
+                const midCB = {
+                    x: (C.x + B.x) / 2,
+                    y: (C.y + B.y) / 2
+                };
+                ctx.fillText('Image of (AD)', midCB.x, midCB.y - 15);
+                
+                // Label for image of Δ
+                const midDeltaImage = {
+                    x: D.x,
+                    y: D.y - 30
+                };
+                ctx.fillText('Image of Δ', midDeltaImage.x, midDeltaImage.y);
+            }
+        }
+        
+        // Helper function to draw arrowhead
+        function drawArrowhead(ctx, x, y, angle) {
+            const headlen = 10;
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angle);
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(-headlen, -headlen/2);
+            ctx.moveTo(0, 0);
+            ctx.lineTo(-headlen, headlen/2);
+            ctx.stroke();
+            ctx.restore();
+        }
+        
+        // Construction functions
+        function constructActivity1Part1() {
+            activity1State.constructed = true;
+            drawActivity1Canvas();
+        }
+        
+        function constructActivity2() {
+            activity2State.constructed = true;
+            drawActivity2Canvas();
+        }
+        
+        function constructActivity3Part1() {
+            activity3State.part1 = true;
+            drawActivity3Canvas();
+        }
+        
+        function constructActivity3Part2() {
+            activity3State.part2 = true;
+            drawActivity3bCanvas();
+        }
+        
+        function constructActivity4() {
+            activity4State.constructed = true;
+            drawActivity4Canvas();
+        }
+        
+        // Solution toggle function
+        function toggleSolution(problemNumber) {
+            const solution = document.getElementById(`solution${problemNumber}`);
+            const button = solution.previousElementSibling;
+            const currentLang = MHThemeManager ? MHThemeManager.getCurrentLanguage() : 'en';
+            
+            if (solution.style.display === 'block' || solution.style.display === '') {
+                solution.style.display = 'none';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_transl2a.showSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_transl2a.showSolution'];
+                } else {
+                    button.textContent = 'Show Solution';
+                }
+            } else {
+                solution.style.display = 'block';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_transl2a.hideSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_transl2a.hideSolution'];
+                } else {
+                    button.textContent = 'Hide Solution';
+                }
+                
+                // Re-render KaTeX for newly visible equations
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(solution, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\(', right: '\\)', display: false},
+                            {left: '\\[', right: '\\]', display: true}
+                        ],
+                        throwOnError: false
+                    });
+                }
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize KaTeX auto-render
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+
+            // Draw initial canvases
+            drawActivity1Canvas();
+            drawActivity2Canvas();
+            drawActivity3Canvas();
+            drawActivity3bCanvas();
+            drawActivity4Canvas();
+
+            // Initialize solutions as hidden and set button text
+            const currentLang = MHThemeManager ? MHThemeManager.getCurrentLanguage() : 'en';
+            for (let i = 1; i <= 6; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                const button = solution ? solution.previousElementSibling : null;
+                
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+                
+                // Set initial button text
+                if (button && translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_transl2a.showSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_transl2a.showSolution'];
+                }
+            }
+            
+            // Redraw canvases when theme changes
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    setTimeout(() => {
+                        drawActivity1Canvas();
+                        drawActivity2Canvas();
+                        drawActivity3Canvas();
+                        drawActivity3bCanvas();
+                        drawActivity4Canvas();
+                    }, 100);
+                });
+            }
+        });
+    </script>
+
+<!-- Add the service worker registration script -->
+<script>
+    // Register service worker with better error handling
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch(function(error) {
+                console.log('Service Worker registration failed:', error);
+            });
+        });
+    }
+</script>
+
+<!-- Add noscript fallback -->
+<noscript>
+    <style>
+        .MH-header-controls { display: none; }
+        .MH-solution { display: block; }
+        .MH-canvas { border: 2px solid #ccc; background-color: #f9f9f9; }
+    </style>
+    <div class="MH-warning">
+        JavaScript is recommended for the full experience, but content is still accessible.
+    </div>
+</noscript>
+</body>
+</html>

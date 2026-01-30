@@ -1,0 +1,2529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Geometry - Homothety Part 2</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#4A90E2" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#8E44AD" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#4A90E2">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    
+    <style>
+        /* Page-specific color palette - Blue + Purple Theme */
+        :root {
+            --primary: #4A90E2;        /* Cornflower Blue */
+            --primary-light: #7BAAF7;  /* Light Blue */
+            --primary-dark: #357ABD;   /* Darker Blue */
+            --secondary: #8E44AD;      /* Dark Purple */
+            --secondary-light: #AF7AC5; /* Light Purple */
+            --secondary-dark: #6C3483;  /* Darker Purple */
+            --accent: #E67E22;
+            --warning: #E74C3C;
+            --info: #2ECC71;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #FFFFFF;
+            --surface: #F8F9FA;
+            --border: #E9ECEF;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        [data-theme="dark"] {
+            --primary: #357ABD;
+            --primary-light: #4A90E2;
+            --primary-dark: #2C3E50;
+            --secondary: #6C3483;
+            --secondary-light: #8E44AD;
+            --secondary-dark: #4A235A;
+            --accent: #D35400;
+            --warning: #C0392B;
+            --info: #27AE60;
+            --text: #FFFFFF;
+            --text-light: #CCCCCC;
+            --background: #121212;
+            --surface: #1E1E1E;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        /* KaTeX styling */
+        .katex { 
+            font-size: 1.1em; 
+        }
+        
+        .katex-display { 
+            margin: 1em 0; 
+            text-align: center;
+        }
+        
+        .katex-display > .katex { 
+            display: inline-block;
+            text-align: center;
+        }
+
+        /* Equation styling */
+        .MH-equation {
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            margin: 0.5em 0;
+            padding: 0;
+            display: inline-block;
+            direction: ltr !important;
+            unicode-bidi: isolate;
+        }
+        
+        [dir="rtl"] .MH-equation {
+            text-align: left;
+            unicode-bidi: plaintext;
+        }
+
+        /* Canvas container styling */
+        .MH-canvas-container {
+            margin: 2em 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .MH-canvas {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background-color: var(--surface);
+            max-width: 100%;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+
+        .MH-canvas-title {
+            font-weight: bold;
+            margin-bottom: 0.5em;
+            color: var(--primary);
+        }
+
+        .MH-canvas-instructions {
+            font-size: 0.9em;
+            color: var(--text-light);
+            margin-top: 0.5em;
+            font-style: italic;
+        }
+
+        /* Geometry specific styling */
+        .MH-construction-step {
+            margin: 1.5em 0;
+            padding: 1em;
+            background-color: var(--surface);
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+        }
+
+        .MH-construction-step h4 {
+            margin-top: 0;
+            color: var(--primary-dark);
+        }
+
+        .MH-vector-notation {
+            font-family: 'KaTeX_Math', 'Cambria Math', serif;
+            font-style: italic;
+            color: var(--secondary);
+        }
+
+        .MH-point-label {
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .MH-transformation-notation {
+            background-color: rgba(78, 144, 226, 0.1);
+            padding: 0.5em;
+            border-radius: 4px;
+            font-family: 'KaTeX_Math', 'Cambria Math', serif;
+            margin: 0.5em 0;
+        }
+
+        /* Responsive canvas */
+        @media (max-width: 768px) {
+            .MH-canvas {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+
+        /* Homothety specific */
+        .MH-homothety-center {
+            font-weight: bold;
+            color: var(--warning);
+        }
+
+        .MH-homothety-ratio {
+            font-weight: bold;
+            color: var(--info);
+        }
+        
+        /* Exercise specific */
+        .MH-exercise-title {
+            color: var(--secondary);
+            border-bottom: 2px solid var(--secondary-light);
+            padding-bottom: 0.5em;
+            margin-top: 2em;
+        }
+        
+        .MH-theorem {
+            background-color: rgba(142, 68, 173, 0.1);
+            border-left: 4px solid var(--secondary);
+            padding: 1em;
+            margin: 1.5em 0;
+            border-radius: 4px;
+        }
+        
+        .MH-theorem-title {
+            font-weight: bold;
+            color: var(--secondary-dark);
+            margin-bottom: 0.5em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                    <!-- Notification Button -->
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+                        <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Geo_homothety2.title">Homothety: Part 2</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y2Geo_homothety2.subtitle">Properties and Applications - Exercises</h2>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_homothety2.introduction">Introduction</h2>
+            <p data-i18n="MH.lesson_Y2Geo_homothety2.introText1">This second part of the homothety lesson focuses on important properties and applications through exercises. We will explore how homotheties preserve alignment, transform lines and segments, conserve midpoints and barycenters, and analyze specific geometric configurations.</p>
+            <p data-i18n="MH.lesson_Y2Geo_homothety2.introText2">Through these exercises, you will master the fundamental properties of homotheties and learn to apply them to solve complex geometric problems.</p>
+        </section>
+
+        <!-- Part I: Conservation of Alignment -->
+        <section class="MH-section">
+            <h2 class="MH-exercise-title" data-i18n="MH.lesson_Y2Geo_homothety2.part1Title">I. Conservation of Alignment</h2>
+            
+            <div class="MH-theorem">
+                <div class="MH-theorem-title" data-i18n="MH.lesson_Y2Geo_homothety2.activity1Title">Activity 1: Alignment Preservation</div>
+                <p data-i18n="MH.lesson_Y2Geo_homothety2.activity1Statement">Let h be a homothety with center I and ratio k. Let A, B, and C be three aligned points, and A', B', and C' their respective images under h. Show that points A', B', and C' are aligned.</p>
+            </div>
+
+            <!-- Diagram 1: Alignment preservation -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_homothety2.diagram1Title">Figure: Homothety preserves alignment</div>
+                <canvas id="activity1Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_homothety2.diagram1Instructions">Points A, B, C are aligned. Their images A', B', C' under homothety h(I,k) remain aligned.</div>
+            </div>
+
+            <div class="MH-construction-step">
+                <button class="MH-solution-btn" onclick="constructActivity1()" data-i18n="MH.lesson_Y2Geo_homothety2.constructButton">Construct Diagram</button>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety2.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                <div class="MH-solution" id="solution1">
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution1Step1"><strong>Proof:</strong></p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution1Step2">Since A, B, and C are aligned, there exists a real number λ such that:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation1a">\(\overrightarrow{AC} = λ \overrightarrow{AB}\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution1Step3">By definition of homothety h with center I and ratio k:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation1b">\(\overrightarrow{IA'} = k \overrightarrow{IA}, \quad \overrightarrow{IB'} = k \overrightarrow{IB}, \quad \overrightarrow{IC'} = k \overrightarrow{IC}\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution1Step4">We need to show that A', B', and C' are aligned, i.e., there exists a real number μ such that:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation1c">\(\overrightarrow{A'C'} = μ \overrightarrow{A'B'}\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution1Step5">Compute \(\overrightarrow{A'C'}\):</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation1d">\(\overrightarrow{A'C'} = \overrightarrow{A'I} + \overrightarrow{IC'} = -\overrightarrow{IA'} + \overrightarrow{IC'} = -k \overrightarrow{IA} + k \overrightarrow{IC} = k(\overrightarrow{IC} - \overrightarrow{IA}) = k \overrightarrow{AC}\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution1Step6">Similarly, compute \(\overrightarrow{A'B'}\):</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation1e">\(\overrightarrow{A'B'} = \overrightarrow{A'I} + \overrightarrow{IB'} = -\overrightarrow{IA'} + \overrightarrow{IB'} = -k \overrightarrow{IA} + k \overrightarrow{IB} = k(\overrightarrow{IB} - \overrightarrow{IA}) = k \overrightarrow{AB}\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution1Step7">Therefore:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation1f">\(\overrightarrow{A'C'} = k \overrightarrow{AC} = k(λ \overrightarrow{AB}) = λ (k \overrightarrow{AB}) = λ \overrightarrow{A'B'}\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution1Step8">Thus, \(\overrightarrow{A'C'} = λ \overrightarrow{A'B'}\), which proves that A', B', and C' are aligned.</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution1Conclusion"><strong>Conclusion:</strong> Homothety preserves alignment of points.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part II: Image of a Line - Image of a Segment -->
+        <section class="MH-section">
+            <h2 class="MH-exercise-title" data-i18n="MH.lesson_Y2Geo_homothety2.part2Title">II. Image of a Line - Image of a Segment</h2>
+            
+            <div class="MH-theorem">
+                <div class="MH-theorem-title" data-i18n="MH.lesson_Y2Geo_homothety2.activity2Title">Activity 2: Line and Segment Transformation</div>
+                <p data-i18n="MH.lesson_Y2Geo_homothety2.activity2Statement">Let h be a homothety with center I and ratio k. Let A and B be two distinct points in the plane. Denote by A' and B' their respective images under h.</p>
+            </div>
+
+            <!-- Diagram 2: Line and segment transformation -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_homothety2.diagram2Title">Figure: Homothety transforms lines to parallel lines</div>
+                <canvas id="activity2Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_homothety2.diagram2Instructions">Line (AB) and its image (A'B') under homothety h(I,k).</div>
+            </div>
+
+            <div class="MH-construction-step">
+                <h4 data-i18n="MH.lesson_Y2Geo_homothety2.question2a">1) a) Let M be a point in the plane and M' its image under h.</h4>
+                <p data-i18n="MH.lesson_Y2Geo_homothety2.question2a1">Express vectorially the statement: "M belongs to line (AB)". Show that if M belongs to line (AB) then M' belongs to line (A'B').</p>
+                <button class="MH-solution-btn" onclick="showActivity2Part('a')" data-i18n="MH.lesson_Y2Geo_homothety2.constructButton">Show Construction</button>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety2.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                <div class="MH-solution" id="solution2">
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution2a1"><strong>a) Solution:</strong></p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution2a2">M belongs to line (AB) if and only if vectors \(\overrightarrow{AM}\) and \(\overrightarrow{AB}\) are collinear:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation2a">\(\overrightarrow{AM} = t \overrightarrow{AB}\) for some real number t</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution2a3">Now, suppose M belongs to line (AB). We need to show M' belongs to line (A'B'), i.e., \(\overrightarrow{A'M'}\) is collinear with \(\overrightarrow{A'B'}\).</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution2a4">Using the property of homothety:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation2b">\(\overrightarrow{A'M'} = k \overrightarrow{AM} = k(t \overrightarrow{AB}) = t(k \overrightarrow{AB}) = t \overrightarrow{A'B'}\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution2a5">Thus, \(\overrightarrow{A'M'} = t \overrightarrow{A'B'}\), which means M' belongs to line (A'B').</p>
+                </div>
+            </div>
+
+            <div class="MH-construction-step">
+                <h4 data-i18n="MH.lesson_Y2Geo_homothety2.question2b">b) Let N' be a point on (A'B') and N its antecedent under h.</h4>
+                <p data-i18n="MH.lesson_Y2Geo_homothety2.question2b1">Show that N belongs to line (AB).</p>
+                <button class="MH-solution-btn" onclick="showActivity2Part('b')" data-i18n="MH.lesson_Y2Geo_homothety2.constructButton">Show Construction</button>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety2.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                <div class="MH-solution" id="solution3">
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution2b1"><strong>b) Solution:</strong></p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution2b2">Since N' belongs to line (A'B'), we have:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation2c">\(\overrightarrow{A'N'} = s \overrightarrow{A'B'}\) for some real number s</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution2b3">But \(\overrightarrow{A'N'} = k \overrightarrow{AN}\) and \(\overrightarrow{A'B'} = k \overrightarrow{AB}\), so:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation2d">\(k \overrightarrow{AN} = s(k \overrightarrow{AB}) \Rightarrow \overrightarrow{AN} = s \overrightarrow{AB}\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution2b4">Thus, N belongs to line (AB).</p>
+                </div>
+            </div>
+
+            <div class="MH-construction-step">
+                <h4 data-i18n="MH.lesson_Y2Geo_homothety2.question2c">c) What can we conclude?</h4>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety2.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+                <div class="MH-solution" id="solution4">
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution2c1"><strong>c) Conclusion:</strong></p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution2c2">From parts (a) and (b), we conclude that the image of line (AB) under homothety h is exactly line (A'B').</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation2e">\(h((AB)) = (A'B')\)</div>
+                </div>
+            </div>
+
+            <div class="MH-construction-step">
+                <h4 data-i18n="MH.lesson_Y2Geo_homothety2.question2d">d) What is the relative position of lines (AB) and (A'B')?</h4>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety2.showSolution" onclick="toggleSolution(5)">Show Solution</button>
+                <div class="MH-solution" id="solution5">
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution2d1"><strong>d) Solution:</strong></p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution2d2">Since \(\overrightarrow{A'B'} = k \overrightarrow{AB}\), vectors \(\overrightarrow{AB}\) and \(\overrightarrow{A'B'}\) are collinear.</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution2d3">Therefore, lines (AB) and (A'B') are parallel.</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation2f">\((AB) \parallel (A'B')\)</div>
+                </div>
+            </div>
+
+            <div class="MH-construction-step">
+                <h4 data-i18n="MH.lesson_Y2Geo_homothety2.question2e">2) Show that the image of segment [AB] under h is the segment [A'B'].</h4>
+                <button class="MH-solution-btn" onclick="showActivity2Part('e')" data-i18n="MH.lesson_Y2Geo_homothety2.constructButton">Show Construction</button>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety2.showSolution" onclick="toggleSolution(6)">Show Solution</button>
+                <div class="MH-solution" id="solution6">
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution2e1"><strong>2) Solution:</strong></p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution2e2">Let M be a point on segment [AB]. Then there exists t ∈ [0, 1] such that:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation2g">\(\overrightarrow{AM} = t \overrightarrow{AB}\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution2e3">Its image M' satisfies:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation2h">\(\overrightarrow{A'M'} = k \overrightarrow{AM} = k(t \overrightarrow{AB}) = t(k \overrightarrow{AB}) = t \overrightarrow{A'B'}\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution2e4">Since t ∈ [0, 1], M' belongs to segment [A'B'].</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution2e5">Conversely, if N' belongs to segment [A'B'], then \(\overrightarrow{A'N'} = s \overrightarrow{A'B'}\) with s ∈ [0, 1]. Its antecedent N satisfies:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation2i">\(\overrightarrow{AN} = s \overrightarrow{AB}\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution2e6">Thus N belongs to segment [AB].</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution2e7"><strong>Conclusion:</strong> \(h([AB]) = [A'B']\)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part III: Conservation of Midpoint -->
+        <section class="MH-section">
+            <h2 class="MH-exercise-title" data-i18n="MH.lesson_Y2Geo_homothety2.part3Title">III. Conservation of Midpoint</h2>
+            
+            <div class="MH-theorem">
+                <div class="MH-theorem-title" data-i18n="MH.lesson_Y2Geo_homothety2.activity3Title">Activity 3: Midpoint Preservation</div>
+                <p data-i18n="MH.lesson_Y2Geo_homothety2.activity3Statement1">1) In the opposite figure, I is the midpoint of segment [AB], A' is the image of A under a homothety with center O.</p>
+                <p data-i18n="MH.lesson_Y2Geo_homothety2.activity3Statement2">a) Copy the figure and construct points I' and B' respective images of I and B under this homothety.</p>
+                <p data-i18n="MH.lesson_Y2Geo_homothety2.activity3Statement3">b) What does I' represent for segment [A'B']?</p>
+            </div>
+
+            <!-- Diagram 3: Midpoint preservation -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_homothety2.diagram3Title">Figure: Homothety preserves midpoints</div>
+                <canvas id="activity3Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_homothety2.diagram3Instructions">I is midpoint of [AB]. Under homothety h(O,k), I' is midpoint of [A'B'].</div>
+            </div>
+
+            <div class="MH-construction-step">
+                <h4 data-i18n="MH.lesson_Y2Geo_homothety2.question3a">1) a) Construction</h4>
+                <button class="MH-solution-btn" onclick="constructActivity3Part('a')" data-i18n="MH.lesson_Y2Geo_homothety2.constructButton">Construct Diagram</button>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety2.showSolution" onclick="toggleSolution(7)">Show Solution</button>
+                <div class="MH-solution" id="solution7">
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution3a1"><strong>a) Construction:</strong></p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution3a2">Given A' = h(A), we construct:</p>
+                    <ul>
+                        <li data-i18n="MH.lesson_Y2Geo_homothety2.solution3a3">B' such that \(\overrightarrow{OB'} = k \overrightarrow{OB}\)</li>
+                        <li data-i18n="MH.lesson_Y2Geo_homothety2.solution3a4">I' such that \(\overrightarrow{OI'} = k \overrightarrow{OI}\)</li>
+                    </ul>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution3a5">Since I is the midpoint of [AB], we have \(\overrightarrow{AI} = \frac{1}{2} \overrightarrow{AB}\).</p>
+                </div>
+            </div>
+
+            <div class="MH-construction-step">
+                <h4 data-i18n="MH.lesson_Y2Geo_homothety2.question3b">b) What does I' represent for segment [A'B']?</h4>
+                <button class="MH-solution-btn" onclick="constructActivity3Part('b')" data-i18n="MH.lesson_Y2Geo_homothety2.constructButton">Show Construction</button>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety2.showSolution" onclick="toggleSolution(8)">Show Solution</button>
+                <div class="MH-solution" id="solution8">
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution3b1"><strong>b) Solution:</strong></p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution3b2">We need to show that I' is the midpoint of [A'B'].</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution3b3">Since I is midpoint of [AB]:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation3a">\(\overrightarrow{AI} = \overrightarrow{IB} \quad \text{or} \quad \overrightarrow{IA} + \overrightarrow{IB} = \overrightarrow{0}\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution3b4">Now consider I' and segment [A'B']:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation3b">\(\overrightarrow{A'I'} = k \overrightarrow{AI} \quad \text{and} \quad \overrightarrow{I'B'} = k \overrightarrow{IB}\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation3c">\(\overrightarrow{A'I'} = k \overrightarrow{AI} = k \overrightarrow{IB} = \overrightarrow{I'B'}\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution3b5">Thus, \(\overrightarrow{A'I'} = \overrightarrow{I'B'}\), so I' is the midpoint of [A'B'].</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution3b6"><strong>Conclusion:</strong> I' is the midpoint of segment [A'B'].</p>
+                </div>
+            </div>
+
+            <div class="MH-construction-step">
+                <h4 data-i18n="MH.lesson_Y2Geo_homothety2.question3c">2) General property</h4>
+                <p data-i18n="MH.lesson_Y2Geo_homothety2.question3c1">Let h be a homothety with ratio k. Let [MN] be a segment and P its midpoint. Denote by M', N', and P' the respective images of M, N, and P under h. Show that P' is the midpoint of [M'N'].</p>
+                <button class="MH-solution-btn" onclick="constructActivity3Part('c')" data-i18n="MH.lesson_Y2Geo_homothety2.constructButton">Show Construction</button>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety2.showSolution" onclick="toggleSolution(9)">Show Solution</button>
+                <div class="MH-solution" id="solution9">
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution3c1"><strong>2) General Proof:</strong></p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution3c2">Since P is the midpoint of [MN], we have:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation3d">\(\overrightarrow{MP} = \overrightarrow{PN} \quad \text{or} \quad \overrightarrow{MN} = 2 \overrightarrow{MP}\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution3c3">Now consider the images:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation3e">\(\overrightarrow{M'P'} = k \overrightarrow{MP} \quad \text{and} \quad \overrightarrow{P'N'} = k \overrightarrow{PN}\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution3c4">Since \(\overrightarrow{MP} = \overrightarrow{PN}\), we have:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation3f">\(\overrightarrow{M'P'} = k \overrightarrow{MP} = k \overrightarrow{PN} = \overrightarrow{P'N'}\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution3c5">Therefore, \(\overrightarrow{M'P'} = \overrightarrow{P'N'}\), which means P' is the midpoint of [M'N'].</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution3c6"><strong>Conclusion:</strong> Homothety preserves midpoints.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part IV: Conservation of Barycenter -->
+        <section class="MH-section">
+            <h2 class="MH-exercise-title" data-i18n="MH.lesson_Y2Geo_homothety2.part4Title">IV. Conservation of Barycenter</h2>
+            
+            <div class="MH-theorem">
+                <div class="MH-theorem-title" data-i18n="MH.lesson_Y2Geo_homothety2.activity4Title">Activity 4: Barycenter Preservation</div>
+                <p data-i18n="MH.lesson_Y2Geo_homothety2.activity4Statement">Let h be a homothety with ratio k.</p>
+            </div>
+
+            <!-- Diagram 4: Barycenter preservation -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_homothety2.diagram4Title">Figure: Homothety preserves barycenters</div>
+                <canvas id="activity4Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_homothety2.diagram4Instructions">Barycenter G of weighted points (A,α), (B,β). Its image G' is barycenter of (A',α), (B',β).</div>
+            </div>
+
+            <div class="MH-construction-step">
+                <h4 data-i18n="MH.lesson_Y2Geo_homothety2.question4a">1) Let α and β be two real numbers such that α + β ≠ 0.</h4>
+                <p data-i18n="MH.lesson_Y2Geo_homothety2.question4a1">Let M and N be two points in the plane. Denote by M' and N' their respective images under h. Let P be the barycenter of points (M, α) and (N, β) and P' the image of P under h. Show that P' is the barycenter of points (M', α) and (N', β).</p>
+                <button class="MH-solution-btn" onclick="constructActivity4Part('a')" data-i18n="MH.lesson_Y2Geo_homothety2.constructButton">Show Construction</button>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety2.showSolution" onclick="toggleSolution(10)">Show Solution</button>
+                <div class="MH-solution" id="solution10">
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution4a1"><strong>1) Proof:</strong></p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution4a2">Let O be an arbitrary point (we can take O as the center of homothety h).</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution4a3">Since P is the barycenter of (M, α) and (N, β), we have:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation4a">\(α \overrightarrow{OP} + β \overrightarrow{OP} = α \overrightarrow{OM} + β \overrightarrow{ON}\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation4b">\((α + β) \overrightarrow{OP} = α \overrightarrow{OM} + β \overrightarrow{ON}\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution4a4">Apply the homothety h with center I and ratio k. For any point X with image X':</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation4c">\(\overrightarrow{IX'} = k \overrightarrow{IX} \quad \text{or} \quad \overrightarrow{OX'} = \overrightarrow{OI} + k(\overrightarrow{OX} - \overrightarrow{OI})\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution4a5">Substitute this into the barycenter equation:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation4d">\((α + β) \overrightarrow{OP'} = (α + β)(\overrightarrow{OI} + k(\overrightarrow{OP} - \overrightarrow{OI}))\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation4e">\(= (α + β)\overrightarrow{OI} + k(α + β)(\overrightarrow{OP} - \overrightarrow{OI})\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation4f">\(= (α + β)\overrightarrow{OI} + k(α \overrightarrow{OM} + β \overrightarrow{ON} - (α + β)\overrightarrow{OI})\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation4g">\(= (α + β)\overrightarrow{OI} + α k(\overrightarrow{OM} - \overrightarrow{OI}) + β k(\overrightarrow{ON} - \overrightarrow{OI})\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation4h">\(= α(\overrightarrow{OI} + k(\overrightarrow{OM} - \overrightarrow{OI})) + β(\overrightarrow{OI} + k(\overrightarrow{ON} - \overrightarrow{OI}))\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation4i">\(= α \overrightarrow{OM'} + β \overrightarrow{ON'}\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution4a6">Thus, \((α + β) \overrightarrow{OP'} = α \overrightarrow{OM'} + β \overrightarrow{ON'}\), which means P' is the barycenter of (M', α) and (N', β).</p>
+                </div>
+            </div>
+
+            <div class="MH-construction-step">
+                <h4 data-i18n="MH.lesson_Y2Geo_homothety2.question4b">2) Let A, B, and C be three points in the plane and G the barycenter of points (A, 2), (B, -1), and (C, 3).</h4>
+                <p data-i18n="MH.lesson_Y2Geo_homothety2.question4b1">Denote by A', B', C', and G' the respective images of A, B, C, and G under h. Show that G' is the barycenter of points (A', 2), (B', -1), and (C', 3).</p>
+                <button class="MH-solution-btn" onclick="constructActivity4Part('b')" data-i18n="MH.lesson_Y2Geo_homothety2.constructButton">Show Construction</button>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety2.showSolution" onclick="toggleSolution(11)">Show Solution</button>
+                <div class="MH-solution" id="solution11">
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution4b1"><strong>2) Proof:</strong></p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution4b2">This is a direct application of the general result from part 1.</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution4b3">Let O be an arbitrary point. Since G is barycenter of (A,2), (B,-1), (C,3):</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation4j">\((2 - 1 + 3) \overrightarrow{OG} = 2 \overrightarrow{OA} - \overrightarrow{OB} + 3 \overrightarrow{OC}\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation4k">\(4 \overrightarrow{OG} = 2 \overrightarrow{OA} - \overrightarrow{OB} + 3 \overrightarrow{OC}\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution4b4">Apply the same transformation as in part 1:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation4l">\(4 \overrightarrow{OG'} = 4(\overrightarrow{OI} + k(\overrightarrow{OG} - \overrightarrow{OI}))\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation4m">\(= 4\overrightarrow{OI} + k(4\overrightarrow{OG} - 4\overrightarrow{OI})\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation4n">\(= 4\overrightarrow{OI} + k(2\overrightarrow{OA} - \overrightarrow{OB} + 3\overrightarrow{OC} - 4\overrightarrow{OI})\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation4o">\(= 2(\overrightarrow{OI} + k(\overrightarrow{OA} - \overrightarrow{OI})) - (\overrightarrow{OI} + k(\overrightarrow{OB} - \overrightarrow{OI})) + 3(\overrightarrow{OI} + k(\overrightarrow{OC} - \overrightarrow{OI}))\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation4p">\(= 2 \overrightarrow{OA'} - \overrightarrow{OB'} + 3 \overrightarrow{OC'}\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution4b5">Thus, \(4 \overrightarrow{OG'} = 2 \overrightarrow{OA'} - \overrightarrow{OB'} + 3 \overrightarrow{OC'}\), which means G' is the barycenter of (A',2), (B',-1), and (C',3).</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution4b6"><strong>Conclusion:</strong> Homothety preserves barycenters with the same weights.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part V: Trapezoid Configuration -->
+        <section class="MH-section">
+            <h2 class="MH-exercise-title" data-i18n="MH.lesson_Y2Geo_homothety2.part5Title">V. Trapezoid Configuration</h2>
+            
+            <div class="MH-theorem">
+                <div class="MH-theorem-title" data-i18n="MH.lesson_Y2Geo_homothety2.activity5Title">Activity 5: Trapezoid Analysis</div>
+                <p data-i18n="MH.lesson_Y2Geo_homothety2.activity5Statement">In the opposite figure, ABCD is a trapezoid with bases [AB] and [CD]. I is the midpoint of [AB] and J is the midpoint of [CD]. O is the intersection point of lines (AD) and (BC), and O' is the intersection point of lines (AC) and (BD).</p>
+            </div>
+
+            <!-- Diagram 5: Trapezoid configuration -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_homothety2.diagram5Title">Figure: Trapezoid ABCD with intersection points O and O'</div>
+                <canvas id="activity5Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_homothety2.diagram5Instructions">Trapezoid ABCD with midpoints I, J and intersection points O, O'.</div>
+            </div>
+
+            <div class="MH-construction-step">
+                <h4 data-i18n="MH.lesson_Y2Geo_homothety2.question5a">1) Let h1 be the homothety with center O that transforms A into D.</h4>
+                <p data-i18n="MH.lesson_Y2Geo_homothety2.question5a1">a) Show that h1 transforms B into C.</p>
+                <p data-i18n="MH.lesson_Y2Geo_homothety2.question5a2">b) Deduce that points O, I, and J are aligned.</p>
+                <button class="MH-solution-btn" onclick="constructActivity5Part('a')" data-i18n="MH.lesson_Y2Geo_homothety2.constructButton">Show Construction</button>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety2.showSolution" onclick="toggleSolution(12)">Show Solution</button>
+                <div class="MH-solution" id="solution12">
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5a1"><strong>1) a) Proof that h1 transforms B into C:</strong></p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5a2">Since h1 is a homothety with center O and h1(A) = D, we have:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation5a">\(\overrightarrow{OD} = k_1 \overrightarrow{OA}\) for some ratio k₁</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5a3">In trapezoid ABCD, (AB) ∥ (CD). Consider lines (AD) and (BC) which intersect at O.</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5a4">Triangles OAB and ODC are similar (by Thales theorem since (AB) ∥ (CD)).</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5a5">The homothety with center O that sends A to D must send B to C to preserve parallelism:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation5b">\(h_1(B) = C\)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5a6"><strong>b) Deduction that O, I, and J are aligned:</strong></p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5a7">Since h1 is a homothety with center O, and I is the midpoint of [AB], the image of I under h1 is the midpoint of [h1(A)h1(B)] = [DC].</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5a8">But the midpoint of [DC] is J. Therefore, h1(I) = J.</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5a9">Since h1(I) = J and h1 has center O, points O, I, and J are aligned (a point, its image, and the center of homothety are always aligned).</p>
+                </div>
+            </div>
+
+            <div class="MH-construction-step">
+                <h4 data-i18n="MH.lesson_Y2Geo_homothety2.question5b">2) Let h2 be the homothety with center O' that transforms A into C.</h4>
+                <p data-i18n="MH.lesson_Y2Geo_homothety2.question5b1">a) Show that h2 transforms B into D.</p>
+                <p data-i18n="MH.lesson_Y2Geo_homothety2.question5b2">b) Show that points O, I, O', and J are aligned.</p>
+                <button class="MH-solution-btn" onclick="constructActivity5Part('b')" data-i18n="MH.lesson_Y2Geo_homothety2.constructButton">Show Construction</button>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety2.showSolution" onclick="toggleSolution(13)">Show Solution</button>
+                <div class="MH-solution" id="solution13">
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5b1"><strong>2) a) Proof that h2 transforms B into D:</strong></p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5b2">Since h2 is a homothety with center O' and h2(A) = C, we have:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation5c">\(\overrightarrow{O'C} = k_2 \overrightarrow{O'A}\) for some ratio k₂</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5b3">Consider triangles O'AB and O'CD. Lines (AC) and (BD) intersect at O'.</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5b4">Since (AB) ∥ (CD), by Thales theorem, triangles O'AB and O'DC are similar.</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5b5">The homothety with center O' that sends A to C must send B to D to preserve parallelism:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation5d">\(h_2(B) = D\)</div>
+                    
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5b6"><strong>b) Proof that O, I, O', and J are aligned:</strong></p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5b7">From part 1, we know O, I, and J are aligned.</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5b8">Now consider h2. Since I is the midpoint of [AB] and h2 is a homothety, h2(I) is the midpoint of [h2(A)h2(B)] = [CD].</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5b9">But the midpoint of [CD] is J. Therefore, h2(I) = J.</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5b10">Since h2(I) = J and h2 has center O', points O', I, and J are aligned.</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5b11">Thus, I and J are aligned with both O and O'. Therefore, all four points O, I, O', and J are aligned.</p>
+                </div>
+            </div>
+
+            <div class="MH-construction-step">
+                <h4 data-i18n="MH.lesson_Y2Geo_homothety2.question5c">3) In the opposite figure, lines D1, D2, and D3 are parallel.</h4>
+                <p data-i18n="MH.lesson_Y2Geo_homothety2.question5c1">Show that points P, Q, and R are aligned.</p>
+                <button class="MH-solution-btn" onclick="constructActivity5Part('c')" data-i18n="MH.lesson_Y2Geo_homothety2.constructButton">Show Construction</button>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety2.showSolution" onclick="toggleSolution(14)">Show Solution</button>
+                <div class="MH-solution" id="solution14">
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5c1"><strong>3) Proof that P, Q, and R are aligned:</strong></p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5c2">Let D1, D2, and D3 be three parallel lines.</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5c3">Consider two transversals that intersect these lines at points A, B, C on D1; A', B', C' on D2; and A", B", C" on D3.</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5c4">Let P = (AA') ∩ (BB'), Q = (BB') ∩ (CC'), and R = (AA') ∩ (CC').</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5c5">By Thales theorem on parallel lines D1, D2, D3:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety2.equation5e">\(\frac{AB}{BC} = \frac{A'B'}{B'C'} = \frac{A"B"}{B"C"}\)</div>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5c6">Consider homothety h1 with center P that sends A to A'. Since (AB) ∥ (A'B'), h1 must send B to B'.</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5c7">Similarly, consider homothety h2 with center Q that sends B to B'. Since (BC) ∥ (B'C'), h2 must send C to C'.</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5c8">The composition h2 ∘ h1 sends A to A' then to A", and sends C to C' then to C".</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5c9">But h2 ∘ h1 is also a homothety (composition of homotheties with aligned centers is a homothety).</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5c10">This homothety sends A to A" and C to C", so its center must be the intersection of (AA") and (CC"), which is R.</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5c11">Since P, Q, and R are centers of homotheties that are aligned (by the property of composition), points P, Q, and R are aligned.</p>
+                    <p data-i18n="MH.lesson_Y2Geo_homothety2.solution5c12">This is a special case of the Pappus theorem for parallel lines.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_homothety2.summaryTitle">Comprehensive Summary</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Geo_homothety2.summary1Title">Key Properties of Homothety</h3>
+                <p data-i18n="MH.lesson_Y2Geo_homothety2.summary1Text">Through these exercises, we have demonstrated important properties of homotheties:</p>
+            </div>
+
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_homothety2.summary2Title">Properties Demonstrated</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety2.summary2a"><strong>Conservation of alignment:</strong> The image of aligned points under a homothety remains aligned.</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety2.summary2b"><strong>Transformation of lines:</strong> A homothety transforms a line into a parallel line.</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety2.summary2c"><strong>Transformation of segments:</strong> The image of segment [AB] is segment [A'B'].</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety2.summary2d"><strong>Conservation of midpoints:</strong> The image of the midpoint of a segment is the midpoint of the image segment.</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety2.summary2e"><strong>Conservation of barycenters:</strong> Homotheties preserve barycenters with the same weights.</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety2.summary2f"><strong>Geometric configurations:</strong> Homotheties are powerful tools for analyzing trapezoids and parallel line configurations.</li>
+                </ul>
+            </div>
+            
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Geo_homothety2.conclusionTitle">Conclusion</h3>
+                <div class="MH-important">
+                    <h3 data-i18n="MH.lesson_Y2Geo_homothety2.keyConceptsTitle">Key Concepts Mastered</h3>
+                    <ul>
+                        <li data-i18n="MH.lesson_Y2Geo_homothety2.concept1">Proof techniques for homothety properties</li>
+                        <li data-i18n="MH.lesson_Y2Geo_homothety2.concept2">Vector methods in homothety proofs</li>
+                        <li data-i18n="MH.lesson_Y2Geo_homothety2.concept3">Application of homotheties to geometric configurations</li>
+                        <li data-i18n="MH.lesson_Y2Geo_homothety2.concept4">Relationship between homotheties and parallel lines</li>
+                        <li data-i18n="MH.lesson_Y2Geo_homothety2.concept5">Composition of homotheties</li>
+                        <li data-i18n="MH.lesson_Y2Geo_homothety2.concept6">Homothety as a tool for proving collinearity</li>
+                    </ul>
+                </div>
+                <p data-i18n="MH.lesson_Y2Geo_homothety2.finalThought">Homothety is not just a simple scaling transformation; it's a powerful geometric tool that preserves many important properties. Mastering homotheties enables you to solve complex geometric problems, prove collinearity and concurrency, and understand deeper relationships in geometric configurations. These exercises demonstrate how homothety connects with other geometric concepts like parallelism, midpoints, barycenters, and similarity.</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    
+    <script>
+        // HOMOTHETY PART 2 LESSON TRANSLATIONS
+        const homothety2Translations = {
+            'en': {
+                // General translations
+                'MH.general.homeTooltip': 'Go to Homepage',
+                'MH.general.install': 'Install App',
+                'MH.general.installSuccess': 'Mathematics Hub installed successfully!',
+                'MH.general.enableNotifications': 'Enable Notifications',
+                'MH.general.notificationEnabled': 'Notifications enabled! You will now receive updates.',
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Theme',
+                'MH.general.language': 'Language',
+                'MH.lesson_Y2Geo_homothety2.showSolution': 'Show Solution',
+                'MH.lesson_Y2Geo_homothety2.hideSolution': 'Hide Solution',
+                'MH.lesson_Y2Geo_homothety2.showConstruction': 'Show Construction',
+                'MH.lesson_Y2Geo_homothety2.constructButton': 'Construct Diagram',
+                
+                // Lesson specific translations
+                'MH.lesson_Y2Geo_homothety2.title': 'Homothety: Part 2',
+                'MH.lesson_Y2Geo_homothety2.subtitle': 'Properties and Applications - Exercises',
+                'MH.lesson_Y2Geo_homothety2.introduction': 'Introduction',
+                'MH.lesson_Y2Geo_homothety2.introText1': 'This second part of the homothety lesson focuses on important properties and applications through exercises. We will explore how homotheties preserve alignment, transform lines and segments, conserve midpoints and barycenters, and analyze specific geometric configurations.',
+                'MH.lesson_Y2Geo_homothety2.introText2': 'Through these exercises, you will master the fundamental properties of homotheties and learn to apply them to solve complex geometric problems.',
+                
+                // Part I: Conservation of Alignment
+                'MH.lesson_Y2Geo_homothety2.part1Title': 'I. Conservation of Alignment',
+                'MH.lesson_Y2Geo_homothety2.activity1Title': 'Activity 1: Alignment Preservation',
+                'MH.lesson_Y2Geo_homothety2.activity1Statement': 'Let h be a homothety with center I and ratio k. Let A, B, and C be three aligned points, and A\', B\', and C\' their respective images under h. Show that points A\', B\', and C\' are aligned.',
+                'MH.lesson_Y2Geo_homothety2.diagram1Title': 'Figure: Homothety preserves alignment',
+                'MH.lesson_Y2Geo_homothety2.diagram1Instructions': 'Points A, B, C are aligned. Their images A\', B\', C\' under homothety h(I,k) remain aligned.',
+                'MH.lesson_Y2Geo_homothety2.solution1Step1': '<strong>Proof:</strong>',
+                'MH.lesson_Y2Geo_homothety2.solution1Step2': 'Since A, B, and C are aligned, there exists a real number λ such that:',
+                'MH.lesson_Y2Geo_homothety2.equation1a': String.raw`\(\overrightarrow{AC} = λ \overrightarrow{AB}\)`,
+                'MH.lesson_Y2Geo_homothety2.solution1Step3': 'By definition of homothety h with center I and ratio k:',
+                'MH.lesson_Y2Geo_homothety2.equation1b': String.raw`\(\overrightarrow{IA'} = k \overrightarrow{IA}, \quad \overrightarrow{IB'} = k \overrightarrow{IB}, \quad \overrightarrow{IC'} = k \overrightarrow{IC}\)`,
+                'MH.lesson_Y2Geo_homothety2.solution1Step4': 'We need to show that A\', B\', and C\' are aligned, i.e., there exists a real number μ such that:',
+                'MH.lesson_Y2Geo_homothety2.equation1c': String.raw`\(\overrightarrow{A'C'} = μ \overrightarrow{A'B'}\)`,
+                'MH.lesson_Y2Geo_homothety2.solution1Step5': 'Compute \(\overrightarrow{A\'C\'}\):',
+                'MH.lesson_Y2Geo_homothety2.equation1d': String.raw`\(\overrightarrow{A'C'} = \overrightarrow{A'I} + \overrightarrow{IC'} = -\overrightarrow{IA'} + \overrightarrow{IC'} = -k \overrightarrow{IA} + k \overrightarrow{IC} = k(\overrightarrow{IC} - \overrightarrow{IA}) = k \overrightarrow{AC}\)`,
+                'MH.lesson_Y2Geo_homothety2.solution1Step6': 'Similarly, compute \(\overrightarrow{A\'B\'}\):',
+                'MH.lesson_Y2Geo_homothety2.equation1e': String.raw`\(\overrightarrow{A'B'} = \overrightarrow{A'I} + \overrightarrow{IB'} = -\overrightarrow{IA'} + \overrightarrow{IB'} = -k \overrightarrow{IA} + k \overrightarrow{IB} = k(\overrightarrow{IB} - \overrightarrow{IA}) = k \overrightarrow{AB}\)`,
+                'MH.lesson_Y2Geo_homothety2.solution1Step7': 'Therefore:',
+                'MH.lesson_Y2Geo_homothety2.equation1f': String.raw`\(\overrightarrow{A'C'} = k \overrightarrow{AC} = k(λ \overrightarrow{AB}) = λ (k \overrightarrow{AB}) = λ \overrightarrow{A'B'}\)`,
+                'MH.lesson_Y2Geo_homothety2.solution1Step8': 'Thus, \(\overrightarrow{A\'C\'} = λ \overrightarrow{A\'B\'}\), which proves that A\', B\', and C\' are aligned.',
+                'MH.lesson_Y2Geo_homothety2.solution1Conclusion': '<strong>Conclusion:</strong> Homothety preserves alignment of points.',
+                
+                // Part II: Image of a Line - Image of a Segment
+                'MH.lesson_Y2Geo_homothety2.part2Title': 'II. Image of a Line - Image of a Segment',
+                'MH.lesson_Y2Geo_homothety2.activity2Title': 'Activity 2: Line and Segment Transformation',
+                'MH.lesson_Y2Geo_homothety2.activity2Statement': 'Let h be a homothety with center I and ratio k. Let A and B be two distinct points in the plane. Denote by A\' and B\' their respective images under h.',
+                'MH.lesson_Y2Geo_homothety2.diagram2Title': 'Figure: Homothety transforms lines to parallel lines',
+                'MH.lesson_Y2Geo_homothety2.diagram2Instructions': 'Line (AB) and its image (A\'B\') under homothety h(I,k).',
+                'MH.lesson_Y2Geo_homothety2.question2a': '1) a) Let M be a point in the plane and M\' its image under h.',
+                'MH.lesson_Y2Geo_homothety2.question2a1': 'Express vectorially the statement: "M belongs to line (AB)". Show that if M belongs to line (AB) then M\' belongs to line (A\'B\').',
+                'MH.lesson_Y2Geo_homothety2.solution2a1': '<strong>a) Solution:</strong>',
+                'MH.lesson_Y2Geo_homothety2.solution2a2': 'M belongs to line (AB) if and only if vectors \(\overrightarrow{AM}\) and \(\overrightarrow{AB}\) are collinear:',
+                'MH.lesson_Y2Geo_homothety2.equation2a': String.raw`\(\overrightarrow{AM} = t \overrightarrow{AB}\) for some real number t`,
+                'MH.lesson_Y2Geo_homothety2.solution2a3': 'Now, suppose M belongs to line (AB). We need to show M\' belongs to line (A\'B\'), i.e., \(\overrightarrow{A\'M\'}\) is collinear with \(\overrightarrow{A\'B\'}\).',
+                'MH.lesson_Y2Geo_homothety2.solution2a4': 'Using the property of homothety:',
+                'MH.lesson_Y2Geo_homothety2.equation2b': String.raw`\(\overrightarrow{A'M'} = k \overrightarrow{AM} = k(t \overrightarrow{AB}) = t(k \overrightarrow{AB}) = t \overrightarrow{A'B'}\)`,
+                'MH.lesson_Y2Geo_homothety2.solution2a5': 'Thus, \(\overrightarrow{A\'M\'} = t \overrightarrow{A\'B\'}\), which means M\' belongs to line (A\'B\').',
+                'MH.lesson_Y2Geo_homothety2.question2b': 'b) Let N\' be a point on (A\'B\') and N its antecedent under h.',
+                'MH.lesson_Y2Geo_homothety2.question2b1': 'Show that N belongs to line (AB).',
+                'MH.lesson_Y2Geo_homothety2.solution2b1': '<strong>b) Solution:</strong>',
+                'MH.lesson_Y2Geo_homothety2.solution2b2': 'Since N\' belongs to line (A\'B\'), we have:',
+                'MH.lesson_Y2Geo_homothety2.equation2c': String.raw`\(\overrightarrow{A'N'} = s \overrightarrow{A'B'}\) for some real number s`,
+                'MH.lesson_Y2Geo_homothety2.solution2b3': 'But \(\overrightarrow{A\'N\'} = k \overrightarrow{AN}\) and \(\overrightarrow{A\'B\'} = k \overrightarrow{AB}\), so:',
+                'MH.lesson_Y2Geo_homothety2.equation2d': String.raw`\(k \overrightarrow{AN} = s(k \overrightarrow{AB}) \Rightarrow \overrightarrow{AN} = s \overrightarrow{AB}\)`,
+                'MH.lesson_Y2Geo_homothety2.solution2b4': 'Thus, N belongs to line (AB).',
+                'MH.lesson_Y2Geo_homothety2.question2c': 'c) What can we conclude?',
+                'MH.lesson_Y2Geo_homothety2.solution2c1': '<strong>c) Conclusion:</strong>',
+                'MH.lesson_Y2Geo_homothety2.solution2c2': 'From parts (a) and (b), we conclude that the image of line (AB) under homothety h is exactly line (A\'B\').',
+                'MH.lesson_Y2Geo_homothety2.equation2e': String.raw`\(h((AB)) = (A'B')\)`,
+                'MH.lesson_Y2Geo_homothety2.question2d': 'd) What is the relative position of lines (AB) and (A\'B\')?',
+                'MH.lesson_Y2Geo_homothety2.solution2d1': '<strong>d) Solution:</strong>',
+                'MH.lesson_Y2Geo_homothety2.solution2d2': 'Since \(\overrightarrow{A\'B\'} = k \overrightarrow{AB}\), vectors \(\overrightarrow{AB}\) and \(\overrightarrow{A\'B\'}\) are collinear.',
+                'MH.lesson_Y2Geo_homothety2.solution2d3': 'Therefore, lines (AB) and (A\'B\') are parallel.',
+                'MH.lesson_Y2Geo_homothety2.equation2f': String.raw`\((AB) \parallel (A'B')\)`,
+                'MH.lesson_Y2Geo_homothety2.question2e': '2) Show that the image of segment [AB] under h is the segment [A\'B\'].',
+                'MH.lesson_Y2Geo_homothety2.solution2e1': '<strong>2) Solution:</strong>',
+                'MH.lesson_Y2Geo_homothety2.solution2e2': 'Let M be a point on segment [AB]. Then there exists t ∈ [0, 1] such that:',
+                'MH.lesson_Y2Geo_homothety2.equation2g': String.raw`\(\overrightarrow{AM} = t \overrightarrow{AB}\)`,
+                'MH.lesson_Y2Geo_homothety2.solution2e3': 'Its image M\' satisfies:',
+                'MH.lesson_Y2Geo_homothety2.equation2h': String.raw`\(\overrightarrow{A'M'} = k \overrightarrow{AM} = k(t \overrightarrow{AB}) = t(k \overrightarrow{AB}) = t \overrightarrow{A'B'}\)`,
+                'MH.lesson_Y2Geo_homothety2.solution2e4': 'Since t ∈ [0, 1], M\' belongs to segment [A\'B\'].',
+                'MH.lesson_Y2Geo_homothety2.solution2e5': 'Conversely, if N\' belongs to segment [A\'B\'], then \(\overrightarrow{A\'N\'} = s \overrightarrow{A\'B\'}\) with s ∈ [0, 1]. Its antecedent N satisfies:',
+                'MH.lesson_Y2Geo_homothety2.equation2i': String.raw`\(\overrightarrow{AN} = s \overrightarrow{AB}\)`,
+                'MH.lesson_Y2Geo_homothety2.solution2e6': 'Thus N belongs to segment [AB].',
+                'MH.lesson_Y2Geo_homothety2.solution2e7': '<strong>Conclusion:</strong> \(h([AB]) = [A\'B\']\)',
+                
+                // Part III: Conservation of Midpoint
+                'MH.lesson_Y2Geo_homothety2.part3Title': 'III. Conservation of Midpoint',
+                'MH.lesson_Y2Geo_homothety2.activity3Title': 'Activity 3: Midpoint Preservation',
+                'MH.lesson_Y2Geo_homothety2.activity3Statement1': '1) In the opposite figure, I is the midpoint of segment [AB], A\' is the image of A under a homothety with center O.',
+                'MH.lesson_Y2Geo_homothety2.activity3Statement2': 'a) Copy the figure and construct points I\' and B\' respective images of I and B under this homothety.',
+                'MH.lesson_Y2Geo_homothety2.activity3Statement3': 'b) What does I\' represent for segment [A\'B\']?',
+                'MH.lesson_Y2Geo_homothety2.diagram3Title': 'Figure: Homothety preserves midpoints',
+                'MH.lesson_Y2Geo_homothety2.diagram3Instructions': 'I is midpoint of [AB]. Under homothety h(O,k), I\' is midpoint of [A\'B\'].',
+                'MH.lesson_Y2Geo_homothety2.question3a': '1) a) Construction',
+                'MH.lesson_Y2Geo_homothety2.solution3a1': '<strong>a) Construction:</strong>',
+                'MH.lesson_Y2Geo_homothety2.solution3a2': 'Given A\' = h(A), we construct:',
+                'MH.lesson_Y2Geo_homothety2.solution3a3': 'B\' such that \(\overrightarrow{OB\'} = k \overrightarrow{OB}\)',
+                'MH.lesson_Y2Geo_homothety2.solution3a4': 'I\' such that \(\overrightarrow{OI\'} = k \overrightarrow{OI}\)',
+                'MH.lesson_Y2Geo_homothety2.solution3a5': 'Since I is the midpoint of [AB], we have \(\overrightarrow{AI} = \frac{1}{2} \overrightarrow{AB}\).',
+                'MH.lesson_Y2Geo_homothety2.question3b': 'b) What does I\' represent for segment [A\'B\']?',
+                'MH.lesson_Y2Geo_homothety2.solution3b1': '<strong>b) Solution:</strong>',
+                'MH.lesson_Y2Geo_homothety2.solution3b2': 'We need to show that I\' is the midpoint of [A\'B\'].',
+                'MH.lesson_Y2Geo_homothety2.solution3b3': 'Since I is midpoint of [AB]:',
+                'MH.lesson_Y2Geo_homothety2.equation3a': String.raw`\(\overrightarrow{AI} = \overrightarrow{IB} \quad \text{or} \quad \overrightarrow{IA} + \overrightarrow{IB} = \overrightarrow{0}\)`,
+                'MH.lesson_Y2Geo_homothety2.solution3b4': 'Now consider I\' and segment [A\'B\']:',
+                'MH.lesson_Y2Geo_homothety2.equation3b': String.raw`\(\overrightarrow{A'I'} = k \overrightarrow{AI} \quad \text{and} \quad \overrightarrow{I'B'} = k \overrightarrow{IB}\)`,
+                'MH.lesson_Y2Geo_homothety2.equation3c': String.raw`\(\overrightarrow{A'I'} = k \overrightarrow{AI} = k \overrightarrow{IB} = \overrightarrow{I'B'}\)`,
+                'MH.lesson_Y2Geo_homothety2.solution3b5': 'Thus, \(\overrightarrow{A\'I\'} = \overrightarrow{I\'B\'}\), so I\' is the midpoint of [A\'B\'].',
+                'MH.lesson_Y2Geo_homothety2.solution3b6': '<strong>Conclusion:</strong> I\' is the midpoint of segment [A\'B\'].',
+                'MH.lesson_Y2Geo_homothety2.question3c': '2) General property',
+                'MH.lesson_Y2Geo_homothety2.question3c1': 'Let h be a homothety with ratio k. Let [MN] be a segment and P its midpoint. Denote by M\', N\', and P\' the respective images of M, N, and P under h. Show that P\' is the midpoint of [M\'N\'].',
+                'MH.lesson_Y2Geo_homothety2.solution3c1': '<strong>2) General Proof:</strong>',
+                'MH.lesson_Y2Geo_homothety2.solution3c2': 'Since P is the midpoint of [MN], we have:',
+                'MH.lesson_Y2Geo_homothety2.equation3d': String.raw`\(\overrightarrow{MP} = \overrightarrow{PN} \quad \text{or} \quad \overrightarrow{MN} = 2 \overrightarrow{MP}\)`,
+                'MH.lesson_Y2Geo_homothety2.solution3c3': 'Now consider the images:',
+                'MH.lesson_Y2Geo_homothety2.equation3e': String.raw`\(\overrightarrow{M'P'} = k \overrightarrow{MP} \quad \text{and} \quad \overrightarrow{P'N'} = k \overrightarrow{PN}\)`,
+                'MH.lesson_Y2Geo_homothety2.solution3c4': 'Since \(\overrightarrow{MP} = \overrightarrow{PN}\), we have:',
+                'MH.lesson_Y2Geo_homothety2.equation3f': String.raw`\(\overrightarrow{M'P'} = k \overrightarrow{MP} = k \overrightarrow{PN} = \overrightarrow{P'N'}\)`,
+                'MH.lesson_Y2Geo_homothety2.solution3c5': 'Therefore, \(\overrightarrow{M\'P\'} = \overrightarrow{P\'N\'}\), which means P\' is the midpoint of [M\'N\'].',
+                'MH.lesson_Y2Geo_homothety2.solution3c6': '<strong>Conclusion:</strong> Homothety preserves midpoints.',
+                
+                // Part IV: Conservation of Barycenter
+                'MH.lesson_Y2Geo_homothety2.part4Title': 'IV. Conservation of Barycenter',
+                'MH.lesson_Y2Geo_homothety2.activity4Title': 'Activity 4: Barycenter Preservation',
+                'MH.lesson_Y2Geo_homothety2.activity4Statement': 'Let h be a homothety with ratio k.',
+                'MH.lesson_Y2Geo_homothety2.diagram4Title': 'Figure: Homothety preserves barycenters',
+                'MH.lesson_Y2Geo_homothety2.diagram4Instructions': 'Barycenter G of weighted points (A,α), (B,β). Its image G\' is barycenter of (A\',α), (B\',β).',
+                'MH.lesson_Y2Geo_homothety2.question4a': '1) Let α and β be two real numbers such that α + β ≠ 0.',
+                'MH.lesson_Y2Geo_homothety2.question4a1': 'Let M and N be two points in the plane. Denote by M\' and N\' their respective images under h. Let P be the barycenter of points (M, α) and (N, β) and P\' the image of P under h. Show that P\' is the barycenter of points (M\', α) and (N\', β).',
+                'MH.lesson_Y2Geo_homothety2.solution4a1': '<strong>1) Proof:</strong>',
+                'MH.lesson_Y2Geo_homothety2.solution4a2': 'Let O be an arbitrary point (we can take O as the center of homothety h).',
+                'MH.lesson_Y2Geo_homothety2.solution4a3': 'Since P is the barycenter of (M, α) and (N, β), we have:',
+                'MH.lesson_Y2Geo_homothety2.equation4a': String.raw`\(α \overrightarrow{OP} + β \overrightarrow{OP} = α \overrightarrow{OM} + β \overrightarrow{ON}\)`,
+                'MH.lesson_Y2Geo_homothety2.equation4b': String.raw`\((α + β) \overrightarrow{OP} = α \overrightarrow{OM} + β \overrightarrow{ON}\)`,
+                'MH.lesson_Y2Geo_homothety2.solution4a4': 'Apply the homothety h with center I and ratio k. For any point X with image X\':',
+                'MH.lesson_Y2Geo_homothety2.equation4c': String.raw`\(\overrightarrow{IX'} = k \overrightarrow{IX} \quad \text{or} \quad \overrightarrow{OX'} = \overrightarrow{OI} + k(\overrightarrow{OX} - \overrightarrow{OI})\)`,
+                'MH.lesson_Y2Geo_homothety2.solution4a5': 'Substitute this into the barycenter equation:',
+                'MH.lesson_Y2Geo_homothety2.equation4d': String.raw`\((α + β) \overrightarrow{OP'} = (α + β)(\overrightarrow{OI} + k(\overrightarrow{OP} - \overrightarrow{OI}))\)`,
+                'MH.lesson_Y2Geo_homothety2.equation4e': String.raw`\(= (α + β)\overrightarrow{OI} + k(α + β)(\overrightarrow{OP} - \overrightarrow{OI})\)`,
+                'MH.lesson_Y2Geo_homothety2.equation4f': String.raw`\(= (α + β)\overrightarrow{OI} + k(α \overrightarrow{OM} + β \overrightarrow{ON} - (α + β)\overrightarrow{OI})\)`,
+                'MH.lesson_Y2Geo_homothety2.equation4g': String.raw`\(= (α + β)\overrightarrow{OI} + α k(\overrightarrow{OM} - \overrightarrow{OI}) + β k(\overrightarrow{ON} - \overrightarrow{OI})\)`,
+                'MH.lesson_Y2Geo_homothety2.equation4h': String.raw`\(= α(\overrightarrow{OI} + k(\overrightarrow{OM} - \overrightarrow{OI})) + β(\overrightarrow{OI} + k(\overrightarrow{ON} - \overrightarrow{OI}))\)`,
+                'MH.lesson_Y2Geo_homothety2.equation4i': String.raw`\(= α \overrightarrow{OM'} + β \overrightarrow{ON'}\)`,
+                'MH.lesson_Y2Geo_homothety2.solution4a6': 'Thus, \((α + β) \overrightarrow{OP\'} = α \overrightarrow{OM\'} + β \overrightarrow{ON\'}\), which means P\' is the barycenter of (M\', α) and (N\', β).',
+                'MH.lesson_Y2Geo_homothety2.question4b': '2) Let A, B, and C be three points in the plane and G the barycenter of points (A, 2), (B, -1), and (C, 3).',
+                'MH.lesson_Y2Geo_homothety2.question4b1': 'Denote by A\', B\', C\', and G\' the respective images of A, B, C, and G under h. Show that G\' is the barycenter of points (A\', 2), (B\', -1), and (C\', 3).',
+                'MH.lesson_Y2Geo_homothety2.solution4b1': '<strong>2) Proof:</strong>',
+                'MH.lesson_Y2Geo_homothety2.solution4b2': 'This is a direct application of the general result from part 1.',
+                'MH.lesson_Y2Geo_homothety2.solution4b3': 'Let O be an arbitrary point. Since G is barycenter of (A,2), (B,-1), (C,3):',
+                'MH.lesson_Y2Geo_homothety2.equation4j': String.raw`\((2 - 1 + 3) \overrightarrow{OG} = 2 \overrightarrow{OA} - \overrightarrow{OB} + 3 \overrightarrow{OC}\)`,
+                'MH.lesson_Y2Geo_homothety2.equation4k': String.raw`\(4 \overrightarrow{OG} = 2 \overrightarrow{OA} - \overrightarrow{OB} + 3 \overrightarrow{OC}\)`,
+                'MH.lesson_Y2Geo_homothety2.solution4b4': 'Apply the same transformation as in part 1:',
+                'MH.lesson_Y2Geo_homothety2.equation4l': String.raw`\(4 \overrightarrow{OG'} = 4(\overrightarrow{OI} + k(\overrightarrow{OG} - \overrightarrow{OI}))\)`,
+                'MH.lesson_Y2Geo_homothety2.equation4m': String.raw`\(= 4\overrightarrow{OI} + k(4\overrightarrow{OG} - 4\overrightarrow{OI})\)`,
+                'MH.lesson_Y2Geo_homothety2.equation4n': String.raw`\(= 4\overrightarrow{OI} + k(2\overrightarrow{OA} - \overrightarrow{OB} + 3\overrightarrow{OC} - 4\overrightarrow{OI})\)`,
+                'MH.lesson_Y2Geo_homothety2.equation4o': String.raw`\(= 2(\overrightarrow{OI} + k(\overrightarrow{OA} - \overrightarrow{OI})) - (\overrightarrow{OI} + k(\overrightarrow{OB} - \overrightarrow{OI})) + 3(\overrightarrow{OI} + k(\overrightarrow{OC} - \overrightarrow{OI}))\)`,
+                'MH.lesson_Y2Geo_homothety2.equation4p': String.raw`\(= 2 \overrightarrow{OA'} - \overrightarrow{OB'} + 3 \overrightarrow{OC'}\)`,
+                'MH.lesson_Y2Geo_homothety2.solution4b5': 'Thus, \(4 \overrightarrow{OG\'} = 2 \overrightarrow{OA\'} - \overrightarrow{OB\'} + 3 \overrightarrow{OC\'}\), which means G\' is the barycenter of (A\',2), (B\',-1), and (C\',3).',
+                'MH.lesson_Y2Geo_homothety2.solution4b6': '<strong>Conclusion:</strong> Homothety preserves barycenters with the same weights.',
+                
+                // Part V: Trapezoid Configuration
+                'MH.lesson_Y2Geo_homothety2.part5Title': 'V. Trapezoid Configuration',
+                'MH.lesson_Y2Geo_homothety2.activity5Title': 'Activity 5: Trapezoid Analysis',
+                'MH.lesson_Y2Geo_homothety2.activity5Statement': 'In the opposite figure, ABCD is a trapezoid with bases [AB] and [CD]. I is the midpoint of [AB] and J is the midpoint of [CD]. O is the intersection point of lines (AD) and (BC), and O\' is the intersection point of lines (AC) and (BD).',
+                'MH.lesson_Y2Geo_homothety2.diagram5Title': 'Figure: Trapezoid ABCD with intersection points O and O\'',
+                'MH.lesson_Y2Geo_homothety2.diagram5Instructions': 'Trapezoid ABCD with midpoints I, J and intersection points O, O\'.',
+                'MH.lesson_Y2Geo_homothety2.question5a': '1) Let h1 be the homothety with center O that transforms A into D.',
+                'MH.lesson_Y2Geo_homothety2.question5a1': 'a) Show that h1 transforms B into C.',
+                'MH.lesson_Y2Geo_homothety2.question5a2': 'b) Deduce that points O, I, and J are aligned.',
+                'MH.lesson_Y2Geo_homothety2.solution5a1': '<strong>1) a) Proof that h1 transforms B into C:</strong>',
+                'MH.lesson_Y2Geo_homothety2.solution5a2': 'Since h1 is a homothety with center O and h1(A) = D, we have:',
+                'MH.lesson_Y2Geo_homothety2.equation5a': String.raw`\(\overrightarrow{OD} = k_1 \overrightarrow{OA}\) for some ratio k₁`,
+                'MH.lesson_Y2Geo_homothety2.solution5a3': 'In trapezoid ABCD, (AB) ∥ (CD). Consider lines (AD) and (BC) which intersect at O.',
+                'MH.lesson_Y2Geo_homothety2.solution5a4': 'Triangles OAB and ODC are similar (by Thales theorem since (AB) ∥ (CD)).',
+                'MH.lesson_Y2Geo_homothety2.solution5a5': 'The homothety with center O that sends A to D must send B to C to preserve parallelism:',
+                'MH.lesson_Y2Geo_homothety2.equation5b': String.raw`\(h_1(B) = C\)`,
+                'MH.lesson_Y2Geo_homothety2.solution5a6': '<strong>b) Deduction that O, I, and J are aligned:</strong>',
+                'MH.lesson_Y2Geo_homothety2.solution5a7': 'Since h1 is a homothety with center O, and I is the midpoint of [AB], the image of I under h1 is the midpoint of [h1(A)h1(B)] = [DC].',
+                'MH.lesson_Y2Geo_homothety2.solution5a8': 'But the midpoint of [DC] is J. Therefore, h1(I) = J.',
+                'MH.lesson_Y2Geo_homothety2.solution5a9': 'Since h1(I) = J and h1 has center O, points O, I, and J are aligned (a point, its image, and the center of homothety are always aligned).',
+                'MH.lesson_Y2Geo_homothety2.question5b': '2) Let h2 be the homothety with center O\' that transforms A into C.',
+                'MH.lesson_Y2Geo_homothety2.question5b1': 'a) Show that h2 transforms B into D.',
+                'MH.lesson_Y2Geo_homothety2.question5b2': 'b) Show that points O, I, O\', and J are aligned.',
+                'MH.lesson_Y2Geo_homothety2.solution5b1': '<strong>2) a) Proof that h2 transforms B into D:</strong>',
+                'MH.lesson_Y2Geo_homothety2.solution5b2': 'Since h2 is a homothety with center O\' and h2(A) = C, we have:',
+                'MH.lesson_Y2Geo_homothety2.equation5c': String.raw`\(\overrightarrow{O'C} = k_2 \overrightarrow{O'A}\) for some ratio k₂`,
+                'MH.lesson_Y2Geo_homothety2.solution5b3': 'Consider triangles O\'AB and O\'CD. Lines (AC) and (BD) intersect at O\'.',
+                'MH.lesson_Y2Geo_homothety2.solution5b4': 'Since (AB) ∥ (CD), by Thales theorem, triangles O\'AB and O\'DC are similar.',
+                'MH.lesson_Y2Geo_homothety2.solution5b5': 'The homothety with center O\' that sends A to C must send B to D to preserve parallelism:',
+                'MH.lesson_Y2Geo_homothety2.equation5d': String.raw`\(h_2(B) = D\)`,
+                'MH.lesson_Y2Geo_homothety2.solution5b6': '<strong>b) Proof that O, I, O\', and J are aligned:</strong>',
+                'MH.lesson_Y2Geo_homothety2.solution5b7': 'From part 1, we know O, I, and J are aligned.',
+                'MH.lesson_Y2Geo_homothety2.solution5b8': 'Now consider h2. Since I is the midpoint of [AB] and h2 is a homothety, h2(I) is the midpoint of [h2(A)h2(B)] = [CD].',
+                'MH.lesson_Y2Geo_homothety2.solution5b9': 'But the midpoint of [CD] is J. Therefore, h2(I) = J.',
+                'MH.lesson_Y2Geo_homothety2.solution5b10': 'Since h2(I) = J and h2 has center O\', points O\', I, and J are aligned.',
+                'MH.lesson_Y2Geo_homothety2.solution5b11': 'Thus, I and J are aligned with both O and O\'. Therefore, all four points O, I, O\', and J are aligned.',
+                'MH.lesson_Y2Geo_homothety2.question5c': '3) In the opposite figure, lines D1, D2, and D3 are parallel.',
+                'MH.lesson_Y2Geo_homothety2.question5c1': 'Show that points P, Q, and R are aligned.',
+                'MH.lesson_Y2Geo_homothety2.solution5c1': '<strong>3) Proof that P, Q, and R are aligned:</strong>',
+                'MH.lesson_Y2Geo_homothety2.solution5c2': 'Let D1, D2, and D3 be three parallel lines.',
+                'MH.lesson_Y2Geo_homothety2.solution5c3': 'Consider two transversals that intersect these lines at points A, B, C on D1; A\', B\', C\' on D2; and A", B", C" on D3.',
+                'MH.lesson_Y2Geo_homothety2.solution5c4': 'Let P = (AA\') ∩ (BB\'), Q = (BB\') ∩ (CC\'), and R = (AA\') ∩ (CC\').',
+                'MH.lesson_Y2Geo_homothety2.solution5c5': 'By Thales theorem on parallel lines D1, D2, D3:',
+                'MH.lesson_Y2Geo_homothety2.equation5e': String.raw`\(\frac{AB}{BC} = \frac{A'B'}{B'C'} = \frac{A"B"}{B"C"}\)`,
+                'MH.lesson_Y2Geo_homothety2.solution5c6': 'Consider homothety h1 with center P that sends A to A\'. Since (AB) ∥ (A\'B\'), h1 must send B to B\'.',
+                'MH.lesson_Y2Geo_homothety2.solution5c7': 'Similarly, consider homothety h2 with center Q that sends B to B\'. Since (BC) ∥ (B\'C\'), h2 must send C to C\'.',
+                'MH.lesson_Y2Geo_homothety2.solution5c8': 'The composition h2 ∘ h1 sends A to A\' then to A", and sends C to C\' then to C".',
+                'MH.lesson_Y2Geo_homothety2.solution5c9': 'But h2 ∘ h1 is also a homothety (composition of homotheties with aligned centers is a homothety).',
+                'MH.lesson_Y2Geo_homothety2.solution5c10': 'This homothety sends A to A" and C to C", so its center must be the intersection of (AA") and (CC"), which is R.',
+                'MH.lesson_Y2Geo_homothety2.solution5c11': 'Since P, Q, and R are centers of homotheties that are aligned (by the property of composition), points P, Q, and R are aligned.',
+                'MH.lesson_Y2Geo_homothety2.solution5c12': 'This is a special case of the Pappus theorem for parallel lines.',
+                
+                // Summary
+                'MH.lesson_Y2Geo_homothety2.summaryTitle': 'Comprehensive Summary',
+                'MH.lesson_Y2Geo_homothety2.summary1Title': 'Key Properties of Homothety',
+                'MH.lesson_Y2Geo_homothety2.summary1Text': 'Through these exercises, we have demonstrated important properties of homotheties:',
+                'MH.lesson_Y2Geo_homothety2.summary2Title': 'Properties Demonstrated',
+                'MH.lesson_Y2Geo_homothety2.summary2a': '<strong>Conservation of alignment:</strong> The image of aligned points under a homothety remains aligned.',
+                'MH.lesson_Y2Geo_homothety2.summary2b': '<strong>Transformation of lines:</strong> A homothety transforms a line into a parallel line.',
+                'MH.lesson_Y2Geo_homothety2.summary2c': '<strong>Transformation of segments:</strong> The image of segment [AB] is segment [A\'B\'].',
+                'MH.lesson_Y2Geo_homothety2.summary2d': '<strong>Conservation of midpoints:</strong> The image of the midpoint of a segment is the midpoint of the image segment.',
+                'MH.lesson_Y2Geo_homothety2.summary2e': '<strong>Conservation of barycenters:</strong> Homotheties preserve barycenters with the same weights.',
+                'MH.lesson_Y2Geo_homothety2.summary2f': '<strong>Geometric configurations:</strong> Homotheties are powerful tools for analyzing trapezoids and parallel line configurations.',
+                'MH.lesson_Y2Geo_homothety2.conclusionTitle': 'Conclusion',
+                'MH.lesson_Y2Geo_homothety2.keyConceptsTitle': 'Key Concepts Mastered',
+                'MH.lesson_Y2Geo_homothety2.concept1': 'Proof techniques for homothety properties',
+                'MH.lesson_Y2Geo_homothety2.concept2': 'Vector methods in homothety proofs',
+                'MH.lesson_Y2Geo_homothety2.concept3': 'Application of homotheties to geometric configurations',
+                'MH.lesson_Y2Geo_homothety2.concept4': 'Relationship between homotheties and parallel lines',
+                'MH.lesson_Y2Geo_homothety2.concept5': 'Composition of homotheties',
+                'MH.lesson_Y2Geo_homothety2.concept6': 'Homothety as a tool for proving collinearity',
+                'MH.lesson_Y2Geo_homothety2.finalThought': 'Homothety is not just a simple scaling transformation; it\'s a powerful geometric tool that preserves many important properties. Mastering homotheties enables you to solve complex geometric problems, prove collinearity and concurrency, and understand deeper relationships in geometric configurations. These exercises demonstrate how homothety connects with other geometric concepts like parallelism, midpoints, barycenters, and similarity.',
+                
+                // Footer
+                'MH.footer.developer': 'Developer',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Links',
+                'MH.footer.terms': 'Terms of Use',
+                'MH.footer.privacy': 'Privacy Policy'
+            },
+            'ar': {
+                // ترجمات عامة
+                'MH.general.homeTooltip': 'الذهاب إلى الصفحة الرئيسية',
+                'MH.general.install': 'تثبيت التطبيق',
+                'MH.general.installSuccess': 'تم تثبيت Mathematics Hub بنجاح!',
+                'MH.general.enableNotifications': 'تفعيل الإشعارات',
+                'MH.general.notificationEnabled': 'تم تفعيل الإشعارات! ستتلقى التحديثات الآن.',
+                'MH.general.title': 'مركز الرياضيات',
+                'MH.general.theme': 'السمة',
+                'MH.general.language': 'اللغة',
+                'MH.lesson_Y2Geo_homothety2.showSolution': 'إظهار الحل',
+                'MH.lesson_Y2Geo_homothety2.hideSolution': 'إخفاء الحل',
+                'MH.lesson_Y2Geo_homothety2.showConstruction': 'إظهار الإنشاء',
+                'MH.lesson_Y2Geo_homothety2.constructButton': 'بناء الرسم',
+                
+                // ترجمات الدرس
+                'MH.lesson_Y2Geo_homothety2.title': 'التماثل: الجزء 2',
+                'MH.lesson_Y2Geo_homothety2.subtitle': 'الخصائص والتطبيقات - تمارين',
+                'MH.lesson_Y2Geo_homothety2.introduction': 'المقدمة',
+                'MH.lesson_Y2Geo_homothety2.introText1': 'يركز هذا الجزء الثاني من درس التماثل على الخصائص والتطبيقات الهامة من خلال التمارين. سنستكشف كيف يحافظ التماثل على الاستقامة، يحول الخطوط والقطاعات، يحافظ على المنتصفات ومراكز الثقل، ونحلل تكوينات هندسية محددة.',
+                'MH.lesson_Y2Geo_homothety2.introText2': 'من خلال هذه التمارين، ستتقن الخصائص الأساسية للتماثلات وتتعلم تطبيقها لحل المسائل الهندسية المعقدة.',
+                
+                // الجزء الأول: الحفاظ على الاستقامة
+                'MH.lesson_Y2Geo_homothety2.part1Title': 'I. الحفاظ على الاستقامة',
+                'MH.lesson_Y2Geo_homothety2.activity1Title': 'النشاط 1: الحفاظ على الاستقامة',
+                'MH.lesson_Y2Geo_homothety2.activity1Statement': 'ليكن h تماثلاً بمركز I ونسبة k. لتكن A، B، C ثلاث نقاط على استقامة واحدة، و A\'، B\'، C\' صورهن على التوالي تحت h. بين أن النقاط A\'، B\'، C\' على استقامة واحدة.',
+                'MH.lesson_Y2Geo_homothety2.diagram1Title': 'الشكل: التماثل يحافظ على الاستقامة',
+                'MH.lesson_Y2Geo_homothety2.diagram1Instructions': 'النقاط A، B، C على استقامة واحدة. صورهن A\'، B\'، C\' تحت التماثل h(I,k) تبقى على استقامة واحدة.',
+                
+                // الجزء الثاني: صورة خط - صورة قطعة
+                'MH.lesson_Y2Geo_homothety2.part2Title': 'II. صورة خط - صورة قطعة',
+                'MH.lesson_Y2Geo_homothety2.activity2Title': 'النشاط 2: تحويل الخط والقطعة',
+                'MH.lesson_Y2Geo_homothety2.activity2Statement': 'ليكن h تماثلاً بمركز I ونسبة k. لتكن A و B نقطتين مختلفتين في المستوى. نرمز بـ A\' و B\' لصورتيهما على التوالي تحت h.',
+                'MH.lesson_Y2Geo_homothety2.diagram2Title': 'الشكل: التماثل يحول الخطوط إلى خطوط متوازية',
+                
+                // الجزء الثالث: الحفاظ على المنتصف
+                'MH.lesson_Y2Geo_homothety2.part3Title': 'III. الحفاظ على المنتصف',
+                'MH.lesson_Y2Geo_homothety2.activity3Title': 'النشاط 3: الحفاظ على المنتصف',
+                'MH.lesson_Y2Geo_homothety2.activity3Statement1': '1) في الشكل المقابل، I هو منتصف القطعة [AB]، A\' هي صورة A تحت تماثل بمركز O.',
+                'MH.lesson_Y2Geo_homothety2.activity3Statement2': 'أ) انسخ الشكل وابن النقطتين I\' و B\' صورتي I و B على التوالي تحت هذا التماثل.',
+                'MH.lesson_Y2Geo_homothety2.activity3Statement3': 'ب) ماذا يمثل I\' بالنسبة للقطعة [A\'B\']؟',
+                'MH.lesson_Y2Geo_homothety2.diagram3Title': 'الشكل: التماثل يحافظ على المنتصفات',
+                
+                // الجزء الرابع: الحفاظ على مركز الثقل
+                'MH.lesson_Y2Geo_homothety2.part4Title': 'IV. الحفاظ على مركز الثقل',
+                'MH.lesson_Y2Geo_homothety2.activity4Title': 'النشاط 4: الحفاظ على مركز الثقل',
+                'MH.lesson_Y2Geo_homothety2.activity4Statement': 'ليكن h تماثلاً بنسبة k.',
+                'MH.lesson_Y2Geo_homothety2.diagram4Title': 'الشكل: التماثل يحافظ على مراكز الثقل',
+                
+                // الجزء الخامس: تكوين شبه المنحرف
+                'MH.lesson_Y2Geo_homothety2.part5Title': 'V. تكوين شبه المنحرف',
+                'MH.lesson_Y2Geo_homothety2.activity5Title': 'النشاط 5: تحليل شبه المنحرف',
+                'MH.lesson_Y2Geo_homothety2.activity5Statement': 'في الشكل المقابل، ABCD شبه منحرف قاعدتاه [AB] و [CD]. I هو منتصف [AB] و J هو منتصف [CD]. O هو نقطة تقاطع المستقيمين (AD) و (BC)، و O\' هو نقطة تقاطع المستقيمين (AC) و (BD).',
+                'MH.lesson_Y2Geo_homothety2.diagram5Title': 'الشكل: شبه المنحرف ABCD مع نقطتي التقاطع O و O\'',
+                
+                // الملخص
+                'MH.lesson_Y2Geo_homothety2.summaryTitle': 'ملخص شامل',
+                'MH.lesson_Y2Geo_homothety2.summary1Title': 'الخصائص الرئيسية للتماثل',
+                'MH.lesson_Y2Geo_homothety2.summary1Text': 'من خلال هذه التمارين، أثبتنا خصائص هامة للتماثلات:',
+                'MH.lesson_Y2Geo_homothety2.summary2Title': 'الخصائص المثبتة',
+                'MH.lesson_Y2Geo_homothety2.summary2a': '<strong>الحفاظ على الاستقامة:</strong> صورة النقاط المستقيمة تحت تماثل تبقى مستقيمة.',
+                'MH.lesson_Y2Geo_homothety2.summary2b': '<strong>تحويل الخطوط:</strong> التماثل يحول الخط إلى خط موازٍ.',
+                'MH.lesson_Y2Geo_homothety2.summary2c': '<strong>تحويل القطاعات:</strong> صورة القطعة [AB] هي القطعة [A\'B\'].',
+                'MH.lesson_Y2Geo_homothety2.summary2d': '<strong>الحفاظ على المنتصفات:</strong> صورة منتصف قطعة هي منتصف صورة القطعة.',
+                'MH.lesson_Y2Geo_homothety2.summary2e': '<strong>الحفاظ على مراكز الثقل:</strong> التماثلات تحافظ على مراكز الثقل بنفس الأوزان.',
+                'MH.lesson_Y2Geo_homothety2.summary2f': '<strong>التكوينات الهندسية:</strong> التماثلات أدوات قوية لتحليل أشباه المنحنيات وتكوينات الخطوط المتوازية.',
+                'MH.lesson_Y2Geo_homothety2.conclusionTitle': 'الخلاصة',
+                'MH.lesson_Y2Geo_homothety2.keyConceptsTitle': 'المفاهيم الرئيسية التي تم إتقانها',
+                'MH.lesson_Y2Geo_homothety2.concept1': 'تقنيات إثبات خصائص التماثل',
+                'MH.lesson_Y2Geo_homothety2.concept2': 'الطرق المتجهية في إثباتات التماثل',
+                'MH.lesson_Y2Geo_homothety2.concept3': 'تطبيق التماثلات على التكوينات الهندسية',
+                'MH.lesson_Y2Geo_homothety2.concept4': 'العلاقة بين التماثلات والخطوط المتوازية',
+                'MH.lesson_Y2Geo_homothety2.concept5': 'تركيب التماثلات',
+                'MH.lesson_Y2Geo_homothety2.concept6': 'التماثل كأداة لإثبات الاستقامة',
+                'MH.lesson_Y2Geo_homothety2.finalThought': 'التماثل ليس مجرد تحجيم بسيط؛ إنه أداة هندسية قوية تحافظ على العديد من الخصائص الهامة. إتقان التماثلات يمكنك من حل المسائل الهندسية المعقدة، وإثبات الاستقامة والتلاقي، وفهم العلاقات الأعمق في التكوينات الهندسية. تظهر هذه التمارين كيف يرتبط التماثل بمفاهيم هندسية أخرى مثل التوازي، المنتصفات، مراكز الثقل، والتشابه.',
+                
+                // التذييل
+                'MH.footer.developer': 'المطور',
+                'MH.footer.version': 'الإصدار',
+                'MH.footer.links': 'الروابط',
+                'MH.footer.terms': 'شروط الاستخدام',
+                'MH.footer.privacy': 'سياسة الخصوصية'
+            },
+            'fr': {
+                // Traductions générales
+                'MH.general.homeTooltip': 'Aller à l\'accueil',
+                'MH.general.install': 'Installer l\'App',
+                'MH.general.installSuccess': 'Mathematics Hub installé avec succès!',
+                'MH.general.enableNotifications': 'Activer les notifications',
+                'MH.general.notificationEnabled': 'Notifications activées! Vous recevrez maintenant des mises à jour.',
+                'MH.general.title': 'Centre de Mathématiques',
+                'MH.general.theme': 'Thème',
+                'MH.general.language': 'Langue',
+                'MH.lesson_Y2Geo_homothety2.showSolution': 'Afficher la Solution',
+                'MH.lesson_Y2Geo_homothety2.hideSolution': 'Masquer la Solution',
+                'MH.lesson_Y2Geo_homothety2.showConstruction': 'Afficher la Construction',
+                'MH.lesson_Y2Geo_homothety2.constructButton': 'Construire le Diagramme',
+                
+                // Traductions de la leçon
+                'MH.lesson_Y2Geo_homothety2.title': 'Homothétie : Partie 2',
+                'MH.lesson_Y2Geo_homothety2.subtitle': 'Propriétés et Applications - Exercices',
+                'MH.lesson_Y2Geo_homothety2.introduction': 'Introduction',
+                'MH.lesson_Y2Geo_homothety2.introText1': 'Cette deuxième partie de la leçon sur l\'homothétie se concentre sur les propriétés importantes et les applications à travers des exercices. Nous explorerons comment les homothéties conservent l\'alignement, transforment les droites et les segments, conservent les milieux et les barycentres, et analyserons des configurations géométriques spécifiques.',
+                'MH.lesson_Y2Geo_homothety2.introText2': 'À travers ces exercices, vous maîtriserez les propriétés fondamentales des homothéties et apprendrez à les appliquer pour résoudre des problèmes géométriques complexes.',
+                
+                // Partie I: Conservation de l'alignement
+                'MH.lesson_Y2Geo_homothety2.part1Title': 'I. Conservation de l\'alignement',
+                'MH.lesson_Y2Geo_homothety2.activity1Title': 'Activité 1 : Conservation de l\'alignement',
+                'MH.lesson_Y2Geo_homothety2.activity1Statement': 'Soit h une homothétie de centre I et de rapport k. Soient A, B et C trois points alignés et A\', B\' et C\' leurs images respectives par h. Montrer que les points A\', B\' et C\' sont alignés.',
+                'MH.lesson_Y2Geo_homothety2.diagram1Title': 'Figure : L\'homothétie conserve l\'alignement',
+                'MH.lesson_Y2Geo_homothety2.diagram1Instructions': 'Les points A, B, C sont alignés. Leurs images A\', B\', C\' par l\'homothétie h(I,k) restent alignées.',
+                
+                // Partie II: Image d'une droite - Image d'un segment
+                'MH.lesson_Y2Geo_homothety2.part2Title': 'II. Image d\'une droite - Image d\'un segment',
+                'MH.lesson_Y2Geo_homothety2.activity2Title': 'Activité 2 : Transformation d\'une droite et d\'un segment',
+                'MH.lesson_Y2Geo_homothety2.activity2Statement': 'Soit h une homothétie de centre I et de rapport k. Soient A et B deux points distincts du plan. On désigne par A\' et B\' leurs images respectives par h.',
+                'MH.lesson_Y2Geo_homothety2.diagram2Title': 'Figure : L\'homothétie transforme les droites en droites parallèles',
+                
+                // Partie III: Conservation du milieu
+                'MH.lesson_Y2Geo_homothety2.part3Title': 'III. Conservation du milieu',
+                'MH.lesson_Y2Geo_homothety2.activity3Title': 'Activité 3 : Conservation du milieu',
+                'MH.lesson_Y2Geo_homothety2.activity3Statement1': '1) Dans la figure ci-contre, I est le milieu du segment [AB], A\' est l\'image de A par une homothétie de centre O.',
+                'MH.lesson_Y2Geo_homothety2.activity3Statement2': 'a) Recopier la figure et construire les points I\' et B\' images respectives de I et B par cette homothétie.',
+                'MH.lesson_Y2Geo_homothety2.activity3Statement3': 'b) Que représente I\' pour le segment [A\'B\'] ?',
+                'MH.lesson_Y2Geo_homothety2.diagram3Title': 'Figure : L\'homothétie conserve les milieux',
+                
+                // Partie IV: Conservation du barycentre
+                'MH.lesson_Y2Geo_homothety2.part4Title': 'IV. Conservation du barycentre',
+                'MH.lesson_Y2Geo_homothety2.activity4Title': 'Activité 4 : Conservation du barycentre',
+                'MH.lesson_Y2Geo_homothety2.activity4Statement': 'Soit h une homothétie de rapport k.',
+                'MH.lesson_Y2Geo_homothety2.diagram4Title': 'Figure : L\'homothétie conserve les barycentres',
+                
+                // Partie V: Configuration du trapèze
+                'MH.lesson_Y2Geo_homothety2.part5Title': 'V. Configuration du trapèze',
+                'MH.lesson_Y2Geo_homothety2.activity5Title': 'Activité 5 : Analyse d\'un trapèze',
+                'MH.lesson_Y2Geo_homothety2.activity5Statement': 'Dans la figure ci-contre, ABCD est un trapèze de bases [AB] et [CD]. I est le milieu de [AB] et J est le milieu de [CD]. O est le point d\'intersection des droites (AD) et (BC) et O\' est le point d\'intersection des droites (AC) et (BD).',
+                'MH.lesson_Y2Geo_homothety2.diagram5Title': 'Figure : Trapèze ABCD avec les points d\'intersection O et O\'',
+                
+                // Résumé
+                'MH.lesson_Y2Geo_homothety2.summaryTitle': 'Résumé Complet',
+                'MH.lesson_Y2Geo_homothety2.summary1Title': 'Propriétés Clés de l\'Homothétie',
+                'MH.lesson_Y2Geo_homothety2.summary1Text': 'À travers ces exercices, nous avons démontré des propriétés importantes des homothéties :',
+                'MH.lesson_Y2Geo_homothety2.summary2Title': 'Propriétés Démontrées',
+                'MH.lesson_Y2Geo_homothety2.summary2a': '<strong>Conservation de l\'alignement :</strong> L\'image de points alignés par une homothétie reste alignée.',
+                'MH.lesson_Y2Geo_homothety2.summary2b': '<strong>Transformation des droites :</strong> Une homothétie transforme une droite en une droite parallèle.',
+                'MH.lesson_Y2Geo_homothety2.summary2c': '<strong>Transformation des segments :</strong> L\'image du segment [AB] est le segment [A\'B\'].',
+                'MH.lesson_Y2Geo_homothety2.summary2d': '<strong>Conservation des milieux :</strong> L\'image du milieu d\'un segment est le milieu de l\'image du segment.',
+                'MH.lesson_Y2Geo_homothety2.summary2e': '<strong>Conservation des barycentres :</strong> Les homothéties conservent les barycentres avec les mêmes poids.',
+                'MH.lesson_Y2Geo_homothety2.summary2f': '<strong>Configurations géométriques :</strong> Les homothéties sont des outils puissants pour analyser les trapèzes et les configurations de droites parallèles.',
+                'MH.lesson_Y2Geo_homothety2.conclusionTitle': 'Conclusion',
+                'MH.lesson_Y2Geo_homothety2.keyConceptsTitle': 'Concepts Clés Maîtrisés',
+                'MH.lesson_Y2Geo_homothety2.concept1': 'Techniques de preuve des propriétés de l\'homothétie',
+                'MH.lesson_Y2Geo_homothety2.concept2': 'Méthodes vectorielles dans les preuves d\'homothétie',
+                'MH.lesson_Y2Geo_homothety2.concept3': 'Application des homothéties aux configurations géométriques',
+                'MH.lesson_Y2Geo_homothety2.concept4': 'Relation entre les homothéties et les droites parallèles',
+                'MH.lesson_Y2Geo_homothety2.concept5': 'Composition d\'homothéties',
+                'MH.lesson_Y2Geo_homothety2.concept6': 'Homothétie comme outil pour prouver l\'alignement',
+                'MH.lesson_Y2Geo_homothety2.finalThought': 'L\'homothétie n\'est pas seulement une simple transformation de mise à l\'échelle ; c\'est un outil géométrique puissant qui conserve de nombreuses propriétés importantes. Maîtriser les homothéties vous permet de résoudre des problèmes géométriques complexes, de prouver l\'alignement et la concurrence, et de comprendre des relations plus profondes dans les configurations géométriques. Ces exercices montrent comment l\'homothétie se connecte à d\'autres concepts géométriques comme le parallélisme, les milieux, les barycentres et la similitude.',
+                
+                // Pied de page
+                'MH.footer.developer': 'Développeur',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Liens',
+                'MH.footer.terms': 'Conditions d\'Utilisation',
+                'MH.footer.privacy': 'Politique de Confidentialité'
+            }
+        };
+
+        // Merge with existing translations if they exist
+        if (typeof translations !== 'undefined') {
+            Object.keys(homothety2Translations).forEach(lang => {
+                if (translations[lang]) {
+                    translations[lang] = {...translations[lang], ...homothety2Translations[lang]};
+                } else {
+                    translations[lang] = homothety2Translations[lang];
+                }
+            });
+        } else {
+            var translations = homothety2Translations;
+        }
+
+        // Canvas drawing functions
+        let activity1State = {constructed: false};
+        let activity2State = {a: false, b: false, c: false, d: false, e: false};
+        let activity3State = {a: false, b: false, c: false};
+        let activity4State = {a: false, b: false};
+        let activity5State = {a: false, b: false, c: false};
+        
+        function drawActivity1Canvas() {
+            const canvas = document.getElementById('activity1Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define center I
+            const I = {x: width * 0.3, y: height * 0.5};
+            
+            // Define ratio k (use k = 1.5 for visualization)
+            const k = 1.5;
+            
+            // Define aligned points A, B, C
+            const A = {x: width * 0.1, y: height * 0.3};
+            const B = {x: width * 0.5, y: height * 0.3};
+            const C = {x: width * 0.7, y: height * 0.3};
+            
+            // Calculate images A', B', C'
+            const Aprime = {
+                x: I.x + k * (A.x - I.x),
+                y: I.y + k * (A.y - I.y)
+            };
+            
+            const Bprime = {
+                x: I.x + k * (B.x - I.x),
+                y: I.y + k * (B.y - I.y)
+            };
+            
+            const Cprime = {
+                x: I.x + k * (C.x - I.x),
+                y: I.y + k * (C.y - I.y)
+            };
+            
+            // Draw center I
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(I.x, I.y, 8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('I', I.x, I.y - 25);
+            
+            // Draw original points A, B, C
+            ctx.fillStyle = '#2ECC71';
+            ctx.beginPath();
+            ctx.arc(A.x, A.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.fillStyle = '#3498DB';
+            ctx.beginPath();
+            ctx.arc(B.x, B.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.fillStyle = '#9B59B6';
+            ctx.beginPath();
+            ctx.arc(C.x, C.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Draw labels for original points
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('A', A.x, A.y - 20);
+            ctx.fillText('B', B.x, B.y - 20);
+            ctx.fillText('C', C.x, C.y - 20);
+            
+            // Draw line through A, B, C
+            ctx.strokeStyle = '#666666';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([3, 3]);
+            ctx.beginPath();
+            ctx.moveTo(A.x - 50, A.y);
+            ctx.lineTo(C.x + 50, C.y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Draw images if constructed
+            if (activity1State.constructed) {
+                ctx.fillStyle = '#E67E22';
+                ctx.beginPath();
+                ctx.arc(Aprime.x, Aprime.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#1ABC9C';
+                ctx.beginPath();
+                ctx.arc(Bprime.x, Bprime.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#8E44AD';
+                ctx.beginPath();
+                ctx.arc(Cprime.x, Cprime.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Draw labels for image points
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('A\'', Aprime.x, Aprime.y - 20);
+                ctx.fillText('B\'', Bprime.x, Bprime.y - 20);
+                ctx.fillText('C\'', Cprime.x, Cprime.y - 20);
+                
+                // Draw lines from center to points
+                ctx.strokeStyle = '#666666';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                
+                // IA and IA'
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(A.x, A.y);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(Aprime.x, Aprime.y);
+                ctx.stroke();
+                
+                // IB and IB'
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(B.x, B.y);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(Bprime.x, Bprime.y);
+                ctx.stroke();
+                
+                // IC and IC'
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(C.x, C.y);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(Cprime.x, Cprime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw line through A', B', C'
+                ctx.strokeStyle = '#E74C3C';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(Aprime.x, Aprime.y);
+                ctx.lineTo(Cprime.x, Cprime.y);
+                ctx.stroke();
+                
+                // Show that they are aligned
+                ctx.fillStyle = '#E74C3C';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('A\', B\', C\' sont alignés', width * 0.7, height * 0.7);
+                
+                // Show homothety notation
+                ctx.fillStyle = '#666666';
+                ctx.font = '14px Arial';
+                ctx.fillText(`h(I, ${k})`, width/2, height * 0.1);
+            }
+        }
+        
+        function drawActivity2Canvas() {
+            const canvas = document.getElementById('activity2Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define center I
+            const I = {x: width * 0.3, y: height * 0.5};
+            
+            // Define ratio k (use k = 1.5 for visualization)
+            const k = 1.5;
+            
+            // Define points A and B
+            const A = {x: width * 0.2, y: height * 0.3};
+            const B = {x: width * 0.8, y: height * 0.3};
+            
+            // Calculate images A' and B'
+            const Aprime = {
+                x: I.x + k * (A.x - I.x),
+                y: I.y + k * (A.y - I.y)
+            };
+            
+            const Bprime = {
+                x: I.x + k * (B.x - I.x),
+                y: I.y + k * (B.y - I.y)
+            };
+            
+            // Draw center I
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(I.x, I.y, 8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('I', I.x, I.y - 25);
+            
+            // Draw original points A, B
+            ctx.fillStyle = '#2ECC71';
+            ctx.beginPath();
+            ctx.arc(A.x, A.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.fillStyle = '#3498DB';
+            ctx.beginPath();
+            ctx.arc(B.x, B.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Draw labels for original points
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('A', A.x, A.y - 20);
+            ctx.fillText('B', B.x, B.y - 20);
+            
+            // Draw line (AB)
+            ctx.strokeStyle = '#2ECC71';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(A.x - 50, A.y);
+            ctx.lineTo(B.x + 50, B.y);
+            ctx.stroke();
+            
+            // Draw images if constructed
+            if (activity2State.a || activity2State.b || activity2State.c || activity2State.d || activity2State.e) {
+                ctx.fillStyle = '#E67E22';
+                ctx.beginPath();
+                ctx.arc(Aprime.x, Aprime.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#1ABC9C';
+                ctx.beginPath();
+                ctx.arc(Bprime.x, Bprime.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Draw labels for image points
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('A\'', Aprime.x, Aprime.y - 20);
+                ctx.fillText('B\'', Bprime.x, Bprime.y - 20);
+                
+                // Draw line (A'B')
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(Aprime.x - 50, Aprime.y);
+                ctx.lineTo(Bprime.x + 50, Bprime.y);
+                ctx.stroke();
+                
+                // Draw lines from center to points
+                ctx.strokeStyle = '#666666';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(A.x, A.y);
+                ctx.lineTo(Aprime.x, Aprime.y);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(B.x, B.y);
+                ctx.lineTo(Bprime.x, Bprime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Show that (AB) and (A'B') are parallel
+                ctx.fillStyle = '#E74C3C';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('(AB) ∥ (A\'B\')', width * 0.7, height * 0.7);
+                
+                // Show homothety notation
+                ctx.fillStyle = '#666666';
+                ctx.font = '14px Arial';
+                ctx.fillText(`h(I, ${k})`, width/2, height * 0.1);
+                
+                // Part a: Show M on (AB) and M' on (A'B')
+                if (activity2State.a) {
+                    // Define M on (AB)
+                    const M = {
+                        x: A.x + 0.4 * (B.x - A.x),
+                        y: A.y + 0.4 * (B.y - A.y)
+                    };
+                    
+                    // Calculate M'
+                    const Mprime = {
+                        x: I.x + k * (M.x - I.x),
+                        y: I.y + k * (M.y - I.y)
+                    };
+                    
+                    // Draw M and M'
+                    ctx.fillStyle = '#8E44AD';
+                    ctx.beginPath();
+                    ctx.arc(M.x, M.y, 6, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#9B59B6';
+                    ctx.beginPath();
+                    ctx.arc(Mprime.x, Mprime.y, 6, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Draw labels
+                    ctx.fillStyle = '#333333';
+                    ctx.font = 'bold 16px Arial';
+                    ctx.fillText('M', M.x, M.y - 20);
+                    ctx.fillText('M\'', Mprime.x, Mprime.y - 20);
+                    
+                    // Draw line from I to M and M'
+                    ctx.strokeStyle = '#8E44AD';
+                    ctx.lineWidth = 1;
+                    ctx.setLineDash([3, 3]);
+                    ctx.beginPath();
+                    ctx.moveTo(I.x, I.y);
+                    ctx.lineTo(M.x, M.y);
+                    ctx.lineTo(Mprime.x, Mprime.y);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                }
+                
+                // Part b: Show N' on (A'B') and N on (AB)
+                if (activity2State.b) {
+                    // Define N' on (A'B')
+                    const Nprime = {
+                        x: Aprime.x + 0.6 * (Bprime.x - Aprime.x),
+                        y: Aprime.y + 0.6 * (Bprime.y - Aprime.y)
+                    };
+                    
+                    // Calculate N (antecedent of N')
+                    const N = {
+                        x: I.x + (1/k) * (Nprime.x - I.x),
+                        y: I.y + (1/k) * (Nprime.y - I.y)
+                    };
+                    
+                    // Draw N' and N
+                    ctx.fillStyle = '#E74C3C';
+                    ctx.beginPath();
+                    ctx.arc(Nprime.x, Nprime.y, 6, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#C0392B';
+                    ctx.beginPath();
+                    ctx.arc(N.x, N.y, 6, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Draw labels
+                    ctx.fillStyle = '#333333';
+                    ctx.font = 'bold 16px Arial';
+                    ctx.fillText('N\'', Nprime.x, Nprime.y + 20);
+                    ctx.fillText('N', N.x, N.y + 20);
+                    
+                    // Draw line from I to N and N'
+                    ctx.strokeStyle = '#E74C3C';
+                    ctx.lineWidth = 1;
+                    ctx.setLineDash([3, 3]);
+                    ctx.beginPath();
+                    ctx.moveTo(I.x, I.y);
+                    ctx.lineTo(N.x, N.y);
+                    ctx.lineTo(Nprime.x, Nprime.y);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                }
+                
+                // Part e: Show segment [AB] and its image [A'B']
+                if (activity2State.e) {
+                    // Draw segment [AB]
+                    ctx.strokeStyle = '#2ECC71';
+                    ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    ctx.moveTo(A.x, A.y);
+                    ctx.lineTo(B.x, B.y);
+                    ctx.stroke();
+                    
+                    // Draw segment [A'B']
+                    ctx.strokeStyle = '#E67E22';
+                    ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    ctx.moveTo(Aprime.x, Aprime.y);
+                    ctx.lineTo(Bprime.x, Bprime.y);
+                    ctx.stroke();
+                    
+                    // Label segments
+                    ctx.fillStyle = '#2ECC71';
+                    ctx.font = 'bold 14px Arial';
+                    ctx.fillText('[AB]', (A.x + B.x)/2, (A.y + B.y)/2 - 15);
+                    
+                    ctx.fillStyle = '#E67E22';
+                    ctx.fillText('[A\'B\']', (Aprime.x + Bprime.x)/2, (Aprime.y + Bprime.y)/2 - 15);
+                }
+            }
+        }
+        
+        function drawActivity3Canvas() {
+            const canvas = document.getElementById('activity3Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define center O
+            const O = {x: width * 0.2, y: height * 0.7};
+            
+            // Define ratio k (use k = 2 for visualization)
+            const k = 2;
+            
+            // Define point A
+            const A = {x: width * 0.4, y: height * 0.3};
+            
+            // Calculate A' = h(A)
+            const Aprime = {
+                x: O.x + k * (A.x - O.x),
+                y: O.y + k * (A.y - O.y)
+            };
+            
+            // Define point B such that I is midpoint of [AB]
+            const B = {
+                x: 2 * (width * 0.6) - A.x,  // Symmetric of A with respect to I
+                y: A.y
+            };
+            
+            // Define I as midpoint of [AB]
+            const I = {
+                x: (A.x + B.x) / 2,
+                y: (A.y + B.y) / 2
+            };
+            
+            // Draw center O
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(O.x, O.y, 8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('O', O.x, O.y + 25);
+            
+            // Draw points A and A'
+            ctx.fillStyle = '#2ECC71';
+            ctx.beginPath();
+            ctx.arc(A.x, A.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.fillStyle = '#E67E22';
+            ctx.beginPath();
+            ctx.arc(Aprime.x, Aprime.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Draw labels
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('A', A.x, A.y - 20);
+            ctx.fillText('A\'', Aprime.x, Aprime.y - 20);
+            
+            // Draw line from O to A and A'
+            ctx.strokeStyle = '#666666';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+            ctx.beginPath();
+            ctx.moveTo(O.x, O.y);
+            ctx.lineTo(A.x, A.y);
+            ctx.lineTo(Aprime.x, Aprime.y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Draw B and I if constructed
+            if (activity3State.a || activity3State.b || activity3State.c) {
+                // Draw B
+                ctx.fillStyle = '#3498DB';
+                ctx.beginPath();
+                ctx.arc(B.x, B.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('B', B.x, B.y - 20);
+                
+                // Draw I (midpoint of AB)
+                ctx.fillStyle = '#9B59B6';
+                ctx.beginPath();
+                ctx.arc(I.x, I.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('I', I.x, I.y + 20);
+                
+                // Draw segment [AB]
+                ctx.strokeStyle = '#3498DB';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(A.x, A.y);
+                ctx.lineTo(B.x, B.y);
+                ctx.stroke();
+                
+                // Mark I as midpoint
+                ctx.strokeStyle = '#9B59B6';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(I.x - 10, I.y - 10);
+                ctx.lineTo(I.x + 10, I.y + 10);
+                ctx.moveTo(I.x - 10, I.y + 10);
+                ctx.lineTo(I.x + 10, I.y - 10);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            }
+            
+            // Draw images B' and I' if constructed
+            if (activity3State.a || activity3State.b) {
+                // Calculate B' = h(B)
+                const Bprime = {
+                    x: O.x + k * (B.x - O.x),
+                    y: O.y + k * (B.y - O.y)
+                };
+                
+                // Calculate I' = h(I)
+                const Iprime = {
+                    x: O.x + k * (I.x - O.x),
+                    y: O.y + k * (I.y - O.y)
+                };
+                
+                // Draw B'
+                ctx.fillStyle = '#1ABC9C';
+                ctx.beginPath();
+                ctx.arc(Bprime.x, Bprime.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('B\'', Bprime.x, Bprime.y - 20);
+                
+                // Draw I'
+                ctx.fillStyle = '#8E44AD';
+                ctx.beginPath();
+                ctx.arc(Iprime.x, Iprime.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('I\'', Iprime.x, Iprime.y + 20);
+                
+                // Draw line from O to B and B'
+                ctx.strokeStyle = '#666666';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                ctx.beginPath();
+                ctx.moveTo(O.x, O.y);
+                ctx.lineTo(B.x, B.y);
+                ctx.lineTo(Bprime.x, Bprime.y);
+                ctx.stroke();
+                
+                // Draw line from O to I and I'
+                ctx.beginPath();
+                ctx.moveTo(O.x, O.y);
+                ctx.lineTo(I.x, I.y);
+                ctx.lineTo(Iprime.x, Iprime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw segment [A'B']
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(Aprime.x, Aprime.y);
+                ctx.lineTo(Bprime.x, Bprime.y);
+                ctx.stroke();
+                
+                // Show that I' is midpoint of [A'B']
+                if (activity3State.b) {
+                    // Mark I' as midpoint
+                    ctx.strokeStyle = '#8E44AD';
+                    ctx.lineWidth = 1;
+                    ctx.setLineDash([3, 3]);
+                    ctx.beginPath();
+                    ctx.moveTo(Iprime.x - 10, Iprime.y - 10);
+                    ctx.lineTo(Iprime.x + 10, Iprime.y + 10);
+                    ctx.moveTo(Iprime.x - 10, Iprime.y + 10);
+                    ctx.lineTo(Iprime.x + 10, Iprime.y - 10);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                    
+                    // Show text
+                    ctx.fillStyle = '#8E44AD';
+                    ctx.font = 'bold 14px Arial';
+                    ctx.fillText('I\' est le milieu de [A\'B\']', width * 0.7, height * 0.8);
+                }
+            }
+            
+            // Part c: General case
+            if (activity3State.c) {
+                // Draw a separate example for the general case
+                const M = {x: width * 0.7, y: height * 0.2};
+                const N = {x: width * 0.9, y: height * 0.4};
+                const P = {  // Midpoint of [MN]
+                    x: (M.x + N.x) / 2,
+                    y: (M.y + N.y) / 2
+                };
+                
+                // Calculate images
+                const Mprime = {
+                    x: O.x + k * (M.x - O.x),
+                    y: O.y + k * (M.y - O.y)
+                };
+                
+                const Nprime = {
+                    x: O.x + k * (N.x - O.x),
+                    y: O.y + k * (N.y - O.y)
+                };
+                
+                const Pprime = {
+                    x: O.x + k * (P.x - O.x),
+                    y: O.y + k * (P.y - O.y)
+                };
+                
+                // Draw points
+                ctx.fillStyle = '#2ECC71';
+                ctx.beginPath();
+                ctx.arc(M.x, M.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#3498DB';
+                ctx.beginPath();
+                ctx.arc(N.x, N.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#9B59B6';
+                ctx.beginPath();
+                ctx.arc(P.x, P.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Draw images
+                ctx.fillStyle = '#E67E22';
+                ctx.beginPath();
+                ctx.arc(Mprime.x, Mprime.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#1ABC9C';
+                ctx.beginPath();
+                ctx.arc(Nprime.x, Nprime.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#8E44AD';
+                ctx.beginPath();
+                ctx.arc(Pprime.x, Pprime.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Draw segments
+                ctx.strokeStyle = '#3498DB';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(M.x, M.y);
+                ctx.lineTo(N.x, N.y);
+                ctx.stroke();
+                
+                ctx.strokeStyle = '#E67E22';
+                ctx.beginPath();
+                ctx.moveTo(Mprime.x, Mprime.y);
+                ctx.lineTo(Nprime.x, Nprime.y);
+                ctx.stroke();
+                
+                // Show that P' is midpoint of [M'N']
+                ctx.strokeStyle = '#8E44AD';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(Pprime.x - 8, Pprime.y - 8);
+                ctx.lineTo(Pprime.x + 8, Pprime.y + 8);
+                ctx.moveTo(Pprime.x - 8, Pprime.y + 8);
+                ctx.lineTo(Pprime.x + 8, Pprime.y - 8);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw labels
+                ctx.fillStyle = '#333333';
+                ctx.font = '12px Arial';
+                ctx.fillText('M', M.x, M.y - 15);
+                ctx.fillText('N', N.x, N.y - 15);
+                ctx.fillText('P', P.x, P.y + 15);
+                ctx.fillText('M\'', Mprime.x, Mprime.y - 15);
+                ctx.fillText('N\'', Nprime.x, Nprime.y - 15);
+                ctx.fillText('P\'', Pprime.x, Pprime.y + 15);
+                
+                // Show text
+                ctx.fillStyle = '#8E44AD';
+                ctx.font = 'bold 12px Arial';
+                ctx.fillText('P\' est le milieu de [M\'N\']', width * 0.8, height * 0.6);
+            }
+            
+            // Show homothety notation
+            ctx.fillStyle = '#666666';
+            ctx.font = '14px Arial';
+            ctx.fillText(`h(O, ${k})`, width/2, height * 0.1);
+        }
+        
+        function drawActivity4Canvas() {
+            const canvas = document.getElementById('activity4Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define center I (for homothety)
+            const I = {x: width * 0.3, y: height * 0.5};
+            
+            // Define ratio k (use k = 1.5 for visualization)
+            const k = 1.5;
+            
+            // Define points M and N
+            const M = {x: width * 0.2, y: height * 0.3};
+            const N = {x: width * 0.4, y: height * 0.7};
+            
+            // Define weights α and β
+            const alpha = 2;
+            const beta = 3;
+            
+            // Calculate barycenter P of (M,α) and (N,β)
+            const P = {
+                x: (alpha * M.x + beta * N.x) / (alpha + beta),
+                y: (alpha * M.y + beta * N.y) / (alpha + beta)
+            };
+            
+            // Draw center I
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(I.x, I.y, 8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('I', I.x, I.y - 25);
+            
+            // Draw points M and N
+            ctx.fillStyle = '#2ECC71';
+            ctx.beginPath();
+            ctx.arc(M.x, M.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.fillStyle = '#3498DB';
+            ctx.beginPath();
+            ctx.arc(N.x, N.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Draw labels
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('M', M.x, M.y - 20);
+            ctx.fillText('N', N.x, N.y + 20);
+            
+            // Draw barycenter P
+            ctx.fillStyle = '#9B59B6';
+            ctx.beginPath();
+            ctx.arc(P.x, P.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('P', P.x, P.y - 20);
+            
+            // Show weights
+            ctx.fillStyle = '#666666';
+            ctx.font = '12px Arial';
+            ctx.fillText(`(${alpha})`, M.x + 10, M.y - 10);
+            ctx.fillText(`(${beta})`, N.x + 10, N.y + 10);
+            
+            // Draw images if constructed
+            if (activity4State.a || activity4State.b) {
+                // Calculate images M', N', P'
+                const Mprime = {
+                    x: I.x + k * (M.x - I.x),
+                    y: I.y + k * (M.y - I.y)
+                };
+                
+                const Nprime = {
+                    x: I.x + k * (N.x - I.x),
+                    y: I.y + k * (N.y - I.y)
+                };
+                
+                const Pprime = {
+                    x: I.x + k * (P.x - I.x),
+                    y: I.y + k * (P.y - I.y)
+                };
+                
+                // Draw images
+                ctx.fillStyle = '#E67E22';
+                ctx.beginPath();
+                ctx.arc(Mprime.x, Mprime.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#1ABC9C';
+                ctx.beginPath();
+                ctx.arc(Nprime.x, Nprime.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#8E44AD';
+                ctx.beginPath();
+                ctx.arc(Pprime.x, Pprime.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Draw labels
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('M\'', Mprime.x, Mprime.y - 20);
+                ctx.fillText('N\'', Nprime.x, Nprime.y + 20);
+                ctx.fillText('P\'', Pprime.x, Pprime.y - 20);
+                
+                // Show weights for images
+                ctx.fillStyle = '#666666';
+                ctx.font = '12px Arial';
+                ctx.fillText(`(${alpha})`, Mprime.x + 10, Mprime.y - 10);
+                ctx.fillText(`(${beta})`, Nprime.x + 10, Nprime.y + 10);
+                
+                // Draw lines from center to points
+                ctx.strokeStyle = '#666666';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                
+                // IM and IM'
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(M.x, M.y);
+                ctx.lineTo(Mprime.x, Mprime.y);
+                ctx.stroke();
+                
+                // IN and IN'
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(N.x, N.y);
+                ctx.lineTo(Nprime.x, Nprime.y);
+                ctx.stroke();
+                
+                // IP and IP'
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(P.x, P.y);
+                ctx.lineTo(Pprime.x, Pprime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Show that P' is barycenter of (M',α) and (N',β)
+                if (activity4State.a) {
+                    ctx.fillStyle = '#8E44AD';
+                    ctx.font = 'bold 14px Arial';
+                    ctx.fillText('P\' est barycentre de (M\',α) et (N\',β)', width * 0.7, height * 0.3);
+                }
+                
+                // Part b: Three points case
+                if (activity4State.b) {
+                    // Define points A, B, C
+                    const A = {x: width * 0.7, y: height * 0.2};
+                    const B = {x: width * 0.9, y: height * 0.4};
+                    const C = {x: width * 0.8, y: height * 0.7};
+                    
+                    // Define weights
+                    const wA = 2;
+                    const wB = -1;
+                    const wC = 3;
+                    
+                    // Calculate barycenter G
+                    const G = {
+                        x: (wA * A.x + wB * B.x + wC * C.x) / (wA + wB + wC),
+                        y: (wA * A.y + wB * B.y + wC * C.y) / (wA + wB + wC)
+                    };
+                    
+                    // Calculate images A', B', C', G'
+                    const Aprime = {
+                        x: I.x + k * (A.x - I.x),
+                        y: I.y + k * (A.y - I.y)
+                    };
+                    
+                    const Bprime = {
+                        x: I.x + k * (B.x - I.x),
+                        y: I.y + k * (B.y - I.y)
+                    };
+                    
+                    const Cprime = {
+                        x: I.x + k * (C.x - I.x),
+                        y: I.y + k * (C.y - I.y)
+                    };
+                    
+                    const Gprime = {
+                        x: I.x + k * (G.x - I.x),
+                        y: I.y + k * (G.y - I.y)
+                    };
+                    
+                    // Draw points
+                    ctx.fillStyle = '#2ECC71';
+                    ctx.beginPath();
+                    ctx.arc(A.x, A.y, 5, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#3498DB';
+                    ctx.beginPath();
+                    ctx.arc(B.x, B.y, 5, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#9B59B6';
+                    ctx.beginPath();
+                    ctx.arc(C.x, C.y, 5, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#E74C3C';
+                    ctx.beginPath();
+                    ctx.arc(G.x, G.y, 6, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Draw images
+                    ctx.fillStyle = '#E67E22';
+                    ctx.beginPath();
+                    ctx.arc(Aprime.x, Aprime.y, 5, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#1ABC9C';
+                    ctx.beginPath();
+                    ctx.arc(Bprime.x, Bprime.y, 5, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#8E44AD';
+                    ctx.beginPath();
+                    ctx.arc(Cprime.x, Cprime.y, 5, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#C0392B';
+                    ctx.beginPath();
+                    ctx.arc(Gprime.x, Gprime.y, 6, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Draw labels
+                    ctx.fillStyle = '#333333';
+                    ctx.font = '12px Arial';
+                    ctx.fillText('A', A.x, A.y - 15);
+                    ctx.fillText('B', B.x, B.y - 15);
+                    ctx.fillText('C', C.x, C.y + 15);
+                    ctx.fillText('G', G.x, G.y - 15);
+                    ctx.fillText('A\'', Aprime.x, Aprime.y - 15);
+                    ctx.fillText('B\'', Bprime.x, Bprime.y - 15);
+                    ctx.fillText('C\'', Cprime.x, Cprime.y + 15);
+                    ctx.fillText('G\'', Gprime.x, Gprime.y - 15);
+                    
+                    // Show weights
+                    ctx.fillStyle = '#666666';
+                    ctx.font = '10px Arial';
+                    ctx.fillText(`(${wA})`, A.x + 8, A.y - 8);
+                    ctx.fillText(`(${wB})`, B.x + 8, B.y - 8);
+                    ctx.fillText(`(${wC})`, C.x + 8, C.y + 8);
+                    ctx.fillText(`(${wA})`, Aprime.x + 8, Aprime.y - 8);
+                    ctx.fillText(`(${wB})`, Bprime.x + 8, Bprime.y - 8);
+                    ctx.fillText(`(${wC})`, Cprime.x + 8, Cprime.y + 8);
+                    
+                    // Show text
+                    ctx.fillStyle = '#C0392B';
+                    ctx.font = 'bold 12px Arial';
+                    ctx.fillText('G\' est barycentre de (A\',2), (B\',-1), (C\',3)', width * 0.7, height * 0.8);
+                }
+            }
+            
+            // Show homothety notation
+            ctx.fillStyle = '#666666';
+            ctx.font = '14px Arial';
+            ctx.fillText(`h(I, ${k})`, width/2, height * 0.1);
+        }
+        
+        function drawActivity5Canvas() {
+            const canvas = document.getElementById('activity5Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define trapezoid vertices
+            const A = {x: width * 0.2, y: height * 0.7};
+            const B = {x: width * 0.8, y: height * 0.7};
+            const C = {x: width * 0.7, y: height * 0.3};
+            const D = {x: width * 0.3, y: height * 0.3};
+            
+            // Calculate midpoints I and J
+            const I = {  // Midpoint of [AB]
+                x: (A.x + B.x) / 2,
+                y: (A.y + B.y) / 2
+            };
+            
+            const J = {  // Midpoint of [CD]
+                x: (C.x + D.x) / 2,
+                y: (C.y + D.y) / 2
+            };
+            
+            // Calculate intersection O of (AD) and (BC)
+            // Solve for intersection of lines
+            const O = intersectLines(A, D, B, C);
+            
+            // Calculate intersection O' of (AC) and (BD)
+            const Oprime = intersectLines(A, C, B, D);
+            
+            // Draw trapezoid
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(A.x, A.y);
+            ctx.lineTo(B.x, B.y);
+            ctx.lineTo(C.x, C.y);
+            ctx.lineTo(D.x, D.y);
+            ctx.closePath();
+            ctx.stroke();
+            
+            // Draw vertices
+            const vertices = [
+                {coord: A, label: 'A', color: '#E74C3C'},
+                {coord: B, label: 'B', color: '#2ECC71'},
+                {coord: C, label: 'C', color: '#3498DB'},
+                {coord: D, label: 'D', color: '#9B59B6'}
+            ];
+            
+            vertices.forEach(point => {
+                ctx.fillStyle = point.color;
+                ctx.beginPath();
+                ctx.arc(point.coord.x, point.coord.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                let offsetY = -20;
+                if (point.label === 'C' || point.label === 'D') offsetY = 20;
+                ctx.fillText(point.label, point.coord.x, point.coord.y + offsetY);
+            });
+            
+            // Draw midpoints I and J
+            ctx.fillStyle = '#E67E22';
+            ctx.beginPath();
+            ctx.arc(I.x, I.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.fillStyle = '#1ABC9C';
+            ctx.beginPath();
+            ctx.arc(J.x, J.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('I', I.x, I.y - 20);
+            ctx.fillText('J', J.x, J.y + 20);
+            
+            // Draw intersection points O and O'
+            ctx.fillStyle = '#8E44AD';
+            ctx.beginPath();
+            ctx.arc(O.x, O.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.fillStyle = '#C0392B';
+            ctx.beginPath();
+            ctx.arc(Oprime.x, Oprime.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('O', O.x, O.y - 20);
+            ctx.fillText('O\'', Oprime.x, Oprime.y + 20);
+            
+            // Draw lines (AD) and (BC) in part a
+            if (activity5State.a) {
+                ctx.strokeStyle = '#E74C3C';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                
+                // Line (AD)
+                ctx.beginPath();
+                // Extend line beyond A and D
+                const AD_slope = (D.y - A.y) / (D.x - A.x);
+                ctx.moveTo(A.x - 50, A.y - 50 * AD_slope);
+                ctx.lineTo(D.x + 50, D.y + 50 * AD_slope);
+                ctx.stroke();
+                
+                // Line (BC)
+                ctx.beginPath();
+                const BC_slope = (C.y - B.y) / (C.x - B.x);
+                ctx.moveTo(B.x - 50, B.y - 50 * BC_slope);
+                ctx.lineTo(C.x + 50, C.y + 50 * BC_slope);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Show homothety h1
+                ctx.fillStyle = '#8E44AD';
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText('h₁(O) : A → D, B → C', width * 0.7, height * 0.2);
+                
+                // Show alignment
+                ctx.strokeStyle = '#8E44AD';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(O.x, O.y);
+                ctx.lineTo(I.x, I.y);
+                ctx.lineTo(J.x, J.y);
+                ctx.stroke();
+                
+                ctx.fillStyle = '#8E44AD';
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText('O, I, J alignés', width * 0.7, height * 0.25);
+            }
+            
+            // Draw lines (AC) and (BD) in part b
+            if (activity5State.b) {
+                ctx.strokeStyle = '#3498DB';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                
+                // Line (AC)
+                ctx.beginPath();
+                const AC_slope = (C.y - A.y) / (C.x - A.x);
+                ctx.moveTo(A.x - 50, A.y - 50 * AC_slope);
+                ctx.lineTo(C.x + 50, C.y + 50 * AC_slope);
+                ctx.stroke();
+                
+                // Line (BD)
+                ctx.beginPath();
+                const BD_slope = (D.y - B.y) / (D.x - B.x);
+                ctx.moveTo(B.x - 50, B.y - 50 * BD_slope);
+                ctx.lineTo(D.x + 50, D.y + 50 * BD_slope);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Show homothety h2
+                ctx.fillStyle = '#C0392B';
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText('h₂(O\') : A → C, B → D', width * 0.7, height * 0.3);
+                
+                // Show alignment of O, I, O', J
+                if (activity5State.a) {
+                    ctx.strokeStyle = '#C0392B';
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash([2, 2]);
+                    ctx.beginPath();
+                    ctx.moveTo(O.x, O.y);
+                    ctx.lineTo(Oprime.x, Oprime.y);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                    
+                    ctx.fillStyle = '#C0392B';
+                    ctx.font = 'bold 14px Arial';
+                    ctx.fillText('O, I, O\', J alignés', width * 0.7, height * 0.35);
+                }
+            }
+            
+            // Part c: Three parallel lines
+            if (activity5State.c) {
+                // Draw three parallel lines
+                const y1 = height * 0.2;
+                const y2 = height * 0.5;
+                const y3 = height * 0.8;
+                
+                ctx.strokeStyle = '#4A90E2';
+                ctx.lineWidth = 2;
+                
+                // Line D1
+                ctx.beginPath();
+                ctx.moveTo(width * 0.1, y1);
+                ctx.lineTo(width * 0.9, y1);
+                ctx.stroke();
+                
+                // Line D2
+                ctx.beginPath();
+                ctx.moveTo(width * 0.1, y2);
+                ctx.lineTo(width * 0.9, y2);
+                ctx.stroke();
+                
+                // Line D3
+                ctx.beginPath();
+                ctx.moveTo(width * 0.1, y3);
+                ctx.lineTo(width * 0.9, y3);
+                ctx.stroke();
+                
+                // Label lines
+                ctx.fillStyle = '#4A90E2';
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText('D₁', width * 0.05, y1);
+                ctx.fillText('D₂', width * 0.05, y2);
+                ctx.fillText('D₃', width * 0.05, y3);
+                
+                // Draw two transversals
+                ctx.strokeStyle = '#E74C3C';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                
+                // First transversal
+                ctx.beginPath();
+                ctx.moveTo(width * 0.2, y1 - 20);
+                ctx.lineTo(width * 0.8, y3 + 20);
+                ctx.stroke();
+                
+                // Second transversal
+                ctx.beginPath();
+                ctx.moveTo(width * 0.4, y1 - 20);
+                ctx.lineTo(width * 0.6, y3 + 20);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Calculate intersection points with lines
+                // For first transversal
+                const P = {  // Intersection of lines through corresponding points
+                    x: width * 0.3,
+                    y: y2
+                };
+                
+                const Q = {
+                    x: width * 0.5,
+                    y: y2
+                };
+                
+                const R = {
+                    x: width * 0.7,
+                    y: y2
+                };
+                
+                // Draw points P, Q, R
+                ctx.fillStyle = '#E67E22';
+                ctx.beginPath();
+                ctx.arc(P.x, P.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#1ABC9C';
+                ctx.beginPath();
+                ctx.arc(Q.x, Q.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#8E44AD';
+                ctx.beginPath();
+                ctx.arc(R.x, R.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Draw labels
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('P', P.x, P.y - 20);
+                ctx.fillText('Q', Q.x, Q.y - 20);
+                ctx.fillText('R', R.x, R.y - 20);
+                
+                // Show they are aligned
+                ctx.strokeStyle = '#E74C3C';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(P.x, P.y);
+                ctx.lineTo(Q.x, Q.y);
+                ctx.lineTo(R.x, R.y);
+                ctx.stroke();
+                
+                ctx.fillStyle = '#E74C3C';
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText('P, Q, R alignés', width * 0.5, height * 0.9);
+            }
+            
+            // Helper function to find intersection of two lines
+            function intersectLines(p1, p2, p3, p4) {
+                // Line1: p1 to p2, Line2: p3 to p4
+                // Using line intersection formula
+                const x1 = p1.x, y1 = p1.y;
+                const x2 = p2.x, y2 = p2.y;
+                const x3 = p3.x, y3 = p3.y;
+                const x4 = p4.x, y4 = p4.y;
+                
+                const denom = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+                
+                if (Math.abs(denom) < 0.001) {
+                    // Lines are parallel or coincident
+                    return {x: (x1 + x3) / 2, y: (y1 + y3) / 2};
+                }
+                
+                const x = ((x1 * y2 - y1 * x2) * (x3 - x4) - (x1 - x2) * (x3 * y4 - y3 * x4)) / denom;
+                const y = ((x1 * y2 - y1 * x2) * (y3 - y4) - (y1 - y2) * (x3 * y4 - y3 * x4)) / denom;
+                
+                return {x, y};
+            }
+        }
+        
+        // Construction functions
+        function constructActivity1() {
+            activity1State.constructed = true;
+            drawActivity1Canvas();
+        }
+        
+        function showActivity2Part(part) {
+            activity2State[part] = true;
+            drawActivity2Canvas();
+        }
+        
+        function constructActivity3Part(part) {
+            activity3State[part] = true;
+            drawActivity3Canvas();
+        }
+        
+        function constructActivity4Part(part) {
+            activity4State[part] = true;
+            drawActivity4Canvas();
+        }
+        
+        function constructActivity5Part(part) {
+            activity5State[part] = true;
+            drawActivity5Canvas();
+        }
+        
+        // Solution toggle function
+        function toggleSolution(problemNumber) {
+            const solution = document.getElementById(`solution${problemNumber}`);
+            const button = solution.previousElementSibling;
+            const currentLang = MHThemeManager ? MHThemeManager.getCurrentLanguage() : 'en';
+            
+            if (solution.style.display === 'block' || solution.style.display === '') {
+                solution.style.display = 'none';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_homothety2.showSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_homothety2.showSolution'];
+                } else {
+                    button.textContent = 'Show Solution';
+                }
+            } else {
+                solution.style.display = 'block';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_homothety2.hideSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_homothety2.hideSolution'];
+                } else {
+                    button.textContent = 'Hide Solution';
+                }
+                
+                // Re-render KaTeX for newly visible equations
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(solution, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\(', right: '\\)', display: false},
+                            {left: '\\[', right: '\\]', display: true}
+                        ],
+                        throwOnError: false
+                    });
+                }
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize KaTeX auto-render
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+
+            // Draw initial canvases
+            drawActivity1Canvas();
+            drawActivity2Canvas();
+            drawActivity3Canvas();
+            drawActivity4Canvas();
+            drawActivity5Canvas();
+
+            // Initialize solutions as hidden and set button text
+            const currentLang = MHThemeManager ? MHThemeManager.getCurrentLanguage() : 'en';
+            for (let i = 1; i <= 14; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                const button = solution ? solution.previousElementSibling : null;
+                
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+                
+                // Set initial button text
+                if (button && translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_homothety2.showSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_homothety2.showSolution'];
+                }
+            }
+            
+            // Redraw canvases when theme changes
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    setTimeout(() => {
+                        drawActivity1Canvas();
+                        drawActivity2Canvas();
+                        drawActivity3Canvas();
+                        drawActivity4Canvas();
+                        drawActivity5Canvas();
+                    }, 100);
+                });
+            }
+        });
+    </script>
+
+<!-- Add the service worker registration script -->
+<script>
+    // Register service worker with better error handling
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch(function(error) {
+                console.log('Service Worker registration failed:', error);
+            });
+        });
+    }
+</script>
+
+<!-- Add noscript fallback -->
+<noscript>
+    <style>
+        .MH-header-controls { display: none; }
+        .MH-solution { display: block; }
+        .MH-canvas { border: 2px solid #ccc; background-color: #f9f9f9; }
+    </style>
+    <div class="MH-warning">
+        JavaScript is recommended for the full experience, but content is still accessible.
+    </div>
+</noscript>
+</body>
+</html>
