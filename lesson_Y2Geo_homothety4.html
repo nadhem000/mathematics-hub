@@ -1,0 +1,2599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Geometry - Homothety Exercises</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#4A90E2" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#8E44AD" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#4A90E2">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    
+    <style>
+        /* Page-specific color palette - Blue + Purple Theme */
+        :root {
+            --primary: #4A90E2;        /* Cornflower Blue */
+            --primary-light: #7BAAF7;  /* Light Blue */
+            --primary-dark: #357ABD;   /* Darker Blue */
+            --secondary: #8E44AD;      /* Dark Purple */
+            --secondary-light: #AF7AC5; /* Light Purple */
+            --secondary-dark: #6C3483;  /* Darker Purple */
+            --accent: #E67E22;
+            --warning: #E74C3C;
+            --info: #2ECC71;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #FFFFFF;
+            --surface: #F8F9FA;
+            --border: #E9ECEF;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        [data-theme="dark"] {
+            --primary: #357ABD;
+            --primary-light: #4A90E2;
+            --primary-dark: #2C3E50;
+            --secondary: #6C3483;
+            --secondary-light: #8E44AD;
+            --secondary-dark: #4A235A;
+            --accent: #D35400;
+            --warning: #C0392B;
+            --info: #27AE60;
+            --text: #FFFFFF;
+            --text-light: #CCCCCC;
+            --background: #121212;
+            --surface: #1E1E1E;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        /* KaTeX styling */
+        .katex { 
+            font-size: 1.1em; 
+        }
+        
+        .katex-display { 
+            margin: 1em 0; 
+            text-align: center;
+        }
+        
+        .katex-display > .katex { 
+            display: inline-block;
+            text-align: center;
+        }
+
+        /* Equation styling */
+        .MH-equation {
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            margin: 0.5em 0;
+            padding: 0;
+            display: inline-block;
+            direction: ltr !important;
+            unicode-bidi: isolate;
+        }
+        
+        [dir="rtl"] .MH-equation {
+            text-align: left;
+            unicode-bidi: plaintext;
+        }
+
+        /* Canvas container styling */
+        .MH-canvas-container {
+            margin: 2em 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .MH-canvas {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background-color: var(--surface);
+            max-width: 100%;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+
+        .MH-canvas-title {
+            font-weight: bold;
+            margin-bottom: 0.5em;
+            color: var(--primary);
+        }
+
+        .MH-canvas-instructions {
+            font-size: 0.9em;
+            color: var(--text-light);
+            margin-top: 0.5em;
+            font-style: italic;
+        }
+
+        /* Geometry specific styling */
+        .MH-construction-step {
+            margin: 1.5em 0;
+            padding: 1em;
+            background-color: var(--surface);
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+        }
+
+        .MH-construction-step h4 {
+            margin-top: 0;
+            color: var(--primary-dark);
+        }
+
+        .MH-vector-notation {
+            font-family: 'KaTeX_Math', 'Cambria Math', serif;
+            font-style: italic;
+            color: var(--secondary);
+        }
+
+        .MH-point-label {
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .MH-transformation-notation {
+            background-color: rgba(78, 144, 226, 0.1);
+            padding: 0.5em;
+            border-radius: 4px;
+            font-family: 'KaTeX_Math', 'Cambria Math', serif;
+            margin: 0.5em 0;
+        }
+
+        /* Responsive canvas */
+        @media (max-width: 768px) {
+            .MH-canvas {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+
+        /* Homothety specific */
+        .MH-homothety-center {
+            font-weight: bold;
+            color: var(--warning);
+        }
+
+        .MH-homothety-ratio {
+            font-weight: bold;
+            color: var(--info);
+        }
+
+        /* Exercise specific */
+        .MH-exercise-number {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--secondary);
+            margin: 1.5em 0 0.5em 0;
+            border-bottom: 2px solid var(--secondary-light);
+            padding-bottom: 0.3em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                    <!-- Notification Button -->
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+                        <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Geo_homothety4.title">Homothety: Part 4 - Exercises</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y2Geo_homothety4.subtitle">Applications and Problem Solving</h2>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_homothety4.introduction">Introduction</h2>
+            <p data-i18n="MH.lesson_Y2Geo_homothety4.introText1">This lesson focuses on advanced applications of homothety through a series of exercises. You will explore properties of circles under homothety, contact preservation, homothetic circles, common tangents, and geometric measurements.</p>
+            <p data-i18n="MH.lesson_Y2Geo_homothety4.introText2">Each exercise includes interactive diagrams that can be constructed step by step. Use the "Show Construction" buttons to visualize the geometric constructions.</p>
+        </section>
+
+        <!-- XIV. Image of a Circle -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y2Geo_homothety4.XIV">XIV. Image of a Circle</div>
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_homothety4.activity1Title">Activity 1</p>
+                <p data-i18n="MH.lesson_Y2Geo_homothety4.activity1Statement1">1) Let ω and I be two distinct points in the plane and let f be the homothety with center I and ratio -1/2.</p>
+            </div>
+
+            <!-- Diagram for Activity 1, part 1 -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_homothety4.diagram1Title">Figure: Circle transformation by homothety</div>
+                <canvas id="activity1Canvas1" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_homothety4.diagram1Instructions">Circle Γ with center ω and points A, B, C on it. Their images A', B', C', ω' by f(I, -1/2).</div>
+            </div>
+
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety4.question1a">a) Draw a circle Γ with center ω. Denote its radius by r.</h4>
+                    <button class="MH-solution-btn" onclick="constructActivity1a()" data-i18n="MH.lesson_Y2Geo_homothety4.showConstruction">Show Construction</button>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety4.question1b">b) Place three points A, B, and C on circle Γ.</h4>
+                    <button class="MH-solution-btn" onclick="constructActivity1b()" data-i18n="MH.lesson_Y2Geo_homothety4.showConstruction">Show Construction</button>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety4.question1c">c) Construct the points A', B', C', and ω' respectively images of points A, B, C, and ω by f.</h4>
+                    <button class="MH-solution-btn" onclick="constructActivity1c()" data-i18n="MH.lesson_Y2Geo_homothety4.showConstruction">Show Construction</button>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety4.question1d">d) Verify that points A', B', and C' lie on a circle Γ' with center ω'. Express the radius of Γ' in terms of r.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety4.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                    <div class="MH-solution" id="solution1">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution1d">Since f is a homothety with ratio k = -1/2, the image of circle Γ is a circle Γ' with center ω' = f(ω) and radius r' = |k| × r.</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety4.equation1d">r' = |k| × r = |-1/2| × r = \frac{1}{2}r</div>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution1d2">All points on Γ are transformed to points on Γ' because homothety preserves circles (transforms circles to circles).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity 1, part 2 -->
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_homothety4.activity1Statement2">2) Let h be a homothety with ratio k and C a circle with center O and radius R. Let M be a point on C. Denote by M' and O' the respective images of M and O by h, and by C' the circle with center O' and radius R' = |k|R.</p>
+            </div>
+
+            <!-- Diagram for Activity 1, part 2 -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_homothety4.diagram2Title">Figure: Circle transformation by homothety with ratio k</div>
+                <canvas id="activity1Canvas2" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_homothety4.diagram2Instructions">Circle C with center O, point M on C. Images O' and M' by homothety h.</div>
+            </div>
+
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety4.question2a">a) Show that M' ∈ C'.</h4>
+                    <button class="MH-solution-btn" onclick="constructActivity1Part2a()" data-i18n="MH.lesson_Y2Geo_homothety4.showConstruction">Show Construction</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety4.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                    <div class="MH-solution" id="solution2">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution2a">By definition of homothety: \(\overrightarrow{O'M'} = k \overrightarrow{OM}\).</p>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution2a2">Since M is on circle C: OM = R.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution2a3">Then: O'M' = |k| × OM = |k| × R = R'.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution2a4">Therefore M' is on circle C' with center O' and radius R'.</p>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety4.question2b">b) Let N' ∈ C' and let N be its antecedent by h. Show that N belongs to C.</h4>
+                    <button class="MH-solution-btn" onclick="constructActivity1Part2b()" data-i18n="MH.lesson_Y2Geo_homothety4.showConstruction">Show Construction</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety4.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                    <div class="MH-solution" id="solution3">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution2b">Since N' is on C': O'N' = R' = |k|R.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution2b2">By definition of homothety: \(\overrightarrow{O'N'} = k \overrightarrow{ON}\).</p>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution2b3">Thus: ON = O'N' / |k| = (|k|R) / |k| = R.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution2b4">Therefore N is on circle C with center O and radius R.</p>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety4.question2c">c) What can we conclude?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety4.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+                    <div class="MH-solution" id="solution4">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution2c">We conclude that the image of circle C by homothety h is the circle C' with center O' = h(O) and radius R' = |k|R.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution2c2">Moreover, every point of C' is the image of a point of C, and vice versa. The homothety establishes a bijection between the two circles.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- XV. Contact Preservation -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y2Geo_homothety4.XV">XV. Contact Preservation</div>
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_homothety4.activity2Title">Activity 2</p>
+                <p data-i18n="MH.lesson_Y2Geo_homothety4.activity2Statement">Let h be a homothety with center I and ratio k. Let C be a circle with center O and radius r, and D a tangent to this circle at point A. Denote by A', C', and D' the respective images of point A, circle C, and line D by h. Show that line D' is tangent to circle C' at point A'.</p>
+            </div>
+
+            <!-- Diagram for Activity 2 -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_homothety4.diagram3Title">Figure: Tangent preservation under homothety</div>
+                <canvas id="activity2Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_homothety4.diagram3Instructions">Circle C with tangent D at A. Images C', D', A' by homothety h.</div>
+            </div>
+
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <button class="MH-solution-btn" onclick="constructActivity2()" data-i18n="MH.lesson_Y2Geo_homothety4.showConstruction">Show Construction</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety4.showSolution" onclick="toggleSolution(5)">Show Solution</button>
+                    <div class="MH-solution" id="solution5">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution2">Since D is tangent to C at A, we have D ⊥ OA (radius is perpendicular to tangent at point of contact).</p>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution2b">Under homothety h:
+                            <ul>
+                                <li data-i18n="MH.lesson_Y2Geo_homothety4.solution2b1">A' = h(A)</li>
+                                <li data-i18n="MH.lesson_Y2Geo_homothety4.solution2b2">O' = h(O) is the center of C'</li>
+                                <li data-i18n="MH.lesson_Y2Geo_homothety4.solution2b3">D' = h(D) is a line through A'</li>
+                            </ul>
+                        </p>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution2c">Homothety preserves angles, so the angle between D and OA is preserved: D' ⊥ O'A'.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution2d">Since O'A' is a radius of C' and D' is perpendicular to it at A', D' is tangent to C' at A'.</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety4.equation2">D ⊥ OA ⇒ D' ⊥ O'A' ⇒ D' tangent to C' at A'</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- XVI. Homothetic Circles – Common Tangents to Two Circles -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y2Geo_homothety4.XVI">XVI. Homothetic Circles – Common Tangents to Two Circles</div>
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_homothety4.activity3Title">Activity 3</p>
+                <p data-i18n="MH.lesson_Y2Geo_homothety4.activity3Statement1">1) Let C and C' be two circles with respective centers O and O' and respective radii R and R' such that R ≠ R'.</p>
+            </div>
+
+            <!-- Diagram for Activity 3, part 1 -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_homothety4.diagram4Title">Figure: Homothetic circles with positive and negative ratios</div>
+                <canvas id="activity3Canvas1" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_homothety4.diagram4Instructions">Circles C and C' with centers O and O', radii R and R' (R ≠ R').</div>
+            </div>
+
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety4.question3a">a) Show that there exists a unique homothety with positive ratio that transforms C into C'. Specify the ratio of this homothety and construct its center I.</h4>
+                    <button class="MH-solution-btn" onclick="constructActivity3a()" data-i18n="MH.lesson_Y2Geo_homothety4.showConstruction">Show Construction</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety4.showSolution" onclick="toggleSolution(6)">Show Solution</button>
+                    <div class="MH-solution" id="solution6">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution3a">For a homothety h(I, k) to transform C into C', we need:
+                            <ul>
+                                <li data-i18n="MH.lesson_Y2Geo_homothety4.solution3a1">h(O) = O' ⇒ \(\overrightarrow{IO'} = k \overrightarrow{IO}\)</li>
+                                <li data-i18n="MH.lesson_Y2Geo_homothety4.solution3a2">Radius transformation: R' = |k|R</li>
+                            </ul>
+                        </p>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution3a3">Since we want positive ratio: k = R'/R > 0.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution3a4">The center I is on line OO' and satisfies \(\overrightarrow{IO'} = \frac{R'}{R} \overrightarrow{IO}\).</p>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution3a5">This gives a unique point I on line OO' (external homothety center).</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety4.equation3a">k = \frac{R'}{R} > 0, \quad I \in (OO') \text{ with } \overrightarrow{IO'} = \frac{R'}{R} \overrightarrow{IO}</div>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety4.question3b">b) Show that there exists a unique homothety with negative ratio that transforms C into C'. Specify the ratio of this homothety and construct its center J.</h4>
+                    <button class="MH-solution-btn" onclick="constructActivity3b()" data-i18n="MH.lesson_Y2Geo_homothety4.showConstruction">Show Construction</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety4.showSolution" onclick="toggleSolution(7)">Show Solution</button>
+                    <div class="MH-solution" id="solution7">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution3b">For negative ratio: k = -R'/R < 0.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution3b2">The center J is on line OO' and satisfies \(\overrightarrow{JO'} = -\frac{R'}{R} \overrightarrow{JO}\).</p>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution3b3">This gives a unique point J on line OO' between O and O' (internal homothety center).</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety4.equation3b">k = -\frac{R'}{R} < 0, \quad J \in (OO') \text{ with } \overrightarrow{JO'} = -\frac{R'}{R} \overrightarrow{JO}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity 3, part 2 -->
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_homothety4.activity3Statement2">2) Let C and C' be two exterior and non-isometric circles. Construct the common tangents to these two circles.</p>
+            </div>
+
+            <!-- Diagram for Activity 3, part 2 -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_homothety4.diagram5Title">Figure: Common tangents to two exterior circles</div>
+                <canvas id="activity3Canvas2" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_homothety4.diagram5Instructions">Two exterior circles C and C' with their common tangents.</div>
+            </div>
+
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <button class="MH-solution-btn" onclick="constructActivity3Part2()" data-i18n="MH.lesson_Y2Geo_homothety4.showConstruction">Show Construction</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety4.showSolution" onclick="toggleSolution(8)">Show Solution</button>
+                    <div class="MH-solution" id="solution8">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution3c">Construction method using homothety:</p>
+                        <ol>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety4.solution3c1">Find the external homothety center I (on line OO' outside both circles).</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety4.solution3c2">Draw tangents from I to circle C, touching C at points T1 and T2.</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety4.solution3c3">Under the homothety h(I, R'/R), these tangents transform to tangents of C' at points T1' and T2'.</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety4.solution3c4">Similarly, using the internal homothety center J, we get the two internal common tangents.</li>
+                        </ol>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution3c5">Thus, two circles have up to 4 common tangents: 2 external and 2 internal.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- XVII. Circles Tangent to a Given Circle and Line -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y2Geo_homothety4.XVII">XVII. Circles Tangent to a Given Circle and Line</div>
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_homothety4.activity4Title">Activity 4</p>
+                <p data-i18n="MH.lesson_Y2Geo_homothety4.activity4Statement">Let Γ be a circle, D a line, and A a point on D not belonging to Γ. Denote by [BC] a diameter of circle Γ such that (BC) is perpendicular to line D, and by D' the tangent to circle Γ at B. Line (AB) intersects circle Γ again at I.</p>
+            </div>
+
+            <!-- Diagram for Activity 4 -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_homothety4.diagram6Title">Figure: Circle tangent to Γ and line D</div>
+                <canvas id="activity4Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_homothety4.diagram6Instructions">Circle Γ, line D, point A on D. Diameter BC perpendicular to D.</div>
+            </div>
+
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety4.question4a">a) Let h be the homothety with center I that transforms B into A. Denote by Γ' the image of circle Γ by homothety h. Show that Γ' is tangent to Γ at I and to line D at A.</h4>
+                    <button class="MH-solution-btn" onclick="constructActivity4a()" data-i18n="MH.lesson_Y2Geo_homothety4.showConstruction">Show Construction</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety4.showSolution" onclick="toggleSolution(9)">Show Solution</button>
+                    <div class="MH-solution" id="solution9">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution4a">Since h(I, k) with B ↦ A, we have \(\overrightarrow{IA} = k \overrightarrow{IB}\).</p>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution4a2">Point I is on both Γ and Γ' (since center of homothety).</p>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution4a3">Γ' is tangent to Γ at I because:
+                            <ul>
+                                <li data-i18n="MH.lesson_Y2Geo_homothety4.solution4a3a">The common point is I</li>
+                                <li data-i18n="MH.lesson_Y2Geo_homothety4.solution4a3b">The tangent to Γ at I is transformed to itself (since I is the center)</li>
+                                <li data-i18n="MH.lesson_Y2Geo_homothety4.solution4a3c">Thus Γ and Γ' have the same tangent at I</li>
+                            </ul>
+                        </p>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution4a4">Γ' is tangent to D at A because:
+                            <ul>
+                                <li data-i18n="MH.lesson_Y2Geo_homothety4.solution4a4a">D' (tangent to Γ at B) is transformed to a line through A</li>
+                                <li data-i18n="MH.lesson_Y2Geo_homothety4.solution4a4b">D' ∥ D (since both perpendicular to BC)</li>
+                                <li data-i18n="MH.lesson_Y2Geo_homothety4.solution4a4c">Thus the image of D' is D, tangent to Γ' at A</li>
+                            </ul>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety4.question4b">b) Let M be any point on D not belonging to Γ and distinct from A. Construct all circles tangent to Γ and to D at M.</h4>
+                    <button class="MH-solution-btn" onclick="constructActivity4b()" data-i18n="MH.lesson_Y2Geo_homothety4.showConstruction">Show Construction</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety4.showSolution" onclick="toggleSolution(10)">Show Solution</button>
+                    <div class="MH-solution" id="solution10">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution4b">Construction method:</p>
+                        <ol>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety4.solution4b1">Draw line perpendicular to D at M.</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety4.solution4b2">Find the intersection points of this perpendicular with circle Γ (or its extension).</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety4.solution4b3">For each intersection point N, consider the homothety with center N that transforms M to the point of tangency on Γ.</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety4.solution4b4">The image of Γ under this homothety gives a circle tangent to both Γ and D at M.</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety4.solution4b5">There are generally two solutions (one on each side of D).</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- XVIII. Homothety and Geometric Measurements -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y2Geo_homothety4.XVIII">XVIII. Homothety and Geometric Measurements</div>
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_homothety4.activity5Title">Activity 5</p>
+                <p data-i18n="MH.lesson_Y2Geo_homothety4.activity5Statement">Let C be a circle with center I and radius R. Let h be a homothety with ratio k. Denote by C' the image of C by h.</p>
+            </div>
+
+            <!-- Diagram for Activity 5 -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_homothety4.diagram7Title">Figure: Circle transformation and measurements</div>
+                <canvas id="activity5Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_homothety4.diagram7Instructions">Circle C and its image C' under homothety h(I, k).</div>
+            </div>
+
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety4.question5a">a) Compare the perimeter of C and the perimeter of C'.</h4>
+                    <button class="MH-solution-btn" onclick="constructActivity5a()" data-i18n="MH.lesson_Y2Geo_homothety4.showConstruction">Show Construction</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety4.showSolution" onclick="toggleSolution(11)">Show Solution</button>
+                    <div class="MH-solution" id="solution11">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution5a">Perimeter P of circle C: P = 2πR.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution5a2">Radius of C': R' = |k|R.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution5a3">Perimeter P' of circle C': P' = 2πR' = 2π|k|R = |k| × P.</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety4.equation5a">P' = |k| × P</div>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution5a4">The perimeter is multiplied by |k|, the absolute value of the homothety ratio.</p>
+                    </div>
+                </div>
+
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety4.question5b">b) Compare the area of C and the area of C'.</h4>
+                    <button class="MH-solution-btn" onclick="constructActivity5b()" data-i18n="MH.lesson_Y2Geo_homothety4.showConstruction">Show Construction</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety4.showSolution" onclick="toggleSolution(12)">Show Solution</button>
+                    <div class="MH-solution" id="solution12">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution5b">Area A of circle C: A = πR².</p>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution5b2">Area A' of circle C': A' = π(R')² = π(|k|R)² = πk²R² = k² × A.</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety4.equation5b">A' = k² × A</div>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety4.solution5b3">The area is multiplied by k² (note: k² = |k|², so the sign of k doesn't matter for area).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_homothety4.summaryTitle">Summary of Key Results</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Geo_homothety4.summary1Title">Properties of Circles under Homothety</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety4.summary1a">The image of a circle by a homothety is a circle</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety4.summary1b">The center of the image circle is the image of the original center</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety4.summary1c">The radius is multiplied by |k|: R' = |k|R</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety4.summary1d">Tangency is preserved: if a line is tangent to a circle, its image is tangent to the image circle</li>
+                </ul>
+            </div>
+
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Geo_homothety4.summary2Title">Homothetic Circles</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety4.summary2a">Two non-congruent circles have two homothety centers: one external (positive ratio) and one internal (negative ratio)</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety4.summary2b">Common tangents to two circles can be constructed using homothety centers</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety4.summary2c">Two circles have up to 4 common tangents (2 external, 2 internal)</li>
+                </ul>
+            </div>
+            
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Geo_homothety4.summary3Title">Measurement Scaling</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety4.summary3a">Lengths (perimeters, distances) are multiplied by |k|</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety4.summary3b">Areas are multiplied by k²</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety4.summary3c">Angles and tangency properties are preserved</li>
+                </ul>
+            </div>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Geo_homothety4.conclusionTitle">Conclusion</h3>
+                <p data-i18n="MH.lesson_Y2Geo_homothety4.finalThought">Homothety is a powerful tool for solving geometric problems involving circles, tangents, and measurements. The preservation of tangency and the predictable scaling of distances and areas make homothety particularly useful in construction problems and measurement comparisons. Mastering these applications provides a solid foundation for more advanced geometric transformations and their applications in similarity problems.</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+    
+    <script>
+        // HOMOTHETY EXERCISES TRANSLATIONS
+        const homothety4Translations = {
+            'en': {
+                // General translations
+                'MH.general.homeTooltip': 'Go to Homepage',
+                'MH.general.install': 'Install App',
+                'MH.general.installSuccess': 'Mathematics Hub installed successfully!',
+                'MH.general.enableNotifications': 'Enable Notifications',
+                'MH.general.notificationEnabled': 'Notifications enabled! You will now receive updates.',
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Theme',
+                'MH.general.language': 'Language',
+                'MH.lesson_Y2Geo_homothety4.showSolution': 'Show Solution',
+                'MH.lesson_Y2Geo_homothety4.hideSolution': 'Hide Solution',
+                'MH.lesson_Y2Geo_homothety4.showConstruction': 'Show Construction',
+                
+                // Lesson specific translations
+                'MH.lesson_Y2Geo_homothety4.title': 'Homothety: Part 4 - Exercises',
+                'MH.lesson_Y2Geo_homothety4.subtitle': 'Applications and Problem Solving',
+                'MH.lesson_Y2Geo_homothety4.introduction': 'Introduction',
+                'MH.lesson_Y2Geo_homothety4.introText1': 'This lesson focuses on advanced applications of homothety through a series of exercises. You will explore properties of circles under homothety, contact preservation, homothetic circles, common tangents, and geometric measurements.',
+                'MH.lesson_Y2Geo_homothety4.introText2': 'Each exercise includes interactive diagrams that can be constructed step by step. Use the "Show Construction" buttons to visualize the geometric constructions.',
+                
+                // XIV. Image of a Circle
+                'MH.lesson_Y2Geo_homothety4.XIV': 'XIV. Image of a Circle',
+                'MH.lesson_Y2Geo_homothety4.activity1Title': 'Activity 1',
+                'MH.lesson_Y2Geo_homothety4.activity1Statement1': String.raw`1) Let ω and I be two distinct points in the plane and let f be the homothety with center I and ratio -1/2.`,
+                'MH.lesson_Y2Geo_homothety4.diagram1Title': 'Figure: Circle transformation by homothety',
+                'MH.lesson_Y2Geo_homothety4.diagram1Instructions': String.raw`Circle Γ with center ω and points A, B, C on it. Their images A', B', C', ω' by f(I, -1/2).`,
+                'MH.lesson_Y2Geo_homothety4.question1a': 'a) Draw a circle Γ with center ω. Denote its radius by r.',
+                'MH.lesson_Y2Geo_homothety4.question1b': 'b) Place three points A, B, and C on circle Γ.',
+                'MH.lesson_Y2Geo_homothety4.question1c': 'c) Construct the points A\', B\', C\', and ω\' respectively images of points A, B, C, and ω by f.',
+                'MH.lesson_Y2Geo_homothety4.question1d': 'd) Verify that points A\', B\', and C\' lie on a circle Γ\' with center ω\'. Express the radius of Γ\' in terms of r.',
+                'MH.lesson_Y2Geo_homothety4.solution1d': 'Since f is a homothety with ratio k = -1/2, the image of circle Γ is a circle Γ\' with center ω\' = f(ω) and radius r\' = |k| × r.',
+                'MH.lesson_Y2Geo_homothety4.equation1d': String.raw`r' = |k| × r = |-1/2| × r = \frac{1}{2}r`,
+                'MH.lesson_Y2Geo_homothety4.solution1d2': 'All points on Γ are transformed to points on Γ\' because homothety preserves circles (transforms circles to circles).',
+                
+                // Activity 1, part 2
+                'MH.lesson_Y2Geo_homothety4.activity1Statement2': String.raw`2) Let h be a homothety with ratio k and C a circle with center O and radius R. Let M be a point on C. Denote by M' and O' the respective images of M and O by h, and by C' the circle with center O' and radius R' = |k|R.`,
+                'MH.lesson_Y2Geo_homothety4.diagram2Title': 'Figure: Circle transformation by homothety with ratio k',
+                'MH.lesson_Y2Geo_homothety4.diagram2Instructions': 'Circle C with center O, point M on C. Images O\' and M\' by homothety h.',
+                'MH.lesson_Y2Geo_homothety4.question2a': 'a) Show that M\' ∈ C\'.',
+                'MH.lesson_Y2Geo_homothety4.solution2a': String.raw`By definition of homothety: \(\overrightarrow{O'M'} = k \overrightarrow{OM}\).`,
+                'MH.lesson_Y2Geo_homothety4.solution2a2': 'Since M is on circle C: OM = R.',
+                'MH.lesson_Y2Geo_homothety4.solution2a3': 'Then: O\'M\' = |k| × OM = |k| × R = R\'.',
+                'MH.lesson_Y2Geo_homothety4.solution2a4': 'Therefore M\' is on circle C\' with center O\' and radius R\'.',
+                'MH.lesson_Y2Geo_homothety4.question2b': 'b) Let N\' ∈ C\' and let N be its antecedent by h. Show that N belongs to C.',
+                'MH.lesson_Y2Geo_homothety4.solution2b': 'Since N\' is on C\': O\'N\' = R\' = |k|R.',
+                'MH.lesson_Y2Geo_homothety4.solution2b2': String.raw`By definition of homothety: \(\overrightarrow{O'N'} = k \overrightarrow{ON}\).`,
+                'MH.lesson_Y2Geo_homothety4.solution2b3': 'Thus: ON = O\'N\' / |k| = (|k|R) / |k| = R.',
+                'MH.lesson_Y2Geo_homothety4.solution2b4': 'Therefore N is on circle C with center O and radius R.',
+                'MH.lesson_Y2Geo_homothety4.question2c': 'c) What can we conclude?',
+                'MH.lesson_Y2Geo_homothety4.solution2c': 'We conclude that the image of circle C by homothety h is the circle C\' with center O\' = h(O) and radius R\' = |k|R.',
+                'MH.lesson_Y2Geo_homothety4.solution2c2': 'Moreover, every point of C\' is the image of a point of C, and vice versa. The homothety establishes a bijection between the two circles.',
+                
+                // XV. Contact Preservation
+                'MH.lesson_Y2Geo_homothety4.XV': 'XV. Contact Preservation',
+                'MH.lesson_Y2Geo_homothety4.activity2Title': 'Activity 2',
+                'MH.lesson_Y2Geo_homothety4.activity2Statement': String.raw`Let h be a homothety with center I and ratio k. Let C be a circle with center O and radius r, and D a tangent to this circle at point A. Denote by A', C', and D' the respective images of point A, circle C, and line D by h. Show that line D' is tangent to circle C' at point A'.`,
+                'MH.lesson_Y2Geo_homothety4.diagram3Title': 'Figure: Tangent preservation under homothety',
+                'MH.lesson_Y2Geo_homothety4.diagram3Instructions': 'Circle C with tangent D at A. Images C\', D\', A\' by homothety h.',
+                'MH.lesson_Y2Geo_homothety4.solution2': 'Since D is tangent to C at A, we have D ⊥ OA (radius is perpendicular to tangent at point of contact).',
+                'MH.lesson_Y2Geo_homothety4.solution2b': 'Under homothety h:',
+                'MH.lesson_Y2Geo_homothety4.solution2b1': 'A\' = h(A)',
+                'MH.lesson_Y2Geo_homothety4.solution2b2': 'O\' = h(O) is the center of C\'',
+                'MH.lesson_Y2Geo_homothety4.solution2b3': 'D\' = h(D) is a line through A\'',
+                'MH.lesson_Y2Geo_homothety4.solution2c': 'Homothety preserves angles, so the angle between D and OA is preserved: D\' ⊥ O\'A\'.',
+                'MH.lesson_Y2Geo_homothety4.solution2d': 'Since O\'A\' is a radius of C\' and D\' is perpendicular to it at A\', D\' is tangent to C\' at A\'.',
+                'MH.lesson_Y2Geo_homothety4.equation2': String.raw`D ⊥ OA ⇒ D' ⊥ O'A' ⇒ D' tangent to C' at A'`,
+                
+                // XVI. Homothetic Circles
+                'MH.lesson_Y2Geo_homothety4.XVI': 'XVI. Homothetic Circles – Common Tangents to Two Circles',
+                'MH.lesson_Y2Geo_homothety4.activity3Title': 'Activity 3',
+                'MH.lesson_Y2Geo_homothety4.activity3Statement1': String.raw`1) Let C and C' be two circles with respective centers O and O' and respective radii R and R' such that R ≠ R'.`,
+                'MH.lesson_Y2Geo_homothety4.diagram4Title': 'Figure: Homothetic circles with positive and negative ratios',
+                'MH.lesson_Y2Geo_homothety4.diagram4Instructions': 'Circles C and C\' with centers O and O\', radii R and R\' (R ≠ R\').',
+                'MH.lesson_Y2Geo_homothety4.question3a': String.raw`a) Show that there exists a unique homothety with positive ratio that transforms C into C'. Specify the ratio of this homothety and construct its center I.`,
+                'MH.lesson_Y2Geo_homothety4.solution3a': 'For a homothety h(I, k) to transform C into C\', we need:',
+                'MH.lesson_Y2Geo_homothety4.solution3a1': String.raw`h(O) = O' ⇒ \(\overrightarrow{IO'} = k \overrightarrow{IO}\)`,
+                'MH.lesson_Y2Geo_homothety4.solution3a2': 'Radius transformation: R\' = |k|R',
+                'MH.lesson_Y2Geo_homothety4.solution3a3': 'Since we want positive ratio: k = R\'/R > 0.',
+                'MH.lesson_Y2Geo_homothety4.solution3a4': String.raw`The center I is on line OO' and satisfies \(\overrightarrow{IO'} = \frac{R'}{R} \overrightarrow{IO}\).`,
+                'MH.lesson_Y2Geo_homothety4.solution3a5': 'This gives a unique point I on line OO\' (external homothety center).',
+                'MH.lesson_Y2Geo_homothety4.equation3a': String.raw`k = \frac{R'}{R} > 0, \quad I \in (OO') \text{ with } \overrightarrow{IO'} = \frac{R'}{R} \overrightarrow{IO}`,
+                'MH.lesson_Y2Geo_homothety4.question3b': String.raw`b) Show that there exists a unique homothety with negative ratio that transforms C into C'. Specify the ratio of this homothety and construct its center J.`,
+                'MH.lesson_Y2Geo_homothety4.solution3b': 'For negative ratio: k = -R\'/R < 0.',
+                'MH.lesson_Y2Geo_homothety4.solution3b2': String.raw`The center J is on line OO' and satisfies \(\overrightarrow{JO'} = -\frac{R'}{R} \overrightarrow{JO}\).`,
+                'MH.lesson_Y2Geo_homothety4.solution3b3': 'This gives a unique point J on line OO\' between O and O\' (internal homothety center).',
+                'MH.lesson_Y2Geo_homothety4.equation3b': String.raw`k = -\frac{R'}{R} < 0, \quad J \in (OO') \text{ with } \overrightarrow{JO'} = -\frac{R'}{R} \overrightarrow{JO}`,
+                'MH.lesson_Y2Geo_homothety4.activity3Statement2': '2) Let C and C\' be two exterior and non-isometric circles. Construct the common tangents to these two circles.',
+                'MH.lesson_Y2Geo_homothety4.diagram5Title': 'Figure: Common tangents to two exterior circles',
+                'MH.lesson_Y2Geo_homothety4.diagram5Instructions': 'Two exterior circles C and C\' with their common tangents.',
+                'MH.lesson_Y2Geo_homothety4.solution3c': 'Construction method using homothety:',
+                'MH.lesson_Y2Geo_homothety4.solution3c1': 'Find the external homothety center I (on line OO\' outside both circles).',
+                'MH.lesson_Y2Geo_homothety4.solution3c2': 'Draw tangents from I to circle C, touching C at points T1 and T2.',
+                'MH.lesson_Y2Geo_homothety4.solution3c3': String.raw`Under the homothety h(I, R'/R), these tangents transform to tangents of C' at points T1' and T2'.`,
+                'MH.lesson_Y2Geo_homothety4.solution3c4': 'Similarly, using the internal homothety center J, we get the two internal common tangents.',
+                'MH.lesson_Y2Geo_homothety4.solution3c5': 'Thus, two circles have up to 4 common tangents: 2 external and 2 internal.',
+                
+                // XVII. Circles Tangent to a Given Circle and Line
+                'MH.lesson_Y2Geo_homothety4.XVII': 'XVII. Circles Tangent to a Given Circle and Line',
+                'MH.lesson_Y2Geo_homothety4.activity4Title': 'Activity 4',
+                'MH.lesson_Y2Geo_homothety4.activity4Statement': 'Let Γ be a circle, D a line, and A a point on D not belonging to Γ. Denote by [BC] a diameter of circle Γ such that (BC) is perpendicular to line D, and by D\' the tangent to circle Γ at B. Line (AB) intersects circle Γ again at I.',
+                'MH.lesson_Y2Geo_homothety4.diagram6Title': 'Figure: Circle tangent to Γ and line D',
+                'MH.lesson_Y2Geo_homothety4.diagram6Instructions': 'Circle Γ, line D, point A on D. Diameter BC perpendicular to D.',
+                'MH.lesson_Y2Geo_homothety4.question4a': String.raw`a) Let h be the homothety with center I that transforms B into A. Denote by Γ' the image of circle Γ by homothety h. Show that Γ' is tangent to Γ at I and to line D at A.`,
+                'MH.lesson_Y2Geo_homothety4.solution4a': String.raw`Since h(I, k) with B ↦ A, we have \(\overrightarrow{IA} = k \overrightarrow{IB}\).`,
+                'MH.lesson_Y2Geo_homothety4.solution4a2': 'Point I is on both Γ and Γ\' (since center of homothety).',
+                'MH.lesson_Y2Geo_homothety4.solution4a3': 'Γ\' is tangent to Γ at I because:',
+                'MH.lesson_Y2Geo_homothety4.solution4a3a': 'The common point is I',
+                'MH.lesson_Y2Geo_homothety4.solution4a3b': 'The tangent to Γ at I is transformed to itself (since I is the center)',
+                'MH.lesson_Y2Geo_homothety4.solution4a3c': 'Thus Γ and Γ\' have the same tangent at I',
+                'MH.lesson_Y2Geo_homothety4.solution4a4': 'Γ\' is tangent to D at A because:',
+                'MH.lesson_Y2Geo_homothety4.solution4a4a': 'D\' (tangent to Γ at B) is transformed to a line through A',
+                'MH.lesson_Y2Geo_homothety4.solution4a4b': 'D\' ∥ D (since both perpendicular to BC)',
+                'MH.lesson_Y2Geo_homothety4.solution4a4c': 'Thus the image of D\' is D, tangent to Γ\' at A',
+                'MH.lesson_Y2Geo_homothety4.question4b': 'b) Let M be any point on D not belonging to Γ and distinct from A. Construct all circles tangent to Γ and to D at M.',
+                'MH.lesson_Y2Geo_homothety4.solution4b': 'Construction method:',
+                'MH.lesson_Y2Geo_homothety4.solution4b1': 'Draw line perpendicular to D at M.',
+                'MH.lesson_Y2Geo_homothety4.solution4b2': 'Find the intersection points of this perpendicular with circle Γ (or its extension).',
+                'MH.lesson_Y2Geo_homothety4.solution4b3': 'For each intersection point N, consider the homothety with center N that transforms M to the point of tangency on Γ.',
+                'MH.lesson_Y2Geo_homothety4.solution4b4': 'The image of Γ under this homothety gives a circle tangent to both Γ and D at M.',
+                'MH.lesson_Y2Geo_homothety4.solution4b5': 'There are generally two solutions (one on each side of D).',
+                
+                // XVIII. Homothety and Geometric Measurements
+                'MH.lesson_Y2Geo_homothety4.XVIII': 'XVIII. Homothety and Geometric Measurements',
+                'MH.lesson_Y2Geo_homothety4.activity5Title': 'Activity 5',
+                'MH.lesson_Y2Geo_homothety4.activity5Statement': 'Let C be a circle with center I and radius R. Let h be a homothety with ratio k. Denote by C\' the image of C by h.',
+                'MH.lesson_Y2Geo_homothety4.diagram7Title': 'Figure: Circle transformation and measurements',
+                'MH.lesson_Y2Geo_homothety4.diagram7Instructions': 'Circle C and its image C\' under homothety h(I, k).',
+                'MH.lesson_Y2Geo_homothety4.question5a': 'a) Compare the perimeter of C and the perimeter of C\'.',
+                'MH.lesson_Y2Geo_homothety4.solution5a': 'Perimeter P of circle C: P = 2πR.',
+                'MH.lesson_Y2Geo_homothety4.solution5a2': 'Radius of C\': R\' = |k|R.',
+                'MH.lesson_Y2Geo_homothety4.solution5a3': 'Perimeter P\' of circle C\': P\' = 2πR\' = 2π|k|R = |k| × P.',
+                'MH.lesson_Y2Geo_homothety4.equation5a': String.raw`P' = |k| × P`,
+                'MH.lesson_Y2Geo_homothety4.solution5a4': 'The perimeter is multiplied by |k|, the absolute value of the homothety ratio.',
+                'MH.lesson_Y2Geo_homothety4.question5b': 'b) Compare the area of C and the area of C\'.',
+                'MH.lesson_Y2Geo_homothety4.solution5b': 'Area A of circle C: A = πR².',
+                'MH.lesson_Y2Geo_homothety4.solution5b2': 'Area A\' of circle C\': A\' = π(R\')² = π(|k|R)² = πk²R² = k² × A.',
+                'MH.lesson_Y2Geo_homothety4.equation5b': String.raw`A' = k² × A`,
+                'MH.lesson_Y2Geo_homothety4.solution5b3': 'The area is multiplied by k² (note: k² = |k|², so the sign of k doesn\'t matter for area).',
+                
+                // Summary
+                'MH.lesson_Y2Geo_homothety4.summaryTitle': 'Summary of Key Results',
+                'MH.lesson_Y2Geo_homothety4.summary1Title': 'Properties of Circles under Homothety',
+                'MH.lesson_Y2Geo_homothety4.summary1a': 'The image of a circle by a homothety is a circle',
+                'MH.lesson_Y2Geo_homothety4.summary1b': 'The center of the image circle is the image of the original center',
+                'MH.lesson_Y2Geo_homothety4.summary1c': String.raw`The radius is multiplied by |k|: R' = |k|R`,
+                'MH.lesson_Y2Geo_homothety4.summary1d': 'Tangency is preserved: if a line is tangent to a circle, its image is tangent to the image circle',
+                'MH.lesson_Y2Geo_homothety4.summary2Title': 'Homothetic Circles',
+                'MH.lesson_Y2Geo_homothety4.summary2a': 'Two non-congruent circles have two homothety centers: one external (positive ratio) and one internal (negative ratio)',
+                'MH.lesson_Y2Geo_homothety4.summary2b': 'Common tangents to two circles can be constructed using homothety centers',
+                'MH.lesson_Y2Geo_homothety4.summary2c': 'Two circles have up to 4 common tangents (2 external, 2 internal)',
+                'MH.lesson_Y2Geo_homothety4.summary3Title': 'Measurement Scaling',
+                'MH.lesson_Y2Geo_homothety4.summary3a': 'Lengths (perimeters, distances) are multiplied by |k|',
+                'MH.lesson_Y2Geo_homothety4.summary3b': 'Areas are multiplied by k²',
+                'MH.lesson_Y2Geo_homothety4.summary3c': 'Angles and tangency properties are preserved',
+                'MH.lesson_Y2Geo_homothety4.conclusionTitle': 'Conclusion',
+                'MH.lesson_Y2Geo_homothety4.finalThought': 'Homothety is a powerful tool for solving geometric problems involving circles, tangents, and measurements. The preservation of tangency and the predictable scaling of distances and areas make homothety particularly useful in construction problems and measurement comparisons. Mastering these applications provides a solid foundation for more advanced geometric transformations and their applications in similarity problems.',
+                
+                // Footer
+                'MH.footer.developer': 'Developer',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Links',
+                'MH.footer.terms': 'Terms of Use',
+                'MH.footer.privacy': 'Privacy Policy'
+            },
+            'fr': {
+                // Traductions générales
+                'MH.general.homeTooltip': 'Aller à l\'accueil',
+                'MH.general.install': 'Installer l\'App',
+                'MH.general.installSuccess': 'Mathematics Hub installé avec succès!',
+                'MH.general.enableNotifications': 'Activer les notifications',
+                'MH.general.notificationEnabled': 'Notifications activées! Vous recevrez maintenant des mises à jour.',
+                'MH.general.title': 'Centre de Mathématiques',
+                'MH.general.theme': 'Thème',
+                'MH.general.language': 'Langue',
+                'MH.lesson_Y2Geo_homothety4.showSolution': 'Afficher la Solution',
+                'MH.lesson_Y2Geo_homothety4.hideSolution': 'Masquer la Solution',
+                'MH.lesson_Y2Geo_homothety4.showConstruction': 'Afficher la Construction',
+                
+                // Traductions de la leçon
+                'MH.lesson_Y2Geo_homothety4.title': 'Homothétie : Partie 4 - Exercices',
+                'MH.lesson_Y2Geo_homothety4.subtitle': 'Applications et Résolution de Problèmes',
+                'MH.lesson_Y2Geo_homothety4.introduction': 'Introduction',
+                'MH.lesson_Y2Geo_homothety4.introText1': 'Cette leçon se concentre sur les applications avancées de l\'homothétie à travers une série d\'exercices. Vous explorerez les propriétés des cercles sous homothétie, la préservation du contact, les cercles homothétiques, les tangentes communes et les mesures géométriques.',
+                'MH.lesson_Y2Geo_homothety4.introText2': 'Chaque exercice comprend des diagrammes interactifs qui peuvent être construits étape par étape. Utilisez les boutons "Afficher la Construction" pour visualiser les constructions géométriques.',
+                
+                // XIV. Image d'un cercle
+                'MH.lesson_Y2Geo_homothety4.XIV': 'XIV. Image d\'un cercle',
+                'MH.lesson_Y2Geo_homothety4.activity1Title': 'Activité 1',
+                'MH.lesson_Y2Geo_homothety4.activity1Statement1': String.raw`1) Soit ω et I deux points distincts du plan et soit f l'homothétie de centre I et de rapport -1/2.`,
+                'MH.lesson_Y2Geo_homothety4.diagram1Title': 'Figure : Transformation d\'un cercle par homothétie',
+                'MH.lesson_Y2Geo_homothety4.diagram1Instructions': String.raw`Cercle Γ de centre ω et points A, B, C sur celui-ci. Leurs images A', B', C', ω' par f(I, -1/2).`,
+                'MH.lesson_Y2Geo_homothety4.question1a': 'a) Tracer un cercle Γ de centre ω. On note r son rayon.',
+                'MH.lesson_Y2Geo_homothety4.question1b': 'b) Placer trois points A, B et C sur le cercle Γ.',
+                'MH.lesson_Y2Geo_homothety4.question1c': 'c) Construire les points A\', B\', C\' et ω\' images respectives des points A, B, C et ω par f.',
+                'MH.lesson_Y2Geo_homothety4.question1d': 'd) Vérifier que les points A\', B\' et C\' sont situés sur un même cercle Γ\' de centre ω\'. Exprimer le rayon de Γ\' en fonction de r.',
+                'MH.lesson_Y2Geo_homothety4.solution1d': String.raw`Puisque f est une homothétie de rapport k = -1/2, l'image du cercle Γ est un cercle Γ' de centre ω' = f(ω) et de rayon r' = |k| × r.`,
+                'MH.lesson_Y2Geo_homothety4.equation1d': String.raw`r' = |k| × r = |-1/2| × r = \frac{1}{2}r`,
+                'MH.lesson_Y2Geo_homothety4.solution1d2': 'Tous les points de Γ sont transformés en points de Γ\' car l\'homothétie préserve les cercles (transforme les cercles en cercles).',
+                
+                // Activité 1, partie 2
+                'MH.lesson_Y2Geo_homothety4.activity1Statement2': String.raw`2) Soit h une homothétie de rapport k et C un cercle de centre O et de rayon R. Soit M un point de C. On désigne par M' et O' les images respectives de M et O par h et par C' le cercle de centre O' et de rayon R' = |k|R.`,
+                'MH.lesson_Y2Geo_homothety4.diagram2Title': 'Figure : Transformation d\'un cercle par homothétie de rapport k',
+                'MH.lesson_Y2Geo_homothety4.diagram2Instructions': 'Cercle C de centre O, point M sur C. Images O\' et M\' par l\'homothétie h.',
+                'MH.lesson_Y2Geo_homothety4.question2a': 'a) Montrer que M\' ∈ C\'.',
+                'MH.lesson_Y2Geo_homothety4.solution2a': String.raw`Par définition de l'homothétie : \(\overrightarrow{O'M'} = k \overrightarrow{OM}\).`,
+                'MH.lesson_Y2Geo_homothety4.solution2a2': 'Puisque M est sur le cercle C : OM = R.',
+                'MH.lesson_Y2Geo_homothety4.solution2a3': 'Alors : O\'M\' = |k| × OM = |k| × R = R\'.',
+                'MH.lesson_Y2Geo_homothety4.solution2a4': 'Donc M\' est sur le cercle C\' de centre O\' et de rayon R\'.',
+                'MH.lesson_Y2Geo_homothety4.question2b': 'b) Soit N\' ∈ C\' et soit N son antécédent par h. Montrer que N appartient à C.',
+                'MH.lesson_Y2Geo_homothety4.solution2b': 'Puisque N\' est sur C\' : O\'N\' = R\' = |k|R.',
+                'MH.lesson_Y2Geo_homothety4.solution2b2': String.raw`Par définition de l'homothétie : \(\overrightarrow{O'N'} = k \overrightarrow{ON}\).`,
+                'MH.lesson_Y2Geo_homothety4.solution2b3': 'Ainsi : ON = O\'N\' / |k| = (|k|R) / |k| = R.',
+                'MH.lesson_Y2Geo_homothety4.solution2b4': 'Donc N est sur le cercle C de centre O et de rayon R.',
+                'MH.lesson_Y2Geo_homothety4.question2c': 'c) Que peut-on conclure ?',
+                'MH.lesson_Y2Geo_homothety4.solution2c': 'On conclut que l\'image du cercle C par l\'homothétie h est le cercle C\' de centre O\' = h(O) et de rayon R\' = |k|R.',
+                'MH.lesson_Y2Geo_homothety4.solution2c2': 'De plus, tout point de C\' est l\'image d\'un point de C, et réciproquement. L\'homothétie établit une bijection entre les deux cercles.',
+                
+                // XV. Conservation du contact
+                'MH.lesson_Y2Geo_homothety4.XV': 'XV. Conservation du contact',
+                'MH.lesson_Y2Geo_homothety4.activity2Title': 'Activité 2',
+                'MH.lesson_Y2Geo_homothety4.activity2Statement': String.raw`Soit h une homothétie de centre I et de rapport k. Soit C un cercle de centre O et de rayon r et D une tangente à ce cercle en un point A. On désigne par A', C' et D' les images respectives du point A, du cercle C et de la droite D par h. Montrer que la droite D' est tangente au cercle C' au point A'.`,
+                'MH.lesson_Y2Geo_homothety4.diagram3Title': 'Figure : Préservation de la tangence sous homothétie',
+                'MH.lesson_Y2Geo_homothety4.diagram3Instructions': 'Cercle C avec tangente D en A. Images C\', D\', A\' par l\'homothétie h.',
+                'MH.lesson_Y2Geo_homothety4.solution2': 'Puisque D est tangente à C en A, on a D ⊥ OA (le rayon est perpendiculaire à la tangente au point de contact).',
+                'MH.lesson_Y2Geo_homothety4.solution2b': 'Sous l\'homothétie h :',
+                'MH.lesson_Y2Geo_homothety4.solution2b1': 'A\' = h(A)',
+                'MH.lesson_Y2Geo_homothety4.solution2b2': 'O\' = h(O) est le centre de C\'',
+                'MH.lesson_Y2Geo_homothety4.solution2b3': 'D\' = h(D) est une droite passant par A\'',
+                'MH.lesson_Y2Geo_homothety4.solution2c': 'L\'homothétie conserve les angles, donc l\'angle entre D et OA est conservé : D\' ⊥ O\'A\'.',
+                'MH.lesson_Y2Geo_homothety4.solution2d': 'Puisque O\'A\' est un rayon de C\' et D\' lui est perpendiculaire en A\', D\' est tangente à C\' en A\'.',
+                'MH.lesson_Y2Geo_homothety4.equation2': String.raw`D ⊥ OA ⇒ D' ⊥ O'A' ⇒ D' tangente à C' en A'`,
+                
+                // XVI. Cercles homothétiques
+                'MH.lesson_Y2Geo_homothety4.XVI': 'XVI. Cercles homothétiques – Tangentes communes à deux cercles',
+                'MH.lesson_Y2Geo_homothety4.activity3Title': 'Activité 3',
+                'MH.lesson_Y2Geo_homothety4.activity3Statement1': String.raw`1) Soient C et C' deux cercles de centres respectifs O et O' et de rayons respectifs R et R' tels que R ≠ R'.`,
+                'MH.lesson_Y2Geo_homothety4.diagram4Title': 'Figure : Cercles homothétiques avec rapports positifs et négatifs',
+                'MH.lesson_Y2Geo_homothety4.diagram4Instructions': 'Cercles C et C\' de centres O et O\', rayons R et R\' (R ≠ R\').',
+                'MH.lesson_Y2Geo_homothety4.question3a': String.raw`a) Montrer qu'il existe une seule homothétie de rapport positif qui transforme C en C'. Préciser le rapport de cette homothétie et construire son centre I.`,
+                'MH.lesson_Y2Geo_homothety4.solution3a': 'Pour qu\'une homothétie h(I, k) transforme C en C\', il faut :',
+                'MH.lesson_Y2Geo_homothety4.solution3a1': String.raw`h(O) = O' ⇒ \(\overrightarrow{IO'} = k \overrightarrow{IO}\)`,
+                'MH.lesson_Y2Geo_homothety4.solution3a2': 'Transformation du rayon : R\' = |k|R',
+                'MH.lesson_Y2Geo_homothety4.solution3a3': 'Puisqu\'on veut un rapport positif : k = R\'/R > 0.',
+                'MH.lesson_Y2Geo_homothety4.solution3a4': String.raw`Le centre I est sur la droite OO' et vérifie \(\overrightarrow{IO'} = \frac{R'}{R} \overrightarrow{IO}\).`,
+                'MH.lesson_Y2Geo_homothety4.solution3a5': 'Cela donne un unique point I sur la droite OO\' (centre d\'homothétie externe).',
+                'MH.lesson_Y2Geo_homothety4.equation3a': String.raw`k = \frac{R'}{R} > 0, \quad I \in (OO') \text{ avec } \overrightarrow{IO'} = \frac{R'}{R} \overrightarrow{IO}`,
+                'MH.lesson_Y2Geo_homothety4.question3b': String.raw`b) Montrer qu'il existe une seule homothétie de rapport négatif qui transforme C en C'. Préciser le rapport de cette homothétie et construire son centre J.`,
+                'MH.lesson_Y2Geo_homothety4.solution3b': 'Pour un rapport négatif : k = -R\'/R < 0.',
+                'MH.lesson_Y2Geo_homothety4.solution3b2': String.raw`Le centre J est sur la droite OO' et vérifie \(\overrightarrow{JO'} = -\frac{R'}{R} \overrightarrow{JO}\).`,
+                'MH.lesson_Y2Geo_homothety4.solution3b3': 'Cela donne un unique point J sur la droite OO\' entre O et O\' (centre d\'homothétie interne).',
+                'MH.lesson_Y2Geo_homothety4.equation3b': String.raw`k = -\frac{R'}{R} < 0, \quad J \in (OO') \text{ avec } \overrightarrow{JO'} = -\frac{R'}{R} \overrightarrow{JO}`,
+                'MH.lesson_Y2Geo_homothety4.activity3Statement2': '2) Soient C et C\' deux cercles extérieurs et non isométriques. Construire les tangentes communes à ces deux cercles.',
+                'MH.lesson_Y2Geo_homothety4.diagram5Title': 'Figure : Tangentes communes à deux cercles extérieurs',
+                'MH.lesson_Y2Geo_homothety4.diagram5Instructions': 'Deux cercles extérieurs C et C\' avec leurs tangentes communes.',
+                'MH.lesson_Y2Geo_homothety4.solution3c': 'Méthode de construction utilisant l\'homothétie :',
+                'MH.lesson_Y2Geo_homothety4.solution3c1': 'Trouver le centre d\'homothétie externe I (sur la droite OO\' à l\'extérieur des deux cercles).',
+                'MH.lesson_Y2Geo_homothety4.solution3c2': 'Tracer les tangentes de I au cercle C, touchant C aux points T1 et T2.',
+                'MH.lesson_Y2Geo_homothety4.solution3c3': String.raw`Sous l'homothétie h(I, R'/R), ces tangentes se transforment en tangentes de C' aux points T1' et T2'.`,
+                'MH.lesson_Y2Geo_homothety4.solution3c4': 'De même, en utilisant le centre d\'homothétie interne J, on obtient les deux tangentes communes internes.',
+                'MH.lesson_Y2Geo_homothety4.solution3c5': 'Ainsi, deux cercles ont jusqu\'à 4 tangentes communes : 2 externes et 2 internes.',
+                
+                // XVII. Cercles tangents à un cercle et à une droite donnés
+                'MH.lesson_Y2Geo_homothety4.XVII': 'XVII. Cercles tangents à un cercle et à une droite donnés',
+                'MH.lesson_Y2Geo_homothety4.activity4Title': 'Activité 4',
+                'MH.lesson_Y2Geo_homothety4.activity4Statement': 'Soient Γ un cercle, D une droite et A un point de D n\'appartenant pas à Γ. On désigne par [BC] un diamètre du cercle Γ tel que (BC) soit perpendiculaire à la droite (D) et par D\' la tangente au cercle Γ en B. La droite (AB) recoupe le cercle Γ en I.',
+                'MH.lesson_Y2Geo_homothety4.diagram6Title': 'Figure : Cercle tangent à Γ et à la droite D',
+                'MH.lesson_Y2Geo_homothety4.diagram6Instructions': 'Cercle Γ, droite D, point A sur D. Diamètre BC perpendiculaire à D.',
+                'MH.lesson_Y2Geo_homothety4.question4a': String.raw`a) Soit h l'homothétie de centre I et qui transforme B en A. On désigne par Γ' l'image du cercle Γ par l'homothétie h. Montrer que Γ' est tangent à Γ en I et à la droite D en A.`,
+                'MH.lesson_Y2Geo_homothety4.solution4a': String.raw`Puisque h(I, k) avec B ↦ A, on a \(\overrightarrow{IA} = k \overrightarrow{IB}\).`,
+                'MH.lesson_Y2Geo_homothety4.solution4a2': 'Le point I est sur Γ et Γ\' (puisque centre de l\'homothétie).',
+                'MH.lesson_Y2Geo_homothety4.solution4a3': 'Γ\' est tangent à Γ en I car :',
+                'MH.lesson_Y2Geo_homothety4.solution4a3a': 'Le point commun est I',
+                'MH.lesson_Y2Geo_homothety4.solution4a3b': 'La tangente à Γ en I est transformée en elle-même (puisque I est le centre)',
+                'MH.lesson_Y2Geo_homothety4.solution4a3c': 'Ainsi Γ et Γ\' ont la même tangente en I',
+                'MH.lesson_Y2Geo_homothety4.solution4a4': 'Γ\' est tangent à D en A car :',
+                'MH.lesson_Y2Geo_homothety4.solution4a4a': 'D\' (tangente à Γ en B) est transformée en une droite passant par A',
+                'MH.lesson_Y2Geo_homothety4.solution4a4b': 'D\' ∥ D (puisque toutes deux perpendiculaires à BC)',
+                'MH.lesson_Y2Geo_homothety4.solution4a4c': 'Ainsi l\'image de D\' est D, tangente à Γ\' en A',
+                'MH.lesson_Y2Geo_homothety4.question4b': 'b) Soit M un point quelconque de D n\'appartenant pas à Γ et distinct de A. Construire tous les cercles tangents à Γ et à D en M.',
+                'MH.lesson_Y2Geo_homothety4.solution4b': 'Méthode de construction :',
+                'MH.lesson_Y2Geo_homothety4.solution4b1': 'Tracer la perpendiculaire à D en M.',
+                'MH.lesson_Y2Geo_homothety4.solution4b2': 'Trouver les points d\'intersection de cette perpendiculaire avec le cercle Γ (ou son prolongement).',
+                'MH.lesson_Y2Geo_homothety4.solution4b3': 'Pour chaque point d\'intersection N, considérer l\'homothétie de centre N qui transforme M en le point de tangence sur Γ.',
+                'MH.lesson_Y2Geo_homothety4.solution4b4': 'L\'image de Γ sous cette homothétie donne un cercle tangent à la fois à Γ et à D en M.',
+                'MH.lesson_Y2Geo_homothety4.solution4b5': 'Il y a généralement deux solutions (une de chaque côté de D).',
+                
+                // XVIII. Homothétie et mesure de grandeurs géométriques
+                'MH.lesson_Y2Geo_homothety4.XVIII': 'XVIII. Homothétie et mesure de grandeurs géométriques',
+                'MH.lesson_Y2Geo_homothety4.activity5Title': 'Activité 5',
+                'MH.lesson_Y2Geo_homothety4.activity5Statement': 'Soit C un cercle de centre I et de rayon R. Soit h une homothétie de rapport k. On note C\' l\'image de C par h.',
+                'MH.lesson_Y2Geo_homothety4.diagram7Title': 'Figure : Transformation de cercle et mesures',
+                'MH.lesson_Y2Geo_homothety4.diagram7Instructions': 'Cercle C et son image C\' sous l\'homothétie h(I, k).',
+                'MH.lesson_Y2Geo_homothety4.question5a': 'a) Comparer le périmètre de C et le périmètre de C\'.',
+                'MH.lesson_Y2Geo_homothety4.solution5a': 'Périmètre P du cercle C : P = 2πR.',
+                'MH.lesson_Y2Geo_homothety4.solution5a2': 'Rayon de C\' : R\' = |k|R.',
+                'MH.lesson_Y2Geo_homothety4.solution5a3': 'Périmètre P\' du cercle C\' : P\' = 2πR\' = 2π|k|R = |k| × P.',
+                'MH.lesson_Y2Geo_homothety4.equation5a': String.raw`P' = |k| × P`,
+                'MH.lesson_Y2Geo_homothety4.solution5a4': 'Le périmètre est multiplié par |k|, la valeur absolue du rapport d\'homothétie.',
+                'MH.lesson_Y2Geo_homothety4.question5b': 'b) Comparer l\'aire de C et l\'aire de C\'.',
+                'MH.lesson_Y2Geo_homothety4.solution5b': 'Aire A du cercle C : A = πR².',
+                'MH.lesson_Y2Geo_homothety4.solution5b2': 'Aire A\' du cercle C\' : A\' = π(R\')² = π(|k|R)² = πk²R² = k² × A.',
+                'MH.lesson_Y2Geo_homothety4.equation5b': String.raw`A' = k² × A`,
+                'MH.lesson_Y2Geo_homothety4.solution5b3': 'L\'aire est multipliée par k² (note : k² = |k|², donc le signe de k n\'a pas d\'importance pour l\'aire).',
+                
+                // Résumé
+                'MH.lesson_Y2Geo_homothety4.summaryTitle': 'Résumé des Résultats Clés',
+                'MH.lesson_Y2Geo_homothety4.summary1Title': 'Propriétés des cercles sous homothétie',
+                'MH.lesson_Y2Geo_homothety4.summary1a': 'L\'image d\'un cercle par une homothétie est un cercle',
+                'MH.lesson_Y2Geo_homothety4.summary1b': 'Le centre du cercle image est l\'image du centre original',
+                'MH.lesson_Y2Geo_homothety4.summary1c': String.raw`Le rayon est multiplié par |k| : R' = |k|R`,
+                'MH.lesson_Y2Geo_homothety4.summary1d': 'La tangence est préservée : si une droite est tangente à un cercle, son image est tangente au cercle image',
+                'MH.lesson_Y2Geo_homothety4.summary2Title': 'Cercles homothétiques',
+                'MH.lesson_Y2Geo_homothety4.summary2a': 'Deux cercles non congruents ont deux centres d\'homothétie : un externe (rapport positif) et un interne (rapport négatif)',
+                'MH.lesson_Y2Geo_homothety4.summary2b': 'Les tangentes communes à deux cercles peuvent être construites en utilisant les centres d\'homothétie',
+                'MH.lesson_Y2Geo_homothety4.summary2c': 'Deux cercles ont jusqu\'à 4 tangentes communes (2 externes, 2 internes)',
+                'MH.lesson_Y2Geo_homothety4.summary3Title': 'Mise à l\'échelle des mesures',
+                'MH.lesson_Y2Geo_homothety4.summary3a': 'Les longueurs (périmètres, distances) sont multipliées par |k|',
+                'MH.lesson_Y2Geo_homothety4.summary3b': 'Les aires sont multipliées par k²',
+                'MH.lesson_Y2Geo_homothety4.summary3c': 'Les angles et les propriétés de tangence sont préservés',
+                'MH.lesson_Y2Geo_homothety4.conclusionTitle': 'Conclusion',
+                'MH.lesson_Y2Geo_homothety4.finalThought': 'L\'homothétie est un outil puissant pour résoudre des problèmes géométriques impliquant des cercles, des tangentes et des mesures. La préservation de la tangence et la mise à l\'échelle prévisible des distances et des aires rendent l\'homothétie particulièrement utile dans les problèmes de construction et les comparaisons de mesures. Maîtriser ces applications fournit une base solide pour les transformations géométriques plus avancées et leurs applications dans les problèmes de similitude.',
+                
+                // Pied de page
+                'MH.footer.developer': 'Développeur',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Liens',
+                'MH.footer.terms': 'Conditions d\'Utilisation',
+                'MH.footer.privacy': 'Politique de Confidentialité'
+            },
+            'ar': {
+                // ترجمات عربية (نفس التركيب ولكن بترجمة عربية)
+                // يمكن ملء هذه الترجمات لاحقاً
+                'MH.lesson_Y2Geo_homothety4.title': 'التماثل: الجزء 4 - تمارين',
+                'MH.lesson_Y2Geo_homothety4.subtitle': 'تطبيقات وحل المسائل',
+                // ... يمكن إكمال بقية الترجمات العربية هنا
+            }
+        };
+
+        // Merge with existing translations if they exist
+        if (typeof translations !== 'undefined') {
+            Object.keys(homothety4Translations).forEach(lang => {
+                if (translations[lang]) {
+                    translations[lang] = {...translations[lang], ...homothety4Translations[lang]};
+                } else {
+                    translations[lang] = homothety4Translations[lang];
+                }
+            });
+        } else {
+            var translations = homothety4Translations;
+        }
+
+        // Canvas drawing functions
+        let activity1State1 = {circle: false, points: false, images: false};
+        let activity1State2 = {partA: false, partB: false};
+        let activity2State = {constructed: false};
+        let activity3State1 = {positive: false, negative: false};
+        let activity3State2 = {constructed: false};
+        let activity4State = {partA: false, partB: false};
+        let activity5State = {constructed: false};
+        
+        function drawActivity1Canvas1() {
+            const canvas = document.getElementById('activity1Canvas1');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define homothety center I and original center ω
+            const I = {x: width * 0.3, y: height * 0.5};
+            const omega = {x: width * 0.7, y: height * 0.5};
+            const k = -1/2;
+            
+            // Draw points I and ω
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(I.x, I.y, 8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('I', I.x, I.y - 25);
+            
+            // Draw circle Γ if requested
+            if (activity1State1.circle) {
+                const radius = 80;
+                
+                // Draw circle Γ
+                ctx.strokeStyle = '#4A90E2';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(omega.x, omega.y, radius, 0, Math.PI * 2);
+                ctx.stroke();
+                
+                // Draw center ω
+                ctx.fillStyle = '#2ECC71';
+                ctx.beginPath();
+                ctx.arc(omega.x, omega.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.fillText('ω', omega.x, omega.y + 25);
+                
+                // Draw radius indication
+                ctx.strokeStyle = '#666666';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(omega.x, omega.y);
+                ctx.lineTo(omega.x + radius, omega.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                ctx.fillStyle = '#666666';
+                ctx.font = '12px Arial';
+                ctx.fillText('r', omega.x + radius/2, omega.y - 10);
+                
+                // Draw points A, B, C if requested
+                if (activity1State1.points) {
+                    const points = [
+                        {angle: Math.PI/4, label: 'A', color: '#E67E22'},
+                        {angle: Math.PI, label: 'B', color: '#9B59B6'},
+                        {angle: 5*Math.PI/4, label: 'C', color: '#1ABC9C'}
+                    ];
+                    
+                    points.forEach(p => {
+                        const point = {
+                            x: omega.x + radius * Math.cos(p.angle),
+                            y: omega.y + radius * Math.sin(p.angle)
+                        };
+                        
+                        ctx.fillStyle = p.color;
+                        ctx.beginPath();
+                        ctx.arc(point.x, point.y, 6, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.fillStyle = '#333333';
+                        ctx.font = 'bold 14px Arial';
+                        ctx.fillText(p.label, point.x, point.y - 20);
+                    });
+                    
+                    // Draw images if requested
+                    if (activity1State1.images) {
+                        // Calculate image of ω
+                        const omegaPrime = {
+                            x: I.x + k * (omega.x - I.x),
+                            y: I.y + k * (omega.y - I.y)
+                        };
+                        
+                        const radiusPrime = Math.abs(k) * radius;
+                        
+                        // Draw circle Γ'
+                        ctx.strokeStyle = '#8E44AD';
+                        ctx.lineWidth = 2;
+                        ctx.setLineDash([5, 3]);
+                        ctx.beginPath();
+                        ctx.arc(omegaPrime.x, omegaPrime.y, radiusPrime, 0, Math.PI * 2);
+                        ctx.stroke();
+                        ctx.setLineDash([]);
+                        
+                        // Draw center ω'
+                        ctx.fillStyle = '#8E44AD';
+                        ctx.beginPath();
+                        ctx.arc(omegaPrime.x, omegaPrime.y, 6, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.fillStyle = '#333333';
+                        ctx.fillText('ω\'', omegaPrime.x, omegaPrime.y + 25);
+                        
+                        // Draw images of A, B, C
+                        points.forEach(p => {
+                            const original = {
+                                x: omega.x + radius * Math.cos(p.angle),
+                                y: omega.y + radius * Math.sin(p.angle)
+                            };
+                            
+                            const image = {
+                                x: I.x + k * (original.x - I.x),
+                                y: I.y + k * (original.y - I.y)
+                            };
+                            
+                            ctx.fillStyle = p.color;
+                            ctx.beginPath();
+                            ctx.arc(image.x, image.y, 6, 0, Math.PI * 2);
+                            ctx.fill();
+                            ctx.fillStyle = '#333333';
+                            ctx.font = 'bold 14px Arial';
+                            ctx.fillText(p.label + '\'', image.x, image.y - 20);
+                            
+                            // Draw line from I through points
+                            ctx.strokeStyle = '#666666';
+                            ctx.lineWidth = 1;
+                            ctx.setLineDash([2, 2]);
+                            ctx.beginPath();
+                            ctx.moveTo(I.x, I.y);
+                            ctx.lineTo(original.x, original.y);
+                            ctx.lineTo(image.x, image.y);
+                            ctx.stroke();
+                            ctx.setLineDash([]);
+                        });
+                        
+                        // Show radius relationship
+                        ctx.strokeStyle = '#8E44AD';
+                        ctx.lineWidth = 1;
+                        ctx.setLineDash([3, 3]);
+                        ctx.beginPath();
+                        ctx.moveTo(omegaPrime.x, omegaPrime.y);
+                        ctx.lineTo(omegaPrime.x + radiusPrime, omegaPrime.y);
+                        ctx.stroke();
+                        ctx.setLineDash([]);
+                        
+                        ctx.fillStyle = '#8E44AD';
+                        ctx.font = '12px Arial';
+                        ctx.fillText('r\' = |k|r', omegaPrime.x + radiusPrime/2, omegaPrime.y - 10);
+                    }
+                }
+            }
+        }
+        
+        function drawActivity1Canvas2() {
+            const canvas = document.getElementById('activity1Canvas2');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define original circle C
+            const O = {x: width * 0.3, y: height * 0.5};
+            const R = 60;
+            const k = 1.5; // Positive ratio for visualization
+            
+            // Define homothety center I (off-center for clarity)
+            const I = {x: width * 0.1, y: height * 0.2};
+            
+            // Draw original circle C
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(O.x, O.y, R, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // Draw center O
+            ctx.fillStyle = '#2ECC71';
+            ctx.beginPath();
+            ctx.arc(O.x, O.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('O', O.x, O.y - 25);
+            
+            // Draw radius
+            ctx.strokeStyle = '#666666';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([3, 3]);
+            ctx.beginPath();
+            ctx.moveTo(O.x, O.y);
+            ctx.lineTo(O.x + R, O.y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            ctx.fillStyle = '#666666';
+            ctx.font = '12px Arial';
+            ctx.fillText('R', O.x + R/2, O.y - 10);
+            
+            // Draw point M on circle C
+            const M = {
+                x: O.x + R * Math.cos(Math.PI/3),
+                y: O.y + R * Math.sin(Math.PI/3)
+            };
+            
+            ctx.fillStyle = '#E67E22';
+            ctx.beginPath();
+            ctx.arc(M.x, M.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('M', M.x, M.y - 20);
+            
+            // Draw images if requested
+            if (activity1State2.partA || activity1State2.partB) {
+                // Calculate images
+                const Oprime = {
+                    x: I.x + k * (O.x - I.x),
+                    y: I.y + k * (O.y - I.y)
+                };
+                
+                const Mprime = {
+                    x: I.x + k * (M.x - I.x),
+                    y: I.y + k * (M.y - I.y)
+                };
+                
+                const Rprime = Math.abs(k) * R;
+                
+                // Draw circle C'
+                ctx.strokeStyle = '#8E44AD';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 3]);
+                ctx.beginPath();
+                ctx.arc(Oprime.x, Oprime.y, Rprime, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw center O'
+                ctx.fillStyle = '#8E44AD';
+                ctx.beginPath();
+                ctx.arc(Oprime.x, Oprime.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('O\'', Oprime.x, Oprime.y - 25);
+                
+                // Draw point M'
+                ctx.fillStyle = '#E67E22';
+                ctx.beginPath();
+                ctx.arc(Mprime.x, Mprime.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('M\'', Mprime.x, Mprime.y + 20);
+                
+                // Draw lines from I
+                ctx.strokeStyle = '#666666';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                
+                // I to O and O'
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(O.x, O.y);
+                ctx.lineTo(Oprime.x, Oprime.y);
+                ctx.stroke();
+                
+                // I to M and M'
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(M.x, M.y);
+                ctx.lineTo(Mprime.x, Mprime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Show that M' is on C'
+                if (activity1State2.partA) {
+                    const distance = Math.sqrt(
+                        Math.pow(Mprime.x - Oprime.x, 2) + 
+                        Math.pow(Mprime.y - Oprime.y, 2)
+                    );
+                    
+                    ctx.strokeStyle = '#8E44AD';
+                    ctx.lineWidth = 1;
+                    ctx.setLineDash([3, 3]);
+                    ctx.beginPath();
+                    ctx.moveTo(Oprime.x, Oprime.y);
+                    ctx.lineTo(Mprime.x, Mprime.y);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                    
+                    ctx.fillStyle = '#8E44AD';
+                    ctx.font = '12px Arial';
+                    ctx.fillText(`O'M' = ${distance.toFixed(1)} ≈ R'`, 
+                        (Oprime.x + Mprime.x)/2, 
+                        (Oprime.y + Mprime.y)/2 - 10);
+                }
+                
+                // For part B: show N' and its antecedent N
+                if (activity1State2.partB) {
+                    // Choose a point N' on C'
+                    const Nprime = {
+                        x: Oprime.x + Rprime * Math.cos(4*Math.PI/3),
+                        y: Oprime.y + Rprime * Math.sin(4*Math.PI/3)
+                    };
+                    
+                    // Calculate its antecedent N
+                    const N = {
+                        x: I.x + (1/k) * (Nprime.x - I.x),
+                        y: I.y + (1/k) * (Nprime.y - I.y)
+                    };
+                    
+                    // Draw N'
+                    ctx.fillStyle = '#3498DB';
+                    ctx.beginPath();
+                    ctx.arc(Nprime.x, Nprime.y, 6, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = '#333333';
+                    ctx.font = 'bold 16px Arial';
+                    ctx.fillText('N\'', Nprime.x, Nprime.y + 20);
+                    
+                    // Draw N
+                    ctx.fillStyle = '#3498DB';
+                    ctx.beginPath();
+                    ctx.arc(N.x, N.y, 6, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = '#333333';
+                    ctx.font = 'bold 16px Arial';
+                    ctx.fillText('N', N.x, N.y - 20);
+                    
+                    // Draw line from I through N and N'
+                    ctx.strokeStyle = '#666666';
+                    ctx.lineWidth = 1;
+                    ctx.setLineDash([2, 2]);
+                    ctx.beginPath();
+                    ctx.moveTo(I.x, I.y);
+                    ctx.lineTo(N.x, N.y);
+                    ctx.lineTo(Nprime.x, Nprime.y);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                    
+                    // Show that N is on C
+                    const distanceN = Math.sqrt(
+                        Math.pow(N.x - O.x, 2) + 
+                        Math.pow(N.y - O.y, 2)
+                    );
+                    
+                    ctx.strokeStyle = '#4A90E2';
+                    ctx.lineWidth = 1;
+                    ctx.setLineDash([3, 3]);
+                    ctx.beginPath();
+                    ctx.moveTo(O.x, O.y);
+                    ctx.lineTo(N.x, N.y);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                    
+                    ctx.fillStyle = '#4A90E2';
+                    ctx.font = '12px Arial';
+                    ctx.fillText(`ON = ${distanceN.toFixed(1)} ≈ R`, 
+                        (O.x + N.x)/2, 
+                        (O.y + N.y)/2 - 10);
+                }
+            }
+            
+            // Draw homothety center I
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(I.x, I.y, 8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('I', I.x, I.y + 25);
+            
+            // Show homothety ratio
+            ctx.fillStyle = '#666666';
+            ctx.font = '14px Arial';
+            ctx.fillText(`h(I, k=${k})`, width/2, height * 0.1);
+        }
+        
+        function drawActivity2Canvas() {
+            const canvas = document.getElementById('activity2Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define original circle C
+            const O = {x: width * 0.3, y: height * 0.5};
+            const r = 70;
+            
+            // Define homothety center I and ratio k
+            const I = {x: width * 0.7, y: height * 0.3};
+            const k = 0.7; // Positive ratio less than 1
+            
+            // Define point A on circle C (tangency point)
+            const A = {
+                x: O.x + r * Math.cos(Math.PI/4),
+                y: O.y + r * Math.sin(Math.PI/4)
+            };
+            
+            // Draw original circle C
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(O.x, O.y, r, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // Draw center O
+            ctx.fillStyle = '#2ECC71';
+            ctx.beginPath();
+            ctx.arc(O.x, O.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('O', O.x, O.y - 25);
+            
+            // Draw point A
+            ctx.fillStyle = '#E67E22';
+            ctx.beginPath();
+            ctx.arc(A.x, A.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('A', A.x, A.y - 20);
+            
+            // Draw radius OA
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([3, 3]);
+            ctx.beginPath();
+            ctx.moveTo(O.x, O.y);
+            ctx.lineTo(A.x, A.y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Draw tangent D at A (perpendicular to OA)
+            const slopeOA = (A.y - O.y) / (A.x - O.x);
+            const slopeD = -1 / slopeOA;
+            
+            // Calculate two points on tangent D
+            const D1 = {
+                x: A.x - 100,
+                y: A.y + slopeD * (-100)
+            };
+            const D2 = {
+                x: A.x + 100,
+                y: A.y + slopeD * 100
+            };
+            
+            ctx.strokeStyle = '#E74C3C';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(D1.x, D1.y);
+            ctx.lineTo(D2.x, D2.y);
+            ctx.stroke();
+            ctx.fillStyle = '#E74C3C';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('D', D2.x - 10, D2.y - 10);
+            
+            // Show perpendicular symbol
+            ctx.strokeStyle = '#666666';
+            ctx.lineWidth = 1;
+            const perpLength = 15;
+            const perpAngle = Math.atan2(A.y - O.y, A.x - O.x) + Math.PI/2;
+            const perpStart = {
+                x: A.x + 20 * Math.cos(perpAngle - Math.PI/2),
+                y: A.y + 20 * Math.sin(perpAngle - Math.PI/2)
+            };
+            
+            ctx.beginPath();
+            ctx.moveTo(perpStart.x, perpStart.y);
+            ctx.lineTo(
+                perpStart.x + perpLength * Math.cos(perpAngle),
+                perpStart.y + perpLength * Math.sin(perpAngle)
+            );
+            ctx.stroke();
+            
+            // Draw images if constructed
+            if (activity2State.constructed) {
+                // Calculate images
+                const Oprime = {
+                    x: I.x + k * (O.x - I.x),
+                    y: I.y + k * (O.y - I.y)
+                };
+                
+                const Aprime = {
+                    x: I.x + k * (A.x - I.x),
+                    y: I.y + k * (A.y - I.y)
+                };
+                
+                const rprime = Math.abs(k) * r;
+                
+                // Draw circle C'
+                ctx.strokeStyle = '#8E44AD';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 3]);
+                ctx.beginPath();
+                ctx.arc(Oprime.x, Oprime.y, rprime, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw center O'
+                ctx.fillStyle = '#8E44AD';
+                ctx.beginPath();
+                ctx.arc(Oprime.x, Oprime.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('O\'', Oprime.x, Oprime.y - 25);
+                
+                // Draw point A'
+                ctx.fillStyle = '#E67E22';
+                ctx.beginPath();
+                ctx.arc(Aprime.x, Aprime.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('A\'', Aprime.x, Aprime.y + 20);
+                
+                // Draw radius O'A'
+                ctx.strokeStyle = '#8E44AD';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(Oprime.x, Oprime.y);
+                ctx.lineTo(Aprime.x, Aprime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw tangent D' (image of D)
+                // Since D is a line through A, its image is a line through A'
+                // And since homothety preserves angles, D' ⊥ O'A'
+                
+                const slopeOAprime = (Aprime.y - Oprime.y) / (Aprime.x - Oprime.x);
+                const slopeDprime = -1 / slopeOAprime;
+                
+                // Calculate two points on tangent D'
+                const Dprime1 = {
+                    x: Aprime.x - 80,
+                    y: Aprime.y + slopeDprime * (-80)
+                };
+                const Dprime2 = {
+                    x: Aprime.x + 80,
+                    y: Aprime.y + slopeDprime * 80
+                };
+                
+                ctx.strokeStyle = '#9B59B6';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(Dprime1.x, Dprime1.y);
+                ctx.lineTo(Dprime2.x, Dprime2.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.fillStyle = '#9B59B6';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('D\'', Dprime2.x - 10, Dprime2.y - 10);
+                
+                // Show that D' is tangent to C' at A'
+                // Draw perpendicular symbol at A'
+                const perpAnglePrime = Math.atan2(Aprime.y - Oprime.y, Aprime.x - Oprime.x) + Math.PI/2;
+                const perpStartPrime = {
+                    x: Aprime.x + 20 * Math.cos(perpAnglePrime - Math.PI/2),
+                    y: Aprime.y + 20 * Math.sin(perpAnglePrime - Math.PI/2)
+                };
+                
+                ctx.strokeStyle = '#666666';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(perpStartPrime.x, perpStartPrime.y);
+                ctx.lineTo(
+                    perpStartPrime.x + perpLength * Math.cos(perpAnglePrime),
+                    perpStartPrime.y + perpLength * Math.sin(perpAnglePrime)
+                );
+                ctx.stroke();
+                
+                // Draw lines from I
+                ctx.strokeStyle = '#666666';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                
+                // I to O and O'
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(O.x, O.y);
+                ctx.lineTo(Oprime.x, Oprime.y);
+                ctx.stroke();
+                
+                // I to A and A'
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(A.x, A.y);
+                ctx.lineTo(Aprime.x, Aprime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            }
+            
+            // Draw homothety center I
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(I.x, I.y, 8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('I', I.x, I.y + 25);
+            
+            // Show homothety ratio
+            ctx.fillStyle = '#666666';
+            ctx.font = '14px Arial';
+            ctx.fillText(`h(I, k=${k})`, width/2, height * 0.1);
+        }
+        
+        function drawActivity3Canvas1() {
+            const canvas = document.getElementById('activity3Canvas1');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define two circles C and C'
+            const O = {x: width * 0.3, y: height * 0.5};
+            const R = 60;
+            const Oprime = {x: width * 0.7, y: height * 0.5};
+            const Rprime = 90;
+            
+            // Draw circle C
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(O.x, O.y, R, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // Draw center O
+            ctx.fillStyle = '#2ECC71';
+            ctx.beginPath();
+            ctx.arc(O.x, O.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('O', O.x, O.y - 25);
+            
+            // Draw circle C'
+            ctx.strokeStyle = '#8E44AD';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(Oprime.x, Oprime.y, Rprime, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // Draw center O'
+            ctx.fillStyle = '#8E44AD';
+            ctx.beginPath();
+            ctx.arc(Oprime.x, Oprime.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('O\'', Oprime.x, Oprime.y - 25);
+            
+            // Draw line OO'
+            ctx.strokeStyle = '#666666';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([3, 3]);
+            ctx.beginPath();
+            ctx.moveTo(O.x, O.y);
+            ctx.lineTo(Oprime.x, Oprime.y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Show radii
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+            ctx.beginPath();
+            ctx.moveTo(O.x, O.y);
+            ctx.lineTo(O.x + R, O.y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.fillStyle = '#4A90E2';
+            ctx.font = '12px Arial';
+            ctx.fillText('R', O.x + R/2, O.y - 10);
+            
+            ctx.strokeStyle = '#8E44AD';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+            ctx.beginPath();
+            ctx.moveTo(Oprime.x, Oprime.y);
+            ctx.lineTo(Oprime.x + Rprime, Oprime.y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.fillStyle = '#8E44AD';
+            ctx.font = '12px Arial';
+            ctx.fillText('R\'', Oprime.x + Rprime/2, Oprime.y - 10);
+            
+            // Calculate homothety centers
+            const ratio = Rprime / R;
+            
+            // External homothety center I (positive ratio)
+            if (activity3State1.positive) {
+                // I is on line OO' such that O'I / OI = R'/R
+                // Since both vectors are in same direction for external center
+                const I = {
+                    x: O.x - (Oprime.x - O.x) * R / (Rprime - R),
+                    y: O.y - (Oprime.y - O.y) * R / (Rprime - R)
+                };
+                
+                ctx.fillStyle = '#E74C3C';
+                ctx.beginPath();
+                ctx.arc(I.x, I.y, 8, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('I', I.x, I.y - 25);
+                
+                // Draw lines from I to circle points
+                ctx.strokeStyle = '#E74C3C';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                
+                // Line from I to O and O'
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(O.x, O.y);
+                ctx.lineTo(Oprime.x, Oprime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Show ratio
+                ctx.fillStyle = '#E74C3C';
+                ctx.font = '14px Arial';
+                ctx.fillText(`k = R'/R = ${ratio.toFixed(2)} > 0`, 
+                    (I.x + Oprime.x)/2, 
+                    (I.y + Oprime.y)/2 - 20);
+            }
+            
+            // Internal homothety center J (negative ratio)
+            if (activity3State1.negative) {
+                // J is on line OO' between O and O' such that O'J / OJ = -R'/R
+                const totalDistance = Math.sqrt(
+                    Math.pow(Oprime.x - O.x, 2) + 
+                    Math.pow(Oprime.y - O.y, 2)
+                );
+                
+                const Jdistance = totalDistance * R / (R + Rprime);
+                const J = {
+                    x: O.x + (Oprime.x - O.x) * Jdistance / totalDistance,
+                    y: O.y + (Oprime.y - O.y) * Jdistance / totalDistance
+                };
+                
+                ctx.fillStyle = '#3498DB';
+                ctx.beginPath();
+                ctx.arc(J.x, J.y, 8, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('J', J.x, J.y + 25);
+                
+                // Draw lines from J to circle points
+                ctx.strokeStyle = '#3498DB';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                
+                // Line from J to O and O'
+                ctx.beginPath();
+                ctx.moveTo(J.x, J.y);
+                ctx.lineTo(O.x, O.y);
+                ctx.lineTo(Oprime.x, Oprime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Show ratio
+                ctx.fillStyle = '#3498DB';
+                ctx.font = '14px Arial';
+                ctx.fillText(`k = -R'/R = -${ratio.toFixed(2)} < 0`, 
+                    (J.x + Oprime.x)/2, 
+                    (J.y + Oprime.y)/2 + 20);
+            }
+        }
+        
+        function drawActivity3Canvas2() {
+            const canvas = document.getElementById('activity3Canvas2');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define two exterior circles
+            const O1 = {x: width * 0.3, y: height * 0.5};
+            const R1 = 60;
+            const O2 = {x: width * 0.7, y: height * 0.5};
+            const R2 = 40;
+            
+            // Draw circles
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(O1.x, O1.y, R1, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            ctx.strokeStyle = '#8E44AD';
+            ctx.beginPath();
+            ctx.arc(O2.x, O2.y, R2, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // Draw centers
+            ctx.fillStyle = '#2ECC71';
+            ctx.beginPath();
+            ctx.arc(O1.x, O1.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('O₁', O1.x, O1.y - 25);
+            
+            ctx.fillStyle = '#8E44AD';
+            ctx.beginPath();
+            ctx.arc(O2.x, O2.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('O₂', O2.x, O2.y - 25);
+            
+            // Draw common tangents if constructed
+            if (activity3State2.constructed) {
+                // Calculate external homothety center I
+                const ratio = R2 / R1;
+                const I = {
+                    x: O1.x - (O2.x - O1.x) * R1 / (R2 - R1),
+                    y: O1.y - (O2.y - O1.y) * R1 / (R2 - R1)
+                };
+                
+                // Calculate internal homothety center J
+                const totalDistance = Math.sqrt(
+                    Math.pow(O2.x - O1.x, 2) + 
+                    Math.pow(O2.y - O1.y, 2)
+                );
+                const Jdistance = totalDistance * R1 / (R1 + R2);
+                const J = {
+                    x: O1.x + (O2.x - O1.x) * Jdistance / totalDistance,
+                    y: O1.y + (O2.y - O1.y) * Jdistance / totalDistance
+                };
+                
+                // Draw homothety centers
+                ctx.fillStyle = '#E74C3C';
+                ctx.beginPath();
+                ctx.arc(I.x, I.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText('I (externe)', I.x, I.y - 20);
+                
+                ctx.fillStyle = '#3498DB';
+                ctx.beginPath();
+                ctx.arc(J.x, J.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText('J (interne)', J.x, J.y + 20);
+                
+                // Draw external common tangents (from I)
+                // Find tangents from I to circle 1
+                const distanceItoO1 = Math.sqrt(
+                    Math.pow(I.x - O1.x, 2) + 
+                    Math.pow(I.y - O1.y, 2)
+                );
+                
+                const angleItoO1 = Math.atan2(O1.y - I.y, O1.x - I.x);
+                const tangentAngle = Math.asin(R1 / distanceItoO1);
+                
+                // Two external tangents
+                const angles = [
+                    angleItoO1 + tangentAngle,
+                    angleItoO1 - tangentAngle
+                ];
+                
+                angles.forEach((angle, index) => {
+                    // Point of tangency on circle 1
+                    const T1 = {
+                        x: O1.x + R1 * Math.cos(angle + Math.PI),
+                        y: O1.y + R1 * Math.sin(angle + Math.PI)
+                    };
+                    
+                    // Draw tangent line from I through T1
+                    const length = 200;
+                    const T2 = {
+                        x: I.x + length * Math.cos(angle),
+                        y: I.y + length * Math.sin(angle)
+                    };
+                    
+                    ctx.strokeStyle = '#E67E22';
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash([5, 3]);
+                    ctx.beginPath();
+                    ctx.moveTo(I.x, I.y);
+                    ctx.lineTo(T2.x, T2.y);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                    
+                    // Draw point of tangency
+                    ctx.fillStyle = '#E67E22';
+                    ctx.beginPath();
+                    ctx.arc(T1.x, T1.y, 5, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Label
+                    ctx.fillStyle = '#E67E22';
+                    ctx.font = '12px Arial';
+                    ctx.fillText(`T${index+1}`, T1.x, T1.y - 15);
+                });
+                
+                // Draw internal common tangents (from J)
+                const distanceJtoO1 = Math.sqrt(
+                    Math.pow(J.x - O1.x, 2) + 
+                    Math.pow(J.y - O1.y, 2)
+                );
+                
+                const angleJtoO1 = Math.atan2(O1.y - J.y, O1.x - J.x);
+                const tangentAngleJ = Math.asin(R1 / distanceJtoO1);
+                
+                // Two internal tangents
+                const anglesJ = [
+                    angleJtoO1 + tangentAngleJ,
+                    angleJtoO1 - tangentAngleJ
+                ];
+                
+                anglesJ.forEach((angle, index) => {
+                    // Point of tangency on circle 1
+                    const T1 = {
+                        x: O1.x + R1 * Math.cos(angle + Math.PI),
+                        y: O1.y + R1 * Math.sin(angle + Math.PI)
+                    };
+                    
+                    // Draw tangent line from J through T1
+                    const length = 150;
+                    const T2 = {
+                        x: J.x + length * Math.cos(angle),
+                        y: J.y + length * Math.sin(angle)
+                    };
+                    
+                    ctx.strokeStyle = '#2ECC71';
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash([5, 3]);
+                    ctx.beginPath();
+                    ctx.moveTo(J.x, J.y);
+                    ctx.lineTo(T2.x, T2.y);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                    
+                    // Draw point of tangency
+                    ctx.fillStyle = '#2ECC71';
+                    ctx.beginPath();
+                    ctx.arc(T1.x, T1.y, 5, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Label
+                    ctx.fillStyle = '#2ECC71';
+                    ctx.font = '12px Arial';
+                    ctx.fillText(`T${index+3}`, T1.x, T1.y + 15);
+                });
+            }
+        }
+        
+        function drawActivity4Canvas() {
+            const canvas = document.getElementById('activity4Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define circle Γ
+            const O = {x: width * 0.5, y: height * 0.5};
+            const R = 80;
+            
+            // Define line D (horizontal)
+            const D_y = height * 0.8;
+            const A = {x: width * 0.7, y: D_y};
+            
+            // Define diameter BC perpendicular to D (vertical)
+            const B = {x: O.x, y: O.y - R};
+            const C = {x: O.x, y: O.y + R};
+            
+            // Find I: intersection of (AB) with Γ (other than B)
+            // Line AB equation
+            const I = {
+                x: O.x - (B.x - O.x),  // Symmetric of B relative to O
+                y: O.y - (B.y - O.y)
+            };
+            
+            // Draw circle Γ
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(O.x, O.y, R, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // Draw center O
+            ctx.fillStyle = '#2ECC71';
+            ctx.beginPath();
+            ctx.arc(O.x, O.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('O', O.x, O.y - 25);
+            
+            // Draw line D
+            ctx.strokeStyle = '#E74C3C';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(width * 0.1, D_y);
+            ctx.lineTo(width * 0.9, D_y);
+            ctx.stroke();
+            ctx.fillStyle = '#E74C3C';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('D', width * 0.9 - 10, D_y - 10);
+            
+            // Draw point A on D
+            ctx.fillStyle = '#E67E22';
+            ctx.beginPath();
+            ctx.arc(A.x, A.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('A', A.x, A.y + 20);
+            
+            // Draw diameter BC
+            ctx.strokeStyle = '#666666';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([3, 3]);
+            ctx.beginPath();
+            ctx.moveTo(B.x, B.y);
+            ctx.lineTo(C.x, C.y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Draw points B and C
+            ctx.fillStyle = '#9B59B6';
+            ctx.beginPath();
+            ctx.arc(B.x, B.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('B', B.x, B.y - 20);
+            
+            ctx.fillStyle = '#3498DB';
+            ctx.beginPath();
+            ctx.arc(C.x, C.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('C', C.x, C.y + 20);
+            
+            // Draw line AB
+            ctx.strokeStyle = '#E67E22';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+            ctx.beginPath();
+            ctx.moveTo(A.x, A.y);
+            ctx.lineTo(B.x, B.y);
+            ctx.lineTo(I.x, I.y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Draw point I
+            ctx.fillStyle = '#1ABC9C';
+            ctx.beginPath();
+            ctx.arc(I.x, I.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('I', I.x, I.y - 20);
+            
+            // Draw tangent D' at B
+            // D' is horizontal (perpendicular to BC which is vertical)
+            ctx.strokeStyle = '#9B59B6';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([3, 3]);
+            ctx.beginPath();
+            ctx.moveTo(B.x - 80, B.y);
+            ctx.lineTo(B.x + 80, B.y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.fillStyle = '#9B59B6';
+            ctx.font = 'bold 14px Arial';
+            ctx.fillText('D\'', B.x + 70, B.y - 10);
+            
+            // Draw images if constructed
+            if (activity4State.partA || activity4State.partB) {
+                // Calculate homothety h with center I, B ↦ A
+                // Find k such that IA = k IB
+                const IB = {x: B.x - I.x, y: B.y - I.y};
+                const IA = {x: A.x - I.x, y: A.y - I.y};
+                
+                // k = IA_x / IB_x (assuming IB_x ≠ 0)
+                const k = IA.x / IB.x;
+                
+                // Calculate image of circle Γ: Γ' with center O' and radius R'
+                const Oprime = {
+                    x: I.x + k * (O.x - I.x),
+                    y: I.y + k * (O.y - I.y)
+                };
+                
+                const Rprime = Math.abs(k) * R;
+                
+                // Draw circle Γ'
+                ctx.strokeStyle = '#8E44AD';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 3]);
+                ctx.beginPath();
+                ctx.arc(Oprime.x, Oprime.y, Rprime, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw center O'
+                ctx.fillStyle = '#8E44AD';
+                ctx.beginPath();
+                ctx.arc(Oprime.x, Oprime.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('O\'', Oprime.x, Oprime.y - 25);
+                
+                // Show tangency at I
+                if (activity4State.partA) {
+                    // Draw common tangent at I
+                    const slopeOI = (I.y - O.y) / (I.x - O.x);
+                    const slopeTangent = -1 / slopeOI;
+                    
+                    const tangentLength = 50;
+                    const tangent1 = {
+                        x: I.x - tangentLength,
+                        y: I.y + slopeTangent * (-tangentLength)
+                    };
+                    const tangent2 = {
+                        x: I.x + tangentLength,
+                        y: I.y + slopeTangent * tangentLength
+                    };
+                    
+                    ctx.strokeStyle = '#1ABC9C';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(tangent1.x, tangent1.y);
+                    ctx.lineTo(tangent2.x, tangent2.y);
+                    ctx.stroke();
+                    
+                    // Show tangency at A to D
+                    // Since D' (horizontal) is transformed to D (also horizontal)
+                    // and A is the image of B, D is tangent to Γ' at A
+                    ctx.strokeStyle = '#E67E22';
+                    ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    ctx.moveTo(A.x - 60, A.y);
+                    ctx.lineTo(A.x + 60, A.y);
+                    ctx.stroke();
+                    
+                    // Draw radius O'A
+                    const OAprime = {
+                        x: A.x - Oprime.x,
+                        y: A.y - Oprime.y
+                    };
+                    
+                    ctx.strokeStyle = '#8E44AD';
+                    ctx.lineWidth = 1;
+                    ctx.setLineDash([3, 3]);
+                    ctx.beginPath();
+                    ctx.moveTo(Oprime.x, Oprime.y);
+                    ctx.lineTo(A.x, A.y);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                    
+                    // Show perpendicular symbol at A
+                    const perpLength = 15;
+                    const perpAngle = Math.atan2(A.y - Oprime.y, A.x - Oprime.x) + Math.PI/2;
+                    const perpStart = {
+                        x: A.x + 20 * Math.cos(perpAngle - Math.PI/2),
+                        y: A.y + 20 * Math.sin(perpAngle - Math.PI/2)
+                    };
+                    
+                    ctx.strokeStyle = '#666666';
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(perpStart.x, perpStart.y);
+                    ctx.lineTo(
+                        perpStart.x + perpLength * Math.cos(perpAngle),
+                        perpStart.y + perpLength * Math.sin(perpAngle)
+                    );
+                    ctx.stroke();
+                }
+                
+                // For part B: construct circles tangent to Γ and D at M
+                if (activity4State.partB) {
+                    const M = {x: width * 0.2, y: D_y};
+                    
+                    // Draw point M
+                    ctx.fillStyle = '#E74C3C';
+                    ctx.beginPath();
+                    ctx.arc(M.x, M.y, 6, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = '#333333';
+                    ctx.font = 'bold 16px Arial';
+                    ctx.fillText('M', M.x, M.y + 20);
+                    
+                    // Draw perpendicular to D at M
+                    ctx.strokeStyle = '#E74C3C';
+                    ctx.lineWidth = 1;
+                    ctx.setLineDash([2, 2]);
+                    ctx.beginPath();
+                    ctx.moveTo(M.x, M.y);
+                    ctx.lineTo(M.x, M.y - 100);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                    
+                    // Find intersection points with circle Γ
+                    // Solve (x - O.x)² + (M.y - O.y)² = R²
+                    const dx = M.x - O.x;
+                    const discriminant = R*R - (M.y - O.y)*(M.y - O.y);
+                    
+                    if (discriminant >= 0) {
+                        const sqrtDisc = Math.sqrt(discriminant);
+                        const N1 = {x: O.x + sqrtDisc, y: M.y};
+                        const N2 = {x: O.x - sqrtDisc, y: M.y};
+                        
+                        // Draw intersection points
+                        [N1, N2].forEach((N, index) => {
+                            ctx.fillStyle = '#3498DB';
+                            ctx.beginPath();
+                            ctx.arc(N.x, N.y, 6, 0, Math.PI * 2);
+                            ctx.fill();
+                            ctx.fillStyle = '#333333';
+                            ctx.font = 'bold 14px Arial';
+                            ctx.fillText(`N${index+1}`, N.x, N.y - 20);
+                            
+                            // For each N, construct circle tangent to Γ and D at M
+                            // Homothety with center N, M maps to point on Γ
+                            // Find point T on Γ such that N, M, T are aligned
+                            const T = {
+                                x: 2*O.x - N.x,  // Other intersection of line through N and center
+                                y: 2*O.y - N.y
+                            };
+                            
+                            // Calculate homothety ratio
+                            const NM = Math.sqrt(Math.pow(M.x - N.x, 2) + Math.pow(M.y - N.y, 2));
+                            const NT = Math.sqrt(Math.pow(T.x - N.x, 2) + Math.pow(T.y - N.y, 2));
+                            const kCircle = NM / NT;
+                            
+                            // Calculate image circle
+                            const Ocircle = {
+                                x: N.x + kCircle * (O.x - N.x),
+                                y: N.y + kCircle * (O.y - N.y)
+                            };
+                            
+                            const Rcircle = Math.abs(kCircle) * R;
+                            
+                            // Draw circle
+                            ctx.strokeStyle = index === 0 ? '#E67E22' : '#2ECC71';
+                            ctx.lineWidth = 2;
+                            ctx.setLineDash([5, 3]);
+                            ctx.beginPath();
+                            ctx.arc(Ocircle.x, Ocircle.y, Rcircle, 0, Math.PI * 2);
+                            ctx.stroke();
+                            ctx.setLineDash([]);
+                            
+                            // Show it's tangent at M
+                            ctx.strokeStyle = index === 0 ? '#E67E22' : '#2ECC71';
+                            ctx.lineWidth = 1;
+                            ctx.setLineDash([3, 3]);
+                            ctx.beginPath();
+                            ctx.moveTo(Ocircle.x, Ocircle.y);
+                            ctx.lineTo(M.x, M.y);
+                            ctx.stroke();
+                            ctx.setLineDash([]);
+                        });
+                    }
+                }
+            }
+        }
+        
+        function drawActivity5Canvas() {
+            const canvas = document.getElementById('activity5Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Define original circle C
+            const I = {x: width * 0.4, y: height * 0.5};
+            const R = 70;
+            const k = 1.8; // Ratio > 1 for enlargement
+            
+            // Draw original circle C
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(I.x, I.y, R, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // Draw center I
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(I.x, I.y, 8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('I', I.x, I.y - 25);
+            
+            // Show radius
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([3, 3]);
+            ctx.beginPath();
+            ctx.moveTo(I.x, I.y);
+            ctx.lineTo(I.x + R, I.y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            ctx.fillStyle = '#4A90E2';
+            ctx.font = '14px Arial';
+            ctx.fillText('R', I.x + R/2, I.y - 10);
+            
+            // Calculate and show perimeter
+            const P = 2 * Math.PI * R;
+            ctx.fillStyle = '#666666';
+            ctx.font = '14px Arial';
+            ctx.fillText(`P = 2πR ≈ ${P.toFixed(1)}`, I.x, I.y + R + 30);
+            
+            // Calculate and show area
+            const A = Math.PI * R * R;
+            ctx.fillText(`A = πR² ≈ ${A.toFixed(1)}`, I.x, I.y + R + 50);
+            
+            // Draw image if constructed
+            if (activity5State.constructed) {
+                // Image circle C' has same center I (since I is the homothety center)
+                const Rprime = Math.abs(k) * R;
+                
+                // Draw image circle C'
+                ctx.strokeStyle = '#8E44AD';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 3]);
+                ctx.beginPath();
+                ctx.arc(I.x, I.y, Rprime, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Show radius of C'
+                ctx.strokeStyle = '#8E44AD';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(I.x, I.y);
+                ctx.lineTo(I.x + Rprime, I.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                ctx.fillStyle = '#8E44AD';
+                ctx.font = '14px Arial';
+                ctx.fillText(`R' = |k|R = ${Rprime.toFixed(1)}`, I.x + Rprime/2, I.y - 10);
+                
+                // Calculate and show perimeter of C'
+                const Pprime = 2 * Math.PI * Rprime;
+                ctx.fillStyle = '#8E44AD';
+                ctx.font = '14px Arial';
+                ctx.fillText(`P' = 2πR' = ${Pprime.toFixed(1)}`, I.x, I.y + Rprime + 30);
+                ctx.fillText(`P' = |k|P = ${Math.abs(k).toFixed(1)} × ${P.toFixed(1)}`, I.x, I.y + Rprime + 50);
+                
+                // Calculate and show area of C'
+                const Aprime = Math.PI * Rprime * Rprime;
+                ctx.fillText(`A' = π(R')² = ${Aprime.toFixed(1)}`, I.x, I.y + Rprime + 70);
+                ctx.fillText(`A' = k²A = ${(k*k).toFixed(2)} × ${A.toFixed(1)}`, I.x, I.y + Rprime + 90);
+                
+                // Show scaling relationships
+                ctx.fillStyle = '#E74C3C';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText(`Scaling by k = ${k}`, width/2, height * 0.1);
+                
+                ctx.fillStyle = '#666666';
+                ctx.font = '14px Arial';
+                ctx.fillText(`Perimeter scales by |k| = ${Math.abs(k).toFixed(1)}`, width/2, height * 0.15);
+                ctx.fillText(`Area scales by k² = ${(k*k).toFixed(2)}`, width/2, height * 0.18);
+            }
+            
+            // Show homothety notation
+            ctx.fillStyle = '#666666';
+            ctx.font = '14px Arial';
+            ctx.fillText(`h(I, k=${k})`, width * 0.8, height * 0.1);
+        }
+        
+        // Helper function to draw arrowhead
+        function drawArrowhead(ctx, x, y, angle) {
+            const headlen = 10;
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angle);
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(-headlen, -headlen/2);
+            ctx.moveTo(0, 0);
+            ctx.lineTo(-headlen, headlen/2);
+            ctx.stroke();
+            ctx.restore();
+        }
+        
+        // Construction functions for Activity 1
+        function constructActivity1a() {
+            activity1State1.circle = true;
+            drawActivity1Canvas1();
+        }
+        
+        function constructActivity1b() {
+            activity1State1.points = true;
+            drawActivity1Canvas1();
+        }
+        
+        function constructActivity1c() {
+            activity1State1.images = true;
+            drawActivity1Canvas1();
+        }
+        
+        function constructActivity1Part2a() {
+            activity1State2.partA = true;
+            drawActivity1Canvas2();
+        }
+        
+        function constructActivity1Part2b() {
+            activity1State2.partB = true;
+            drawActivity1Canvas2();
+        }
+        
+        // Construction functions for Activity 2
+        function constructActivity2() {
+            activity2State.constructed = true;
+            drawActivity2Canvas();
+        }
+        
+        // Construction functions for Activity 3
+        function constructActivity3a() {
+            activity3State1.positive = true;
+            drawActivity3Canvas1();
+        }
+        
+        function constructActivity3b() {
+            activity3State1.negative = true;
+            drawActivity3Canvas1();
+        }
+        
+        function constructActivity3Part2() {
+            activity3State2.constructed = true;
+            drawActivity3Canvas2();
+        }
+        
+        // Construction functions for Activity 4
+        function constructActivity4a() {
+            activity4State.partA = true;
+            drawActivity4Canvas();
+        }
+        
+        function constructActivity4b() {
+            activity4State.partB = true;
+            drawActivity4Canvas();
+        }
+        
+        // Construction functions for Activity 5
+        function constructActivity5a() {
+            activity5State.constructed = true;
+            drawActivity5Canvas();
+        }
+        
+        function constructActivity5b() {
+            activity5State.constructed = true;
+            drawActivity5Canvas();
+        }
+        
+        // Solution toggle function
+        function toggleSolution(problemNumber) {
+            const solution = document.getElementById(`solution${problemNumber}`);
+            const button = solution.previousElementSibling;
+            const currentLang = MHThemeManager ? MHThemeManager.getCurrentLanguage() : 'en';
+            
+            if (solution.style.display === 'block' || solution.style.display === '') {
+                solution.style.display = 'none';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_homothety4.showSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_homothety4.showSolution'];
+                } else {
+                    button.textContent = 'Show Solution';
+                }
+            } else {
+                solution.style.display = 'block';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_homothety4.hideSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_homothety4.hideSolution'];
+                } else {
+                    button.textContent = 'Hide Solution';
+                }
+                
+                // Re-render KaTeX for newly visible equations
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(solution, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\(', right: '\\)', display: false},
+                            {left: '\\[', right: '\\]', display: true}
+                        ],
+                        throwOnError: false
+                    });
+                }
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize KaTeX auto-render
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+
+            // Draw initial canvases
+            drawActivity1Canvas1();
+            drawActivity1Canvas2();
+            drawActivity2Canvas();
+            drawActivity3Canvas1();
+            drawActivity3Canvas2();
+            drawActivity4Canvas();
+            drawActivity5Canvas();
+
+            // Initialize solutions as hidden and set button text
+            const currentLang = MHThemeManager ? MHThemeManager.getCurrentLanguage() : 'en';
+            for (let i = 1; i <= 12; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                const button = solution ? solution.previousElementSibling : null;
+                
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+                
+                // Set initial button text
+                if (button && translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_homothety4.showSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_homothety4.showSolution'];
+                }
+            }
+            
+            // Redraw canvases when theme changes
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    setTimeout(() => {
+                        drawActivity1Canvas1();
+                        drawActivity1Canvas2();
+                        drawActivity2Canvas();
+                        drawActivity3Canvas1();
+                        drawActivity3Canvas2();
+                        drawActivity4Canvas();
+                        drawActivity5Canvas();
+                    }, 100);
+                });
+            }
+        });
+    </script>
+
+<!-- Add the service worker registration script -->
+<script>
+    // Register service worker with better error handling
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch(function(error) {
+                console.log('Service Worker registration failed:', error);
+            });
+        });
+    }
+</script>
+
+<!-- Add noscript fallback -->
+<noscript>
+    <style>
+        .MH-header-controls { display: none; }
+        .MH-solution { display: block; }
+        .MH-canvas { border: 2px solid #ccc; background-color: #f9f9f9; }
+    </style>
+    <div class="MH-warning">
+        JavaScript is recommended for the full experience, but content is still accessible.
+    </div>
+</noscript>
+</body>
+</html>
