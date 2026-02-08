@@ -1,0 +1,1988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Geometry - Homothety Part 5 (Euler Line and Locus Problems)</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#4A90E2" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#8E44AD" media="(prefers-color-scheme: dark)">
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#4A90E2">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    <style>
+        /* Page-specific color palette - Blue + Purple Theme */
+        :root {
+            --primary: #4A90E2;        /* Cornflower Blue */
+            --primary-light: #7BAAF7;  /* Light Blue */
+            --primary-dark: #357ABD;   /* Darker Blue */
+            --secondary: #8E44AD;      /* Dark Purple */
+            --secondary-light: #AF7AC5; /* Light Purple */
+            --secondary-dark: #6C3483;  /* Darker Purple */
+            --accent: #E67E22;
+            --warning: #E74C3C;
+            --info: #2ECC71;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #FFFFFF;
+            --surface: #F8F9FA;
+            --border: #E9ECEF;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        [data-theme="dark"] {
+            --primary: #357ABD;
+            --primary-light: #4A90E2;
+            --primary-dark: #2C3E50;
+            --secondary: #6C3483;
+            --secondary-light: #8E44AD;
+            --secondary-dark: #4A235A;
+            --accent: #D35400;
+            --warning: #C0392B;
+            --info: #27AE60;
+            --text: #FFFFFF;
+            --text-light: #CCCCCC;
+            --background: #121212;
+            --surface: #1E1E1E;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+        /* KaTeX styling */
+        .katex { 
+            font-size: 1.1em; 
+        }
+        .katex-display { 
+            margin: 1em 0; 
+            text-align: center;
+        }
+        .katex-display > .katex { 
+            display: inline-block;
+            text-align: center;
+        }
+        /* Equation styling */
+        .MH-equation {
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            margin: 0.5em 0;
+            padding: 0;
+            display: inline-block;
+            direction: ltr !important;
+            unicode-bidi: isolate;
+        }
+        [dir="rtl"] .MH-equation {
+            text-align: left;
+            unicode-bidi: plaintext;
+        }
+        /* Canvas container styling */
+        .MH-canvas-container {
+            margin: 2em 0;
+            text-align: center;
+            position: relative;
+        }
+        .MH-canvas {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background-color: var(--surface);
+            max-width: 100%;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+        .MH-canvas-title {
+            font-weight: bold;
+            margin-bottom: 0.5em;
+            color: var(--primary);
+        }
+        .MH-canvas-instructions {
+            font-size: 0.9em;
+            color: var(--text-light);
+            margin-top: 0.5em;
+            font-style: italic;
+        }
+        /* Geometry specific styling */
+        .MH-construction-step {
+            margin: 1.5em 0;
+            padding: 1em;
+            background-color: var(--surface);
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+        }
+        .MH-construction-step h4 {
+            margin-top: 0;
+            color: var(--primary-dark);
+        }
+        .MH-vector-notation {
+            font-family: 'KaTeX_Math', 'Cambria Math', serif;
+            font-style: italic;
+            color: var(--secondary);
+        }
+        .MH-point-label {
+            font-weight: bold;
+            color: var(--accent);
+        }
+        .MH-transformation-notation {
+            background-color: rgba(78, 144, 226, 0.1);
+            padding: 0.5em;
+            border-radius: 4px;
+            font-family: 'KaTeX_Math', 'Cambria Math', serif;
+            margin: 0.5em 0;
+        }
+        /* Responsive canvas */
+        @media (max-width: 768px) {
+            .MH-canvas {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+        /* Homothety specific */
+        .MH-homothety-center {
+            font-weight: bold;
+            color: var(--warning);
+        }
+        .MH-homothety-ratio {
+            font-weight: bold;
+            color: var(--info);
+        }
+        /* Exercise specific */
+        .MH-exercise-number {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--secondary);
+            margin: 1.5em 0 0.5em 0;
+            border-bottom: 2px solid var(--secondary-light);
+            padding-bottom: 0.3em;
+        }
+        /* Euler line specific */
+        .MH-euler-line {
+            border: 2px dashed var(--accent);
+            padding: 0.5em;
+            margin: 0.5em 0;
+            border-radius: 4px;
+        }
+        /* Locus specific */
+        .MH-locus-path {
+            stroke: var(--warning);
+            stroke-width: 3;
+            fill: none;
+            stroke-dasharray: 5,5;
+        }
+        .MH-locus-point {
+            fill: var(--info);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                    <!-- Notification Button -->
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+                        <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Geo_homothety5.title">Homothety: Part 5</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y2Geo_homothety5.subtitle">Euler Line, Euler Circle, and Locus Problems</h2>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_homothety5.introduction">Introduction</h2>
+            <p data-i18n="MH.lesson_Y2Geo_homothety5.introText1">In this final lesson on homothety, we explore advanced applications including the famous Euler line and Euler circle of a triangle, as well as various locus problems. These topics demonstrate the power of homothety in establishing important geometric relationships and solving complex problems.</p>
+            <p data-i18n="MH.lesson_Y2Geo_homothety5.introText2">Through these exercises, you will learn how homothety can be used to prove alignment of special points in triangles, discover interesting circle properties, and determine paths traced by points under given conditions.</p>
+        </section>
+
+        <!-- XIX. Euler Line – Euler Circle -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y2Geo_homothety5.XIX">XIX. Euler Line – Euler Circle</div>
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_homothety5.activity1Title">Activity 1</p>
+                <p data-i18n="MH.lesson_Y2Geo_homothety5.activity1Statement">Given a triangle ABC, denote by O the circumcenter, G the centroid, and H the orthocenter of triangle ABC. Let A', B', and C' be the respective midpoints of [BC], [AC], and [AB]. Let h be the homothety with center G and ratio -1/2.</p>
+            </div>
+            
+            <!-- Diagram for Activity 1 -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_homothety5.diagram1Title">Figure: Triangle ABC with circumcenter O, centroid G, orthocenter H</div>
+                <canvas id="activity1Canvas" width="600" height="500" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_homothety5.diagram1Instructions">Triangle ABC with circumcircle, centroid G, orthocenter H, and midpoints A', B', C'.</div>
+            </div>
+            
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety5.question1a">1) a) Make a figure.</h4>
+                    <button class="MH-solution-btn" onclick="constructActivity1a()" data-i18n="MH.lesson_Y2Geo_homothety5.showConstruction">Show Construction</button>
+                </div>
+                
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety5.question1b">b) Show that the image of altitude (AH) by homothety h is the perpendicular bisector of [BC].</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety5.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                    <div class="MH-solution" id="solution1">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution1b">Consider homothety h(G, -1/2):</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution1b1">A ↦ A' (since A' is midpoint of BC and G divides median in ratio 2:1)</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution1b2">H ↦ O (we will prove this in part 2)</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution1b3">Line AH ↦ line through A' and O</li>
+                        </ul>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution1b4">But O is the circumcenter, so line A'O is the perpendicular bisector of BC.</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety5.equation1b">h(G,-1/2): (AH) ↦ (A'O) where (A'O) is perpendicular bisector of [BC]</div>
+                    </div>
+                </div>
+                
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety5.question1c">c) Specify the images by h of altitudes (BH) and (CH).</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety5.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                    <div class="MH-solution" id="solution2">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution1c">Similarly:</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution1c1">h: (BH) ↦ (B'O) where (B'O) is perpendicular bisector of [AC]</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution1c2">h: (CH) ↦ (C'O) where (C'O) is perpendicular bisector of [AB]</li>
+                        </ul>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety5.equation1c">h(G,-1/2): altitudes ↦ perpendicular bisectors</div>
+                    </div>
+                </div>
+                
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety5.question2">2) Show that points O, G, and H are collinear and that OH = 3OG. (The line containing points O, G, and H is called the Euler line of triangle ABC)</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety5.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                    <div class="MH-solution" id="solution3">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution2">From the homothety h(G, -1/2):</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution2a">We have H ↦ O (since altitudes ↦ perpendicular bisectors)</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution2b">By definition of homothety: \(\overrightarrow{GO} = -\frac{1}{2} \overrightarrow{GH}\)</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution2c">This implies that O, G, H are collinear with G between O and H</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution2d">From the equation: \(\overrightarrow{GO} = -\frac{1}{2} \overrightarrow{GH} \Rightarrow \overrightarrow{GH} = -2 \overrightarrow{GO}\)</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution2e">Thus \(\overrightarrow{OH} = \overrightarrow{OG} + \overrightarrow{GH} = \overrightarrow{OG} - 2\overrightarrow{GO} = \overrightarrow{OG} + 2\overrightarrow{OG} = 3\overrightarrow{OG}\)</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution2f">Therefore OH = 3OG</li>
+                        </ul>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety5.equation2">\(\overrightarrow{OH} = 3\overrightarrow{OG}\) ⇒ OH = 3OG and O, G, H are collinear</div>
+                        <div class="MH-euler-line" data-i18n="MH.lesson_Y2Geo_homothety5.eulerLineDef">This line is called the Euler line of the triangle.</div>
+                    </div>
+                </div>
+                
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety5.question3">3) Let Ω be the circumcenter of triangle A'B'C'. Show that Ω belongs to line (OG) and that it is the midpoint of [OH]. Calculate the radius r of this circle in terms of the radius R of the circumcircle of ABC. (The circumcircle of A'B'C' is called the Euler circle or nine-point circle of triangle ABC)</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety5.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+                    <div class="MH-solution" id="solution4">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution3a">Consider triangle A'B'C' (midpoint triangle of ABC):</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution3a1">A'B'C' is homothetic to ABC by homothety h₁ with center G and ratio -1/2</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution3a2">The circumcircle of A'B'C' is the image of circumcircle of ABC by h₁</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution3a3">Therefore Ω = h₁(O) = image of O by h(G, -1/2)</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution3a4">Since h maps O to Ω and H to O, and h has ratio -1/2, we have:
+                                <ul>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety5.solution3a4a">\(\overrightarrow{GΩ} = -\frac{1}{2} \overrightarrow{GO}\)</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety5.solution3a4b">\(\overrightarrow{GH} = -2 \overrightarrow{GO}\) (from part 2)</li>
+                                </ul>
+                            </li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution3a5">Thus Ω is the midpoint of OH because:
+                                <ul>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety5.solution3a5a">\(\overrightarrow{OΩ} = \overrightarrow{OG} + \overrightarrow{GΩ} = \overrightarrow{OG} - \frac{1}{2}\overrightarrow{GO} = \overrightarrow{OG} + \frac{1}{2}\overrightarrow{OG} = \frac{3}{2}\overrightarrow{OG}\)</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety5.solution3a5b">\(\overrightarrow{OH} = 3\overrightarrow{OG}\) (from part 2)</li>
+                                    <li data-i18n="MH.lesson_Y2Geo_homothety5.solution3a5c">So \(\overrightarrow{OΩ} = \frac{1}{2}\overrightarrow{OH}\) ⇒ Ω is midpoint of OH</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution3b">For the radius:</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution3b1">Homothety h(G, -1/2) transforms circumcircle of ABC (radius R) to circumcircle of A'B'C'</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution3b2">Since the absolute ratio is 1/2, the radius r = (1/2)R</li>
+                        </ul>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety5.equation3">Ω = midpoint of [OH], r = \(\frac{1}{2}\)R</div>
+                        <div class="MH-euler-line" data-i18n="MH.lesson_Y2Geo_homothety5.eulerCircleDef">This circle is called the Euler circle or nine-point circle of the triangle.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- XX. Locus Problem A -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y2Geo_homothety5.XX">XX. Locus Problem A</div>
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_homothety5.activity2Title">Activity 2</p>
+                <p data-i18n="MH.lesson_Y2Geo_homothety5.activity2Statement">Let C be a circle with center O and A a point not belonging to C. Let M be a point on circle C, and let I be the barycenter of points (A, 2) and (M, 3). Determine the locus of point I as point M describes circle C.</p>
+            </div>
+            
+            <!-- Diagram for Activity 2 -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_homothety5.diagram2Title">Figure: Circle C with point A outside, point M on C, and barycenter I</div>
+                <canvas id="activity2Canvas" width="600" height="500" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_homothety5.diagram2Instructions">Circle C with center O, point A outside, point M moving on C, and barycenter I of (A,2) and (M,3).</div>
+            </div>
+            
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <button class="MH-solution-btn" onclick="constructActivity2()" data-i18n="MH.lesson_Y2Geo_homothety5.showConstruction">Show Construction</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety5.showSolution" onclick="toggleSolution(5)">Show Solution</button>
+                    <div class="MH-solution" id="solution5">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution2">I is barycenter of (A,2) and (M,3), so by definition:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety5.equation4">\(2\overrightarrow{IA} + 3\overrightarrow{IM} = \overrightarrow{0}\) or equivalently \(\overrightarrow{AI} = \frac{3}{5}\overrightarrow{AM}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution2b">This means that I is the image of M by homothety h with center A and ratio 3/5:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety5.equation5">I = h(A, 3/5)(M)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution2c">Since M describes circle C, and homothety transforms circles to circles:</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution2c1">The image of C by h(A, 3/5) is a circle C'</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution2c2">Center of C' = h(A, 3/5)(O) = O' such that \(\overrightarrow{AO'} = \frac{3}{5}\overrightarrow{AO}\)</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution2c3">Radius of C' = (3/5) × radius of C</li>
+                        </ul>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution2d">Therefore, the locus of I is circle C' with center O' (on line AO at 3/5 of distance from A to O) and radius (3/5)R.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- XXI. Locus Problem B -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y2Geo_homothety5.XXI">XXI. Locus Problem B</div>
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_homothety5.activity3Title">Activity 3</p>
+                <p data-i18n="MH.lesson_Y2Geo_homothety5.activity3Statement">Let C be a circle with diameter [AB] and S a point on (AB). M being a point of C, we draw the diameter [PM], then the point M' intersection of lines (SM) and (AP).</p>
+            </div>
+            
+            <!-- Diagram for Activity 3 -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_homothety5.diagram3Title">Figure: Circle with diameter AB, point S on AB, point M on circle, diameter PM, and intersection M'</div>
+                <canvas id="activity3Canvas" width="600" height="500" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_homothety5.diagram3Instructions">Circle C with diameter AB, point S on AB, point M on circle, diameter PM, intersection M' of SM and AP.</div>
+            </div>
+            
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety5.question3a">1) Let h be the homothety with center S that transforms B into A. Determine the image by h of line (BM).</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety5.showSolution" onclick="toggleSolution(6)">Show Solution</button>
+                    <div class="MH-solution" id="solution6">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution3a">Homothety h(S, k) with B ↦ A:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety5.equation6">\(\overrightarrow{SA} = k \overrightarrow{SB}\) ⇒ k = SA/SB</div>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution3a2">Under this homothety:</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution3a2a">B ↦ A</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution3a2b">M ↦ ?</li>
+                        </ul>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution3a3">Since P is diametrically opposite to M, and AP is a line through A and P:</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution3a3a">Consider triangle SBM</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution3a3b">Under h: S ↦ S (fixed point), B ↦ A, M ↦ some point on line through A</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution3a3c">But M' is intersection of SM and AP</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution3a3d">Thus h(M) = M' (since M' is on line AP and on line through S and image of M)</li>
+                        </ul>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution3a4">Therefore h: (BM) ↦ (AM') which is line through A and M'</p>
+                    </div>
+                </div>
+                
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety5.question3b">2) Determine and construct the locus of point M' when M describes circle C.</h4>
+                    <button class="MH-solution-btn" onclick="constructActivity3()" data-i18n="MH.lesson_Y2Geo_homothety5.showConstruction">Show Construction</button>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety5.showSolution" onclick="toggleSolution(7)">Show Solution</button>
+                    <div class="MH-solution" id="solution7">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution3b">From part 1, M' = h(M) where h is homothety with center S and ratio k = SA/SB.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution3b2">As M describes circle C, its image M' describes the image of C by h.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution3b3">Therefore, the locus of M' is a circle C' with:</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution3b3a">Center O' = h(O) where O is center of C (midpoint of AB)</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution3b3b">Radius r' = |k| × R where R is radius of C</li>
+                        </ul>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution3b4">Since S is on line AB, O' is also on line AB.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution3b5">The circle C' is the image of C by homothety h(S, SA/SB).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- XXII. Locus Problem C -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y2Geo_homothety5.XXII">XXII. Locus Problem C</div>
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y2Geo_homothety5.activity4Title">Activity 4</p>
+                <p data-i18n="MH.lesson_Y2Geo_homothety5.activity4Statement">Let C be a circle with center O and [AB] a chord of this circle. Let M be a variable point on circle C and N the point defined by MN = AB (with same direction).</p>
+            </div>
+            
+            <!-- Diagram for Activity 4 -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Geo_homothety5.diagram4Title">Figure: Circle C with chord AB, point M on circle, point N such that MN = AB</div>
+                <canvas id="activity4Canvas" width="600" height="500" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Geo_homothety5.diagram4Instructions">Circle C with chord AB, point M moving on circle, point N such that vector MN = vector AB.</div>
+            </div>
+            
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety5.question4a">1) Determine the locus of point N when M describes circle C.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety5.showSolution" onclick="toggleSolution(8)">Show Solution</button>
+                    <div class="MH-solution" id="solution8">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution4a">We have \(\overrightarrow{MN} = \overrightarrow{AB}\) constant.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution4a2">Thus N is the image of M by translation with vector \(\overrightarrow{AB}\).</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety5.equation7">\(\overrightarrow{ON} = \overrightarrow{OM} + \overrightarrow{MN} = \overrightarrow{OM} + \overrightarrow{AB}\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution4a3">Since M describes circle C with center O and radius R, and translation preserves circles:</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution4a3a">N describes a circle C' with center O' = O + \(\overrightarrow{AB}\)</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution4a3b">Radius of C' = R (same as C)</li>
+                        </ul>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution4a4">Therefore, the locus of N is circle C' with center O' and radius R, where O' is the translation of O by vector AB.</p>
+                    </div>
+                </div>
+                
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety5.question4b">2) Let I be the midpoint of [AN]. What is the locus of point I when M describes circle C?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety5.showSolution" onclick="toggleSolution(9)">Show Solution</button>
+                    <div class="MH-solution" id="solution9">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution4b">I is midpoint of AN, so:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety5.equation8">\(\overrightarrow{AI} = \frac{1}{2}\overrightarrow{AN} = \frac{1}{2}(\overrightarrow{AM} + \overrightarrow{MN}) = \frac{1}{2}(\overrightarrow{AM} + \overrightarrow{AB})\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution4b2">Alternatively, consider homothety h with center A and ratio 1/2:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety5.equation9">I = h(A, 1/2)(N)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution4b3">From part 1, N describes circle C' with center O' and radius R.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution4b4">Under homothety h(A, 1/2):</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution4b4a">Circle C' ↦ circle C'' with center O'' = h(A, 1/2)(O')</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution4b4b">Radius of C'' = (1/2)R</li>
+                        </ul>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution4b5">Therefore, the locus of I is circle C'' with center O'' and radius R/2.</p>
+                    </div>
+                </div>
+                
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y2Geo_homothety5.question4c">3) Let G be the centroid of triangle BMN. Determine the locus of point G when M describes circle C.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Geo_homothety5.showSolution" onclick="toggleSolution(10)">Show Solution</button>
+                    <div class="MH-solution" id="solution10">
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution4c">G is centroid of triangle BMN, so:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety5.equation10">\(\overrightarrow{G} = \frac{1}{3}(\overrightarrow{B} + \overrightarrow{M} + \overrightarrow{N})\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution4c2">But \(\overrightarrow{N} = \overrightarrow{M} + \overrightarrow{AB}\), so:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety5.equation11">\(\overrightarrow{G} = \frac{1}{3}(\overrightarrow{B} + \overrightarrow{M} + (\overrightarrow{M} + \overrightarrow{AB})) = \frac{1}{3}(\overrightarrow{B} + 2\overrightarrow{M} + \overrightarrow{AB})\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution4c3">Simplify using \(\overrightarrow{AB} = \overrightarrow{B} - \overrightarrow{A}\):</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety5.equation12">\(\overrightarrow{G} = \frac{1}{3}(2\overrightarrow{B} - \overrightarrow{A} + 2\overrightarrow{M}) = \frac{2}{3}\overrightarrow{M} + \frac{1}{3}(2\overrightarrow{B} - \overrightarrow{A})\)</div>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution4c4">This can be written as:</p>
+                        <div class="MH-equation" data-i18n="MH.lesson_Y2Geo_homothety5.equation13">\(\overrightarrow{G} = \frac{2}{3}\overrightarrow{M} + \overrightarrow{C}\) where \(\overrightarrow{C} = \frac{1}{3}(2\overrightarrow{B} - \overrightarrow{A})\) is constant</div>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution4c5">Thus G is the image of M by homothety with center at the origin and ratio 2/3, followed by translation by vector C.</p>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution4c6">Since M describes circle C with center O and radius R:</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution4c6a">After homothety with ratio 2/3: circle with center (2/3)O and radius (2/3)R</li>
+                            <li data-i18n="MH.lesson_Y2Geo_homothety5.solution4c6b">After translation by C: circle with center (2/3)O + C and radius (2/3)R</li>
+                        </ul>
+                        <p data-i18n="MH.lesson_Y2Geo_homothety5.solution4c7">Therefore, the locus of G is a circle with center (2/3)O + (1/3)(2B - A) and radius (2/3)R.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Geo_homothety5.summaryTitle">Comprehensive Summary</h2>
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Geo_homothety5.keyPropertiesTitle">Key Results Demonstrated</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety5.property1">The Euler line: O, G, H are collinear with OH = 3OG</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety5.property2">The Euler circle (nine-point circle): circumcircle of midpoint triangle with radius R/2 and center at midpoint of OH</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety5.property3">Homothety transforms circles to circles, with center and radius scaled accordingly</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety5.property4">Locus problems can be solved by identifying transformations (homothety, translation) that relate moving points</li>
+                    <li data-i18n="MH.lesson_Y2Geo_homothety5.property5">Barycenters and centroids can be expressed in terms of homotheties</li>
+                </ul>
+            </div>
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Geo_homothety5.conclusionTitle">Conclusion</h3>
+                <p data-i18n="MH.lesson_Y2Geo_homothety5.finalThought">This lesson concludes our exploration of homothety with advanced applications including the famous Euler line and Euler circle of a triangle, as well as various locus problems. These topics demonstrate the power of homothety in establishing important geometric relationships and solving complex problems. The Euler line shows how three significant points of a triangle are always aligned in a specific ratio, while the Euler circle reveals a beautiful relationship between the circumcircle and the midpoint triangle. Locus problems illustrate how homothety, combined with other transformations, can determine the paths of points under given conditions. Mastery of these concepts provides a strong foundation for advanced geometric reasoning and problem-solving.</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript Files -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+    
+    <script>
+        // HOMOTHETY PART 5 LESSON TRANSLATIONS
+        const homothety5Translations = {
+    'en': {
+        // General translations
+        'MH.general.homeTooltip': 'Go to Homepage',
+        'MH.general.install': 'Install App',
+        'MH.general.installSuccess': 'Mathematics Hub installed successfully!',
+        'MH.general.enableNotifications': 'Enable Notifications',
+        'MH.general.notificationEnabled': 'Notifications enabled! You will now receive updates.',
+        'MH.general.title': 'Mathematics Hub',
+        'MH.general.theme': 'Theme',
+        'MH.general.language': 'Language',
+        'MH.lesson_Y2Geo_homothety5.showSolution': 'Show Solution',
+        'MH.lesson_Y2Geo_homothety5.hideSolution': 'Hide Solution',
+        'MH.lesson_Y2Geo_homothety5.showConstruction': 'Show Construction',
+        
+        // Lesson specific translations
+        'MH.lesson_Y2Geo_homothety5.title': 'Homothety: Part 5',
+        'MH.lesson_Y2Geo_homothety5.subtitle': 'Euler Line, Euler Circle, and Locus Problems',
+        'MH.lesson_Y2Geo_homothety5.introduction': 'Introduction',
+        'MH.lesson_Y2Geo_homothety5.introText1': 'In this final lesson on homothety, we explore advanced applications including the famous Euler line and Euler circle of a triangle, as well as various locus problems. These topics demonstrate the power of homothety in establishing important geometric relationships and solving complex problems.',
+        'MH.lesson_Y2Geo_homothety5.introText2': 'Through these exercises, you will learn how homothety can be used to prove alignment of special points in triangles, discover interesting circle properties, and determine paths traced by points under given conditions.',
+        
+        // XIX. Euler Line – Euler Circle
+        'MH.lesson_Y2Geo_homothety5.XIX': 'XIX. Euler Line – Euler Circle',
+        'MH.lesson_Y2Geo_homothety5.activity1Title': 'Activity 1',
+        'MH.lesson_Y2Geo_homothety5.activity1Statement': 'Given a triangle ABC, denote by O the circumcenter, G the centroid, and H the orthocenter of triangle ABC. Let A\', B\', and C\' be the respective midpoints of [BC], [AC], and [AB]. Let h be the homothety with center G and ratio -1/2.',
+        'MH.lesson_Y2Geo_homothety5.diagram1Title': 'Figure: Triangle ABC with circumcenter O, centroid G, orthocenter H',
+        'MH.lesson_Y2Geo_homothety5.diagram1Instructions': 'Triangle ABC with circumcircle, centroid G, orthocenter H, and midpoints A\', B\', C\'.',
+        'MH.lesson_Y2Geo_homothety5.question1a': '1) a) Make a figure.',
+        'MH.lesson_Y2Geo_homothety5.question1b': 'b) Show that the image of altitude (AH) by homothety h is the perpendicular bisector of [BC].',
+        'MH.lesson_Y2Geo_homothety5.solution1b': 'Consider homothety h(G, -1/2):',
+        'MH.lesson_Y2Geo_homothety5.solution1b1': 'A ↦ A\' (since A\' is midpoint of BC and G divides median in ratio 2:1)',
+        'MH.lesson_Y2Geo_homothety5.solution1b2': 'H ↦ O (we will prove this in part 2)',
+        'MH.lesson_Y2Geo_homothety5.solution1b3': 'Line AH ↦ line through A\' and O',
+        'MH.lesson_Y2Geo_homothety5.solution1b4': 'But O is the circumcenter, so line A\'O is the perpendicular bisector of BC.',
+        'MH.lesson_Y2Geo_homothety5.equation1b': 'h(G,-1/2): (AH) ↦ (A\'O) where (A\'O) is perpendicular bisector of [BC]',
+        'MH.lesson_Y2Geo_homothety5.question1c': 'c) Specify the images by h of altitudes (BH) and (CH).',
+        'MH.lesson_Y2Geo_homothety5.solution1c': 'Similarly:',
+        'MH.lesson_Y2Geo_homothety5.solution1c1': 'h: (BH) ↦ (B\'O) where (B\'O) is perpendicular bisector of [AC]',
+        'MH.lesson_Y2Geo_homothety5.solution1c2': 'h: (CH) ↦ (C\'O) where (C\'O) is perpendicular bisector of [AB]',
+        'MH.lesson_Y2Geo_homothety5.equation1c': 'h(G,-1/2): altitudes ↦ perpendicular bisectors',
+        'MH.lesson_Y2Geo_homothety5.question2': '2) Show that points O, G, and H are collinear and that OH = 3OG. (The line containing points O, G, and H is called the Euler line of triangle ABC)',
+        'MH.lesson_Y2Geo_homothety5.solution2': 'From the homothety h(G, -1/2):',
+        'MH.lesson_Y2Geo_homothety5.solution2a': 'We have H ↦ O (since altitudes ↦ perpendicular bisectors)',
+        'MH.lesson_Y2Geo_homothety5.solution2b': String.raw`By definition of homothety: \(\overrightarrow{GO} = -\frac{1}{2} \overrightarrow{GH}\)`,
+        'MH.lesson_Y2Geo_homothety5.solution2c': 'This implies that O, G, H are collinear with G between O and H',
+        'MH.lesson_Y2Geo_homothety5.solution2d': String.raw`From the equation: \(\overrightarrow{GO} = -\frac{1}{2} \overrightarrow{GH} \Rightarrow \overrightarrow{GH} = -2 \overrightarrow{GO}\)`,
+        'MH.lesson_Y2Geo_homothety5.solution2e': String.raw`Thus \(\overrightarrow{OH} = \overrightarrow{OG} + \overrightarrow{GH} = \overrightarrow{OG} - 2\overrightarrow{GO} = \overrightarrow{OG} + 2\overrightarrow{OG} = 3\overrightarrow{OG}\)`,
+        'MH.lesson_Y2Geo_homothety5.solution2f': 'Therefore OH = 3OG',
+        'MH.lesson_Y2Geo_homothety5.equation2': String.raw`\(\overrightarrow{OH} = 3\overrightarrow{OG}\) ⇒ OH = 3OG and O, G, H are collinear`,
+        'MH.lesson_Y2Geo_homothety5.eulerLineDef': 'This line is called the Euler line of the triangle.',
+        'MH.lesson_Y2Geo_homothety5.question3': '3) Let Ω be the circumcenter of triangle A\'B\'C\'. Show that Ω belongs to line (OG) and that it is the midpoint of [OH]. Calculate the radius r of this circle in terms of the radius R of the circumcircle of ABC. (The circumcircle of A\'B\'C\' is called the Euler circle or nine-point circle of triangle ABC)',
+        'MH.lesson_Y2Geo_homothety5.solution3a': 'Consider triangle A\'B\'C\' (midpoint triangle of ABC):',
+        'MH.lesson_Y2Geo_homothety5.solution3a1': 'A\'B\'C\' is homothetic to ABC by homothety h₁ with center G and ratio -1/2',
+        'MH.lesson_Y2Geo_homothety5.solution3a2': 'The circumcircle of A\'B\'C\' is the image of circumcircle of ABC by h₁',
+        'MH.lesson_Y2Geo_homothety5.solution3a3': 'Therefore Ω = h₁(O) = image of O by h(G, -1/2)',
+        'MH.lesson_Y2Geo_homothety5.solution3a4': 'Since h maps O to Ω and H to O, and h has ratio -1/2, we have:',
+        'MH.lesson_Y2Geo_homothety5.solution3a4a': String.raw`\(\overrightarrow{GΩ} = -\frac{1}{2} \overrightarrow{GO}\)`,
+        'MH.lesson_Y2Geo_homothety5.solution3a4b': String.raw`\(\overrightarrow{GH} = -2 \overrightarrow{GO}\) (from part 2)`,
+        'MH.lesson_Y2Geo_homothety5.solution3a5': 'Thus Ω is the midpoint of OH because:',
+        'MH.lesson_Y2Geo_homothety5.solution3a5a': String.raw`\(\overrightarrow{OΩ} = \overrightarrow{OG} + \overrightarrow{GΩ} = \overrightarrow{OG} - \frac{1}{2}\overrightarrow{GO} = \overrightarrow{OG} + \frac{1}{2}\overrightarrow{OG} = \frac{3}{2}\overrightarrow{OG}\)`,
+        'MH.lesson_Y2Geo_homothety5.solution3a5b': String.raw`\(\overrightarrow{OH} = 3\overrightarrow{OG}\) (from part 2)`,
+        'MH.lesson_Y2Geo_homothety5.solution3a5c': String.raw`So \(\overrightarrow{OΩ} = \frac{1}{2}\overrightarrow{OH}\) ⇒ Ω is midpoint of OH`,
+        'MH.lesson_Y2Geo_homothety5.solution3b': 'For the radius:',
+        'MH.lesson_Y2Geo_homothety5.solution3b1': 'Homothety h(G, -1/2) transforms circumcircle of ABC (radius R) to circumcircle of A\'B\'C\'',
+        'MH.lesson_Y2Geo_homothety5.solution3b2': 'Since the absolute ratio is 1/2, the radius r = (1/2)R',
+        'MH.lesson_Y2Geo_homothety5.equation3': String.raw`Ω = midpoint of [OH], r = \(\frac{1}{2}\)R`,
+        'MH.lesson_Y2Geo_homothety5.eulerCircleDef': 'This circle is called the Euler circle or nine-point circle of the triangle.',
+        
+        // XX. Locus Problem A
+        'MH.lesson_Y2Geo_homothety5.XX': 'XX. Locus Problem A',
+        'MH.lesson_Y2Geo_homothety5.activity2Title': 'Activity 2',
+        'MH.lesson_Y2Geo_homothety5.activity2Statement': 'Let C be a circle with center O and A a point not belonging to C. Let M be a point on circle C, and let I be the barycenter of points (A, 2) and (M, 3). Determine the locus of point I as point M describes circle C.',
+        'MH.lesson_Y2Geo_homothety5.diagram2Title': 'Figure: Circle C with point A outside, point M on C, and barycenter I',
+        'MH.lesson_Y2Geo_homothety5.diagram2Instructions': 'Circle C with center O, point A outside, point M moving on C, and barycenter I of (A,2) and (M,3).',
+        'MH.lesson_Y2Geo_homothety5.solution2': 'I is barycenter of (A,2) and (M,3), so by definition:',
+        'MH.lesson_Y2Geo_homothety5.equation4': String.raw`\(2\overrightarrow{IA} + 3\overrightarrow{IM} = \overrightarrow{0}\) or equivalently \(\overrightarrow{AI} = \frac{3}{5}\overrightarrow{AM}\)`,
+        'MH.lesson_Y2Geo_homothety5.solution2b': 'This means that I is the image of M by homothety h with center A and ratio 3/5:',
+        'MH.lesson_Y2Geo_homothety5.equation5': String.raw`I = h(A, 3/5)(M)`,
+        'MH.lesson_Y2Geo_homothety5.solution2c': 'Since M describes circle C, and homothety transforms circles to circles:',
+        'MH.lesson_Y2Geo_homothety5.solution2c1': 'The image of C by h(A, 3/5) is a circle C\'',
+        'MH.lesson_Y2Geo_homothety5.solution2c2': String.raw`Center of C' = h(A, 3/5)(O) = O' such that \(\overrightarrow{AO'} = \frac{3}{5}\overrightarrow{AO}\)`,
+        'MH.lesson_Y2Geo_homothety5.solution2c3': 'Radius of C\' = (3/5) × radius of C',
+        'MH.lesson_Y2Geo_homothety5.solution2d': 'Therefore, the locus of I is circle C\' with center O\' (on line AO at 3/5 of distance from A to O) and radius (3/5)R.',
+        
+        // XXI. Locus Problem B
+        'MH.lesson_Y2Geo_homothety5.XXI': 'XXI. Locus Problem B',
+        'MH.lesson_Y2Geo_homothety5.activity3Title': 'Activity 3',
+        'MH.lesson_Y2Geo_homothety5.activity3Statement': 'Let C be a circle with diameter [AB] and S a point on (AB). M being a point of C, we draw the diameter [PM], then the point M\' intersection of lines (SM) and (AP).',
+        'MH.lesson_Y2Geo_homothety5.diagram3Title': 'Figure: Circle with diameter AB, point S on AB, point M on circle, diameter PM, and intersection M\'',
+        'MH.lesson_Y2Geo_homothety5.diagram3Instructions': 'Circle C with diameter AB, point S on AB, point M on circle, diameter PM, intersection M\' of SM and AP.',
+        'MH.lesson_Y2Geo_homothety5.question3a': '1) Let h be the homothety with center S that transforms B into A. Determine the image by h of line (BM).',
+        'MH.lesson_Y2Geo_homothety5.solution3a': 'Homothety h(S, k) with B ↦ A:',
+        'MH.lesson_Y2Geo_homothety5.equation6': String.raw`\(\overrightarrow{SA} = k \overrightarrow{SB}\) ⇒ k = SA/SB`,
+        'MH.lesson_Y2Geo_homothety5.solution3a2': 'Under this homothety:',
+        'MH.lesson_Y2Geo_homothety5.solution3a2a': 'B ↦ A',
+        'MH.lesson_Y2Geo_homothety5.solution3a2b': 'M ↦ ?',
+        'MH.lesson_Y2Geo_homothety5.solution3a3': 'Since P is diametrically opposite to M, and AP is a line through A and P:',
+        'MH.lesson_Y2Geo_homothety5.solution3a3a': 'Consider triangle SBM',
+        'MH.lesson_Y2Geo_homothety5.solution3a3b': 'Under h: S ↦ S (fixed point), B ↦ A, M ↦ some point on line through A',
+        'MH.lesson_Y2Geo_homothety5.solution3a3c': 'But M\' is intersection of SM and AP',
+        'MH.lesson_Y2Geo_homothety5.solution3a3d': 'Thus h(M) = M\' (since M\' is on line AP and on line through S and image of M)',
+        'MH.lesson_Y2Geo_homothety5.solution3a4': 'Therefore h: (BM) ↦ (AM\') which is line through A and M\'',
+        'MH.lesson_Y2Geo_homothety5.question3b': '2) Determine and construct the locus of point M\' when M describes circle C.',
+        'MH.lesson_Y2Geo_homothety5.solution3b': 'From part 1, M\' = h(M) where h is homothety with center S and ratio k = SA/SB.',
+        'MH.lesson_Y2Geo_homothety5.solution3b2': 'As M describes circle C, its image M\' describes the image of C by h.',
+        'MH.lesson_Y2Geo_homothety5.solution3b3': 'Therefore, the locus of M\' is a circle C\' with:',
+        'MH.lesson_Y2Geo_homothety5.solution3b3a': 'Center O\' = h(O) where O is center of C (midpoint of AB)',
+        'MH.lesson_Y2Geo_homothety5.solution3b3b': 'Radius r\' = |k| × R where R is radius of C',
+        'MH.lesson_Y2Geo_homothety5.solution3b4': 'Since S is on line AB, O\' is also on line AB.',
+        'MH.lesson_Y2Geo_homothety5.solution3b5': 'The circle C\' is the image of C by homothety h(S, SA/SB).',
+        
+        // XXII. Locus Problem C
+        'MH.lesson_Y2Geo_homothety5.XXII': 'XXII. Locus Problem C',
+        'MH.lesson_Y2Geo_homothety5.activity4Title': 'Activity 4',
+        'MH.lesson_Y2Geo_homothety5.activity4Statement': 'Let C be a circle with center O and [AB] a chord of this circle. Let M be a variable point on circle C and N the point defined by MN = AB (with same direction).',
+        'MH.lesson_Y2Geo_homothety5.diagram4Title': 'Figure: Circle C with chord AB, point M on circle, point N such that MN = AB',
+        'MH.lesson_Y2Geo_homothety5.diagram4Instructions': 'Circle C with chord AB, point M moving on circle, point N such that vector MN = vector AB.',
+        'MH.lesson_Y2Geo_homothety5.question4a': '1) Determine the locus of point N when M describes circle C.',
+        'MH.lesson_Y2Geo_homothety5.solution4a': String.raw`We have \(\overrightarrow{MN} = \overrightarrow{AB}\) constant.`,
+        'MH.lesson_Y2Geo_homothety5.solution4a2': String.raw`Thus N is the image of M by translation with vector \(\overrightarrow{AB}\).`,
+        'MH.lesson_Y2Geo_homothety5.equation7': String.raw`\(\overrightarrow{ON} = \overrightarrow{OM} + \overrightarrow{MN} = \overrightarrow{OM} + \overrightarrow{AB}\)`,
+        'MH.lesson_Y2Geo_homothety5.solution4a3': 'Since M describes circle C with center O and radius R, and translation preserves circles:',
+        'MH.lesson_Y2Geo_homothety5.solution4a3a': String.raw`N describes a circle C' with center O' = O + \(\overrightarrow{AB}\)`,
+        'MH.lesson_Y2Geo_homothety5.solution4a3b': 'Radius of C\' = R (same as C)',
+        'MH.lesson_Y2Geo_homothety5.solution4a4': 'Therefore, the locus of N is circle C\' with center O\' and radius R, where O\' is the translation of O by vector AB.',
+        'MH.lesson_Y2Geo_homothety5.question4b': '2) Let I be the midpoint of [AN]. What is the locus of point I when M describes circle C?',
+        'MH.lesson_Y2Geo_homothety5.solution4b': 'I is midpoint of AN, so:',
+        'MH.lesson_Y2Geo_homothety5.equation8': String.raw`\(\overrightarrow{AI} = \frac{1}{2}\overrightarrow{AN} = \frac{1}{2}(\overrightarrow{AM} + \overrightarrow{MN}) = \frac{1}{2}(\overrightarrow{AM} + \overrightarrow{AB})\)`,
+        'MH.lesson_Y2Geo_homothety5.solution4b2': 'Alternatively, consider homothety h with center A and ratio 1/2:',
+        'MH.lesson_Y2Geo_homothety5.equation9': String.raw`I = h(A, 1/2)(N)`,
+        'MH.lesson_Y2Geo_homothety5.solution4b3': 'From part 1, N describes circle C\' with center O\' and radius R.',
+        'MH.lesson_Y2Geo_homothety5.solution4b4': 'Under homothety h(A, 1/2):',
+        'MH.lesson_Y2Geo_homothety5.solution4b4a': 'Circle C\' ↦ circle C\'\' with center O\'\' = h(A, 1/2)(O\')',
+        'MH.lesson_Y2Geo_homothety5.solution4b4b': 'Radius of C\'\' = (1/2)R',
+        'MH.lesson_Y2Geo_homothety5.solution4b5': 'Therefore, the locus of I is circle C\'\' with center O\'\' and radius R/2.',
+        'MH.lesson_Y2Geo_homothety5.question4c': '3) Let G be the centroid of triangle BMN. Determine the locus of point G when M describes circle C.',
+        'MH.lesson_Y2Geo_homothety5.solution4c': 'G is centroid of triangle BMN, so:',
+        'MH.lesson_Y2Geo_homothety5.equation10': String.raw`\(\overrightarrow{G} = \frac{1}{3}(\overrightarrow{B} + \overrightarrow{M} + \overrightarrow{N})\)`,
+        'MH.lesson_Y2Geo_homothety5.solution4c2': String.raw`But \(\overrightarrow{N} = \overrightarrow{M} + \overrightarrow{AB}\), so:`,
+        'MH.lesson_Y2Geo_homothety5.equation11': String.raw`\(\overrightarrow{G} = \frac{1}{3}(\overrightarrow{B} + \overrightarrow{M} + (\overrightarrow{M} + \overrightarrow{AB})) = \frac{1}{3}(\overrightarrow{B} + 2\overrightarrow{M} + \overrightarrow{AB})\)`,
+        'MH.lesson_Y2Geo_homothety5.solution4c3': String.raw`Simplify using \(\overrightarrow{AB} = \overrightarrow{B} - \overrightarrow{A}\):`,
+        'MH.lesson_Y2Geo_homothety5.equation12': String.raw`\(\overrightarrow{G} = \frac{1}{3}(2\overrightarrow{B} - \overrightarrow{A} + 2\overrightarrow{M}) = \frac{2}{3}\overrightarrow{M} + \frac{1}{3}(2\overrightarrow{B} - \overrightarrow{A})\)`,
+        'MH.lesson_Y2Geo_homothety5.solution4c4': 'This can be written as:',
+        'MH.lesson_Y2Geo_homothety5.equation13': String.raw`\(\overrightarrow{G} = \frac{2}{3}\overrightarrow{M} + \overrightarrow{C}\) where \(\overrightarrow{C} = \frac{1}{3}(2\overrightarrow{B} - \overrightarrow{A})\) is constant`,
+        'MH.lesson_Y2Geo_homothety5.solution4c5': 'Thus G is the image of M by homothety with center at the origin and ratio 2/3, followed by translation by vector C.',
+        'MH.lesson_Y2Geo_homothety5.solution4c6': 'Since M describes circle C with center O and radius R:',
+        'MH.lesson_Y2Geo_homothety5.solution4c6a': 'After homothety with ratio 2/3: circle with center (2/3)O and radius (2/3)R',
+        'MH.lesson_Y2Geo_homothety5.solution4c6b': 'After translation by C: circle with center (2/3)O + C and radius (2/3)R',
+        'MH.lesson_Y2Geo_homothety5.solution4c7': 'Therefore, the locus of G is a circle with center (2/3)O + (1/3)(2B - A) and radius (2/3)R.',
+        
+        // Summary
+        'MH.lesson_Y2Geo_homothety5.summaryTitle': 'Comprehensive Summary',
+        'MH.lesson_Y2Geo_homothety5.keyPropertiesTitle': 'Key Results Demonstrated',
+        'MH.lesson_Y2Geo_homothety5.property1': 'The Euler line: O, G, H are collinear with OH = 3OG',
+        'MH.lesson_Y2Geo_homothety5.property2': 'The Euler circle (nine-point circle): circumcircle of midpoint triangle with radius R/2 and center at midpoint of OH',
+        'MH.lesson_Y2Geo_homothety5.property3': 'Homothety transforms circles to circles, with center and radius scaled accordingly',
+        'MH.lesson_Y2Geo_homothety5.property4': 'Locus problems can be solved by identifying transformations (homothety, translation) that relate moving points',
+        'MH.lesson_Y2Geo_homothety5.property5': 'Barycenters and centroids can be expressed in terms of homotheties',
+        'MH.lesson_Y2Geo_homothety5.conclusionTitle': 'Conclusion',
+        'MH.lesson_Y2Geo_homothety5.finalThought': 'This lesson concludes our exploration of homothety with advanced applications including the famous Euler line and Euler circle of a triangle, as well as various locus problems. These topics demonstrate the power of homothety in establishing important geometric relationships and solving complex problems. The Euler line shows how three significant points of a triangle are always aligned in a specific ratio, while the Euler circle reveals a beautiful relationship between the circumcircle and the midpoint triangle. Locus problems illustrate how homothety, combined with other transformations, can determine the paths of points under given conditions. Mastery of these concepts provides a strong foundation for advanced geometric reasoning and problem-solving.',
+        
+        // Footer
+        'MH.footer.developer': 'Developer',
+        'MH.footer.version': 'Version',
+        'MH.footer.links': 'Links',
+        'MH.footer.terms': 'Terms of Use',
+        'MH.footer.privacy': 'Privacy Policy'
+    },
+    'ar': {
+        // General translations
+        'MH.general.homeTooltip': 'الذهاب إلى الصفحة الرئيسية',
+        'MH.general.install': 'تثبيت التطبيق',
+        'MH.general.installSuccess': 'تم تثبيت Mathematics Hub بنجاح!',
+        'MH.general.enableNotifications': 'تفعيل الإشعارات',
+        'MH.general.notificationEnabled': 'تم تفعيل الإشعارات! ستتلقى التحديثات الآن.',
+        'MH.general.title': 'مركز الرياضيات',
+        'MH.general.theme': 'السمة',
+        'MH.general.language': 'اللغة',
+        'MH.lesson_Y2Geo_homothety5.showSolution': 'عرض الحل',
+        'MH.lesson_Y2Geo_homothety5.hideSolution': 'إخفاء الحل',
+        'MH.lesson_Y2Geo_homothety5.showConstruction': 'عرض الإنشاء',
+
+        // Lesson specific translations
+        'MH.lesson_Y2Geo_homothety5.title': 'التماثل: الجزء 5',
+        'MH.lesson_Y2Geo_homothety5.subtitle': 'خط أويلر، دائرة أويلر، ومسائل المحل الهندسي',
+        'MH.lesson_Y2Geo_homothety5.introduction': 'مقدمة',
+        'MH.lesson_Y2Geo_homothety5.introText1': 'في هذا الدرس الأخير عن التماثل، نستكشف تطبيقات متقدمة تشمل خط أويلر ودائرة أويلر المشهورين للمثلث، بالإضافة إلى مسائل المحل الهندسي المتنوعة. تظهر هذه المواضيع قوة التماثل في إثبات العلاقات الهندسية المهمة وحل المسائل المعقدة.',
+        'MH.lesson_Y2Geo_homothety5.introText2': 'من خلال هذه التمارين، ستتعلم كيف يمكن استخدام التماثل لإثبات انطباق النقاط الخاصة في المثلثات، واكتشاف خصائص دوائر مثيرة للاهتمام، وتحديد المسارات التي ترسمها النقاط تحت شروط معينة.',
+
+        // XIX. Euler Line – Euler Circle
+        'MH.lesson_Y2Geo_homothety5.XIX': 'التاسع عشر. خط أويلر – دائرة أويلر',
+        'MH.lesson_Y2Geo_homothety5.activity1Title': 'النشاط 1',
+        'MH.lesson_Y2Geo_homothety5.activity1Statement': 'ليكن ABC مثلثًا، نرمز بـ O لمركز الدائرة المحيطة، و G لمركز الثقل، و H لمركز الارتفاع في المثلث ABC. لتكن A\'، B\'، و C\' هي منتصفات الأضلاع [BC]، [AC]، و[AB] على التوالي. لتكن h التماثل الذي مركزه G ونسبته -1/2.',
+        'MH.lesson_Y2Geo_homothety5.diagram1Title': 'الشكل: المثلث ABC مع مركز الدائرة المحيطة O، مركز الثقل G، مركز الارتفاع H',
+        'MH.lesson_Y2Geo_homothety5.diagram1Instructions': 'المثلث ABC مع الدائرة المحيطة، مركز الثقل G، مركز الارتفاع H، ومنتصفات A\'، B\'، C\'.',
+        'MH.lesson_Y2Geo_homothety5.question1a': '1) أ) أنشئ شكلاً.',
+        'MH.lesson_Y2Geo_homothety5.question1b': 'ب) بين أن صورة الارتفاع (AH) بالتماثل h هي المنصف العمودي للقطعة [BC].',
+        'MH.lesson_Y2Geo_homothety5.solution1b': 'اعتبر التماثل h(G, -1/2):',
+        'MH.lesson_Y2Geo_homothety5.solution1b1': 'A ↦ A\' (بما أن A\' منتصف BC و G يقسم الوسيط بنسبة 2:1)',
+        'MH.lesson_Y2Geo_homothety5.solution1b2': 'H ↦ O (سوف نثبت هذا في الجزء 2)',
+        'MH.lesson_Y2Geo_homothety5.solution1b3': 'الخط AH ↦ الخط المار بـ A\' و O',
+        'MH.lesson_Y2Geo_homothety5.solution1b4': 'لكن O هو مركز الدائرة المحيطة، لذا الخط A\'O هو المنصف العمودي لـ BC.',
+        'MH.lesson_Y2Geo_homothety5.equation1b': 'h(G,-1/2): (AH) ↦ (A\'O) حيث (A\'O) هو المنصف العمودي لـ [BC]',
+        'MH.lesson_Y2Geo_homothety5.question1c': 'ج) حدد صور الارتفاعات (BH) و (CH) بالتماثل h.',
+        'MH.lesson_Y2Geo_homothety5.solution1c': 'بالمثل:',
+        'MH.lesson_Y2Geo_homothety5.solution1c1': 'h: (BH) ↦ (B\'O) حيث (B\'O) هو المنصف العمودي لـ [AC]',
+        'MH.lesson_Y2Geo_homothety5.solution1c2': 'h: (CH) ↦ (C\'O) حيث (C\'O) هو المنصف العمودي لـ [AB]',
+        'MH.lesson_Y2Geo_homothety5.equation1c': 'h(G,-1/2): الارتفاعات ↦ المنصفات العمودية',
+        'MH.lesson_Y2Geo_homothety5.question2': '2) بين أن النقاط O، G، و H مستقيمية وأن OH = 3OG. (الخط الذي يحتوي على النقاط O، G، و H يسمى خط أويلر للمثلث ABC)',
+        'MH.lesson_Y2Geo_homothety5.solution2': 'من التماثل h(G, -1/2):',
+        'MH.lesson_Y2Geo_homothety5.solution2a': 'لدينا H ↦ O (بما أن الارتفاعات ↦ المنصفات العمودية)',
+        'MH.lesson_Y2Geo_homothety5.solution2b': String.raw`بحكم تعريف التماثل: \(\overrightarrow{GO} = -\frac{1}{2} \overrightarrow{GH}\)`,
+        'MH.lesson_Y2Geo_homothety5.solution2c': 'هذا يعني أن O، G، H مستقيمية مع G بين O و H',
+        'MH.lesson_Y2Geo_homothety5.solution2d': String.raw`من المعادلة: \(\overrightarrow{GO} = -\frac{1}{2} \overrightarrow{GH} \Rightarrow \overrightarrow{GH} = -2 \overrightarrow{GO}\)`,
+        'MH.lesson_Y2Geo_homothety5.solution2e': String.raw`إذن \(\overrightarrow{OH} = \overrightarrow{OG} + \overrightarrow{GH} = \overrightarrow{OG} - 2\overrightarrow{GO} = \overrightarrow{OG} + 2\overrightarrow{OG} = 3\overrightarrow{OG}\)`,
+        'MH.lesson_Y2Geo_homothety5.solution2f': 'لذلك OH = 3OG',
+        'MH.lesson_Y2Geo_homothety5.equation2': String.raw`\(\overrightarrow{OH} = 3\overrightarrow{OG}\) ⇒ OH = 3OG و O، G، H مستقيمية`,
+        'MH.lesson_Y2Geo_homothety5.eulerLineDef': 'هذا الخط يسمى خط أويلر للمثلث.',
+        'MH.lesson_Y2Geo_homothety5.question3': '3) ليكن Ω مركز الدائرة المحيطة للمثلث A\'B\'C\'. بين أن Ω ينتمي إلى الخط (OG) وأنه منتصف [OH]. احسب نصف القطر r لهذه الدائرة بدلالة نصف القطر R للدائرة المحيطة بـ ABC. (الدائرة المحيطة بـ A\'B\'C\' تسمى دائرة أويلر أو دائرة التسع نقاط للمثلث ABC)',
+        'MH.lesson_Y2Geo_homothety5.solution3a': 'اعتبر المثلث A\'B\'C\' (مثلث منتصفات ABC):',
+        'MH.lesson_Y2Geo_homothety5.solution3a1': 'A\'B\'C\' متماثل مع ABC بالتماثل h₁ الذي مركزه G ونسبته -1/2',
+        'MH.lesson_Y2Geo_homothety5.solution3a2': 'الدائرة المحيطة بـ A\'B\'C\' هي صورة الدائرة المحيطة بـ ABC بالتماثل h₁',
+        'MH.lesson_Y2Geo_homothety5.solution3a3': 'إذن Ω = h₁(O) = صورة O بالتماثل h(G, -1/2)',
+        'MH.lesson_Y2Geo_homothety5.solution3a4': 'بما أن h يحول O إلى Ω و H إلى O، ونسبة التماثل هي -1/2، فإننا نحصل على:',
+        'MH.lesson_Y2Geo_homothety5.solution3a4a': String.raw`\(\overrightarrow{GΩ} = -\frac{1}{2} \overrightarrow{GO}\)`,
+        'MH.lesson_Y2Geo_homothety5.solution3a4b': String.raw`\(\overrightarrow{GH} = -2 \overrightarrow{GO}\) (من الجزء 2)`,
+        'MH.lesson_Y2Geo_homothety5.solution3a5': 'إذن Ω هي منتصف OH لأن:',
+        'MH.lesson_Y2Geo_homothety5.solution3a5a': String.raw`\(\overrightarrow{OΩ} = \overrightarrow{OG} + \overrightarrow{GΩ} = \overrightarrow{OG} - \frac{1}{2}\overrightarrow{GO} = \overrightarrow{OG} + \frac{1}{2}\overrightarrow{OG} = \frac{3}{2}\overrightarrow{OG}\)`,
+        'MH.lesson_Y2Geo_homothety5.solution3a5b': String.raw`\(\overrightarrow{OH} = 3\overrightarrow{OG}\) (من الجزء 2)`,
+        'MH.lesson_Y2Geo_homothety5.solution3a5c': String.raw`إذن \(\overrightarrow{OΩ} = \frac{1}{2}\overrightarrow{OH}\) ⇒ Ω هي منتصف OH`,
+        'MH.lesson_Y2Geo_homothety5.solution3b': 'بالنسبة لنصف القطر:',
+        'MH.lesson_Y2Geo_homothety5.solution3b1': 'التماثل h(G, -1/2) يحول الدائرة المحيطة بـ ABC (نصف القطر R) إلى الدائرة المحيطة بـ A\'B\'C\'',
+        'MH.lesson_Y2Geo_homothety5.solution3b2': 'بما أن القيمة المطلقة للنسبة هي 1/2، فإن نصف القطر r = (1/2)R',
+        'MH.lesson_Y2Geo_homothety5.equation3': String.raw`Ω = منتصف [OH], r = \(\frac{1}{2}\)R`,
+        'MH.lesson_Y2Geo_homothety5.eulerCircleDef': 'هذه الدائرة تسمى دائرة أويلر أو دائرة التسع نقاط للمثلث.',
+
+        // XX. Locus Problem A
+        'MH.lesson_Y2Geo_homothety5.XX': 'العشرون. مسألة المحل الهندسي أ',
+        'MH.lesson_Y2Geo_homothety5.activity2Title': 'النشاط 2',
+        'MH.lesson_Y2Geo_homothety5.activity2Statement': 'لتكن C دائرة مركزها O و A نقطة لا تنتمي إلى C. لتكن M نقطة على الدائرة C، وليكن I مركز الكتلة للنقطتين (A, 2) و (M, 3). حدد محل النقطة I عندما تتحرك النقطة M على الدائرة C.',
+        'MH.lesson_Y2Geo_homothety5.diagram2Title': 'الشكل: الدائرة C مع النقطة A خارجها، النقطة M على C، ومركز الكتلة I',
+        'MH.lesson_Y2Geo_homothety5.diagram2Instructions': 'الدائرة C مركزها O، النقطة A خارجها، النقطة M تتحرك على C، ومركز الكتلة I للنقطتين (A,2) و (M,3).',
+        'MH.lesson_Y2Geo_homothety5.solution2': 'I هو مركز الكتلة للنقطتين (A,2) و (M,3)، لذلك بحكم التعريف:',
+        'MH.lesson_Y2Geo_homothety5.equation4': String.raw`\(2\overrightarrow{IA} + 3\overrightarrow{IM} = \overrightarrow{0}\) أو ما يعادل \(\overrightarrow{AI} = \frac{3}{5}\overrightarrow{AM}\)`,
+        'MH.lesson_Y2Geo_homothety5.solution2b': 'هذا يعني أن I هي صورة M بالتماثل h الذي مركزه A ونسبته 3/5:',
+        'MH.lesson_Y2Geo_homothety5.equation5': String.raw`I = h(A, 3/5)(M)`,
+        'MH.lesson_Y2Geo_homothety5.solution2c': 'بما أن M تتحرك على الدائرة C، والتماثل يحول الدوائر إلى دوائر:',
+        'MH.lesson_Y2Geo_homothety5.solution2c1': 'صورة C بالتماثل h(A, 3/5) هي دائرة C\'',
+        'MH.lesson_Y2Geo_homothety5.solution2c2': String.raw`مركز C' = h(A, 3/5)(O) = O' بحيث \(\overrightarrow{AO'} = \frac{3}{5}\overrightarrow{AO}\)`,
+        'MH.lesson_Y2Geo_homothety5.solution2c3': 'نصف قطر C\' = (3/5) × نصف قطر C',
+        'MH.lesson_Y2Geo_homothety5.solution2d': 'لذلك، محل I هو الدائرة C\' التي مركزها O\' (على الخط AO على بعد 3/5 من المسافة من A إلى O) ونصف قطرها (3/5)R.',
+
+        // XXI. Locus Problem B
+        'MH.lesson_Y2Geo_homothety5.XXI': 'الحادي والعشرون. مسألة المحل الهندسي ب',
+        'MH.lesson_Y2Geo_homothety5.activity3Title': 'النشاط 3',
+        'MH.lesson_Y2Geo_homothety5.activity3Statement': 'لتكن C دائرة قطرها [AB] و S نقطة على (AB). لتكن M نقطة من C، نرسم القطر [PM]، ثم النقطة M\' تقاطع الخطين (SM) و (AP).',
+        'MH.lesson_Y2Geo_homothety5.diagram3Title': 'الشكل: دائرة قطرها AB، النقطة S على AB، النقطة M على الدائرة، القطر PM، والتقاطع M\'',
+        'MH.lesson_Y2Geo_homothety5.diagram3Instructions': 'الدائرة C قطرها AB، النقطة S على AB، النقطة M على الدائرة، القطر PM، تقاطع M\' للخطين SM و AP.',
+        'MH.lesson_Y2Geo_homothety5.question3a': '1) ليكن h التماثل الذي مركزه S ويحول B إلى A. حدد صورة الخط (BM) بالتماثل h.',
+        'MH.lesson_Y2Geo_homothety5.solution3a': 'التماثل h(S, k) مع B ↦ A:',
+        'MH.lesson_Y2Geo_homothety5.equation6': String.raw`\(\overrightarrow{SA} = k \overrightarrow{SB}\) ⇒ k = SA/SB`,
+        'MH.lesson_Y2Geo_homothety5.solution3a2': 'تحت هذا التماثل:',
+        'MH.lesson_Y2Geo_homothety5.solution3a2a': 'B ↦ A',
+        'MH.lesson_Y2Geo_homothety5.solution3a2b': 'M ↦ ?',
+        'MH.lesson_Y2Geo_homothety5.solution3a3': 'بما أن P مقابلة قطرية لـ M، و AP هو خط يمر بـ A و P:',
+        'MH.lesson_Y2Geo_homothety5.solution3a3a': 'اعتبر المثلث SBM',
+        'MH.lesson_Y2Geo_homothety5.solution3a3b': 'تحت h: S ↦ S (نقطة ثابتة)، B ↦ A، M ↦ نقطة ما على الخط المار بـ A',
+        'MH.lesson_Y2Geo_homothety5.solution3a3c': 'لكن M\' هي تقاطع SM و AP',
+        'MH.lesson_Y2Geo_homothety5.solution3a3d': 'إذن h(M) = M\' (بما أن M\' على الخط AP وعلى الخط المار بـ S وصورة M)',
+        'MH.lesson_Y2Geo_homothety5.solution3a4': 'لذلك h: (BM) ↦ (AM\') وهو الخط المار بـ A و M\'',
+        'MH.lesson_Y2Geo_homothety5.question3b': '2) حدد وأنشئ محل النقطة M\' عندما تتحرك M على الدائرة C.',
+        'MH.lesson_Y2Geo_homothety5.solution3b': 'من الجزء 1، M\' = h(M) حيث h هو التماثل الذي مركزه S ونسبته k = SA/SB.',
+        'MH.lesson_Y2Geo_homothety5.solution3b2': 'بينما تتحرك M على الدائرة C، فإن صورتها M\' تتحرك على صورة C بالتماثل h.',
+        'MH.lesson_Y2Geo_homothety5.solution3b3': 'لذلك، محل M\' هو دائرة C\' ذات:',
+        'MH.lesson_Y2Geo_homothety5.solution3b3a': 'مركز O\' = h(O) حيث O مركز C (منتصف AB)',
+        'MH.lesson_Y2Geo_homothety5.solution3b3b': 'نصف قطر r\' = |k| × R حيث R نصف قطر C',
+        'MH.lesson_Y2Geo_homothety5.solution3b4': 'بما أن S على الخط AB، فإن O\' أيضًا على الخط AB.',
+        'MH.lesson_Y2Geo_homothety5.solution3b5': 'الدائرة C\' هي صورة C بالتماثل h(S, SA/SB).',
+
+        // XXII. Locus Problem C
+        'MH.lesson_Y2Geo_homothety5.XXII': 'الثاني والعشرون. مسألة المحل الهندسي ج',
+        'MH.lesson_Y2Geo_homothety5.activity4Title': 'النشاط 4',
+        'MH.lesson_Y2Geo_homothety5.activity4Statement': 'لتكن C دائرة مركزها O و [AB] وترًا في هذه الدائرة. لتكن M نقطة متغيرة على الدائرة C و N النقطة المعرفة بـ MN = AB (بنفس الاتجاه).',
+        'MH.lesson_Y2Geo_homothety5.diagram4Title': 'الشكل: الدائرة C مع الوتر AB، النقطة M على الدائرة، النقطة N بحيث MN = AB',
+        'MH.lesson_Y2Geo_homothety5.diagram4Instructions': 'الدائرة C مع الوتر AB، النقطة M تتحرك على الدائرة، النقطة N بحيث متجه MN = متجه AB.',
+        'MH.lesson_Y2Geo_homothety5.question4a': '1) حدد محل النقطة N عندما تتحرك M على الدائرة C.',
+        'MH.lesson_Y2Geo_homothety5.solution4a': String.raw`لدينا \(\overrightarrow{MN} = \overrightarrow{AB}\) ثابت.`,
+        'MH.lesson_Y2Geo_homothety5.solution4a2': String.raw`إذن N هي صورة M بالإزاحة بمتجه \(\overrightarrow{AB}\).`,
+        'MH.lesson_Y2Geo_homothety5.equation7': String.raw`\(\overrightarrow{ON} = \overrightarrow{OM} + \overrightarrow{MN} = \overrightarrow{OM} + \overrightarrow{AB}\)`,
+        'MH.lesson_Y2Geo_homothety5.solution4a3': 'بما أن M تتحرك على الدائرة C التي مركزها O ونصف قطرها R، والإزاحة تحافظ على الدوائر:',
+        'MH.lesson_Y2Geo_homothety5.solution4a3a': String.raw`N تتحرك على دائرة C' مركزها O' = O + \(\overrightarrow{AB}\)`,
+        'MH.lesson_Y2Geo_homothety5.solution4a3b': 'نصف قطر C\' = R (نفس C)',
+        'MH.lesson_Y2Geo_homothety5.solution4a4': 'لذلك، محل N هو الدائرة C\' التي مركزها O\' ونصف قطرها R، حيث O\' هو إزاحة O بمتجه AB.',
+        'MH.lesson_Y2Geo_homothety5.question4b': '2) ليكن I منتصف [AN]. ما هو محل النقطة I عندما تتحرك M على الدائرة C؟',
+        'MH.lesson_Y2Geo_homothety5.solution4b': 'I هو منتصف AN، إذن:',
+        'MH.lesson_Y2Geo_homothety5.equation8': String.raw`\(\overrightarrow{AI} = \frac{1}{2}\overrightarrow{AN} = \frac{1}{2}(\overrightarrow{AM} + \overrightarrow{MN}) = \frac{1}{2}(\overrightarrow{AM} + \overrightarrow{AB})\)`,
+        'MH.lesson_Y2Geo_homothety5.solution4b2': 'بدلاً من ذلك، اعتبار التماثل h الذي مركزه A ونسبته 1/2:',
+        'MH.lesson_Y2Geo_homothety5.equation9': String.raw`I = h(A, 1/2)(N)`,
+        'MH.lesson_Y2Geo_homothety5.solution4b3': 'من الجزء 1، N تتحرك على الدائرة C\' التي مركزها O\' ونصف قطرها R.',
+        'MH.lesson_Y2Geo_homothety5.solution4b4': 'تحت التماثل h(A, 1/2):',
+        'MH.lesson_Y2Geo_homothety5.solution4b4a': 'الدائرة C\' ↦ الدائرة C\'\' التي مركزها O\'\' = h(A, 1/2)(O\')',
+        'MH.lesson_Y2Geo_homothety5.solution4b4b': 'نصف قطر C\'\' = (1/2)R',
+        'MH.lesson_Y2Geo_homothety5.solution4b5': 'لذلك، محل I هو الدائرة C\'\' التي مركزها O\'\' ونصف قطرها R/2.',
+        'MH.lesson_Y2Geo_homothety5.question4c': '3) ليكن G مركز ثقل المثلث BMN. حدد محل النقطة G عندما تتحرك M على الدائرة C.',
+        'MH.lesson_Y2Geo_homothety5.solution4c': 'G هو مركز ثقل المثلث BMN، إذن:',
+        'MH.lesson_Y2Geo_homothety5.equation10': String.raw`\(\overrightarrow{G} = \frac{1}{3}(\overrightarrow{B} + \overrightarrow{M} + \overrightarrow{N})\)`,
+        'MH.lesson_Y2Geo_homothety5.solution4c2': String.raw`لكن \(\overrightarrow{N} = \overrightarrow{M} + \overrightarrow{AB}\)، إذن:`,
+        'MH.lesson_Y2Geo_homothety5.equation11': String.raw`\(\overrightarrow{G} = \frac{1}{3}(\overrightarrow{B} + \overrightarrow{M} + (\overrightarrow{M} + \overrightarrow{AB})) = \frac{1}{3}(\overrightarrow{B} + 2\overrightarrow{M} + \overrightarrow{AB})\)`,
+        'MH.lesson_Y2Geo_homothety5.solution4c3': String.raw`باستخدام \(\overrightarrow{AB} = \overrightarrow{B} - \overrightarrow{A}\):`,
+        'MH.lesson_Y2Geo_homothety5.equation12': String.raw`\(\overrightarrow{G} = \frac{1}{3}(2\overrightarrow{B} - \overrightarrow{A} + 2\overrightarrow{M}) = \frac{2}{3}\overrightarrow{M} + \frac{1}{3}(2\overrightarrow{B} - \overrightarrow{A})\)`,
+        'MH.lesson_Y2Geo_homothety5.solution4c4': 'يمكن كتابة هذا كالتالي:',
+        'MH.lesson_Y2Geo_homothety5.equation13': String.raw`\(\overrightarrow{G} = \frac{2}{3}\overrightarrow{M} + \overrightarrow{C}\) حيث \(\overrightarrow{C} = \frac{1}{3}(2\overrightarrow{B} - \overrightarrow{A})\) ثابت`,
+        'MH.lesson_Y2Geo_homothety5.solution4c5': 'إذن G هي صورة M بالتماثل الذي مركزه الأصل ونسبته 2/3، متبوعًا بإزاحة بمتجه C.',
+        'MH.lesson_Y2Geo_homothety5.solution4c6': 'بما أن M تتحرك على الدائرة C التي مركزها O ونصف قطرها R:',
+        'MH.lesson_Y2Geo_homothety5.solution4c6a': 'بعد التماثل بنسبة 2/3: دائرة مركزها (2/3)O ونصف قطرها (2/3)R',
+        'MH.lesson_Y2Geo_homothety5.solution4c6b': 'بعد الإزاحة بـ C: دائرة مركزها (2/3)O + C ونصف قطرها (2/3)R',
+        'MH.lesson_Y2Geo_homothety5.solution4c7': 'لذلك، محل G هو دائرة مركزها (2/3)O + (1/3)(2B - A) ونصف قطرها (2/3)R.',
+
+        // Summary
+        'MH.lesson_Y2Geo_homothety5.summaryTitle': 'ملخص شامل',
+        'MH.lesson_Y2Geo_homothety5.keyPropertiesTitle': 'النتائج الرئيسية المثبتة',
+        'MH.lesson_Y2Geo_homothety5.property1': 'خط أويلر: O، G، H مستقيمية مع OH = 3OG',
+        'MH.lesson_Y2Geo_homothety5.property2': 'دائرة أويلر (دائرة التسع نقاط): الدائرة المحيطة بمثلث المنصفات بنصف قطر R/2 ومركزها منتصف OH',
+        'MH.lesson_Y2Geo_homothety5.property3': 'التماثل يحول الدوائر إلى دوائر، مع تغيير المركز ونصف القطر بشكل متناسب',
+        'MH.lesson_Y2Geo_homothety5.property4': 'يمكن حل مسائل المحل الهندسي بتحديد التحويلات (تماثل، إزاحة) التي تربط النقاط المتحركة',
+        'MH.lesson_Y2Geo_homothety5.property5': 'مراكز الكتلة ومراكز الثقل يمكن التعبير عنها بدلالة التماثلات',
+        'MH.lesson_Y2Geo_homothety5.conclusionTitle': 'خاتمة',
+        'MH.lesson_Y2Geo_homothety5.finalThought': 'يختتم هذا الدرس استكشافنا للتماثل بتطبيقات متقدمة تشمل خط أويلر ودائرة أويلر المشهورين للمثلث، بالإضافة إلى مسائل المحل الهندسي المتنوعة. تظهر هذه المواضيع قوة التماثل في إثبات العلاقات الهندسية المهمة وحل المسائل المعقدة. يبين خط أويلر كيف أن ثلاث نقاط مهمة في المثلث دائمًا ما تكون على استقامة واحدة بنسبة محددة، بينما تكشف دائرة أويلر عن علاقة جميلة بين الدائرة المحيطة ومثلث المنصفات. توضح مسائل المحل الهندسي كيف يمكن للتماثل، مع التحويلات الأخرى، تحديد مسارات النقاط تحت شروط معينة. يزود إتقان هذه المفاهيم بأساس قوي للاستدلال الهندسي المتقدم وحل المسائل.',
+
+        // Footer
+        'MH.footer.developer': 'المطور',
+        'MH.footer.version': 'الإصدار',
+        'MH.footer.links': 'روابط',
+        'MH.footer.terms': 'شروط الاستخدام',
+        'MH.footer.privacy': 'سياسة الخصوصية'
+    },
+    'fr': {
+        // General translations
+        'MH.general.homeTooltip': 'Aller à la page d\'accueil',
+        'MH.general.install': 'Installer l\'application',
+        'MH.general.installSuccess': 'Mathematics Hub installé avec succès !',
+        'MH.general.enableNotifications': 'Activer les notifications',
+        'MH.general.notificationEnabled': 'Notifications activées ! Vous recevrez maintenant les mises à jour.',
+        'MH.general.title': 'Mathematics Hub',
+        'MH.general.theme': 'Thème',
+        'MH.general.language': 'Langue',
+        'MH.lesson_Y2Geo_homothety5.showSolution': 'Afficher la solution',
+        'MH.lesson_Y2Geo_homothety5.hideSolution': 'Masquer la solution',
+        'MH.lesson_Y2Geo_homothety5.showConstruction': 'Afficher la construction',
+
+        // Lesson specific translations
+        'MH.lesson_Y2Geo_homothety5.title': 'Homothétie : Partie 5',
+        'MH.lesson_Y2Geo_homothety5.subtitle': 'Ligne d\'Euler, Cercle d\'Euler et Problèmes de Lieux',
+        'MH.lesson_Y2Geo_homothety5.introduction': 'Introduction',
+        'MH.lesson_Y2Geo_homothety5.introText1': 'Dans cette dernière leçon sur l\'homothétie, nous explorons des applications avancées incluant la célèbre ligne d\'Euler et le cercle d\'Euler d\'un triangle, ainsi que divers problèmes de lieux géométriques. Ces sujets démontrent la puissance de l\'homothétie pour établir des relations géométriques importantes et résoudre des problèmes complexes.',
+        'MH.lesson_Y2Geo_homothety5.introText2': 'À travers ces exercices, vous apprendrez comment l\'homothétie peut être utilisée pour prouver l\'alignement de points spéciaux dans les triangles, découvrir des propriétés intéressantes des cercles, et déterminer les trajectoires décrites par des points sous des conditions données.',
+
+        // XIX. Euler Line – Euler Circle
+        'MH.lesson_Y2Geo_homothety5.XIX': 'XIX. Droite d\'Euler – Cercle d\'Euler',
+        'MH.lesson_Y2Geo_homothety5.activity1Title': 'Activité 1',
+        'MH.lesson_Y2Geo_homothety5.activity1Statement': 'Soit un triangle ABC, on note O le centre du cercle circonscrit, G le centre de gravité, et H l\'orthocentre du triangle ABC. Soient A\', B\' et C\' les milieux respectifs de [BC], [AC] et [AB]. Soit h l\'homothétie de centre G et de rapport -1/2.',
+        'MH.lesson_Y2Geo_homothety5.diagram1Title': 'Figure : Triangle ABC avec centre du cercle circonscrit O, centre de gravité G, orthocentre H',
+        'MH.lesson_Y2Geo_homothety5.diagram1Instructions': 'Triangle ABC avec cercle circonscrit, centre de gravité G, orthocentre H, et milieux A\', B\', C\'.',
+        'MH.lesson_Y2Geo_homothety5.question1a': '1) a) Faire une figure.',
+        'MH.lesson_Y2Geo_homothety5.question1b': 'b) Montrer que l\'image de la hauteur (AH) par l\'homothétie h est la médiatrice de [BC].',
+        'MH.lesson_Y2Geo_homothety5.solution1b': 'Considérons l\'homothétie h(G, -1/2) :',
+        'MH.lesson_Y2Geo_homothety5.solution1b1': 'A ↦ A\' (puisque A\' est le milieu de BC et G divise la médiane dans le rapport 2:1)',
+        'MH.lesson_Y2Geo_homothety5.solution1b2': 'H ↦ O (nous le prouverons dans la partie 2)',
+        'MH.lesson_Y2Geo_homothety5.solution1b3': 'La droite AH ↦ la droite passant par A\' et O',
+        'MH.lesson_Y2Geo_homothety5.solution1b4': 'Mais O est le centre du cercle circonscrit, donc la droite A\'O est la médiatrice de BC.',
+        'MH.lesson_Y2Geo_homothety5.equation1b': 'h(G,-1/2) : (AH) ↦ (A\'O) où (A\'O) est la médiatrice de [BC]',
+        'MH.lesson_Y2Geo_homothety5.question1c': 'c) Préciser les images par h des hauteurs (BH) et (CH).',
+        'MH.lesson_Y2Geo_homothety5.solution1c': 'De même :',
+        'MH.lesson_Y2Geo_homothety5.solution1c1': 'h : (BH) ↦ (B\'O) où (B\'O) est la médiatrice de [AC]',
+        'MH.lesson_Y2Geo_homothety5.solution1c2': 'h : (CH) ↦ (C\'O) où (C\'O) est la médiatrice de [AB]',
+        'MH.lesson_Y2Geo_homothety5.equation1c': 'h(G,-1/2) : hauteurs ↦ médiatrices',
+        'MH.lesson_Y2Geo_homothety5.question2': '2) Montrer que les points O, G et H sont alignés et que OH = 3OG. (La droite contenant les points O, G et H est appelée droite d\'Euler du triangle ABC)',
+        'MH.lesson_Y2Geo_homothety5.solution2': 'De l\'homothétie h(G, -1/2) :',
+        'MH.lesson_Y2Geo_homothety5.solution2a': 'Nous avons H ↦ O (puisque les hauteurs ↦ les médiatrices)',
+        'MH.lesson_Y2Geo_homothety5.solution2b': String.raw`Par définition de l'homothétie : \(\overrightarrow{GO} = -\frac{1}{2} \overrightarrow{GH}\)`,
+        'MH.lesson_Y2Geo_homothety5.solution2c': 'Cela implique que O, G, H sont alignés avec G entre O et H',
+        'MH.lesson_Y2Geo_homothety5.solution2d': String.raw`De l'équation : \(\overrightarrow{GO} = -\frac{1}{2} \overrightarrow{GH} \Rightarrow \overrightarrow{GH} = -2 \overrightarrow{GO}\)`,
+        'MH.lesson_Y2Geo_homothety5.solution2e': String.raw`Ainsi \(\overrightarrow{OH} = \overrightarrow{OG} + \overrightarrow{GH} = \overrightarrow{OG} - 2\overrightarrow{GO} = \overrightarrow{OG} + 2\overrightarrow{OG} = 3\overrightarrow{OG}\)`,
+        'MH.lesson_Y2Geo_homothety5.solution2f': 'Donc OH = 3OG',
+        'MH.lesson_Y2Geo_homothety5.equation2': String.raw`\(\overrightarrow{OH} = 3\overrightarrow{OG}\) ⇒ OH = 3OG et O, G, H sont alignés`,
+        'MH.lesson_Y2Geo_homothety5.eulerLineDef': 'Cette droite est appelée droite d\'Euler du triangle.',
+        'MH.lesson_Y2Geo_homothety5.question3': '3) Soit Ω le centre du cercle circonscrit au triangle A\'B\'C\'. Montrer que Ω appartient à la droite (OG) et qu\'il est le milieu de [OH]. Calculer le rayon r de ce cercle en fonction du rayon R du cercle circonscrit à ABC. (Le cercle circonscrit à A\'B\'C\' est appelé cercle d\'Euler ou cercle des neuf points du triangle ABC)',
+        'MH.lesson_Y2Geo_homothety5.solution3a': 'Considérons le triangle A\'B\'C\' (triangle médian de ABC) :',
+        'MH.lesson_Y2Geo_homothety5.solution3a1': 'A\'B\'C\' est homothétique à ABC par l\'homothétie h₁ de centre G et de rapport -1/2',
+        'MH.lesson_Y2Geo_homothety5.solution3a2': 'Le cercle circonscrit à A\'B\'C\' est l\'image du cercle circonscrit à ABC par h₁',
+        'MH.lesson_Y2Geo_homothety5.solution3a3': 'Donc Ω = h₁(O) = image de O par h(G, -1/2)',
+        'MH.lesson_Y2Geo_homothety5.solution3a4': 'Puisque h envoie O sur Ω et H sur O, et que h a pour rapport -1/2, nous avons :',
+        'MH.lesson_Y2Geo_homothety5.solution3a4a': String.raw`\(\overrightarrow{GΩ} = -\frac{1}{2} \overrightarrow{GO}\)`,
+        'MH.lesson_Y2Geo_homothety5.solution3a4b': String.raw`\(\overrightarrow{GH} = -2 \overrightarrow{GO}\) (d'après la partie 2)`,
+        'MH.lesson_Y2Geo_homothety5.solution3a5': 'Ainsi Ω est le milieu de OH car :',
+        'MH.lesson_Y2Geo_homothety5.solution3a5a': String.raw`\(\overrightarrow{OΩ} = \overrightarrow{OG} + \overrightarrow{GΩ} = \overrightarrow{OG} - \frac{1}{2}\overrightarrow{GO} = \overrightarrow{OG} + \frac{1}{2}\overrightarrow{OG} = \frac{3}{2}\overrightarrow{OG}\)`,
+        'MH.lesson_Y2Geo_homothety5.solution3a5b': String.raw`\(\overrightarrow{OH} = 3\overrightarrow{OG}\) (d'après la partie 2)`,
+        'MH.lesson_Y2Geo_homothety5.solution3a5c': String.raw`Donc \(\overrightarrow{OΩ} = \frac{1}{2}\overrightarrow{OH}\) ⇒ Ω est le milieu de OH`,
+        'MH.lesson_Y2Geo_homothety5.solution3b': 'Pour le rayon :',
+        'MH.lesson_Y2Geo_homothety5.solution3b1': 'L\'homothétie h(G, -1/2) transforme le cercle circonscrit à ABC (rayon R) en cercle circonscrit à A\'B\'C\'',
+        'MH.lesson_Y2Geo_homothety5.solution3b2': 'Puisque la valeur absolue du rapport est 1/2, le rayon r = (1/2)R',
+        'MH.lesson_Y2Geo_homothety5.equation3': String.raw`Ω = milieu de [OH], r = \(\frac{1}{2}\)R`,
+        'MH.lesson_Y2Geo_homothety5.eulerCircleDef': 'Ce cercle est appelé cercle d\'Euler ou cercle des neuf points du triangle.',
+
+        // XX. Locus Problem A
+        'MH.lesson_Y2Geo_homothety5.XX': 'XX. Problème de Lieu A',
+        'MH.lesson_Y2Geo_homothety5.activity2Title': 'Activité 2',
+        'MH.lesson_Y2Geo_homothety5.activity2Statement': 'Soit C un cercle de centre O et A un point n\'appartenant pas à C. Soit M un point du cercle C, et soit I le barycentre des points (A, 2) et (M, 3). Déterminer le lieu du point I lorsque le point M décrit le cercle C.',
+        'MH.lesson_Y2Geo_homothety5.diagram2Title': 'Figure : Cercle C avec point A extérieur, point M sur C, et barycentre I',
+        'MH.lesson_Y2Geo_homothety5.diagram2Instructions': 'Cercle C de centre O, point A extérieur, point M se déplaçant sur C, et barycentre I de (A,2) et (M,3).',
+        'MH.lesson_Y2Geo_homothety5.solution2': 'I est le barycentre de (A,2) et (M,3), donc par définition :',
+        'MH.lesson_Y2Geo_homothety5.equation4': String.raw`\(2\overrightarrow{IA} + 3\overrightarrow{IM} = \overrightarrow{0}\) ou équivalemment \(\overrightarrow{AI} = \frac{3}{5}\overrightarrow{AM}\)`,
+        'MH.lesson_Y2Geo_homothety5.solution2b': 'Cela signifie que I est l\'image de M par l\'homothétie h de centre A et de rapport 3/5 :',
+        'MH.lesson_Y2Geo_homothety5.equation5': String.raw`I = h(A, 3/5)(M)`,
+        'MH.lesson_Y2Geo_homothety5.solution2c': 'Puisque M décrit le cercle C, et que l\'homothétie transforme les cercles en cercles :',
+        'MH.lesson_Y2Geo_homothety5.solution2c1': 'L\'image de C par h(A, 3/5) est un cercle C\'',
+        'MH.lesson_Y2Geo_homothety5.solution2c2': String.raw`Le centre de C' = h(A, 3/5)(O) = O' tel que \(\overrightarrow{AO'} = \frac{3}{5}\overrightarrow{AO}\)`,
+        'MH.lesson_Y2Geo_homothety5.solution2c3': 'Le rayon de C\' = (3/5) × rayon de C',
+        'MH.lesson_Y2Geo_homothety5.solution2d': 'Par conséquent, le lieu de I est le cercle C\' de centre O\' (sur la droite AO aux 3/5 de la distance de A à O) et de rayon (3/5)R.',
+
+        // XXI. Locus Problem B
+        'MH.lesson_Y2Geo_homothety5.XXI': 'XXI. Problème de Lieu B',
+        'MH.lesson_Y2Geo_homothety5.activity3Title': 'Activité 3',
+        'MH.lesson_Y2Geo_homothety5.activity3Statement': 'Soit C un cercle de diamètre [AB] et S un point de (AB). M étant un point de C, on trace le diamètre [PM], puis le point M\' intersection des droites (SM) et (AP).',
+        'MH.lesson_Y2Geo_homothety5.diagram3Title': 'Figure : Cercle de diamètre AB, point S sur AB, point M sur le cercle, diamètre PM, et intersection M\'',
+        'MH.lesson_Y2Geo_homothety5.diagram3Instructions': 'Cercle C de diamètre AB, point S sur AB, point M sur le cercle, diamètre PM, intersection M\' de SM et AP.',
+        'MH.lesson_Y2Geo_homothety5.question3a': '1) Soit h l\'homothétie de centre S qui transforme B en A. Déterminer l\'image par h de la droite (BM).',
+        'MH.lesson_Y2Geo_homothety5.solution3a': 'Homothétie h(S, k) avec B ↦ A :',
+        'MH.lesson_Y2Geo_homothety5.equation6': String.raw`\(\overrightarrow{SA} = k \overrightarrow{SB}\) ⇒ k = SA/SB`,
+        'MH.lesson_Y2Geo_homothety5.solution3a2': 'Sous cette homothétie :',
+        'MH.lesson_Y2Geo_homothety5.solution3a2a': 'B ↦ A',
+        'MH.lesson_Y2Geo_homothety5.solution3a2b': 'M ↦ ?',
+        'MH.lesson_Y2Geo_homothety5.solution3a3': 'Puisque P est diamétralement opposé à M, et AP est une droite passant par A et P :',
+        'MH.lesson_Y2Geo_homothety5.solution3a3a': 'Considérons le triangle SBM',
+        'MH.lesson_Y2Geo_homothety5.solution3a3b': 'Sous h : S ↦ S (point fixe), B ↦ A, M ↦ un point sur la droite passant par A',
+        'MH.lesson_Y2Geo_homothety5.solution3a3c': 'Mais M\' est l\'intersection de SM et AP',
+        'MH.lesson_Y2Geo_homothety5.solution3a3d': 'Ainsi h(M) = M\' (puisque M\' est sur la droite AP et sur la droite passant par S et l\'image de M)',
+        'MH.lesson_Y2Geo_homothety5.solution3a4': 'Par conséquent h : (BM) ↦ (AM\') qui est la droite passant par A et M\'',
+        'MH.lesson_Y2Geo_homothety5.question3b': '2) Déterminer et construire le lieu du point M\' lorsque M décrit le cercle C.',
+        'MH.lesson_Y2Geo_homothety5.solution3b': 'D\'après la partie 1, M\' = h(M) où h est l\'homothétie de centre S et de rapport k = SA/SB.',
+        'MH.lesson_Y2Geo_homothety5.solution3b2': 'Lorsque M décrit le cercle C, son image M\' décrit l\'image de C par h.',
+        'MH.lesson_Y2Geo_homothety5.solution3b3': 'Par conséquent, le lieu de M\' est un cercle C\' avec :',
+        'MH.lesson_Y2Geo_homothety5.solution3b3a': 'Centre O\' = h(O) où O est le centre de C (milieu de AB)',
+        'MH.lesson_Y2Geo_homothety5.solution3b3b': 'Rayon r\' = |k| × R où R est le rayon de C',
+        'MH.lesson_Y2Geo_homothety5.solution3b4': 'Puisque S est sur la droite AB, O\' est aussi sur la droite AB.',
+        'MH.lesson_Y2Geo_homothety5.solution3b5': 'Le cercle C\' est l\'image de C par l\'homothétie h(S, SA/SB).',
+
+        // XXII. Locus Problem C
+        'MH.lesson_Y2Geo_homothety5.XXII': 'XXII. Problème de Lieu C',
+        'MH.lesson_Y2Geo_homothety5.activity4Title': 'Activité 4',
+        'MH.lesson_Y2Geo_homothety5.activity4Statement': 'Soit C un cercle de centre O et [AB] une corde de ce cercle. Soit M un point variable sur le cercle C et N le point défini par MN = AB (de même direction).',
+        'MH.lesson_Y2Geo_homothety5.diagram4Title': 'Figure : Cercle C avec corde AB, point M sur le cercle, point N tel que MN = AB',
+        'MH.lesson_Y2Geo_homothety5.diagram4Instructions': 'Cercle C avec corde AB, point M se déplaçant sur le cercle, point N tel que vecteur MN = vecteur AB.',
+        'MH.lesson_Y2Geo_homothety5.question4a': '1) Déterminer le lieu du point N lorsque M décrit le cercle C.',
+        'MH.lesson_Y2Geo_homothety5.solution4a': String.raw`Nous avons \(\overrightarrow{MN} = \overrightarrow{AB}\) constant.`,
+        'MH.lesson_Y2Geo_homothety5.solution4a2': String.raw`Ainsi N est l'image de M par la translation de vecteur \(\overrightarrow{AB}\).`,
+        'MH.lesson_Y2Geo_homothety5.equation7': String.raw`\(\overrightarrow{ON} = \overrightarrow{OM} + \overrightarrow{MN} = \overrightarrow{OM} + \overrightarrow{AB}\)`,
+        'MH.lesson_Y2Geo_homothety5.solution4a3': 'Puisque M décrit le cercle C de centre O et de rayon R, et que la translation conserve les cercles :',
+        'MH.lesson_Y2Geo_homothety5.solution4a3a': String.raw`N décrit un cercle C' de centre O' = O + \(\overrightarrow{AB}\)`,
+        'MH.lesson_Y2Geo_homothety5.solution4a3b': 'Le rayon de C\' = R (identique à C)',
+        'MH.lesson_Y2Geo_homothety5.solution4a4': 'Par conséquent, le lieu de N est le cercle C\' de centre O\' et de rayon R, où O\' est la translation de O par le vecteur AB.',
+        'MH.lesson_Y2Geo_homothety5.question4b': '2) Soit I le milieu de [AN]. Quel est le lieu du point I lorsque M décrit le cercle C ?',
+        'MH.lesson_Y2Geo_homothety5.solution4b': 'I est le milieu de AN, donc :',
+        'MH.lesson_Y2Geo_homothety5.equation8': String.raw`\(\overrightarrow{AI} = \frac{1}{2}\overrightarrow{AN} = \frac{1}{2}(\overrightarrow{AM} + \overrightarrow{MN}) = \frac{1}{2}(\overrightarrow{AM} + \overrightarrow{AB})\)`,
+        'MH.lesson_Y2Geo_homothety5.solution4b2': 'Alternativement, considérons l\'homothétie h de centre A et de rapport 1/2 :',
+        'MH.lesson_Y2Geo_homothety5.equation9': String.raw`I = h(A, 1/2)(N)`,
+        'MH.lesson_Y2Geo_homothety5.solution4b3': 'D\'après la partie 1, N décrit le cercle C\' de centre O\' et de rayon R.',
+        'MH.lesson_Y2Geo_homothety5.solution4b4': 'Sous l\'homothétie h(A, 1/2) :',
+        'MH.lesson_Y2Geo_homothety5.solution4b4a': 'Le cercle C\' ↦ le cercle C\'\' de centre O\'\' = h(A, 1/2)(O\')',
+        'MH.lesson_Y2Geo_homothety5.solution4b4b': 'Le rayon de C\'\' = (1/2)R',
+        'MH.lesson_Y2Geo_homothety5.solution4b5': 'Par conséquent, le lieu de I est le cercle C\'\' de centre O\'\' et de rayon R/2.',
+        'MH.lesson_Y2Geo_homothety5.question4c': '3) Soit G le centre de gravité du triangle BMN. Déterminer le lieu du point G lorsque M décrit le cercle C.',
+        'MH.lesson_Y2Geo_homothety5.solution4c': 'G est le centre de gravité du triangle BMN, donc :',
+        'MH.lesson_Y2Geo_homothety5.equation10': String.raw`\(\overrightarrow{G} = \frac{1}{3}(\overrightarrow{B} + \overrightarrow{M} + \overrightarrow{N})\)`,
+        'MH.lesson_Y2Geo_homothety5.solution4c2': String.raw`Mais \(\overrightarrow{N} = \overrightarrow{M} + \overrightarrow{AB}\), donc :`,
+        'MH.lesson_Y2Geo_homothety5.equation11': String.raw`\(\overrightarrow{G} = \frac{1}{3}(\overrightarrow{B} + \overrightarrow{M} + (\overrightarrow{M} + \overrightarrow{AB})) = \frac{1}{3}(\overrightarrow{B} + 2\overrightarrow{M} + \overrightarrow{AB})\)`,
+        'MH.lesson_Y2Geo_homothety5.solution4c3': String.raw`Simplifions en utilisant \(\overrightarrow{AB} = \overrightarrow{B} - \overrightarrow{A}\) :`,
+        'MH.lesson_Y2Geo_homothety5.equation12': String.raw`\(\overrightarrow{G} = \frac{1}{3}(2\overrightarrow{B} - \overrightarrow{A} + 2\overrightarrow{M}) = \frac{2}{3}\overrightarrow{M} + \frac{1}{3}(2\overrightarrow{B} - \overrightarrow{A})\)`,
+        'MH.lesson_Y2Geo_homothety5.solution4c4': 'Cela peut s\'écrire :',
+        'MH.lesson_Y2Geo_homothety5.equation13': String.raw`\(\overrightarrow{G} = \frac{2}{3}\overrightarrow{M} + \overrightarrow{C}\) où \(\overrightarrow{C} = \frac{1}{3}(2\overrightarrow{B} - \overrightarrow{A})\) est constant`,
+        'MH.lesson_Y2Geo_homothety5.solution4c5': 'Ainsi G est l\'image de M par une homothétie de centre à l\'origine et de rapport 2/3, suivie d\'une translation de vecteur C.',
+        'MH.lesson_Y2Geo_homothety5.solution4c6': 'Puisque M décrit le cercle C de centre O et de rayon R :',
+        'MH.lesson_Y2Geo_homothety5.solution4c6a': 'Après homothétie de rapport 2/3 : cercle de centre (2/3)O et de rayon (2/3)R',
+        'MH.lesson_Y2Geo_homothety5.solution4c6b': 'Après translation par C : cercle de centre (2/3)O + C et de rayon (2/3)R',
+        'MH.lesson_Y2Geo_homothety5.solution4c7': 'Par conséquent, le lieu de G est un cercle de centre (2/3)O + (1/3)(2B - A) et de rayon (2/3)R.',
+
+        // Summary
+        'MH.lesson_Y2Geo_homothety5.summaryTitle': 'Résumé complet',
+        'MH.lesson_Y2Geo_homothety5.keyPropertiesTitle': 'Résultats clés démontrés',
+        'MH.lesson_Y2Geo_homothety5.property1': 'La droite d\'Euler : O, G, H sont alignés avec OH = 3OG',
+        'MH.lesson_Y2Geo_homothety5.property2': 'Le cercle d\'Euler (cercle des neuf points) : cercle circonscrit au triangle médian de rayon R/2 et de centre au milieu de OH',
+        'MH.lesson_Y2Geo_homothety5.property3': 'L\'homothétie transforme les cercles en cercles, avec un centre et un rayon mis à l\'échelle en conséquence',
+        'MH.lesson_Y2Geo_homothety5.property4': 'Les problèmes de lieux peuvent être résolus en identifiant les transformations (homothétie, translation) qui relient les points mobiles',
+        'MH.lesson_Y2Geo_homothety5.property5': 'Les barycentres et centres de gravité peuvent être exprimés en termes d\'homothéties',
+        'MH.lesson_Y2Geo_homothety5.conclusionTitle': 'Conclusion',
+        'MH.lesson_Y2Geo_homothety5.finalThought': 'Cette leçon conclut notre exploration de l\'homothétie avec des applications avancées incluant la célèbre droite d\'Euler et le cercle d\'Euler d\'un triangle, ainsi que divers problèmes de lieux. Ces sujets démontrent la puissance de l\'homothétie pour établir des relations géométriques importantes et résoudre des problèmes complexes. La droite d\'Euler montre comment trois points significatifs d\'un triangle sont toujours alignés dans un rapport spécifique, tandis que le cercle d\'Euler révèle une belle relation entre le cercle circonscrit et le triangle médian. Les problèmes de lieux illustrent comment l\'homothétie, combinée à d\'autres transformations, peut déterminer les trajectoires de points sous des conditions données. La maîtrise de ces concepts fournit une base solide pour le raisonnement géométrique avancé et la résolution de problèmes.',
+
+        // Footer
+        'MH.footer.developer': 'Développeur',
+        'MH.footer.version': 'Version',
+        'MH.footer.links': 'Liens',
+        'MH.footer.terms': 'Conditions d\'utilisation',
+        'MH.footer.privacy': 'Politique de confidentialité'
+    }
+};
+
+        // Merge with existing translations if they exist
+        if (typeof translations !== 'undefined') {
+            Object.keys(homothety5Translations).forEach(lang => {
+                if (translations[lang]) {
+                    translations[lang] = {...translations[lang], ...homothety5Translations[lang]};
+                } else {
+                    translations[lang] = homothety5Translations[lang];
+                }
+            });
+        } else {
+            var translations = homothety5Translations;
+        }
+
+        // Canvas drawing functions for all activities
+        let activity1State = {constructed: false};
+        let activity2State = {constructed: false};
+        let activity3State = {constructed: false};
+        let activity4State = {constructed: false};
+
+        // Activity 1: Euler Line and Euler Circle
+        function drawActivity1Canvas() {
+            const canvas = document.getElementById('activity1Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw triangle ABC
+            const A = {x: width * 0.3, y: height * 0.2};
+            const B = {x: width * 0.1, y: height * 0.8};
+            const C = {x: width * 0.9, y: height * 0.7};
+            
+            // Draw triangle
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(A.x, A.y);
+            ctx.lineTo(B.x, B.y);
+            ctx.lineTo(C.x, C.y);
+            ctx.closePath();
+            ctx.stroke();
+            
+            // Label vertices
+            const vertices = [
+                {coord: A, label: 'A', color: '#E74C3C'},
+                {coord: B, label: 'B', color: '#2ECC71'},
+                {coord: C, label: 'C', color: '#3498DB'}
+            ];
+            
+            vertices.forEach(point => {
+                ctx.fillStyle = point.color;
+                ctx.beginPath();
+                ctx.arc(point.coord.x, point.coord.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                let offsetX = 15, offsetY = 15;
+                if (point.label === 'A') offsetY = -15;
+                if (point.label === 'B') { offsetX = -15; offsetY = 15; }
+                if (point.label === 'C') { offsetX = 15; offsetY = 15; }
+                ctx.fillText(point.label, point.coord.x + offsetX, point.coord.y + offsetY);
+            });
+            
+            if (activity1State.constructed) {
+                // Calculate midpoints
+                const Aprime = {
+                    x: (B.x + C.x) / 2,
+                    y: (B.y + C.y) / 2
+                };
+                const Bprime = {
+                    x: (A.x + C.x) / 2,
+                    y: (A.y + C.y) / 2
+                };
+                const Cprime = {
+                    x: (A.x + B.x) / 2,
+                    y: (A.y + B.y) / 2
+                };
+                
+                // Draw midpoints
+                const midpoints = [
+                    {coord: Aprime, label: "A'", color: '#8E44AD'},
+                    {coord: Bprime, label: "B'", color: '#1ABC9C'},
+                    {coord: Cprime, label: "C'", color: '#9B59B6'}
+                ];
+                
+                midpoints.forEach(point => {
+                    ctx.fillStyle = point.color;
+                    ctx.beginPath();
+                    ctx.arc(point.coord.x, point.coord.y, 5, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = '#333333';
+                    ctx.font = 'bold 14px Arial';
+                    ctx.fillText(point.label, point.coord.x + 10, point.coord.y + 10);
+                });
+                
+                // Draw midpoint triangle
+                ctx.strokeStyle = '#8E44AD';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.moveTo(Aprime.x, Aprime.y);
+                ctx.lineTo(Bprime.x, Bprime.y);
+                ctx.lineTo(Cprime.x, Cprime.y);
+                ctx.closePath();
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Calculate centroid G
+                const G = {
+                    x: (A.x + B.x + C.x) / 3,
+                    y: (A.y + B.y + C.y) / 3
+                };
+                
+                // Calculate circumcenter O (intersection of perpendicular bisectors)
+                // For simplicity, use approximate position
+                const O = {
+                    x: width * 0.5,
+                    y: height * 0.4
+                };
+                
+                // Calculate orthocenter H (intersection of altitudes)
+                // For simplicity, use approximate position
+                const H = {
+                    x: width * 0.4,
+                    y: height * 0.6
+                };
+                
+                // Draw O, G, H
+                const specialPoints = [
+                    {coord: O, label: 'O', color: '#E67E22', size: 8},
+                    {coord: G, label: 'G', color: '#2ECC71', size: 8},
+                    {coord: H, label: 'H', color: '#3498DB', size: 8}
+                ];
+                
+                specialPoints.forEach(point => {
+                    ctx.fillStyle = point.color;
+                    ctx.beginPath();
+                    ctx.arc(point.coord.x, point.coord.y, point.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = '#333333';
+                    ctx.font = 'bold 16px Arial';
+                    let offsetX = 15, offsetY = 15;
+                    if (point.label === 'O') { offsetX = 15; offsetY = -15; }
+                    if (point.label === 'G') { offsetX = -15; offsetY = -15; }
+                    if (point.label === 'H') { offsetX = 15; offsetY = 15; }
+                    ctx.fillText(point.label, point.coord.x + offsetX, point.coord.y + offsetY);
+                });
+                
+                // Draw Euler line (OGH)
+                ctx.strokeStyle = '#E74C3C';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.moveTo(O.x, O.y);
+                ctx.lineTo(G.x, G.y);
+                ctx.lineTo(H.x, H.y);
+                ctx.stroke();
+                
+                // Draw Euler circle (circumcircle of A'B'C')
+                const Omega = {  // Midpoint of OH
+                    x: (O.x + H.x) / 2,
+                    y: (O.y + H.y) / 2
+                };
+                const eulerRadius = 80; // Approximate
+                
+                ctx.strokeStyle = '#8E44AD';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.arc(Omega.x, Omega.y, eulerRadius, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw Ω
+                ctx.fillStyle = '#8E44AD';
+                ctx.beginPath();
+                ctx.arc(Omega.x, Omega.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Ω', Omega.x + 15, Omega.y - 15);
+                
+                // Show relationships
+                ctx.fillStyle = '#666666';
+                ctx.font = '14px Arial';
+                ctx.fillText('OH = 3OG', (O.x + H.x)/2, (O.y + H.y)/2 - 20);
+                ctx.fillText('Ω = midpoint of OH', Omega.x + 30, Omega.y - 30);
+                
+                // Draw circumcircle of ABC
+                ctx.strokeStyle = '#4A90E2';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                const circumRadius = 160; // Approximate
+                ctx.beginPath();
+                ctx.arc(O.x, O.y, circumRadius, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw altitudes and perpendicular bisectors
+                // Altitude from A (dashed)
+                ctx.strokeStyle = '#3498DB';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(A.x, A.y);
+                // For simplicity, draw line from A to opposite side
+                const footA = {
+                    x: (B.x + C.x) / 2,
+                    y: (B.y + C.y) / 2
+                };
+                ctx.lineTo(footA.x, footA.y);
+                ctx.stroke();
+                
+                // Perpendicular bisector of BC (through A' and O)
+                ctx.strokeStyle = '#2ECC71';
+                ctx.beginPath();
+                ctx.moveTo(Aprime.x, Aprime.y);
+                ctx.lineTo(O.x, O.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Show homothety relationship
+                ctx.fillStyle = '#E67E22';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('h(G, -1/2): H → O, altitudes → ⊥ bisectors', width/2, height * 0.9);
+            }
+        }
+
+        // Activity 2: Locus Problem A
+        function drawActivity2Canvas() {
+            const canvas = document.getElementById('activity2Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw circle C
+            const O = {x: width * 0.5, y: height * 0.5};
+            const radius = 120;
+            
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(O.x, O.y, radius, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.fillStyle = '#4A90E2';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('C', O.x, O.y - radius - 10);
+            ctx.fillText('O', O.x + 15, O.y - 10);
+            
+            // Draw center O
+            ctx.fillStyle = '#4A90E2';
+            ctx.beginPath();
+            ctx.arc(O.x, O.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Draw point A (outside circle)
+            const A = {x: width * 0.2, y: height * 0.3};
+            
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(A.x, A.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('A', A.x - 15, A.y - 10);
+            
+            if (activity2State.constructed) {
+                // Draw point M on circle
+                const angle = Date.now() / 2000; // Animate with time
+                const M = {
+                    x: O.x + radius * Math.cos(angle),
+                    y: O.y + radius * Math.sin(angle)
+                };
+                
+                ctx.fillStyle = '#2ECC71';
+                ctx.beginPath();
+                ctx.arc(M.x, M.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('M', M.x + 10, M.y + 10);
+                
+                // Calculate I (barycenter of (A,2) and (M,3))
+                // I = (2A + 3M)/5
+                const I = {
+                    x: (2 * A.x + 3 * M.x) / 5,
+                    y: (2 * A.y + 3 * M.y) / 5
+                };
+                
+                ctx.fillStyle = '#8E44AD';
+                ctx.beginPath();
+                ctx.arc(I.x, I.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('I', I.x + 10, I.y - 10);
+                
+                // Draw line AM
+                ctx.strokeStyle = '#666666';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                ctx.beginPath();
+                ctx.moveTo(A.x, A.y);
+                ctx.lineTo(M.x, M.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw locus circle C' (image of C by homothety h(A, 3/5))
+                const Oprime = {
+                    x: A.x + (3/5) * (O.x - A.x),
+                    y: A.y + (3/5) * (O.y - A.y)
+                };
+                const radiusPrime = (3/5) * radius;
+                
+                ctx.strokeStyle = '#8E44AD';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.arc(Oprime.x, Oprime.y, radiusPrime, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw O'
+                ctx.fillStyle = '#8E44AD';
+                ctx.beginPath();
+                ctx.arc(Oprime.x, Oprime.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText("O'", Oprime.x + 10, Oprime.y - 10);
+                
+                // Show homothety relationship
+                ctx.strokeStyle = '#666666';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                ctx.beginPath();
+                ctx.moveTo(A.x, A.y);
+                ctx.lineTo(O.x, O.y);
+                ctx.lineTo(Oprime.x, Oprime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Show ratio
+                ctx.fillStyle = '#E67E22';
+                ctx.font = '14px Arial';
+                ctx.fillText('k = 3/5', (A.x + Oprime.x)/2, (A.y + Oprime.y)/2 - 10);
+                
+                // Title
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('Locus of I: circle with center O\' and radius (3/5)R', width/2, height * 0.9);
+                ctx.textAlign = 'left';
+            }
+        }
+
+        // Activity 3: Locus Problem B
+        function drawActivity3Canvas() {
+            const canvas = document.getElementById('activity3Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw circle with diameter AB
+            const A = {x: width * 0.2, y: height * 0.5};
+            const B = {x: width * 0.8, y: height * 0.5};
+            const O = {x: (A.x + B.x)/2, y: (A.y + B.y)/2};
+            const radius = Math.abs(B.x - A.x) / 2;
+            
+            // Draw circle
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(O.x, O.y, radius, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // Draw diameter AB
+            ctx.strokeStyle = '#E74C3C';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(A.x, A.y);
+            ctx.lineTo(B.x, B.y);
+            ctx.stroke();
+            
+            // Label A, B, O
+            const points1 = [
+                {coord: A, label: 'A', color: '#E74C3C'},
+                {coord: B, label: 'B', color: '#2ECC71'},
+                {coord: O, label: 'O', color: '#4A90E2'}
+            ];
+            
+            points1.forEach(point => {
+                ctx.fillStyle = point.color;
+                ctx.beginPath();
+                ctx.arc(point.coord.x, point.coord.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                let offsetX = 15, offsetY = 15;
+                if (point.label === 'A') { offsetX = -15; offsetY = -15; }
+                if (point.label === 'B') { offsetX = 15; offsetY = -15; }
+                if (point.label === 'O') { offsetX = 15; offsetY = 15; }
+                ctx.fillText(point.label, point.coord.x + offsetX, point.coord.y + offsetY);
+            });
+            
+            // Draw point S on AB
+            const S = {x: width * 0.4, y: height * 0.5};
+            
+            ctx.fillStyle = '#8E44AD';
+            ctx.beginPath();
+            ctx.arc(S.x, S.y, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('S', S.x + 15, S.y - 15);
+            
+            if (activity3State.constructed) {
+                // Draw point M on circle (animated)
+                const angle = Date.now() / 3000;
+                const M = {
+                    x: O.x + radius * Math.cos(angle),
+                    y: O.y + radius * Math.sin(angle)
+                };
+                
+                // Draw point P (diametrically opposite to M)
+                const P = {
+                    x: O.x - (M.x - O.x),
+                    y: O.y - (M.y - O.y)
+                };
+                
+                // Draw M and P
+                const points2 = [
+                    {coord: M, label: 'M', color: '#2ECC71'},
+                    {coord: P, label: 'P', color: '#3498DB'}
+                ];
+                
+                points2.forEach(point => {
+                    ctx.fillStyle = point.color;
+                    ctx.beginPath();
+                    ctx.arc(point.coord.x, point.coord.y, 6, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = '#333333';
+                    ctx.font = 'bold 16px Arial';
+                    let offsetX = 15, offsetY = 15;
+                    if (point.label === 'M') { offsetX = 15; offsetY = 15; }
+                    if (point.label === 'P') { offsetX = -15; offsetY = -15; }
+                    ctx.fillText(point.label, point.coord.x + offsetX, point.coord.y + offsetY);
+                });
+                
+                // Draw diameter PM
+                ctx.strokeStyle = '#666666';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(P.x, P.y);
+                ctx.lineTo(M.x, M.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw line AP
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(A.x, A.y);
+                ctx.lineTo(P.x, P.y);
+                ctx.stroke();
+                
+                // Calculate M' = intersection of SM and AP
+                // For simplicity, approximate intersection
+                const Mprime = {
+                    x: (S.x + M.x + A.x + P.x) / 4, // Rough average
+                    y: (S.y + M.y + A.y + P.y) / 4
+                };
+                
+                // Draw M'
+                ctx.fillStyle = '#8E44AD';
+                ctx.beginPath();
+                ctx.arc(Mprime.x, Mprime.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText("M'", Mprime.x + 15, Mprime.y - 15);
+                
+                // Draw line SM
+                ctx.strokeStyle = '#2ECC71';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(S.x, S.y);
+                ctx.lineTo(M.x, M.y);
+                ctx.lineTo(Mprime.x, Mprime.y);
+                ctx.stroke();
+                
+                // Draw locus circle C' (image of C by homothety h(S, SA/SB))
+                const ratio = Math.abs(S.x - A.x) / Math.abs(S.x - B.x);
+                const Oprime = {
+                    x: S.x + ratio * (O.x - S.x),
+                    y: S.y + ratio * (O.y - S.y)
+                };
+                const radiusPrime = ratio * radius;
+                
+                ctx.strokeStyle = '#8E44AD';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.arc(Oprime.x, Oprime.y, radiusPrime, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw O'
+                ctx.fillStyle = '#8E44AD';
+                ctx.beginPath();
+                ctx.arc(Oprime.x, Oprime.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText("O'", Oprime.x + 10, Oprime.y - 10);
+                
+                // Show homothety
+                ctx.strokeStyle = '#666666';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                ctx.beginPath();
+                ctx.moveTo(S.x, S.y);
+                ctx.lineTo(O.x, O.y);
+                ctx.lineTo(Oprime.x, Oprime.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Show ratio
+                ctx.fillStyle = '#E67E22';
+                ctx.font = '14px Arial';
+                ctx.fillText(`k = SA/SB ≈ ${ratio.toFixed(2)}`, (S.x + Oprime.x)/2, (S.y + Oprime.y)/2 - 10);
+                
+                // Title
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText("Locus of M': circle with center O' and radius |k|R", width/2, height * 0.9);
+                ctx.textAlign = 'left';
+            }
+        }
+
+        // Activity 4: Locus Problem C
+        function drawActivity4Canvas() {
+            const canvas = document.getElementById('activity4Canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw circle C
+            const O = {x: width * 0.5, y: height * 0.5};
+            const radius = 120;
+            
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(O.x, O.y, radius, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.fillStyle = '#4A90E2';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('C', O.x, O.y - radius - 10);
+            
+            // Draw chord AB
+            const angleAB = Math.PI / 6; // 30 degrees
+            const A = {
+                x: O.x + radius * Math.cos(angleAB),
+                y: O.y + radius * Math.sin(angleAB)
+            };
+            const B = {
+                x: O.x + radius * Math.cos(angleAB + Math.PI/3), // 60 degrees apart
+                y: O.y + radius * Math.sin(angleAB + Math.PI/3)
+            };
+            
+            ctx.strokeStyle = '#E74C3C';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(A.x, A.y);
+            ctx.lineTo(B.x, B.y);
+            ctx.stroke();
+            
+            // Label A, B, O
+            const points1 = [
+                {coord: A, label: 'A', color: '#E74C3C'},
+                {coord: B, label: 'B', color: '#2ECC71'},
+                {coord: O, label: 'O', color: '#4A90E2'}
+            ];
+            
+            points1.forEach(point => {
+                ctx.fillStyle = point.color;
+                ctx.beginPath();
+                ctx.arc(point.coord.x, point.coord.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                let offsetX = 15, offsetY = 15;
+                if (point.label === 'A') { offsetX = 15; offsetY = -15; }
+                if (point.label === 'B') { offsetX = -15; offsetY = 15; }
+                if (point.label === 'O') { offsetX = 15; offsetY = 15; }
+                ctx.fillText(point.label, point.coord.x + offsetX, point.coord.y + offsetY);
+            });
+            
+            if (activity4State.constructed) {
+                // Draw point M on circle (animated)
+                const angle = Date.now() / 2500;
+                const M = {
+                    x: O.x + radius * Math.cos(angle),
+                    y: O.y + radius * Math.sin(angle)
+                };
+                
+                // Draw M
+                ctx.fillStyle = '#3498DB';
+                ctx.beginPath();
+                ctx.arc(M.x, M.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('M', M.x + 10, M.y + 10);
+                
+                // Calculate N such that MN = AB (vector equality)
+                const ABvector = {x: B.x - A.x, y: B.y - A.y};
+                const N = {
+                    x: M.x + ABvector.x,
+                    y: M.y + ABvector.y
+                };
+                
+                // Draw N
+                ctx.fillStyle = '#8E44AD';
+                ctx.beginPath();
+                ctx.arc(N.x, N.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('N', N.x + 10, N.y - 10);
+                
+                // Draw vector MN = AB
+                ctx.strokeStyle = '#666666';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.moveTo(M.x, M.y);
+                ctx.lineTo(N.x, N.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw vector AB for comparison
+                ctx.strokeStyle = '#E74C3C';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([2, 2]);
+                ctx.beginPath();
+                ctx.moveTo(A.x, A.y);
+                ctx.lineTo(B.x, B.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Calculate I (midpoint of AN)
+                const I = {
+                    x: (A.x + N.x) / 2,
+                    y: (A.y + N.y) / 2
+                };
+                
+                // Draw I
+                ctx.fillStyle = '#2ECC71';
+                ctx.beginPath();
+                ctx.arc(I.x, I.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText('I', I.x + 10, I.y - 10);
+                
+                // Calculate G (centroid of triangle BMN)
+                const G = {
+                    x: (B.x + M.x + N.x) / 3,
+                    y: (B.y + M.y + N.y) / 3
+                };
+                
+                // Draw G
+                ctx.fillStyle = '#E67E22';
+                ctx.beginPath();
+                ctx.arc(G.x, G.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText('G', G.x + 10, G.y + 10);
+                
+                // Draw triangle BMN
+                ctx.strokeStyle = '#666666';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(B.x, B.y);
+                ctx.lineTo(M.x, M.y);
+                ctx.lineTo(N.x, N.y);
+                ctx.closePath();
+                ctx.stroke();
+                
+                // Draw locus of N (circle C' = translation of C by vector AB)
+                const Oprime = {
+                    x: O.x + ABvector.x,
+                    y: O.y + ABvector.y
+                };
+                
+                ctx.strokeStyle = '#8E44AD';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.arc(Oprime.x, Oprime.y, radius, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw O'
+                ctx.fillStyle = '#8E44AD';
+                ctx.beginPath();
+                ctx.arc(Oprime.x, Oprime.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText("O'", Oprime.x + 10, Oprime.y - 10);
+                
+                // Draw locus of I (circle C'' = homothety of C' with center A and ratio 1/2)
+                const Odoubleprime = {
+                    x: A.x + (1/2) * (Oprime.x - A.x),
+                    y: A.y + (1/2) * (Oprime.y - A.y)
+                };
+                const radiusDoubleprime = radius / 2;
+                
+                ctx.strokeStyle = '#2ECC71';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.arc(Odoubleprime.x, Odoubleprime.y, radiusDoubleprime, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw O''
+                ctx.fillStyle = '#2ECC71';
+                ctx.beginPath();
+                ctx.arc(Odoubleprime.x, Odoubleprime.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#333333';
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText("O''", Odoubleprime.x + 10, Odoubleprime.y - 10);
+                
+                // Draw locus of G (circle with center (2/3)O + (1/3)(2B - A) and radius (2/3)R)
+                const centerG = {
+                    x: (2/3) * O.x + (1/3) * (2 * B.x - A.x),
+                    y: (2/3) * O.y + (1/3) * (2 * B.y - A.y)
+                };
+                const radiusG = (2/3) * radius;
+                
+                ctx.strokeStyle = '#E67E22';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.arc(centerG.x, centerG.y, radiusG, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Show vector relationships
+                ctx.fillStyle = '#666666';
+                ctx.font = '14px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('MN = AB (constant vector)', width/2, height * 0.85);
+                ctx.fillText('N = translation of M by vector AB', width/2, height * 0.87);
+                ctx.fillText('I = midpoint of AN', width/2, height * 0.89);
+                ctx.fillText('G = centroid of ΔBMN', width/2, height * 0.91);
+                ctx.textAlign = 'left';
+            }
+        }
+
+        // Construction functions for each activity
+        function constructActivity1a() {
+            activity1State.constructed = true;
+            drawActivity1Canvas();
+        }
+        
+        function constructActivity2() {
+            activity2State.constructed = true;
+            drawActivity2Canvas();
+        }
+        
+        function constructActivity3() {
+            activity3State.constructed = true;
+            drawActivity3Canvas();
+        }
+        
+        function constructActivity4() {
+            activity4State.constructed = true;
+            drawActivity4Canvas();
+        }
+
+        // Solution toggle function
+        function toggleSolution(problemNumber) {
+            const solution = document.getElementById(`solution${problemNumber}`);
+            const button = solution.previousElementSibling;
+            const currentLang = MHThemeManager ? MHThemeManager.getCurrentLanguage() : 'en';
+            
+            if (solution.style.display === 'block' || solution.style.display === '') {
+                solution.style.display = 'none';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_homothety5.showSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_homothety5.showSolution'];
+                } else {
+                    button.textContent = 'Show Solution';
+                }
+            } else {
+                solution.style.display = 'block';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_homothety5.hideSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_homothety5.hideSolution'];
+                } else {
+                    button.textContent = 'Hide Solution';
+                }
+                // Re-render KaTeX for newly visible equations
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(solution, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\(', right: '\\)', display: false},
+                            {left: '\\[', right: '\\]', display: true}
+                        ],
+                        throwOnError: false
+                    });
+                }
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize KaTeX auto-render
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+            
+            // Draw initial canvases
+            drawActivity1Canvas();
+            drawActivity2Canvas();
+            drawActivity3Canvas();
+            drawActivity4Canvas();
+            
+            // Initialize solutions as hidden and set button text
+            const currentLang = MHThemeManager ? MHThemeManager.getCurrentLanguage() : 'en';
+            for (let i = 1; i <= 10; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                const button = solution ? solution.previousElementSibling : null;
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+                // Set initial button text
+                if (button && translations[currentLang] && translations[currentLang]['MH.lesson_Y2Geo_homothety5.showSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Geo_homothety5.showSolution'];
+                }
+            }
+            
+            // Redraw canvases when theme changes
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    setTimeout(() => {
+                        drawActivity1Canvas();
+                        drawActivity2Canvas();
+                        drawActivity3Canvas();
+                        drawActivity4Canvas();
+                    }, 100);
+                });
+            }
+            
+            // Animate moving points
+            function animate() {
+                if (activity2State.constructed) drawActivity2Canvas();
+                if (activity3State.constructed) drawActivity3Canvas();
+                if (activity4State.constructed) drawActivity4Canvas();
+                requestAnimationFrame(animate);
+            }
+            animate();
+        });
+    </script>
+    
+    <!-- Add the service worker registration script -->
+    <script>
+        // Register service worker with better error handling
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                })
+                .catch(function(error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+            });
+        }
+    </script>
+    
+    <!-- Add noscript fallback -->
+    <noscript>
+        <style>
+            .MH-header-controls { display: none; }
+            .MH-solution { display: block; }
+            .MH-canvas { border: 2px solid #ccc; background-color: #f9f9f9; }
+        </style>
+        <div class="MH-warning">
+            JavaScript is recommended for the full experience, but content is still accessible.
+        </div>
+    </noscript>
+</body>
+</html>
