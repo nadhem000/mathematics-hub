@@ -91,7 +91,7 @@ window.translations_en = {
 "MH.index.algebra.second.4b": "Part II: Definition, General Term, Graphical Representation, and Sum of Terms",
 "MH.index.algebra.second.4c": "Part III: More Practice with Sequences, Recognizing Arithmetic Sequences, and Advanced Applications",
 "MH.index.algebra.second.4d": "Part IV: Summary and Practical Problems",
-"MH.index.algebra.second.4e": "Part V: Exercises and Applications",,
+"MH.index.algebra.second.4e": "Part V: Exercises and Applications",
     'MH.index.algebra.second.5': 'Geometric Sequences',
     'MH.index.algebra.second.6': 'Statistics',
     'MH.index.algebra.second.7': 'General Functions',
@@ -3208,4 +3208,5 @@ window.translations_en = {
 'MH.lesson_Y2Al_arth1b.solution10_part2': "So 2<sup>4</sup> - 1 is divisible by 5. Check smaller values: 2<sup>1</sup>-1=1, 2<sup>2</sup>-1=3, 2<sup>3</sup>-1=7, none divisible by 5.",
 'MH.lesson_Y2Al_arth1b.showSolution': 'Show Solution',
 'MH.lesson_Y2Al_arth1b.hideSolution': 'Hide Solution'
+
 };
