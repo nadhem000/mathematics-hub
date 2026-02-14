@@ -1,0 +1,1901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Algebra - Arithmetic Sequences Part IV</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#4A90E2" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#8E44AD" media="(prefers-color-scheme: dark)">
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#4A90E2">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    <style>
+        /* Page-specific color palette - Purple + Orange Theme for Advanced Algebra */
+        :root {
+            --primary: #8E44AD;        /* Purple */
+            --primary-light: #9B59B6;  /* Light Purple */
+            --primary-dark: #6C3483;   /* Darker Purple */
+            --secondary: #E67E22;      /* Orange */
+            --secondary-light: #F39C12; /* Light Orange */
+            --secondary-dark: #D35400;  /* Darker Orange */
+            --accent: #2ECC71;
+            --warning: #E74C3C;
+            --info: #3498DB;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #FFFFFF;
+            --surface: #F8F9FA;
+            --border: #E9ECEF;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        [data-theme="dark"] {
+            --primary: #6C3483;
+            --primary-light: #8E44AD;
+            --primary-dark: #5B2C6F;
+            --secondary: #D35400;
+            --secondary-light: #E67E22;
+            --secondary-dark: #BA4A00;
+            --accent: #27AE60;
+            --warning: #C0392B;
+            --info: #2980B9;
+            --text: #FFFFFF;
+            --text-light: #CCCCCC;
+            --background: #121212;
+            --surface: #1E1E1E;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+        /* KaTeX styling */
+        .katex { 
+            font-size: 1.1em; 
+        }
+        .katex-display { 
+            margin: 1em 0; 
+            text-align: center;
+        }
+        .katex-display > .katex { 
+            display: inline-block;
+            text-align: center;
+        }
+        /* Equation styling */
+        .MH-equation {
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            margin: 0.5em 0;
+            padding: 0;
+            display: inline-block;
+            direction: ltr !important;
+            unicode-bidi: isolate;
+        }
+        [dir="rtl"] .MH-equation {
+            text-align: left;
+            unicode-bidi: plaintext;
+        }
+        /* Sequence specific styling */
+        .MH-sequence {
+            font-family: 'KaTeX_Math', 'Cambria Math', serif;
+            font-style: italic;
+            color: var(--primary);
+        }
+        .MH-term {
+            font-weight: bold;
+            color: var(--secondary);
+        }
+        .MH-definition-box {
+            margin: 1.5em 0;
+            padding: 1em;
+            background-color: var(--surface);
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+        }
+        .MH-definition-title {
+            font-weight: bold;
+            color: var(--primary-dark);
+            margin-bottom: 0.5em;
+        }
+        .MH-remark {
+            margin: 1em 0;
+            padding: 1em;
+            background-color: rgba(142, 68, 173, 0.1);
+            border-left: 4px solid var(--secondary);
+            border-radius: 4px;
+        }
+        .MH-step-by-step {
+            margin: 1.5em 0;
+            padding: 1em;
+            background-color: rgba(230, 126, 34, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+        .MH-step-title {
+            font-weight: bold;
+            color: var(--secondary-dark);
+            margin-bottom: 0.5em;
+        }
+        /* Activity numbering */
+        .MH-activity-number {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--secondary);
+            margin: 1.5em 0 0.5em 0;
+            border-bottom: 2px solid var(--secondary-light);
+            padding-bottom: 0.3em;
+        }
+        /* For beginner-friendly explanations */
+        .MH-beginner-tip {
+            background-color: rgba(230, 126, 34, 0.1);
+            padding: 1em;
+            border-radius: 8px;
+            margin: 1em 0;
+            border-left: 4px solid var(--secondary);
+        }
+        .MH-beginner-tip-title {
+            font-weight: bold;
+            color: var(--secondary-dark);
+            margin-bottom: 0.5em;
+        }
+        /* Problem styling */
+        .MH-problem {
+            margin: 1.5em 0;
+            padding: 1em;
+            background-color: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px var(--shadow);
+        }
+        .MH-problem-title {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5em;
+            font-size: 1.1em;
+        }
+        .MH-problem-indication {
+            font-style: italic;
+            color: var(--text-light);
+            margin-top: 1em;
+            padding-top: 1em;
+            border-top: 1px dashed var(--border);
+        }
+        /* Summary box styling */
+        .MH-summary-box {
+            margin: 2em 0;
+            padding: 1.5em;
+            background-color: rgba(142, 68, 173, 0.05);
+            border: 2px solid var(--primary-light);
+            border-radius: 8px;
+        }
+        .MH-summary-title {
+            font-weight: bold;
+            color: var(--primary-dark);
+            margin-bottom: 1em;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        /* Practical problem diagram container */
+        .MH-diagram-container {
+            margin: 2em auto;
+            padding: 1em;
+            max-width: 800px;
+            text-align: center;
+            background-color: var(--surface);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        .MH-diagram-title {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 1em;
+        }
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .MH-diagram-container {
+                padding: 0.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                    <!-- Notification Button -->
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+                        <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Alg_seqArith4.title">Arithmetic Sequences: Part IV</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y2Alg_seqArith4.subtitle">Summary and Practical Problems</h2>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Alg_seqArith4.introduction">Introduction</h2>
+            <p data-i18n="MH.lesson_Y2Alg_seqArith4.introText1">In this final lesson on arithmetic sequences, we will review all the concepts we've learned and apply them to solve interesting real-world problems. This will help you see how mathematics is used in everyday life!</p>
+            <p data-i18n="MH.lesson_Y2Alg_seqArith4.introText2">We'll start with a comprehensive summary of everything about arithmetic sequences, then solve three practical problems that will challenge your understanding.</p>
+            
+            <div class="MH-beginner-tip">
+                <div class="MH-beginner-tip-title" data-i18n="MH.lesson_Y2Alg_seqArith4.beginnerTip">Tip for Beginners</div>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith4.beginnerTipText">Don't worry if you don't remember everything! We'll review all the important formulas. The key is to take your time and think step by step. Each practical problem will show you how to use what you've learned.</p>
+            </div>
+        </section>
+        
+        <!-- XI. Summary -->
+        <section class="MH-section">
+            <div class="MH-activity-number" data-i18n="MH.lesson_Y2Alg_seqArith4.sectionXI">XI. Summary</div>
+            
+            <div class="MH-summary-box">
+                <div class="MH-summary-title" data-i18n="MH.lesson_Y2Alg_seqArith4.summaryTitle">Complete Summary of Arithmetic Sequences</div>
+                
+                <div class="MH-step">
+                    <h3 data-i18n="MH.lesson_Y2Alg_seqArith4.presentationModesTitle">1. Ways to Present a Sequence</h3>
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith4.presentationModesText">A sequence can be defined in two main ways:</p>
+                    
+                    <div class="MH-step-by-step">
+                        <h4 data-i18n="MH.lesson_Y2Alg_seqArith4.presentationMode1Title">a) By its General Term</h4>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.presentationMode1Text">This means we have a formula that gives us any term directly. For example:</p>
+                        <p class="MH-equation" data-i18n="MH.lesson_Y2Alg_seqArith4.presentationMode1Example">U<sub>n</sub> = 3n + 2</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.presentationMode1Explanation">With this formula, we can find U<sub>0</sub> by putting n=0, U<sub>1</sub> by putting n=1, and so on.</p>
+                    </div>
+                    
+                    <div class="MH-step-by-step">
+                        <h4 data-i18n="MH.lesson_Y2Alg_seqArith4.presentationMode2Title">b) By Recurrence Relation</h4>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.presentationMode2Text">This means we know the first term and a rule to get each term from the previous one. For example:</p>
+                        <p class="MH-equation" data-i18n="MH.lesson_Y2Alg_seqArith4.presentationMode2Example">U<sub>0</sub> = 2 and U<sub>n+1</sub> = U<sub>n</sub> + 3</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.presentationMode2Explanation">With this method, we start with U<sub>0</sub>=2, then U<sub>1</sub>=U<sub>0</sub>+3=5, then U<sub>2</sub>=U<sub>1</sub>+3=8, and so on.</p>
+                    </div>
+                    
+                    <div class="MH-beginner-tip">
+                        <div class="MH-beginner-tip-title" data-i18n="MH.lesson_Y2Alg_seqArith4.presentationTipTitle">Which Method to Use?</div>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.presentationTipText">• If you need to find term number 1000, the general term formula is faster (you calculate directly).</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.presentationTipText2">• If you need to understand how the sequence grows step by step, the recurrence relation is clearer.</p>
+                    </div>
+                </div>
+                
+                <div class="MH-step">
+                    <h3 data-i18n="MH.lesson_Y2Alg_seqArith4.arithmeticSequencesTitle">2. Arithmetic Sequences</h3>
+                    
+                    <div class="MH-step-by-step">
+                        <h4 data-i18n="MH.lesson_Y2Alg_seqArith4.generalTermTitle">a) General Term</h4>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.generalTermText1">If (U<sub>n</sub>) is an arithmetic sequence with first term U<sub>0</sub> and common difference r, then:</p>
+                        <p class="MH-equation" data-i18n="MH.lesson_Y2Alg_seqArith4.generalTermFormula1">U<sub>n</sub> = U<sub>0</sub> + n × r, for all n ∈ ℕ</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.generalTermText2">We can also find any term from any other term:</p>
+                        <p class="MH-equation" data-i18n="MH.lesson_Y2Alg_seqArith4.generalTermFormula2">U<sub>n</sub> = U<sub>p</sub> + (n - p) × r, where n and p are natural numbers</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.generalTermText3">In particular, if the sequence starts at n=1:</p>
+                        <p class="MH-equation" data-i18n="MH.lesson_Y2Alg_seqArith4.generalTermFormula3">U<sub>n</sub> = U<sub>1</sub> + (n - 1) × r, for all n ∈ ℕ</p>
+                        
+                        <div class="MH-beginner-tip">
+                            <div class="MH-beginner-tip-title" data-i18n="MH.lesson_Y2Alg_seqArith4.generalTermExampleTitle">Example</div>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith4.generalTermExample">If U<sub>0</sub> = 5 and r = 3, then:</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith4.generalTermExample1">• U<sub>1</sub> = 5 + 1×3 = 8</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith4.generalTermExample2">• U<sub>10</sub> = 5 + 10×3 = 35</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith4.generalTermExample3">• If we know U<sub>3</sub> = 14, then U<sub>7</sub> = U<sub>3</sub> + (7-3)×3 = 14 + 4×3 = 26</p>
+                        </div>
+                    </div>
+                    
+                    <div class="MH-step-by-step">
+                        <h4 data-i18n="MH.lesson_Y2Alg_seqArith4.graphicalRepTitle">b) Graphical Representation</h4>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.graphicalRepText1">For an arithmetic sequence (U<sub>n</sub>) with first term U<sub>0</sub> and common difference r:</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.graphicalRepText2">The points A<sub>n</sub> with coordinates (n, U<sub>n</sub>) lie on a straight line.</p>
+                        
+                        <div class="MH-diagram-container">
+                            <div class="MH-diagram-title" data-i18n="MH.lesson_Y2Alg_seqArith4.graphicalDiagramTitle">Graphical Representation</div>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith4.graphicalDiagramText">All points (n, U<sub>n</sub>) are on a straight line with:</p>
+                            <ul>
+                                <li data-i18n="MH.lesson_Y2Alg_seqArith4.graphicalProperty1">Slope = r (the common difference)</li>
+                                <li data-i18n="MH.lesson_Y2Alg_seqArith4.graphicalProperty2">y-intercept = U<sub>0</sub> (the first term)</li>
+                            </ul>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith4.graphicalEquation">Equation of the line: y = r × x + U<sub>0</sub></p>
+                        </div>
+                        
+                        <div class="MH-beginner-tip">
+                            <div class="MH-beginner-tip-title" data-i18n="MH.lesson_Y2Alg_seqArith4.graphicalTipTitle">Why This is Useful</div>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith4.graphicalTipText">The graph helps us visualize if the sequence is increasing (r > 0), decreasing (r < 0), or constant (r = 0). It also helps us estimate values between terms.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="MH-step-by-step">
+                        <h4 data-i18n="MH.lesson_Y2Alg_seqArith4.sumOfTermsTitle">c) Sum of n Consecutive Terms</h4>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.sumOfTermsText1">The sum S of n consecutive terms of an arithmetic sequence is:</p>
+                        <p class="MH-equation" data-i18n="MH.lesson_Y2Alg_seqArith4.sumFormula1">S = n × (first term + last term) ÷ 2</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.sumFormulaDescription">Where:</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.sumDescription1">n = number of terms</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.sumDescription2">first term = the first term of the sum</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.sumDescription3">last term = the last term of the sum</li>
+                        </ul>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.specialCaseTitle">Special Case: Sum of the first n natural numbers</p>
+                        <p class="MH-equation" data-i18n="MH.lesson_Y2Alg_seqArith4.specialCaseFormula">1 + 2 + 3 + ... + n = n × (n + 1) ÷ 2</p>
+                        
+                        <div class="MH-beginner-tip">
+                            <div class="MH-beginner-tip-title" data-i18n="MH.lesson_Y2Alg_seqArith4.sumExampleTitle">Example</div>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith4.sumExample1">Sum of 1 to 100: 100 × (1 + 100) ÷ 2 = 100 × 101 ÷ 2 = 5050</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith4.sumExample2">Sum of 5 + 8 + 11 + 14 + 17:</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith4.sumExample2a">• n = 5 terms</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith4.sumExample2b">• first term = 5</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith4.sumExample2c">• last term = 17</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith4.sumExample2d">• S = 5 × (5 + 17) ÷ 2 = 5 × 22 ÷ 2 = 55</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- XII. Practical Problems -->
+        <section class="MH-section">
+            <div class="MH-activity-number" data-i18n="MH.lesson_Y2Alg_seqArith4.sectionXII">XII. Practical Problems</div>
+            
+            <div class="MH-problem">
+                <div class="MH-problem-title" data-i18n="MH.lesson_Y2Alg_seqArith4.problemATitle">A. The Poplar Waterer</div>
+                
+                <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAText1">The season is dry and a farmer decides to pour a bucket of water at the foot of each of the young poplars that border his field. There are one hundred poplars, in a straight line, spaced two meters apart, and the water well is at the foot of the first tree. The farmer carries only one bucket at a time. He has started the work. His neighbor, a teacher, watches him, leaning on the common wall.</p>
+                
+                <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAText2">"That's some work!"</p>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAText3">"Oh," says the farmer, "it will take me an hour!"</p>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAText4">"An hour! I would have time to walk to town and back before you finish."</p>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAText5">The farmer rolls his eyes! The town is 9 km away, the teacher is educated, sure, but sometimes... I swear...!</p>
+                
+                <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAQuestion">To settle the debate, calculate the distance the farmer will have to travel to water all his poplars.</p>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemASource">(Based on Mathematical Games)</p>
+                
+                <div class="MH-problem-indication">
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAHint">Hint: Think about the sum of terms of an arithmetic sequence.</p>
+                </div>
+                
+                <div class="MH-step-by-step">
+                    <h4 data-i18n="MH.lesson_Y2Alg_seqArith4.problemASolutionTitle">Detailed Step-by-Step Solution</h4>
+                    
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Alg_seqArith4.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                    
+                    <div class="MH-solution" id="solution1">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep1"><strong>Step 1: Understanding the problem</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep2">We need to calculate the total distance the farmer walks. Let's think about what happens:</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep3">There are 100 poplars in a straight line</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep4">They are spaced 2 meters apart</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep5">The well is at the first poplar</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep6">The farmer carries one bucket at a time</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep7">He must go to the well, fill the bucket, walk to a tree, water it, and return to the well</li>
+                        </ul>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep8"><strong>Step 2: Distance to the first tree</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep9">For the first tree (tree number 1):</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep10">Distance from well to tree 1 = 0 meters (it's at the well)</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep11">But he still needs to walk to water it and return to well</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep12">Actually, if the well is at tree 1, he doesn't need to walk to water tree 1</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep13">Wait, let's read carefully: "the water well is at the foot of the first"</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep14">So tree 1 is already at the well, no walking needed for tree 1</li>
+                        </ul>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep15"><strong>Step 3: Understanding the farmer's trips</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep16">For each tree after the first, the farmer must:</p>
+                        <ol>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep17">Walk from the well to the tree with an empty bucket (to water it)</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep18">Walk back to the well to get more water</li>
+                        </ol>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep19">So for tree number k (where k is from 2 to 100), the round trip distance is: 2 × (distance from well to tree k)</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep20"><strong>Step 4: Calculating distances</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep21">The trees are in a straight line, 2 meters apart. If the well is at tree 1:</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep22">Distance from well to tree 2 = 2 meters</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep23">Distance from well to tree 3 = 4 meters</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep24">Distance from well to tree 4 = 6 meters</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep25">...</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep26">Distance from well to tree 100 = 2 × 99 = 198 meters</li>
+                        </ul>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep27"><strong>Step 5: Creating an arithmetic sequence</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep28">The round trip distances form an arithmetic sequence:</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep29">For tree 2: round trip = 2 × 2 = 4 meters</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep30">For tree 3: round trip = 2 × 4 = 8 meters</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep31">For tree 4: round trip = 2 × 6 = 12 meters</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep32">...</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep33">For tree 100: round trip = 2 × 198 = 396 meters</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep34"><strong>Step 6: The sequence</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep35">We have 99 round trips (trees 2 to 100) with distances:</p>
+                        <p class="MH-equation" data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep36">4, 8, 12, 16, ..., 396</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep37">This is an arithmetic sequence with:</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep38">First term a = 4</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep39">Last term b = 396</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep40">Common difference r = 4</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep41">Number of terms n = 99</li>
+                        </ul>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep42"><strong>Step 7: Using the sum formula</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep43">Sum of an arithmetic sequence: S = n × (a + b) ÷ 2</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep44">S = 99 × (4 + 396) ÷ 2</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep45">S = 99 × 400 ÷ 2</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep46">S = 99 × 200</p>
+                        <p class="MH-equation" data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep47">S = 19,800 meters</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep48"><strong>Step 8: Converting to kilometers</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep49">19,800 meters = 19.8 km</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep50"><strong>Step 9: Answer</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep51">The farmer will walk 19.8 km to water all the poplars.</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep52"><strong>Step 10: Checking the teacher's claim</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep53">The teacher said he could walk to town and back (9 km each way = 18 km total) before the farmer finishes.</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemAStep54">Since 19.8 km > 18 km, the farmer is right that it will take more than an hour (assuming normal walking speed).</p>
+                        
+                        <div class="MH-beginner-tip">
+                            <div class="MH-beginner-tip-title" data-i18n="MH.lesson_Y2Alg_seqArith4.problemALearningTitle">What We Learned</div>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemALearningText">This problem shows how arithmetic sequences appear in real life. The farmer's walking distances increase by a constant amount (4 meters) each time, forming an arithmetic sequence.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="MH-problem">
+                <div class="MH-problem-title" data-i18n="MH.lesson_Y2Alg_seqArith4.problemBTitle">B. Even or Odd?</div>
+                
+                <div class="MH-step-by-step">
+                    <h5 data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartATitle">a) First Part</h5>
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAText">A bag contains 20 tokens numbered from 1 to 20. Each time we draw two tokens from the bag and replace them with a single token having the sum of the numbers of the two tokens drawn.</p>
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAQuestion">What is the number written on the last token that remains in the bag?</p>
+                </div>
+                
+                <div class="MH-step-by-step">
+                    <h5 data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBTitle">b) Second Part</h5>
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBText">A bag contains 20 tokens numbered from 1 to 20. Each time we draw two tokens from the bag and replace them with a single token having the positive difference of the numbers of the two tokens drawn.</p>
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBQuestion">Show that the number written on the last token that remains in the bag is even.</p>
+                </div>
+                
+                <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBSource">(Based on Mathematical Games Championship)</p>
+                
+                <div class="MH-problem-indication">
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBHintA">Hint for part a: Think about the sum of terms of an arithmetic sequence.</p>
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBHintB">Hint for part b: Notice that if x and y are two natural numbers, then x + y and x - y have the same parity (both even or both odd).</p>
+                </div>
+                
+                <div class="MH-step-by-step">
+                    <h4 data-i18n="MH.lesson_Y2Alg_seqArith4.problemBSolutionTitle">Detailed Step-by-Step Solution</h4>
+                    
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Alg_seqArith4.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                    
+                    <div class="MH-solution" id="solution2">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep1"><strong>Part a - Step 1: Understanding the process</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep2">We start with tokens numbered 1, 2, 3, ..., 20.</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep3">Each time we:</p>
+                        <ol>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep4">Remove two tokens</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep5">Add their sum as a new token</li>
+                        </ol>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep6">This reduces the number of tokens by 1 each time.</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep7"><strong>Step 2: What happens to the total sum?</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep8">Let's calculate the initial total sum of all tokens:</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep9">Tokens: 1 + 2 + 3 + ... + 20</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep10">This is an arithmetic sequence with:</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep11">First term a = 1</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep12">Last term b = 20</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep13">Number of terms n = 20</li>
+                        </ul>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep14"><strong>Step 3: Calculating the initial sum</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep15">Using the sum formula: S = n × (a + b) ÷ 2</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep16">S = 20 × (1 + 20) ÷ 2</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep17">S = 20 × 21 ÷ 2</p>
+                        <p class="MH-equation" data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep18">S = 210</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep19"><strong>Step 4: What happens when we combine tokens?</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep20">When we remove two tokens with numbers x and y, and add a token with number (x + y):</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep21">Old sum before operation: includes x and y</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep22">New sum after operation: instead of x and y, we have (x + y)</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep23">So the total sum doesn't change! Because (x + y) = x + y</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep24"><strong>Step 5: The sum remains constant</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep25">No matter how many times we combine tokens, the total sum of all tokens in the bag stays the same.</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep26">Initial sum = 210</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep27">Final sum (when only one token remains) = 210</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep28"><strong>Step 6: Answer for part a</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartAStep29">The last token will have the number 210.</p>
+                        
+                        <div class="MH-beginner-tip">
+                            <div class="MH-beginner-tip-title" data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartATipTitle">Important Insight</div>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartATipText">The key observation is that replacing two numbers with their sum doesn't change the total sum. This is why we could solve the problem without doing all the combinations!</p>
+                        </div>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep1"><strong>Part b - Step 1: Understanding the new rule</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep2">Now we replace two tokens x and y with |x - y| (the positive difference).</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep2"><strong>Step 2: Thinking about parity</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep3">Parity means whether a number is even or odd.</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep4">The hint tells us: If x and y have the same parity (both even or both odd), then x - y is even.</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep5">If x and y have different parity (one even, one odd), then x - y is odd.</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep6">But wait, we need to check x + y too...</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep7"><strong>Step 3: Testing the hint</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep8">Let's test with examples:</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep9">If x=4 (even) and y=2 (even): x+y=6 (even), x-y=2 (even) - same parity ✓</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep10">If x=5 (odd) and y=3 (odd): x+y=8 (even), x-y=2 (even) - same parity ✓</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep11">If x=6 (even) and y=3 (odd): x+y=9 (odd), x-y=3 (odd) - same parity ✓</li>
+                        </ul>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep12">The hint is correct: x+y and x-y always have the same parity!</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep13"><strong>Step 4: Why this helps</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep14">We want to prove the final token is even. Let's think about what happens to parity when we combine tokens.</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep15"><strong>Step 5: Initial parity of the sum</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep16">Initial tokens: 1, 2, 3, ..., 20</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep17">Let's count how many odd numbers: 1, 3, 5, 7, 9, 11, 13, 15, 17, 19 → 10 odd numbers</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep18">Sum of odd numbers: odd + odd = even, even + odd = odd</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep19">With 10 odd numbers: odd+odd=even, even+odd=odd, ...</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep20">Actually, let's calculate the sum of the first 10 odd numbers:</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep21">1 + 3 + 5 + ... + 19</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep22">This is an arithmetic sequence with a=1, d=2, n=10</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep23">Sum = 10 × (1 + 19) ÷ 2 = 10 × 20 ÷ 2 = 100 (even)</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep24">The even numbers (2, 4, 6, ..., 20) sum to: 10 × (2 + 20) ÷ 2 = 10 × 22 ÷ 2 = 110 (even)</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep25">Total sum = 100 + 110 = 210 (even)</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep26"><strong>Step 6: Parity remains even</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep27">When we replace x and y with |x-y|:</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep28">The parity of the new token is the same as the parity of x+y (from the hint)</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep29">But x+y has the same parity as the sum of all tokens at that moment!</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep30">So the parity of the sum of all tokens remains constant.</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep31">Initial sum parity = even</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep32">Final sum parity (when only one token) = even</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep33"><strong>Step 7: Conclusion for part b</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep34">The last token has a value equal to the final sum, which is even.</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBStep35">Therefore, the number on the last token is even.</p>
+                        
+                        <div class="MH-beginner-tip">
+                            <div class="MH-beginner-tip-title" data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBTipTitle">Key Concept</div>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemBPartBTipText">This problem teaches us about invariants - properties that don't change during a process. In part a, the total sum was invariant. In part b, the parity of the total sum was invariant.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="MH-problem">
+                <div class="MH-problem-title" data-i18n="MH.lesson_Y2Alg_seqArith4.problemCTitle">C. Common Term in Three Sequences</div>
+                
+                <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCText1">(U<sub>n</sub>) is an arithmetic sequence with first term 6 and common difference 11.</p>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCText2">(V<sub>n</sub>) is an arithmetic sequence with first term -8 and common difference 13.</p>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCText3">(W<sub>n</sub>) is an arithmetic sequence with first term 29 and common difference 17.</p>
+                
+                <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCQuestion">What is the smallest natural number that is a term of all three sequences (U<sub>n</sub>), (V<sub>n</sub>), and (W<sub>n</sub>)?</p>
+                
+                <div class="MH-problem-indication">
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCHint">Hint: Verify that U<sub>n</sub> + 5 is a multiple of 11.</p>
+                </div>
+                
+                <div class="MH-step-by-step">
+                    <h4 data-i18n="MH.lesson_Y2Alg_seqArith4.problemCSolutionTitle">Detailed Step-by-Step Solution</h4>
+                    
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Alg_seqArith4.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                    
+                    <div class="MH-solution" id="solution3">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep1"><strong>Step 1: Writing the general terms</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep2">For an arithmetic sequence: U<sub>n</sub> = first term + n × difference</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep3">For sequence (U<sub>n</sub>): U<sub>0</sub> = 6, difference = 11</p>
+                        <p class="MH-equation" data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep4">U<sub>n</sub> = 6 + 11n</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep5">For sequence (V<sub>n</sub>): V<sub>0</sub> = -8, difference = 13</p>
+                        <p class="MH-equation" data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep6">V<sub>n</sub> = -8 + 13n</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep7">For sequence (W<sub>n</sub>): W<sub>0</sub> = 29, difference = 17</p>
+                        <p class="MH-equation" data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep8">W<sub>n</sub> = 29 + 17n</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep9"><strong>Step 2: Using the hint</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep10">The hint says: U<sub>n</sub> + 5 is a multiple of 11. Let's check:</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep11">U<sub>n</sub> = 6 + 11n</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep12">U<sub>n</sub> + 5 = (6 + 11n) + 5 = 11 + 11n = 11(1 + n)</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep13">Yes! U<sub>n</sub> + 5 = 11(n + 1), which is clearly a multiple of 11.</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep14"><strong>Step 3: What does this mean?</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep15">If a number x is in sequence (U<sub>n</sub>), then x + 5 must be a multiple of 11.</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep16">So x = multiple of 11 - 5</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep17">Or: x ≡ -5 (mod 11) which means x ≡ 6 (mod 11) because -5 + 11 = 6</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep18"><strong>Step 4: Finding similar patterns for other sequences</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep19">Let's check V<sub>n</sub> + something:</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep20">V<sub>n</sub> = -8 + 13n</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep21">V<sub>n</sub> + 8 = 13n, which is a multiple of 13</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep22">So if x is in (V<sub>n</sub>), then x + 8 is a multiple of 13</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep23">Or: x ≡ -8 (mod 13) which means x ≡ 5 (mod 13) because -8 + 13 = 5</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep24">Now for W<sub>n</sub>:</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep25">W<sub>n</sub> = 29 + 17n</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep26">W<sub>n</sub> - 12 = 17 + 17n = 17(1 + n), which is a multiple of 17</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep27">So if x is in (W<sub>n</sub>), then x - 12 is a multiple of 17</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep28">Or: x ≡ 12 (mod 17)</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep29"><strong>Step 5: Putting it all together</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep30">We need a natural number x that satisfies:</p>
+                        <ol>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep31">x ≡ 6 (mod 11) [from sequence U]</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep32">x ≡ 5 (mod 13) [from sequence V]</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep33">x ≡ 12 (mod 17) [from sequence W]</li>
+                        </ol>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep34"><strong>Step 6: Solving the system of congruences</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep35">We need the smallest natural number satisfying all three conditions.</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep36"><strong>Step 7: Trying values</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep37">From condition 1: x = 11k + 6 for some integer k ≥ 0</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep38">Let's check values of k:</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep39">k=0: x=6 → check condition 2: 6 mod 13 = 6, not 5</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep40">k=1: x=17 → 17 mod 13 = 4, not 5</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep41">k=2: x=28 → 28 mod 13 = 2, not 5</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep42">k=3: x=39 → 39 mod 13 = 0, not 5</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep43">k=4: x=50 → 50 mod 13 = 11, not 5</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep44">k=5: x=61 → 61 mod 13 = 9, not 5</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep45">k=6: x=72 → 72 mod 13 = 7, not 5</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep46">k=7: x=83 → 83 mod 13 = 5 ✓ (good for condition 2!)</li>
+                        </ul>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep47">Now x=83 also needs to satisfy condition 3: x ≡ 12 (mod 17)</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep48">83 mod 17 = 83 - 4×17 = 83 - 68 = 15, not 12</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep49"><strong>Step 8: Finding more candidates</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep50">We need numbers that are ≡ 6 (mod 11) and ≡ 5 (mod 13).</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep51">The next one after 83 will be 83 + LCM(11,13) = 83 + 143 = 226</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep52">Check 226 mod 17: 226 ÷ 17 = 13 remainder 5, not 12</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep53">Next: 226 + 143 = 369</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep54">369 mod 17: 369 ÷ 17 = 21 remainder 12 ✓ (369 - 21×17 = 369 - 357 = 12)</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep55"><strong>Step 9: Verifying 369</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep56">Check all conditions:</p>
+                        <ol>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep57">369 mod 11 = 369 - 33×11 = 369 - 363 = 6 ✓</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep58">369 mod 13 = 369 - 28×13 = 369 - 364 = 5 ✓</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep59">369 mod 17 = 12 ✓ (we already checked)</li>
+                        </ol>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep60"><strong>Step 10: Checking if it's a natural number in each sequence</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep61">For (U<sub>n</sub>): U<sub>n</sub> = 6 + 11n = 369 → 11n = 363 → n = 33 ✓</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep62">For (V<sub>n</sub>): V<sub>n</sub> = -8 + 13n = 369 → 13n = 377 → n = 29 ✓</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep63">For (W<sub>n</sub>): W<sub>n</sub> = 29 + 17n = 369 → 17n = 340 → n = 20 ✓</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep64"><strong>Step 11: Checking for smaller solutions</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep65">We should check if there's a smaller number. Let's check the pattern:</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep66">We found 369 = 83 + 2×143</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep67">What about 83 - 143 = -60 (not natural)</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep68">Or check numbers less than 83 that satisfy conditions 1 and 2:</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep69">The only numbers ≡ 6 (mod 11) and ≡ 5 (mod 13) less than 83 would be negative.</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep70">So 369 is indeed the smallest natural solution.</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep71"><strong>Step 12: Answer</strong></p>
+                        <p class="MH-equation" data-i18n="MH.lesson_Y2Alg_seqArith4.problemCStep72">The smallest natural number that is in all three sequences is 369.</p>
+                        
+                        <div class="MH-beginner-tip">
+                            <div class="MH-beginner-tip-title" data-i18n="MH.lesson_Y2Alg_seqArith4.problemCTipTitle">What We Learned</div>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith4.problemCTipText">This problem combines arithmetic sequences with modular arithmetic. Finding common terms in multiple sequences often involves solving a system of congruences, which is an important concept in number theory.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Conclusion -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Alg_seqArith4.conclusionTitle">Conclusion</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Alg_seqArith4.finalThoughtsTitle">Final Thoughts</h3>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith4.finalThoughtsText">Congratulations! You have completed the four-part series on arithmetic sequences. You have learned:</p>
+                <ol>
+                    <li data-i18n="MH.lesson_Y2Alg_seqArith4.learned1">How to recognize arithmetic sequences</li>
+                    <li data-i18n="MH.lesson_Y2Alg_seqArith4.learned2">How to find the general term of an arithmetic sequence</li>
+                    <li data-i18n="MH.lesson_Y2Alg_seqArith4.learned3">How to represent arithmetic sequences graphically</li>
+                    <li data-i18n="MH.lesson_Y2Alg_seqArith4.learned4">How to calculate the sum of consecutive terms</li>
+                    <li data-i18n="MH.lesson_Y2Alg_seqArith4.learned5">How to apply these concepts to solve practical problems</li>
+                </ol>
+                
+                <p data-i18n="MH.lesson_Y2Alg_seqArith4.encouragement">Arithmetic sequences are everywhere in mathematics and in the real world. The skills you've learned will help you in many areas of study and in understanding patterns in daily life. Keep practicing and exploring mathematics!</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript Files -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+    
+    <script>
+        // ARITHMETIC SEQUENCES PART IV TRANSLATIONS
+        const seqArith4Translations = {
+            'en': {
+                // General translations
+                'MH.general.homeTooltip': 'Go to Homepage',
+                'MH.general.install': 'Install App',
+                'MH.general.installSuccess': 'Mathematics Hub installed successfully!',
+                'MH.general.enableNotifications': 'Enable Notifications',
+                'MH.general.notificationEnabled': 'Notifications enabled! You will now receive updates.',
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Theme',
+                'MH.general.language': 'Language',
+                'MH.lesson_Y2Alg_seqArith4.showSolution': 'Show Solution',
+                'MH.lesson_Y2Alg_seqArith4.hideSolution': 'Hide Solution',
+                
+                // Lesson specific translations
+                'MH.lesson_Y2Alg_seqArith4.title': 'Arithmetic Sequences: Part IV',
+                'MH.lesson_Y2Alg_seqArith4.subtitle': 'Summary and Practical Problems',
+                'MH.lesson_Y2Alg_seqArith4.introduction': 'Introduction',
+                'MH.lesson_Y2Alg_seqArith4.introText1': 'In this final lesson on arithmetic sequences, we will review all the concepts we\'ve learned and apply them to solve interesting real-world problems. This will help you see how mathematics is used in everyday life!',
+                'MH.lesson_Y2Alg_seqArith4.introText2': 'We\'ll start with a comprehensive summary of everything about arithmetic sequences, then solve three practical problems that will challenge your understanding.',
+                'MH.lesson_Y2Alg_seqArith4.beginnerTip': 'Tip for Beginners',
+                'MH.lesson_Y2Alg_seqArith4.beginnerTipText': 'Don\'t worry if you don\'t remember everything! We\'ll review all the important formulas. The key is to take your time and think step by step. Each practical problem will show you how to use what you\'ve learned.',
+                
+                // Section XI
+                'MH.lesson_Y2Alg_seqArith4.sectionXI': 'XI. Summary',
+                'MH.lesson_Y2Alg_seqArith4.summaryTitle': 'Complete Summary of Arithmetic Sequences',
+                
+                'MH.lesson_Y2Alg_seqArith4.presentationModesTitle': '1. Ways to Present a Sequence',
+                'MH.lesson_Y2Alg_seqArith4.presentationModesText': 'A sequence can be defined in two main ways:',
+                
+                'MH.lesson_Y2Alg_seqArith4.presentationMode1Title': 'a) By its General Term',
+                'MH.lesson_Y2Alg_seqArith4.presentationMode1Text': 'This means we have a formula that gives us any term directly. For example:',
+                'MH.lesson_Y2Alg_seqArith4.presentationMode1Example': String.raw`U<sub>n</sub> = 3n + 2`,
+                'MH.lesson_Y2Alg_seqArith4.presentationMode1Explanation': 'With this formula, we can find U<sub>0</sub> by putting n=0, U<sub>1</sub> by putting n=1, and so on.',
+                
+                'MH.lesson_Y2Alg_seqArith4.presentationMode2Title': 'b) By Recurrence Relation',
+                'MH.lesson_Y2Alg_seqArith4.presentationMode2Text': 'This means we know the first term and a rule to get each term from the previous one. For example:',
+                'MH.lesson_Y2Alg_seqArith4.presentationMode2Example': String.raw`U<sub>0</sub> = 2 and U<sub>n+1</sub> = U<sub>n</sub> + 3`,
+                'MH.lesson_Y2Alg_seqArith4.presentationMode2Explanation': 'With this method, we start with U<sub>0</sub>=2, then U<sub>1</sub>=U<sub>0</sub>+3=5, then U<sub>2</sub>=U<sub>1</sub>+3=8, and so on.',
+                
+                'MH.lesson_Y2Alg_seqArith4.presentationTipTitle': 'Which Method to Use?',
+                'MH.lesson_Y2Alg_seqArith4.presentationTipText': '• If you need to find term number 1000, the general term formula is faster (you calculate directly).',
+                'MH.lesson_Y2Alg_seqArith4.presentationTipText2': '• If you need to understand how the sequence grows step by step, the recurrence relation is clearer.',
+                
+                'MH.lesson_Y2Alg_seqArith4.arithmeticSequencesTitle': '2. Arithmetic Sequences',
+                
+                'MH.lesson_Y2Alg_seqArith4.generalTermTitle': 'a) General Term',
+                'MH.lesson_Y2Alg_seqArith4.generalTermText1': String.raw`If (U<sub>n</sub>) is an arithmetic sequence with first term U<sub>0</sub> and common difference r, then:`,
+                'MH.lesson_Y2Alg_seqArith4.generalTermFormula1': String.raw`U<sub>n</sub> = U<sub>0</sub> + n × r, for all n ∈ ℕ`,
+                'MH.lesson_Y2Alg_seqArith4.generalTermText2': 'We can also find any term from any other term:',
+                'MH.lesson_Y2Alg_seqArith4.generalTermFormula2': String.raw`U<sub>n</sub> = U<sub>p</sub> + (n - p) × r, where n and p are natural numbers`,
+                'MH.lesson_Y2Alg_seqArith4.generalTermText3': 'In particular, if the sequence starts at n=1:',
+                'MH.lesson_Y2Alg_seqArith4.generalTermFormula3': String.raw`U<sub>n</sub> = U<sub>1</sub> + (n - 1) × r, for all n ∈ ℕ`,
+                
+                'MH.lesson_Y2Alg_seqArith4.generalTermExampleTitle': 'Example',
+                'MH.lesson_Y2Alg_seqArith4.generalTermExample': String.raw`If U<sub>0</sub> = 5 and r = 3, then:`,
+                'MH.lesson_Y2Alg_seqArith4.generalTermExample1': String.raw`• U<sub>1</sub> = 5 + 1×3 = 8`,
+                'MH.lesson_Y2Alg_seqArith4.generalTermExample2': String.raw`• U<sub>10</sub> = 5 + 10×3 = 35`,
+                'MH.lesson_Y2Alg_seqArith4.generalTermExample3': String.raw`• If we know U<sub>3</sub> = 14, then U<sub>7</sub> = U<sub>3</sub> + (7-3)×3 = 14 + 4×3 = 26`,
+                
+                'MH.lesson_Y2Alg_seqArith4.graphicalRepTitle': 'b) Graphical Representation',
+                'MH.lesson_Y2Alg_seqArith4.graphicalRepText1': String.raw`For an arithmetic sequence (U<sub>n</sub>) with first term U<sub>0</sub> and common difference r:`,
+                'MH.lesson_Y2Alg_seqArith4.graphicalRepText2': String.raw`The points A<sub>n</sub> with coordinates (n, U<sub>n</sub>) lie on a straight line.`,
+                
+                'MH.lesson_Y2Alg_seqArith4.graphicalDiagramTitle': 'Graphical Representation',
+                'MH.lesson_Y2Alg_seqArith4.graphicalDiagramText': 'All points (n, U<sub>n</sub>) are on a straight line with:',
+                'MH.lesson_Y2Alg_seqArith4.graphicalProperty1': 'Slope = r (the common difference)',
+                'MH.lesson_Y2Alg_seqArith4.graphicalProperty2': String.raw`y-intercept = U<sub>0</sub> (the first term)`,
+                'MH.lesson_Y2Alg_seqArith4.graphicalEquation': String.raw`Equation of the line: y = r × x + U<sub>0</sub>`,
+                
+                'MH.lesson_Y2Alg_seqArith4.graphicalTipTitle': 'Why This is Useful',
+                'MH.lesson_Y2Alg_seqArith4.graphicalTipText': 'The graph helps us visualize if the sequence is increasing (r > 0), decreasing (r < 0), or constant (r = 0). It also helps us estimate values between terms.',
+                
+                'MH.lesson_Y2Alg_seqArith4.sumOfTermsTitle': 'c) Sum of n Consecutive Terms',
+                'MH.lesson_Y2Alg_seqArith4.sumOfTermsText1': 'The sum S of n consecutive terms of an arithmetic sequence is:',
+                'MH.lesson_Y2Alg_seqArith4.sumFormula1': 'S = n × (first term + last term) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith4.sumFormulaDescription': 'Where:',
+                'MH.lesson_Y2Alg_seqArith4.sumDescription1': 'n = number of terms',
+                'MH.lesson_Y2Alg_seqArith4.sumDescription2': 'first term = the first term of the sum',
+                'MH.lesson_Y2Alg_seqArith4.sumDescription3': 'last term = the last term of the sum',
+                
+                'MH.lesson_Y2Alg_seqArith4.specialCaseTitle': 'Special Case: Sum of the first n natural numbers',
+                'MH.lesson_Y2Alg_seqArith4.specialCaseFormula': '1 + 2 + 3 + ... + n = n × (n + 1) ÷ 2',
+                
+                'MH.lesson_Y2Alg_seqArith4.sumExampleTitle': 'Example',
+                'MH.lesson_Y2Alg_seqArith4.sumExample1': 'Sum of 1 to 100: 100 × (1 + 100) ÷ 2 = 100 × 101 ÷ 2 = 5050',
+                'MH.lesson_Y2Alg_seqArith4.sumExample2': 'Sum of 5 + 8 + 11 + 14 + 17:',
+                'MH.lesson_Y2Alg_seqArith4.sumExample2a': '• n = 5 terms',
+                'MH.lesson_Y2Alg_seqArith4.sumExample2b': '• first term = 5',
+                'MH.lesson_Y2Alg_seqArith4.sumExample2c': '• last term = 17',
+                'MH.lesson_Y2Alg_seqArith4.sumExample2d': '• S = 5 × (5 + 17) ÷ 2 = 5 × 22 ÷ 2 = 55',
+                
+                // Section XII
+                'MH.lesson_Y2Alg_seqArith4.sectionXII': 'XII. Practical Problems',
+                
+                'MH.lesson_Y2Alg_seqArith4.problemATitle': 'A. The Poplar Waterer',
+                'MH.lesson_Y2Alg_seqArith4.problemAText1': 'The season is dry and a farmer decides to pour a bucket of water at the foot of each of the young poplars that border his field. There are one hundred poplars, in a straight line, spaced two meters apart, and the water well is at the foot of the first tree. The farmer carries only one bucket at a time. He has started the work. His neighbor, a teacher, watches him, leaning on the common wall.',
+                'MH.lesson_Y2Alg_seqArith4.problemAText2': '"That\'s some work!"',
+                'MH.lesson_Y2Alg_seqArith4.problemAText3': '"Oh," says the farmer, "it will take me an hour!"',
+                'MH.lesson_Y2Alg_seqArith4.problemAText4': '"An hour! I would have time to walk to town and back before you finish."',
+                'MH.lesson_Y2Alg_seqArith4.problemAText5': 'The farmer rolls his eyes! The town is 9 km away, the teacher is educated, sure, but sometimes... I swear...!',
+                'MH.lesson_Y2Alg_seqArith4.problemAQuestion': 'To settle the debate, calculate the distance the farmer will have to travel to water all his poplars.',
+                'MH.lesson_Y2Alg_seqArith4.problemASource': '(Based on Mathematical Games)',
+                'MH.lesson_Y2Alg_seqArith4.problemAHint': 'Hint: Think about the sum of terms of an arithmetic sequence.',
+                
+                'MH.lesson_Y2Alg_seqArith4.problemASolutionTitle': 'Detailed Step-by-Step Solution',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep1': String.raw`<strong>Step 1: Understanding the problem</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemAStep2': 'We need to calculate the total distance the farmer walks. Let\'s think about what happens:',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep3': 'There are 100 poplars in a straight line',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep4': 'They are spaced 2 meters apart',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep5': 'The well is at the first poplar',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep6': 'The farmer carries one bucket at a time',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep7': 'He must go to the well, fill the bucket, walk to a tree, water it, and return to the well',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep8': String.raw`<strong>Step 2: Distance to the first tree</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemAStep9': 'For the first tree (tree number 1):',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep10': 'Distance from well to tree 1 = 0 meters (it\'s at the well)',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep11': 'But he still needs to walk to water it and return to well',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep12': 'Actually, if the well is at tree 1, he doesn\'t need to walk to water tree 1',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep13': 'Wait, let\'s read carefully: "the water well is at the foot of the first"',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep14': 'So tree 1 is already at the well, no walking needed for tree 1',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep15': String.raw`<strong>Step 3: Understanding the farmer\'s trips</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemAStep16': 'For each tree after the first, the farmer must:',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep17': '1. Walk from the well to the tree with an empty bucket (to water it)',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep18': '2. Walk back to the well to get more water',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep19': 'So for tree number k (where k is from 2 to 100), the round trip distance is: 2 × (distance from well to tree k)',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep20': String.raw`<strong>Step 4: Calculating distances</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemAStep21': 'The trees are in a straight line, 2 meters apart. If the well is at tree 1:',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep22': 'Distance from well to tree 2 = 2 meters',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep23': 'Distance from well to tree 3 = 4 meters',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep24': 'Distance from well to tree 4 = 6 meters',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep25': '...',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep26': 'Distance from well to tree 100 = 2 × 99 = 198 meters',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep27': String.raw`<strong>Step 5: Creating an arithmetic sequence</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemAStep28': 'The round trip distances form an arithmetic sequence:',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep29': 'For tree 2: round trip = 2 × 2 = 4 meters',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep30': 'For tree 3: round trip = 2 × 4 = 8 meters',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep31': 'For tree 4: round trip = 2 × 6 = 12 meters',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep32': '...',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep33': 'For tree 100: round trip = 2 × 198 = 396 meters',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep34': String.raw`<strong>Step 6: The sequence</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemAStep35': 'We have 99 round trips (trees 2 to 100) with distances:',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep36': '4, 8, 12, 16, ..., 396',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep37': 'This is an arithmetic sequence with:',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep38': 'First term a = 4',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep39': 'Last term b = 396',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep40': 'Common difference r = 4',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep41': 'Number of terms n = 99',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep42': String.raw`<strong>Step 7: Using the sum formula</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemAStep43': 'Sum of an arithmetic sequence: S = n × (a + b) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep44': 'S = 99 × (4 + 396) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep45': 'S = 99 × 400 ÷ 2',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep46': 'S = 99 × 200',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep47': 'S = 19,800 meters',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep48': String.raw`<strong>Step 8: Converting to kilometers</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemAStep49': '19,800 meters = 19.8 km',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep50': String.raw`<strong>Step 9: Answer</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemAStep51': 'The farmer will walk 19.8 km to water all the poplars.',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep52': String.raw`<strong>Step 10: Checking the teacher\'s claim</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemAStep53': 'The teacher said he could walk to town and back (9 km each way = 18 km total) before the farmer finishes.',
+                'MH.lesson_Y2Alg_seqArith4.problemAStep54': 'Since 19.8 km > 18 km, the farmer is right that it will take more than an hour (assuming normal walking speed).',
+                
+                'MH.lesson_Y2Alg_seqArith4.problemALearningTitle': 'What We Learned',
+                'MH.lesson_Y2Alg_seqArith4.problemALearningText': 'This problem shows how arithmetic sequences appear in real life. The farmer\'s walking distances increase by a constant amount (4 meters) each time, forming an arithmetic sequence.',
+                
+                'MH.lesson_Y2Alg_seqArith4.problemBTitle': 'B. Even or Odd?',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartATitle': 'a) First Part',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAText': 'A bag contains 20 tokens numbered from 1 to 20. Each time we draw two tokens from the bag and replace them with a single token having the sum of the numbers of the two tokens drawn.',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAQuestion': 'What is the number written on the last token that remains in the bag?',
+                
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBTitle': 'b) Second Part',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBText': 'A bag contains 20 tokens numbered from 1 to 20. Each time we draw two tokens from the bag and replace them with a single token having the positive difference of the numbers of the two tokens drawn.',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBQuestion': 'Show that the number written on the last token that remains in the bag is even.',
+                
+                'MH.lesson_Y2Alg_seqArith4.problemBSource': '(Based on Mathematical Games Championship)',
+                'MH.lesson_Y2Alg_seqArith4.problemBHintA': 'Hint for part a: Think about the sum of terms of an arithmetic sequence.',
+                'MH.lesson_Y2Alg_seqArith4.problemBHintB': 'Hint for part b: Notice that if x and y are two natural numbers, then x + y and x - y have the same parity (both even or both odd).',
+                
+                'MH.lesson_Y2Alg_seqArith4.problemBSolutionTitle': 'Detailed Step-by-Step Solution',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep1': String.raw`<strong>Part a - Step 1: Understanding the process</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep2': 'We start with tokens numbered 1, 2, 3, ..., 20.',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep3': 'Each time we:',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep4': '1. Remove two tokens',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep5': '2. Add their sum as a new token',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep6': 'This reduces the number of tokens by 1 each time.',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep7': String.raw`<strong>Step 2: What happens to the total sum?</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep8': 'Let\'s calculate the initial total sum of all tokens:',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep9': 'Tokens: 1 + 2 + 3 + ... + 20',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep10': 'This is an arithmetic sequence with:',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep11': 'First term a = 1',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep12': 'Last term b = 20',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep13': 'Number of terms n = 20',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep14': String.raw`<strong>Step 3: Calculating the initial sum</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep15': 'Using the sum formula: S = n × (a + b) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep16': 'S = 20 × (1 + 20) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep17': 'S = 20 × 21 ÷ 2',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep18': 'S = 210',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep19': String.raw`<strong>Step 4: What happens when we combine tokens?</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep20': 'When we remove two tokens with numbers x and y, and add a token with number (x + y):',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep21': 'Old sum before operation: includes x and y',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep22': 'New sum after operation: instead of x and y, we have (x + y)',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep23': 'So the total sum doesn\'t change! Because (x + y) = x + y',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep24': String.raw`<strong>Step 5: The sum remains constant</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep25': 'No matter how many times we combine tokens, the total sum of all tokens in the bag stays the same.',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep26': 'Initial sum = 210',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep27': 'Final sum (when only one token remains) = 210',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep28': String.raw`<strong>Step 6: Answer for part a</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemBPartAStep29': 'The last token will have the number 210.',
+                
+                'MH.lesson_Y2Alg_seqArith4.problemBPartATipTitle': 'Important Insight',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartATipText': 'The key observation is that replacing two numbers with their sum doesn\'t change the total sum. This is why we could solve the problem without doing all the combinations!',
+                
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep1': String.raw`<strong>Part b - Step 1: Understanding the new rule</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep2': 'Now we replace two tokens x and y with |x - y| (the positive difference).',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep3': String.raw`<strong>Step 2: Thinking about parity</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep3': 'Parity means whether a number is even or odd.',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep4': 'The hint tells us: If x and y have the same parity (both even or both odd), then x - y is even.',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep5': 'If x and y have different parity (one even, one odd), then x - y is odd.',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep6': 'But wait, we need to check x + y too...',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep7': String.raw`<strong>Step 3: Testing the hint</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep8': 'Let\'s test with examples:',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep9': 'If x=4 (even) and y=2 (even): x+y=6 (even), x-y=2 (even) - same parity ✓',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep10': 'If x=5 (odd) and y=3 (odd): x+y=8 (even), x-y=2 (even) - same parity ✓',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep11': 'If x=6 (even) and y=3 (odd): x+y=9 (odd), x-y=3 (odd) - same parity ✓',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep12': 'The hint is correct: x+y and x-y always have the same parity!',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep13': String.raw`<strong>Step 4: Why this helps</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep14': 'We want to prove the final token is even. Let\'s think about what happens to parity when we combine tokens.',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep15': String.raw`<strong>Step 5: Initial parity of the sum</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep16': 'Initial tokens: 1, 2, 3, ..., 20',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep17': 'Let\'s count how many odd numbers: 1, 3, 5, 7, 9, 11, 13, 15, 17, 19 → 10 odd numbers',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep18': 'Sum of odd numbers: odd + odd = even, even + odd = odd',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep19': 'With 10 odd numbers: odd+odd=even, even+odd=odd, ...',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep20': 'Actually, let\'s calculate the sum of the first 10 odd numbers:',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep21': '1 + 3 + 5 + ... + 19',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep22': 'This is an arithmetic sequence with a=1, d=2, n=10',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep23': 'Sum = 10 × (1 + 19) ÷ 2 = 10 × 20 ÷ 2 = 100 (even)',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep24': 'The even numbers (2, 4, 6, ..., 20) sum to: 10 × (2 + 20) ÷ 2 = 10 × 22 ÷ 2 = 110 (even)',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep25': 'Total sum = 100 + 110 = 210 (even)',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep26': String.raw`<strong>Step 6: Parity remains even</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep27': 'When we replace x and y with |x-y|:',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep28': 'The parity of the new token is the same as the parity of x+y (from the hint)',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep29': 'But x+y has the same parity as the sum of all tokens at that moment!',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep30': 'So the parity of the sum of all tokens remains constant.',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep31': 'Initial sum parity = even',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep32': 'Final sum parity (when only one token) = even',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep33': String.raw`<strong>Step 7: Conclusion for part b</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep34': 'The last token has a value equal to the final sum, which is even.',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBStep35': 'Therefore, the number on the last token is even.',
+                
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBTipTitle': 'Key Concept',
+                'MH.lesson_Y2Alg_seqArith4.problemBPartBTipText': 'This problem teaches us about invariants - properties that don\'t change during a process. In part a, the total sum was invariant. In part b, the parity of the total sum was invariant.',
+                
+                'MH.lesson_Y2Alg_seqArith4.problemCTitle': 'C. Common Term in Three Sequences',
+                'MH.lesson_Y2Alg_seqArith4.problemCText1': String.raw`(U<sub>n</sub>) is an arithmetic sequence with first term 6 and common difference 11.`,
+                'MH.lesson_Y2Alg_seqArith4.problemCText2': String.raw`(V<sub>n</sub>) is an arithmetic sequence with first term -8 and common difference 13.`,
+                'MH.lesson_Y2Alg_seqArith4.problemCText3': String.raw`(W<sub>n</sub>) is an arithmetic sequence with first term 29 and common difference 17.`,
+                'MH.lesson_Y2Alg_seqArith4.problemCQuestion': String.raw`What is the smallest natural number that is a term of all three sequences (U<sub>n</sub>), (V<sub>n</sub>), and (W<sub>n</sub>)?`,
+                'MH.lesson_Y2Alg_seqArith4.problemCHint': String.raw`Hint: Verify that U<sub>n</sub> + 5 is a multiple of 11.`,
+                
+                'MH.lesson_Y2Alg_seqArith4.problemCSolutionTitle': 'Detailed Step-by-Step Solution',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep1': String.raw`<strong>Step 1: Writing the general terms</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep2': 'For an arithmetic sequence: U<sub>n</sub> = first term + n × difference',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep3': String.raw`For sequence (U<sub>n</sub>): U<sub>0</sub> = 6, difference = 11`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep4': String.raw`U<sub>n</sub> = 6 + 11n`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep5': String.raw`For sequence (V<sub>n</sub>): V<sub>0</sub> = -8, difference = 13`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep6': String.raw`V<sub>n</sub> = -8 + 13n`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep7': String.raw`For sequence (W<sub>n</sub>): W<sub>0</sub> = 29, difference = 17`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep8': String.raw`W<sub>n</sub> = 29 + 17n`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep9': String.raw`<strong>Step 2: Using the hint</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep10': String.raw`The hint says: U<sub>n</sub> + 5 is a multiple of 11. Let\'s check:`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep11': String.raw`U<sub>n</sub> = 6 + 11n`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep12': String.raw`U<sub>n</sub> + 5 = (6 + 11n) + 5 = 11 + 11n = 11(1 + n)`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep13': String.raw`Yes! U<sub>n</sub> + 5 = 11(n + 1), which is clearly a multiple of 11.`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep14': String.raw`<strong>Step 3: What does this mean?</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep15': String.raw`If a number x is in sequence (U<sub>n</sub>), then x + 5 must be a multiple of 11.`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep16': 'So x = multiple of 11 - 5',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep17': 'Or: x ≡ -5 (mod 11) which means x ≡ 6 (mod 11) because -5 + 11 = 6',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep18': String.raw`<strong>Step 4: Finding similar patterns for other sequences</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep19': String.raw`Let\'s check V<sub>n</sub> + something:`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep20': String.raw`V<sub>n</sub> = -8 + 13n`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep21': String.raw`V<sub>n</sub> + 8 = 13n, which is a multiple of 13`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep22': String.raw`So if x is in (V<sub>n</sub>), then x + 8 is a multiple of 13`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep23': 'Or: x ≡ -8 (mod 13) which means x ≡ 5 (mod 13) because -8 + 13 = 5',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep24': String.raw`Now for W<sub>n</sub>:`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep25': String.raw`W<sub>n</sub> = 29 + 17n`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep26': String.raw`W<sub>n</sub> - 12 = 17 + 17n = 17(1 + n), which is a multiple of 17`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep27': String.raw`So if x is in (W<sub>n</sub>), then x - 12 is a multiple of 17`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep28': 'Or: x ≡ 12 (mod 17)',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep29': String.raw`<strong>Step 5: Putting it all together</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep30': 'We need a natural number x that satisfies:',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep31': '1. x ≡ 6 (mod 11) [from sequence U]',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep32': '2. x ≡ 5 (mod 13) [from sequence V]',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep33': '3. x ≡ 12 (mod 17) [from sequence W]',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep34': String.raw`<strong>Step 6: Solving the system of congruences</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep35': 'We need the smallest natural number satisfying all three conditions.',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep36': String.raw`<strong>Step 7: Trying values</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep37': 'From condition 1: x = 11k + 6 for some integer k ≥ 0',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep38': 'Let\'s check values of k:',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep39': 'k=0: x=6 → check condition 2: 6 mod 13 = 6, not 5',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep40': 'k=1: x=17 → 17 mod 13 = 4, not 5',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep41': 'k=2: x=28 → 28 mod 13 = 2, not 5',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep42': 'k=3: x=39 → 39 mod 13 = 0, not 5',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep43': 'k=4: x=50 → 50 mod 13 = 11, not 5',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep44': 'k=5: x=61 → 61 mod 13 = 9, not 5',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep45': 'k=6: x=72 → 72 mod 13 = 7, not 5',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep46': 'k=7: x=83 → 83 mod 13 = 5 ✓ (good for condition 2!)',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep47': 'Now x=83 also needs to satisfy condition 3: x ≡ 12 (mod 17)',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep48': '83 mod 17 = 83 - 4×17 = 83 - 68 = 15, not 12',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep49': String.raw`<strong>Step 8: Finding more candidates</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep50': 'We need numbers that are ≡ 6 (mod 11) and ≡ 5 (mod 13).',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep51': 'The next one after 83 will be 83 + LCM(11,13) = 83 + 143 = 226',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep52': 'Check 226 mod 17: 226 ÷ 17 = 13 remainder 5, not 12',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep53': 'Next: 226 + 143 = 369',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep54': '369 mod 17: 369 ÷ 17 = 21 remainder 12 ✓ (369 - 21×17 = 369 - 357 = 12)',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep55': String.raw`<strong>Step 9: Verifying 369</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep56': 'Check all conditions:',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep57': '369 mod 11 = 369 - 33×11 = 369 - 363 = 6 ✓',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep58': '369 mod 13 = 369 - 28×13 = 369 - 364 = 5 ✓',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep59': '369 mod 17 = 12 ✓ (we already checked)',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep60': String.raw`<strong>Step 10: Checking if it\'s a natural number in each sequence</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep61': String.raw`For (U<sub>n</sub>): U<sub>n</sub> = 6 + 11n = 369 → 11n = 363 → n = 33 ✓`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep62': String.raw`For (V<sub>n</sub>): V<sub>n</sub> = -8 + 13n = 369 → 13n = 377 → n = 29 ✓`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep63': String.raw`For (W<sub>n</sub>): W<sub>n</sub> = 29 + 17n = 369 → 17n = 340 → n = 20 ✓`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep64': String.raw`<strong>Step 11: Checking for smaller solutions</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep65': 'We should check if there\'s a smaller number. Let\'s check the pattern:',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep66': 'We found 369 = 83 + 2×143',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep67': 'What about 83 - 143 = -60 (not natural)',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep68': 'Or check numbers less than 83 that satisfy conditions 1 and 2:',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep69': 'The only numbers ≡ 6 (mod 11) and ≡ 5 (mod 13) less than 83 would be negative.',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep70': 'So 369 is indeed the smallest natural solution.',
+                'MH.lesson_Y2Alg_seqArith4.problemCStep71': String.raw`<strong>Step 12: Answer</strong>`,
+                'MH.lesson_Y2Alg_seqArith4.problemCStep72': 'The smallest natural number that is in all three sequences is 369.',
+                
+                'MH.lesson_Y2Alg_seqArith4.problemCTipTitle': 'What We Learned',
+                'MH.lesson_Y2Alg_seqArith4.problemCTipText': 'This problem combines arithmetic sequences with modular arithmetic. Finding common terms in multiple sequences often involves solving a system of congruences, which is an important concept in number theory.',
+                
+                // Conclusion
+                'MH.lesson_Y2Alg_seqArith4.conclusionTitle': 'Conclusion',
+                'MH.lesson_Y2Alg_seqArith4.finalThoughtsTitle': 'Final Thoughts',
+                'MH.lesson_Y2Alg_seqArith4.finalThoughtsText': 'Congratulations! You have completed the four-part series on arithmetic sequences. You have learned:',
+                'MH.lesson_Y2Alg_seqArith4.learned1': 'How to recognize arithmetic sequences',
+                'MH.lesson_Y2Alg_seqArith4.learned2': 'How to find the general term of an arithmetic sequence',
+                'MH.lesson_Y2Alg_seqArith4.learned3': 'How to represent arithmetic sequences graphically',
+                'MH.lesson_Y2Alg_seqArith4.learned4': 'How to calculate the sum of consecutive terms',
+                'MH.lesson_Y2Alg_seqArith4.learned5': 'How to apply these concepts to solve practical problems',
+                'MH.lesson_Y2Alg_seqArith4.encouragement': 'Arithmetic sequences are everywhere in mathematics and in the real world. The skills you\'ve learned will help you in many areas of study and in understanding patterns in daily life. Keep practicing and exploring mathematics!',
+                
+                // Footer
+                'MH.footer.developer': 'Developer',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Links',
+                'MH.footer.terms': 'Terms of Use',
+                'MH.footer.privacy': 'Privacy Policy'
+            },
+    'fr': {
+        // Traductions générales
+        'MH.general.homeTooltip': 'Aller à la page d\'accueil',
+        'MH.general.install': 'Installer l\'application',
+        'MH.general.installSuccess': 'Mathematics Hub installé avec succès !',
+        'MH.general.enableNotifications': 'Activer les notifications',
+        'MH.general.notificationEnabled': 'Notifications activées ! Vous recevrez maintenant les mises à jour.',
+        'MH.general.title': 'Mathematics Hub',
+        'MH.general.theme': 'Thème',
+        'MH.general.language': 'Langue',
+        'MH.lesson_Y2Alg_seqArith4.showSolution': 'Afficher la solution',
+        'MH.lesson_Y2Alg_seqArith4.hideSolution': 'Masquer la solution',
+        
+        // Traductions spécifiques à la leçon
+        'MH.lesson_Y2Alg_seqArith4.title': 'Suites arithmétiques : Partie IV',
+        'MH.lesson_Y2Alg_seqArith4.subtitle': 'Synthèse et problèmes pratiques',
+        'MH.lesson_Y2Alg_seqArith4.introduction': 'Introduction',
+        'MH.lesson_Y2Alg_seqArith4.introText1': 'Dans cette dernière leçon sur les suites arithmétiques, nous allons revoir tous les concepts appris et les appliquer pour résoudre des problèmes réels intéressants. Cela vous aidera à voir comment les mathématiques sont utilisées dans la vie quotidienne !',
+        'MH.lesson_Y2Alg_seqArith4.introText2': 'Nous commencerons par une synthèse complète de tout ce qui concerne les suites arithmétiques, puis nous résoudrons trois problèmes pratiques qui défieront votre compréhension.',
+        'MH.lesson_Y2Alg_seqArith4.beginnerTip': 'Conseil pour les débutants',
+        'MH.lesson_Y2Alg_seqArith4.beginnerTipText': 'Ne vous inquiétez pas si vous ne vous souvenez pas de tout ! Nous allons revoir toutes les formules importantes. L\'essentiel est de prendre votre temps et de réfléchir étape par étape. Chaque problème pratique vous montrera comment utiliser ce que vous avez appris.',
+        
+        // Section XI
+        'MH.lesson_Y2Alg_seqArith4.sectionXI': 'XI. Synthèse',
+        'MH.lesson_Y2Alg_seqArith4.summaryTitle': 'Synthèse complète des suites arithmétiques',
+        
+        'MH.lesson_Y2Alg_seqArith4.presentationModesTitle': '1. Façons de présenter une suite',
+        'MH.lesson_Y2Alg_seqArith4.presentationModesText': 'Une suite peut être définie de deux manières principales :',
+        
+        'MH.lesson_Y2Alg_seqArith4.presentationMode1Title': 'a) Par son terme général',
+        'MH.lesson_Y2Alg_seqArith4.presentationMode1Text': 'Cela signifie que nous avons une formule qui nous donne directement n\'importe quel terme. Par exemple :',
+        'MH.lesson_Y2Alg_seqArith4.presentationMode1Example': String.raw`U<sub>n</sub> = 3n + 2`,
+        'MH.lesson_Y2Alg_seqArith4.presentationMode1Explanation': 'Avec cette formule, nous pouvons trouver U<sub>0</sub> en posant n=0, U<sub>1</sub> en posant n=1, et ainsi de suite.',
+        
+        'MH.lesson_Y2Alg_seqArith4.presentationMode2Title': 'b) Par relation de récurrence',
+        'MH.lesson_Y2Alg_seqArith4.presentationMode2Text': 'Cela signifie que nous connaissons le premier terme et une règle pour obtenir chaque terme à partir du précédent. Par exemple :',
+        'MH.lesson_Y2Alg_seqArith4.presentationMode2Example': String.raw`U<sub>0</sub> = 2 et U<sub>n+1</sub> = U<sub>n</sub> + 3`,
+        'MH.lesson_Y2Alg_seqArith4.presentationMode2Explanation': 'Avec cette méthode, nous commençons avec U<sub>0</sub>=2, puis U<sub>1</sub>=U<sub>0</sub>+3=5, puis U<sub>2</sub>=U<sub>1</sub>+3=8, et ainsi de suite.',
+        
+        'MH.lesson_Y2Alg_seqArith4.presentationTipTitle': 'Quelle méthode utiliser ?',
+        'MH.lesson_Y2Alg_seqArith4.presentationTipText': '• Si vous avez besoin de trouver le terme numéro 1000, la formule du terme général est plus rapide (vous calculez directement).',
+        'MH.lesson_Y2Alg_seqArith4.presentationTipText2': '• Si vous avez besoin de comprendre comment la suite croît étape par étape, la relation de récurrence est plus claire.',
+        
+        'MH.lesson_Y2Alg_seqArith4.arithmeticSequencesTitle': '2. Suites arithmétiques',
+        
+        'MH.lesson_Y2Alg_seqArith4.generalTermTitle': 'a) Terme général',
+        'MH.lesson_Y2Alg_seqArith4.generalTermText1': String.raw`Si (U<sub>n</sub>) est une suite arithmétique de premier terme U<sub>0</sub> et de raison r, alors :`,
+        'MH.lesson_Y2Alg_seqArith4.generalTermFormula1': String.raw`U<sub>n</sub> = U<sub>0</sub> + n × r, pour tout n ∈ ℕ`,
+        'MH.lesson_Y2Alg_seqArith4.generalTermText2': 'Nous pouvons aussi trouver n\'importe quel terme à partir d\'un autre terme :',
+        'MH.lesson_Y2Alg_seqArith4.generalTermFormula2': String.raw`U<sub>n</sub> = U<sub>p</sub> + (n - p) × r, où n et p sont des entiers naturels`,
+        'MH.lesson_Y2Alg_seqArith4.generalTermText3': 'En particulier, si la suite commence à n=1 :',
+        'MH.lesson_Y2Alg_seqArith4.generalTermFormula3': String.raw`U<sub>n</sub> = U<sub>1</sub> + (n - 1) × r, pour tout n ∈ ℕ`,
+        
+        'MH.lesson_Y2Alg_seqArith4.generalTermExampleTitle': 'Exemple',
+        'MH.lesson_Y2Alg_seqArith4.generalTermExample': String.raw`Si U<sub>0</sub> = 5 et r = 3, alors :`,
+        'MH.lesson_Y2Alg_seqArith4.generalTermExample1': String.raw`• U<sub>1</sub> = 5 + 1×3 = 8`,
+        'MH.lesson_Y2Alg_seqArith4.generalTermExample2': String.raw`• U<sub>10</sub> = 5 + 10×3 = 35`,
+        'MH.lesson_Y2Alg_seqArith4.generalTermExample3': String.raw`• Si nous savons que U<sub>3</sub> = 14, alors U<sub>7</sub> = U<sub>3</sub> + (7-3)×3 = 14 + 4×3 = 26`,
+        
+        'MH.lesson_Y2Alg_seqArith4.graphicalRepTitle': 'b) Représentation graphique',
+        'MH.lesson_Y2Alg_seqArith4.graphicalRepText1': String.raw`Pour une suite arithmétique (U<sub>n</sub>) de premier terme U<sub>0</sub> et de raison r :`,
+        'MH.lesson_Y2Alg_seqArith4.graphicalRepText2': String.raw`Les points A<sub>n</sub> de coordonnées (n, U<sub>n</sub>) sont alignés sur une droite.`,
+        
+        'MH.lesson_Y2Alg_seqArith4.graphicalDiagramTitle': 'Représentation graphique',
+        'MH.lesson_Y2Alg_seqArith4.graphicalDiagramText': 'Tous les points (n, U<sub>n</sub>) sont sur une droite avec :',
+        'MH.lesson_Y2Alg_seqArith4.graphicalProperty1': 'Pente = r (la raison)',
+        'MH.lesson_Y2Alg_seqArith4.graphicalProperty2': String.raw`Ordonnée à l\'origine = U<sub>0</sub> (le premier terme)`,
+        'MH.lesson_Y2Alg_seqArith4.graphicalEquation': String.raw`Équation de la droite : y = r × x + U<sub>0</sub>`,
+        
+        'MH.lesson_Y2Alg_seqArith4.graphicalTipTitle': 'Pourquoi c\'est utile',
+        'MH.lesson_Y2Alg_seqArith4.graphicalTipText': 'Le graphique nous aide à visualiser si la suite est croissante (r > 0), décroissante (r < 0) ou constante (r = 0). Il nous aide aussi à estimer des valeurs entre les termes.',
+        
+        'MH.lesson_Y2Alg_seqArith4.sumOfTermsTitle': 'c) Somme de n termes consécutifs',
+        'MH.lesson_Y2Alg_seqArith4.sumOfTermsText1': 'La somme S de n termes consécutifs d\'une suite arithmétique est :',
+        'MH.lesson_Y2Alg_seqArith4.sumFormula1': 'S = n × (premier terme + dernier terme) ÷ 2',
+        'MH.lesson_Y2Alg_seqArith4.sumFormulaDescription': 'Où :',
+        'MH.lesson_Y2Alg_seqArith4.sumDescription1': 'n = nombre de termes',
+        'MH.lesson_Y2Alg_seqArith4.sumDescription2': 'premier terme = le premier terme de la somme',
+        'MH.lesson_Y2Alg_seqArith4.sumDescription3': 'dernier terme = le dernier terme de la somme',
+        
+        'MH.lesson_Y2Alg_seqArith4.specialCaseTitle': 'Cas particulier : Somme des n premiers entiers naturels',
+        'MH.lesson_Y2Alg_seqArith4.specialCaseFormula': '1 + 2 + 3 + ... + n = n × (n + 1) ÷ 2',
+        
+        'MH.lesson_Y2Alg_seqArith4.sumExampleTitle': 'Exemple',
+        'MH.lesson_Y2Alg_seqArith4.sumExample1': 'Somme de 1 à 100 : 100 × (1 + 100) ÷ 2 = 100 × 101 ÷ 2 = 5050',
+        'MH.lesson_Y2Alg_seqArith4.sumExample2': 'Somme de 5 + 8 + 11 + 14 + 17 :',
+        'MH.lesson_Y2Alg_seqArith4.sumExample2a': '• n = 5 termes',
+        'MH.lesson_Y2Alg_seqArith4.sumExample2b': '• premier terme = 5',
+        'MH.lesson_Y2Alg_seqArith4.sumExample2c': '• dernier terme = 17',
+        'MH.lesson_Y2Alg_seqArith4.sumExample2d': '• S = 5 × (5 + 17) ÷ 2 = 5 × 22 ÷ 2 = 55',
+        
+        // Section XII
+        'MH.lesson_Y2Alg_seqArith4.sectionXII': 'XII. Problèmes pratiques',
+        
+        'MH.lesson_Y2Alg_seqArith4.problemATitle': 'A. L\'arroseur de peupliers',
+        'MH.lesson_Y2Alg_seqArith4.problemAText1': 'La saison est sèche et un agriculteur décide de verser un seau d\'eau au pied de chacun des jeunes peupliers qui bordent son champ. Il y a cent peupliers, alignés en ligne droite, espacés de deux mètres, et le puits d\'eau est au pied du premier arbre. L\'agriculteur ne porte qu\'un seul seau à la fois. Il a commencé le travail. Son voisin, un enseignant, le regarde, appuyé sur le mur mitoyen.',
+        'MH.lesson_Y2Alg_seqArith4.problemAText2': '"Ça, c\'est du travail !"',
+        'MH.lesson_Y2Alg_seqArith4.problemAText3': '"Oh," dit l\'agriculteur, "il me faudra une heure !"',
+        'MH.lesson_Y2Alg_seqArith4.problemAText4': '"Une heure ! J\'aurais le temps d\'aller à la ville et de revenir avant que vous n\'ayez fini."',
+        'MH.lesson_Y2Alg_seqArith4.problemAText5': 'L\'agriculteur lève les yeux au ciel ! La ville est à 9 km, le voisin est instruit, certes, mais parfois... Je te jure...!',
+        'MH.lesson_Y2Alg_seqArith4.problemAQuestion': 'Pour trancher le débat, calculez la distance que l\'agriculteur devra parcourir pour arroser tous ses peupliers.',
+        'MH.lesson_Y2Alg_seqArith4.problemASource': '(D\'après Jeux Mathématiques)',
+        'MH.lesson_Y2Alg_seqArith4.problemAHint': 'Indice : Pensez à la somme des termes d\'une suite arithmétique.',
+        
+        'MH.lesson_Y2Alg_seqArith4.problemASolutionTitle': 'Solution détaillée étape par étape',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep1': String.raw`<strong>Étape 1 : Comprendre le problème</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemAStep2': 'Nous devons calculer la distance totale que l\'agriculteur marche. Réfléchissons à ce qui se passe :',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep3': 'Il y a 100 peupliers alignés',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep4': 'Ils sont espacés de 2 mètres',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep5': 'Le puits est au premier peuplier',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep6': 'L\'agriculteur ne porte qu\'un seau à la fois',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep7': 'Il doit aller au puits, remplir le seau, marcher jusqu\'à un arbre, l\'arroser, et retourner au puits',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep8': String.raw`<strong>Étape 2 : Distance jusqu\'au premier arbre</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemAStep9': 'Pour le premier arbre (arbre numéro 1) :',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep10': 'Distance du puits à l\'arbre 1 = 0 mètre (il est au puits)',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep11': 'Mais il doit quand même marcher pour l\'arroser et retourner au puits',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep12': 'En fait, si le puits est à l\'arbre 1, il n\'a pas besoin de marcher pour arroser l\'arbre 1',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep13': 'Attendez, lisons attentivement : "le puits d\'eau est au pied du premier"',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep14': 'Donc l\'arbre 1 est déjà au puits, pas besoin de marcher pour l\'arbre 1',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep15': String.raw`<strong>Étape 3 : Comprendre les trajets de l\'agriculteur</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemAStep16': 'Pour chaque arbre après le premier, l\'agriculteur doit :',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep17': '1. Marcher du puits à l\'arbre avec un seau vide (pour l\'arroser)',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep18': '2. Retourner au puits pour avoir plus d\'eau',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep19': 'Donc pour l\'arbre numéro k (où k va de 2 à 100), la distance aller-retour est : 2 × (distance du puits à l\'arbre k)',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep20': String.raw`<strong>Étape 4 : Calcul des distances</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemAStep21': 'Les arbres sont alignés, espacés de 2 mètres. Si le puits est à l\'arbre 1 :',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep22': 'Distance du puits à l\'arbre 2 = 2 mètres',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep23': 'Distance du puits à l\'arbre 3 = 4 mètres',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep24': 'Distance du puits à l\'arbre 4 = 6 mètres',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep25': '...',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep26': 'Distance du puits à l\'arbre 100 = 2 × 99 = 198 mètres',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep27': String.raw`<strong>Étape 5 : Création d\'une suite arithmétique</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemAStep28': 'Les distances aller-retour forment une suite arithmétique :',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep29': 'Pour l\'arbre 2 : aller-retour = 2 × 2 = 4 mètres',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep30': 'Pour l\'arbre 3 : aller-retour = 2 × 4 = 8 mètres',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep31': 'Pour l\'arbre 4 : aller-retour = 2 × 6 = 12 mètres',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep32': '...',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep33': 'Pour l\'arbre 100 : aller-retour = 2 × 198 = 396 mètres',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep34': String.raw`<strong>Étape 6 : La suite</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemAStep35': 'Nous avons 99 allers-retours (arbres 2 à 100) avec les distances :',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep36': '4, 8, 12, 16, ..., 396',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep37': 'C\'est une suite arithmétique avec :',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep38': 'Premier terme a = 4',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep39': 'Dernier terme b = 396',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep40': 'Raison r = 4',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep41': 'Nombre de termes n = 99',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep42': String.raw`<strong>Étape 7 : Utilisation de la formule de la somme</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemAStep43': 'Somme d\'une suite arithmétique : S = n × (a + b) ÷ 2',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep44': 'S = 99 × (4 + 396) ÷ 2',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep45': 'S = 99 × 400 ÷ 2',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep46': 'S = 99 × 200',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep47': 'S = 19 800 mètres',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep48': String.raw`<strong>Étape 8 : Conversion en kilomètres</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemAStep49': '19 800 mètres = 19,8 km',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep50': String.raw`<strong>Étape 9 : Réponse</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemAStep51': 'L\'agriculteur marchera 19,8 km pour arroser tous les peupliers.',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep52': String.raw`<strong>Étape 10 : Vérification de l\'affirmation de l\'enseignant</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemAStep53': 'L\'enseignant a dit qu\'il pourrait aller à la ville et revenir (9 km aller = 18 km aller-retour) avant que l\'agriculteur ne termine.',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep54': 'Puisque 19,8 km > 18 km, l\'agriculteur a raison de dire que cela prendra plus d\'une heure (en supposant une vitesse de marche normale).',
+        
+        'MH.lesson_Y2Alg_seqArith4.problemALearningTitle': 'Ce que nous avons appris',
+        'MH.lesson_Y2Alg_seqArith4.problemALearningText': 'Ce problème montre comment les suites arithmétiques apparaissent dans la vie réelle. Les distances de marche de l\'agriculteur augmentent d\'une quantité constante (4 mètres) à chaque fois, formant une suite arithmétique.',
+        
+        'MH.lesson_Y2Alg_seqArith4.problemBTitle': 'B. Pair ou impair ?',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartATitle': 'a) Première partie',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAText': 'Un sac contient 20 jetons numérotés de 1 à 20. Chaque fois, on tire deux jetons du sac et on les remplace par un seul jeton portant la somme des nombres des deux jetons tirés.',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAQuestion': 'Quel est le nombre inscrit sur le dernier jeton qui reste dans le sac ?',
+        
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBTitle': 'b) Deuxième partie',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBText': 'Un sac contient 20 jetons numérotés de 1 à 20. Chaque fois, on tire deux jetons du sac et on les remplace par un seul jeton portant la différence positive des nombres des deux jetons tirés.',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBQuestion': 'Montrer que le nombre inscrit sur le dernier jeton qui reste dans le sac est pair.',
+        
+        'MH.lesson_Y2Alg_seqArith4.problemBSource': '(D\'après Championnat de jeux mathématiques)',
+        'MH.lesson_Y2Alg_seqArith4.problemBHintA': 'Indice pour la partie a : Pensez à la somme des termes d\'une suite arithmétique.',
+        'MH.lesson_Y2Alg_seqArith4.problemBHintB': 'Indice pour la partie b : Remarquez que si x et y sont deux nombres naturels, alors x + y et x - y ont la même parité (tous deux pairs ou tous deux impairs).',
+        
+        'MH.lesson_Y2Alg_seqArith4.problemBSolutionTitle': 'Solution détaillée étape par étape',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep1': String.raw`<strong>Partie a - Étape 1 : Comprendre le processus</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep2': 'Nous commençons avec les jetons numérotés 1, 2, 3, ..., 20.',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep3': 'À chaque fois nous :',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep4': '1. Retirons deux jetons',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep5': '2. Ajoutons leur somme comme nouveau jeton',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep6': 'Cela réduit le nombre de jetons de 1 à chaque fois.',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep7': String.raw`<strong>Étape 2 : Qu\'advient-il de la somme totale ?</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep8': 'Calculons la somme totale initiale de tous les jetons :',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep9': 'Jetons : 1 + 2 + 3 + ... + 20',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep10': 'C\'est une suite arithmétique avec :',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep11': 'Premier terme a = 1',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep12': 'Dernier terme b = 20',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep13': 'Nombre de termes n = 20',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep14': String.raw`<strong>Étape 3 : Calcul de la somme initiale</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep15': 'En utilisant la formule de la somme : S = n × (a + b) ÷ 2',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep16': 'S = 20 × (1 + 20) ÷ 2',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep17': 'S = 20 × 21 ÷ 2',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep18': 'S = 210',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep19': String.raw`<strong>Étape 4 : Qu\'advient-il lorsque nous combinons les jetons ?</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep20': 'Lorsque nous retirons deux jetons avec les nombres x et y, et ajoutons un jeton avec le nombre (x + y) :',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep21': 'Ancienne somme avant l\'opération : inclut x et y',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep22': 'Nouvelle somme après l\'opération : au lieu de x et y, nous avons (x + y)',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep23': 'Donc la somme totale ne change pas ! Car (x + y) = x + y',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep24': String.raw`<strong>Étape 5 : La somme reste constante</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep25': 'Peu importe combien de fois nous combinons les jetons, la somme totale de tous les jetons dans le sac reste la même.',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep26': 'Somme initiale = 210',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep27': 'Somme finale (quand il ne reste qu\'un jeton) = 210',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep28': String.raw`<strong>Étape 6 : Réponse pour la partie a</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep29': 'Le dernier jeton aura le nombre 210.',
+        
+        'MH.lesson_Y2Alg_seqArith4.problemBPartATipTitle': 'Idée importante',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartATipText': 'L\'observation clé est que remplacer deux nombres par leur somme ne change pas la somme totale. C\'est pourquoi nous avons pu résoudre le problème sans faire toutes les combinaisons !',
+        
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep1': String.raw`<strong>Partie b - Étape 1 : Comprendre la nouvelle règle</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep2': 'Maintenant nous remplaçons deux jetons x et y par |x - y| (la différence positive).',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep3': String.raw`<strong>Étape 2 : Réfléchir à la parité</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep3': 'La parité signifie si un nombre est pair ou impair.',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep4': 'L\'indice nous dit : Si x et y ont la même parité (tous deux pairs ou tous deux impairs), alors x - y est pair.',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep5': 'Si x et y ont des parités différentes (un pair, un impair), alors x - y est impair.',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep6': 'Mais attendez, nous devons aussi vérifier x + y...',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep7': String.raw`<strong>Étape 3 : Tester l\'indice</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep8': 'Testons avec des exemples :',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep9': 'Si x=4 (pair) et y=2 (pair) : x+y=6 (pair), x-y=2 (pair) - même parité ✓',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep10': 'Si x=5 (impair) et y=3 (impair) : x+y=8 (pair), x-y=2 (pair) - même parité ✓',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep11': 'Si x=6 (pair) et y=3 (impair) : x+y=9 (impair), x-y=3 (impair) - même parité ✓',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep12': 'L\'indice est correct : x+y et x-y ont toujours la même parité !',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep13': String.raw`<strong>Étape 4 : Pourquoi cela aide-t-il</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep14': 'Nous voulons prouver que le dernier jeton est pair. Réfléchissons à ce qui arrive à la parité lorsque nous combinons les jetons.',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep15': String.raw`<strong>Étape 5 : Parité initiale de la somme</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep16': 'Jetons initiaux : 1, 2, 3, ..., 20',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep17': 'Comptons combien de nombres impairs : 1, 3, 5, 7, 9, 11, 13, 15, 17, 19 → 10 nombres impairs',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep18': 'Somme des nombres impairs : impair + impair = pair, pair + impair = impair',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep19': 'Avec 10 nombres impairs : impair+impair=pair, pair+impair=impair, ...',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep20': 'En fait, calculons la somme des 10 premiers nombres impairs :',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep21': '1 + 3 + 5 + ... + 19',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep22': 'C\'est une suite arithmétique avec a=1, d=2, n=10',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep23': 'Somme = 10 × (1 + 19) ÷ 2 = 10 × 20 ÷ 2 = 100 (pair)',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep24': 'Les nombres pairs (2, 4, 6, ..., 20) somment à : 10 × (2 + 20) ÷ 2 = 10 × 22 ÷ 2 = 110 (pair)',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep25': 'Somme totale = 100 + 110 = 210 (pair)',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep26': String.raw`<strong>Étape 6 : La parité reste paire</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep27': 'Lorsque nous remplaçons x et y par |x-y| :',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep28': 'La parité du nouveau jeton est la même que la parité de x+y (d\'après l\'indice)',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep29': 'Mais x+y a la même parité que la somme de tous les jetons à ce moment-là !',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep30': 'Donc la parité de la somme de tous les jetons reste constante.',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep31': 'Parité de la somme initiale = paire',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep32': 'Parité de la somme finale (quand il ne reste qu\'un jeton) = paire',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep33': String.raw`<strong>Étape 7 : Conclusion pour la partie b</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep34': 'Le dernier jeton a une valeur égale à la somme finale, qui est paire.',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep35': 'Par conséquent, le nombre sur le dernier jeton est pair.',
+        
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBTipTitle': 'Concept clé',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBTipText': 'Ce problème nous enseigne les invariants - des propriétés qui ne changent pas pendant un processus. Dans la partie a, la somme totale était invariante. Dans la partie b, la parité de la somme totale était invariante.',
+        
+        'MH.lesson_Y2Alg_seqArith4.problemCTitle': 'C. Terme commun à trois suites',
+        'MH.lesson_Y2Alg_seqArith4.problemCText1': String.raw`(U<sub>n</sub>) est une suite arithmétique de premier terme 6 et de raison 11.`,
+        'MH.lesson_Y2Alg_seqArith4.problemCText2': String.raw`(V<sub>n</sub>) est une suite arithmétique de premier terme -8 et de raison 13.`,
+        'MH.lesson_Y2Alg_seqArith4.problemCText3': String.raw`(W<sub>n</sub>) est une suite arithmétique de premier terme 29 et de raison 17.`,
+        'MH.lesson_Y2Alg_seqArith4.problemCQuestion': String.raw`Quel est le plus petit nombre naturel qui est un terme des trois suites (U<sub>n</sub>), (V<sub>n</sub>) et (W<sub>n</sub>) ?`,
+        'MH.lesson_Y2Alg_seqArith4.problemCHint': String.raw`Indice : Vérifier que U<sub>n</sub> + 5 est un multiple de 11.`,
+        
+        'MH.lesson_Y2Alg_seqArith4.problemCSolutionTitle': 'Solution détaillée étape par étape',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep1': String.raw`<strong>Étape 1 : Écrire les termes généraux</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep2': 'Pour une suite arithmétique : U<sub>n</sub> = premier terme + n × raison',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep3': String.raw`Pour la suite (U<sub>n</sub>) : U<sub>0</sub> = 6, raison = 11`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep4': String.raw`U<sub>n</sub> = 6 + 11n`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep5': String.raw`Pour la suite (V<sub>n</sub>) : V<sub>0</sub> = -8, raison = 13`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep6': String.raw`V<sub>n</sub> = -8 + 13n`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep7': String.raw`Pour la suite (W<sub>n</sub>) : W<sub>0</sub> = 29, raison = 17`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep8': String.raw`W<sub>n</sub> = 29 + 17n`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep9': String.raw`<strong>Étape 2 : Utiliser l\'indice</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep10': String.raw`L\'indice dit : U<sub>n</sub> + 5 est un multiple de 11. Vérifions :`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep11': String.raw`U<sub>n</sub> = 6 + 11n`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep12': String.raw`U<sub>n</sub> + 5 = (6 + 11n) + 5 = 11 + 11n = 11(1 + n)`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep13': String.raw`Oui ! U<sub>n</sub> + 5 = 11(n + 1), ce qui est clairement un multiple de 11.`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep14': String.raw`<strong>Étape 3 : Qu\'est-ce que cela signifie ?</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep15': String.raw`Si un nombre x est dans la suite (U<sub>n</sub>), alors x + 5 doit être un multiple de 11.`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep16': 'Donc x = multiple de 11 - 5',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep17': 'Ou : x ≡ -5 (mod 11) ce qui signifie x ≡ 6 (mod 11) car -5 + 11 = 6',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep18': String.raw`<strong>Étape 4 : Trouver des motifs similaires pour les autres suites</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep19': String.raw`Vérifions V<sub>n</sub> + quelque chose :`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep20': String.raw`V<sub>n</sub> = -8 + 13n`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep21': String.raw`V<sub>n</sub> + 8 = 13n, qui est un multiple de 13`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep22': String.raw`Donc si x est dans (V<sub>n</sub>), alors x + 8 est un multiple de 13`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep23': 'Ou : x ≡ -8 (mod 13) ce qui signifie x ≡ 5 (mod 13) car -8 + 13 = 5',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep24': String.raw`Maintenant pour W<sub>n</sub> :`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep25': String.raw`W<sub>n</sub> = 29 + 17n`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep26': String.raw`W<sub>n</sub> - 12 = 17 + 17n = 17(1 + n), qui est un multiple de 17`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep27': String.raw`Donc si x est dans (W<sub>n</sub>), alors x - 12 est un multiple de 17`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep28': 'Ou : x ≡ 12 (mod 17)',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep29': String.raw`<strong>Étape 5 : Tout mettre ensemble</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep30': 'Nous avons besoin d\'un nombre naturel x qui satisfait :',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep31': '1. x ≡ 6 (mod 11) [de la suite U]',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep32': '2. x ≡ 5 (mod 13) [de la suite V]',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep33': '3. x ≡ 12 (mod 17) [de la suite W]',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep34': String.raw`<strong>Étape 6 : Résoudre le système de congruences</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep35': 'Nous avons besoin du plus petit nombre naturel satisfaisant les trois conditions.',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep36': String.raw`<strong>Étape 7 : Essayer des valeurs</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep37': 'D\'après la condition 1 : x = 11k + 6 pour un entier k ≥ 0',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep38': 'Vérifions les valeurs de k :',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep39': 'k=0 : x=6 → vérifier condition 2 : 6 mod 13 = 6, pas 5',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep40': 'k=1 : x=17 → 17 mod 13 = 4, pas 5',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep41': 'k=2 : x=28 → 28 mod 13 = 2, pas 5',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep42': 'k=3 : x=39 → 39 mod 13 = 0, pas 5',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep43': 'k=4 : x=50 → 50 mod 13 = 11, pas 5',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep44': 'k=5 : x=61 → 61 mod 13 = 9, pas 5',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep45': 'k=6 : x=72 → 72 mod 13 = 7, pas 5',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep46': 'k=7 : x=83 → 83 mod 13 = 5 ✓ (bon pour la condition 2 !)',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep47': 'Maintenant x=83 doit aussi satisfaire la condition 3 : x ≡ 12 (mod 17)',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep48': '83 mod 17 = 83 - 4×17 = 83 - 68 = 15, pas 12',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep49': String.raw`<strong>Étape 8 : Trouver plus de candidats</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep50': 'Nous avons besoin de nombres qui sont ≡ 6 (mod 11) et ≡ 5 (mod 13).',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep51': 'Le suivant après 83 sera 83 + PPCM(11,13) = 83 + 143 = 226',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep52': 'Vérifier 226 mod 17 : 226 ÷ 17 = 13 reste 5, pas 12',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep53': 'Suivant : 226 + 143 = 369',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep54': '369 mod 17 : 369 ÷ 17 = 21 reste 12 ✓ (369 - 21×17 = 369 - 357 = 12)',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep55': String.raw`<strong>Étape 9 : Vérification de 369</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep56': 'Vérifier toutes les conditions :',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep57': '369 mod 11 = 369 - 33×11 = 369 - 363 = 6 ✓',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep58': '369 mod 13 = 369 - 28×13 = 369 - 364 = 5 ✓',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep59': '369 mod 17 = 12 ✓ (déjà vérifié)',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep60': String.raw`<strong>Étape 10 : Vérifier si c\'est un nombre naturel dans chaque suite</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep61': String.raw`Pour (U<sub>n</sub>) : U<sub>n</sub> = 6 + 11n = 369 → 11n = 363 → n = 33 ✓`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep62': String.raw`Pour (V<sub>n</sub>) : V<sub>n</sub> = -8 + 13n = 369 → 13n = 377 → n = 29 ✓`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep63': String.raw`Pour (W<sub>n</sub>) : W<sub>n</sub> = 29 + 17n = 369 → 17n = 340 → n = 20 ✓`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep64': String.raw`<strong>Étape 11 : Vérifier s\'il existe des solutions plus petites</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep65': 'Nous devrions vérifier s\'il existe un nombre plus petit. Vérifions le motif :',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep66': 'Nous avons trouvé 369 = 83 + 2×143',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep67': 'Qu\'en est-il de 83 - 143 = -60 (pas naturel)',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep68': 'Ou vérifier les nombres inférieurs à 83 qui satisfont les conditions 1 et 2 :',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep69': 'Les seuls nombres ≡ 6 (mod 11) et ≡ 5 (mod 13) inférieurs à 83 seraient négatifs.',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep70': 'Donc 369 est bien la plus petite solution naturelle.',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep71': String.raw`<strong>Étape 12 : Réponse</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep72': 'Le plus petit nombre naturel qui est dans les trois suites est 369.',
+        
+        'MH.lesson_Y2Alg_seqArith4.problemCTipTitle': 'Ce que nous avons appris',
+        'MH.lesson_Y2Alg_seqArith4.problemCTipText': 'Ce problème combine les suites arithmétiques avec l\'arithmétique modulaire. Trouver des termes communs dans plusieurs suites implique souvent de résoudre un système de congruences, ce qui est un concept important en théorie des nombres.',
+        
+        // Conclusion
+        'MH.lesson_Y2Alg_seqArith4.conclusionTitle': 'Conclusion',
+        'MH.lesson_Y2Alg_seqArith4.finalThoughtsTitle': 'Dernières réflexions',
+        'MH.lesson_Y2Alg_seqArith4.finalThoughtsText': 'Félicitations ! Vous avez terminé la série de quatre parties sur les suites arithmétiques. Vous avez appris :',
+        'MH.lesson_Y2Alg_seqArith4.learned1': 'Comment reconnaître les suites arithmétiques',
+        'MH.lesson_Y2Alg_seqArith4.learned2': 'Comment trouver le terme général d\'une suite arithmétique',
+        'MH.lesson_Y2Alg_seqArith4.learned3': 'Comment représenter graphiquement les suites arithmétiques',
+        'MH.lesson_Y2Alg_seqArith4.learned4': 'Comment calculer la somme de termes consécutifs',
+        'MH.lesson_Y2Alg_seqArith4.learned5': 'Comment appliquer ces concepts pour résoudre des problèmes pratiques',
+        'MH.lesson_Y2Alg_seqArith4.encouragement': 'Les suites arithmétiques sont partout en mathématiques et dans le monde réel. Les compétences que vous avez acquises vous aideront dans de nombreux domaines d\'étude et pour comprendre les modèles de la vie quotidienne. Continuez à pratiquer et à explorer les mathématiques !',
+        
+        // Footer
+        'MH.footer.developer': 'Développeur',
+        'MH.footer.version': 'Version',
+        'MH.footer.links': 'Liens',
+        'MH.footer.terms': 'Conditions d\'utilisation',
+        'MH.footer.privacy': 'Politique de confidentialité'
+},
+                'ar': {
+        // ترجمات عامة
+        'MH.general.homeTooltip': 'الانتقال إلى الصفحة الرئيسية',
+        'MH.general.install': 'تثبيت التطبيق',
+        'MH.general.installSuccess': 'تم تثبيت Mathematics Hub بنجاح!',
+        'MH.general.enableNotifications': 'تمكين الإشعارات',
+        'MH.general.notificationEnabled': 'تم تمكين الإشعارات! ستتلقى الآن التحديثات.',
+        'MH.general.title': 'مركز الرياضيات',
+        'MH.general.theme': 'السمة',
+        'MH.general.language': 'اللغة',
+        'MH.lesson_Y2Alg_seqArith4.showSolution': 'عرض الحل',
+        'MH.lesson_Y2Alg_seqArith4.hideSolution': 'إخفاء الحل',
+        
+        // ترجمات خاصة بالدرس
+        'MH.lesson_Y2Alg_seqArith4.title': 'المتتابعات الحسابية: الجزء الرابع',
+        'MH.lesson_Y2Alg_seqArith4.subtitle': 'ملخص ومشكلات تطبيقية',
+        'MH.lesson_Y2Alg_seqArith4.introduction': 'مقدمة',
+        'MH.lesson_Y2Alg_seqArith4.introText1': 'في هذا الدرس الأخير عن المتتابعات الحسابية، سنراجع جميع المفاهيم التي تعلمناها ونطبقها لحل مشكلات واقعية مثيرة للاهتمام. هذا سيساعدك على رؤية كيفية استخدام الرياضيات في الحياة اليومية!',
+        'MH.lesson_Y2Alg_seqArith4.introText2': 'سنبدأ بملخص شامل لكل ما يتعلق بالمتتابعات الحسابية، ثم نحل ثلاث مشكلات تطبيقية ستتحدى فهمك.',
+        'MH.lesson_Y2Alg_seqArith4.beginnerTip': 'نصيحة للمبتدئين',
+        'MH.lesson_Y2Alg_seqArith4.beginnerTipText': 'لا تقلق إذا كنت لا تتذكر كل شيء! سنراجع جميع الصيغ المهمة. المفتاح هو أن تأخذ وقتك وتفكر خطوة بخطوة. كل مشكلة تطبيقية ستريك كيفية استخدام ما تعلمته.',
+        
+        // القسم الحادي عشر
+        'MH.lesson_Y2Alg_seqArith4.sectionXI': 'الحادي عشر. الملخص',
+        'MH.lesson_Y2Alg_seqArith4.summaryTitle': 'ملخص كامل للمتتابعات الحسابية',
+        
+        'MH.lesson_Y2Alg_seqArith4.presentationModesTitle': '1. طرق عرض المتتابعة',
+        'MH.lesson_Y2Alg_seqArith4.presentationModesText': 'يمكن تعريف المتتابعة بطريقتين رئيسيتين:',
+        
+        'MH.lesson_Y2Alg_seqArith4.presentationMode1Title': 'أ) بالحد العام',
+        'MH.lesson_Y2Alg_seqArith4.presentationMode1Text': 'هذا يعني أن لدينا صيغة تعطينا أي حد مباشرة. على سبيل المثال:',
+        'MH.lesson_Y2Alg_seqArith4.presentationMode1Example': String.raw`U<sub>n</sub> = 3n + 2`,
+        'MH.lesson_Y2Alg_seqArith4.presentationMode1Explanation': 'بهذه الصيغة، يمكننا إيجاد U<sub>0</sub> بوضع n=0، و U<sub>1</sub> بوضع n=1، وهكذا.',
+        
+        'MH.lesson_Y2Alg_seqArith4.presentationMode2Title': 'ب) بالعلاقة التكرارية',
+        'MH.lesson_Y2Alg_seqArith4.presentationMode2Text': 'هذا يعني أننا نعرف الحد الأول وقاعدة للحصول على كل حد من الحد السابق. على سبيل المثال:',
+        'MH.lesson_Y2Alg_seqArith4.presentationMode2Example': String.raw`U<sub>0</sub> = 2 و U<sub>n+1</sub> = U<sub>n</sub> + 3`,
+        'MH.lesson_Y2Alg_seqArith4.presentationMode2Explanation': 'بهذه الطريقة، نبدأ بـ U<sub>0</sub>=2، ثم U<sub>1</sub>=U<sub>0</sub>+3=5، ثم U<sub>2</sub>=U<sub>1</sub>+3=8، وهكذا.',
+        
+        'MH.lesson_Y2Alg_seqArith4.presentationTipTitle': 'أي طريقة نستخدم؟',
+        'MH.lesson_Y2Alg_seqArith4.presentationTipText': '• إذا كنت بحاجة إلى إيجاد الحد رقم 1000، فصيغة الحد العام أسرع (تحسب مباشرة).',
+        'MH.lesson_Y2Alg_seqArith4.presentationTipText2': '• إذا كنت بحاجة إلى فهم كيفية نمو المتتابعة خطوة بخطوة، فالعلاقة التكرارية أوضح.',
+        
+        'MH.lesson_Y2Alg_seqArith4.arithmeticSequencesTitle': '2. المتتابعات الحسابية',
+        
+        'MH.lesson_Y2Alg_seqArith4.generalTermTitle': 'أ) الحد العام',
+        'MH.lesson_Y2Alg_seqArith4.generalTermText1': String.raw`إذا كانت (U<sub>n</sub>) متتابعة حسابية ذات حد أول U<sub>0</sub> وأساس r، فإن:`,
+        'MH.lesson_Y2Alg_seqArith4.generalTermFormula1': String.raw`U<sub>n</sub> = U<sub>0</sub> + n × r، لكل n ∈ ℕ`,
+        'MH.lesson_Y2Alg_seqArith4.generalTermText2': 'يمكننا أيضًا إيجاد أي حد من أي حد آخر:',
+        'MH.lesson_Y2Alg_seqArith4.generalTermFormula2': String.raw`U<sub>n</sub> = U<sub>p</sub> + (n - p) × r، حيث n و p أعداد طبيعية`,
+        'MH.lesson_Y2Alg_seqArith4.generalTermText3': 'بالتحديد، إذا بدأت المتتابعة من n=1:',
+        'MH.lesson_Y2Alg_seqArith4.generalTermFormula3': String.raw`U<sub>n</sub> = U<sub>1</sub> + (n - 1) × r، لكل n ∈ ℕ`,
+        
+        'MH.lesson_Y2Alg_seqArith4.generalTermExampleTitle': 'مثال',
+        'MH.lesson_Y2Alg_seqArith4.generalTermExample': String.raw`إذا كان U<sub>0</sub> = 5 و r = 3، فإن:`,
+        'MH.lesson_Y2Alg_seqArith4.generalTermExample1': String.raw`• U<sub>1</sub> = 5 + 1×3 = 8`,
+        'MH.lesson_Y2Alg_seqArith4.generalTermExample2': String.raw`• U<sub>10</sub> = 5 + 10×3 = 35`,
+        'MH.lesson_Y2Alg_seqArith4.generalTermExample3': String.raw`• إذا علمنا أن U<sub>3</sub> = 14، فإن U<sub>7</sub> = U<sub>3</sub> + (7-3)×3 = 14 + 4×3 = 26`,
+        
+        'MH.lesson_Y2Alg_seqArith4.graphicalRepTitle': 'ب) التمثيل البياني',
+        'MH.lesson_Y2Alg_seqArith4.graphicalRepText1': String.raw`لمتتابعة حسابية (U<sub>n</sub>) ذات حد أول U<sub>0</sub> وأساس r:`,
+        'MH.lesson_Y2Alg_seqArith4.graphicalRepText2': String.raw`النقاط A<sub>n</sub> ذات الإحداثيات (n, U<sub>n</sub>) تقع على خط مستقيم.`,
+        
+        'MH.lesson_Y2Alg_seqArith4.graphicalDiagramTitle': 'التمثيل البياني',
+        'MH.lesson_Y2Alg_seqArith4.graphicalDiagramText': 'جميع النقاط (n, U<sub>n</sub>) على خط مستقيم مع:',
+        'MH.lesson_Y2Alg_seqArith4.graphicalProperty1': 'الميل = r (الأساس)',
+        'MH.lesson_Y2Alg_seqArith4.graphicalProperty2': String.raw`تقاطع المحور الصادي = U<sub>0</sub> (الحد الأول)`,
+        'MH.lesson_Y2Alg_seqArith4.graphicalEquation': String.raw`معادلة الخط: y = r × x + U<sub>0</sub>`,
+        
+        'MH.lesson_Y2Alg_seqArith4.graphicalTipTitle': 'لماذا هذا مفيد',
+        'MH.lesson_Y2Alg_seqArith4.graphicalTipText': 'يساعدنا الرسم البياني على تصور ما إذا كانت المتتابعة تتزايد (r > 0)، تتناقص (r < 0)، أو ثابتة (r = 0). كما يساعدنا على تقدير القيم بين الحدود.',
+        
+        'MH.lesson_Y2Alg_seqArith4.sumOfTermsTitle': 'ج) مجموع حدود متتالية',
+        'MH.lesson_Y2Alg_seqArith4.sumOfTermsText1': 'مجموع حدود متتالية من متتابعة حسابية هو:',
+        'MH.lesson_Y2Alg_seqArith4.sumFormula1': 'S = n × (الحد الأول + الحد الأخير) ÷ 2',
+        'MH.lesson_Y2Alg_seqArith4.sumFormulaDescription': 'حيث:',
+        'MH.lesson_Y2Alg_seqArith4.sumDescription1': 'n = عدد الحدود',
+        'MH.lesson_Y2Alg_seqArith4.sumDescription2': 'الحد الأول = أول حد في المجموع',
+        'MH.lesson_Y2Alg_seqArith4.sumDescription3': 'الحد الأخير = آخر حد في المجموع',
+        
+        'MH.lesson_Y2Alg_seqArith4.specialCaseTitle': 'حالة خاصة: مجموع أول أعداد طبيعية',
+        'MH.lesson_Y2Alg_seqArith4.specialCaseFormula': '1 + 2 + 3 + ... + n = n × (n + 1) ÷ 2',
+        
+        'MH.lesson_Y2Alg_seqArith4.sumExampleTitle': 'مثال',
+        'MH.lesson_Y2Alg_seqArith4.sumExample1': 'مجموع 1 إلى 100: 100 × (1 + 100) ÷ 2 = 100 × 101 ÷ 2 = 5050',
+        'MH.lesson_Y2Alg_seqArith4.sumExample2': 'مجموع 5 + 8 + 11 + 14 + 17:',
+        'MH.lesson_Y2Alg_seqArith4.sumExample2a': '• n = 5 حدود',
+        'MH.lesson_Y2Alg_seqArith4.sumExample2b': '• الحد الأول = 5',
+        'MH.lesson_Y2Alg_seqArith4.sumExample2c': '• الحد الأخير = 17',
+        'MH.lesson_Y2Alg_seqArith4.sumExample2d': '• S = 5 × (5 + 17) ÷ 2 = 5 × 22 ÷ 2 = 55',
+        
+        // القسم الثاني عشر
+        'MH.lesson_Y2Alg_seqArith4.sectionXII': 'الثاني عشر. مشكلات تطبيقية',
+        
+        'MH.lesson_Y2Alg_seqArith4.problemATitle': 'أ. سقي أشجار الحور',
+        'MH.lesson_Y2Alg_seqArith4.problemAText1': 'الفصل جاف ويقرر مزارع أن يصب دلو ماء عند قدم كل من أشجار الحور الصغيرة التي تحيط بحقله. هناك مائة شجرة حور، في خط مستقيم، متباعدة بمترين، وبئر الماء عند قدم الشجرة الأولى. يحمل المزارع دلوًا واحدًا فقط في كل مرة. لقد بدأ العمل. جاره، وهو معلم، يشاهده، متكئًا على الجدار المشترك.',
+        'MH.lesson_Y2Alg_seqArith4.problemAText2': '"هذا عمل شاق!"',
+        'MH.lesson_Y2Alg_seqArith4.problemAText3': '"أوه،" يقول المزارع، "سيستغرقني ساعة!"',
+        'MH.lesson_Y2Alg_seqArith4.problemAText4': '"ساعة! سيكون لدي الوقت لأمشي إلى البلدة وأعود قبل أن تنتهي."',
+        'MH.lesson_Y2Alg_seqArith4.problemAText5': 'يدير المزارع عينيه! البلدة على بعد 9 كم، المعلم متعلم، بالتأكيد، ولكن أحيانًا... أقسم...!',
+        'MH.lesson_Y2Alg_seqArith4.problemAQuestion': 'لحسم النقاش، احسب المسافة التي سيقطعها المزارع لسقي جميع أشجار الحور.',
+        'MH.lesson_Y2Alg_seqArith4.problemASource': '(مستوحى من الألعاب الرياضية)',
+        'MH.lesson_Y2Alg_seqArith4.problemAHint': 'تلميح: فكر في مجموع حدود متتابعة حسابية.',
+        
+        'MH.lesson_Y2Alg_seqArith4.problemASolutionTitle': 'حل مفصل خطوة بخطوة',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep1': String.raw`<strong>الخطوة 1: فهم المشكلة</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemAStep2': 'نحتاج إلى حساب المسافة الإجمالية التي يمشيها المزارع. لنفكر فيما يحدث:',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep3': 'هناك 100 شجرة حور في خط مستقيم',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep4': 'متباعدة بمترين',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep5': 'البئر عند أول شجرة حور',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep6': 'يحمل المزارع دلوًا واحدًا في كل مرة',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep7': 'يجب أن يذهب إلى البئر، يملأ الدلو، يمشي إلى شجرة، يسقيها، ويعود إلى البئر',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep8': String.raw`<strong>الخطوة 2: المسافة إلى الشجرة الأولى</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemAStep9': 'للشجرة الأولى (الشجرة رقم 1):',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep10': 'المسافة من البئر إلى الشجرة 1 = 0 متر (إنها عند البئر)',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep11': 'لكنه لا يزال بحاجة للمشي لسقيها والعودة إلى البئر',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep12': 'في الواقع، إذا كان البئر عند الشجرة 1، فهو لا يحتاج للمشي لسقي الشجرة 1',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep13': 'انتظر، لنقرأ بعناية: "بئر الماء عند قدم الشجرة الأولى"',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep14': 'إذن الشجرة 1 موجودة بالفعل عند البئر، لا حاجة للمشي للشجرة 1',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep15': String.raw`<strong>الخطوة 3: فهم رحلات المزارع</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemAStep16': 'لكل شجرة بعد الأولى، يجب على المزارع:',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep17': '1. المشي من البئر إلى الشجرة بدلو فارغ (ليسقيها)',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep18': '2. العودة إلى البئر للحصول على ماء أكثر',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep19': 'إذن للشجرة رقم k (حيث k من 2 إلى 100)، مسافة الذهاب والعودة هي: 2 × (المسافة من البئر إلى الشجرة k)',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep20': String.raw`<strong>الخطوة 4: حساب المسافات</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemAStep21': 'الأشجار في خط مستقيم، متباعدة بمترين. إذا كان البئر عند الشجرة 1:',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep22': 'المسافة من البئر إلى الشجرة 2 = 2 متر',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep23': 'المسافة من البئر إلى الشجرة 3 = 4 متر',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep24': 'المسافة من البئر إلى الشجرة 4 = 6 متر',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep25': '...',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep26': 'المسافة من البئر إلى الشجرة 100 = 2 × 99 = 198 متر',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep27': String.raw`<strong>الخطوة 5: إنشاء متتابعة حسابية</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemAStep28': 'مسافات الذهاب والعودة تشكل متتابعة حسابية:',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep29': 'للشجرة 2: الذهاب والعودة = 2 × 2 = 4 متر',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep30': 'للشجرة 3: الذهاب والعودة = 2 × 4 = 8 متر',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep31': 'للشجرة 4: الذهاب والعودة = 2 × 6 = 12 متر',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep32': '...',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep33': 'للشجرة 100: الذهاب والعودة = 2 × 198 = 396 متر',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep34': String.raw`<strong>الخطوة 6: المتتابعة</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemAStep35': 'لدينا 99 رحلة ذهاب وإياب (أشجار 2 إلى 100) بمسافات:',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep36': '4, 8, 12, 16, ..., 396',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep37': 'هذه متتابعة حسابية مع:',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep38': 'الحد الأول أ = 4',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep39': 'الحد الأخير ب = 396',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep40': 'الأساس ر = 4',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep41': 'عدد الحدود ن = 99',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep42': String.raw`<strong>الخطوة 7: استخدام صيغة المجموع</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemAStep43': 'مجموع متتابعة حسابية: S = n × (أ + ب) ÷ 2',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep44': 'S = 99 × (4 + 396) ÷ 2',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep45': 'S = 99 × 400 ÷ 2',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep46': 'S = 99 × 200',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep47': 'S = 19,800 متر',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep48': String.raw`<strong>الخطوة 8: التحويل إلى كيلومترات</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemAStep49': '19,800 متر = 19.8 كم',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep50': String.raw`<strong>الخطوة 9: الإجابة</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemAStep51': 'سيمشي المزارع 19.8 كم ليسقي جميع أشجار الحور.',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep52': String.raw`<strong>الخطوة 10: التحقق من ادعاء المعلم</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemAStep53': 'قال المعلم إنه يمكنه المشي إلى البلدة والعودة (9 كم لكل اتجاه = 18 كم إجمالاً) قبل أن ينتهي المزارع.',
+        'MH.lesson_Y2Alg_seqArith4.problemAStep54': 'بما أن 19.8 كم > 18 كم، فإن المزارع محق في أن الأمر سيستغرق أكثر من ساعة (بافتراض سرعة مشي طبيعية).',
+        
+        'MH.lesson_Y2Alg_seqArith4.problemALearningTitle': 'ما تعلمناه',
+        'MH.lesson_Y2Alg_seqArith4.problemALearningText': 'تظهر هذه المشكلة كيف تظهر المتتابعات الحسابية في الحياة الواقعية. مسافات مشي المزارع تزداد بمقدار ثابت (4 أمتار) كل مرة، مشكلة متتابعة حسابية.',
+        
+        'MH.lesson_Y2Alg_seqArith4.problemBTitle': 'ب. زوجي أم فردي؟',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartATitle': 'أ) الجزء الأول',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAText': 'يحتوي كيس على 20 قطعة مرقمة من 1 إلى 20. في كل مرة نسحب قطعتين من الكيس ونستبدلهما بقطعة واحدة تحمل مجموع رقمي القطعتين المسحوبتين.',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAQuestion': 'ما الرقم المكتوب على القطعة الأخيرة المتبقية في الكيس؟',
+        
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBTitle': 'ب) الجزء الثاني',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBText': 'يحتوي كيس على 20 قطعة مرقمة من 1 إلى 20. في كل مرة نسحب قطعتين من الكيس ونستبدلهما بقطعة واحدة تحمل الفرق الموجب بين رقمي القطعتين المسحوبتين.',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBQuestion': 'أثبت أن الرقم المكتوب على القطعة الأخيرة المتبقية في الكيس هو عدد زوجي.',
+        
+        'MH.lesson_Y2Alg_seqArith4.problemBSource': '(مستوحى من بطولة الألعاب الرياضية)',
+        'MH.lesson_Y2Alg_seqArith4.problemBHintA': 'تلميح للجزء أ: فكر في مجموع حدود متتابعة حسابية.',
+        'MH.lesson_Y2Alg_seqArith4.problemBHintB': 'تلميح للجزء ب: لاحظ أنه إذا كان x و y عددين طبيعيين، فإن x + y و x - y لهما نفس الزوجية (كلاهما زوجي أو كلاهما فردي).',
+        
+        'MH.lesson_Y2Alg_seqArith4.problemBSolutionTitle': 'حل مفصل خطوة بخطوة',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep1': String.raw`<strong>الجزء أ - الخطوة 1: فهم العملية</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep2': 'نبدأ بقطع مرقمة 1, 2, 3, ..., 20.',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep3': 'في كل مرة ن:',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep4': '1. نزيل قطعتين',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep5': '2. نضيف مجموعهما كقطعة جديدة',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep6': 'هذا يقلل عدد القطع بمقدار 1 في كل مرة.',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep7': String.raw`<strong>الخطوة 2: ماذا يحدث للمجموع الكلي؟</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep8': 'لنحسب المجموع الكلي الأولي لجميع القطع:',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep9': 'القطع: 1 + 2 + 3 + ... + 20',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep10': 'هذه متتابعة حسابية مع:',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep11': 'الحد الأول أ = 1',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep12': 'الحد الأخير ب = 20',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep13': 'عدد الحدود ن = 20',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep14': String.raw`<strong>الخطوة 3: حساب المجموع الأولي</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep15': 'باستخدام صيغة المجموع: S = n × (أ + ب) ÷ 2',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep16': 'S = 20 × (1 + 20) ÷ 2',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep17': 'S = 20 × 21 ÷ 2',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep18': 'S = 210',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep19': String.raw`<strong>الخطوة 4: ماذا يحدث عندما نجمع القطع؟</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep20': 'عندما نزيل قطعتين بأرقام x و y، ونضيف قطعة برقم (x + y):',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep21': 'المجموع القديم قبل العملية: يتضمن x و y',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep22': 'المجموع الجديد بعد العملية: بدلاً من x و y، لدينا (x + y)',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep23': 'لذلك المجموع الكلي لا يتغير! لأن (x + y) = x + y',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep24': String.raw`<strong>الخطوة 5: المجموع يبقى ثابتًا</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep25': 'بغض النظر عن عدد مرات جمع القطع، يبقى المجموع الكلي لجميع القطع في الكيس كما هو.',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep26': 'المجموع الأولي = 210',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep27': 'المجموع النهائي (عندما تبقى قطعة واحدة فقط) = 210',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep28': String.raw`<strong>الخطوة 6: الإجابة للجزء أ</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemBPartAStep29': 'القطعة الأخيرة ستحمل الرقم 210.',
+        
+        'MH.lesson_Y2Alg_seqArith4.problemBPartATipTitle': 'فكرة مهمة',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartATipText': 'الملاحظة الرئيسية هي أن استبدال عددين بمجموعهما لا يغير المجموع الكلي. لهذا استطعنا حل المشكلة دون القيام بجميع التركيبات!',
+        
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep1': String.raw`<strong>الجزء ب - الخطوة 1: فهم القاعدة الجديدة</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep2': 'الآن نستبدل قطعتين x و y بـ |x - y| (الفرق الموجب).',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep3': String.raw`<strong>الخطوة 2: التفكير في الزوجية</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep3': 'الزوجية تعني ما إذا كان العدد زوجيًا أم فرديًا.',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep4': 'يخبرنا التلميح: إذا كان x و y لهما نفس الزوجية (كلاهما زوجي أو كلاهما فردي)، فإن x - y زوجي.',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep5': 'إذا كان x و y لهما زوجية مختلفة (أحدهما زوجي والآخر فردي)، فإن x - y فردي.',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep6': 'لكن انتظر، نحتاج إلى التحقق من x + y أيضًا...',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep7': String.raw`<strong>الخطوة 3: اختبار التلميح</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep8': 'لنختبر بأمثلة:',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep9': 'إذا x=4 (زوجي) و y=2 (زوجي): x+y=6 (زوجي)، x-y=2 (زوجي) - نفس الزوجية ✓',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep10': 'إذا x=5 (فردي) و y=3 (فردي): x+y=8 (زوجي)، x-y=2 (زوجي) - نفس الزوجية ✓',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep11': 'إذا x=6 (زوجي) و y=3 (فردي): x+y=9 (فردي)، x-y=3 (فردي) - نفس الزوجية ✓',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep12': 'التلميح صحيح: x+y و x-y لهما نفس الزوجية دائمًا!',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep13': String.raw`<strong>الخطوة 4: لماذا هذا مفيد</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep14': 'نريد إثبات أن القطعة النهائية زوجية. لنفكر فيما يحدث للزوجية عندما نجمع القطع.',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep15': String.raw`<strong>الخطوة 5: الزوجية الأولية للمجموع</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep16': 'القطع الأولية: 1, 2, 3, ..., 20',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep17': 'لنعد كم عدد الأعداد الفردية: 1, 3, 5, 7, 9, 11, 13, 15, 17, 19 → 10 أعداد فردية',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep18': 'مجموع الأعداد الفردية: فردي + فردي = زوجي، زوجي + فردي = فردي',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep19': 'مع 10 أعداد فردية: فردي+فردي=زوجي، زوجي+فردي=فردي، ...',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep20': 'في الواقع، لنحسب مجموع أول 10 أعداد فردية:',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep21': '1 + 3 + 5 + ... + 19',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep22': 'هذه متتابعة حسابية مع أ=1، د=2، ن=10',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep23': 'المجموع = 10 × (1 + 19) ÷ 2 = 10 × 20 ÷ 2 = 100 (زوجي)',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep24': 'الأعداد الزوجية (2, 4, 6, ..., 20) مجموعها: 10 × (2 + 20) ÷ 2 = 10 × 22 ÷ 2 = 110 (زوجي)',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep25': 'المجموع الكلي = 100 + 110 = 210 (زوجي)',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep26': String.raw`<strong>الخطوة 6: الزوجية تبقى زوجية</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep27': 'عندما نستبدل x و y بـ |x-y|:',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep28': 'زوجية القطعة الجديدة هي نفس زوجية x+y (من التلميح)',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep29': 'لكن x+y له نفس زوجية مجموع جميع القطع في تلك اللحظة!',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep30': 'لذلك زوجية مجموع جميع القطع تبقى ثابتة.',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep31': 'زوجية المجموع الأولي = زوجي',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep32': 'زوجية المجموع النهائي (عندما تبقى قطعة واحدة) = زوجي',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep33': String.raw`<strong>الخطوة 7: الاستنتاج للجزء ب</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep34': 'القطعة الأخيرة لها قيمة تساوي المجموع النهائي، وهو زوجي.',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBStep35': 'لذلك، الرقم على القطعة الأخيرة زوجي.',
+        
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBTipTitle': 'مفهوم رئيسي',
+        'MH.lesson_Y2Alg_seqArith4.problemBPartBTipText': 'تعلمنا هذه المشكلة عن الثوابت - خصائص لا تتغير أثناء العملية. في الجزء أ، كان المجموع الكلي ثابتًا. في الجزء ب، كانت زوجية المجموع الكلي ثابتة.',
+        
+        'MH.lesson_Y2Alg_seqArith4.problemCTitle': 'ج. حد مشترك في ثلاث متتابعات',
+        'MH.lesson_Y2Alg_seqArith4.problemCText1': String.raw`(U<sub>n</sub>) متتابعة حسابية بحد أول 6 وأساس 11.`,
+        'MH.lesson_Y2Alg_seqArith4.problemCText2': String.raw`(V<sub>n</sub>) متتابعة حسابية بحد أول -8 وأساس 13.`,
+        'MH.lesson_Y2Alg_seqArith4.problemCText3': String.raw`(W<sub>n</sub>) متتابعة حسابية بحد أول 29 وأساس 17.`,
+        'MH.lesson_Y2Alg_seqArith4.problemCQuestion': String.raw`ما أصغر عدد طبيعي هو حد في المتتابعات الثلاث (U<sub>n</sub>)، (V<sub>n</sub>)، و (W<sub>n</sub>)؟`,
+        'MH.lesson_Y2Alg_seqArith4.problemCHint': String.raw`تلميح: تحقق أن U<sub>n</sub> + 5 مضاعف للعدد 11.`,
+        
+        'MH.lesson_Y2Alg_seqArith4.problemCSolutionTitle': 'حل مفصل خطوة بخطوة',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep1': String.raw`<strong>الخطوة 1: كتابة الحدود العامة</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep2': 'لمتتابعة حسابية: U<sub>n</sub> = الحد الأول + n × الأساس',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep3': String.raw`للمتتابعة (U<sub>n</sub>): U<sub>0</sub> = 6، الأساس = 11`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep4': String.raw`U<sub>n</sub> = 6 + 11n`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep5': String.raw`للمتتابعة (V<sub>n</sub>): V<sub>0</sub> = -8، الأساس = 13`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep6': String.raw`V<sub>n</sub> = -8 + 13n`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep7': String.raw`للمتتابعة (W<sub>n</sub>): W<sub>0</sub> = 29، الأساس = 17`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep8': String.raw`W<sub>n</sub> = 29 + 17n`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep9': String.raw`<strong>الخطوة 2: استخدام التلميح</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep10': String.raw`يقول التلميح: U<sub>n</sub> + 5 مضاعف للعدد 11. لنتحقق:`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep11': String.raw`U<sub>n</sub> = 6 + 11n`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep12': String.raw`U<sub>n</sub> + 5 = (6 + 11n) + 5 = 11 + 11n = 11(1 + n)`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep13': String.raw`نعم! U<sub>n</sub> + 5 = 11(n + 1)، وهو بوضوح مضاعف للعدد 11.`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep14': String.raw`<strong>الخطوة 3: ماذا يعني هذا؟</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep15': String.raw`إذا كان العدد x في المتتابعة (U<sub>n</sub>)، فإن x + 5 يجب أن يكون مضاعفًا للعدد 11.`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep16': 'إذن x = مضاعف 11 - 5',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep17': 'أو: x ≡ -5 (mod 11) مما يعني x ≡ 6 (mod 11) لأن -5 + 11 = 6',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep18': String.raw`<strong>الخطوة 4: إيجاد أنماط مماثلة للمتتابعات الأخرى</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep19': String.raw`لنتحقق من V<sub>n</sub> + شيء:`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep20': String.raw`V<sub>n</sub> = -8 + 13n`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep21': String.raw`V<sub>n</sub> + 8 = 13n، وهو مضاعف للعدد 13`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep22': String.raw`لذلك إذا كان x في (V<sub>n</sub>)، فإن x + 8 مضاعف للعدد 13`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep23': 'أو: x ≡ -8 (mod 13) مما يعني x ≡ 5 (mod 13) لأن -8 + 13 = 5',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep24': String.raw`الآن لـ W<sub>n</sub>:`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep25': String.raw`W<sub>n</sub> = 29 + 17n`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep26': String.raw`W<sub>n</sub> - 12 = 17 + 17n = 17(1 + n)، وهو مضاعف للعدد 17`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep27': String.raw`لذلك إذا كان x في (W<sub>n</sub>)، فإن x - 12 مضاعف للعدد 17`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep28': 'أو: x ≡ 12 (mod 17)',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep29': String.raw`<strong>الخطوة 5: جمع كل شيء معًا</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep30': 'نحتاج إلى عدد طبيعي x يحقق:',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep31': '1. x ≡ 6 (mod 11) [من المتتابعة U]',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep32': '2. x ≡ 5 (mod 13) [من المتتابعة V]',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep33': '3. x ≡ 12 (mod 17) [من المتتابعة W]',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep34': String.raw`<strong>الخطوة 6: حل نظام التطابقات</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep35': 'نحتاج إلى أصغر عدد طبيعي يحقق الشروط الثلاثة.',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep36': String.raw`<strong>الخطوة 7: تجربة قيم</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep37': 'من الشرط 1: x = 11k + 6 لبعض الأعداد الصحيحة k ≥ 0',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep38': 'لنتحقق من قيم k:',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep39': 'k=0: x=6 → تحقق الشرط 2: 6 mod 13 = 6، ليس 5',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep40': 'k=1: x=17 → 17 mod 13 = 4، ليس 5',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep41': 'k=2: x=28 → 28 mod 13 = 2، ليس 5',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep42': 'k=3: x=39 → 39 mod 13 = 0، ليس 5',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep43': 'k=4: x=50 → 50 mod 13 = 11، ليس 5',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep44': 'k=5: x=61 → 61 mod 13 = 9، ليس 5',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep45': 'k=6: x=72 → 72 mod 13 = 7، ليس 5',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep46': 'k=7: x=83 → 83 mod 13 = 5 ✓ (جيد للشرط 2!)',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep47': 'الآن x=83 يحتاج أيضًا إلى تحقيق الشرط 3: x ≡ 12 (mod 17)',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep48': '83 mod 17 = 83 - 4×17 = 83 - 68 = 15، ليس 12',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep49': String.raw`<strong>الخطوة 8: إيجاد مرشحين أكثر</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep50': 'نحتاج إلى أعداد تكون ≡ 6 (mod 11) و ≡ 5 (mod 13).',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep51': 'التالي بعد 83 سيكون 83 + م.م.أ(11,13) = 83 + 143 = 226',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep52': 'تحقق 226 mod 17: 226 ÷ 17 = 13 باقي 5، ليس 12',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep53': 'التالي: 226 + 143 = 369',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep54': '369 mod 17: 369 ÷ 17 = 21 باقي 12 ✓ (369 - 21×17 = 369 - 357 = 12)',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep55': String.raw`<strong>الخطوة 9: التحقق من 369</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep56': 'تحقق من جميع الشروط:',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep57': '369 mod 11 = 369 - 33×11 = 369 - 363 = 6 ✓',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep58': '369 mod 13 = 369 - 28×13 = 369 - 364 = 5 ✓',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep59': '369 mod 17 = 12 ✓ (تحققنا بالفعل)',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep60': String.raw`<strong>الخطوة 10: التحقق مما إذا كان عددًا طبيعيًا في كل متتابعة</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep61': String.raw`لـ (U<sub>n</sub>): U<sub>n</sub> = 6 + 11n = 369 → 11n = 363 → n = 33 ✓`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep62': String.raw`لـ (V<sub>n</sub>): V<sub>n</sub> = -8 + 13n = 369 → 13n = 377 → n = 29 ✓`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep63': String.raw`لـ (W<sub>n</sub>): W<sub>n</sub> = 29 + 17n = 369 → 17n = 340 → n = 20 ✓`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep64': String.raw`<strong>الخطوة 11: التحقق من وجود حلول أصغر</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep65': 'يجب أن نتحقق مما إذا كان هناك عدد أصغر. لنتحقق من النمط:',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep66': 'وجدنا 369 = 83 + 2×143',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep67': 'ماذا عن 83 - 143 = -60 (ليس طبيعيًا)',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep68': 'أو تحقق من أعداد أقل من 83 تحقق الشروط 1 و 2:',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep69': 'الأعداد الوحيدة ≡ 6 (mod 11) و ≡ 5 (mod 13) الأقل من 83 ستكون سالبة.',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep70': 'إذن 369 هو بالفعل أصغر حل طبيعي.',
+        'MH.lesson_Y2Alg_seqArith4.problemCStep71': String.raw`<strong>الخطوة 12: الإجابة</strong>`,
+        'MH.lesson_Y2Alg_seqArith4.problemCStep72': 'أصغر عدد طبيعي موجود في المتتابعات الثلاث هو 369.',
+        
+        'MH.lesson_Y2Alg_seqArith4.problemCTipTitle': 'ما تعلمناه',
+        'MH.lesson_Y2Alg_seqArith4.problemCTipText': 'تجمع هذه المشكلة المتتابعات الحسابية مع الحساب المعياري. إيجاد حدود مشتركة في متتابعات متعددة يتضمن غالبًا حل نظام تطابقات، وهو مفهوم مهم في نظرية الأعداد.',
+        
+        // الخاتمة
+        'MH.lesson_Y2Alg_seqArith4.conclusionTitle': 'الخاتمة',
+        'MH.lesson_Y2Alg_seqArith4.finalThoughtsTitle': 'أفكار ختامية',
+        'MH.lesson_Y2Alg_seqArith4.finalThoughtsText': 'مبروك! لقد أكملت السلسلة المكونة من أربعة أجزاء عن المتتابعات الحسابية. لقد تعلمت:',
+        'MH.lesson_Y2Alg_seqArith4.learned1': 'كيف تتعرف على المتتابعات الحسابية',
+        'MH.lesson_Y2Alg_seqArith4.learned2': 'كيف تجد الحد العام لمتتابعة حسابية',
+        'MH.lesson_Y2Alg_seqArith4.learned3': 'كيف تمثل المتتابعات الحسابية بيانيًا',
+        'MH.lesson_Y2Alg_seqArith4.learned4': 'كيف تحسب مجموع حدود متتالية',
+        'MH.lesson_Y2Alg_seqArith4.learned5': 'كيف تطبق هذه المفاهيم لحل مشكلات تطبيقية',
+        'MH.lesson_Y2Alg_seqArith4.encouragement': 'المتتابعات الحسابية موجودة في كل مكان في الرياضيات وفي العالم الحقيقي. المهارات التي تعلمتها ستساعدك في العديد من مجالات الدراسة وفهم الأنماط في الحياة اليومية. استمر في الممارسة واستكشاف الرياضيات!',
+        
+        // التذييل
+        'MH.footer.developer': 'المطور',
+        'MH.footer.version': 'الإصدار',
+        'MH.footer.links': 'الروابط',
+        'MH.footer.terms': 'شروط الاستخدام',
+        'MH.footer.privacy': 'سياسة الخصوصية'
+    }
+
+        };
+        
+        // Merge translations with existing ones
+        if (typeof translations !== 'undefined') {
+            Object.keys(seqArith4Translations).forEach(lang => {
+                if (translations[lang]) {
+                    translations[lang] = {...translations[lang], ...seqArith4Translations[lang]};
+                } else {
+                    translations[lang] = seqArith4Translations[lang];
+                }
+            });
+        } else {
+            var translations = seqArith4Translations;
+        }
+        
+        // Solution toggle function
+        function toggleSolution(solutionId) {
+            const solution = document.getElementById(`solution${solutionId}`);
+            const button = solution.previousElementSibling;
+            
+            if (solution.style.display === 'block' || solution.style.display === '') {
+                solution.style.display = 'none';
+                button.textContent = button.getAttribute('data-i18n') === 'MH.lesson_Y2Alg_seqArith4.hideSolution' ? 
+                    translations[currentLanguage]['MH.lesson_Y2Alg_seqArith4.showSolution'] : 
+                    'Show Solution';
+            } else {
+                solution.style.display = 'block';
+                button.textContent = button.getAttribute('data-i18n') === 'MH.lesson_Y2Alg_seqArith4.showSolution' ? 
+                    translations[currentLanguage]['MH.lesson_Y2Alg_seqArith4.hideSolution'] : 
+                    'Hide Solution';
+            }
+        }
+        
+        // Initialize solutions as hidden
+        document.addEventListener('DOMContentLoaded', function() {
+            for (let i = 1; i <= 3; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+            }
+            
+            // Apply translations
+            if (typeof applyTranslations === 'function') {
+                applyTranslations();
+            }
+        });
+        
+        // Render KaTeX equations
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof renderMathInElement === 'function') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+        });
+    </script>
+</body>
+</html>

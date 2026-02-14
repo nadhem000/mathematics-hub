@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Affine Functions – Part V</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#27AE60" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#E67E22" media="(prefers-color-scheme: dark)">
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#27AE60">
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    <style>
+        /* Fresh palette – Green & Orange (same as Part IV) */
+        :root {
+            --primary: #27AE60;
+            --primary-light: #6FCF97;
+            --primary-dark: #1E8449;
+            --secondary: #E67E22;
+            --secondary-light: #F39C12;
+            --secondary-dark: #D35400;
+            --accent: #3498DB;
+            --warning: #E74C3C;
+            --info: #2ECC71;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #FFFFFF;
+            --surface: #F8F9FA;
+            --border: #E9ECEF;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        [data-theme="dark"] {
+            --primary: #1E8449;
+            --primary-light: #27AE60;
+            --primary-dark: #145A32;
+            --secondary: #D35400;
+            --secondary-light: #E67E22;
+            --secondary-dark: #A04000;
+            --accent: #5DADE2;
+            --warning: #C0392B;
+            --info: #27AE60;
+            --text: #FFFFFF;
+            --text-light: #CCCCCC;
+            --background: #121212;
+            --surface: #1E1E1E;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+        .katex { font-size: 1.1em; }
+        .MH-equation {
+            font-family: inherit;
+            font-size: 1.1em;
+            color: var(--primary-dark);
+            margin: 0.5em 0;
+            padding: 0.3em 0.8em;
+            background: rgba(39, 174, 96, 0.05);
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .MH-canvas-container { margin: 2em 0; text-align: center; }
+        .MH-canvas {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background-color: var(--surface);
+            max-width: 100%;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+        .MH-canvas-title { font-weight: bold; margin-bottom: 0.5em; color: var(--primary); }
+        .MH-canvas-instructions { font-size: 0.9em; color: var(--text-light); margin-top: 0.5em; font-style: italic; }
+        .MH-construction-step {
+            margin: 1.5em 0;
+            padding: 1em;
+            background-color: var(--surface);
+            border-left: 4px solid var(--secondary);
+            border-radius: 4px;
+        }
+        .MH-construction-step h4 { margin-top: 0; color: var(--secondary-dark); }
+        .MH-solution {
+            display: none;
+            margin-top: 1em;
+            padding: 1.2em;
+            background: var(--surface);
+            border-radius: 8px;
+            border-left: 6px solid var(--secondary);
+            color: var(--text);
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+        .MH-solution-btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s;
+            margin-right: 0.5em;
+        }
+        .MH-solution-btn:hover { background-color: var(--secondary-dark); }
+        .MH-exercise-number {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: var(--primary-dark);
+            margin: 1.5em 0 0.5em 0;
+            border-bottom: 3px solid var(--primary-light);
+            padding-bottom: 0.3em;
+        }
+        .MH-important { background: rgba(39, 174, 96, 0.1); padding: 1em; border-radius: 8px; margin: 1em 0; }
+        .MH-step { margin-left: 1em; }
+        @media (max-width: 768px) { .MH-canvas { max-width: 100%; height: auto; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+                        <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y1Alg_fonAff5.title">Affine Functions: Part V</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y1Alg_fonAff5.subtitle">Deepening – squares, cubes, square roots → affine</h2>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Alg_fonAff5.introduction">Introduction</h2>
+            <p data-i18n="MH.lesson_Y1Alg_fonAff5.introText1">In this fifth part, we continue to discover affine functions hidden inside more elaborate expressions: differences of squares, cubes that cancel the quadratic term, and square roots that become simple lines. Every calculation is explained step by step, as if we were doing it together. No shortcuts – we want you to understand each transformation.</p>
+            <p data-i18n="MH.lesson_Y1Alg_fonAff5.introText2">We will also solve equations and inequalities, and see how these functions appear in everyday situations. Take your time; the solutions are extremely detailed.</p>
+        </section>
+
+        <!-- ============== EXERCISE 1 ============== -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y1Alg_fonAff5.ex1.title">IX. Exercise 1 – Difference of two squares</div>
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y1Alg_fonAff5.ex1.statement">Let \(f(x) = (x+5)^2 - (x-3)^2\).<br>
+                1) Expand both squares and simplify. Show that \(f\) is an affine function (write it as \(ax+b\)).<br>
+                2) What are the slope and the y‑intercept?<br>
+                3) Draw the graph of \(f\) for \(x\) between \(-4\) and \(2\).<br>
+                4) Solve algebraically: \(f(x) = 10\). Also check graphically.</p>
+            </div>
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y1Alg_fonAff5.ex1.canvasTitle">Figure 1: Graph of f(x) = (x+5)² – (x-3)² = 16x+16</div>
+                <canvas id="ex1Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y1Alg_fonAff5.ex1.canvasInstructions">Line y = 16x+16, slope 16, intercept 16. Intersection with y=10 marked.</div>
+            </div>
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff5.ex1.q1">1) Expand and simplify f(x)</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex1_sol1')" data-i18n="MH.lesson_Y1Alg_fonAff5.showSolution">Show Solution</button>
+                    <div id="ex1_sol1" class="MH-solution"></div>
+                </div>
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff5.ex1.q2">2) Slope and intercept</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex1_sol2')" data-i18n="MH.lesson_Y1Alg_fonAff5.showSolution">Show Solution</button>
+                    <div id="ex1_sol2" class="MH-solution"></div>
+                </div>
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff5.ex1.q3">3) Graph</h4>
+                    <button class="MH-solution-btn" onclick="constructExercise1()" data-i18n="MH.lesson_Y1Alg_fonAff5.showConstruction">Show Construction</button>
+                </div>
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff5.ex1.q4">4) Solve f(x) = 10</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex1_sol4')" data-i18n="MH.lesson_Y1Alg_fonAff5.showSolution">Show Solution</button>
+                    <div id="ex1_sol4" class="MH-solution"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============== EXERCISE 2 ============== -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y1Alg_fonAff5.ex2.title">IX. Exercise 2 – Square roots that become lines</div>
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y1Alg_fonAff5.ex2.statement">Consider the two functions:<br>
+                \(g(x) = \sqrt{(4x+8)^2}\) for \(x \ge -2\) &nbsp;&nbsp; and &nbsp;&nbsp; \(h(x) = \sqrt{(9-3x)^2}\) for \(x \le 3\).<br>
+                1) Simplify \(g(x)\) and \(h(x)\). Are they affine? Write each as \(ax+b\).<br>
+                2) Solve \(g(x) = 12\) and \(h(x) = 6\).<br>
+                3) Draw the two lines on the same graph (for appropriate \(x\) ranges).<br>
+                4) For which \(x\) do we have \(g(x) = h(x)\)?</p>
+            </div>
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y1Alg_fonAff5.ex2.canvasTitle">Figure 2: g(x)=4x+8 (x≥–2) ; h(x)=9–3x (x≤3)</div>
+                <canvas id="ex2Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y1Alg_fonAff5.ex2.canvasInstructions">Intersection at x = 0.2 ; g(0.2)=8.8, h(0.2)=8.4? Wait, solve 4x+8 = 9-3x → 7x=1 → x≈0.1429. Let's mark correctly.</div>
+            </div>
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff5.ex2.q1">1) Simplify g and h</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex2_sol1')" data-i18n="MH.lesson_Y1Alg_fonAff5.showSolution">Show Solution</button>
+                    <div id="ex2_sol1" class="MH-solution"></div>
+                </div>
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff5.ex2.q2">2) Solve equations</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex2_sol2')" data-i18n="MH.lesson_Y1Alg_fonAff5.showSolution">Show Solution</button>
+                    <div id="ex2_sol2" class="MH-solution"></div>
+                </div>
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff5.ex2.q3">3) Draw the lines</h4>
+                    <button class="MH-solution-btn" onclick="constructExercise2()" data-i18n="MH.lesson_Y1Alg_fonAff5.showConstruction">Show Construction</button>
+                </div>
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff5.ex2.q4">4) Solve g(x) = h(x)</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex2_sol4')" data-i18n="MH.lesson_Y1Alg_fonAff5.showSolution">Show Solution</button>
+                    <div id="ex2_sol4" class="MH-solution"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============== EXERCISE 3 ============== -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y1Alg_fonAff5.ex3.title">IX. Exercise 3 – A cube that simplifies</div>
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y1Alg_fonAff5.ex3.statement">Let \(p(x) = (2x+1)^3 - 8x^3 - 12x^2\).<br>
+                1) Expand \((2x+1)^3\) carefully, then subtract \(8x^3\) and \(12x^2\). Show that only an affine part remains.<br>
+                2) Write \(p(x)\) as \(ax+b\). What are \(a\) and \(b\)?<br>
+                3) Solve \(p(x) = 7\).<br>
+                4) Draw the graph of \(p\) for \(x\) between \(-2\) and \(2\) and verify your solution.</p>
+            </div>
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y1Alg_fonAff5.ex3.canvasTitle">Figure 3: p(x) = 6x+1 (affine!)</div>
+                <canvas id="ex3Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y1Alg_fonAff5.ex3.canvasInstructions">Line y = 6x+1, slope 6, intercept 1. Intersection with y=7 at x=1.</div>
+            </div>
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff5.ex3.q1">1) Expand and simplify</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex3_sol1')" data-i18n="MH.lesson_Y1Alg_fonAff5.showSolution">Show Solution</button>
+                    <div id="ex3_sol1" class="MH-solution"></div>
+                </div>
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff5.ex3.q2">2) Affine form, a, b</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex3_sol2')" data-i18n="MH.lesson_Y1Alg_fonAff5.showSolution">Show Solution</button>
+                    <div id="ex3_sol2" class="MH-solution"></div>
+                </div>
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff5.ex3.q3">3) Solve p(x)=7</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex3_sol3')" data-i18n="MH.lesson_Y1Alg_fonAff5.showSolution">Show Solution</button>
+                    <div id="ex3_sol3" class="MH-solution"></div>
+                </div>
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff5.ex3.q4">4) Graph</h4>
+                    <button class="MH-solution-btn" onclick="constructExercise3()" data-i18n="MH.lesson_Y1Alg_fonAff5.showConstruction">Show Construction</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============== EXERCISE 4 ============== -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y1Alg_fonAff5.ex4.title">IX. Exercise 4 – Two lines, intersection and comparison</div>
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y1Alg_fonAff5.ex4.statement">We define \(f(x) = (3x+2)^2 - (3x-2)^2\) and \(g(x) = (x+4)^2 - (x-4)^2\).<br>
+                1) Simplify each function. Verify they are affine.<br>
+                2) Find the coordinates of the intersection point of the two lines.<br>
+                3) Solve the inequality \(f(x) \ge g(x)\). Interpret on a graph.</p>
+            </div>
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y1Alg_fonAff5.ex4.canvasTitle">Figure 4: f(x)=24x , g(x)=16x</div>
+                <canvas id="ex4Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y1Alg_fonAff5.ex4.canvasInstructions">Both pass through origin. f steeper. f ≥ g for x ≥ 0.</div>
+            </div>
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff5.ex4.q1">1) Simplify f and g</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex4_sol1')" data-i18n="MH.lesson_Y1Alg_fonAff5.showSolution">Show Solution</button>
+                    <div id="ex4_sol1" class="MH-solution"></div>
+                </div>
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff5.ex4.q2">2) Intersection</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex4_sol2')" data-i18n="MH.lesson_Y1Alg_fonAff5.showSolution">Show Solution</button>
+                    <div id="ex4_sol2" class="MH-solution"></div>
+                </div>
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff5.ex4.q3">3) Solve f(x) ≥ g(x)</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex4_sol3')" data-i18n="MH.lesson_Y1Alg_fonAff5.showSolution">Show Solution</button>
+                    <div id="ex4_sol3" class="MH-solution"></div>
+                </div>
+                <button class="MH-solution-btn" onclick="constructExercise4()" data-i18n="MH.lesson_Y1Alg_fonAff5.showConstruction">Show Construction</button>
+            </div>
+        </section>
+
+        <!-- ============== EXERCISE 5 ============== -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y1Alg_fonAff5.ex5.title">IX. Exercise 5 – Real life: garden and pool</div>
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y1Alg_fonAff5.ex5.statement">A rectangular garden is a square of side \(x+3\) meters. Inside there is a square pool of side \(x\) meters. The rest is lawn.<br>
+                1) Express the lawn area \(A(x)\) in expanded form. Simplify: it becomes an affine function.<br>
+                2) What are the slope and the vertical intercept? What do they mean?<br>
+                3) The owner wants a lawn area of at least 50 m². Solve \(A(x) \ge 50\) and give the smallest possible side of the pool (to one decimal).<br>
+                4) Draw the graph of \(A(x)\) for \(0 \le x \le 10\) and highlight the solution set.</p>
+            </div>
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y1Alg_fonAff5.ex5.canvasTitle">Figure 5: Lawn area A(x) = 6x+9</div>
+                <canvas id="ex5Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y1Alg_fonAff5.ex5.canvasInstructions">Line with slope 6, intercept 9. Area ≥ 50 when x ≥ 6.833.</div>
+            </div>
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff5.ex5.q1">1) Simplify A(x)</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex5_sol1')" data-i18n="MH.lesson_Y1Alg_fonAff5.showSolution">Show Solution</button>
+                    <div id="ex5_sol1" class="MH-solution"></div>
+                </div>
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff5.ex5.q2">2) Slope, intercept, meaning</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex5_sol2')" data-i18n="MH.lesson_Y1Alg_fonAff5.showSolution">Show Solution</button>
+                    <div id="ex5_sol2" class="MH-solution"></div>
+                </div>
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff5.ex5.q3">3) Solve A(x) ≥ 50</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex5_sol3')" data-i18n="MH.lesson_Y1Alg_fonAff5.showSolution">Show Solution</button>
+                    <div id="ex5_sol3" class="MH-solution"></div>
+                </div>
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff5.ex5.q4">4) Graph and highlight</h4>
+                    <button class="MH-solution-btn" onclick="constructExercise5()" data-i18n="MH.lesson_Y1Alg_fonAff5.showConstruction">Show Construction</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Alg_fonAff5.summary">Summary – what we learned</h2>
+            <div class="MH-important">
+                <ul>
+                    <li data-i18n="MH.lesson_Y1Alg_fonAff5.summary1">\((x+a)^2 - (x+b)^2\) simplifies to \(2(a-b)x + (a^2-b^2)\) → affine.</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonAff5.summary2">\(\sqrt{(\text{linear})^2}\) becomes \(|\text{linear}|\); with a domain it can become a pure linear (affine) function.</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonAff5.summary3">A cleverly chosen cubic can also hide an affine part: \((2x+1)^3 - 8x^3 -12x^2 = 6x+1\).</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonAff5.summary4">Two affine lines intersect at one point (unless parallel). Comparison: f ≥ g corresponds to x on one side of the intersection.</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonAff5.summary5">Real situations (area, profit) often lead to such hidden affine functions – the slope tells the increase per unit.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+    <script>
+        // =========================================================================
+        // COMPLETE TRANSLATION OBJECT (EN, AR, FR) with String.raw for LaTeX
+        // =========================================================================
+        const fonAff5Translations = {
+            en: {
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Theme',
+                'MH.general.language': 'Language',
+                'MH.general.enableNotifications': 'Enable Notifications',
+                'MH.lesson_Y1Alg_fonAff5.showSolution': 'Show Solution',
+                'MH.lesson_Y1Alg_fonAff5.hideSolution': 'Hide Solution',
+                'MH.lesson_Y1Alg_fonAff5.showConstruction': 'Show Construction',
+                'MH.lesson_Y1Alg_fonAff5.title': 'Affine Functions: Part V',
+                'MH.lesson_Y1Alg_fonAff5.subtitle': 'Deepening – squares, cubes, square roots → affine',
+                'MH.lesson_Y1Alg_fonAff5.introduction': 'Introduction',
+                'MH.lesson_Y1Alg_fonAff5.introText1': 'In this fifth part, we continue to discover affine functions hidden inside more elaborate expressions: differences of squares, cubes that cancel the quadratic term, and square roots that become simple lines. Every calculation is explained step by step, as if we were doing it together. No shortcuts – we want you to understand each transformation.',
+                'MH.lesson_Y1Alg_fonAff5.introText2': 'We will also solve equations and inequalities, and see how these functions appear in everyday situations. Take your time; the solutions are extremely detailed.',
+                // Exercise 1
+                'MH.lesson_Y1Alg_fonAff5.ex1.title': 'IX. Exercise 1 – Difference of two squares',
+                'MH.lesson_Y1Alg_fonAff5.ex1.statement': 'Let \\(f(x) = (x+5)^2 - (x-3)^2\\).<br>1) Expand both squares and simplify. Show that \\(f\\) is an affine function (write it as \\(ax+b\\)).<br>2) What are the slope and the y‑intercept?<br>3) Draw the graph of \\(f\\) for \\(x\\) between \\(-4\\) and \\(2\\).<br>4) Solve algebraically: \\(f(x) = 10\\). Also check graphically.',
+                'MH.lesson_Y1Alg_fonAff5.ex1.canvasTitle': 'Figure 1: Graph of f(x) = (x+5)² – (x-3)² = 16x+16',
+                'MH.lesson_Y1Alg_fonAff5.ex1.canvasInstructions': 'Line y = 16x+16, slope 16, intercept 16. Intersection with y=10 marked.',
+                'MH.lesson_Y1Alg_fonAff5.ex1.q1': '1) Expand and simplify f(x)',
+                'MH.lesson_Y1Alg_fonAff5.ex1.q2': '2) Slope and intercept',
+                'MH.lesson_Y1Alg_fonAff5.ex1.q3': '3) Graph',
+                'MH.lesson_Y1Alg_fonAff5.ex1.q4': '4) Solve f(x) = 10',
+                // Exercise 2
+                'MH.lesson_Y1Alg_fonAff5.ex2.title': 'IX. Exercise 2 – Square roots that become lines',
+                'MH.lesson_Y1Alg_fonAff5.ex2.statement': 'Consider the two functions:<br>\\(g(x) = \\sqrt{(4x+8)^2}\\) for \\(x \\ge -2\\) &nbsp;&nbsp; and &nbsp;&nbsp; \\(h(x) = \\sqrt{(9-3x)^2}\\) for \\(x \\le 3\\).<br>1) Simplify \\(g(x)\\) and \\(h(x)\\). Are they affine? Write each as \\(ax+b\\).<br>2) Solve \\(g(x) = 12\\) and \\(h(x) = 6\\).<br>3) Draw the two lines on the same graph (for appropriate \\(x\\) ranges).<br>4) For which \\(x\\) do we have \\(g(x) = h(x)\\)?',
+                'MH.lesson_Y1Alg_fonAff5.ex2.canvasTitle': 'Figure 2: g(x)=4x+8 (x≥–2) ; h(x)=9–3x (x≤3)',
+                'MH.lesson_Y1Alg_fonAff5.ex2.canvasInstructions': 'Intersection at x = 1/7 ≈ 0.1429, y ≈ 8.571.',
+                'MH.lesson_Y1Alg_fonAff5.ex2.q1': '1) Simplify g and h',
+                'MH.lesson_Y1Alg_fonAff5.ex2.q2': '2) Solve equations',
+                'MH.lesson_Y1Alg_fonAff5.ex2.q3': '3) Draw the lines',
+                'MH.lesson_Y1Alg_fonAff5.ex2.q4': '4) Solve g(x) = h(x)',
+                // Exercise 3
+                'MH.lesson_Y1Alg_fonAff5.ex3.title': 'IX. Exercise 3 – A cube that simplifies',
+                'MH.lesson_Y1Alg_fonAff5.ex3.statement': 'Let \\(p(x) = (2x+1)^3 - 8x^3 - 12x^2\\).<br>1) Expand \\((2x+1)^3\\) carefully, then subtract \\(8x^3\\) and \\(12x^2\\). Show that only an affine part remains.<br>2) Write \\(p(x)\\) as \\(ax+b\\). What are \\(a\\) and \\(b\\)?<br>3) Solve \\(p(x) = 7\\).<br>4) Draw the graph of \\(p\\) for \\(x\\) between \\(-2\\) and \\(2\\) and verify your solution.',
+                'MH.lesson_Y1Alg_fonAff5.ex3.canvasTitle': 'Figure 3: p(x) = 6x+1 (affine!)',
+                'MH.lesson_Y1Alg_fonAff5.ex3.canvasInstructions': 'Line y = 6x+1, slope 6, intercept 1. Intersection with y=7 at x=1.',
+                'MH.lesson_Y1Alg_fonAff5.ex3.q1': '1) Expand and simplify',
+                'MH.lesson_Y1Alg_fonAff5.ex3.q2': '2) Affine form, a, b',
+                'MH.lesson_Y1Alg_fonAff5.ex3.q3': '3) Solve p(x)=7',
+                'MH.lesson_Y1Alg_fonAff5.ex3.q4': '4) Graph',
+                // Exercise 4
+                'MH.lesson_Y1Alg_fonAff5.ex4.title': 'IX. Exercise 4 – Two lines, intersection and comparison',
+                'MH.lesson_Y1Alg_fonAff5.ex4.statement': 'We define \\(f(x) = (3x+2)^2 - (3x-2)^2\\) and \\(g(x) = (x+4)^2 - (x-4)^2\\).<br>1) Simplify each function. Verify they are affine.<br>2) Find the coordinates of the intersection point of the two lines.<br>3) Solve the inequality \\(f(x) \\ge g(x)\\). Interpret on a graph.',
+                'MH.lesson_Y1Alg_fonAff5.ex4.canvasTitle': 'Figure 4: f(x)=24x , g(x)=16x',
+                'MH.lesson_Y1Alg_fonAff5.ex4.canvasInstructions': 'Both pass through origin. f steeper. f ≥ g for x ≥ 0.',
+                'MH.lesson_Y1Alg_fonAff5.ex4.q1': '1) Simplify f and g',
+                'MH.lesson_Y1Alg_fonAff5.ex4.q2': '2) Intersection',
+                'MH.lesson_Y1Alg_fonAff5.ex4.q3': '3) Solve f(x) ≥ g(x)',
+                // Exercise 5
+                'MH.lesson_Y1Alg_fonAff5.ex5.title': 'IX. Exercise 5 – Real life: garden and pool',
+                'MH.lesson_Y1Alg_fonAff5.ex5.statement': 'A rectangular garden is a square of side \\(x+3\\) meters. Inside there is a square pool of side \\(x\\) meters. The rest is lawn.<br>1) Express the lawn area \\(A(x)\\) in expanded form. Simplify: it becomes an affine function.<br>2) What are the slope and the vertical intercept? What do they mean?<br>3) The owner wants a lawn area of at least 50 m². Solve \\(A(x) \\ge 50\\) and give the smallest possible side of the pool (to one decimal).<br>4) Draw the graph of \\(A(x)\\) for \\(0 \\le x \\le 10\\) and highlight the solution set.',
+                'MH.lesson_Y1Alg_fonAff5.ex5.canvasTitle': 'Figure 5: Lawn area A(x) = 6x+9',
+                'MH.lesson_Y1Alg_fonAff5.ex5.canvasInstructions': 'Line with slope 6, intercept 9. Area ≥ 50 when x ≥ 6.833.',
+                'MH.lesson_Y1Alg_fonAff5.ex5.q1': '1) Simplify A(x)',
+                'MH.lesson_Y1Alg_fonAff5.ex5.q2': '2) Slope, intercept, meaning',
+                'MH.lesson_Y1Alg_fonAff5.ex5.q3': '3) Solve A(x) ≥ 50',
+                'MH.lesson_Y1Alg_fonAff5.ex5.q4': '4) Graph and highlight',
+                // Summary
+                'MH.lesson_Y1Alg_fonAff5.summary': 'Summary – what we learned',
+                'MH.lesson_Y1Alg_fonAff5.summary1': '\\((x+a)^2 - (x+b)^2\\) simplifies to \\(2(a-b)x + (a^2-b^2)\\) → affine.',
+                'MH.lesson_Y1Alg_fonAff5.summary2': '\\sqrt{(\\text{linear})^2} becomes |linear|; with a domain it can become a pure linear (affine) function.',
+                'MH.lesson_Y1Alg_fonAff5.summary3': 'A cleverly chosen cubic can also hide an affine part: \\((2x+1)^3 - 8x^3 -12x^2 = 6x+1\\).',
+                'MH.lesson_Y1Alg_fonAff5.summary4': 'Two affine lines intersect at one point (unless parallel). Comparison: f ≥ g corresponds to x on one side of the intersection.',
+                'MH.lesson_Y1Alg_fonAff5.summary5': 'Real situations (area, profit) often lead to such hidden affine functions – the slope tells the increase per unit.',
+                // Footer
+                'MH.footer.developer': 'Developer',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Links',
+                'MH.footer.terms': 'Terms of Use',
+                'MH.footer.privacy': 'Privacy Policy',
+                // ========= DETAILED SOLUTIONS (beginner-friendly, String.raw) =========
+                'MH.lesson_Y1Alg_fonAff5.ex1.sol1': String.raw`<strong>Solution 1 – Simplification:</strong><br>\((x+5)^2 = (x+5)(x+5) = x^2 + 5x + 5x + 25 = x^2 + 10x + 25\).<br>\((x-3)^2 = (x-3)(x-3) = x^2 - 3x - 3x + 9 = x^2 - 6x + 9\).<br>Now subtract: \(f(x) = (x^2+10x+25) - (x^2-6x+9) = x^2+10x+25 - x^2 + 6x - 9\).<br>The \(x^2\) cancels: \(10x+6x = 16x\) and \(25-9=16\). So \(f(x)=16x+16\).<br>This is of the form \(ax+b\) with \(a=16, b=16\) → affine function.`,
+                'MH.lesson_Y1Alg_fonAff5.ex1.sol2': String.raw`<strong>Solution 2 – Slope and intercept:</strong><br>For \(f(x)=16x+16\), the slope (coefficient of \(x\)) is \(16\). The y‑intercept (constant term) is \(16\). It means the line crosses the y‑axis at (0,16).`,
+                'MH.lesson_Y1Alg_fonAff5.ex1.sol4': String.raw`<strong>Solution 4 – Solve f(x)=10:</strong><br>\(16x+16 = 10\) → subtract 16 from both sides: \(16x = -6\) → divide by 16: \(x = -\frac{6}{16} = -\frac{3}{8} = -0.375\).<br>Graphically: draw horizontal line y=10, it meets the line at \(x \approx -0.38\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex2.sol1': String.raw`<strong>Solution 1 – Simplify g and h:</strong><br>\(\sqrt{(4x+8)^2} = |4x+8|\). Domain \(x \ge -2\) ⇒ \(4x+8 \ge 0\) ⇒ \(|4x+8| = 4x+8\). So \(g(x)=4x+8\), affine (slope 4, intercept 8).<br>\(\sqrt{(9-3x)^2} = |9-3x|\). Domain \(x \le 3\) ⇒ \(9-3x \ge 0\) ⇒ \(|9-3x| = 9-3x\). So \(h(x)=9-3x\), affine (slope -3, intercept 9).`,
+                'MH.lesson_Y1Alg_fonAff5.ex2.sol2': String.raw`<strong>Solution 2 – Solve equations:</strong><br>\(g(x)=12\) → \(4x+8=12\) → \(4x=4\) → \(x=1\) (1 ≥ -2, ok).<br>\(h(x)=6\) → \(9-3x=6\) → \(-3x = -3\) → \(x=1\) (1 ≤ 3, ok).`,
+                'MH.lesson_Y1Alg_fonAff5.ex2.sol4': String.raw`<strong>Solution 4 – Solve g(x) = h(x):</strong><br>Set \(4x+8 = 9-3x\) → \(4x+3x = 9-8\) → \(7x = 1\) → \(x = \frac{1}{7} \approx 0.1429\).<br>Check domains: \(0.1429 \ge -2\) and \(\le 3\) ✓. Then \(y = 4\cdot\frac17+8 = \frac47+8 = \frac{4+56}{7}= \frac{60}{7}\approx 8.571\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex3.sol1': String.raw`<strong>Solution 1 – Expand and simplify:</strong><br>\((2x+1)^3 = (2x)^3 + 3\cdot(2x)^2\cdot1 + 3\cdot(2x)\cdot1^2 + 1^3\) (binomial formula).<br>= \(8x^3 + 3\cdot4x^2\cdot1 + 6x + 1 = 8x^3 + 12x^2 + 6x + 1\).<br>Now \(p(x) = (8x^3+12x^2+6x+1) - 8x^3 - 12x^2\).<br>Cancel \(8x^3\) and \(12x^2\): we get \(6x+1\). So \(p(x)=6x+1\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex3.sol2': String.raw`<strong>Solution 2 – Affine form:</strong><br>\(p(x)=6x+1\) is affine: \(a=6\) (slope), \(b=1\) (intercept).`,
+                'MH.lesson_Y1Alg_fonAff5.ex3.sol3': String.raw`<strong>Solution 3 – Solve p(x)=7:</strong><br>\(6x+1 = 7\) → \(6x = 6\) → \(x = 1\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex4.sol1': String.raw`<strong>Solution 1 – Simplify f and g:</strong><br>\(f(x) = (3x+2)^2 - (3x-2)^2 = (9x^2+12x+4) - (9x^2-12x+4) = 9x^2+12x+4-9x^2+12x-4 = 24x\).<br>\(g(x) = (x+4)^2 - (x-4)^2 = (x^2+8x+16) - (x^2-8x+16) = x^2+8x+16-x^2+8x-16 = 16x\).<br>Both are affine (actually linear through origin).`,
+                'MH.lesson_Y1Alg_fonAff5.ex4.sol2': String.raw`<strong>Solution 2 – Intersection:</strong><br>\(f(x)=g(x)\) ⇒ \(24x = 16x\) ⇒ \(8x = 0\) ⇒ \(x = 0\). Then \(y = 24\cdot0 = 0\). Point \((0,0)\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex4.sol3': String.raw`<strong>Solution 3 – Inequality f(x) ≥ g(x):</strong><br>\(24x \ge 16x\) ⇒ \(24x - 16x \ge 0\) ⇒ \(8x \ge 0\) ⇒ \(x \ge 0\).<br>On the graph, for \(x \ge 0\) the line f (steeper) is above or on g.`,
+                'MH.lesson_Y1Alg_fonAff5.ex5.sol1': String.raw`<strong>Solution 1 – Lawn area:</strong><br>Big square area: \((x+3)^2 = x^2 + 6x + 9\). Pool area: \(x^2\).<br>Lawn area \(A(x) = (x^2+6x+9) - x^2 = 6x + 9\). Affine function.`,
+                'MH.lesson_Y1Alg_fonAff5.ex5.sol2': String.raw`<strong>Solution 2 – Slope and intercept:</strong><br>Slope = 6, intercept = 9. Interpretation: each additional meter of pool side increases lawn area by 6 m²; when pool side is 0, lawn area is 9 m² (the border around a non‑existent pool).`,
+                'MH.lesson_Y1Alg_fonAff5.ex5.sol3': String.raw`<strong>Solution 3 – Solve A(x) ≥ 50:</strong><br>\(6x+9 \ge 50\) ⇒ \(6x \ge 41\) ⇒ \(x \ge \frac{41}{6} \approx 6.833\).<br>Smallest pool side: about 6.8 m (to one decimal: 6.8 m, but if we need whole meters then 7 m).`,
+            },
+            ar: {
+                // Arabic translations – complete set (keys same as English, values in Arabic)
+                'MH.general.title': 'مركز الرياضيات',
+                'MH.general.theme': 'السمة',
+                'MH.general.language': 'اللغة',
+                'MH.general.enableNotifications': 'تفعيل الإشعارات',
+                'MH.lesson_Y1Alg_fonAff5.showSolution': 'عرض الحل',
+                'MH.lesson_Y1Alg_fonAff5.hideSolution': 'إخفاء الحل',
+                'MH.lesson_Y1Alg_fonAff5.showConstruction': 'عرض الإنشاء',
+                'MH.lesson_Y1Alg_fonAff5.title': 'الدوال التآلفية: الجزء الخامس',
+                'MH.lesson_Y1Alg_fonAff5.subtitle': 'تعميق – مربعات، مكعبات، جذور تربيعية ← تآلفي',
+                'MH.lesson_Y1Alg_fonAff5.introduction': 'مقدمة',
+                'MH.lesson_Y1Alg_fonAff5.introText1': 'في هذا الجزء الخامس، نواصل اكتشاف الدوال التآلفية المخبأة في تعبيرات أكثر تعقيداً: فرق مربعين، مكعبات تلغي الحد التربيعي، وجذور تربيعية تصبح مستقيمات بسيطة. كل عملية حسابية مشروحة خطوة بخطوة. لا اختصارات – نريدك أن تفهم كل تحويل.',
+                'MH.lesson_Y1Alg_fonAff5.introText2': 'سنحل أيضاً معادلات ومتراجحات، ونرى كيف تظهر هذه الدوال في مواقف يومية. خذ وقتك؛ الحلول مفصلة جداً.',
+                // Exercise 1
+                'MH.lesson_Y1Alg_fonAff5.ex1.title': 'تاسعاً: تمرين 1 – فرق مربعين',
+                'MH.lesson_Y1Alg_fonAff5.ex1.statement': 'لتكن \\(f(x) = (x+5)^2 - (x-3)^2\\).<br>1) انشر المربعين وبسط. بيّن أن \\(f\\) دالة تآلفية (اكتبها على شكل \\(ax+b\\)).<br>2) ما هما الميل وتقاطع y؟<br>3) ارسم تمثيل \\(f\\) لـ \\(x\\) بين -4 و2.<br>4) حل جبرياً: \\(f(x) = 10\\). وتحقق بيانياً.',
+                'MH.lesson_Y1Alg_fonAff5.ex1.canvasTitle': 'الشكل 1: تمثيل f(x) = (x+5)² – (x-3)² = 16x+16',
+                'MH.lesson_Y1Alg_fonAff5.ex1.canvasInstructions': 'مستقيم y = 16x+16، ميله 16، وتقاطع y = 16. التقاطع مع y=10 محدد.',
+                'MH.lesson_Y1Alg_fonAff5.ex1.q1': '1) انشر وبسط f(x)',
+                'MH.lesson_Y1Alg_fonAff5.ex1.q2': '2) الميل والتقاطع',
+                'MH.lesson_Y1Alg_fonAff5.ex1.q3': '3) التمثيل',
+                'MH.lesson_Y1Alg_fonAff5.ex1.q4': '4) حل f(x)=10',
+                // Exercise 2
+                'MH.lesson_Y1Alg_fonAff5.ex2.title': 'تاسعاً: تمرين 2 – جذور تربيعية تصبح مستقيمات',
+                'MH.lesson_Y1Alg_fonAff5.ex2.statement': 'نعتبر الدالتين:<br>\\(g(x) = \\sqrt{(4x+8)^2}\\) من أجل \\(x \\ge -2\\) &nbsp;&nbsp; و &nbsp;&nbsp; \\(h(x) = \\sqrt{(9-3x)^2}\\) من أجل \\(x \\le 3\\).<br>1) بسط \\(g(x)\\) و \\(h(x)\\). هل هما تآلفيتان؟ اكتب كل منهما على شكل \\(ax+b\\).<br>2) حل \\(g(x) = 12\\) و \\(h(x) = 6\\).<br>3) ارسم المستقيمين على نفس المعلم (باستعمال المجال المناسب).<br>4) من أجل أي \\(x\\) يكون \\(g(x) = h(x)\\)؟',
+                'MH.lesson_Y1Alg_fonAff5.ex2.canvasTitle': 'الشكل 2: g(x)=4x+8 (x≥–2) ; h(x)=9–3x (x≤3)',
+                'MH.lesson_Y1Alg_fonAff5.ex2.canvasInstructions': 'التقاطع عند x = 1/7 ≈ 0.1429، y ≈ 8.571',
+                'MH.lesson_Y1Alg_fonAff5.ex2.q1': '1) بسط g و h',
+                'MH.lesson_Y1Alg_fonAff5.ex2.q2': '2) حل المعادلات',
+                'MH.lesson_Y1Alg_fonAff5.ex2.q3': '3) ارسم المستقيمين',
+                'MH.lesson_Y1Alg_fonAff5.ex2.q4': '4) حل g(x) = h(x)',
+                // Exercise 3
+                'MH.lesson_Y1Alg_fonAff5.ex3.title': 'تاسعاً: تمرين 3 – مكعب يبسط',
+                'MH.lesson_Y1Alg_fonAff5.ex3.statement': 'لتكن \\(p(x) = (2x+1)^3 - 8x^3 - 12x^2\\).<br>1) انشر \\((2x+1)^3\\) بدقة، ثم اطرح \\(8x^3\\) و \\(12x^2\\). بيّن أنه لا يبقى إلا جزء تآلفي.<br>2) اكتب \\(p(x)\\) على شكل \\(ax+b\\). ما هما \\(a\\) و \\(b\\)؟<br>3) حل \\(p(x) = 7\\).<br>4) ارسم تمثيل \\(p\\) لـ \\(x\\) بين -2 و 2 وتحقق من حلك.',
+                'MH.lesson_Y1Alg_fonAff5.ex3.canvasTitle': 'الشكل 3: p(x) = 6x+1 (تآلفي!)',
+                'MH.lesson_Y1Alg_fonAff5.ex3.canvasInstructions': 'مستقيم y = 6x+1، ميله 6، تقاطع 1. التقاطع مع y=7 عند x=1.',
+                'MH.lesson_Y1Alg_fonAff5.ex3.q1': '1) انشر وبسط',
+                'MH.lesson_Y1Alg_fonAff5.ex3.q2': '2) الصيغة التآلفية، a، b',
+                'MH.lesson_Y1Alg_fonAff5.ex3.q3': '3) حل p(x)=7',
+                'MH.lesson_Y1Alg_fonAff5.ex3.q4': '4) التمثيل',
+                // Exercise 4
+                'MH.lesson_Y1Alg_fonAff5.ex4.title': 'تاسعاً: تمرين 4 – مستقيمان، تقاطع ومقارنة',
+                'MH.lesson_Y1Alg_fonAff5.ex4.statement': 'نعرف \\(f(x) = (3x+2)^2 - (3x-2)^2\\) و \\(g(x) = (x+4)^2 - (x-4)^2\\).<br>1) بسط كل دالة. تحقق أنهما تآلفيتان.<br>2) جد إحداثيات نقطة تقاطع المستقيمين.<br>3) حل المتراجحة \\(f(x) \\ge g(x)\\). فسّر على التمثيل.',
+                'MH.lesson_Y1Alg_fonAff5.ex4.canvasTitle': 'الشكل 4: f(x)=24x ، g(x)=16x',
+                'MH.lesson_Y1Alg_fonAff5.ex4.canvasInstructions': 'كلاهما يمر بالأصل. f أكثر انحداراً. f ≥ g من أجل x ≥ 0.',
+                'MH.lesson_Y1Alg_fonAff5.ex4.q1': '1) بسط f و g',
+                'MH.lesson_Y1Alg_fonAff5.ex4.q2': '2) نقطة التقاطع',
+                'MH.lesson_Y1Alg_fonAff5.ex4.q3': '3) حل f(x) ≥ g(x)',
+                // Exercise 5
+                'MH.lesson_Y1Alg_fonAff5.ex5.title': 'تاسعاً: تمرين 5 – واقعي: حديقة وبركة',
+                'MH.lesson_Y1Alg_fonAff5.ex5.statement': 'حديقة مربعة الشكل طول ضلعها \\(x+3\\) متر. داخلها بركة مربعة طول ضلعها \\(x\\) متر. الباقي عشب.<br>1) عبر عن مساحة العشب \\(A(x)\\) بشكل مبسط. بيّن أنها دالة تآلفية.<br>2) ما هما الميل وتقاطع المحور العمودي؟ ماذا يعبّران؟<br>3) يريد صاحب الحديقة مساحة عشب لا تقل عن 50 م². حل \\(A(x) \\ge 50\\) وأعط أصغر طول ممكن لضلع البركة (إلى عشر).<br>4) ارسم تمثيل \\(A(x)\\) من أجل \\(0 \\le x \\le 10\\) ولون مجموعة الحل.',
+                'MH.lesson_Y1Alg_fonAff5.ex5.canvasTitle': 'الشكل 5: مساحة العشب A(x) = 6x+9',
+                'MH.lesson_Y1Alg_fonAff5.ex5.canvasInstructions': 'مستقيم ميله 6، وتقاطع 9. مساحة ≥ 50 عندما x ≥ 6.833',
+                'MH.lesson_Y1Alg_fonAff5.ex5.q1': '1) بسط A(x)',
+                'MH.lesson_Y1Alg_fonAff5.ex5.q2': '2) الميل، التقاطع، المعنى',
+                'MH.lesson_Y1Alg_fonAff5.ex5.q3': '3) حل A(x) ≥ 50',
+                'MH.lesson_Y1Alg_fonAff5.ex5.q4': '4) التمثيل والتلوين',
+                // Summary
+                'MH.lesson_Y1Alg_fonAff5.summary': 'ملخص – ما تعلمناه',
+                'MH.lesson_Y1Alg_fonAff5.summary1': '\\((x+a)^2 - (x+b)^2\\) تبسط إلى \\(2(a-b)x + (a^2-b^2)\\) → تآلفية.',
+                'MH.lesson_Y1Alg_fonAff5.summary2': '\\sqrt{(خطي)^2} = |خطي|; مع مجال مناسب تصبح خطية (تآلفية) محضة.',
+                'MH.lesson_Y1Alg_fonAff5.summary3': 'مكعب باختيار ذكي يمكن أن يخفي جزءاً تآلفياً: \\((2x+1)^3 - 8x^3 -12x^2 = 6x+1\\).',
+                'MH.lesson_Y1Alg_fonAff5.summary4': 'مستقيمان تآلفيان يتقاطعان في نقطة واحدة (ما لم يتوازيا). المقارنة f ≥ g تعني x في جهة من التقاطع.',
+                'MH.lesson_Y1Alg_fonAff5.summary5': 'مواقف حقيقية (مساحة، ربح) غالباً ما تؤدي إلى دوال تآلفية مخبأة – الميل يعطي الزيادة لكل وحدة.',
+                // Footer
+                'MH.footer.developer': 'المطور',
+                'MH.footer.version': 'الإصدار',
+                'MH.footer.links': 'روابط',
+                'MH.footer.terms': 'شروط الاستخدام',
+                'MH.footer.privacy': 'سياسة الخصوصية',
+                // Arabic detailed solutions (String.raw with Arabic text + LaTeX)
+                'MH.lesson_Y1Alg_fonAff5.ex1.sol1': String.raw`<strong>الحل 1 – التبسيط:</strong><br>\((x+5)^2 = x^2 + 10x + 25\)، \((x-3)^2 = x^2 - 6x + 9\).<br>بالطرح: \(f(x) = (x^2+10x+25) - (x^2-6x+9) = x^2+10x+25-x^2+6x-9 = 16x+16\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex1.sol2': String.raw`<strong>الميل والتقاطع:</strong><br>\(f(x)=16x+16\) ⇒ الميل = 16، تقاطع y = 16.`,
+                'MH.lesson_Y1Alg_fonAff5.ex1.sol4': String.raw`<strong>حل f(x)=10:</strong><br>\(16x+16 = 10\) → \(16x = -6\) → \(x = -\frac{3}{8} = -0.375\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex2.sol1': String.raw`<strong>تبسيط g و h:</strong><br>\(\sqrt{(4x+8)^2}=|4x+8|\). لـ \(x\ge -2\)، \(4x+8\ge0\) إذن \(g(x)=4x+8\).<br>\(\sqrt{(9-3x)^2}=|9-3x|\). لـ \(x\le 3\)، \(9-3x\ge0\) إذن \(h(x)=9-3x\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex2.sol2': String.raw`<strong>حل المعادلات:</strong><br>\(g(x)=12\) ← \(4x+8=12\) ← \(x=1\).<br>\(h(x)=6\) ← \(9-3x=6\) ← \(x=1\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex2.sol4': String.raw`<strong>حل g(x)=h(x):</strong><br>\(4x+8 = 9-3x\) → \(7x=1\) → \(x=\frac17\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex3.sol1': String.raw`<strong>النشر والتبسيط:</strong><br>\((2x+1)^3 = 8x^3 + 12x^2 + 6x + 1\). نطرح \(8x^3\) و \(12x^2\): \(p(x)=6x+1\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex3.sol2': String.raw`<strong>الصيغة التآلفية:</strong> \(a=6, b=1\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex3.sol3': String.raw`<strong>حل p(x)=7:</strong> \(6x+1=7\) → \(x=1\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex4.sol1': String.raw`<strong>تبسيط f و g:</strong><br>\(f(x)=24x\)، \(g(x)=16x\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex4.sol2': String.raw`<strong>نقطة التقاطع:</strong> \(24x=16x\) → \(x=0\)، \(y=0\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex4.sol3': String.raw`<strong>حل f(x) ≥ g(x):</strong> \(24x \ge 16x\) → \(8x \ge 0\) → \(x \ge 0\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex5.sol1': String.raw`<strong>مساحة العشب:</strong> \((x+3)^2 - x^2 = 6x+9\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex5.sol2': String.raw`<strong>الميل والتقاطع:</strong> الميل 6، التقاطع 9. كل زيادة 1م في ضلع البركة تزيد العشب 6م²، وإذا كان ضلع البركة 0 فالعشب 9م².`,
+                'MH.lesson_Y1Alg_fonAff5.ex5.sol3': String.raw`<strong>حل A(x) ≥ 50:</strong> \(6x+9 \ge 50\) → \(6x \ge 41\) → \(x \ge 6.833\).`,
+            },
+            fr: {
+                // French translations – complete set
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Thème',
+                'MH.general.language': 'Langue',
+                'MH.general.enableNotifications': 'Activer les notifications',
+                'MH.lesson_Y1Alg_fonAff5.showSolution': 'Afficher la solution',
+                'MH.lesson_Y1Alg_fonAff5.hideSolution': 'Masquer la solution',
+                'MH.lesson_Y1Alg_fonAff5.showConstruction': 'Afficher la construction',
+                'MH.lesson_Y1Alg_fonAff5.title': 'Fonctions affines : Partie V',
+                'MH.lesson_Y1Alg_fonAff5.subtitle': 'Approfondissement – carrés, cubes, racines carrées → affine',
+                'MH.lesson_Y1Alg_fonAff5.introduction': 'Introduction',
+                'MH.lesson_Y1Alg_fonAff5.introText1': 'Dans cette cinquième partie, nous continuons à découvrir des fonctions affines cachées dans des expressions plus élaborées : différences de carrés, cubes qui annulent le terme quadratique, et racines carrées qui deviennent de simples droites. Chaque calcul est détaillé pas à pas. Pas de raccourcis – nous voulons que vous compreniez chaque transformation.',
+                'MH.lesson_Y1Alg_fonAff5.introText2': 'Nous résoudrons également des équations et inéquations, et verrons comment ces fonctions apparaissent dans des situations quotidiennes. Prenez votre temps ; les solutions sont extrêmement détaillées.',
+                // Exercise 1
+                'MH.lesson_Y1Alg_fonAff5.ex1.title': 'IX. Exercice 1 – Différence de deux carrés',
+                'MH.lesson_Y1Alg_fonAff5.ex1.statement': 'Soit \\(f(x) = (x+5)^2 - (x-3)^2\\).<br>1) Développer et réduire. Montrer que \\(f\\) est affine (l’écrire sous la forme \\(ax+b\\)).<br>2) Donner le coefficient directeur et l’ordonnée à l’origine.<br>3) Tracer la représentation graphique de \\(f\\) pour \\(x\\) compris entre \\(-4\\) et \\(2\\).<br>4) Résoudre algébriquement : \\(f(x) = 10\\). Vérifier graphiquement.',
+                'MH.lesson_Y1Alg_fonAff5.ex1.canvasTitle': 'Figure 1 : Graphe de f(x) = (x+5)² – (x-3)² = 16x+16',
+                'MH.lesson_Y1Alg_fonAff5.ex1.canvasInstructions': 'Droite y = 16x+16, pente 16, ordonnée 16. Intersection avec y=10 marquée.',
+                'MH.lesson_Y1Alg_fonAff5.ex1.q1': '1) Développer et réduire f(x)',
+                'MH.lesson_Y1Alg_fonAff5.ex1.q2': '2) Pente et ordonnée',
+                'MH.lesson_Y1Alg_fonAff5.ex1.q3': '3) Tracé',
+                'MH.lesson_Y1Alg_fonAff5.ex1.q4': '4) Résoudre f(x)=10',
+                // Exercise 2
+                'MH.lesson_Y1Alg_fonAff5.ex2.title': 'IX. Exercice 2 – Racines carrées qui deviennent des droites',
+                'MH.lesson_Y1Alg_fonAff5.ex2.statement': 'On considère les deux fonctions :<br>\\(g(x) = \\sqrt{(4x+8)^2}\\) pour \\(x \\ge -2\\) &nbsp;&nbsp; et &nbsp;&nbsp; \\(h(x) = \\sqrt{(9-3x)^2}\\) pour \\(x \\le 3\\).<br>1) Simplifier \\(g(x)\\) et \\(h(x)\\). Sont-elles affines ? Écrire chacune sous la forme \\(ax+b\\).<br>2) Résoudre \\(g(x) = 12\\) et \\(h(x) = 6\\).<br>3) Tracer les deux droites sur le même graphique (domaines appropriés).<br>4) Pour quel \\(x\\) a-t-on \\(g(x) = h(x)\\) ?',
+                'MH.lesson_Y1Alg_fonAff5.ex2.canvasTitle': 'Figure 2 : g(x)=4x+8 (x≥–2) ; h(x)=9–3x (x≤3)',
+                'MH.lesson_Y1Alg_fonAff5.ex2.canvasInstructions': 'Intersection en x = 1/7 ≈ 0,1429, y ≈ 8,571.',
+                'MH.lesson_Y1Alg_fonAff5.ex2.q1': '1) Simplifier g et h',
+                'MH.lesson_Y1Alg_fonAff5.ex2.q2': '2) Résoudre les équations',
+                'MH.lesson_Y1Alg_fonAff5.ex2.q3': '3) Tracer les droites',
+                'MH.lesson_Y1Alg_fonAff5.ex2.q4': '4) Résoudre g(x) = h(x)',
+                // Exercise 3
+                'MH.lesson_Y1Alg_fonAff5.ex3.title': 'IX. Exercice 3 – Un cube qui se simplifie',
+                'MH.lesson_Y1Alg_fonAff5.ex3.statement': 'Soit \\(p(x) = (2x+1)^3 - 8x^3 - 12x^2\\).<br>1) Développer \\((2x+1)^3\\) soigneusement, puis soustraire \\(8x^3\\) et \\(12x^2\\). Montrer qu’il ne reste qu’une partie affine.<br>2) Écrire \\(p(x)\\) sous la forme \\(ax+b\\). Que valent \\(a\\) et \\(b\\) ?<br>3) Résoudre \\(p(x) = 7\\).<br>4) Tracer la représentation graphique de \\(p\\) pour \\(x\\) entre \\(-2\\) et \\(2\\) et vérifier votre solution.',
+                'MH.lesson_Y1Alg_fonAff5.ex3.canvasTitle': 'Figure 3 : p(x) = 6x+1 (affine !)',
+                'MH.lesson_Y1Alg_fonAff5.ex3.canvasInstructions': 'Droite y = 6x+1, pente 6, ordonnée 1. Intersection avec y=7 en x=1.',
+                'MH.lesson_Y1Alg_fonAff5.ex3.q1': '1) Développer et réduire',
+                'MH.lesson_Y1Alg_fonAff5.ex3.q2': '2) Forme affine, a, b',
+                'MH.lesson_Y1Alg_fonAff5.ex3.q3': '3) Résoudre p(x)=7',
+                'MH.lesson_Y1Alg_fonAff5.ex3.q4': '4) Tracé',
+                // Exercise 4
+                'MH.lesson_Y1Alg_fonAff5.ex4.title': 'IX. Exercice 4 – Deux droites, intersection et comparaison',
+                'MH.lesson_Y1Alg_fonAff5.ex4.statement': 'On définit \\(f(x) = (3x+2)^2 - (3x-2)^2\\) et \\(g(x) = (x+4)^2 - (x-4)^2\\).<br>1) Simplifier chaque fonction. Vérifier qu’elles sont affines.<br>2) Trouver les coordonnées du point d’intersection des deux droites.<br>3) Résoudre l’inéquation \\(f(x) \\ge g(x)\\). Interpréter graphiquement.',
+                'MH.lesson_Y1Alg_fonAff5.ex4.canvasTitle': 'Figure 4 : f(x)=24x , g(x)=16x',
+                'MH.lesson_Y1Alg_fonAff5.ex4.canvasInstructions': 'Les deux passent par l’origine. f plus pentue. f ≥ g pour x ≥ 0.',
+                'MH.lesson_Y1Alg_fonAff5.ex4.q1': '1) Simplifier f et g',
+                'MH.lesson_Y1Alg_fonAff5.ex4.q2': '2) Intersection',
+                'MH.lesson_Y1Alg_fonAff5.ex4.q3': '3) Résoudre f(x) ≥ g(x)',
+                // Exercise 5
+                'MH.lesson_Y1Alg_fonAff5.ex5.title': 'IX. Exercice 5 – Réel : jardin et piscine',
+                'MH.lesson_Y1Alg_fonAff5.ex5.statement': 'Un jardin rectangulaire est un carré de côté \\(x+3\\) mètres. À l’intérieur se trouve une piscine carrée de côté \\(x\\) mètres. Le reste est pelouse.<br>1) Exprimer l’aire de la pelouse \\(A(x)\\) sous forme développée. Simplifier : elle devient une fonction affine.<br>2) Donner le coefficient directeur et l’ordonnée à l’origine. Que signifient-ils ?<br>3) Le propriétaire veut une pelouse d’au moins 50 m². Résoudre \\(A(x) \\ge 50\\) et donner le plus petit côté possible de la piscine (au dixième).<br>4) Tracer la représentation graphique de \\(A(x)\\) pour \\(0 \\le x \\le 10\\) et colorier l’ensemble solution.',
+                'MH.lesson_Y1Alg_fonAff5.ex5.canvasTitle': 'Figure 5 : Aire de la pelouse A(x) = 6x+9',
+                'MH.lesson_Y1Alg_fonAff5.ex5.canvasInstructions': 'Droite de pente 6, ordonnée 9. Pelouse ≥ 50 quand x ≥ 6,833.',
+                'MH.lesson_Y1Alg_fonAff5.ex5.q1': '1) Simplifier A(x)',
+                'MH.lesson_Y1Alg_fonAff5.ex5.q2': '2) Pente, ordonnée, signification',
+                'MH.lesson_Y1Alg_fonAff5.ex5.q3': '3) Résoudre A(x) ≥ 50',
+                'MH.lesson_Y1Alg_fonAff5.ex5.q4': '4) Tracé et coloriage',
+                // Summary
+                'MH.lesson_Y1Alg_fonAff5.summary': 'Résumé – ce que nous avons appris',
+                'MH.lesson_Y1Alg_fonAff5.summary1': '\\((x+a)^2 - (x+b)^2\\) se simplifie en \\(2(a-b)x + (a^2-b^2)\\) → affine.',
+                'MH.lesson_Y1Alg_fonAff5.summary2': '\\sqrt{(linéaire)^2} = |linéaire| ; avec un domaine adapté, cela devient une fonction linéaire (affine).',
+                'MH.lesson_Y1Alg_fonAff5.summary3': 'Un cube bien choisi peut cacher une partie affine : \\((2x+1)^3 - 8x^3 -12x^2 = 6x+1\\).',
+                'MH.lesson_Y1Alg_fonAff5.summary4': 'Deux droites affines se coupent en un point (sauf parallèles). Comparer f ≥ g revient à considérer x d’un côté de l’intersection.',
+                'MH.lesson_Y1Alg_fonAff5.summary5': 'Des situations réelles (aire, bénéfice) se modélisent par de telles fonctions affines cachées – la pente donne l’augmentation par unité.',
+                // Footer
+                'MH.footer.developer': 'Développeur',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Liens',
+                'MH.footer.terms': 'Conditions d\'utilisation',
+                'MH.footer.privacy': 'Politique de confidentialité',
+                // French detailed solutions (String.raw)
+                'MH.lesson_Y1Alg_fonAff5.ex1.sol1': String.raw`<strong>Solution 1 – Simplification :</strong><br>\((x+5)^2 = x^2 + 10x + 25\), \((x-3)^2 = x^2 - 6x + 9\).<br>Par soustraction : \(f(x) = (x^2+10x+25) - (x^2-6x+9) = x^2+10x+25 - x^2+6x-9 = 16x+16\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex1.sol2': String.raw`<strong>Solution 2 – Pente et ordonnée :</strong><br>\(f(x)=16x+16\) → pente \(16\), ordonnée à l’origine \(16\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex1.sol4': String.raw`<strong>Solution 4 – Résoudre f(x)=10 :</strong><br>\(16x+16 = 10\) → \(16x = -6\) → \(x = -\frac{3}{8} = -0,375\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex2.sol1': String.raw`<strong>Solution 1 – Simplification :</strong><br>\(\sqrt{(4x+8)^2}=|4x+8|\). Pour \(x\ge -2\), \(4x+8\ge0\) donc \(g(x)=4x+8\).<br>\(\sqrt{(9-3x)^2}=|9-3x|\). Pour \(x\le 3\), \(9-3x\ge0\) donc \(h(x)=9-3x\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex2.sol2': String.raw`<strong>Solution 2 – Résoudre :</strong><br>\(g(x)=12\) → \(4x+8=12\) → \(x=1\).<br>\(h(x)=6\) → \(9-3x=6\) → \(x=1\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex2.sol4': String.raw`<strong>Solution 4 – Égalité :</strong><br>\(4x+8 = 9-3x\) → \(7x=1\) → \(x=1/7\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex3.sol1': String.raw`<strong>Solution 1 – Développement :</strong><br>\((2x+1)^3 = 8x^3 + 12x^2 + 6x + 1\). On soustrait \(8x^3\) et \(12x^2\) : \(p(x)=6x+1\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex3.sol2': String.raw`<strong>Solution 2 – Forme affine :</strong> \(a=6, b=1\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex3.sol3': String.raw`<strong>Solution 3 – p(x)=7 :</strong> \(6x+1=7\) → \(x=1\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex4.sol1': String.raw`<strong>Solution 1 – Simplification :</strong><br>\(f(x)=24x\), \(g(x)=16x\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex4.sol2': String.raw`<strong>Solution 2 – Intersection :</strong> \(24x=16x\) → \(x=0\), \(y=0\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex4.sol3': String.raw`<strong>Solution 3 – Inéquation :</strong> \(24x \ge 16x\) → \(8x \ge 0\) → \(x \ge 0\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex5.sol1': String.raw`<strong>Solution 1 – Aire de la pelouse :</strong> \((x+3)^2 - x^2 = 6x+9\).`,
+                'MH.lesson_Y1Alg_fonAff5.ex5.sol2': String.raw`<strong>Solution 2 – Pente et ordonnée :</strong> pente 6, ordonnée 9. Chaque mètre supplémentaire du côté de la piscine augmente la pelouse de 6 m² ; si la piscine a un côté nul, la pelouse fait 9 m².`,
+                'MH.lesson_Y1Alg_fonAff5.ex5.sol3': String.raw`<strong>Solution 3 – A(x) ≥ 50 :</strong> \(6x+9 \ge 50\) → \(6x \ge 41\) → \(x \ge 41/6 \approx 6,833\).`,
+            }
+        };
+
+        // Merge translations
+        if (typeof window.translations !== 'undefined') {
+            Object.keys(fonAff5Translations).forEach(lang => {
+                window.translations[lang] = { ...window.translations[lang], ...fonAff5Translations[lang] };
+            });
+        } else {
+            window.translations = fonAff5Translations;
+        }
+
+        // ========== I18N, THEME, LANGUAGE ==========
+        let currentLanguage = localStorage.getItem('MH-language') || 'en';
+        document.documentElement.lang = currentLanguage;
+
+        // Helper: get computed CSS variable color
+        function getCSSVar(varName) {
+            return getComputedStyle(document.documentElement).getPropertyValue(varName).trim() || '#000000';
+        }
+
+        function applyTranslations(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (window.translations[lang] && window.translations[lang][key]) {
+                    el.innerHTML = window.translations[lang][key];
+                }
+            });
+            // Set solution content for each exercise
+            const solMap = {
+                'ex1_sol1': 'MH.lesson_Y1Alg_fonAff5.ex1.sol1',
+                'ex1_sol2': 'MH.lesson_Y1Alg_fonAff5.ex1.sol2',
+                'ex1_sol4': 'MH.lesson_Y1Alg_fonAff5.ex1.sol4',
+                'ex2_sol1': 'MH.lesson_Y1Alg_fonAff5.ex2.sol1',
+                'ex2_sol2': 'MH.lesson_Y1Alg_fonAff5.ex2.sol2',
+                'ex2_sol4': 'MH.lesson_Y1Alg_fonAff5.ex2.sol4',
+                'ex3_sol1': 'MH.lesson_Y1Alg_fonAff5.ex3.sol1',
+                'ex3_sol2': 'MH.lesson_Y1Alg_fonAff5.ex3.sol2',
+                'ex3_sol3': 'MH.lesson_Y1Alg_fonAff5.ex3.sol3',
+                'ex4_sol1': 'MH.lesson_Y1Alg_fonAff5.ex4.sol1',
+                'ex4_sol2': 'MH.lesson_Y1Alg_fonAff5.ex4.sol2',
+                'ex4_sol3': 'MH.lesson_Y1Alg_fonAff5.ex4.sol3',
+                'ex5_sol1': 'MH.lesson_Y1Alg_fonAff5.ex5.sol1',
+                'ex5_sol2': 'MH.lesson_Y1Alg_fonAff5.ex5.sol2',
+                'ex5_sol3': 'MH.lesson_Y1Alg_fonAff5.ex5.sol3'
+            };
+            for (let [id, key] of Object.entries(solMap)) {
+                const el = document.getElementById(id);
+                if (el && window.translations[lang] && window.translations[lang][key]) {
+                    el.innerHTML = window.translations[lang][key];
+                }
+            }
+            // Update solution buttons text
+            document.querySelectorAll('.MH-solution-btn').forEach(btn => {
+                if (btn.textContent.includes('Show') || btn.textContent.includes('Afficher') || btn.textContent.includes('عرض')) {
+                    btn.textContent = window.translations[lang]['MH.lesson_Y1Alg_fonAff5.showSolution'] || 'Show Solution';
+                }
+            });
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, { delimiters: [{left: '$', right: '$', display: false}, {left: '\\(', right: '\\)', display: false}], throwOnError: false });
+            }
+            drawAllCanvases();
+        }
+
+        // Language selector
+        const languageBtn = document.getElementById('languageBtn');
+        const dropdown = document.getElementById('languageDropdown');
+        if (languageBtn) {
+            languageBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdown.classList.toggle('show');
+            });
+            document.querySelectorAll('.MH-language-option').forEach(opt => {
+                opt.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const lang = e.target.getAttribute('data-lang');
+                    currentLanguage = lang;
+                    localStorage.setItem('MH-language', lang);
+                    document.documentElement.lang = lang;
+                    applyTranslations(lang);
+                    dropdown.classList.remove('show');
+                });
+            });
+            document.addEventListener('click', () => { dropdown.classList.remove('show'); });
+        }
+
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('MH-theme', newTheme);
+                setTimeout(() => { drawAllCanvases(); }, 20);
+            });
+        }
+
+        // ========== CANVAS DRAWING – THEME AWARE ==========
+        function toX(coord, width, minX, maxX) { return ((coord - minX) / (maxX - minX)) * width; }
+        function toY(coord, height, minY, maxY) { return height - ((coord - minY) / (maxY - minY)) * height; }
+
+        function drawGrid(ctx, w, h, minX, maxX, minY, maxY) {
+            const borderColor = getCSSVar('--border');
+            const textColor = getCSSVar('--text');
+            ctx.strokeStyle = borderColor; ctx.lineWidth = 0.5;
+            for (let i = Math.ceil(minX); i <= maxX; i++) {
+                ctx.beginPath();
+                ctx.moveTo(toX(i, w, minX, maxX), 0);
+                ctx.lineTo(toX(i, w, minX, maxX), h);
+                ctx.stroke();
+            }
+            for (let i = Math.ceil(minY); i <= maxY; i++) {
+                ctx.beginPath();
+                ctx.moveTo(0, toY(i, h, minY, maxY));
+                ctx.lineTo(w, toY(i, h, minY, maxY));
+                ctx.stroke();
+            }
+            ctx.strokeStyle = textColor; ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(toX(0, w, minX, maxX), 0);
+            ctx.lineTo(toX(0, w, minX, maxX), h);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(0, toY(0, h, minY, maxY));
+            ctx.lineTo(w, toY(0, h, minY, maxY));
+            ctx.stroke();
+        }
+
+        let ex1Constructed = false, ex2Constructed = false, ex3Constructed = false, ex4Constructed = false, ex5Constructed = false;
+
+        function drawExercise1() {
+            const canvas = document.getElementById('ex1Canvas'); if (!canvas) return;
+            const ctx = canvas.getContext('2d'); const w=600, h=400;
+            ctx.clearRect(0,0,w,h);
+            const minX=-4, maxX=2, minY=-20, maxY=40;
+            drawGrid(ctx, w, h, minX, maxX, minY, maxY);
+            // f(x)=16x+16
+            ctx.beginPath(); ctx.strokeStyle = getCSSVar('--primary'); ctx.lineWidth = 3;
+            ctx.moveTo(toX(-4,w,minX,maxX), toY(16*(-4)+16, h, minY, maxY));
+            ctx.lineTo(toX(2,w,minX,maxX), toY(16*2+16, h, minY, maxY)); ctx.stroke();
+            // y=10 horizontal
+            ctx.beginPath(); ctx.strokeStyle = getCSSVar('--warning'); ctx.setLineDash([5,5]);
+            ctx.moveTo(toX(-4,w,minX,maxX), toY(10, h, minY, maxY));
+            ctx.lineTo(toX(2,w,minX,maxX), toY(10, h, minY, maxY)); ctx.stroke();
+            ctx.setLineDash([]);
+            // intersection
+            ctx.fillStyle = getCSSVar('--warning');
+            ctx.beginPath(); ctx.arc(toX(-0.375,w,minX,maxX), toY(10, h, minY, maxY), 6, 0, 2*Math.PI); ctx.fill();
+            ctx.fillStyle = getCSSVar('--text');
+            ctx.fillText('(-0.375,10)', toX(-0.375,w,minX,maxX)+10, toY(10, h, minY, maxY)-10);
+            if (ex1Constructed) {
+                ctx.fillStyle = getCSSVar('--primary') + '20';
+                ctx.fillRect(0,0,w,h);
+                ctx.fillStyle = getCSSVar('--text');
+                ctx.fillText('Graph of f(x)=16x+16', 20, 50);
+            }
+        }
+
+        function drawExercise2() {
+            const canvas = document.getElementById('ex2Canvas'); if (!canvas) return;
+            const ctx = canvas.getContext('2d'); const w=600, h=400;
+            ctx.clearRect(0,0,w,h);
+            const minX=-2, maxX=4, minY=-2, maxY=20;
+            drawGrid(ctx, w, h, minX, maxX, minY, maxY);
+            // g(x)=4x+8
+            ctx.beginPath(); ctx.strokeStyle = getCSSVar('--accent'); ctx.lineWidth = 3;
+            ctx.moveTo(toX(-2,w,minX,maxX), toY(4*(-2)+8, h, minY, maxY));
+            ctx.lineTo(toX(4,w,minX,maxX), toY(4*4+8, h, minY, maxY)); ctx.stroke();
+            // h(x)=9-3x
+            ctx.beginPath(); ctx.strokeStyle = getCSSVar('--secondary'); ctx.lineWidth = 3;
+            ctx.moveTo(toX(-2,w,minX,maxX), toY(9-3*(-2), h, minY, maxY));
+            ctx.lineTo(toX(4,w,minX,maxX), toY(9-3*4, h, minY, maxY)); ctx.stroke();
+            // intersection
+            ctx.fillStyle = getCSSVar('--warning');
+            ctx.beginPath(); ctx.arc(toX(1/7,w,minX,maxX), toY(4*(1/7)+8, h, minY, maxY), 6, 0, 2*Math.PI); ctx.fill();
+            ctx.fillStyle = getCSSVar('--text');
+            ctx.fillText('(1/7, 60/7)', toX(1/7,w,minX,maxX)+10, toY(60/7, h, minY, maxY)-10);
+        }
+
+        function drawExercise3() {
+            const canvas = document.getElementById('ex3Canvas'); if (!canvas) return;
+            const ctx = canvas.getContext('2d'); const w=600, h=400;
+            ctx.clearRect(0,0,w,h);
+            const minX=-2, maxX=2, minY=-5, maxY=15;
+            drawGrid(ctx, w, h, minX, maxX, minY, maxY);
+            // p(x)=6x+1
+            ctx.beginPath(); ctx.strokeStyle = getCSSVar('--primary'); ctx.lineWidth = 3;
+            ctx.moveTo(toX(-2,w,minX,maxX), toY(6*(-2)+1, h, minY, maxY));
+            ctx.lineTo(toX(2,w,minX,maxX), toY(6*2+1, h, minY, maxY)); ctx.stroke();
+            // y=7
+            ctx.beginPath(); ctx.strokeStyle = getCSSVar('--warning'); ctx.setLineDash([5,5]);
+            ctx.moveTo(toX(-2,w,minX,maxX), toY(7, h, minY, maxY));
+            ctx.lineTo(toX(2,w,minX,maxX), toY(7, h, minY, maxY)); ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.fillStyle = getCSSVar('--warning');
+            ctx.beginPath(); ctx.arc(toX(1,w,minX,maxX), toY(7, h, minY, maxY), 6, 0, 2*Math.PI); ctx.fill();
+            ctx.fillStyle = getCSSVar('--text');
+            ctx.fillText('(1,7)', toX(1,w,minX,maxX)+10, toY(7, h, minY, maxY)-10);
+        }
+
+        function drawExercise4() {
+            const canvas = document.getElementById('ex4Canvas'); if (!canvas) return;
+            const ctx = canvas.getContext('2d'); const w=600, h=400;
+            ctx.clearRect(0,0,w,h);
+            const minX=-2, maxX=2, minY=-20, maxY=50;
+            drawGrid(ctx, w, h, minX, maxX, minY, maxY);
+            // f(x)=24x
+            ctx.beginPath(); ctx.strokeStyle = getCSSVar('--primary'); ctx.lineWidth = 3;
+            ctx.moveTo(toX(-2,w,minX,maxX), toY(24*(-2), h, minY, maxY));
+            ctx.lineTo(toX(2,w,minX,maxX), toY(24*2, h, minY, maxY)); ctx.stroke();
+            // g(x)=16x
+            ctx.beginPath(); ctx.strokeStyle = getCSSVar('--secondary'); ctx.lineWidth = 3;
+            ctx.moveTo(toX(-2,w,minX,maxX), toY(16*(-2), h, minY, maxY));
+            ctx.lineTo(toX(2,w,minX,maxX), toY(16*2, h, minY, maxY)); ctx.stroke();
+            // intersection (0,0)
+            ctx.fillStyle = getCSSVar('--warning');
+            ctx.beginPath(); ctx.arc(toX(0,w,minX,maxX), toY(0, h, minY, maxY), 6, 0, 2*Math.PI); ctx.fill();
+            ctx.fillStyle = getCSSVar('--text');
+            ctx.fillText('(0,0)', toX(0,w,minX,maxX)+10, toY(0, h, minY, maxY)-10);
+            if (ex4Constructed) {
+                ctx.fillStyle = getCSSVar('--primary') + '20';
+                ctx.fillRect(toX(0,w,minX,maxX), 0, w, h);
+                ctx.fillStyle = getCSSVar('--text');
+                ctx.fillText('f(x) ≥ g(x) for x ≥ 0', 200, 50);
+            }
+        }
+
+        function drawExercise5() {
+            const canvas = document.getElementById('ex5Canvas'); if (!canvas) return;
+            const ctx = canvas.getContext('2d'); const w=600, h=400;
+            ctx.clearRect(0,0,w,h);
+            const minX=0, maxX=10, minY=0, maxY=70;
+            drawGrid(ctx, w, h, minX, maxX, minY, maxY);
+            // A(x)=6x+9
+            ctx.beginPath(); ctx.strokeStyle = getCSSVar('--primary'); ctx.lineWidth = 3;
+            ctx.moveTo(toX(0,w,minX,maxX), toY(9, h, minY, maxY));
+            ctx.lineTo(toX(10,w,minX,maxX), toY(6*10+9, h, minY, maxY)); ctx.stroke();
+            // y=50
+            ctx.beginPath(); ctx.strokeStyle = getCSSVar('--warning'); ctx.setLineDash([5,5]);
+            ctx.moveTo(toX(0,w,minX,maxX), toY(50, h, minY, maxY));
+            ctx.lineTo(toX(10,w,minX,maxX), toY(50, h, minY, maxY)); ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.fillStyle = getCSSVar('--warning');
+            ctx.beginPath(); ctx.arc(toX(41/6,w,minX,maxX), toY(50, h, minY, maxY), 6, 0, 2*Math.PI); ctx.fill();
+            ctx.fillStyle = getCSSVar('--text');
+            ctx.fillText('x≈6.83', toX(41/6,w,minX,maxX)+10, toY(50, h, minY, maxY)-10);
+            if (ex5Constructed) {
+                ctx.fillStyle = getCSSVar('--primary') + '20';
+                ctx.fillRect(toX(41/6,w,minX,maxX), 0, w, h);
+                ctx.fillStyle = getCSSVar('--text');
+                ctx.fillText('A(x) ≥ 50 for x ≥ 6.83', 200, 50);
+            }
+        }
+
+        function drawAllCanvases() { 
+            drawExercise1(); 
+            drawExercise2(); 
+            drawExercise3(); 
+            drawExercise4(); 
+            drawExercise5(); 
+        }
+
+        window.constructExercise1 = function() { ex1Constructed = !ex1Constructed; drawExercise1(); };
+        window.constructExercise2 = function() { ex2Constructed = !ex2Constructed; drawExercise2(); };
+        window.constructExercise3 = function() { ex3Constructed = !ex3Constructed; drawExercise3(); };
+        window.constructExercise4 = function() { ex4Constructed = !ex4Constructed; drawExercise4(); };
+        window.constructExercise5 = function() { ex5Constructed = !ex5Constructed; drawExercise5(); };
+        window.toggleSolution = function(id) {
+            const sol = document.getElementById(id);
+            if (sol.style.display === 'block') sol.style.display = 'none';
+            else { 
+                sol.style.display = 'block'; 
+                if (typeof renderMathInElement !== 'undefined') 
+                    renderMathInElement(sol, { delimiters: [{left:'$',right:'$',display:false},{left:'\\(',right:'\\)',display:false}], throwOnError: false });
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('MH-theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            applyTranslations(currentLanguage);
+            drawAllCanvases();
+            document.querySelectorAll('.MH-solution').forEach(el => el.style.display = 'none');
+        });
+
+        if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('/sw.js').catch(()=>{}); }); }
+    </script>
+    <noscript><div class="MH-warning">JavaScript is recommended for interactive features.</div></noscript>
+</body>
+</html>

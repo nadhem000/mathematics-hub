@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Arithmetic Sequences - Part V</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#4A90E2" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#8E44AD" media="(prefers-color-scheme: dark)">
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#4A90E2">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    <style>
+        /* Page-specific color palette - Blue + Green Theme */
+        :root {
+            --primary: #4A90E2;        /* Cornflower Blue */
+            --primary-light: #7BAAF7;  /* Light Blue */
+            --primary-dark: #357ABD;   /* Darker Blue */
+            --secondary: #2ECC71;      /* Green */
+            --secondary-light: #58D68D; /* Light Green */
+            --secondary-dark: #27AE60;  /* Darker Green */
+            --accent: #E67E22;
+            --warning: #E74C3C;
+            --info: #3498DB;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #FFFFFF;
+            --surface: #F8F9FA;
+            --border: #E9ECEF;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        [data-theme="dark"] {
+            --primary: #357ABD;
+            --primary-light: #4A90E2;
+            --primary-dark: #2C3E50;
+            --secondary: #27AE60;
+            --secondary-light: #2ECC71;
+            --secondary-dark: #229954;
+            --accent: #D35400;
+            --warning: #C0392B;
+            --info: #2980B9;
+            --text: #FFFFFF;
+            --text-light: #CCCCCC;
+            --background: #121212;
+            --surface: #1E1E1E;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+        /* KaTeX styling */
+        .katex { 
+            font-size: 1.1em; 
+        }
+        .katex-display { 
+            margin: 1em 0; 
+            text-align: center;
+        }
+        .katex-display > .katex { 
+            display: inline-block;
+            text-align: center;
+        }
+        /* Equation styling */
+        .MH-equation {
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            margin: 0.5em 0;
+            padding: 0;
+            display: inline-block;
+            direction: ltr !important;
+            unicode-bidi: isolate;
+        }
+        [dir="rtl"] .MH-equation {
+            text-align: left;
+            unicode-bidi: plaintext;
+        }
+        /* Exercise numbering */
+        .MH-exercise-number {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--secondary);
+            margin: 1.5em 0 0.5em 0;
+            border-bottom: 2px solid var(--secondary-light);
+            padding-bottom: 0.3em;
+        }
+        /* Sequence specific styling */
+        .MH-sequence-item {
+            margin: 1em 0;
+            padding: 1em;
+            background-color: var(--surface);
+            border-left: 4px solid var(--secondary);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px var(--shadow);
+        }
+        .MH-sequence-step {
+            margin: 0.8em 0;
+            padding-left: 1.2em;
+            border-left: 2px solid var(--primary-light);
+        }
+        .MH-formula-box {
+            background-color: rgba(46, 204, 113, 0.1);
+            border: 2px solid var(--secondary);
+            border-radius: 8px;
+            padding: 1.5em;
+            margin: 1em 0;
+        }
+        .MH-warning-box {
+            background-color: rgba(231, 76, 60, 0.1);
+            border: 2px solid var(--warning);
+            border-radius: 8px;
+            padding: 1.5em;
+            margin: 1em 0;
+        }
+        .MH-info-box {
+            background-color: rgba(52, 152, 219, 0.1);
+            border: 2px solid var(--info);
+            border-radius: 8px;
+            padding: 1.5em;
+            margin: 1em 0;
+        }
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .MH-sequence-item {
+                padding: 0.8em;
+            }
+            .MH-formula-box, .MH-warning-box, .MH-info-box {
+                padding: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                    <!-- Notification Button -->
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+                        <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Alg_seqArith5.title">Arithmetic Sequences: Part V</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y2Alg_seqArith5.subtitle">Exercises and Applications</h2>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Alg_seqArith5.introduction">Introduction</h2>
+            <p data-i18n="MH.lesson_Y2Alg_seqArith5.introText1">In this lesson, we will practice solving various problems involving arithmetic sequences. These exercises will help you apply what you've learned about arithmetic sequences to real-world situations and mathematical problems.</p>
+            <p data-i18n="MH.lesson_Y2Alg_seqArith5.introText2">We will work through five different exercises, each focusing on different aspects of arithmetic sequences. Take your time with each problem and try to understand each step of the solution.</p>
+        </section>
+
+        <!-- XIII. Exercises and Applications -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y2Alg_seqArith5.part13">XIII. Exercises and Applications</div>
+            
+            <!-- Exercise 1 -->
+            <div class="MH-sequence-item">
+                <h3 data-i18n="MH.lesson_Y2Alg_seqArith5.exercise1Title">Exercise 1</h3>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise1Statement">(Uₙ) is an arithmetic sequence such that U₂₀ = 1926 and U₅₇ = 1606. Determine the common difference of this sequence as well as its first term U₀.</p>
+                
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Alg_seqArith5.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                <div class="MH-solution" id="solution1">
+                    <div class="MH-info-box">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise1Reminder">Remember: In an arithmetic sequence, the general term is Uₙ = U₀ + n×r, where r is the common difference.</p>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise1Step1"><strong>Step 1: Write what we know</strong></p>
+                    <div class="MH-sequence-step">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise1Step1a">We know that U₂₀ = 1926 and U₅₇ = 1606</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise1Step1b">Using the formula Uₙ = U₀ + n×r, we can write:</p>
+                        <p>U₂₀ = U₀ + 20×r = 1926</p>
+                        <p>U₅₇ = U₀ + 57×r = 1606</p>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise1Step2"><strong>Step 2: Subtract the two equations</strong></p>
+                    <div class="MH-sequence-step">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise1Step2a">Let's subtract the first equation from the second:</p>
+                        <p>(U₀ + 57×r) - (U₀ + 20×r) = 1606 - 1926</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise1Step2b">The U₀ terms cancel out:</p>
+                        <p>57×r - 20×r = 1606 - 1926</p>
+                        <p>37×r = -320</p>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise1Step3"><strong>Step 3: Solve for r</strong></p>
+                    <div class="MH-sequence-step">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise1Step3a">Divide both sides by 37:</p>
+                        <p>r = -320 ÷ 37</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise1Step3b">Let's calculate this:</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise1Step3b2">320 ÷ 37 = 8 with remainder 24 (because 37 × 8 = 296)</p>
+                        <p>So r = -320/37</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise1Step3c">We can leave it as a fraction or calculate the decimal:</p>
+                        <p>r = -320/37 ≈ -8.64864865</p>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise1Step4"><strong>Step 4: Find U₀</strong></p>
+                    <div class="MH-sequence-step">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise1Step4a">Now use one of the equations to find U₀. Let's use U₂₀ = U₀ + 20×r = 1926:</p>
+                        <p>U₀ + 20×(-320/37) = 1926</p>
+                        <p>U₀ - 6400/37 = 1926</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise1Step4b">Add 6400/37 to both sides:</p>
+                        <p>U₀ = 1926 + 6400/37</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise1Step4c">To add these, convert 1926 to a fraction with denominator 37:</p>
+                        <p>1926 = 1926 × 37/37 = 71262/37</p>
+                        <p>U₀ = 71262/37 + 6400/37 = 77662/37</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise1Step4d">Simplify or calculate the decimal:</p>
+                        <p>U₀ = 77662/37 ≈ 2098.97297</p>
+                    </div>
+                    
+                    <div class="MH-formula-box">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise1Answer"><strong>Answer:</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise1AnswerR">Common difference: r = -320/37 ≈ -8.6486</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise1AnswerU0">First term: U₀ = 77662/37 ≈ 2098.973</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercise 2 -->
+            <div class="MH-sequence-item">
+                <h3 data-i18n="MH.lesson_Y2Alg_seqArith5.exercise2Title">Exercise 2</h3>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise2Statement">(Uₙ) is an arithmetic sequence such that U₃ = 2 and U₁₁ = 26. Let S = U₀ + U₁ + ... + U₁₅. Calculate S.</p>
+                
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Alg_seqArith5.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                <div class="MH-solution" id="solution2">
+                    <div class="MH-info-box">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise2Reminder1">Remember: The sum of the first n terms of an arithmetic sequence is Sₙ = (number of terms) × (first term + last term) ÷ 2</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise2Reminder2">Also: Sₙ = (n+1) × (U₀ + Uₙ) ÷ 2 if we start counting from U₀</p>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise2Step1"><strong>Step 1: Find the common difference r</strong></p>
+                    <div class="MH-sequence-step">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise2Step1a">We know U₃ = 2 and U₁₁ = 26</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise2Step1b">The difference between U₁₁ and U₃ is 8 steps (from term 3 to term 11)</p>
+                        <p>U₁₁ - U₃ = 26 - 2 = 24</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise2Step1c">This difference equals 8 × r (because each step adds r)</p>
+                        <p>8 × r = 24</p>
+                        <p>r = 24 ÷ 8 = 3</p>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise2Step2"><strong>Step 2: Find U₀</strong></p>
+                    <div class="MH-sequence-step">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise2Step2a">We know U₃ = U₀ + 3×r = 2</p>
+                        <p>U₀ + 3×3 = 2</p>
+                        <p>U₀ + 9 = 2</p>
+                        <p>U₀ = 2 - 9 = -7</p>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise2Step3"><strong>Step 3: Find U₁₅</strong></p>
+                    <div class="MH-sequence-step">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise2Step3a">U₁₅ = U₀ + 15×r</p>
+                        <p>U₁₅ = -7 + 15×3</p>
+                        <p>U₁₅ = -7 + 45 = 38</p>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise2Step4"><strong>Step 4: Calculate the sum S = U₀ + U₁ + ... + U₁₅</strong></p>
+                    <div class="MH-sequence-step">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise2Step4a">We have 16 terms (from U₀ to U₁₅ inclusive)</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise2Step4b">First term = U₀ = -7</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise2Step4c">Last term = U₁₅ = 38</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise2Step4d">Sum = (number of terms) × (first term + last term) ÷ 2</p>
+                        <p>S = 16 × (-7 + 38) ÷ 2</p>
+                        <p>S = 16 × 31 ÷ 2</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise2Step4e">S = 8 × 31 (because 16 ÷ 2 = 8)</p>
+                        <p>S = 248</p>
+                    </div>
+                    
+                    <div class="MH-formula-box">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise2Answer"><strong>Answer:</strong> S = 248</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercise 3 -->
+            <div class="MH-sequence-item">
+                <h3 data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3Title">Exercise 3</h3>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3Statement">A mother saves 10 dinars in the first month, then 15 dinars the next month, and so on, saving 5 dinars more each month.</p>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3a">a) How much did she save after 8 months?</p>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3b">b) At the end of which month will her savings be enough to buy a vacuum cleaner costing 205 dinars?</p>
+                
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Alg_seqArith5.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                <div class="MH-solution" id="solution3">
+                    <div class="MH-info-box">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3Reminder">This is an arithmetic sequence: First term = 10, common difference = 5</p>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3PartA"><strong>Part a: Savings after 8 months</strong></p>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3aStep1"><strong>Step 1: Understand what we're calculating</strong></p>
+                    <div class="MH-sequence-step">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3aStep1a">We want the TOTAL savings after 8 months, not just the 8th month's savings</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3aStep1b">This means we need the sum of the first 8 terms of the sequence</p>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3aStep2"><strong>Step 2: Write the sequence</strong></p>
+                    <div class="MH-sequence-step">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3aStep2a">Month 1: 10 dinars</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3aStep2b">Month 2: 15 dinars (10 + 5)</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3aStep2c">Month 3: 20 dinars (15 + 5)</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3aStep2d">Month 4: 25 dinars (20 + 5)</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3aStep2e">Month 5: 30 dinars</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3aStep2f">Month 6: 35 dinars</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3aStep2g">Month 7: 40 dinars</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3aStep2h">Month 8: 45 dinars</p>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3aStep3"><strong>Step 3: Calculate the total</strong></p>
+                    <div class="MH-sequence-step">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3aStep3a">Total = 10 + 15 + 20 + 25 + 30 + 35 + 40 + 45</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3aStep3b">We can add these step by step:</p>
+                        <p>10 + 15 = 25</p>
+                        <p>25 + 20 = 45</p>
+                        <p>45 + 25 = 70</p>
+                        <p>70 + 30 = 100</p>
+                        <p>100 + 35 = 135</p>
+                        <p>135 + 40 = 175</p>
+                        <p>175 + 45 = 220</p>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3PartB"><strong>Part b: When savings reach 205 dinars</strong></p>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3bStep1"><strong>Step 1: Set up the equation</strong></p>
+                    <div class="MH-sequence-step">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3bStep1a">We need to find n such that the sum of the first n months' savings ≥ 205</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3bStep1b">The sum formula for an arithmetic sequence: Sₙ = n × (first term + last term) ÷ 2</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3bStep1c">First term = 10, last term of n months = 10 + (n-1)×5</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3bStep1d">So: Sₙ = n × [10 + (10 + (n-1)×5)] ÷ 2</p>
+                        <p>Sₙ = n × [20 + 5(n-1)] ÷ 2</p>
+                        <p>Sₙ = n × [20 + 5n - 5] ÷ 2</p>
+                        <p>Sₙ = n × [15 + 5n] ÷ 2</p>
+                        <p>Sₙ = (5n² + 15n) ÷ 2</p>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3bStep2"><strong>Step 2: Solve Sₙ ≥ 205</strong></p>
+                    <div class="MH-sequence-step">
+                        <p>(5n² + 15n) ÷ 2 ≥ 205</p>
+                        <p>5n² + 15n ≥ 410</p>
+                        <p>5n² + 15n - 410 ≥ 0</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3bStep2a">Divide by 5: n² + 3n - 82 ≥ 0</p>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3bStep3"><strong>Step 3: Solve the quadratic equation</strong></p>
+                    <div class="MH-sequence-step">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3bStep3a">n² + 3n - 82 = 0</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3bStep3b">We can solve using the quadratic formula: n = [-3 ± √(9 + 328)] ÷ 2</p>
+                        <p>n = [-3 ± √337] ÷ 2</p>
+                        <p>√337 ≈ 18.3576</p>
+                        <p>n ≈ (-3 + 18.3576) ÷ 2 or n ≈ (-3 - 18.3576) ÷ 2</p>
+                        <p>n ≈ 15.3576 ÷ 2 or n ≈ -21.3576 ÷ 2</p>
+                        <p>n ≈ 7.6788 or n ≈ -10.6788</p>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3bStep4"><strong>Step 4: Interpret the result</strong></p>
+                    <div class="MH-sequence-step">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3bStep4a">Since n must be positive, n ≈ 7.6788</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3bStep4b">This means after 7 months, savings are less than 205, but after 8 months, savings exceed 205</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3bStep4c">Let's check:</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3bStep4cCheck1">After 7 months: S₇ = (5×7² + 15×7) ÷ 2 = (5×49 + 105) ÷ 2 = (245 + 105) ÷ 2 = 350 ÷ 2 = 175</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3bStep4cCheck2">After 8 months: S₈ = (5×8² + 15×8) ÷ 2 = (5×64 + 120) ÷ 2 = (320 + 120) ÷ 2 = 440 ÷ 2 = 220</p>
+                    </div>
+                    
+                    <div class="MH-formula-box">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3Answer"><strong>Answer:</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3AnswerA">a) After 8 months: 220 dinars</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise3AnswerB">b) At the end of the 8th month (savings = 220 dinars > 205 dinars)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercise 4 -->
+            <div class="MH-sequence-item">
+                <h3 data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4Title">Exercise 4: Arithmetic Mean</h3>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4a">a) Show that if a, b and c are three consecutive terms of an arithmetic sequence, then b = (a+c)/2. (We say that b is the arithmetic mean of a and c).</p>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4b">b) Let a, b and c be three real numbers such that b = (a+c)/2. Are a, b and c three consecutive terms of an arithmetic sequence?</p>
+                
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Alg_seqArith5.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+                <div class="MH-solution" id="solution4">
+                    <div class="MH-info-box">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4Reminder">In an arithmetic sequence, the difference between consecutive terms is constant.</p>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4PartA"><strong>Part a: Proving b = (a+c)/2</strong></p>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4aStep1"><strong>Step 1: Understand what "consecutive terms" means</strong></p>
+                    <div class="MH-sequence-step">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4aStep1a">If a, b, c are consecutive terms of an arithmetic sequence, then:</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4aStep1b">Let r be the common difference</p>
+                        <p>b = a + r</p>
+                        <p>c = b + r = a + 2r</p>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4aStep2"><strong>Step 2: Express (a+c)/2 in terms of a and r</strong></p>
+                    <div class="MH-sequence-step">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4aStep2a">Calculate (a+c)/2:</p>
+                        <p>(a+c)/2 = [a + (a + 2r)] / 2</p>
+                        <p>(a+c)/2 = (2a + 2r) / 2</p>
+                        <p>(a+c)/2 = a + r</p>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4aStep3"><strong>Step 3: Compare with b</strong></p>
+                    <div class="MH-sequence-step">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4aStep3a">But we know b = a + r</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4aStep3b">Therefore: b = (a+c)/2</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4aStep3c">This proves that b is exactly the average of a and c!</p>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4PartB"><strong>Part b: The converse</strong></p>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4bStep1"><strong>Step 1: Start with b = (a+c)/2</strong></p>
+                    <div class="MH-sequence-step">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4bStep1a">We have: b = (a+c)/2</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4bStep1b">Multiply both sides by 2: 2b = a + c</p>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4bStep2"><strong>Step 2: Check if there exists a common difference r</strong></p>
+                    <div class="MH-sequence-step">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4bStep2a">For a, b, c to be consecutive terms of an arithmetic sequence, we need:</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4bStep2b">Let's check if b - a equals c - b:</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4bStep2b2">From 2b = a + c, we get c = 2b - a</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4bStep2b3">Now c - b = (2b - a) - b = b - a</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4bStep2c">Yes! b - a = c - b</p>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4bStep3"><strong>Step 3: Conclusion</strong></p>
+                    <div class="MH-sequence-step">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4bStep3a">Since b - a = c - b, let's call this common value r</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4bStep3b">Then: b = a + r and c = b + r = a + 2r</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4bStep3c">So a, b, c are indeed consecutive terms of an arithmetic sequence with common difference r</p>
+                    </div>
+                    
+                    <div class="MH-formula-box">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4Answer"><strong>Answer:</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4AnswerA">a) Proof shown above: b = (a+c)/2 when a, b, c are consecutive terms of an arithmetic sequence</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise4AnswerB">b) Yes, if b = (a+c)/2, then a, b, c are consecutive terms of an arithmetic sequence</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercise 5 -->
+            <div class="MH-sequence-item">
+                <h3 data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Title">Exercise 5: Syracuse Sequence</h3>
+                <div class="MH-warning-box">
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Note">Note: This is NOT an arithmetic sequence! It's a special sequence with its own rules.</p>
+                </div>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Statement">We define a Syracuse sequence as follows: Choose an integer N (the first term).</p>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Rule1">If N is even, the next term is N/2</li>
+                    <li data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Rule2">If N is odd, the next term is 3N + 1</li>
+                </ul>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Continue">We continue in the same way with the new term. We stop when we reach 1.</p>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Examples">Examples: For N=5: 5, 16, 8, 4, 2, 1. For N=24: 24, 12, 6, 3, 10, 5, 16, 8, 4, 2, 1.</p>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Problem">Determine the terms of the Syracuse sequence for N=28 and for N=30.</p>
+                
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Alg_seqArith5.showSolution" onclick="toggleSolution(5)">Show Solution</button>
+                <div class="MH-solution" id="solution5">
+                    <div class="MH-info-box">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Reminder">Remember the rules: Even → divide by 2, Odd → multiply by 3 and add 1</p>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Part1"><strong>For N = 28</strong></p>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step1"><strong>Step 1: Start with N = 28</strong></p>
+                    <div class="MH-sequence-step">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step1a">28 is even, so next term = 28 ÷ 2 = 14</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step1b">Sequence so far: 28, 14</p>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step2"><strong>Step 2: Continue with 14</strong></p>
+                    <div class="MH-sequence-step">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step2a">14 is even, so next term = 14 ÷ 2 = 7</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step2b">Sequence: 28, 14, 7</p>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step3"><strong>Step 3: Continue with 7</strong></p>
+                    <div class="MH-sequence-step">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step3a">7 is odd, so next term = 3×7 + 1 = 21 + 1 = 22</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step3b">Sequence: 28, 14, 7, 22</p>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step4"><strong>Step 4: Continue step by step</strong></p>
+                    <div class="MH-sequence-step">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_1">22 is even → 22 ÷ 2 = 11: 28, 14, 7, 22, 11</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_2">11 is odd → 3×11 + 1 = 33 + 1 = 34: 28, 14, 7, 22, 11, 34</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_3">34 is even → 34 ÷ 2 = 17: 28, 14, 7, 22, 11, 34, 17</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_4">17 is odd → 3×17 + 1 = 51 + 1 = 52: 28, 14, 7, 22, 11, 34, 17, 52</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_5">52 is even → 52 ÷ 2 = 26: 28, 14, 7, 22, 11, 34, 17, 52, 26</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_6">26 is even → 26 ÷ 2 = 13: 28, 14, 7, 22, 11, 34, 17, 52, 26, 13</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_7">13 is odd → 3×13 + 1 = 39 + 1 = 40: 28, 14, 7, 22, 11, 34, 17, 52, 26, 13, 40</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_8">40 is even → 40 ÷ 2 = 20: ... , 40, 20</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_9">20 is even → 20 ÷ 2 = 10: ... , 20, 10</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_10">10 is even → 10 ÷ 2 = 5: ... , 10, 5</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_11">5 is odd → 3×5 + 1 = 15 + 1 = 16: ... , 5, 16</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_12">16 is even → 16 ÷ 2 = 8: ... , 16, 8</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_13">8 is even → 8 ÷ 2 = 4: ... , 8, 4</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_14">4 is even → 4 ÷ 2 = 2: ... , 4, 2</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_15">2 is even → 2 ÷ 2 = 1: ... , 2, 1</p>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Part2"><strong>For N = 30</strong></p>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step5"><strong>Step 5: Start with N = 30</strong></p>
+                    <div class="MH-sequence-step">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step5a">30 is even, so next term = 30 ÷ 2 = 15</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step5b">Sequence so far: 30, 15</p>
+                    </div>
+                    
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step6"><strong>Step 6: Continue step by step</strong></p>
+                    <div class="MH-sequence-step">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_1">15 is odd → 3×15 + 1 = 45 + 1 = 46: 30, 15, 46</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_2">46 is even → 46 ÷ 2 = 23: 30, 15, 46, 23</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_3">23 is odd → 3×23 + 1 = 69 + 1 = 70: 30, 15, 46, 23, 70</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_4">70 is even → 70 ÷ 2 = 35: ... , 70, 35</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_5">35 is odd → 3×35 + 1 = 105 + 1 = 106: ... , 35, 106</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_6">106 is even → 106 ÷ 2 = 53: ... , 106, 53</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_7">53 is odd → 3×53 + 1 = 159 + 1 = 160: ... , 53, 160</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_8">160 is even → 160 ÷ 2 = 80: ... , 160, 80</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_9">80 is even → 80 ÷ 2 = 40: ... , 80, 40</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_10">40 is even → 40 ÷ 2 = 20: ... , 40, 20</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_11">20 is even → 20 ÷ 2 = 10: ... , 20, 10</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_12">10 is even → 10 ÷ 2 = 5: ... , 10, 5</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_13">5 is odd → 3×5 + 1 = 15 + 1 = 16: ... , 5, 16</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_14">16 is even → 16 ÷ 2 = 8: ... , 16, 8</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_15">8 is even → 8 ÷ 2 = 4: ... , 8, 4</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_16">4 is even → 4 ÷ 2 = 2: ... , 4, 2</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_17">2 is even → 2 ÷ 2 = 1: ... , 2, 1</p>
+                    </div>
+                    
+                    <div class="MH-formula-box">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Answer"><strong>Answer:</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Answer1">For N=28: 28, 14, 7, 22, 11, 34, 17, 52, 26, 13, 40, 20, 10, 5, 16, 8, 4, 2, 1</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5Answer2">For N=30: 30, 15, 46, 23, 70, 35, 106, 53, 160, 80, 40, 20, 10, 5, 16, 8, 4, 2, 1</p>
+                    </div>
+                    
+                    <div class="MH-warning-box">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith5.exercise5FunFact">Fun fact: The Syracuse problem (also called Collatz conjecture) is still unsolved! No one has proven that EVERY starting number eventually reaches 1, though it's been tested for very large numbers.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Alg_seqArith5.summaryTitle">Lesson Summary</h2>
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Alg_seqArith5.keyConceptsTitle">What We Practiced Today</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Alg_seqArith5.concept1">Finding the common difference and first term when given two terms of an arithmetic sequence</li>
+                    <li data-i18n="MH.lesson_Y2Alg_seqArith5.concept2">Calculating the sum of terms in an arithmetic sequence</li>
+                    <li data-i18n="MH.lesson_Y2Alg_seqArith5.concept3">Applying arithmetic sequences to real-world problems (savings)</li>
+                    <li data-i18n="MH.lesson_Y2Alg_seqArith5.concept4">Understanding the arithmetic mean property: b = (a+c)/2 for consecutive terms</li>
+                    <li data-i18n="MH.lesson_Y2Alg_seqArith5.concept5">Exploring the fascinating Syracuse sequence (not arithmetic, but interesting!)</li>
+                </ul>
+            </div>
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Alg_seqArith5.importantFormulasTitle">Important Formulas Used</h3>
+                <div class="MH-formula-box">
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.formula1">General term of arithmetic sequence: Uₙ = U₀ + n×r</p>
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.formula2">Sum of first n terms: Sₙ = n × (first term + last term) ÷ 2</p>
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith5.formula3">Arithmetic mean: If a, b, c are consecutive terms, then b = (a+c)/2</p>
+                </div>
+            </div>
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Alg_seqArith5.nextStepsTitle">Next Steps</h3>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith5.finalThought">You've now completed a series of lessons on arithmetic sequences! You've learned to recognize them, work with their formulas, and apply them to various problems. Keep practicing with different exercises to strengthen your understanding.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+    
+    <script>
+        // ARITHMETIC SEQUENCES PART 5 TRANSLATIONS
+        const seqArith5Translations = {
+            'en': {
+                // General translations
+                'MH.general.homeTooltip': 'Go to Homepage',
+                'MH.general.install': 'Install App',
+                'MH.general.installSuccess': 'Mathematics Hub installed successfully!',
+                'MH.general.enableNotifications': 'Enable Notifications',
+                'MH.general.notificationEnabled': 'Notifications enabled! You will now receive updates.',
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Theme',
+                'MH.general.language': 'Language',
+                'MH.lesson_Y2Alg_seqArith5.showSolution': 'Show Solution',
+                'MH.lesson_Y2Alg_seqArith5.hideSolution': 'Hide Solution',
+                
+                // Lesson specific translations
+                'MH.lesson_Y2Alg_seqArith5.title': 'Arithmetic Sequences: Part V',
+                'MH.lesson_Y2Alg_seqArith5.subtitle': 'Exercises and Applications',
+                'MH.lesson_Y2Alg_seqArith5.introduction': 'Introduction',
+                'MH.lesson_Y2Alg_seqArith5.introText1': 'In this lesson, we will practice solving various problems involving arithmetic sequences. These exercises will help you apply what you\'ve learned about arithmetic sequences to real-world situations and mathematical problems.',
+                'MH.lesson_Y2Alg_seqArith5.introText2': 'We will work through five different exercises, each focusing on different aspects of arithmetic sequences. Take your time with each problem and try to understand each step of the solution.',
+                
+                // Part XIII
+                'MH.lesson_Y2Alg_seqArith5.part13': 'XIII. Exercises and Applications',
+                
+                // Exercise 1
+                'MH.lesson_Y2Alg_seqArith5.exercise1Title': 'Exercise 1',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Statement': '(Uₙ) is an arithmetic sequence such that U₂₀ = 1926 and U₅₇ = 1606. Determine the common difference of this sequence as well as its first term U₀.',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Reminder': 'Remember: In an arithmetic sequence, the general term is Uₙ = U₀ + n×r, where r is the common difference.',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step1': 'Step 1: Write what we know',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step1a': 'We know that U₂₀ = 1926 and U₅₇ = 1606',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step1b': 'Using the formula Uₙ = U₀ + n×r, we can write:',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step2': 'Step 2: Subtract the two equations',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step2a': 'Let\'s subtract the first equation from the second:',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step2b': 'The U₀ terms cancel out:',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step3': 'Step 3: Solve for r',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step3a': 'Divide both sides by 37:',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step3b': 'Let\'s calculate this:',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step3b2': '320 ÷ 37 = 8 with remainder 24 (because 37 × 8 = 296)',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step3c': 'We can leave it as a fraction or calculate the decimal:',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step4': 'Step 4: Find U₀',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step4a': 'Now use one of the equations to find U₀. Let\'s use U₂₀ = U₀ + 20×r = 1926:',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step4b': 'Add 6400/37 to both sides:',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step4c': 'To add these, convert 1926 to a fraction with denominator 37:',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step4d': 'Simplify or calculate the decimal:',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Answer': 'Answer:',
+                'MH.lesson_Y2Alg_seqArith5.exercise1AnswerR': 'Common difference: r = -320/37 ≈ -8.6486',
+                'MH.lesson_Y2Alg_seqArith5.exercise1AnswerU0': 'First term: U₀ = 77662/37 ≈ 2098.973',
+                
+                // Exercise 2
+                'MH.lesson_Y2Alg_seqArith5.exercise2Title': 'Exercise 2',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Statement': '(Uₙ) is an arithmetic sequence such that U₃ = 2 and U₁₁ = 26. Let S = U₀ + U₁ + ... + U₁₅. Calculate S.',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Reminder1': 'Remember: The sum of the first n terms of an arithmetic sequence is Sₙ = (number of terms) × (first term + last term) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Reminder2': 'Also: Sₙ = (n+1) × (U₀ + Uₙ) ÷ 2 if we start counting from U₀',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step1': 'Step 1: Find the common difference r',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step1a': 'We know U₃ = 2 and U₁₁ = 26',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step1b': 'The difference between U₁₁ and U₃ is 8 steps (from term 3 to term 11)',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step1c': 'This difference equals 8 × r (because each step adds r)',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step2': 'Step 2: Find U₀',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step2a': 'We know U₃ = U₀ + 3×r = 2',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step3': 'Step 3: Find U₁₅',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step3a': 'U₁₅ = U₀ + 15×r',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step4': 'Step 4: Calculate the sum S = U₀ + U₁ + ... + U₁₅',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step4a': 'We have 16 terms (from U₀ to U₁₅ inclusive)',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step4b': 'First term = U₀ = -7',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step4c': 'Last term = U₁₅ = 38',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step4d': 'Sum = (number of terms) × (first term + last term) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step4e': 'S = 8 × 31 (because 16 ÷ 2 = 8)',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Answer': 'Answer: S = 248',
+                
+                // Exercise 3
+                'MH.lesson_Y2Alg_seqArith5.exercise3Title': 'Exercise 3',
+                'MH.lesson_Y2Alg_seqArith5.exercise3Statement': 'A mother saves 10 dinars in the first month, then 15 dinars the next month, and so on, saving 5 dinars more each month.',
+                'MH.lesson_Y2Alg_seqArith5.exercise3a': 'a) How much did she save after 8 months?',
+                'MH.lesson_Y2Alg_seqArith5.exercise3b': 'b) At the end of which month will her savings be enough to buy a vacuum cleaner costing 205 dinars?',
+                'MH.lesson_Y2Alg_seqArith5.exercise3Reminder': 'This is an arithmetic sequence: First term = 10, common difference = 5',
+                'MH.lesson_Y2Alg_seqArith5.exercise3PartA': 'Part a: Savings after 8 months',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep1': 'Step 1: Understand what we\'re calculating',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep1a': 'We want the TOTAL savings after 8 months, not just the 8th month\'s savings',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep1b': 'This means we need the sum of the first 8 terms of the sequence',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep2': 'Step 2: Write the sequence',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep2a': 'Month 1: 10 dinars',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep2b': 'Month 2: 15 dinars (10 + 5)',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep2c': 'Month 3: 20 dinars (15 + 5)',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep2d': 'Month 4: 25 dinars (20 + 5)',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep2e': 'Month 5: 30 dinars',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep2f': 'Month 6: 35 dinars',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep2g': 'Month 7: 40 dinars',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep2h': 'Month 8: 45 dinars',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep3': 'Step 3: Calculate the total',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep3a': 'Total = 10 + 15 + 20 + 25 + 30 + 35 + 40 + 45',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep3b': 'We can add these step by step:',
+                'MH.lesson_Y2Alg_seqArith5.exercise3PartB': 'Part b: When savings reach 205 dinars',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep1': 'Step 1: Set up the equation',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep1a': 'We need to find n such that the sum of the first n months\' savings ≥ 205',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep1b': 'The sum formula for an arithmetic sequence: Sₙ = n × (first term + last term) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep1c': 'First term = 10, last term of n months = 10 + (n-1)×5',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep1d': 'So: Sₙ = n × [10 + (10 + (n-1)×5)] ÷ 2',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep2': 'Step 2: Solve Sₙ ≥ 205',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep2a': 'Divide by 5: n² + 3n - 82 ≥ 0',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep3': 'Step 3: Solve the quadratic equation',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep3a': 'n² + 3n - 82 = 0',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep3b': 'We can solve using the quadratic formula: n = [-3 ± √(9 + 328)] ÷ 2',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep4': 'Step 4: Interpret the result',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep4a': 'Since n must be positive, n ≈ 7.6788',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep4b': 'This means after 7 months, savings are less than 205, but after 8 months, savings exceed 205',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep4c': 'Let\'s check:',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep4cCheck1': 'After 7 months: S₇ = (5×7² + 15×7) ÷ 2 = (5×49 + 105) ÷ 2 = (245 + 105) ÷ 2 = 350 ÷ 2 = 175',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep4cCheck2': 'After 8 months: S₈ = (5×8² + 15×8) ÷ 2 = (5×64 + 120) ÷ 2 = (320 + 120) ÷ 2 = 440 ÷ 2 = 220',
+                'MH.lesson_Y2Alg_seqArith5.exercise3Answer': 'Answer:',
+                'MH.lesson_Y2Alg_seqArith5.exercise3AnswerA': 'a) After 8 months: 220 dinars',
+                'MH.lesson_Y2Alg_seqArith5.exercise3AnswerB': 'b) At the end of the 8th month (savings = 220 dinars > 205 dinars)',
+                
+                // Exercise 4
+                'MH.lesson_Y2Alg_seqArith5.exercise4Title': 'Exercise 4: Arithmetic Mean',
+                'MH.lesson_Y2Alg_seqArith5.exercise4a': 'a) Show that if a, b and c are three consecutive terms of an arithmetic sequence, then b = (a+c)/2. (We say that b is the arithmetic mean of a and c).',
+                'MH.lesson_Y2Alg_seqArith5.exercise4b': 'b) Let a, b and c be three real numbers such that b = (a+c)/2. Are a, b and c three consecutive terms of an arithmetic sequence?',
+                'MH.lesson_Y2Alg_seqArith5.exercise4Reminder': 'In an arithmetic sequence, the difference between consecutive terms is constant.',
+                'MH.lesson_Y2Alg_seqArith5.exercise4PartA': 'Part a: Proving b = (a+c)/2',
+                'MH.lesson_Y2Alg_seqArith5.exercise4aStep1': 'Step 1: Understand what "consecutive terms" means',
+                'MH.lesson_Y2Alg_seqArith5.exercise4aStep1a': 'If a, b, c are consecutive terms of an arithmetic sequence, then:',
+                'MH.lesson_Y2Alg_seqArith5.exercise4aStep1b': 'Let r be the common difference',
+                'MH.lesson_Y2Alg_seqArith5.exercise4aStep2': 'Step 2: Express (a+c)/2 in terms of a and r',
+                'MH.lesson_Y2Alg_seqArith5.exercise4aStep2a': 'Calculate (a+c)/2:',
+                'MH.lesson_Y2Alg_seqArith5.exercise4aStep3': 'Step 3: Compare with b',
+                'MH.lesson_Y2Alg_seqArith5.exercise4aStep3a': 'But we know b = a + r',
+                'MH.lesson_Y2Alg_seqArith5.exercise4aStep3b': 'Therefore: b = (a+c)/2',
+                'MH.lesson_Y2Alg_seqArith5.exercise4aStep3c': 'This proves that b is exactly the average of a and c!',
+                'MH.lesson_Y2Alg_seqArith5.exercise4PartB': 'Part b: The converse',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep1': 'Step 1: Start with b = (a+c)/2',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep1a': 'We have: b = (a+c)/2',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep1b': 'Multiply both sides by 2: 2b = a + c',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep2': 'Step 2: Check if there exists a common difference r',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep2a': 'For a, b, c to be consecutive terms of an arithmetic sequence, we need:',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep2b': 'Let\'s check if b - a equals c - b:',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep2b2': 'From 2b = a + c, we get c = 2b - a',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep2b3': 'Now c - b = (2b - a) - b = b - a',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep2c': 'Yes! b - a = c - b',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep3': 'Step 3: Conclusion',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep3a': 'Since b - a = c - b, let\'s call this common value r',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep3b': 'Then: b = a + r and c = b + r = a + 2r',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep3c': 'So a, b, c are indeed consecutive terms of an arithmetic sequence with common difference r',
+                'MH.lesson_Y2Alg_seqArith5.exercise4Answer': 'Answer:',
+                'MH.lesson_Y2Alg_seqArith5.exercise4AnswerA': 'a) Proof shown above: b = (a+c)/2 when a, b, c are consecutive terms of an arithmetic sequence',
+                'MH.lesson_Y2Alg_seqArith5.exercise4AnswerB': 'b) Yes, if b = (a+c)/2, then a, b, c are consecutive terms of an arithmetic sequence',
+                
+                // Exercise 5
+                'MH.lesson_Y2Alg_seqArith5.exercise5Title': 'Exercise 5: Syracuse Sequence',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Note': 'Note: This is NOT an arithmetic sequence! It\'s a special sequence with its own rules.',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Statement': 'We define a Syracuse sequence as follows: Choose an integer N (the first term).',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Rule1': 'If N is even, the next term is N/2',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Rule2': 'If N is odd, the next term is 3N + 1',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Continue': 'We continue in the same way with the new term. We stop when we reach 1.',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Examples': 'Examples: For N=5: 5, 16, 8, 4, 2, 1. For N=24: 24, 12, 6, 3, 10, 5, 16, 8, 4, 2, 1.',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Problem': 'Determine the terms of the Syracuse sequence for N=28 and for N=30.',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Reminder': 'Remember the rules: Even → divide by 2, Odd → multiply by 3 and add 1',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Part1': 'For N = 28',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step1': 'Step 1: Start with N = 28',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step1a': '28 is even, so next term = 28 ÷ 2 = 14',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step1b': 'Sequence so far: 28, 14',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step2': 'Step 2: Continue with 14',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step2a': '14 is even, so next term = 14 ÷ 2 = 7',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step2b': 'Sequence: 28, 14, 7',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step3': 'Step 3: Continue with 7',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step3a': '7 is odd, so next term = 3×7 + 1 = 21 + 1 = 22',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step3b': 'Sequence: 28, 14, 7, 22',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4': 'Step 4: Continue step by step',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_1': '22 is even → 22 ÷ 2 = 11: 28, 14, 7, 22, 11',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_2': '11 is odd → 3×11 + 1 = 33 + 1 = 34: 28, 14, 7, 22, 11, 34',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_3': '34 is even → 34 ÷ 2 = 17: 28, 14, 7, 22, 11, 34, 17',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_4': '17 is odd → 3×17 + 1 = 51 + 1 = 52: 28, 14, 7, 22, 11, 34, 17, 52',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_5': '52 is even → 52 ÷ 2 = 26: 28, 14, 7, 22, 11, 34, 17, 52, 26',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_6': '26 is even → 26 ÷ 2 = 13: 28, 14, 7, 22, 11, 34, 17, 52, 26, 13',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_7': '13 is odd → 3×13 + 1 = 39 + 1 = 40: 28, 14, 7, 22, 11, 34, 17, 52, 26, 13, 40',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_8': '40 is even → 40 ÷ 2 = 20: ... , 40, 20',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_9': '20 is even → 20 ÷ 2 = 10: ... , 20, 10',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_10': '10 is even → 10 ÷ 2 = 5: ... , 10, 5',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_11': '5 is odd → 3×5 + 1 = 15 + 1 = 16: ... , 5, 16',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_12': '16 is even → 16 ÷ 2 = 8: ... , 16, 8',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_13': '8 is even → 8 ÷ 2 = 4: ... , 8, 4',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_14': '4 is even → 4 ÷ 2 = 2: ... , 4, 2',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_15': '2 is even → 2 ÷ 2 = 1: ... , 2, 1',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Part2': 'For N = 30',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step5': 'Step 5: Start with N = 30',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step5a': '30 is even, so next term = 30 ÷ 2 = 15',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step5b': 'Sequence so far: 30, 15',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6': 'Step 6: Continue step by step',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_1': '15 is odd → 3×15 + 1 = 45 + 1 = 46: 30, 15, 46',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_2': '46 is even → 46 ÷ 2 = 23: 30, 15, 46, 23',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_3': '23 is odd → 3×23 + 1 = 69 + 1 = 70: 30, 15, 46, 23, 70',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_4': '70 is even → 70 ÷ 2 = 35: ... , 70, 35',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_5': '35 is odd → 3×35 + 1 = 105 + 1 = 106: ... , 35, 106',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_6': '106 is even → 106 ÷ 2 = 53: ... , 106, 53',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_7': '53 is odd → 3×53 + 1 = 159 + 1 = 160: ... , 53, 160',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_8': '160 is even → 160 ÷ 2 = 80: ... , 160, 80',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_9': '80 is even → 80 ÷ 2 = 40: ... , 80, 40',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_10': '40 is even → 40 ÷ 2 = 20: ... , 40, 20',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_11': '20 is even → 20 ÷ 2 = 10: ... , 20, 10',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_12': '10 is even → 10 ÷ 2 = 5: ... , 10, 5',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_13': '5 is odd → 3×5 + 1 = 15 + 1 = 16: ... , 5, 16',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_14': '16 is even → 16 ÷ 2 = 8: ... , 16, 8',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_15': '8 is even → 8 ÷ 2 = 4: ... , 8, 4',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_16': '4 is even → 4 ÷ 2 = 2: ... , 4, 2',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_17': '2 is even → 2 ÷ 2 = 1: ... , 2, 1',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Answer': 'Answer:',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Answer1': 'For N=28: 28, 14, 7, 22, 11, 34, 17, 52, 26, 13, 40, 20, 10, 5, 16, 8, 4, 2, 1',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Answer2': 'For N=30: 30, 15, 46, 23, 70, 35, 106, 53, 160, 80, 40, 20, 10, 5, 16, 8, 4, 2, 1',
+                'MH.lesson_Y2Alg_seqArith5.exercise5FunFact': 'Fun fact: The Syracuse problem (also called Collatz conjecture) is still unsolved! No one has proven that EVERY starting number eventually reaches 1, though it\'s been tested for very large numbers.',
+                
+                // Summary
+                'MH.lesson_Y2Alg_seqArith5.summaryTitle': 'Lesson Summary',
+                'MH.lesson_Y2Alg_seqArith5.keyConceptsTitle': 'What We Practiced Today',
+                'MH.lesson_Y2Alg_seqArith5.concept1': 'Finding the common difference and first term when given two terms of an arithmetic sequence',
+                'MH.lesson_Y2Alg_seqArith5.concept2': 'Calculating the sum of terms in an arithmetic sequence',
+                'MH.lesson_Y2Alg_seqArith5.concept3': 'Applying arithmetic sequences to real-world problems (savings)',
+                'MH.lesson_Y2Alg_seqArith5.concept4': 'Understanding the arithmetic mean property: b = (a+c)/2 for consecutive terms',
+                'MH.lesson_Y2Alg_seqArith5.concept5': 'Exploring the fascinating Syracuse sequence (not arithmetic, but interesting!)',
+                'MH.lesson_Y2Alg_seqArith5.importantFormulasTitle': 'Important Formulas Used',
+                'MH.lesson_Y2Alg_seqArith5.formula1': 'General term of arithmetic sequence: Uₙ = U₀ + n×r',
+                'MH.lesson_Y2Alg_seqArith5.formula2': 'Sum of first n terms: Sₙ = n × (first term + last term) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith5.formula3': 'Arithmetic mean: If a, b, c are consecutive terms, then b = (a+c)/2',
+                'MH.lesson_Y2Alg_seqArith5.nextStepsTitle': 'Next Steps',
+                'MH.lesson_Y2Alg_seqArith5.finalThought': 'You\'ve now completed a series of lessons on arithmetic sequences! You\'ve learned to recognize them, work with their formulas, and apply them to various problems. Keep practicing with different exercises to strengthen your understanding.',
+                
+                // Footer
+                'MH.footer.developer': 'Developer',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Links',
+                'MH.footer.terms': 'Terms of Use',
+                'MH.footer.privacy': 'Privacy Policy'
+            },
+            'fr': {
+                // General translations (already present)
+                'MH.general.homeTooltip': 'Aller à la page d\'accueil',
+                'MH.general.install': 'Installer l\'application',
+                'MH.general.installSuccess': 'Mathematics Hub installé avec succès !',
+                'MH.general.enableNotifications': 'Activer les notifications',
+                'MH.general.notificationEnabled': 'Notifications activées ! Vous recevrez désormais les mises à jour.',
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Thème',
+                'MH.general.language': 'Langue',
+                'MH.lesson_Y2Alg_seqArith5.showSolution': 'Afficher la solution',
+                'MH.lesson_Y2Alg_seqArith5.hideSolution': 'Masquer la solution',
+                
+                // Lesson specific translations (existing)
+                'MH.lesson_Y2Alg_seqArith5.title': 'Suites arithmétiques : Partie V',
+                'MH.lesson_Y2Alg_seqArith5.subtitle': 'Exercices et applications',
+                'MH.lesson_Y2Alg_seqArith5.introduction': 'Introduction',
+                'MH.lesson_Y2Alg_seqArith5.introText1': 'Dans cette leçon, nous allons nous entraîner à résoudre divers problèmes impliquant des suites arithmétiques. Ces exercices vous aideront à appliquer ce que vous avez appris sur les suites arithmétiques à des situations de la vie réelle et à des problèmes mathématiques.',
+                'MH.lesson_Y2Alg_seqArith5.introText2': 'Nous allons travailler sur cinq exercices différents, chacun se concentrant sur différents aspects des suites arithmétiques. Prenez votre temps pour chaque problème et essayez de comprendre chaque étape de la solution.',
+                
+                // Part XIII
+                'MH.lesson_Y2Alg_seqArith5.part13': 'XIII. Exercices et applications',
+                
+                // Exercise 1
+                'MH.lesson_Y2Alg_seqArith5.exercise1Title': 'Exercice 1',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Statement': '(Uₙ) est une suite arithmétique telle que U₂₀ = 1926 et U₅₇ = 1606. Déterminer la raison de cette suite ainsi que son premier terme U₀.',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Reminder': 'Rappel : Dans une suite arithmétique, le terme général est Uₙ = U₀ + n×r, où r est la raison.',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step1': 'Étape 1 : Écrire ce que nous savons',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step1a': 'Nous savons que U₂₀ = 1926 et U₅₇ = 1606',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step1b': 'En utilisant la formule Uₙ = U₀ + n×r, nous pouvons écrire :',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step2': 'Étape 2 : Soustraire les deux équations',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step2a': 'Soustrayons la première équation de la seconde :',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step2b': 'Les termes en U₀ s\'annulent :',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step3': 'Étape 3 : Résoudre pour r',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step3a': 'Diviser les deux côtés par 37 :',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step3b': 'Calculons cela :',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step3b2': '320 ÷ 37 = 8 avec un reste de 24 (car 37 × 8 = 296)',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step3c': 'Nous pouvons le laisser sous forme de fraction ou calculer la décimale :',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step4': 'Étape 4 : Trouver U₀',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step4a': 'Maintenant, utilisons une des équations pour trouver U₀. Utilisons U₂₀ = U₀ + 20×r = 1926 :',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step4b': 'Ajouter 6400/37 aux deux côtés :',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step4c': 'Pour additionner, convertir 1926 en une fraction avec dénominateur 37 :',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step4d': 'Simplifier ou calculer la décimale :',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Answer': 'Réponse :',
+                'MH.lesson_Y2Alg_seqArith5.exercise1AnswerR': 'Raison : r = -320/37 ≈ -8,6486',
+                'MH.lesson_Y2Alg_seqArith5.exercise1AnswerU0': 'Premier terme : U₀ = 77662/37 ≈ 2098,973',
+                
+                // Exercise 2
+                'MH.lesson_Y2Alg_seqArith5.exercise2Title': 'Exercice 2',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Statement': '(Uₙ) est une suite arithmétique telle que U₃ = 2 et U₁₁ = 26. Soit S = U₀ + U₁ + ... + U₁₅. Calculer S.',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Reminder1': 'Rappel : La somme des n premiers termes d\'une suite arithmétique est Sₙ = (nombre de termes) × (premier terme + dernier terme) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Reminder2': 'Aussi : Sₙ = (n+1) × (U₀ + Uₙ) ÷ 2 si nous commençons à compter à partir de U₀',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step1': 'Étape 1 : Trouver la raison r',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step1a': 'Nous savons que U₃ = 2 et U₁₁ = 26',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step1b': 'La différence entre U₁₁ et U₃ est de 8 pas (du terme 3 au terme 11)',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step1c': 'Cette différence est égale à 8 × r (car chaque pas ajoute r)',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step2': 'Étape 2 : Trouver U₀',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step2a': 'Nous savons que U₃ = U₀ + 3×r = 2',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step3': 'Étape 3 : Trouver U₁₅',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step3a': 'U₁₅ = U₀ + 15×r',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step4': 'Étape 4 : Calculer la somme S = U₀ + U₁ + ... + U₁₅',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step4a': 'Nous avons 16 termes (de U₀ à U₁₅ inclus)',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step4b': 'Premier terme = U₀ = -7',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step4c': 'Dernier terme = U₁₅ = 38',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step4d': 'Somme = (nombre de termes) × (premier terme + dernier terme) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step4e': 'S = 8 × 31 (car 16 ÷ 2 = 8)',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Answer': 'Réponse : S = 248',
+                
+                // Exercise 3
+                'MH.lesson_Y2Alg_seqArith5.exercise3Title': 'Exercice 3',
+                'MH.lesson_Y2Alg_seqArith5.exercise3Statement': 'Une mère économise 10 dinars le premier mois, puis 15 dinars le mois suivant, et ainsi de suite, en économisant 5 dinars de plus chaque mois.',
+                'MH.lesson_Y2Alg_seqArith5.exercise3a': 'a) Combien a-t-elle économisé après 8 mois ?',
+                'MH.lesson_Y2Alg_seqArith5.exercise3b': 'b) À la fin de quel mois ses économies seront-elles suffisantes pour acheter un aspirateur coûtant 205 dinars ?',
+                'MH.lesson_Y2Alg_seqArith5.exercise3Reminder': 'Il s\'agit d\'une suite arithmétique : Premier terme = 10, raison = 5',
+                'MH.lesson_Y2Alg_seqArith5.exercise3PartA': 'Partie a : Économies après 8 mois',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep1': 'Étape 1 : Comprendre ce que nous calculons',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep1a': 'Nous voulons le TOTAL des économies après 8 mois, pas seulement les économies du 8e mois',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep1b': 'Cela signifie que nous avons besoin de la somme des 8 premiers termes de la suite',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep2': 'Étape 2 : Écrire la suite',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep2a': 'Mois 1 : 10 dinars',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep2b': 'Mois 2 : 15 dinars (10 + 5)',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep2c': 'Mois 3 : 20 dinars (15 + 5)',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep2d': 'Mois 4 : 25 dinars (20 + 5)',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep2e': 'Mois 5 : 30 dinars',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep2f': 'Mois 6 : 35 dinars',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep2g': 'Mois 7 : 40 dinars',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep2h': 'Mois 8 : 45 dinars',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep3': 'Étape 3 : Calculer le total',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep3a': 'Total = 10 + 15 + 20 + 25 + 30 + 35 + 40 + 45',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep3b': 'Nous pouvons les additionner étape par étape :',
+                'MH.lesson_Y2Alg_seqArith5.exercise3PartB': 'Partie b : Quand les économies atteignent 205 dinars',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep1': 'Étape 1 : Établir l\'équation',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep1a': 'Nous devons trouver n tel que la somme des économies des n premiers mois ≥ 205',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep1b': 'La formule de somme pour une suite arithmétique : Sₙ = n × (premier terme + dernier terme) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep1c': 'Premier terme = 10, dernier terme de n mois = 10 + (n-1)×5',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep1d': 'Donc : Sₙ = n × [10 + (10 + (n-1)×5)] ÷ 2',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep2': 'Étape 2 : Résoudre Sₙ ≥ 205',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep2a': 'Diviser par 5 : n² + 3n - 82 ≥ 0',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep3': 'Étape 3 : Résoudre l\'équation quadratique',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep3a': 'n² + 3n - 82 = 0',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep3b': 'Nous pouvons résoudre en utilisant la formule quadratique : n = [-3 ± √(9 + 328)] ÷ 2',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep4': 'Étape 4 : Interpréter le résultat',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep4a': 'Comme n doit être positif, n ≈ 7,6788',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep4b': 'Cela signifie qu\'après 7 mois, les économies sont inférieures à 205, mais après 8 mois, les économies dépassent 205',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep4c': 'Vérifions :',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep4cCheck1': 'Après 7 mois : S₇ = (5×7² + 15×7) ÷ 2 = (5×49 + 105) ÷ 2 = (245 + 105) ÷ 2 = 350 ÷ 2 = 175',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep4cCheck2': 'Après 8 mois : S₈ = (5×8² + 15×8) ÷ 2 = (5×64 + 120) ÷ 2 = (320 + 120) ÷ 2 = 440 ÷ 2 = 220',
+                'MH.lesson_Y2Alg_seqArith5.exercise3Answer': 'Réponse :',
+                'MH.lesson_Y2Alg_seqArith5.exercise3AnswerA': 'a) Après 8 mois : 220 dinars',
+                'MH.lesson_Y2Alg_seqArith5.exercise3AnswerB': 'b) À la fin du 8e mois (économies = 220 dinars > 205 dinars)',
+                
+                // Exercise 4
+                'MH.lesson_Y2Alg_seqArith5.exercise4Title': 'Exercice 4 : Moyenne arithmétique',
+                'MH.lesson_Y2Alg_seqArith5.exercise4a': 'a) Montrer que si a, b et c sont trois termes consécutifs d\'une suite arithmétique, alors b = (a+c)/2. (On dit que b est la moyenne arithmétique de a et c).',
+                'MH.lesson_Y2Alg_seqArith5.exercise4b': 'b) Soient a, b et c trois nombres réels tels que b = (a+c)/2. Est-ce que a, b et c sont trois termes consécutifs d\'une suite arithmétique ?',
+                'MH.lesson_Y2Alg_seqArith5.exercise4Reminder': 'Dans une suite arithmétique, la différence entre les termes consécutifs est constante.',
+                'MH.lesson_Y2Alg_seqArith5.exercise4PartA': 'Partie a : Démontrer que b = (a+c)/2',
+                'MH.lesson_Y2Alg_seqArith5.exercise4aStep1': 'Étape 1 : Comprendre ce que signifient "termes consécutifs"',
+                'MH.lesson_Y2Alg_seqArith5.exercise4aStep1a': 'Si a, b, c sont des termes consécutifs d\'une suite arithmétique, alors :',
+                'MH.lesson_Y2Alg_seqArith5.exercise4aStep1b': 'Soit r la raison',
+                'MH.lesson_Y2Alg_seqArith5.exercise4aStep2': 'Étape 2 : Exprimer (a+c)/2 en fonction de a et r',
+                'MH.lesson_Y2Alg_seqArith5.exercise4aStep2a': 'Calculer (a+c)/2 :',
+                'MH.lesson_Y2Alg_seqArith5.exercise4aStep3': 'Étape 3 : Comparer avec b',
+                'MH.lesson_Y2Alg_seqArith5.exercise4aStep3a': 'Mais nous savons que b = a + r',
+                'MH.lesson_Y2Alg_seqArith5.exercise4aStep3b': 'Donc : b = (a+c)/2',
+                'MH.lesson_Y2Alg_seqArith5.exercise4aStep3c': 'Ceci prouve que b est exactement la moyenne de a et c !',
+                'MH.lesson_Y2Alg_seqArith5.exercise4PartB': 'Partie b : La réciproque',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep1': 'Étape 1 : Commencer avec b = (a+c)/2',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep1a': 'Nous avons : b = (a+c)/2',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep1b': 'Multiplier les deux côtés par 2 : 2b = a + c',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep2': 'Étape 2 : Vérifier s\'il existe une raison r',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep2a': 'Pour que a, b, c soient des termes consécutifs d\'une suite arithmétique, nous avons besoin :',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep2b': 'Vérifions si b - a est égal à c - b :',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep2b2': 'De 2b = a + c, nous obtenons c = 2b - a',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep2b3': 'Maintenant c - b = (2b - a) - b = b - a',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep2c': 'Oui ! b - a = c - b',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep3': 'Étape 3 : Conclusion',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep3a': 'Puisque b - a = c - b, appelons cette valeur commune r',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep3b': 'Alors : b = a + r et c = b + r = a + 2r',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep3c': 'Donc a, b, c sont bien des termes consécutifs d\'une suite arithmétique de raison r',
+                'MH.lesson_Y2Alg_seqArith5.exercise4Answer': 'Réponse :',
+                'MH.lesson_Y2Alg_seqArith5.exercise4AnswerA': 'a) Preuve ci-dessus : b = (a+c)/2 lorsque a, b, c sont des termes consécutifs d\'une suite arithmétique',
+                'MH.lesson_Y2Alg_seqArith5.exercise4AnswerB': 'b) Oui, si b = (a+c)/2, alors a, b, c sont des termes consécutifs d\'une suite arithmétique',
+                
+                // Exercise 5
+                'MH.lesson_Y2Alg_seqArith5.exercise5Title': 'Exercice 5 : Suite de Syracuse',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Note': 'Remarque : Ce n\'est PAS une suite arithmétique ! C\'est une suite spéciale avec ses propres règles.',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Statement': 'On définit une suite de Syracuse comme suit : Choisir un entier N (le premier terme).',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Rule1': 'Si N est pair, le terme suivant est N/2',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Rule2': 'Si N est impair, le terme suivant est 3N + 1',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Continue': 'On continue de la même manière avec le nouveau terme. On s\'arrête quand on atteint 1.',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Examples': 'Exemples : Pour N=5 : 5, 16, 8, 4, 2, 1. Pour N=24 : 24, 12, 6, 3, 10, 5, 16, 8, 4, 2, 1.',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Problem': 'Déterminer les termes de la suite de Syracuse pour N=28 et pour N=30.',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Reminder': 'Rappel des règles : Pair → diviser par 2, Impair → multiplier par 3 et ajouter 1',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Part1': 'Pour N = 28',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step1': 'Étape 1 : Commencer avec N = 28',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step1a': '28 est pair, donc terme suivant = 28 ÷ 2 = 14',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step1b': 'Suite jusqu\'à présent : 28, 14',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step2': 'Étape 2 : Continuer avec 14',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step2a': '14 est pair, donc terme suivant = 14 ÷ 2 = 7',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step2b': 'Suite : 28, 14, 7',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step3': 'Étape 3 : Continuer avec 7',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step3a': '7 est impair, donc terme suivant = 3×7 + 1 = 21 + 1 = 22',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step3b': 'Suite : 28, 14, 7, 22',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4': 'Étape 4 : Continuer étape par étape',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_1': '22 est pair → 22 ÷ 2 = 11 : 28, 14, 7, 22, 11',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_2': '11 est impair → 3×11 + 1 = 33 + 1 = 34 : 28, 14, 7, 22, 11, 34',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_3': '34 est pair → 34 ÷ 2 = 17 : 28, 14, 7, 22, 11, 34, 17',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_4': '17 est impair → 3×17 + 1 = 51 + 1 = 52 : 28, 14, 7, 22, 11, 34, 17, 52',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_5': '52 est pair → 52 ÷ 2 = 26 : 28, 14, 7, 22, 11, 34, 17, 52, 26',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_6': '26 est pair → 26 ÷ 2 = 13 : 28, 14, 7, 22, 11, 34, 17, 52, 26, 13',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_7': '13 est impair → 3×13 + 1 = 39 + 1 = 40 : 28, 14, 7, 22, 11, 34, 17, 52, 26, 13, 40',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_8': '40 est pair → 40 ÷ 2 = 20 : ... , 40, 20',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_9': '20 est pair → 20 ÷ 2 = 10 : ... , 20, 10',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_10': '10 est pair → 10 ÷ 2 = 5 : ... , 10, 5',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_11': '5 est impair → 3×5 + 1 = 15 + 1 = 16 : ... , 5, 16',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_12': '16 est pair → 16 ÷ 2 = 8 : ... , 16, 8',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_13': '8 est pair → 8 ÷ 2 = 4 : ... , 8, 4',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_14': '4 est pair → 4 ÷ 2 = 2 : ... , 4, 2',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_15': '2 est pair → 2 ÷ 2 = 1 : ... , 2, 1',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Part2': 'Pour N = 30',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step5': 'Étape 5 : Commencer avec N = 30',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step5a': '30 est pair, donc terme suivant = 30 ÷ 2 = 15',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step5b': 'Suite jusqu\'à présent : 30, 15',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6': 'Étape 6 : Continuer étape par étape',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_1': '15 est impair → 3×15 + 1 = 45 + 1 = 46 : 30, 15, 46',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_2': '46 est pair → 46 ÷ 2 = 23 : 30, 15, 46, 23',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_3': '23 est impair → 3×23 + 1 = 69 + 1 = 70 : 30, 15, 46, 23, 70',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_4': '70 est pair → 70 ÷ 2 = 35 : ... , 70, 35',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_5': '35 est impair → 3×35 + 1 = 105 + 1 = 106 : ... , 35, 106',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_6': '106 est pair → 106 ÷ 2 = 53 : ... , 106, 53',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_7': '53 est impair → 3×53 + 1 = 159 + 1 = 160 : ... , 53, 160',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_8': '160 est pair → 160 ÷ 2 = 80 : ... , 160, 80',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_9': '80 est pair → 80 ÷ 2 = 40 : ... , 80, 40',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_10': '40 est pair → 40 ÷ 2 = 20 : ... , 40, 20',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_11': '20 est pair → 20 ÷ 2 = 10 : ... , 20, 10',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_12': '10 est pair → 10 ÷ 2 = 5 : ... , 10, 5',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_13': '5 est impair → 3×5 + 1 = 15 + 1 = 16 : ... , 5, 16',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_14': '16 est pair → 16 ÷ 2 = 8 : ... , 16, 8',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_15': '8 est pair → 8 ÷ 2 = 4 : ... , 8, 4',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_16': '4 est pair → 4 ÷ 2 = 2 : ... , 4, 2',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_17': '2 est pair → 2 ÷ 2 = 1 : ... , 2, 1',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Answer': 'Réponse :',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Answer1': 'Pour N=28 : 28, 14, 7, 22, 11, 34, 17, 52, 26, 13, 40, 20, 10, 5, 16, 8, 4, 2, 1',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Answer2': 'Pour N=30 : 30, 15, 46, 23, 70, 35, 106, 53, 160, 80, 40, 20, 10, 5, 16, 8, 4, 2, 1',
+                'MH.lesson_Y2Alg_seqArith5.exercise5FunFact': 'Fait amusant : Le problème de Syracuse (aussi appelé conjecture de Collatz) est toujours non résolu ! Personne n\'a prouvé que TOUT nombre de départ atteint finalement 1, bien que cela ait été testé pour de très grands nombres.',
+                
+                // Summary
+                'MH.lesson_Y2Alg_seqArith5.summaryTitle': 'Résumé de la leçon',
+                'MH.lesson_Y2Alg_seqArith5.keyConceptsTitle': 'Ce que nous avons pratiqué aujourd\'hui',
+                'MH.lesson_Y2Alg_seqArith5.concept1': 'Trouver la raison et le premier terme à partir de deux termes d\'une suite arithmétique',
+                'MH.lesson_Y2Alg_seqArith5.concept2': 'Calculer la somme des termes d\'une suite arithmétique',
+                'MH.lesson_Y2Alg_seqArith5.concept3': 'Appliquer les suites arithmétiques à des problèmes concrets (économies)',
+                'MH.lesson_Y2Alg_seqArith5.concept4': 'Comprendre la propriété de la moyenne arithmétique : b = (a+c)/2 pour des termes consécutifs',
+                'MH.lesson_Y2Alg_seqArith5.concept5': 'Explorer la fascinante suite de Syracuse (pas arithmétique, mais intéressante !)',
+                'MH.lesson_Y2Alg_seqArith5.importantFormulasTitle': 'Formules importantes utilisées',
+                'MH.lesson_Y2Alg_seqArith5.formula1': 'Terme général d\'une suite arithmétique : Uₙ = U₀ + n×r',
+                'MH.lesson_Y2Alg_seqArith5.formula2': 'Somme des n premiers termes : Sₙ = n × (premier terme + dernier terme) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith5.formula3': 'Moyenne arithmétique : Si a, b, c sont des termes consécutifs, alors b = (a+c)/2',
+                'MH.lesson_Y2Alg_seqArith5.nextStepsTitle': 'Prochaines étapes',
+                'MH.lesson_Y2Alg_seqArith5.finalThought': 'Vous avez maintenant terminé une série de leçons sur les suites arithmétiques ! Vous avez appris à les reconnaître, à travailler avec leurs formules et à les appliquer à divers problèmes. Continuez à vous entraîner avec différents exercices pour renforcer votre compréhension.',
+                
+                // Footer
+                'MH.footer.developer': 'Développeur',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Liens',
+                'MH.footer.terms': 'Conditions d\'utilisation',
+                'MH.footer.privacy': 'Politique de confidentialité'
+            },
+            'ar': {
+                // General translations (already present)
+                'MH.general.homeTooltip': 'الانتقال إلى الصفحة الرئيسية',
+                'MH.general.install': 'تثبيت التطبيق',
+                'MH.general.installSuccess': 'تم تثبيت Mathematics Hub بنجاح!',
+                'MH.general.enableNotifications': 'تفعيل الإشعارات',
+                'MH.general.notificationEnabled': 'تم تفعيل الإشعارات! ستصلك التحديثات الآن.',
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'المظهر',
+                'MH.general.language': 'اللغة',
+                'MH.lesson_Y2Alg_seqArith5.showSolution': 'عرض الحل',
+                'MH.lesson_Y2Alg_seqArith5.hideSolution': 'إخفاء الحل',
+                
+                // Lesson specific translations (existing)
+                'MH.lesson_Y2Alg_seqArith5.title': 'المتتاليات الحسابية: الجزء الخامس',
+                'MH.lesson_Y2Alg_seqArith5.subtitle': 'تمارين وتطبيقات',
+                'MH.lesson_Y2Alg_seqArith5.introduction': 'مقدمة',
+                'MH.lesson_Y2Alg_seqArith5.introText1': 'في هذا الدرس، سوف نتدرب على حل مسائل متنوعة تتضمن المتتاليات الحسابية. ستساعدك هذه التمارين على تطبيق ما تعلمته عن المتتاليات الحسابية في مواقف من الحياة الواقعية ومسائل رياضية.',
+                'MH.lesson_Y2Alg_seqArith5.introText2': 'سنعمل على خمسة تمارين مختلفة، يركز كل منها على جوانب مختلفة من المتتاليات الحسابية. خذ وقتك في كل مسألة وحاول فهم كل خطوة من خطوات الحل.',
+                
+                // Part XIII
+                'MH.lesson_Y2Alg_seqArith5.part13': 'XIII. تمارين وتطبيقات',
+                
+                // Exercise 1
+                'MH.lesson_Y2Alg_seqArith5.exercise1Title': 'تمرين 1',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Statement': '(Uₙ) متتالية حسابية بحيث U₂₀ = 1926 و U₅₇ = 1606. حدد أساس هذه المتتالية وكذلك حدها الأول U₀.',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Reminder': 'تذكر: في المتتالية الحسابية، الحد العام هو Uₙ = U₀ + n×r، حيث r هو الأساس.',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step1': 'الخطوة 1: كتابة ما نعرفه',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step1a': 'نعلم أن U₂₀ = 1926 و U₅₇ = 1606',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step1b': 'باستخدام الصيغة Uₙ = U₀ + n×r، يمكننا كتابة:',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step2': 'الخطوة 2: طرح المعادلتين',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step2a': 'لنطرح المعادلة الأولى من الثانية:',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step2b': 'الحدود U₀ تلغي بعضها البعض:',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step3': 'الخطوة 3: إيجاد r',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step3a': 'نقسم الطرفين على 37:',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step3b': 'لنحسب هذا:',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step3b2': '320 ÷ 37 = 8 والباقي 24 (لأن 37 × 8 = 296)',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step3c': 'يمكننا تركها ككسر أو حساب القيمة العشرية:',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step4': 'الخطوة 4: إيجاد U₀',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step4a': 'الآن استخدم إحدى المعادلتين لإيجاد U₀. لنستخدم U₂₀ = U₀ + 20×r = 1926:',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step4b': 'نضيف 6400/37 إلى كلا الطرفين:',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step4c': 'للجمع، حول 1926 إلى كسر مقامه 37:',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Step4d': 'بسّط أو احسب القيمة العشرية:',
+                'MH.lesson_Y2Alg_seqArith5.exercise1Answer': 'الإجابة:',
+                'MH.lesson_Y2Alg_seqArith5.exercise1AnswerR': 'الأساس: r = -320/37 ≈ -8.6486',
+                'MH.lesson_Y2Alg_seqArith5.exercise1AnswerU0': 'الحد الأول: U₀ = 77662/37 ≈ 2098.973',
+                
+                // Exercise 2
+                'MH.lesson_Y2Alg_seqArith5.exercise2Title': 'تمرين 2',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Statement': '(Uₙ) متتالية حسابية بحيث U₃ = 2 و U₁₁ = 26. لتكن S = U₀ + U₁ + ... + U₁₅. احسب S.',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Reminder1': 'تذكر: مجموع أول n حدًا من متتالية حسابية هو Sₙ = (عدد الحدود) × (الحد الأول + الحد الأخير) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Reminder2': 'أيضًا: Sₙ = (n+1) × (U₀ + Uₙ) ÷ 2 إذا بدأنا العد من U₀',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step1': 'الخطوة 1: إيجاد الأساس r',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step1a': 'نعلم أن U₃ = 2 و U₁₁ = 26',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step1b': 'الفرق بين U₁₁ و U₃ هو 8 خطوات (من الحد 3 إلى الحد 11)',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step1c': 'هذا الفرق يساوي 8 × r (لأن كل خطوة تضيف r)',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step2': 'الخطوة 2: إيجاد U₀',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step2a': 'نعلم أن U₃ = U₀ + 3×r = 2',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step3': 'الخطوة 3: إيجاد U₁₅',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step3a': 'U₁₅ = U₀ + 15×r',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step4': 'الخطوة 4: حساب المجموع S = U₀ + U₁ + ... + U₁₅',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step4a': 'لدينا 16 حدًا (من U₀ إلى U₁₅ شاملين)',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step4b': 'الحد الأول = U₀ = -7',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step4c': 'الحد الأخير = U₁₅ = 38',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step4d': 'المجموع = (عدد الحدود) × (الحد الأول + الحد الأخير) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Step4e': 'S = 8 × 31 (لأن 16 ÷ 2 = 8)',
+                'MH.lesson_Y2Alg_seqArith5.exercise2Answer': 'الإجابة: S = 248',
+                
+                // Exercise 3
+                'MH.lesson_Y2Alg_seqArith5.exercise3Title': 'تمرين 3',
+                'MH.lesson_Y2Alg_seqArith5.exercise3Statement': 'أم تدخر 10 دنانير في الشهر الأول، ثم 15 دينارًا في الشهر التالي، وهكذا، تدخر 5 دنانير إضافية كل شهر.',
+                'MH.lesson_Y2Alg_seqArith5.exercise3a': 'أ) كم ادخرت بعد 8 أشهر؟',
+                'MH.lesson_Y2Alg_seqArith5.exercise3b': 'ب) في نهاية أي شهر ستكون مدخراتها كافية لشراء مكنسة كهربائية ثمنها 205 دنانير؟',
+                'MH.lesson_Y2Alg_seqArith5.exercise3Reminder': 'هذه متتالية حسابية: الحد الأول = 10، الأساس = 5',
+                'MH.lesson_Y2Alg_seqArith5.exercise3PartA': 'الجزء أ: المدخرات بعد 8 أشهر',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep1': 'الخطوة 1: فهم ما نحسبه',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep1a': 'نريد إجمالي المدخرات بعد 8 أشهر، وليس فقط مدخرات الشهر الثامن',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep1b': 'هذا يعني أننا نحتاج مجموع أول 8 حدود من المتتالية',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep2': 'الخطوة 2: كتابة المتتالية',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep2a': 'الشهر 1: 10 دنانير',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep2b': 'الشهر 2: 15 دينارًا (10 + 5)',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep2c': 'الشهر 3: 20 دينارًا (15 + 5)',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep2d': 'الشهر 4: 25 دينارًا (20 + 5)',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep2e': 'الشهر 5: 30 دينارًا',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep2f': 'الشهر 6: 35 دينارًا',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep2g': 'الشهر 7: 40 دينارًا',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep2h': 'الشهر 8: 45 دينارًا',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep3': 'الخطوة 3: حساب المجموع',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep3a': 'المجموع = 10 + 15 + 20 + 25 + 30 + 35 + 40 + 45',
+                'MH.lesson_Y2Alg_seqArith5.exercise3aStep3b': 'يمكننا جمعها خطوة بخطوة:',
+                'MH.lesson_Y2Alg_seqArith5.exercise3PartB': 'الجزء ب: متى تصل المدخرات إلى 205 دنانير',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep1': 'الخطوة 1: كتابة المعادلة',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep1a': 'نحتاج إيجاد n بحيث مجموع مدخرات أول n شهر ≥ 205',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep1b': 'صيغة المجموع لمتتالية حسابية: Sₙ = n × (الحد الأول + الحد الأخير) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep1c': 'الحد الأول = 10، الحد الأخير لـ n شهر = 10 + (n-1)×5',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep1d': 'إذن: Sₙ = n × [10 + (10 + (n-1)×5)] ÷ 2',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep2': 'الخطوة 2: حل Sₙ ≥ 205',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep2a': 'نقسم على 5: n² + 3n - 82 ≥ 0',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep3': 'الخطوة 3: حل المعادلة التربيعية',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep3a': 'n² + 3n - 82 = 0',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep3b': 'يمكننا الحل باستخدام الصيغة التربيعية: n = [-3 ± √(9 + 328)] ÷ 2',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep4': 'الخطوة 4: تفسير النتيجة',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep4a': 'بما أن n يجب أن يكون موجبًا، n ≈ 7.6788',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep4b': 'هذا يعني أنه بعد 7 أشهر، المدخرات أقل من 205، لكن بعد 8 أشهر، تتجاوز المدخرات 205',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep4c': 'لنتحقق:',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep4cCheck1': 'بعد 7 أشهر: S₇ = (5×7² + 15×7) ÷ 2 = (5×49 + 105) ÷ 2 = (245 + 105) ÷ 2 = 350 ÷ 2 = 175',
+                'MH.lesson_Y2Alg_seqArith5.exercise3bStep4cCheck2': 'بعد 8 أشهر: S₈ = (5×8² + 15×8) ÷ 2 = (5×64 + 120) ÷ 2 = (320 + 120) ÷ 2 = 440 ÷ 2 = 220',
+                'MH.lesson_Y2Alg_seqArith5.exercise3Answer': 'الإجابة:',
+                'MH.lesson_Y2Alg_seqArith5.exercise3AnswerA': 'أ) بعد 8 أشهر: 220 دينارًا',
+                'MH.lesson_Y2Alg_seqArith5.exercise3AnswerB': 'ب) في نهاية الشهر الثامن (المدخرات = 220 دينارًا > 205 دينارًا)',
+                
+                // Exercise 4
+                'MH.lesson_Y2Alg_seqArith5.exercise4Title': 'تمرين 4: الوسط الحسابي',
+                'MH.lesson_Y2Alg_seqArith5.exercise4a': 'أ) برهن أنه إذا كانت a، b، c ثلاث حدود متتالية من متتالية حسابية، فإن b = (a+c)/2. (يقال أن b هو الوسط الحسابي للعددين a و c).',
+                'MH.lesson_Y2Alg_seqArith5.exercise4b': 'ب) لتكن a، b، c ثلاثة أعداد حقيقية بحيث b = (a+c)/2. هل a، b، c هي ثلاث حدود متتالية من متتالية حسابية؟',
+                'MH.lesson_Y2Alg_seqArith5.exercise4Reminder': 'في المتتالية الحسابية، الفرق بين الحدود المتتالية ثابت.',
+                'MH.lesson_Y2Alg_seqArith5.exercise4PartA': 'الجزء أ: إثبات أن b = (a+c)/2',
+                'MH.lesson_Y2Alg_seqArith5.exercise4aStep1': 'الخطوة 1: فهم معنى "حدود متتالية"',
+                'MH.lesson_Y2Alg_seqArith5.exercise4aStep1a': 'إذا كانت a، b، c حدودًا متتالية من متتالية حسابية، فإن:',
+                'MH.lesson_Y2Alg_seqArith5.exercise4aStep1b': 'لتكن r هو الأساس',
+                'MH.lesson_Y2Alg_seqArith5.exercise4aStep2': 'الخطوة 2: التعبير عن (a+c)/2 بدلالة a و r',
+                'MH.lesson_Y2Alg_seqArith5.exercise4aStep2a': 'احسب (a+c)/2:',
+                'MH.lesson_Y2Alg_seqArith5.exercise4aStep3': 'الخطوة 3: المقارنة مع b',
+                'MH.lesson_Y2Alg_seqArith5.exercise4aStep3a': 'لكننا نعلم أن b = a + r',
+                'MH.lesson_Y2Alg_seqArith5.exercise4aStep3b': 'إذن: b = (a+c)/2',
+                'MH.lesson_Y2Alg_seqArith5.exercise4aStep3c': 'هذا يثبت أن b هو بالضبط متوسط a و c!',
+                'MH.lesson_Y2Alg_seqArith5.exercise4PartB': 'الجزء ب: العكس',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep1': 'الخطوة 1: نبدأ بـ b = (a+c)/2',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep1a': 'لدينا: b = (a+c)/2',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep1b': 'نضرب الطرفين في 2: 2b = a + c',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep2': 'الخطوة 2: التحقق من وجود أساس r',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep2a': 'لكي تكون a، b، c حدودًا متتالية من متتالية حسابية، نحتاج:',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep2b': 'لنتحقق ما إذا كان b - a يساوي c - b:',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep2b2': 'من 2b = a + c، نحصل على c = 2b - a',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep2b3': 'الآن c - b = (2b - a) - b = b - a',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep2c': 'نعم! b - a = c - b',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep3': 'الخطوة 3: الاستنتاج',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep3a': 'بما أن b - a = c - b، نسمي هذه القيمة المشتركة r',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep3b': 'إذن: b = a + r و c = b + r = a + 2r',
+                'MH.lesson_Y2Alg_seqArith5.exercise4bStep3c': 'وبالتالي a، b، c هي بالفعل حدود متتالية من متتالية حسابية أساسها r',
+                'MH.lesson_Y2Alg_seqArith5.exercise4Answer': 'الإجابة:',
+                'MH.lesson_Y2Alg_seqArith5.exercise4AnswerA': 'أ) البرهان أعلاه: b = (a+c)/2 عندما a، b، c حدود متتالية من متتالية حسابية',
+                'MH.lesson_Y2Alg_seqArith5.exercise4AnswerB': 'ب) نعم، إذا كان b = (a+c)/2، فإن a، b، c هي حدود متتالية من متتالية حسابية',
+                
+                // Exercise 5
+                'MH.lesson_Y2Alg_seqArith5.exercise5Title': 'تمرين 5: متتالية سيراكيوز',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Note': 'ملاحظة: هذه ليست متتالية حسابية! إنها متتالية خاصة لها قواعدها الخاصة.',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Statement': 'نعرف متتالية سيراكيوز كما يلي: اختر عددًا صحيحًا N (الحد الأول).',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Rule1': 'إذا كان N زوجيًا، فإن الحد التالي هو N/2',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Rule2': 'إذا كان N فرديًا، فإن الحد التالي هو 3N + 1',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Continue': 'نستمر بنفس الطريقة مع الحد الجديد. نتوقف عندما نصل إلى 1.',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Examples': 'أمثلة: من أجل N=5: 5, 16, 8, 4, 2, 1. من أجل N=24: 24, 12, 6, 3, 10, 5, 16, 8, 4, 2, 1.',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Problem': 'حدد حدود متتالية سيراكيوز من أجل N=28 و N=30.',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Reminder': 'تذكر القواعد: زوجي ← قسمة على 2، فردي ← ضرب في 3 وإضافة 1',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Part1': 'من أجل N = 28',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step1': 'الخطوة 1: نبدأ بـ N = 28',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step1a': '28 زوجي، إذن الحد التالي = 28 ÷ 2 = 14',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step1b': 'التسلسل حتى الآن: 28, 14',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step2': 'الخطوة 2: نواصل مع 14',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step2a': '14 زوجي، إذن الحد التالي = 14 ÷ 2 = 7',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step2b': 'التسلسل: 28, 14, 7',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step3': 'الخطوة 3: نواصل مع 7',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step3a': '7 فردي، إذن الحد التالي = 3×7 + 1 = 21 + 1 = 22',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step3b': 'التسلسل: 28, 14, 7, 22',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4': 'الخطوة 4: نواصل خطوة بخطوة',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_1': '22 زوجي → 22 ÷ 2 = 11: 28, 14, 7, 22, 11',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_2': '11 فردي → 3×11 + 1 = 33 + 1 = 34: 28, 14, 7, 22, 11, 34',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_3': '34 زوجي → 34 ÷ 2 = 17: 28, 14, 7, 22, 11, 34, 17',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_4': '17 فردي → 3×17 + 1 = 51 + 1 = 52: 28, 14, 7, 22, 11, 34, 17, 52',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_5': '52 زوجي → 52 ÷ 2 = 26: 28, 14, 7, 22, 11, 34, 17, 52, 26',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_6': '26 زوجي → 26 ÷ 2 = 13: 28, 14, 7, 22, 11, 34, 17, 52, 26, 13',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_7': '13 فردي → 3×13 + 1 = 39 + 1 = 40: 28, 14, 7, 22, 11, 34, 17, 52, 26, 13, 40',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_8': '40 زوجي → 40 ÷ 2 = 20: ... , 40, 20',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_9': '20 زوجي → 20 ÷ 2 = 10: ... , 20, 10',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_10': '10 زوجي → 10 ÷ 2 = 5: ... , 10, 5',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_11': '5 فردي → 3×5 + 1 = 15 + 1 = 16: ... , 5, 16',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_12': '16 زوجي → 16 ÷ 2 = 8: ... , 16, 8',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_13': '8 زوجي → 8 ÷ 2 = 4: ... , 8, 4',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_14': '4 زوجي → 4 ÷ 2 = 2: ... , 4, 2',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step4_28_15': '2 زوجي → 2 ÷ 2 = 1: ... , 2, 1',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Part2': 'من أجل N = 30',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step5': 'الخطوة 5: نبدأ بـ N = 30',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step5a': '30 زوجي، إذن الحد التالي = 30 ÷ 2 = 15',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step5b': 'التسلسل حتى الآن: 30, 15',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6': 'الخطوة 6: نواصل خطوة بخطوة',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_1': '15 فردي → 3×15 + 1 = 45 + 1 = 46: 30, 15, 46',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_2': '46 زوجي → 46 ÷ 2 = 23: 30, 15, 46, 23',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_3': '23 فردي → 3×23 + 1 = 69 + 1 = 70: 30, 15, 46, 23, 70',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_4': '70 زوجي → 70 ÷ 2 = 35: ... , 70, 35',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_5': '35 فردي → 3×35 + 1 = 105 + 1 = 106: ... , 35, 106',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_6': '106 زوجي → 106 ÷ 2 = 53: ... , 106, 53',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_7': '53 فردي → 3×53 + 1 = 159 + 1 = 160: ... , 53, 160',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_8': '160 زوجي → 160 ÷ 2 = 80: ... , 160, 80',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_9': '80 زوجي → 80 ÷ 2 = 40: ... , 80, 40',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_10': '40 زوجي → 40 ÷ 2 = 20: ... , 40, 20',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_11': '20 زوجي → 20 ÷ 2 = 10: ... , 20, 10',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_12': '10 زوجي → 10 ÷ 2 = 5: ... , 10, 5',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_13': '5 فردي → 3×5 + 1 = 15 + 1 = 16: ... , 5, 16',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_14': '16 زوجي → 16 ÷ 2 = 8: ... , 16, 8',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_15': '8 زوجي → 8 ÷ 2 = 4: ... , 8, 4',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_16': '4 زوجي → 4 ÷ 2 = 2: ... , 4, 2',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Step6_30_17': '2 زوجي → 2 ÷ 2 = 1: ... , 2, 1',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Answer': 'الإجابة:',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Answer1': 'من أجل N=28: 28, 14, 7, 22, 11, 34, 17, 52, 26, 13, 40, 20, 10, 5, 16, 8, 4, 2, 1',
+                'MH.lesson_Y2Alg_seqArith5.exercise5Answer2': 'من أجل N=30: 30, 15, 46, 23, 70, 35, 106, 53, 160, 80, 40, 20, 10, 5, 16, 8, 4, 2, 1',
+                'MH.lesson_Y2Alg_seqArith5.exercise5FunFact': 'معلومة طريفة: مسألة سيراكيوز (وتسمى أيضًا حدسية كولاتز) لا تزال غير محلولة! لم يثبت أحد أن كل عدد ابتدائي يصل في النهاية إلى 1، على الرغم من أنه تم اختبارها لأعداد كبيرة جدًا.',
+                
+                // Summary
+                'MH.lesson_Y2Alg_seqArith5.summaryTitle': 'ملخص الدرس',
+                'MH.lesson_Y2Alg_seqArith5.keyConceptsTitle': 'ما تدربنا عليه اليوم',
+                'MH.lesson_Y2Alg_seqArith5.concept1': 'إيجاد الأساس والحد الأول بمعلومية حدين من متتالية حسابية',
+                'MH.lesson_Y2Alg_seqArith5.concept2': 'حساب مجموع حدود متتالية حسابية',
+                'MH.lesson_Y2Alg_seqArith5.concept3': 'تطبيق المتتاليات الحسابية على مسائل من الواقع (ادخار)',
+                'MH.lesson_Y2Alg_seqArith5.concept4': 'فهم خاصية الوسط الحسابي: b = (a+c)/2 للحدود المتتالية',
+                'MH.lesson_Y2Alg_seqArith5.concept5': 'استكشاف متتالية سيراكيوز المذهلة (ليست حسابية، لكنها شيقة!)',
+                'MH.lesson_Y2Alg_seqArith5.importantFormulasTitle': 'الصيغ المهمة المستخدمة',
+                'MH.lesson_Y2Alg_seqArith5.formula1': 'الحد العام للمتتالية الحسابية: Uₙ = U₀ + n×r',
+                'MH.lesson_Y2Alg_seqArith5.formula2': 'مجموع أول n حدًا: Sₙ = n × (الحد الأول + الحد الأخير) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith5.formula3': 'الوسط الحسابي: إذا كانت a, b, c حدودًا متتالية، فإن b = (a+c)/2',
+                'MH.lesson_Y2Alg_seqArith5.nextStepsTitle': 'الخطوات التالية',
+                'MH.lesson_Y2Alg_seqArith5.finalThought': 'لقد أكملت الآن سلسلة دروس حول المتتاليات الحسابية! لقد تعلمت كيف تتعرف عليها، وتتعامل مع صيغها، وتطبقها على مسائل متنوعة. استمر في التدرب على تمارين مختلفة لتعزيز فهمك.',
+                
+                // Footer
+                'MH.footer.developer': 'المطور',
+                'MH.footer.version': 'الإصدار',
+                'MH.footer.links': 'روابط',
+                'MH.footer.terms': 'شروط الاستخدام',
+                'MH.footer.privacy': 'سياسة الخصوصية'
+            }
+        };
+
+        // Merge translations with existing ones
+        if (typeof translations !== 'undefined') {
+            Object.keys(seqArith5Translations).forEach(lang => {
+                if (translations[lang]) {
+                    translations[lang] = {...translations[lang], ...seqArith5Translations[lang]};
+                } else {
+                    translations[lang] = seqArith5Translations[lang];
+                }
+            });
+        } else {
+            var translations = seqArith5Translations;
+        }
+        
+        // Solution toggle function
+        function toggleSolution(solutionId) {
+            const solution = document.getElementById(`solution${solutionId}`);
+            const button = solution.previousElementSibling;
+            
+            if (solution.style.display === 'block' || solution.style.display === '') {
+                solution.style.display = 'none';
+                button.textContent = button.getAttribute('data-i18n') === 'MH.lesson_Y2Alg_seqArith5.hideSolution' ? 
+                    translations[currentLanguage]['MH.lesson_Y2Alg_seqArith5.showSolution'] : 
+                    'Show Solution';
+            } else {
+                solution.style.display = 'block';
+                button.textContent = button.getAttribute('data-i18n') === 'MH.lesson_Y2Alg_seqArith5.showSolution' ? 
+                    translations[currentLanguage]['MH.lesson_Y2Alg_seqArith5.hideSolution'] : 
+                    'Hide Solution';
+            }
+        }
+        
+        // Initialize solutions as hidden
+        document.addEventListener('DOMContentLoaded', function() {
+            for (let i = 1; i <= 5; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+            }
+            
+            // Apply translations
+            if (typeof applyTranslations === 'function') {
+                applyTranslations();
+            }
+        });
+        
+        // Render KaTeX equations
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof renderMathInElement === 'function') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+        });
+    </script>
+</body>
+</html>

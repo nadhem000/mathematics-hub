@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Affine Functions – Part III</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#27AE60" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#E67E22" media="(prefers-color-scheme: dark)">
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#27AE60">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    <style>
+        /* Fresh palette for Affine Functions – Green & Orange */
+        :root {
+            --primary: #27AE60;        /* Emerald green */
+            --primary-light: #6FCF97;  /* Light green */
+            --primary-dark: #1E8449;   /* Dark green */
+            --secondary: #E67E22;      /* Carrot orange */
+            --secondary-light: #F39C12; /* Orange */
+            --secondary-dark: #D35400;  /* Pumpkin */
+            --accent: #3498DB;         /* Bright blue */
+            --warning: #E74C3C;
+            --info: #2ECC71;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #FFFFFF;
+            --surface: #F8F9FA;
+            --border: #E9ECEF;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        [data-theme="dark"] {
+            --primary: #1E8449;
+            --primary-light: #27AE60;
+            --primary-dark: #145A32;
+            --secondary: #D35400;
+            --secondary-light: #E67E22;
+            --secondary-dark: #A04000;
+            --accent: #5DADE2;
+            --warning: #C0392B;
+            --info: #27AE60;
+            --text: #FFFFFF;
+            --text-light: #CCCCCC;
+            --background: #121212;
+            --surface: #1E1E1E;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+        /* KaTeX styling */
+        .katex { 
+            font-size: 1.1em; 
+        }
+        .katex-display { 
+            margin: 1em 0; 
+            text-align: center;
+        }
+        /* Equation styling */
+        .MH-equation {
+            font-family: inherit;
+            font-size: 1.1em;
+            color: var(--primary-dark);
+            margin: 0.5em 0;
+            padding: 0.3em 0.8em;
+            background: rgba(39, 174, 96, 0.05);
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+            display: inline-block;
+            direction: ltr !important;
+        }
+        /* Canvas containers */
+        .MH-canvas-container {
+            margin: 2em 0;
+            text-align: center;
+            position: relative;
+        }
+        .MH-canvas {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background-color: var(--surface);
+            max-width: 100%;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+        .MH-canvas-title {
+            font-weight: bold;
+            margin-bottom: 0.5em;
+            color: var(--primary);
+        }
+        .MH-canvas-instructions {
+            font-size: 0.9em;
+            color: var(--text-light);
+            margin-top: 0.5em;
+            font-style: italic;
+        }
+        /* Exercise and solution styling */
+        .MH-construction-step {
+            margin: 1.5em 0;
+            padding: 1em;
+            background-color: var(--surface);
+            border-left: 4px solid var(--secondary);
+            border-radius: 4px;
+        }
+        .MH-construction-step h4 {
+            margin-top: 0;
+            color: var(--secondary-dark);
+        }
+        .MH-solution {
+            display: none;
+            margin-top: 1em;
+            padding: 1em;
+            background: rgba(230, 126, 34, 0.05);
+            border-radius: 6px;
+            border-left: 4px solid var(--secondary);
+        }
+        .MH-solution-btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s;
+            margin-right: 0.5em;
+        }
+        .MH-solution-btn:hover {
+            background-color: var(--secondary-dark);
+        }
+        .MH-exercise-number {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: var(--primary-dark);
+            margin: 1.5em 0 0.5em 0;
+            border-bottom: 3px solid var(--primary-light);
+            padding-bottom: 0.3em;
+        }
+        .MH-important {
+            background: rgba(39, 174, 96, 0.1);
+            padding: 1em;
+            border-radius: 8px;
+            margin: 1em 0;
+        }
+        .MH-step {
+            margin-left: 1em;
+        }
+        /* Coordinate grid styling */
+        .graph-axis {
+            stroke: var(--text-light);
+            stroke-width: 1;
+        }
+        .graph-grid {
+            stroke: var(--border);
+            stroke-width: 0.5;
+            stroke-dasharray: 4,4;
+        }
+        .function-line {
+            stroke-width: 3;
+        }
+        .intersection-point {
+            fill: var(--warning);
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .MH-canvas { max-width: 100%; height: auto; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+                        <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y1Alg_fonAff3.title">Affine Functions: Part III</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y1Alg_fonAff3.subtitle">Inequalities, Systems and Applications</h2>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Alg_fonAff3.introduction">Introduction</h2>
+            <p data-i18n="MH.lesson_Y1Alg_fonAff3.introText1">In this third part on affine functions, we deepen our understanding through graphical comparison, solving inequalities, and practical problems. We will learn how to interpret the relative position of two lines, determine conditions for the existence of an affine function, and apply these concepts to geometry and real-life contexts (cinema pricing). Each step is explained in detail for beginner students.</p>
+            <p data-i18n="MH.lesson_Y1Alg_fonAff3.introText2">Take your time to follow the reasoning; all answers are broken down with careful justifications.</p>
+        </section>
+
+        <!-- ============== EXERCISE 1 ============== -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y1Alg_fonAff3.ex1.title">VII. Exercise 1</div>
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y1Alg_fonAff3.ex1.statement">In a coordinate system (O, I, J), we have drawn lines D and D' with equations y = 1.5x and y = –x + 5 respectively.</p>
+            </div>
+            <!-- Canvas for Exercise 1 -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y1Alg_fonAff3.ex1.canvasTitle">Figure 1: Lines D and D'</div>
+                <canvas id="ex1Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y1Alg_fonAff3.ex1.canvasInstructions">Graph of y = 1.5x (green) and y = –x+5 (orange). Intersection marked in red.</div>
+            </div>
+            
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff3.ex1.q1">1) Graphically determine the coordinates of the intersection point of lines D and D'.</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex1_sol1')" data-i18n="MH.lesson_Y1Alg_fonAff3.showSolution">Show Solution</button>
+                    <div id="ex1_sol1" class="MH-solution"></div>
+                </div>
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff3.ex1.q2a">2a) What is the set of points on line D that are below line D'?</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex1_sol2a')" data-i18n="MH.lesson_Y1Alg_fonAff3.showSolution">Show Solution</button>
+                    <div id="ex1_sol2a" class="MH-solution"></div>
+                </div>
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff3.ex1.q2b">2b) What is the set of points on line D that are above line D'?</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex1_sol2b')" data-i18n="MH.lesson_Y1Alg_fonAff3.showSolution">Show Solution</button>
+                    <div id="ex1_sol2b" class="MH-solution"></div>
+                </div>
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff3.ex1.q3">3) Write inequalities that illustrate the situations in question 2.</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex1_sol3')" data-i18n="MH.lesson_Y1Alg_fonAff3.showSolution">Show Solution</button>
+                    <div id="ex1_sol3" class="MH-solution"></div>
+                </div>
+                <button class="MH-solution-btn" onclick="constructExercise1()" data-i18n="MH.lesson_Y1Alg_fonAff3.showConstruction">Show Construction</button>
+            </div>
+        </section>
+
+        <!-- ============== EXERCISE 2 ============== -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y1Alg_fonAff3.ex2.title">VII. Exercise 2</div>
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y1Alg_fonAff3.ex2.statement">1) Can we find an affine function f such that f(0) = –2 and f(0) = –3?<br>
+                2) Can we find an affine function g such that g(–2) = 0 and g(–3) = 0?<br>
+                3) Can we find an affine function h such that h(1) = 2 and h(0) = 0?<br>
+                4) Can we find an affine function k such that k(0) = 1, k(1) = 2 and k(3) = 5?</p>
+            </div>
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff3.ex2.q1">Question 1</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex2_sol1')" data-i18n="MH.lesson_Y1Alg_fonAff3.showSolution">Show Solution</button>
+                    <div id="ex2_sol1" class="MH-solution"></div>
+                </div>
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff3.ex2.q2">Question 2</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex2_sol2')" data-i18n="MH.lesson_Y1Alg_fonAff3.showSolution">Show Solution</button>
+                    <div id="ex2_sol2" class="MH-solution"></div>
+                </div>
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff3.ex2.q3">Question 3</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex2_sol3')" data-i18n="MH.lesson_Y1Alg_fonAff3.showSolution">Show Solution</button>
+                    <div id="ex2_sol3" class="MH-solution"></div>
+                </div>
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff3.ex2.q4">Question 4</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex2_sol4')" data-i18n="MH.lesson_Y1Alg_fonAff3.showSolution">Show Solution</button>
+                    <div id="ex2_sol4" class="MH-solution"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============== EXERCISE 3 ============== -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y1Alg_fonAff3.ex3.title">VII. Exercise 3</div>
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y1Alg_fonAff3.ex3.statement">Let f be defined by f(x) = –2x + 1 and g defined by g(x) = –3x.<br>
+                1) Draw the graphs of f and g in a coordinate system (O, I, J).<br>
+                2) Determine graphically, then by calculation, the solutions of the inequality –2x + 1 < –3x.</p>
+            </div>
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y1Alg_fonAff3.ex3.canvasTitle">Figure 2: Graphs of f(x) = –2x+1 and g(x) = –3x</div>
+                <canvas id="ex3Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y1Alg_fonAff3.ex3.canvasInstructions">Blue: f, purple: g. Intersection at (–1,3).</div>
+            </div>
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff3.ex3.q1">1) Draw the graphs.</h4>
+                    <button class="MH-solution-btn" onclick="constructExercise3()" data-i18n="MH.lesson_Y1Alg_fonAff3.showConstruction">Show Construction</button>
+                </div>
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff3.ex3.q2">2) Solve the inequality –2x+1 < –3x.</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex3_sol2')" data-i18n="MH.lesson_Y1Alg_fonAff3.showSolution">Show Solution</button>
+                    <div id="ex3_sol2" class="MH-solution"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============== EXERCISE 4 ============== -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y1Alg_fonAff3.ex4.title">VII. Exercise 4 – Cinema problem</div>
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y1Alg_fonAff3.ex4.statement">A cinema offers two options.<br>
+                Option 1: Each ticket costs 2.500 D.<br>
+                Option 2: An annual membership of 50 D and then 300 millimes (0.300 D) per ticket.<br>
+                Let x be the number of tickets bought in one year by a customer.<br>
+                1) Express the annual expenses for both options in terms of x.<br>
+                2) From which value of x does Option 2 become more advantageous?</p>
+            </div>
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y1Alg_fonAff3.ex4.canvasTitle">Figure 3: Cost comparison</div>
+                <canvas id="ex4Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y1Alg_fonAff3.ex4.canvasInstructions">Blue: Option1, Orange: Option2. Intersection at x ≈ 22.73.</div>
+            </div>
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff3.ex4.q1">1) Express expenses.</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex4_sol1')" data-i18n="MH.lesson_Y1Alg_fonAff3.showSolution">Show Solution</button>
+                    <div id="ex4_sol1" class="MH-solution"></div>
+                </div>
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff3.ex4.q2">2) Find threshold.</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex4_sol2')" data-i18n="MH.lesson_Y1Alg_fonAff3.showSolution">Show Solution</button>
+                    <div id="ex4_sol2" class="MH-solution"></div>
+                </div>
+                <button class="MH-solution-btn" onclick="constructExercise4()" data-i18n="MH.lesson_Y1Alg_fonAff3.showConstruction">Show Construction</button>
+            </div>
+        </section>
+
+        <!-- ============== EXERCISE 5 ============== -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y1Alg_fonAff3.ex5.title">VII. Exercise 5 – Triangle and parallel</div>
+            <div class="MH-important">
+                <p data-i18n="MH.lesson_Y1Alg_fonAff3.ex5.statement">ABC is an isosceles triangle with vertex A, and H is the midpoint of [BC]. Given AH = 4 cm and HB = 3 cm. Let M be a point on [AH]. Set HM = x.<br>
+                1) What is the range of possible values for x?<br>
+                2) The line through M parallel to (BC) meets (AB) at E and (AC) at F.<br>
+                &nbsp;&nbsp;a) Express EF in terms of x.<br>
+                &nbsp;&nbsp;b) For which values of x do we have EF ≤ 3?</p>
+            </div>
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y1Alg_fonAff3.ex5.canvasTitle">Figure 4: Isosceles triangle with parallel line</div>
+                <canvas id="ex5Canvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y1Alg_fonAff3.ex5.canvasInstructions">Triangle ABC, AH vertical, M on AH, EF ∥ BC.</div>
+            </div>
+            <div class="MH-step">
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff3.ex5.q1">1) Range of x</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex5_sol1')" data-i18n="MH.lesson_Y1Alg_fonAff3.showSolution">Show Solution</button>
+                    <div id="ex5_sol1" class="MH-solution"></div>
+                </div>
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff3.ex5.q2a">2a) Express EF in terms of x</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex5_sol2a')" data-i18n="MH.lesson_Y1Alg_fonAff3.showSolution">Show Solution</button>
+                    <div id="ex5_sol2a" class="MH-solution"></div>
+                </div>
+                <div class="MH-construction-step">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff3.ex5.q2b">2b) Values of x for EF ≤ 3</h4>
+                    <button class="MH-solution-btn" onclick="toggleSolution('ex5_sol2b')" data-i18n="MH.lesson_Y1Alg_fonAff3.showSolution">Show Solution</button>
+                    <div id="ex5_sol2b" class="MH-solution"></div>
+                </div>
+                <button class="MH-solution-btn" onclick="constructExercise5()" data-i18n="MH.lesson_Y1Alg_fonAff3.showConstruction">Show Construction</button>
+            </div>
+        </section>
+
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Alg_fonAff3.summary">Summary of key ideas</h2>
+            <div class="MH-important">
+                <ul>
+                    <li data-i18n="MH.lesson_Y1Alg_fonAff3.summary1">An affine function is of the form f(x)=ax+b. Its graph is a straight line.</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonAff3.summary2">Two points uniquely determine a line; one point with two different images is impossible.</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonAff3.summary3">To compare two lines, compare their expressions: below ↔ f(x) ≤ g(x).</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonAff3.summary4">In similar triangles, parallel lines create proportional segments.</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonAff3.summary5">Real-world problems are modelled by affine functions; the break-even point is found by solving an equation.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+    <script>
+        // =========================================================================
+        // COMPLETE TRANSLATION OBJECT (EN, AR, FR) with String.raw for LaTeX
+        // =========================================================================
+        const fonAff3Translations = {
+            en: {
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Theme',
+                'MH.general.language': 'Language',
+                'MH.general.enableNotifications': 'Enable Notifications',
+                'MH.lesson_Y1Alg_fonAff3.showSolution': 'Show Solution',
+                'MH.lesson_Y1Alg_fonAff3.hideSolution': 'Hide Solution',
+                'MH.lesson_Y1Alg_fonAff3.showConstruction': 'Show Construction',
+                'MH.lesson_Y1Alg_fonAff3.title': 'Affine Functions: Part III',
+                'MH.lesson_Y1Alg_fonAff3.subtitle': 'Inequalities, Systems and Applications',
+                'MH.lesson_Y1Alg_fonAff3.introduction': 'Introduction',
+                'MH.lesson_Y1Alg_fonAff3.introText1': 'In this third part on affine functions, we deepen our understanding through graphical comparison, solving inequalities, and practical problems. We will learn how to interpret the relative position of two lines, determine conditions for the existence of an affine function, and apply these concepts to geometry and real-life contexts (cinema pricing). Each step is explained in detail for beginner students.',
+                'MH.lesson_Y1Alg_fonAff3.introText2': 'Take your time to follow the reasoning; all answers are broken down with careful justifications.',
+                'MH.lesson_Y1Alg_fonAff3.ex1.title': 'VII. Exercise 1',
+                'MH.lesson_Y1Alg_fonAff3.ex1.statement': 'In a coordinate system (O, I, J), we have drawn lines D and D\' with equations y = 1.5x and y = –x + 5 respectively.',
+                'MH.lesson_Y1Alg_fonAff3.ex1.canvasTitle': 'Figure 1: Lines D and D\'',
+                'MH.lesson_Y1Alg_fonAff3.ex1.canvasInstructions': 'Graph of y = 1.5x (green) and y = –x+5 (orange). Intersection marked in red.',
+                'MH.lesson_Y1Alg_fonAff3.ex1.q1': '1) Graphically determine the coordinates of the intersection point of lines D and D\'.',
+                'MH.lesson_Y1Alg_fonAff3.ex1.q2a': '2a) What is the set of points on line D that are below line D\'?',
+                'MH.lesson_Y1Alg_fonAff3.ex1.q2b': '2b) What is the set of points on line D that are above line D\'?',
+                'MH.lesson_Y1Alg_fonAff3.ex1.q3': '3) Write inequalities that illustrate the situations in question 2.',
+                'MH.lesson_Y1Alg_fonAff3.ex2.title': 'VII. Exercise 2',
+                'MH.lesson_Y1Alg_fonAff3.ex2.statement': '1) Can we find an affine function f such that f(0) = –2 and f(0) = –3?\n2) Can we find an affine function g such that g(–2) = 0 and g(–3) = 0?\n3) Can we find an affine function h such that h(1) = 2 and h(0) = 0?\n4) Can we find an affine function k such that k(0) = 1, k(1) = 2 and k(3) = 5?',
+                'MH.lesson_Y1Alg_fonAff3.ex2.q1': 'Question 1',
+                'MH.lesson_Y1Alg_fonAff3.ex2.q2': 'Question 2',
+                'MH.lesson_Y1Alg_fonAff3.ex2.q3': 'Question 3',
+                'MH.lesson_Y1Alg_fonAff3.ex2.q4': 'Question 4',
+                'MH.lesson_Y1Alg_fonAff3.ex3.title': 'VII. Exercise 3',
+                'MH.lesson_Y1Alg_fonAff3.ex3.statement': 'Let f be defined by f(x) = –2x + 1 and g defined by g(x) = –3x.\n1) Draw the graphs of f and g in a coordinate system (O, I, J).\n2) Determine graphically, then by calculation, the solutions of the inequality –2x + 1 < –3x.',
+                'MH.lesson_Y1Alg_fonAff3.ex3.canvasTitle': 'Figure 2: Graphs of f(x) = –2x+1 and g(x) = –3x',
+                'MH.lesson_Y1Alg_fonAff3.ex3.canvasInstructions': 'Blue: f, purple: g. Intersection at (–1,3).',
+                'MH.lesson_Y1Alg_fonAff3.ex3.q1': '1) Draw the graphs.',
+                'MH.lesson_Y1Alg_fonAff3.ex3.q2': '2) Solve the inequality –2x+1 < –3x.',
+                'MH.lesson_Y1Alg_fonAff3.ex4.title': 'VII. Exercise 4 – Cinema problem',
+                'MH.lesson_Y1Alg_fonAff3.ex4.statement': 'A cinema offers two options.\nOption 1: Each ticket costs 2.500 D.\nOption 2: An annual membership of 50 D and then 300 millimes (0.300 D) per ticket.\nLet x be the number of tickets bought in one year by a customer.\n1) Express the annual expenses for both options in terms of x.\n2) From which value of x does Option 2 become more advantageous?',
+                'MH.lesson_Y1Alg_fonAff3.ex4.canvasTitle': 'Figure 3: Cost comparison',
+                'MH.lesson_Y1Alg_fonAff3.ex4.canvasInstructions': 'Blue: Option1, Orange: Option2. Intersection at x ≈ 22.73.',
+                'MH.lesson_Y1Alg_fonAff3.ex4.q1': '1) Express expenses.',
+                'MH.lesson_Y1Alg_fonAff3.ex4.q2': '2) Find threshold.',
+                'MH.lesson_Y1Alg_fonAff3.ex5.title': 'VII. Exercise 5 – Triangle and parallel',
+                'MH.lesson_Y1Alg_fonAff3.ex5.statement': 'ABC is an isosceles triangle with vertex A, and H is the midpoint of [BC]. Given AH = 4 cm and HB = 3 cm. Let M be a point on [AH]. Set HM = x.\n1) What is the range of possible values for x?\n2) The line through M parallel to (BC) meets (AB) at E and (AC) at F.\na) Express EF in terms of x.\nb) For which values of x do we have EF ≤ 3?',
+                'MH.lesson_Y1Alg_fonAff3.ex5.canvasTitle': 'Figure 4: Isosceles triangle with parallel line',
+                'MH.lesson_Y1Alg_fonAff3.ex5.canvasInstructions': 'Triangle ABC, AH vertical, M on AH, EF ∥ BC.',
+                'MH.lesson_Y1Alg_fonAff3.ex5.q1': '1) Range of x',
+                'MH.lesson_Y1Alg_fonAff3.ex5.q2a': '2a) Express EF in terms of x',
+                'MH.lesson_Y1Alg_fonAff3.ex5.q2b': '2b) Values of x for EF ≤ 3',
+                'MH.lesson_Y1Alg_fonAff3.summary': 'Summary of key ideas',
+                'MH.lesson_Y1Alg_fonAff3.summary1': 'An affine function is of the form f(x)=ax+b. Its graph is a straight line.',
+                'MH.lesson_Y1Alg_fonAff3.summary2': 'Two points uniquely determine a line; one point with two different images is impossible.',
+                'MH.lesson_Y1Alg_fonAff3.summary3': 'To compare two lines, compare their expressions: below ↔ f(x) ≤ g(x).',
+                'MH.lesson_Y1Alg_fonAff3.summary4': 'In similar triangles, parallel lines create proportional segments.',
+                'MH.lesson_Y1Alg_fonAff3.summary5': 'Real-world problems are modelled by affine functions; the break-even point is found by solving an equation.',
+                'MH.footer.developer': 'Developer',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Links',
+                'MH.footer.terms': 'Terms of Use',
+                'MH.footer.privacy': 'Privacy Policy',
+                // Detailed solutions (beginner-friendly)
+                'MH.lesson_Y1Alg_fonAff3.ex1.sol1': String.raw`<strong>Solution 1 – Intersection:</strong> On the graph, line D passes through (0,0) and (2,3); line D' passes through (0,5) and (5,0). They intersect where the y-values are equal: 1.5x = –x+5 → 2.5x = 5 → x = 2. Then y = 1.5·2 = 3. So the intersection is <strong>(2,3)</strong>.`,
+                'MH.lesson_Y1Alg_fonAff3.ex1.sol2a': String.raw`<strong>Solution 2a – Points on D below D':</strong> Take the same x for both lines. On D: y = 1.5x, on D': y = –x+5. "Below" means smaller y: 1.5x ≤ –x+5 → add x: 2.5x ≤ 5 → x ≤ 2. So on D, all points with x ≤ 2 are below D' (left part of D, including the intersection).`,
+                'MH.lesson_Y1Alg_fonAff3.ex1.sol2b': String.raw`<strong>Solution 2b – Points on D above D':</strong> Opposite inequality: 1.5x ≥ –x+5 → 2.5x ≥ 5 → x ≥ 2. Points with x ≥ 2 on D are above D' (right part, including intersection).`,
+                'MH.lesson_Y1Alg_fonAff3.ex1.sol3': String.raw`<strong>Solution 3 – Inequalities:</strong> Let f(x)=1.5x and g(x)=–x+5.<br>• Below/equal: f(x) ≤ g(x)  →  1.5x ≤ –x+5.<br>• Above/equal: f(x) ≥ g(x)  →  1.5x ≥ –x+5.`,
+                'MH.lesson_Y1Alg_fonAff3.ex2.sol1': String.raw`<strong>Question 1:</strong> An affine function gives a single value for each input. Here we would need f(0)= –2 AND f(0)= –3, impossible. So <strong>no</strong>.`,
+                'MH.lesson_Y1Alg_fonAff3.ex2.sol2': String.raw`<strong>Question 2:</strong> Yes, the constant function g(x)=0 works: g(–2)=0 and g(–3)=0.`,
+                'MH.lesson_Y1Alg_fonAff3.ex2.sol3': String.raw`<strong>Question 3:</strong> Yes, h(x)=2x. Check: h(0)=0, h(1)=2.`,
+                'MH.lesson_Y1Alg_fonAff3.ex2.sol4': String.raw`<strong>Question 4:</strong> No. From k(0)=1 and k(1)=2 we get slope (2-1)/(1-0)=1, intercept 1 → k(x)=x+1. Then k(3)=4, not 5. So three points are not collinear; no affine function fits.`,
+                'MH.lesson_Y1Alg_fonAff3.ex3.sol2': String.raw`<strong>Solution 2 – Inequality –2x+1 < –3x:</strong><br><em>Graphical:</em> The lines intersect at (–1,3). For x < –1, the blue line (f) is below the purple line (g) → f(x) < g(x).<br><em>Algebraic:</em> –2x+1 < –3x  →  add 3x: x+1 < 0 → x < –1. So solution: x < –1.`,
+                'MH.lesson_Y1Alg_fonAff3.ex4.sol1': String.raw`<strong>Solution 1 – Expenses:</strong><br>Option 1: 2.5 x   (each ticket 2.5 D)<br>Option 2: 50 + 0.3 x   (membership 50 D + 0.3 D per ticket).`,
+                'MH.lesson_Y1Alg_fonAff3.ex4.sol2': String.raw`<strong>Solution 2 – Threshold:</strong> Option 2 cheaper when 50 + 0.3x < 2.5x → 50 < 2.2x → x > 50/2.2 ≈ 22.727... So from the 23rd ticket onward (x ≥ 23), Option 2 is better.`,
+                'MH.lesson_Y1Alg_fonAff3.ex5.sol1': String.raw`<strong>Solution 1 – Range of x:</strong> M lies on segment [AH] with H between B and C? Actually A is top, H is midpoint of base. AH = 4 cm, HM = x measured from H toward A. When M = H, x = 0; when M = A, x = 4. So <strong>0 ≤ x ≤ 4</strong>.`,
+                'MH.lesson_Y1Alg_fonAff3.ex5.sol2a': String.raw`<strong>Solution 2a – EF in terms of x:</strong> Since EF ∥ BC, triangles AEF and ABC are similar (Thales). Height from A to BC is AH = 4, height from A to EF is AM = 4 – x. Base BC = 2·HB = 6 cm. Ratio of heights = (4–x)/4, so EF = BC × (4–x)/4 = 6 × (4–x)/4 = (3/2)(4–x) = 6 – 1.5x.`,
+                'MH.lesson_Y1Alg_fonAff3.ex5.sol2b': String.raw`<strong>Solution 2b – EF ≤ 3:</strong> (3/2)(4–x) ≤ 3 → multiply by 2: 3(4–x) ≤ 6 → 12 – 3x ≤ 6 → –3x ≤ –6 → x ≥ 2. With 0 ≤ x ≤ 4, we get <strong>2 ≤ x ≤ 4</strong>.`
+            },
+            ar: {
+                'MH.general.title': 'مركز الرياضيات',
+                'MH.general.theme': 'السمة',
+                'MH.general.language': 'اللغة',
+                'MH.general.enableNotifications': 'تفعيل الإشعارات',
+                'MH.lesson_Y1Alg_fonAff3.showSolution': 'عرض الحل',
+                'MH.lesson_Y1Alg_fonAff3.hideSolution': 'إخفاء الحل',
+                'MH.lesson_Y1Alg_fonAff3.showConstruction': 'عرض الإنشاء',
+                'MH.lesson_Y1Alg_fonAff3.title': 'الدوال التآلفية: الجزء الثالث',
+                'MH.lesson_Y1Alg_fonAff3.subtitle': 'المتراجحات، النظم والتطبيقات',
+                'MH.lesson_Y1Alg_fonAff3.introduction': 'مقدمة',
+                'MH.lesson_Y1Alg_fonAff3.introText1': 'في هذا الجزء الثالث حول الدوال التآلفية، نعمق فهمنا من خلال المقارنة البيانية، حل المتراجحات والمسائل التطبيقية. سنتعلم كيفية تفسير الوضع النسبي لمستقيمين، تحديد شروط وجود دالة تآلفية، وتطبيق هذه المفاهيم على الهندسة والحياة اليومية (أسعار السينما). كل خطوة مشروحة بالتفصيل للمستوى المبتدئ.',
+                'MH.lesson_Y1Alg_fonAff3.introText2': 'خذ وقتك لمتابعة الاستدلال؛ جميع الإجابات مفصلة مع تبريرات دقيقة.',
+                'MH.lesson_Y1Alg_fonAff3.ex1.title': 'سابعاً: تمرين 1',
+                'MH.lesson_Y1Alg_fonAff3.ex1.statement': 'في معلم (O, I, J)، رسمنا المستقيمين D و D\' اللذين معادلتاهما y = 1.5x و y = –x + 5 على التوالي.',
+                'MH.lesson_Y1Alg_fonAff3.ex1.canvasTitle': 'الشكل 1: المستقيمان D و D\'',
+                'MH.lesson_Y1Alg_fonAff3.ex1.canvasInstructions': 'تمثيل y = 1.5x (أخضر) و y = –x+5 (برتقالي). نقطة التقاطع باللون الأحمر.',
+                'MH.lesson_Y1Alg_fonAff3.ex1.q1': '1) حدد بيانياً إحداثيات نقطة تقاطع D و D\'',
+                'MH.lesson_Y1Alg_fonAff3.ex1.q2a': '2أ) ما هي مجموعة نقاط المستقيم D التي تقع أسفل D\'؟',
+                'MH.lesson_Y1Alg_fonAff3.ex1.q2b': '2ب) ما هي مجموعة نقاط المستقيم D التي تقع أعلى D\'؟',
+                'MH.lesson_Y1Alg_fonAff3.ex1.q3': '3) اكتب متراجحات تمثل حالتي السؤال 2.',
+                'MH.lesson_Y1Alg_fonAff3.ex2.title': 'سابعاً: تمرين 2',
+                'MH.lesson_Y1Alg_fonAff3.ex2.statement': '1) هل يمكن إيجاد دالة تآلفية f تحقق f(0) = –2 و f(0) = –3؟\n2) هل يمكن إيجاد دالة تآلفية g تحقق g(–2) = 0 و g(–3) = 0؟\n3) هل يمكن إيجاد دالة تآلفية h تحقق h(1) = 2 و h(0) = 0؟\n4) هل يمكن إيجاد دالة تآلفية k تحقق k(0) = 1، k(1) = 2 و k(3) = 5؟',
+                'MH.lesson_Y1Alg_fonAff3.ex3.title': 'سابعاً: تمرين 3',
+                'MH.lesson_Y1Alg_fonAff3.ex3.statement': 'لتكن f(x) = –2x + 1 و g(x) = –3x.\n1) مثل بيانياً f و g في معلم (O, I, J).\n2) حدد بيانياً ثم حسابياً حلول المتراجحة –2x + 1 < –3x.',
+                'MH.lesson_Y1Alg_fonAff3.ex3.canvasTitle': 'الشكل 2: تمثيلي f(x) = –2x+1 و g(x) = –3x',
+                'MH.lesson_Y1Alg_fonAff3.ex3.canvasInstructions': 'الأزرق: f، الأرجواني: g. التقاطع عند (–1,3).',
+                'MH.lesson_Y1Alg_fonAff3.ex3.q1': '1) ارسم التمثيليين.',
+                'MH.lesson_Y1Alg_fonAff3.ex3.q2': '2) حل المتراجحة –2x+1 < –3x.',
+                'MH.lesson_Y1Alg_fonAff3.ex4.title': 'سابعاً: تمرين 4 – مسألة السينما',
+                'MH.lesson_Y1Alg_fonAff3.ex4.statement': 'يقدم سينما صيغتين:\nالصيغة 1: ثمن التذكرة الواحدة 2.500 د.\nالصيغة 2: اشتراك سنوي 50 د ثم 300 مليم (0.300 د) للتذكرة.\nليكن x عدد التذاكر المشتراة في السنة.\n1) عبر بدلالة x عن المصاريف السنوية لكل صيغة.\n2) من أي قيمة لـ x تصبح الصيغة 2 أوفر؟',
+                'MH.lesson_Y1Alg_fonAff3.ex4.canvasTitle': 'الشكل 3: مقارنة التكاليف',
+                'MH.lesson_Y1Alg_fonAff3.ex4.canvasInstructions': 'الأزرق: الصيغة1، البرتقالي: الصيغة2. التقاطع عند x ≈ 22.73',
+                'MH.lesson_Y1Alg_fonAff3.ex4.q1': '1) عبر عن المصاريف.',
+                'MH.lesson_Y1Alg_fonAff3.ex4.q2': '2) جد العتبة.',
+                'MH.lesson_Y1Alg_fonAff3.ex5.title': 'سابعاً: تمرين 5 – مثلث وموازي',
+                'MH.lesson_Y1Alg_fonAff3.ex5.statement': 'ABC مثلث متساوي الساقين رأسه A، H منتصف [BC]. AH = 4 cm و HB = 3 cm. لتكن M نقطة من [AH] و HM = x.\n1) ما هو مجال قيم x؟\n2) المستقيم الموازي لـ (BC) المار من M يقطع (AB) في E و (AC) في F.\nأ) عبر عن EF بدلالة x.\nب) من أجل أي قيم x يكون EF ≤ 3؟',
+                'MH.lesson_Y1Alg_fonAff3.ex5.canvasTitle': 'الشكل 4: مثلث متساوي الساقين مع مستقيم موازي',
+                'MH.lesson_Y1Alg_fonAff3.ex5.canvasInstructions': 'المثلث ABC، AH شاقولي، M على AH، EF ∥ BC.',
+                'MH.lesson_Y1Alg_fonAff3.ex5.q1': '1) مجال x',
+                'MH.lesson_Y1Alg_fonAff3.ex5.q2a': '2أ) عبر عن EF بدلالة x',
+                'MH.lesson_Y1Alg_fonAff3.ex5.q2b': '2ب) قيم x التي من أجلها EF ≤ 3',
+                'MH.lesson_Y1Alg_fonAff3.summary': 'ملخص الأفكار الرئيسية',
+                'MH.lesson_Y1Alg_fonAff3.summary1': 'الدالة التآلفية: f(x)=ax+b، تمثيلها مستقيم.',
+                'MH.lesson_Y1Alg_fonAff3.summary2': 'نقطتان تحددان مستقيم; نقطة واحدة بقيمتين مختلفتين مستحيل.',
+                'MH.lesson_Y1Alg_fonAff3.summary3': 'مقارنة مستقيمين: أسفل يعني f(x) ≤ g(x).',
+                'MH.lesson_Y1Alg_fonAff3.summary4': 'في المثلثات المتشابهة، المستقيمات الموازية تنتج أطوالاً متناسبة.',
+                'MH.lesson_Y1Alg_fonAff3.summary5': 'مسائل واقعية تنمذج بدوال تآلفية، نقطة التعادل بحل معادلة.',
+                'MH.footer.developer': 'المطور',
+                'MH.footer.version': 'الإصدار',
+                'MH.footer.links': 'روابط',
+                'MH.footer.terms': 'شروط الاستخدام',
+                'MH.footer.privacy': 'سياسة الخصوصية',
+                // Arabic detailed solutions (abbreviated but clear)
+                'MH.lesson_Y1Alg_fonAff3.ex1.sol1': String.raw`<strong>الحل 1 – التقاطع:</strong> من البيان، 1.5x = –x+5 → 2.5x=5 → x=2, y=3. النقطة (2,3).`,
+                'MH.lesson_Y1Alg_fonAff3.ex1.sol2a': String.raw`<strong>الحل 2أ – نقاط D أسفل D':</strong> 1.5x ≤ –x+5 → x ≤ 2.`,
+                'MH.lesson_Y1Alg_fonAff3.ex1.sol2b': String.raw`<strong>الحل 2ب – نقاط D أعلى D':</strong> 1.5x ≥ –x+5 → x ≥ 2.`,
+                'MH.lesson_Y1Alg_fonAff3.ex1.sol3': String.raw`<strong>الحل 3 – المتراجحات:</strong> f(x)=1.5x, g(x)=–x+5.<br>• أسفل: 1.5x ≤ –x+5.<br>• أعلى: 1.5x ≥ –x+5.`,
+                'MH.lesson_Y1Alg_fonAff3.ex2.sol1': String.raw`<strong>السؤال 1:</strong> مستحيل لأن f(0) لا يمكن أن يأخذ قيمتين.`,
+                'MH.lesson_Y1Alg_fonAff3.ex2.sol2': String.raw`<strong>السؤال 2:</strong> نعم, g(x)=0.`,
+                'MH.lesson_Y1Alg_fonAff3.ex2.sol3': String.raw`<strong>السؤال 3:</strong> نعم, h(x)=2x.`,
+                'MH.lesson_Y1Alg_fonAff3.ex2.sol4': String.raw`<strong>السؤال 4:</strong> لا. الدالة الوحيدة من (0,1) و (1,2) هي x+1, لكن عند x=3 تعطي 4.`,
+                'MH.lesson_Y1Alg_fonAff3.ex3.sol2': String.raw`<strong>حل المتراجحة –2x+1 < –3x:</strong> x < –1.`,
+                'MH.lesson_Y1Alg_fonAff3.ex4.sol1': String.raw`<strong>المصاريف:</strong> الصيغة1: 2.5x; الصيغة2: 50 + 0.3x.`,
+                'MH.lesson_Y1Alg_fonAff3.ex4.sol2': String.raw`<strong>العتبة:</strong> 50+0.3x < 2.5x → x > 50/2.2 ≈ 22.73 → x ≥ 23.`,
+                'MH.lesson_Y1Alg_fonAff3.ex5.sol1': String.raw`<strong>مجال x:</strong> 0 ≤ x ≤ 4.`,
+                'MH.lesson_Y1Alg_fonAff3.ex5.sol2a': String.raw`<strong>EF بدلالة x:</strong> EF = 6×(4–x)/4 = 6 – 1.5x.`,
+                'MH.lesson_Y1Alg_fonAff3.ex5.sol2b': String.raw`<strong>EF ≤ 3:</strong> 2 ≤ x ≤ 4.`
+            },
+            fr: {
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Thème',
+                'MH.general.language': 'Langue',
+                'MH.general.enableNotifications': 'Activer les notifications',
+                'MH.lesson_Y1Alg_fonAff3.showSolution': 'Afficher la solution',
+                'MH.lesson_Y1Alg_fonAff3.hideSolution': 'Masquer la solution',
+                'MH.lesson_Y1Alg_fonAff3.showConstruction': 'Afficher la construction',
+                'MH.lesson_Y1Alg_fonAff3.title': 'Fonctions affines : Partie III',
+                'MH.lesson_Y1Alg_fonAff3.subtitle': 'Inéquations, systèmes et applications',
+                'MH.lesson_Y1Alg_fonAff3.introduction': 'Introduction',
+                'MH.lesson_Y1Alg_fonAff3.introText1': 'Dans cette troisième partie sur les fonctions affines, nous approfondissons la comparaison graphique, la résolution d’inéquations et des problèmes pratiques. Nous apprendrons à interpréter la position relative de deux droites, à déterminer les conditions d’existence d’une fonction affine, et à appliquer ces concepts à la géométrie et à la vie courante (tarifs de cinéma). Chaque étape est détaillée pour des élèves de niveau modeste.',
+                'MH.lesson_Y1Alg_fonAff3.introText2': 'Prenez le temps de suivre le raisonnement ; toutes les réponses sont décomposées avec des justifications soignées.',
+                'MH.lesson_Y1Alg_fonAff3.ex1.title': 'VII. Exercice 1',
+                'MH.lesson_Y1Alg_fonAff3.ex1.statement': 'Dans un repère (O, I, J), on a tracé les droites D et D\' d’équations respectives y = 1,5x et y = –x + 5.',
+                'MH.lesson_Y1Alg_fonAff3.ex1.canvasTitle': 'Figure 1 : Droites D et D\'',
+                'MH.lesson_Y1Alg_fonAff3.ex1.canvasInstructions': 'Graphe de y = 1,5x (vert) et y = –x+5 (orange). Intersection en rouge.',
+                'MH.lesson_Y1Alg_fonAff3.ex1.q1': '1) Déterminer graphiquement les coordonnées du point d’intersection des droites D et D’.',
+                'MH.lesson_Y1Alg_fonAff3.ex1.q2a': '2a) Quel est l’ensemble des points de la droite D qui sont en dessous de D’ ?',
+                'MH.lesson_Y1Alg_fonAff3.ex1.q2b': '2b) Quel est l’ensemble des points de la droite D qui sont au dessus de D’ ?',
+                'MH.lesson_Y1Alg_fonAff3.ex1.q3': '3) Écrire des inéquations qui illustrent les situations de la question précédente.',
+                'MH.lesson_Y1Alg_fonAff3.ex2.title': 'VII. Exercice 2',
+                'MH.lesson_Y1Alg_fonAff3.ex2.statement': '1) Peut-on trouver une fonction affine f telle que f(0) = –2 et f(0) = –3 ?\n2) Peut-on trouver une fonction affine g telle que g(–2) = 0 et g(–3) = 0 ?\n3) Peut-on trouver une fonction affine h telle que h(1) = 2 et h(0) = 0 ?\n4) Peut-on trouver une fonction affine k telle que k(0) =1 ; k(1) = 2 et k(3) = 5 ?',
+                'MH.lesson_Y1Alg_fonAff3.ex3.title': 'VII. Exercice 3',
+                'MH.lesson_Y1Alg_fonAff3.ex3.statement': 'Soient la fonction f définie par f(x) = –2x + 1 et g la fonction définie par g(x) = –3x.\n1) Tracer les représentations graphiques de f et g dans un repère (O, I, J).\n2) Déterminer graphiquement puis par le calcul les solutions de l’inéquation –2x + 1 < –3x.',
+                'MH.lesson_Y1Alg_fonAff3.ex3.canvasTitle': 'Figure 2 : Graphes de f(x) = –2x+1 et g(x) = –3x',
+                'MH.lesson_Y1Alg_fonAff3.ex3.canvasInstructions': 'Bleu : f, violet : g. Intersection en (–1,3).',
+                'MH.lesson_Y1Alg_fonAff3.ex3.q1': '1) Tracer les graphes.',
+                'MH.lesson_Y1Alg_fonAff3.ex3.q2': '2) Résoudre l’inéquation –2x+1 < –3x.',
+                'MH.lesson_Y1Alg_fonAff3.ex4.title': 'VII. Exercice 4 – Problème de cinéma',
+                'MH.lesson_Y1Alg_fonAff3.ex4.statement': 'Un cinéma propose à ses clients deux formules.\n1ère formule : Chaque entrée coûte 2D,500.\n2ème formule : Le client paye un abonnement annuel de 50D et 300 millimes (0,300D) par entrée.\nOn désigne par x le nombre d’entrées en une année d’un client.\n1) Exprimer à l’aide de x les dépenses annuelles du client selon les deux formules.\n2) À partir de quelle valeur de x, la 2ème formule devient-elle plus avantageuse ?',
+                'MH.lesson_Y1Alg_fonAff3.ex4.canvasTitle': 'Figure 3 : Comparaison des coûts',
+                'MH.lesson_Y1Alg_fonAff3.ex4.canvasInstructions': 'Bleu : Formule1, Orange : Formule2. Intersection x ≈ 22,73.',
+                'MH.lesson_Y1Alg_fonAff3.ex4.q1': '1) Exprimer les dépenses.',
+                'MH.lesson_Y1Alg_fonAff3.ex4.q2': '2) Trouver le seuil.',
+                'MH.lesson_Y1Alg_fonAff3.ex5.title': 'VII. Exercice 5 – Triangle et parallèle',
+                'MH.lesson_Y1Alg_fonAff3.ex5.statement': 'ABC est un triangle isocèle en A et H est le milieu de [BC]. On donne AH = 4cm et HB = 3cm. Soit M un point de [AH]. On pose HM = x.\n1) Quel est l’ensemble des valeurs de x ?\n2) La parallèle à (BC) passant par M coupe (AB) en E et (AC) en F.\na) Exprimer EF en fonction de x.\nb) Pour quelles valeurs de x a-t-on EF ≤ 3 ?',
+                'MH.lesson_Y1Alg_fonAff3.ex5.canvasTitle': 'Figure 4 : Triangle isocèle et droite parallèle',
+                'MH.lesson_Y1Alg_fonAff3.ex5.canvasInstructions': 'Triangle ABC, AH vertical, M sur AH, EF ∥ BC.',
+                'MH.lesson_Y1Alg_fonAff3.ex5.q1': '1) Ensemble de x',
+                'MH.lesson_Y1Alg_fonAff3.ex5.q2a': '2a) Exprimer EF en fonction de x',
+                'MH.lesson_Y1Alg_fonAff3.ex5.q2b': '2b) Valeurs de x pour EF ≤ 3',
+                'MH.lesson_Y1Alg_fonAff3.summary': 'Résumé des idées clés',
+                'MH.lesson_Y1Alg_fonAff3.summary1': 'Une fonction affine est de la forme f(x)=ax+b ; sa représentation est une droite.',
+                'MH.lesson_Y1Alg_fonAff3.summary2': 'Deux points déterminent une unique droite ; un point avec deux images différentes est impossible.',
+                'MH.lesson_Y1Alg_fonAff3.summary3': 'Comparer deux droites : en dessous ⇔ f(x) ≤ g(x).',
+                'MH.lesson_Y1Alg_fonAff3.summary4': 'Dans des triangles semblables, le parallélisme donne des segments proportionnels.',
+                'MH.lesson_Y1Alg_fonAff3.summary5': 'Des problèmes concrets se modélisent par des fonctions affines ; le seuil s’obtient en résolvant une équation.',
+                'MH.footer.developer': 'Développeur',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Liens',
+                'MH.footer.terms': 'Conditions d\'utilisation',
+                'MH.footer.privacy': 'Politique de confidentialité',
+                // French detailed solutions
+                'MH.lesson_Y1Alg_fonAff3.ex1.sol1': String.raw`<strong>Solution 1 – Intersection :</strong> Graphiquement, D passe par (0,0) et (2,3) ; D' passe par (0,5) et (5,0). Résolvons : 1,5x = –x+5 → 2,5x = 5 → x = 2, y = 3. Soit <strong>(2,3)</strong>.`,
+                'MH.lesson_Y1Alg_fonAff3.ex1.sol2a': String.raw`<strong>Solution 2a – Points de D en dessous de D' :</strong> Même abscisse : 1,5x ≤ –x+5 → 2,5x ≤ 5 → x ≤ 2. Donc les points de D d'abscisse ≤ 2 (à gauche de l'intersection).`,
+                'MH.lesson_Y1Alg_fonAff3.ex1.sol2b': String.raw`<strong>Solution 2b – Points de D au dessus de D' :</strong> 1,5x ≥ –x+5 → x ≥ 2.`,
+                'MH.lesson_Y1Alg_fonAff3.ex1.sol3': String.raw`<strong>Solution 3 – Inéquations :</strong> f(x)=1,5x, g(x)=–x+5.<br>• en dessous/égal : 1,5x ≤ –x+5.<br>• au dessus/égal : 1,5x ≥ –x+5.`,
+                'MH.lesson_Y1Alg_fonAff3.ex2.sol1': String.raw`<strong>Question 1 :</strong> Impossible car une fonction donne une seule image pour 0.`,
+                'MH.lesson_Y1Alg_fonAff3.ex2.sol2': String.raw`<strong>Question 2 :</strong> Oui, la fonction constante g(x)=0.`,
+                'MH.lesson_Y1Alg_fonAff3.ex2.sol3': String.raw`<strong>Question 3 :</strong> Oui, h(x)=2x.`,
+                'MH.lesson_Y1Alg_fonAff3.ex2.sol4': String.raw`<strong>Question 4 :</strong> Non. Avec (0,1) et (1,2) on obtient k(x)=x+1, mais k(3)=4 ≠ 5.`,
+                'MH.lesson_Y1Alg_fonAff3.ex3.sol2': String.raw`<strong>Solution 2 – Inéquation –2x+1 < –3x :</strong> Graphique : intersection (–1,3) ; pour x < –1, f est en dessous de g. Calcul : –2x+1 < –3x → x+1 < 0 → x < –1.`,
+                'MH.lesson_Y1Alg_fonAff3.ex4.sol1': String.raw`<strong>Solution 1 – Dépenses :</strong> Formule 1 : 2,5x ; Formule 2 : 50 + 0,3x.`,
+                'MH.lesson_Y1Alg_fonAff3.ex4.sol2': String.raw`<strong>Solution 2 – Seuil :</strong> 50+0,3x < 2,5x → 50 < 2,2x → x > 50/2,2 ≈ 22,73 → à partir de x = 23.`,
+                'MH.lesson_Y1Alg_fonAff3.ex5.sol1': String.raw`<strong>Solution 1 – Ensemble de x :</strong> M ∈ [AH], HM = x, AH = 4 → 0 ≤ x ≤ 4.`,
+                'MH.lesson_Y1Alg_fonAff3.ex5.sol2a': String.raw`<strong>Solution 2a – EF en fonction de x :</strong> Thalès : EF/BC = AM/AH = (4–x)/4, BC=6 → EF = 6×(4–x)/4 = (3/2)(4–x)=6–1,5x.`,
+                'MH.lesson_Y1Alg_fonAff3.ex5.sol2b': String.raw`<strong>Solution 2b – EF ≤ 3 :</strong> (3/2)(4–x) ≤ 3 → 3(4–x) ≤ 6 → 12–3x ≤ 6 → –3x ≤ –6 → x ≥ 2. Avec 0≤x≤4 → 2 ≤ x ≤ 4.`
+            }
+        };
+
+        // Merge translations
+        if (typeof window.translations !== 'undefined') {
+            Object.keys(fonAff3Translations).forEach(lang => {
+                window.translations[lang] = { ...window.translations[lang], ...fonAff3Translations[lang] };
+            });
+        } else {
+            window.translations = fonAff3Translations;
+        }
+
+        // ---------------------------------------------------------------------
+        // I18N and THEME MANAGER
+        // ---------------------------------------------------------------------
+        let currentLanguage = localStorage.getItem('MH-language') || 'en';
+        document.documentElement.lang = currentLanguage;
+
+        function applyTranslations(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (window.translations[lang] && window.translations[lang][key]) {
+                    el.innerHTML = window.translations[lang][key];
+                }
+            });
+            setSolutionContent('ex1_sol1', lang, 'MH.lesson_Y1Alg_fonAff3.ex1.sol1');
+            setSolutionContent('ex1_sol2a', lang, 'MH.lesson_Y1Alg_fonAff3.ex1.sol2a');
+            setSolutionContent('ex1_sol2b', lang, 'MH.lesson_Y1Alg_fonAff3.ex1.sol2b');
+            setSolutionContent('ex1_sol3', lang, 'MH.lesson_Y1Alg_fonAff3.ex1.sol3');
+            setSolutionContent('ex2_sol1', lang, 'MH.lesson_Y1Alg_fonAff3.ex2.sol1');
+            setSolutionContent('ex2_sol2', lang, 'MH.lesson_Y1Alg_fonAff3.ex2.sol2');
+            setSolutionContent('ex2_sol3', lang, 'MH.lesson_Y1Alg_fonAff3.ex2.sol3');
+            setSolutionContent('ex2_sol4', lang, 'MH.lesson_Y1Alg_fonAff3.ex2.sol4');
+            setSolutionContent('ex3_sol2', lang, 'MH.lesson_Y1Alg_fonAff3.ex3.sol2');
+            setSolutionContent('ex4_sol1', lang, 'MH.lesson_Y1Alg_fonAff3.ex4.sol1');
+            setSolutionContent('ex4_sol2', lang, 'MH.lesson_Y1Alg_fonAff3.ex4.sol2');
+            setSolutionContent('ex5_sol1', lang, 'MH.lesson_Y1Alg_fonAff3.ex5.sol1');
+            setSolutionContent('ex5_sol2a', lang, 'MH.lesson_Y1Alg_fonAff3.ex5.sol2a');
+            setSolutionContent('ex5_sol2b', lang, 'MH.lesson_Y1Alg_fonAff3.ex5.sol2b');
+            
+            document.querySelectorAll('.MH-solution-btn').forEach(btn => {
+                if (btn.textContent.includes('Show') || btn.textContent.includes('Afficher') || btn.textContent.includes('عرض')) {
+                    btn.textContent = window.translations[lang]['MH.lesson_Y1Alg_fonAff3.showSolution'] || 'Show Solution';
+                }
+            });
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, { delimiters: [{left: '$', right: '$', display: false}, {left: '\\(', right: '\\)', display: false}], throwOnError: false });
+            }
+        }
+
+        function setSolutionContent(elementId, lang, key) {
+            const el = document.getElementById(elementId);
+            if (el && window.translations[lang] && window.translations[lang][key]) {
+                el.innerHTML = window.translations[lang][key];
+            }
+        }
+
+        // Theme toggle
+            
+            // Redessiner au changement de thème
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    setTimeout(() => {
+                        drawBenefitsCanvas();
+                        drawAffineCanvas();
+                    }, 100);
+                });
+            }
+
+        // Language selector
+        const languageBtn = document.getElementById('languageBtn');
+        const dropdown = document.getElementById('languageDropdown');
+        languageBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdown.classList.toggle('show');
+        });
+        document.querySelectorAll('.MH-language-option').forEach(opt => {
+            opt.addEventListener('click', (e) => {
+                e.preventDefault();
+                const lang = e.target.getAttribute('data-lang');
+                currentLanguage = lang;
+                localStorage.setItem('MH-language', lang);
+                document.documentElement.lang = lang;
+                applyTranslations(lang);
+                dropdown.classList.remove('show');
+                drawExercise1(); drawExercise3(); drawExercise4(); drawExercise5();
+            });
+        });
+        document.addEventListener('click', () => { dropdown.classList.remove('show'); });
+
+        // ------------------------------------------------------------
+        // CANVAS DRAWING FUNCTIONS – FIXED (no syntax errors)
+        // ------------------------------------------------------------
+        let ex1Constructed = false, ex3Constructed = false, ex4Constructed = false, ex5Constructed = false;
+
+        // Helper coordinate transforms with default ranges
+        function toX(coord, width, minX = -2, maxX = 6) {
+            return ((coord - minX) / (maxX - minX)) * width;
+        }
+        function toY(coord, height, minY = -2, maxY = 8) {
+            return height - ((coord - minY) / (maxY - minY)) * height;
+        }
+
+        function drawGrid(ctx, w, h, minX = -2, maxX = 6, minY = -2, maxY = 8) {
+            ctx.strokeStyle = 'var(--border)';
+            ctx.lineWidth = 0.5;
+            for (let i = Math.ceil(minX); i <= maxX; i++) {
+                ctx.beginPath();
+                ctx.moveTo(toX(i, w, minX, maxX), 0);
+                ctx.lineTo(toX(i, w, minX, maxX), h);
+                ctx.stroke();
+            }
+            for (let i = Math.ceil(minY); i <= maxY; i++) {
+                ctx.beginPath();
+                ctx.moveTo(0, toY(i, h, minY, maxY));
+                ctx.lineTo(w, toY(i, h, minY, maxY));
+                ctx.stroke();
+            }
+            ctx.strokeStyle = 'var(--text)';
+            ctx.lineWidth = 2;  // <-- Bold axes: changed from 1 to 2
+            ctx.beginPath();
+            ctx.moveTo(toX(0, w, minX, maxX), 0);
+            ctx.lineTo(toX(0, w, minX, maxX), h);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(0, toY(0, h, minY, maxY));
+            ctx.lineTo(w, toY(0, h, minY, maxY));
+            ctx.stroke();
+        }
+
+        function drawExercise1() {
+            const canvas = document.getElementById('ex1Canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            drawGrid(ctx, w, h);
+            // D: y = 1.5x
+            ctx.beginPath();
+            ctx.strokeStyle = '#27AE60';
+            ctx.lineWidth = 3;
+            let x1 = -2, y1 = 1.5 * x1;
+            let x2 = 6, y2 = 1.5 * x2;
+            ctx.moveTo(toX(x1, w), toY(y1, h));
+            ctx.lineTo(toX(x2, w), toY(y2, h));
+            ctx.stroke();
+            // D': y = -x+5
+            ctx.beginPath();
+            ctx.strokeStyle = '#E67E22';
+            ctx.lineWidth = 3;
+            y1 = -(-2) + 5; // 7
+            y2 = -6 + 5;     // -1
+            ctx.moveTo(toX(-2, w), toY(y1, h));
+            ctx.lineTo(toX(6, w), toY(y2, h));
+            ctx.stroke();
+            // Intersection (2,3)
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(toX(2, w), toY(3, h), 6, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.fillStyle = 'var(--text)';
+            ctx.font = '12px Arial';
+            ctx.fillText('(2,3)', toX(2.2, w), toY(3.2, h));
+            if (ex1Constructed) {
+                ctx.globalAlpha = 0.2;
+                ctx.fillStyle = '#27AE60';
+                ctx.fillRect(0, 0, toX(2, w), h);
+                ctx.globalAlpha = 1;
+                ctx.fillStyle = 'var(--text)';
+                ctx.fillText('x ≤ 2 → D below D\'', toX(0.5, w), toY(5, h));
+            }
+        }
+
+        function drawExercise3() {
+            const canvas = document.getElementById('ex3Canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            drawGrid(ctx, w, h);
+            // f(x) = -2x+1
+            ctx.beginPath();
+            ctx.strokeStyle = '#3498DB';
+            ctx.lineWidth = 3;
+            let x1 = -3, y1 = -2 * x1 + 1; // 7
+            let x2 = 4, y2 = -2 * 4 + 1;   // -7
+            ctx.moveTo(toX(x1, w), toY(y1, h));
+            ctx.lineTo(toX(x2, w), toY(y2, h));
+            ctx.stroke();
+            // g(x) = -3x
+            ctx.beginPath();
+            ctx.strokeStyle = '#8E44AD';
+            ctx.lineWidth = 3;
+            y1 = -3 * (-3); // 9
+            y2 = -3 * 4;    // -12
+            ctx.moveTo(toX(-3, w), toY(y1, h));
+            ctx.lineTo(toX(4, w), toY(y2, h));
+            ctx.stroke();
+            // Intersection (-1,3)
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(toX(-1, w), toY(3, h), 6, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.fillText('(-1,3)', toX(-0.8, w), toY(3.2, h));
+            if (ex3Constructed) {
+                ctx.fillStyle = 'rgba(52,152,219,0.2)';
+                ctx.fillRect(0, 0, toX(-1, w), h);
+                ctx.fillStyle = 'var(--text)';
+                ctx.fillText('f(x) < g(x) for x < -1', toX(-2.5, w), toY(5, h));
+            }
+        }
+
+        function drawExercise4() {
+            const canvas = document.getElementById('ex4Canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            drawGrid(ctx, w, h, 0, 40, 0, 120);
+            // Option1: 2.5x
+            ctx.beginPath();
+            ctx.strokeStyle = '#3498DB';
+            ctx.lineWidth = 3;
+            ctx.moveTo(toX(0, w, 0, 40), toY(0, h, 0, 120));
+            ctx.lineTo(toX(40, w, 0, 40), toY(100, h, 0, 120));
+            ctx.stroke();
+            // Option2: 50 + 0.3x
+            ctx.beginPath();
+            ctx.strokeStyle = '#E67E22';
+            ctx.lineWidth = 3;
+            ctx.moveTo(toX(0, w, 0, 40), toY(50, h, 0, 120));
+            ctx.lineTo(toX(40, w, 0, 40), toY(50 + 12, h, 0, 120)); // 50+0.3*40=62
+            ctx.stroke();
+            // Intersection approx (22.73, 56.82)
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(toX(22.73, w, 0, 40), toY(56.82, h, 0, 120), 6, 0, 2 * Math.PI);
+            ctx.fill();
+        }
+
+        function drawExercise5() {
+            const canvas = document.getElementById('ex5Canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            // Triangle coordinates
+            const Ax = 300, Ay = 60;
+            const Bx = 150, By = 340;
+            const Cx = 450, Cy = 340;
+            const Hx = (Bx + Cx) / 2, Hy = (By + Cy) / 2;
+            ctx.strokeStyle = '#27AE60';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(Ax, Ay); ctx.lineTo(Bx, By); ctx.lineTo(Cx, Cy); ctx.closePath();
+            ctx.stroke();
+            ctx.strokeStyle = '#E67E22';
+            ctx.setLineDash([5,5]);
+            ctx.beginPath(); ctx.moveTo(Ax, Ay); ctx.lineTo(Hx, Hy); ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.fillStyle = 'var(--text)';
+            ctx.fillText('A', Ax+10, Ay-10);
+            ctx.fillText('B', Bx-20, By-10);
+            ctx.fillText('C', Cx+5, Cy-10);
+            ctx.fillText('H', Hx+10, Hy-10);
+            if (ex5Constructed) {
+                let x = 2; // example
+                let Mx = Hx + (Ax - Hx) * (x / 4);
+                let My = Hy + (Ay - Hy) * (x / 4);
+                ctx.fillStyle = '#E74C3C';
+                ctx.beginPath(); ctx.arc(Mx, My, 5, 0, 2*Math.PI); ctx.fill();
+                ctx.fillText('M', Mx+10, My-5);
+                ctx.strokeStyle = '#8E44AD';
+                ctx.beginPath(); ctx.moveTo(100, My); ctx.lineTo(500, My); ctx.stroke();
+                ctx.fillStyle = '#E67E22';
+                ctx.fillText('E', 200, My-10);
+                ctx.fillText('F', 400, My-10);
+                ctx.fillStyle = 'var(--text)';
+                ctx.fillText(`EF = ${6 - 1.5 * x} cm`, 250, My-30);
+            }
+        }
+
+        function constructExercise1() { ex1Constructed = !ex1Constructed; drawExercise1(); }
+        function constructExercise3() { ex3Constructed = !ex3Constructed; drawExercise3(); }
+        function constructExercise4() { ex4Constructed = !ex4Constructed; drawExercise4(); }
+        function constructExercise5() { ex5Constructed = !ex5Constructed; drawExercise5(); }
+
+        function toggleSolution(id) {
+            const sol = document.getElementById(id);
+            if (sol.style.display === 'block') {
+                sol.style.display = 'none';
+            } else {
+                sol.style.display = 'block';
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(sol, { delimiters: [{left: '$', right: '$', display: false}, {left: '\\(', right: '\\)', display: false}], throwOnError: false });
+                }
+            }
+        }
+
+        // Expose to global for onclick
+        window.constructExercise1 = constructExercise1;
+        window.constructExercise3 = constructExercise3;
+        window.constructExercise4 = constructExercise4;
+        window.constructExercise5 = constructExercise5;
+        window.toggleSolution = toggleSolution;
+
+        // DOM ready
+        document.addEventListener('DOMContentLoaded', () => {
+            applyTranslations(currentLanguage);
+            const savedTheme = localStorage.getItem('MH-theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            drawExercise1(); drawExercise3(); drawExercise4(); drawExercise5();
+            document.querySelectorAll('.MH-solution').forEach(el => el.style.display = 'none');
+        });
+    </script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(() => {});
+            });
+        }
+    </script>
+    <noscript><div class="MH-warning">JavaScript is recommended for interactive features.</div></noscript>
+</body>
+</html>

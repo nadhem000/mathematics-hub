@@ -1,0 +1,2142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Arithmetic Sequences - Part 1</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#4A90E2" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#8E44AD" media="(prefers-color-scheme: dark)">
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#4A90E2">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    <style>
+        /* Page-specific color palette - Blue + Green Theme */
+        :root {
+            --primary: #4A90E2;        /* Cornflower Blue */
+            --primary-light: #7BAAF7;  /* Light Blue */
+            --primary-dark: #357ABD;   /* Darker Blue */
+            --secondary: #2ECC71;      /* Green */
+            --secondary-light: #58D68D; /* Light Green */
+            --secondary-dark: #27AE60;  /* Darker Green */
+            --accent: #E67E22;
+            --warning: #E74C3C;
+            --info: #3498DB;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #FFFFFF;
+            --surface: #F8F9FA;
+            --border: #E9ECEF;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        [data-theme="dark"] {
+            --primary: #357ABD;
+            --primary-light: #4A90E2;
+            --primary-dark: #2C3E50;
+            --secondary: #27AE60;
+            --secondary-light: #2ECC71;
+            --secondary-dark: #229954;
+            --accent: #D35400;
+            --warning: #C0392B;
+            --info: #2980B9;
+            --text: #FFFFFF;
+            --text-light: #CCCCCC;
+            --background: #121212;
+            --surface: #1E1E1E;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+        /* KaTeX styling */
+        .katex { 
+            font-size: 1.1em; 
+        }
+        .katex-display { 
+            margin: 1em 0; 
+            text-align: center;
+        }
+        .katex-display > .katex { 
+            display: inline-block;
+            text-align: center;
+        }
+        /* Equation styling */
+        .MH-equation {
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            margin: 0.5em 0;
+            padding: 0;
+            display: inline-block;
+            direction: ltr !important;
+            unicode-bidi: isolate;
+        }
+        [dir="rtl"] .MH-equation {
+            text-align: left;
+            unicode-bidi: plaintext;
+        }
+        /* Canvas container styling */
+        .MH-canvas-container {
+            margin: 2em 0;
+            text-align: center;
+            position: relative;
+        }
+        .MH-canvas {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background-color: var(--surface);
+            max-width: 100%;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+        .MH-canvas-title {
+            font-weight: bold;
+            margin-bottom: 0.5em;
+            color: var(--primary);
+        }
+        .MH-canvas-instructions {
+            font-size: 0.9em;
+            color: var(--text-light);
+            margin-top: 0.5em;
+            font-style: italic;
+        }
+        /* Sequence specific styling */
+        .MH-sequence-item {
+            margin: 0.5em 0;
+            padding: 0.5em;
+            background-color: var(--surface);
+            border-left: 4px solid var(--secondary);
+            border-radius: 4px;
+        }
+        .MH-sequence-step {
+            margin: 0.5em 0;
+            padding-left: 1em;
+            border-left: 2px solid var(--primary-light);
+        }
+        .MH-number-pattern {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            color: var(--warning);
+            background-color: rgba(231, 76, 60, 0.1);
+            padding: 0.2em 0.5em;
+            border-radius: 4px;
+        }
+        .MH-triangular-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1em;
+            margin: 1em 0;
+        }
+        .MH-triangular-figure {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 1em;
+            text-align: center;
+        }
+        .MH-formula-box {
+            background-color: rgba(46, 204, 113, 0.1);
+            border: 2px solid var(--secondary);
+            border-radius: 8px;
+            padding: 1.5em;
+            margin: 1em 0;
+        }
+        /* Exercise numbering */
+        .MH-exercise-number {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--secondary);
+            margin: 1.5em 0 0.5em 0;
+            border-bottom: 2px solid var(--secondary-light);
+            padding-bottom: 0.3em;
+        }
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .MH-canvas {
+                max-width: 100%;
+                height: auto;
+            }
+            .MH-triangular-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                    <!-- Notification Button -->
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+                        <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Alg_seqArith1.title">Arithmetic Sequences: Part I</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y2Alg_seqArith1.subtitle">Introduction to Number Patterns</h2>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Alg_seqArith1.introduction">Introduction</h2>
+            <p data-i18n="MH.lesson_Y2Alg_seqArith1.introText1">In this lesson, we will explore the concept of sequences. A sequence is an ordered list of numbers that follows a specific pattern or rule. Understanding sequences helps us recognize patterns in mathematics and in the world around us.</p>
+            <p data-i18n="MH.lesson_Y2Alg_seqArith1.introText2">We will start by identifying patterns in given lists of numbers, then explore special sequences like triangular numbers, and finally learn the formal definition of a sequence.</p>
+        </section>
+
+        <!-- I. Notion de suites -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y2Alg_seqArith1.part1">I. Concept of Sequences</div>
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Alg_seqArith1.activity1Title">Activity 1</h3>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith1.activity1Statement">Each of the following lists of numbers follows a pattern. Discover this pattern and give the next two terms.</p>
+            </div>
+
+            <!-- Part a: Arithmetic sequence -->
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y2Alg_seqArith1.activity1a">a) 5; 3; 1; -1; -3; ...</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Alg_seqArith1.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                    <div class="MH-solution" id="solution1">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1a">Let's examine the differences between consecutive terms:</p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1a1">From 5 to 3: 3 - 5 = -2</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1a2">From 3 to 1: 1 - 3 = -2</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1a3">From 1 to -1: -1 - 1 = -2</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1a4">From -1 to -3: -3 - (-1) = -2</p>
+                        </div>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1a5">Each term is obtained by subtracting 2 from the previous term. This is called an <strong>arithmetic sequence</strong> with common difference -2.</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1a6">To find the next two terms:</p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1a7">-3 - 2 = <strong>-5</strong></p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1a8">-5 - 2 = <strong>-7</strong></p>
+                        </div>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1a9">The complete sequence: 5; 3; 1; -1; -3; <span class="MH-number-pattern">-5; -7</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Part b: Fraction sequence -->
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y2Alg_seqArith1.activity1b">b) 1/4; 1; 7/4; 5/2; 13/4; ...</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Alg_seqArith1.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                    <div class="MH-solution" id="solution2">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1b">Let's write all terms with denominator 4 to see the pattern more clearly:</p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1b1">1/4 = 1/4</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1b2">1 = 4/4</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1b3">7/4 = 7/4</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1b4">5/2 = 10/4</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1b5">13/4 = 13/4</p>
+                        </div>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1b6">Now look at the numerators: 1, 4, 7, 10, 13, ...</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1b7">The difference between consecutive numerators: 4-1=3, 7-4=3, 10-7=3, 13-10=3</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1b8">Each numerator increases by 3. This is also an <strong>arithmetic sequence</strong> with common difference 3/4 (since we keep denominator 4).</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1b9">To find the next two terms:</p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1b10">Next numerator: 13 + 3 = 16 → 16/4 = <strong>4</strong></p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1b11">Following numerator: 16 + 3 = 19 → 19/4 = <strong>19/4</strong></p>
+                        </div>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1b12">The complete sequence: 1/4; 1; 7/4; 5/2; 13/4; <span class="MH-number-pattern">4; 19/4</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Part c: Fibonacci-like sequence -->
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y2Alg_seqArith1.activity1c">c) 1; 2; 3; 5; 8; ...</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Alg_seqArith1.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                    <div class="MH-solution" id="solution3">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1c">Let's examine how each term relates to the previous ones:</p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1c1">1 + 2 = 3 (third term equals sum of first two)</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1c2">2 + 3 = 5 (fourth term equals sum of previous two)</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1c3">3 + 5 = 8 (fifth term equals sum of previous two)</p>
+                        </div>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1c4">This is a <strong>Fibonacci-like sequence</strong> where each term (after the first two) is the sum of the two preceding terms.</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1c5">To find the next two terms:</p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1c6">5 + 8 = <strong>13</strong></p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1c7">8 + 13 = <strong>21</strong></p>
+                        </div>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1c8">The complete sequence: 1; 2; 3; 5; 8; <span class="MH-number-pattern">13; 21</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Part d: Square numbers -->
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y2Alg_seqArith1.activity1d">d) 1; 4; 9; 16; 25; ...</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Alg_seqArith1.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+                    <div class="MH-solution" id="solution4">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1d">Let's check if these numbers are perfect squares:</p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1d1">1 = 1² = 1 × 1</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1d2">4 = 2² = 2 × 2</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1d3">9 = 3² = 3 × 3</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1d4">16 = 4² = 4 × 4</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1d5">25 = 5² = 5 × 5</p>
+                        </div>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1d6">These are <strong>square numbers</strong> - each term is the square of its position in the sequence (1st term is 1², 2nd term is 2², etc.).</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1d7">To find the next two terms:</p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1d8">6² = 6 × 6 = <strong>36</strong></p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1d9">7² = 7 × 7 = <strong>49</strong></p>
+                        </div>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1d10">The complete sequence: 1; 4; 9; 16; 25; <span class="MH-number-pattern">36; 49</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Part e: Pattern with doubling differences -->
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y2Alg_seqArith1.activity1e">e) -2; -3; -5; -9; -17; ...</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Alg_seqArith1.showSolution" onclick="toggleSolution(5)">Show Solution</button>
+                    <div class="MH-solution" id="solution5">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1e">Let's examine the differences between consecutive terms:</p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1e1">-3 - (-2) = -1</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1e2">-5 - (-3) = -2</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1e3">-9 - (-5) = -4</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1e4">-17 - (-9) = -8</p>
+                        </div>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1e5">The differences are: -1, -2, -4, -8, ...</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1e6">Notice that each difference is double the previous difference: -2 = 2 × (-1), -4 = 2 × (-2), -8 = 2 × (-4)</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1e7">So the pattern is: each term is obtained by subtracting a number that keeps doubling: subtract 1, then 2, then 4, then 8, ...</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1e8">To find the next two terms:</p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1e9">Next difference: 2 × (-8) = -16</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1e10">-17 + (-16) = -17 - 16 = <strong>-33</strong></p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1e11">Following difference: 2 × (-16) = -32</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1e12">-33 + (-32) = -33 - 32 = <strong>-65</strong></p>
+                        </div>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution1e13">The complete sequence: -2; -3; -5; -9; -17; <span class="MH-number-pattern">-33; -65</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- II. Les nombres triangulaires -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y2Alg_seqArith1.part2">II. Triangular Numbers</div>
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Alg_seqArith1.activity2Title">Activity 2</h3>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith1.activity2Statement">The following figures represent the first four triangular numbers 1, 3, 6 and 10, denoted respectively T₁, T₂, T₃ and T₄.</p>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith1.activity2Statement2">T₁ reads "T subscript 1" or "T, 1". T₂ reads "T subscript 2" or "T, 2". More generally Tₙ reads "T subscript n" or "T, n".</p>
+            </div>
+
+            <!-- Triangular numbers figures -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Alg_seqArith1.diagram1Title">Triangular Numbers T₁, T₂, T₃, T₄</div>
+                <canvas id="triangularCanvas" width="600" height="300" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Alg_seqArith1.diagram1Instructions">Each triangle contains dots arranged in triangular patterns. T₁ has 1 dot, T₂ has 3 dots (1+2), T₃ has 6 dots (1+2+3), T₄ has 10 dots (1+2+3+4).</div>
+            </div>
+
+            <!-- Question 2.1 -->
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y2Alg_seqArith1.question2a">1) a) Represent the 5th triangular number denoted T₅ and give its value.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Alg_seqArith1.showSolution" onclick="toggleSolution(6)">Show Solution</button>
+                    <div class="MH-solution" id="solution6">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2a1">To find T₅, we need to understand the pattern of triangular numbers:</p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2a2">T₁ = 1</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2a3">T₂ = 1 + 2 = 3</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2a4">T₃ = 1 + 2 + 3 = 6</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2a5">T₄ = 1 + 2 + 3 + 4 = 10</p>
+                        </div>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2a6">So T₅ should be the sum of the first 5 natural numbers:</p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2a7">T₅ = 1 + 2 + 3 + 4 + 5</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2a8">Let's calculate step by step:</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2a9">1 + 2 = 3</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2a10">3 + 3 = 6</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2a11">6 + 4 = 10</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2a12">10 + 5 = <strong>15</strong></p>
+                        </div>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2a13">So T₅ = <strong>15</strong>. The figure would have 5 rows: first row 1 dot, second row 2 dots, third row 3 dots, fourth row 4 dots, fifth row 5 dots, making a total of 15 dots arranged in a triangle.</p>
+                    </div>
+                </div>
+
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y2Alg_seqArith1.question2b">b) Same question for T₆.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Alg_seqArith1.showSolution" onclick="toggleSolution(7)">Show Solution</button>
+                    <div class="MH-solution" id="solution7">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2b1">Following the same pattern, T₆ is the sum of the first 6 natural numbers:</p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2b2">T₆ = 1 + 2 + 3 + 4 + 5 + 6</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2b3">We already know T₅ = 15, so:</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2b4">T₆ = T₅ + 6 = 15 + 6 = <strong>21</strong></p>
+                        </div>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2b5">So T₆ = <strong>21</strong>. The figure would have 6 rows with 1, 2, 3, 4, 5, 6 dots respectively, total 21 dots.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 2.2 -->
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y2Alg_seqArith1.question2c">2) The Pythagoreans used rectangular diagrams to calculate triangular numbers.</h4>
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith1.question2ca">a) The rectangular diagram below allows calculating T₁₂. Explain how.</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Alg_seqArith1.showSolution" onclick="toggleSolution(8)">Show Solution</button>
+                    <div class="MH-solution" id="solution8">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2c1">The Pythagoreans noticed that if you take two identical triangular arrangements and put them together, you get a rectangle.</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2c2">For example, two T₄ triangles (each with 10 dots) form a 4 × 5 rectangle with 20 dots.</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2c3">So one triangle has half the dots of the rectangle:</p>
+                        <div class="MH-formula-box">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2c4">Tₙ = (n × (n + 1)) ÷ 2</p>
+                        </div>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2c5">For T₁₂, the rectangular diagram would be 12 × 13 with 156 dots total, so T₁₂ = 156 ÷ 2 = 78.</p>
+                    </div>
+                </div>
+
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y2Alg_seqArith1.question2d">b) Give the values of T₂₀, T₁₂₅ and T₂₀₀₆.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Alg_seqArith1.showSolution" onclick="toggleSolution(9)">Show Solution</button>
+                    <div class="MH-solution" id="solution9">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2d1">Using the formula Tₙ = n × (n + 1) ÷ 2:</p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2d2">T₂₀ = 20 × (20 + 1) ÷ 2 = 20 × 21 ÷ 2 = 420 ÷ 2 = <strong>210</strong></p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2d3">T₁₂₅ = 125 × (125 + 1) ÷ 2 = 125 × 126 ÷ 2 = 15750 ÷ 2 = <strong>7875</strong></p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2d4">T₂₀₀₆ = 2006 × (2006 + 1) ÷ 2 = 2006 × 2007 ÷ 2</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2d5">2006 × 2007 = 2006 × 2000 + 2006 × 7 = 4,012,000 + 14,042 = 4,026,042</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2d6">4,026,042 ÷ 2 = <strong>2,013,021</strong></p>
+                        </div>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2d7">So: T₂₀ = 210, T₁₂₅ = 7,875, T₂₀₀₆ = 2,013,021</p>
+                    </div>
+                </div>
+
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y2Alg_seqArith1.question2e">c) Give the expression for the nth triangular number Tₙ as a function of n.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Alg_seqArith1.showSolution" onclick="toggleSolution(10)">Show Solution</button>
+                    <div class="MH-solution" id="solution10">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2e1">From our observations:</p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2e2">T₁ = 1 = (1 × 2) ÷ 2</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2e3">T₂ = 3 = (2 × 3) ÷ 2</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2e4">T₃ = 6 = (3 × 4) ÷ 2</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2e5">T₄ = 10 = (4 × 5) ÷ 2</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2e6">T₅ = 15 = (5 × 6) ÷ 2</p>
+                        </div>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2e7">We can see the pattern: Tₙ = n × (n + 1) ÷ 2</p>
+                        <div class="MH-formula-box">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.formula2e">\[T_n = \frac{n(n+1)}{2}\]</p>
+                        </div>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution2e8">This formula works because when you put two triangular numbers together, you get a rectangle of dimensions n by (n+1), so one triangle is half of that rectangle.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- III. Une spirale quadratique -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y2Alg_seqArith1.part3">III. A Quadratic Spiral</div>
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Alg_seqArith1.activity3Title">Activity 3</h3>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith1.activity3Statement">In the figure opposite we have:</p>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Alg_seqArith1.activity3a">Triangle OA₁A₂ is right-angled at A₁ with OA₁ = A₁A₂ = 1</li>
+                    <li data-i18n="MH.lesson_Y2Alg_seqArith1.activity3b">Triangle OA₂A₃ is right-angled at A₂ with A₂A₃ = 1</li>
+                    <li data-i18n="MH.lesson_Y2Alg_seqArith1.activity3c">And so on...</li>
+                </ul>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith1.activity3d">We denote: a₁ = area(OA₁A₂), a₂ = area(OA₂A₃), ..., aₙ = area(OAₙAₙ₊₁).</p>
+            </div>
+
+            <!-- Diagram for the quadratic spiral -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y2Alg_seqArith1.diagram2Title">Quadratic Spiral with Right Triangles</div>
+                <canvas id="spiralCanvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y2Alg_seqArith1.diagram2Instructions">Triangles OA₁A₂, OA₂A₃, OA₃A₄, etc. forming a spiral pattern. Each triangle has a right angle and certain sides equal to 1.</div>
+            </div>
+
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y2Alg_seqArith1.question3a">a) Calculate a₂, a₃, a₄ and a₅.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Alg_seqArith1.showSolution" onclick="toggleSolution(11)">Show Solution</button>
+                    <div class="MH-solution" id="solution11">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a1">Let's analyze step by step:</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a2"><strong>Step 1: Understanding the pattern</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a3">Triangle OA₁A₂ is right-angled at A₁ with OA₁ = A₁A₂ = 1.</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a4">Area of right triangle = (base × height) ÷ 2</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a5">So a₁ = area(OA₁A₂) = (1 × 1) ÷ 2 = 0.5</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a6"><strong>Step 2: Calculate OA₂ using Pythagorean theorem</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a7">In triangle OA₁A₂: OA₂² = OA₁² + A₁A₂² = 1² + 1² = 2</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a8">So OA₂ = √2</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a9"><strong>Step 3: Triangle OA₂A₃</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a10">Triangle OA₂A₃ is right-angled at A₂ with A₂A₃ = 1</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a11">Base = OA₂ = √2, height = A₂A₃ = 1</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a12">So a₂ = area(OA₂A₃) = (√2 × 1) ÷ 2 = <strong>√2/2</strong> ≈ 0.7071</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a13"><strong>Step 4: Calculate OA₃</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a14">In triangle OA₂A₃: OA₃² = OA₂² + A₂A₃² = (√2)² + 1² = 2 + 1 = 3</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a15">So OA₃ = √3</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a16"><strong>Step 5: Triangle OA₃A₄</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a17">Triangle OA₃A₄ is right-angled at A₃ with A₃A₄ = 1</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a18">Base = OA₃ = √3, height = A₃A₄ = 1</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a19">So a₃ = area(OA₃A₄) = (√3 × 1) ÷ 2 = <strong>√3/2</strong> ≈ 0.8660</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a20"><strong>Step 6: Calculate OA₄</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a21">In triangle OA₃A₄: OA₄² = OA₃² + A₃A₄² = (√3)² + 1² = 3 + 1 = 4</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a22">So OA₄ = √4 = 2</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a23"><strong>Step 7: Triangle OA₄A₅</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a24">Triangle OA₄A₅ is right-angled at A₄ with A₄A₅ = 1</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a25">Base = OA₄ = 2, height = A₄A₅ = 1</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a26">So a₄ = area(OA₄A₅) = (2 × 1) ÷ 2 = <strong>1</strong></p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a27"><strong>Step 8: Calculate OA₅</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a28">In triangle OA₄A₅: OA₅² = OA₄² + A₄A₅² = 2² + 1² = 4 + 1 = 5</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a29">So OA₅ = √5</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a30"><strong>Step 9: Triangle OA₅A₆</strong></p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a31">Triangle OA₅A₆ is right-angled at A₅ with A₅A₆ = 1</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a32">Base = OA₅ = √5, height = A₅A₆ = 1</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a33">So a₅ = area(OA₅A₆) = (√5 × 1) ÷ 2 = <strong>√5/2</strong> ≈ 1.1180</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a34"><strong>Summary:</strong></p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a35">a₁ = 1/2 = 0.5</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a36">a₂ = √2/2 ≈ 0.7071</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a37">a₃ = √3/2 ≈ 0.8660</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a38">a₄ = 2/2 = 1</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3a39">a₅ = √5/2 ≈ 1.1180</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y2Alg_seqArith1.question3b">b) Conjecture the expression of aₙ as a function of n.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Alg_seqArith1.showSolution" onclick="toggleSolution(12)">Show Solution</button>
+                    <div class="MH-solution" id="solution12">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3b1">Let's look at the pattern we found:</p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3b2">a₁ = √1/2 (since √1 = 1)</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3b3">a₂ = √2/2</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3b4">a₃ = √3/2</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3b5">a₄ = √4/2 = 2/2 = 1 (but √4 = 2)</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3b6">a₅ = √5/2</p>
+                        </div>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3b7">It seems like aₙ = √n/2, but let's check:</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3b8">For n=1: √1/2 = 1/2 = 0.5 ✓</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3b9">For n=2: √2/2 ≈ 0.7071 ✓</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3b10">For n=3: √3/2 ≈ 0.8660 ✓</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3b11">For n=4: √4/2 = 2/2 = 1 ✓</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3b12">For n=5: √5/2 ≈ 1.1180 ✓</p>
+                        
+                        <div class="MH-formula-box">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.formula3b">\[a_n = \frac{\sqrt{n}}{2}\]</p>
+                        </div>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3b13">Why does this work? Let's think about it:</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3b14">In triangle OAₙAₙ₊₁:</p>
+                        <ul>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith1.solution3b15">The right angle is at Aₙ</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith1.solution3b16">OAₙ is the base</li>
+                            <li data-i18n="MH.lesson_Y2Alg_seqArith1.solution3b17">AₙAₙ₊₁ = 1 is the height</li>
+                        </ul>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3b18">From the Pythagorean theorem in previous triangles, we found:</p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3b19">OA₁² = 1 (given)</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3b20">OA₂² = OA₁² + 1² = 1 + 1 = 2</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3b21">OA₃² = OA₂² + 1² = 2 + 1 = 3</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3b22">OA₄² = OA₃² + 1² = 3 + 1 = 4</p>
+                        </div>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3b23">So in general: OAₙ² = n, which means OAₙ = √n</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution3b24">Then area = (base × height) ÷ 2 = (√n × 1) ÷ 2 = √n/2</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Definition of a Sequence -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y2Alg_seqArith1.definitionTitle">Definition of a Sequence</div>
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Alg_seqArith1.definition">Definition</h3>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith1.definitionText">Let n₀ be a natural number. When to every natural number n greater than or equal to n₀ we associate a unique real number U(n), we say that we have defined a sequence of real numbers.</p>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith1.definitionText2">The real number U(n) is called the general term of the sequence and is denoted Uₙ. The sequence is denoted (Uₙ)ₙ ≥ n₀ or simply (Uₙ).</p>
+            </div>
+
+            <!-- Activity 4 -->
+            <div class="MH-step">
+                <div class="MH-important">
+                    <h3 data-i18n="MH.lesson_Y2Alg_seqArith1.activity4Title">Activity 4</h3>
+                    <p data-i18n="MH.lesson_Y2Alg_seqArith1.activity4Statement">Let the sequence (Uₙ) be defined for every natural number n by Uₙ = (3n + 1)/4.</p>
+                </div>
+
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y2Alg_seqArith1.question4a">a) Calculate U₀, U₁, U₅ and U₁₀₀.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Alg_seqArith1.showSolution" onclick="toggleSolution(13)">Show Solution</button>
+                    <div class="MH-solution" id="solution13">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4a1">We use the formula Uₙ = (3n + 1)/4 and substitute different values of n:</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4a2"><strong>For U₀ (n = 0):</strong></p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4a3">U₀ = (3 × 0 + 1) / 4 = (0 + 1) / 4 = 1/4 = <strong>0.25</strong></p>
+                        </div>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4a4"><strong>For U₁ (n = 1):</strong></p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4a5">U₁ = (3 × 1 + 1) / 4 = (3 + 1) / 4 = 4/4 = <strong>1</strong></p>
+                        </div>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4a6"><strong>For U₅ (n = 5):</strong></p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4a7">U₅ = (3 × 5 + 1) / 4 = (15 + 1) / 4 = 16/4 = <strong>4</strong></p>
+                        </div>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4a8"><strong>For U₁₀₀ (n = 100):</strong></p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4a9">U₁₀₀ = (3 × 100 + 1) / 4 = (300 + 1) / 4 = 301/4 = <strong>75.25</strong></p>
+                        </div>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4a10"><strong>Summary:</strong></p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4a11">U₀ = 0.25 or 1/4</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4a12">U₁ = 1</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4a13">U₅ = 4</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4a14">U₁₀₀ = 75.25 or 301/4</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y2Alg_seqArith1.question4b">b) Determine the first term, the 5th term and the 100th term of this sequence.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Alg_seqArith1.showSolution" onclick="toggleSolution(14)">Show Solution</button>
+                    <div class="MH-solution" id="solution14">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4b1">In a sequence, the terms are usually numbered starting from 0 or 1. Since our sequence is defined for every natural number n (which usually starts at 0), we have:</p>
+                        
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4b2"><strong>First term:</strong> This is U₀ (when n = 0)</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4b3">We already calculated U₀ = 1/4 = 0.25</p>
+                            
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4b4"><strong>5th term:</strong> If we count from the first term as term number 1, then:</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4b5">Term 1: U₀ = 0.25</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4b6">Term 2: U₁ = 1</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4b7">Term 3: U₂ = (3×2+1)/4 = (6+1)/4 = 7/4 = 1.75</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4b8">Term 4: U₃ = (3×3+1)/4 = (9+1)/4 = 10/4 = 2.5</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4b9">Term 5: U₄ = (3×4+1)/4 = (12+1)/4 = 13/4 = 3.25</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4b10">So the 5th term is U₄ = 3.25</p>
+                            
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4b11"><strong>100th term:</strong> Following the same pattern, the 100th term would be U₉₉ (since first term is U₀)</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4b12">U₉₉ = (3×99 + 1)/4 = (297 + 1)/4 = 298/4 = 74.5</p>
+                        </div>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4b13">But wait! We need to be careful. Sometimes sequences are indexed starting from 1. Let's clarify:</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4b14">If the sequence starts at n=0:</p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4b15">First term = U₀ = 0.25</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4b16">5th term = U₄ = 3.25</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4b17">100th term = U₉₉ = 74.5</p>
+                        </div>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4b18">If the sequence starts at n=1:</p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4b19">First term = U₁ = 1</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4b20">5th term = U₅ = 4</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4b21">100th term = U₁₀₀ = 75.25</p>
+                        </div>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4b22">Since the problem says "for every natural number n" and natural numbers usually include 0, we'll use the first interpretation:</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4b23"><strong>First term: U₀ = 0.25, 5th term: U₄ = 3.25, 100th term: U₉₉ = 74.5</strong></p>
+                    </div>
+                </div>
+
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y2Alg_seqArith1.question4c">c) Determine the expression of Uₚ₊₁, U₂ₙ and U₃ₖ₊₂.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Alg_seqArith1.showSolution" onclick="toggleSolution(15)">Show Solution</button>
+                    <div class="MH-solution" id="solution15">
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4c1">We have the general formula: Uₙ = (3n + 1)/4</p>
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4c2">We need to substitute different expressions for n:</p>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4c3"><strong>For Uₚ₊₁:</strong> Here, n = p+1</p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4c4">Uₚ₊₁ = [3(p+1) + 1] / 4 = [3p + 3 + 1] / 4 = (3p + 4) / 4</p>
+                        </div>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4c5"><strong>For U₂ₙ:</strong> Here, n = 2n (be careful: the n in U₂ₙ is different from the n in our formula)</p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4c6">U₂ₙ = [3(2n) + 1] / 4 = (6n + 1) / 4</p>
+                        </div>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4c7"><strong>For U₃ₖ₊₂:</strong> Here, n = 3k+2</p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4c8">U₃ₖ₊₂ = [3(3k+2) + 1] / 4 = [9k + 6 + 1] / 4 = (9k + 7) / 4</p>
+                        </div>
+                        
+                        <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4c9"><strong>Summary:</strong></p>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4c10">Uₚ₊₁ = (3p + 4)/4</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4c11">U₂ₙ = (6n + 1)/4</p>
+                            <p data-i18n="MH.lesson_Y2Alg_seqArith1.solution4c12">U₃ₖ₊₂ = (9k + 7)/4</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Alg_seqArith1.summaryTitle">Lesson Summary</h2>
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Alg_seqArith1.keyConceptsTitle">Key Concepts Learned</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Alg_seqArith1.concept1">A sequence is an ordered list of numbers that follows a specific pattern</li>
+                    <li data-i18n="MH.lesson_Y2Alg_seqArith1.concept2">We can find patterns by looking at differences between terms, ratios, or other relationships</li>
+                    <li data-i18n="MH.lesson_Y2Alg_seqArith1.concept3">Triangular numbers follow the formula Tₙ = n(n+1)/2</li>
+                    <li data-i18n="MH.lesson_Y2Alg_seqArith1.concept4">A sequence is formally defined as a function that assigns a real number to each natural number</li>
+                    <li data-i18n="MH.lesson_Y2Alg_seqArith1.concept5">The general term Uₙ gives us a formula to find any term in the sequence</li>
+                </ul>
+            </div>
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Alg_seqArith1.typesSequencesTitle">Types of Sequences Encountered</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Alg_seqArith1.type1"><strong>Arithmetic sequences:</strong> Each term differs from the previous by a constant (like 5, 3, 1, -1, -3, ... with difference -2)</li>
+                    <li data-i18n="MH.lesson_Y2Alg_seqArith1.type2"><strong>Fibonacci-like sequences:</strong> Each term is the sum of the two preceding terms (like 1, 2, 3, 5, 8, 13, ...)</li>
+                    <li data-i18n="MH.lesson_Y2Alg_seqArith1.type3"><strong>Square numbers:</strong> Each term is a perfect square (like 1, 4, 9, 16, 25, ...)</li>
+                    <li data-i18n="MH.lesson_Y2Alg_seqArith1.type4"><strong>Triangular numbers:</strong> Each term represents dots arranged in a triangle (1, 3, 6, 10, 15, ...)</li>
+                </ul>
+            </div>
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y2Alg_seqArith1.nextLessonTitle">Next Steps</h3>
+                <p data-i18n="MH.lesson_Y2Alg_seqArith1.finalThought">In this lesson, we learned to recognize patterns in sequences and work with their general terms. In the next lesson, we will focus specifically on arithmetic sequences, learn how to find their general term, and solve problems involving these important sequences.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+    
+    <script>
+        // ARITHMETIC SEQUENCES PART 1 TRANSLATIONS
+        const seqArith1Translations = {
+            'en': {
+                // General translations
+                'MH.general.homeTooltip': 'Go to Homepage',
+                'MH.general.install': 'Install App',
+                'MH.general.installSuccess': 'Mathematics Hub installed successfully!',
+                'MH.general.enableNotifications': 'Enable Notifications',
+                'MH.general.notificationEnabled': 'Notifications enabled! You will now receive updates.',
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Theme',
+                'MH.general.language': 'Language',
+                'MH.lesson_Y2Alg_seqArith1.showSolution': 'Show Solution',
+                'MH.lesson_Y2Alg_seqArith1.hideSolution': 'Hide Solution',
+                'MH.lesson_Y2Alg_seqArith1.showConstruction': 'Show Construction',
+                
+                // Lesson specific translations
+                'MH.lesson_Y2Alg_seqArith1.title': 'Arithmetic Sequences: Part I',
+                'MH.lesson_Y2Alg_seqArith1.subtitle': 'Introduction to Number Patterns',
+                'MH.lesson_Y2Alg_seqArith1.introduction': 'Introduction',
+                'MH.lesson_Y2Alg_seqArith1.introText1': 'In this lesson, we will explore the concept of sequences. A sequence is an ordered list of numbers that follows a specific pattern or rule. Understanding sequences helps us recognize patterns in mathematics and in the world around us.',
+                'MH.lesson_Y2Alg_seqArith1.introText2': 'We will start by identifying patterns in given lists of numbers, then explore special sequences like triangular numbers, and finally learn the formal definition of a sequence.',
+                
+                // Part I
+                'MH.lesson_Y2Alg_seqArith1.part1': 'I. Concept of Sequences',
+                'MH.lesson_Y2Alg_seqArith1.activity1Title': 'Activity 1',
+                'MH.lesson_Y2Alg_seqArith1.activity1Statement': 'Each of the following lists of numbers follows a pattern. Discover this pattern and give the next two terms.',
+                'MH.lesson_Y2Alg_seqArith1.activity1a': 'a) 5; 3; 1; -1; -3; ...',
+                'MH.lesson_Y2Alg_seqArith1.solution1a': 'Let\'s examine the differences between consecutive terms:',
+                'MH.lesson_Y2Alg_seqArith1.solution1a1': 'From 5 to 3: 3 - 5 = -2',
+                'MH.lesson_Y2Alg_seqArith1.solution1a2': 'From 3 to 1: 1 - 3 = -2',
+                'MH.lesson_Y2Alg_seqArith1.solution1a3': 'From 1 to -1: -1 - 1 = -2',
+                'MH.lesson_Y2Alg_seqArith1.solution1a4': 'From -1 to -3: -3 - (-1) = -2',
+                'MH.lesson_Y2Alg_seqArith1.solution1a5': 'Each term is obtained by subtracting 2 from the previous term. This is called an <strong>arithmetic sequence</strong> with common difference -2.',
+                'MH.lesson_Y2Alg_seqArith1.solution1a6': 'To find the next two terms:',
+                'MH.lesson_Y2Alg_seqArith1.solution1a7': '-3 - 2 = <strong>-5</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1a8': '-5 - 2 = <strong>-7</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1a9': 'The complete sequence: 5; 3; 1; -1; -3; <span class="MH-number-pattern">-5; -7</span>',
+                
+                'MH.lesson_Y2Alg_seqArith1.activity1b': 'b) 1/4; 1; 7/4; 5/2; 13/4; ...',
+                'MH.lesson_Y2Alg_seqArith1.solution1b': 'Let\'s write all terms with denominator 4 to see the pattern more clearly:',
+                'MH.lesson_Y2Alg_seqArith1.solution1b1': '1/4 = 1/4',
+                'MH.lesson_Y2Alg_seqArith1.solution1b2': '1 = 4/4',
+                'MH.lesson_Y2Alg_seqArith1.solution1b3': '7/4 = 7/4',
+                'MH.lesson_Y2Alg_seqArith1.solution1b4': '5/2 = 10/4',
+                'MH.lesson_Y2Alg_seqArith1.solution1b5': '13/4 = 13/4',
+                'MH.lesson_Y2Alg_seqArith1.solution1b6': 'Now look at the numerators: 1, 4, 7, 10, 13, ...',
+                'MH.lesson_Y2Alg_seqArith1.solution1b7': 'The difference between consecutive numerators: 4-1=3, 7-4=3, 10-7=3, 13-10=3',
+                'MH.lesson_Y2Alg_seqArith1.solution1b8': 'Each numerator increases by 3. This is also an <strong>arithmetic sequence</strong> with common difference 3/4 (since we keep denominator 4).',
+                'MH.lesson_Y2Alg_seqArith1.solution1b9': 'To find the next two terms:',
+                'MH.lesson_Y2Alg_seqArith1.solution1b10': 'Next numerator: 13 + 3 = 16 → 16/4 = <strong>4</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1b11': 'Following numerator: 16 + 3 = 19 → 19/4 = <strong>19/4</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1b12': 'The complete sequence: 1/4; 1; 7/4; 5/2; 13/4; <span class="MH-number-pattern">4; 19/4</span>',
+                
+                'MH.lesson_Y2Alg_seqArith1.activity1c': 'c) 1; 2; 3; 5; 8; ...',
+                'MH.lesson_Y2Alg_seqArith1.solution1c': 'Let\'s examine how each term relates to the previous ones:',
+                'MH.lesson_Y2Alg_seqArith1.solution1c1': '1 + 2 = 3 (third term equals sum of first two)',
+                'MH.lesson_Y2Alg_seqArith1.solution1c2': '2 + 3 = 5 (fourth term equals sum of previous two)',
+                'MH.lesson_Y2Alg_seqArith1.solution1c3': '3 + 5 = 8 (fifth term equals sum of previous two)',
+                'MH.lesson_Y2Alg_seqArith1.solution1c4': 'This is a <strong>Fibonacci-like sequence</strong> where each term (after the first two) is the sum of the two preceding terms.',
+                'MH.lesson_Y2Alg_seqArith1.solution1c5': 'To find the next two terms:',
+                'MH.lesson_Y2Alg_seqArith1.solution1c6': '5 + 8 = <strong>13</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1c7': '8 + 13 = <strong>21</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1c8': 'The complete sequence: 1; 2; 3; 5; 8; <span class="MH-number-pattern">13; 21</span>',
+                
+                'MH.lesson_Y2Alg_seqArith1.activity1d': 'd) 1; 4; 9; 16; 25; ...',
+                'MH.lesson_Y2Alg_seqArith1.solution1d': 'Let\'s check if these numbers are perfect squares:',
+                'MH.lesson_Y2Alg_seqArith1.solution1d1': '1 = 1² = 1 × 1',
+                'MH.lesson_Y2Alg_seqArith1.solution1d2': '4 = 2² = 2 × 2',
+                'MH.lesson_Y2Alg_seqArith1.solution1d3': '9 = 3² = 3 × 3',
+                'MH.lesson_Y2Alg_seqArith1.solution1d4': '16 = 4² = 4 × 4',
+                'MH.lesson_Y2Alg_seqArith1.solution1d5': '25 = 5² = 5 × 5',
+                'MH.lesson_Y2Alg_seqArith1.solution1d6': 'These are <strong>square numbers</strong> - each term is the square of its position in the sequence (1st term is 1², 2nd term is 2², etc.).',
+                'MH.lesson_Y2Alg_seqArith1.solution1d7': 'To find the next two terms:',
+                'MH.lesson_Y2Alg_seqArith1.solution1d8': '6² = 6 × 6 = <strong>36</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1d9': '7² = 7 × 7 = <strong>49</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1d10': 'The complete sequence: 1; 4; 9; 16; 25; <span class="MH-number-pattern">36; 49</span>',
+                
+                'MH.lesson_Y2Alg_seqArith1.activity1e': 'e) -2; -3; -5; -9; -17; ...',
+                'MH.lesson_Y2Alg_seqArith1.solution1e': 'Let\'s examine the differences between consecutive terms:',
+                'MH.lesson_Y2Alg_seqArith1.solution1e1': '-3 - (-2) = -1',
+                'MH.lesson_Y2Alg_seqArith1.solution1e2': '-5 - (-3) = -2',
+                'MH.lesson_Y2Alg_seqArith1.solution1e3': '-9 - (-5) = -4',
+                'MH.lesson_Y2Alg_seqArith1.solution1e4': '-17 - (-9) = -8',
+                'MH.lesson_Y2Alg_seqArith1.solution1e5': 'The differences are: -1, -2, -4, -8, ...',
+                'MH.lesson_Y2Alg_seqArith1.solution1e6': 'Notice that each difference is double the previous difference: -2 = 2 × (-1), -4 = 2 × (-2), -8 = 2 × (-4)',
+                'MH.lesson_Y2Alg_seqArith1.solution1e7': 'So the pattern is: each term is obtained by subtracting a number that keeps doubling: subtract 1, then 2, then 4, then 8, ...',
+                'MH.lesson_Y2Alg_seqArith1.solution1e8': 'To find the next two terms:',
+                'MH.lesson_Y2Alg_seqArith1.solution1e9': 'Next difference: 2 × (-8) = -16',
+                'MH.lesson_Y2Alg_seqArith1.solution1e10': '-17 + (-16) = -17 - 16 = <strong>-33</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1e11': 'Following difference: 2 × (-16) = -32',
+                'MH.lesson_Y2Alg_seqArith1.solution1e12': '-33 + (-32) = -33 - 32 = <strong>-65</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1e13': 'The complete sequence: -2; -3; -5; -9; -17; <span class="MH-number-pattern">-33; -65</span>',
+                
+                // Part II
+                'MH.lesson_Y2Alg_seqArith1.part2': 'II. Triangular Numbers',
+                'MH.lesson_Y2Alg_seqArith1.activity2Title': 'Activity 2',
+                'MH.lesson_Y2Alg_seqArith1.activity2Statement': 'The following figures represent the first four triangular numbers 1, 3, 6 and 10, denoted respectively T₁, T₂, T₃ and T₄.',
+                'MH.lesson_Y2Alg_seqArith1.activity2Statement2': 'T₁ reads "T subscript 1" or "T, 1". T₂ reads "T subscript 2" or "T, 2". More generally Tₙ reads "T subscript n" or "T, n".',
+                'MH.lesson_Y2Alg_seqArith1.diagram1Title': 'Triangular Numbers T₁, T₂, T₃, T₄',
+                'MH.lesson_Y2Alg_seqArith1.diagram1Instructions': 'Each triangle contains dots arranged in triangular patterns. T₁ has 1 dot, T₂ has 3 dots (1+2), T₃ has 6 dots (1+2+3), T₄ has 10 dots (1+2+3+4).',
+                'MH.lesson_Y2Alg_seqArith1.question2a': '1) a) Represent the 5th triangular number denoted T₅ and give its value.',
+                'MH.lesson_Y2Alg_seqArith1.solution2a1': 'To find T₅, we need to understand the pattern of triangular numbers:',
+                'MH.lesson_Y2Alg_seqArith1.solution2a2': 'T₁ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution2a3': 'T₂ = 1 + 2 = 3',
+                'MH.lesson_Y2Alg_seqArith1.solution2a4': 'T₃ = 1 + 2 + 3 = 6',
+                'MH.lesson_Y2Alg_seqArith1.solution2a5': 'T₄ = 1 + 2 + 3 + 4 = 10',
+                'MH.lesson_Y2Alg_seqArith1.solution2a6': 'So T₅ should be the sum of the first 5 natural numbers:',
+                'MH.lesson_Y2Alg_seqArith1.solution2a7': 'T₅ = 1 + 2 + 3 + 4 + 5',
+                'MH.lesson_Y2Alg_seqArith1.solution2a8': 'Let\'s calculate step by step:',
+                'MH.lesson_Y2Alg_seqArith1.solution2a9': '1 + 2 = 3',
+                'MH.lesson_Y2Alg_seqArith1.solution2a10': '3 + 3 = 6',
+                'MH.lesson_Y2Alg_seqArith1.solution2a11': '6 + 4 = 10',
+                'MH.lesson_Y2Alg_seqArith1.solution2a12': '10 + 5 = <strong>15</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution2a13': 'So T₅ = <strong>15</strong>. The figure would have 5 rows: first row 1 dot, second row 2 dots, third row 3 dots, fourth row 4 dots, fifth row 5 dots, making a total of 15 dots arranged in a triangle.',
+                
+                'MH.lesson_Y2Alg_seqArith1.question2b': 'b) Same question for T₆.',
+                'MH.lesson_Y2Alg_seqArith1.solution2b1': 'Following the same pattern, T₆ is the sum of the first 6 natural numbers:',
+                'MH.lesson_Y2Alg_seqArith1.solution2b2': 'T₆ = 1 + 2 + 3 + 4 + 5 + 6',
+                'MH.lesson_Y2Alg_seqArith1.solution2b3': 'We already know T₅ = 15, so:',
+                'MH.lesson_Y2Alg_seqArith1.solution2b4': 'T₆ = T₅ + 6 = 15 + 6 = <strong>21</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution2b5': 'So T₆ = <strong>21</strong>. The figure would have 6 rows with 1, 2, 3, 4, 5, 6 dots respectively, total 21 dots.',
+                
+                'MH.lesson_Y2Alg_seqArith1.question2c': '2) The Pythagoreans used rectangular diagrams to calculate triangular numbers.',
+                'MH.lesson_Y2Alg_seqArith1.question2ca': 'a) The rectangular diagram below allows calculating T₁₂. Explain how.',
+                'MH.lesson_Y2Alg_seqArith1.solution2c1': 'The Pythagoreans noticed that if you take two identical triangular arrangements and put them together, you get a rectangle.',
+                'MH.lesson_Y2Alg_seqArith1.solution2c2': 'For example, two T₄ triangles (each with 10 dots) form a 4 × 5 rectangle with 20 dots.',
+                'MH.lesson_Y2Alg_seqArith1.solution2c3': 'So one triangle has half the dots of the rectangle:',
+                'MH.lesson_Y2Alg_seqArith1.solution2c4': 'Tₙ = (n × (n + 1)) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith1.solution2c5': 'For T₁₂, the rectangular diagram would be 12 × 13 with 156 dots total, so T₁₂ = 156 ÷ 2 = 78.',
+                
+                'MH.lesson_Y2Alg_seqArith1.question2d': 'b) Give the values of T₂₀, T₁₂₅ and T₂₀₀₆.',
+                'MH.lesson_Y2Alg_seqArith1.solution2d1': 'Using the formula Tₙ = n × (n + 1) ÷ 2:',
+                'MH.lesson_Y2Alg_seqArith1.solution2d2': 'T₂₀ = 20 × (20 + 1) ÷ 2 = 20 × 21 ÷ 2 = 420 ÷ 2 = <strong>210</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution2d3': 'T₁₂₅ = 125 × (125 + 1) ÷ 2 = 125 × 126 ÷ 2 = 15750 ÷ 2 = <strong>7875</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution2d4': 'T₂₀₀₆ = 2006 × (2006 + 1) ÷ 2 = 2006 × 2007 ÷ 2',
+                'MH.lesson_Y2Alg_seqArith1.solution2d5': '2006 × 2007 = 2006 × 2000 + 2006 × 7 = 4,012,000 + 14,042 = 4,026,042',
+                'MH.lesson_Y2Alg_seqArith1.solution2d6': '4,026,042 ÷ 2 = <strong>2,013,021</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution2d7': 'So: T₂₀ = 210, T₁₂₅ = 7,875, T₂₀₀₆ = 2,013,021',
+                
+                'MH.lesson_Y2Alg_seqArith1.question2e': 'c) Give the expression for the nth triangular number Tₙ as a function of n.',
+                'MH.lesson_Y2Alg_seqArith1.solution2e1': 'From our observations:',
+                'MH.lesson_Y2Alg_seqArith1.solution2e2': 'T₁ = 1 = (1 × 2) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith1.solution2e3': 'T₂ = 3 = (2 × 3) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith1.solution2e4': 'T₃ = 6 = (3 × 4) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith1.solution2e5': 'T₄ = 10 = (4 × 5) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith1.solution2e6': 'T₅ = 15 = (5 × 6) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith1.solution2e7': 'We can see the pattern: Tₙ = n × (n + 1) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith1.formula2e': String.raw`\[T_n = \frac{n(n+1)}{2}\]`,
+                'MH.lesson_Y2Alg_seqArith1.solution2e8': 'This formula works because when you put two triangular numbers together, you get a rectangle of dimensions n by (n+1), so one triangle is half of that rectangle.',
+                
+                // Part III
+                'MH.lesson_Y2Alg_seqArith1.part3': 'III. A Quadratic Spiral',
+                'MH.lesson_Y2Alg_seqArith1.activity3Title': 'Activity 3',
+                'MH.lesson_Y2Alg_seqArith1.activity3Statement': 'In the figure opposite we have:',
+                'MH.lesson_Y2Alg_seqArith1.activity3a': 'Triangle OA₁A₂ is right-angled at A₁ with OA₁ = A₁A₂ = 1',
+                'MH.lesson_Y2Alg_seqArith1.activity3b': 'Triangle OA₂A₃ is right-angled at A₂ with A₂A₃ = 1',
+                'MH.lesson_Y2Alg_seqArith1.activity3c': 'And so on...',
+                'MH.lesson_Y2Alg_seqArith1.activity3d': 'We denote: a₁ = area(OA₁A₂), a₂ = area(OA₂A₃), ..., aₙ = area(OAₙAₙ₊₁).',
+                'MH.lesson_Y2Alg_seqArith1.diagram2Title': 'Quadratic Spiral with Right Triangles',
+                'MH.lesson_Y2Alg_seqArith1.diagram2Instructions': 'Triangles OA₁A₂, OA₂A₃, OA₃A₄, etc. forming a spiral pattern. Each triangle has a right angle and certain sides equal to 1.',
+                'MH.lesson_Y2Alg_seqArith1.question3a': 'a) Calculate a₂, a₃, a₄ and a₅.',
+                'MH.lesson_Y2Alg_seqArith1.solution3a1': 'Let\'s analyze step by step:',
+                'MH.lesson_Y2Alg_seqArith1.solution3a2': '<strong>Step 1: Understanding the pattern</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a3': 'Triangle OA₁A₂ is right-angled at A₁ with OA₁ = A₁A₂ = 1.',
+                'MH.lesson_Y2Alg_seqArith1.solution3a4': 'Area of right triangle = (base × height) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith1.solution3a5': 'So a₁ = area(OA₁A₂) = (1 × 1) ÷ 2 = 0.5',
+                'MH.lesson_Y2Alg_seqArith1.solution3a6': '<strong>Step 2: Calculate OA₂ using Pythagorean theorem</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a7': 'In triangle OA₁A₂: OA₂² = OA₁² + A₁A₂² = 1² + 1² = 2',
+                'MH.lesson_Y2Alg_seqArith1.solution3a8': 'So OA₂ = √2',
+                'MH.lesson_Y2Alg_seqArith1.solution3a9': '<strong>Step 3: Triangle OA₂A₃</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a10': 'Triangle OA₂A₃ is right-angled at A₂ with A₂A₃ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution3a11': 'Base = OA₂ = √2, height = A₂A₃ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution3a12': 'So a₂ = area(OA₂A₃) = (√2 × 1) ÷ 2 = <strong>√2/2</strong> ≈ 0.7071',
+                'MH.lesson_Y2Alg_seqArith1.solution3a13': '<strong>Step 4: Calculate OA₃</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a14': 'In triangle OA₂A₃: OA₃² = OA₂² + A₂A₃² = (√2)² + 1² = 2 + 1 = 3',
+                'MH.lesson_Y2Alg_seqArith1.solution3a15': 'So OA₃ = √3',
+                'MH.lesson_Y2Alg_seqArith1.solution3a16': '<strong>Step 5: Triangle OA₃A₄</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a17': 'Triangle OA₃A₄ is right-angled at A₃ with A₃A₄ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution3a18': 'Base = OA₃ = √3, height = A₃A₄ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution3a19': 'So a₃ = area(OA₃A₄) = (√3 × 1) ÷ 2 = <strong>√3/2</strong> ≈ 0.8660',
+                'MH.lesson_Y2Alg_seqArith1.solution3a20': '<strong>Step 6: Calculate OA₄</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a21': 'In triangle OA₃A₄: OA₄² = OA₃² + A₃A₄² = (√3)² + 1² = 3 + 1 = 4',
+                'MH.lesson_Y2Alg_seqArith1.solution3a22': 'So OA₄ = √4 = 2',
+                'MH.lesson_Y2Alg_seqArith1.solution3a23': '<strong>Step 7: Triangle OA₄A₅</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a24': 'Triangle OA₄A₅ is right-angled at A₄ with A₄A₅ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution3a25': 'Base = OA₄ = 2, height = A₄A₅ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution3a26': 'So a₄ = area(OA₄A₅) = (2 × 1) ÷ 2 = <strong>1</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a27': '<strong>Step 8: Calculate OA₅</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a28': 'In triangle OA₄A₅: OA₅² = OA₄² + A₄A₅² = 2² + 1² = 4 + 1 = 5',
+                'MH.lesson_Y2Alg_seqArith1.solution3a29': 'So OA₅ = √5',
+                'MH.lesson_Y2Alg_seqArith1.solution3a30': '<strong>Step 9: Triangle OA₅A₆</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a31': 'Triangle OA₅A₆ is right-angled at A₅ with A₅A₆ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution3a32': 'Base = OA₅ = √5, height = A₅A₆ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution3a33': 'So a₅ = area(OA₅A₆) = (√5 × 1) ÷ 2 = <strong>√5/2</strong> ≈ 1.1180',
+                'MH.lesson_Y2Alg_seqArith1.solution3a34': '<strong>Summary:</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a35': 'a₁ = 1/2 = 0.5',
+                'MH.lesson_Y2Alg_seqArith1.solution3a36': 'a₂ = √2/2 ≈ 0.7071',
+                'MH.lesson_Y2Alg_seqArith1.solution3a37': 'a₃ = √3/2 ≈ 0.8660',
+                'MH.lesson_Y2Alg_seqArith1.solution3a38': 'a₄ = 2/2 = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution3a39': 'a₅ = √5/2 ≈ 1.1180',
+                
+                'MH.lesson_Y2Alg_seqArith1.question3b': 'b) Conjecture the expression of aₙ as a function of n.',
+                'MH.lesson_Y2Alg_seqArith1.solution3b1': 'Let\'s look at the pattern we found:',
+                'MH.lesson_Y2Alg_seqArith1.solution3b2': 'a₁ = √1/2 (since √1 = 1)',
+                'MH.lesson_Y2Alg_seqArith1.solution3b3': 'a₂ = √2/2',
+                'MH.lesson_Y2Alg_seqArith1.solution3b4': 'a₃ = √3/2',
+                'MH.lesson_Y2Alg_seqArith1.solution3b5': 'a₄ = √4/2 = 2/2 = 1 (but √4 = 2)',
+                'MH.lesson_Y2Alg_seqArith1.solution3b6': 'a₅ = √5/2',
+                'MH.lesson_Y2Alg_seqArith1.solution3b7': 'It seems like aₙ = √n/2, but let\'s check:',
+                'MH.lesson_Y2Alg_seqArith1.solution3b8': 'For n=1: √1/2 = 1/2 = 0.5 ✓',
+                'MH.lesson_Y2Alg_seqArith1.solution3b9': 'For n=2: √2/2 ≈ 0.7071 ✓',
+                'MH.lesson_Y2Alg_seqArith1.solution3b10': 'For n=3: √3/2 ≈ 0.8660 ✓',
+                'MH.lesson_Y2Alg_seqArith1.solution3b11': 'For n=4: √4/2 = 2/2 = 1 ✓',
+                'MH.lesson_Y2Alg_seqArith1.solution3b12': 'For n=5: √5/2 ≈ 1.1180 ✓',
+                'MH.lesson_Y2Alg_seqArith1.formula3b': String.raw`\[a_n = \frac{\sqrt{n}}{2}\]`,
+                'MH.lesson_Y2Alg_seqArith1.solution3b13': 'Why does this work? Let\'s think about it:',
+                'MH.lesson_Y2Alg_seqArith1.solution3b14': 'In triangle OAₙAₙ₊₁:',
+                'MH.lesson_Y2Alg_seqArith1.solution3b15': 'The right angle is at Aₙ',
+                'MH.lesson_Y2Alg_seqArith1.solution3b16': 'OAₙ is the base',
+                'MH.lesson_Y2Alg_seqArith1.solution3b17': 'AₙAₙ₊₁ = 1 is the height',
+                'MH.lesson_Y2Alg_seqArith1.solution3b18': 'From the Pythagorean theorem in previous triangles, we found:',
+                'MH.lesson_Y2Alg_seqArith1.solution3b19': 'OA₁² = 1 (given)',
+                'MH.lesson_Y2Alg_seqArith1.solution3b20': 'OA₂² = OA₁² + 1² = 1 + 1 = 2',
+                'MH.lesson_Y2Alg_seqArith1.solution3b21': 'OA₃² = OA₂² + 1² = 2 + 1 = 3',
+                'MH.lesson_Y2Alg_seqArith1.solution3b22': 'OA₄² = OA₃² + 1² = 3 + 1 = 4',
+                'MH.lesson_Y2Alg_seqArith1.solution3b23': 'So in general: OAₙ² = n, which means OAₙ = √n',
+                'MH.lesson_Y2Alg_seqArith1.solution3b24': 'Then area = (base × height) ÷ 2 = (√n × 1) ÷ 2 = √n/2',
+                
+                // Definition
+                'MH.lesson_Y2Alg_seqArith1.definitionTitle': 'Definition of a Sequence',
+                'MH.lesson_Y2Alg_seqArith1.definition': 'Definition',
+                'MH.lesson_Y2Alg_seqArith1.definitionText': 'Let n₀ be a natural number. When to every natural number n greater than or equal to n₀ we associate a unique real number U(n), we say that we have defined a sequence of real numbers.',
+                'MH.lesson_Y2Alg_seqArith1.definitionText2': 'The real number U(n) is called the general term of the sequence and is denoted Uₙ. The sequence is denoted (Uₙ)ₙ ≥ n₀ or simply (Uₙ).',
+                
+                // Activity 4
+                'MH.lesson_Y2Alg_seqArith1.activity4Title': 'Activity 4',
+                'MH.lesson_Y2Alg_seqArith1.activity4Statement': 'Let the sequence (Uₙ) be defined for every natural number n by Uₙ = (3n + 1)/4.',
+                'MH.lesson_Y2Alg_seqArith1.question4a': 'a) Calculate U₀, U₁, U₅ and U₁₀₀.',
+                'MH.lesson_Y2Alg_seqArith1.solution4a1': 'We use the formula Uₙ = (3n + 1)/4 and substitute different values of n:',
+                'MH.lesson_Y2Alg_seqArith1.solution4a2': '<strong>For U₀ (n = 0):</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4a3': 'U₀ = (3 × 0 + 1) / 4 = (0 + 1) / 4 = 1/4 = <strong>0.25</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4a4': '<strong>For U₁ (n = 1):</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4a5': 'U₁ = (3 × 1 + 1) / 4 = (3 + 1) / 4 = 4/4 = <strong>1</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4a6': '<strong>For U₅ (n = 5):</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4a7': 'U₅ = (3 × 5 + 1) / 4 = (15 + 1) / 4 = 16/4 = <strong>4</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4a8': '<strong>For U₁₀₀ (n = 100):</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4a9': 'U₁₀₀ = (3 × 100 + 1) / 4 = (300 + 1) / 4 = 301/4 = <strong>75.25</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4a10': '<strong>Summary:</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4a11': 'U₀ = 0.25 or 1/4',
+                'MH.lesson_Y2Alg_seqArith1.solution4a12': 'U₁ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution4a13': 'U₅ = 4',
+                'MH.lesson_Y2Alg_seqArith1.solution4a14': 'U₁₀₀ = 75.25 or 301/4',
+                
+                'MH.lesson_Y2Alg_seqArith1.question4b': 'b) Determine the first term, the 5th term and the 100th term of this sequence.',
+                'MH.lesson_Y2Alg_seqArith1.solution4b1': 'In a sequence, the terms are usually numbered starting from 0 or 1. Since our sequence is defined for every natural number n (which usually starts at 0), we have:',
+                'MH.lesson_Y2Alg_seqArith1.solution4b2': '<strong>First term:</strong> This is U₀ (when n = 0)',
+                'MH.lesson_Y2Alg_seqArith1.solution4b3': 'We already calculated U₀ = 1/4 = 0.25',
+                'MH.lesson_Y2Alg_seqArith1.solution4b4': '<strong>5th term:</strong> If we count from the first term as term number 1, then:',
+                'MH.lesson_Y2Alg_seqArith1.solution4b5': 'Term 1: U₀ = 0.25',
+                'MH.lesson_Y2Alg_seqArith1.solution4b6': 'Term 2: U₁ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution4b7': 'Term 3: U₂ = (3×2+1)/4 = (6+1)/4 = 7/4 = 1.75',
+                'MH.lesson_Y2Alg_seqArith1.solution4b8': 'Term 4: U₃ = (3×3+1)/4 = (9+1)/4 = 10/4 = 2.5',
+                'MH.lesson_Y2Alg_seqArith1.solution4b9': 'Term 5: U₄ = (3×4+1)/4 = (12+1)/4 = 13/4 = 3.25',
+                'MH.lesson_Y2Alg_seqArith1.solution4b10': 'So the 5th term is U₄ = 3.25',
+                'MH.lesson_Y2Alg_seqArith1.solution4b11': '<strong>100th term:</strong> Following the same pattern, the 100th term would be U₉₉ (since first term is U₀)',
+                'MH.lesson_Y2Alg_seqArith1.solution4b12': 'U₉₉ = (3×99 + 1)/4 = (297 + 1)/4 = 298/4 = 74.5',
+                'MH.lesson_Y2Alg_seqArith1.solution4b13': 'But wait! We need to be careful. Sometimes sequences are indexed starting from 1. Let\'s clarify:',
+                'MH.lesson_Y2Alg_seqArith1.solution4b14': 'If the sequence starts at n=0:',
+                'MH.lesson_Y2Alg_seqArith1.solution4b15': 'First term = U₀ = 0.25',
+                'MH.lesson_Y2Alg_seqArith1.solution4b16': '5th term = U₄ = 3.25',
+                'MH.lesson_Y2Alg_seqArith1.solution4b17': '100th term = U₉₉ = 74.5',
+                'MH.lesson_Y2Alg_seqArith1.solution4b18': 'If the sequence starts at n=1:',
+                'MH.lesson_Y2Alg_seqArith1.solution4b19': 'First term = U₁ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution4b20': '5th term = U₅ = 4',
+                'MH.lesson_Y2Alg_seqArith1.solution4b21': '100th term = U₁₀₀ = 75.25',
+                'MH.lesson_Y2Alg_seqArith1.solution4b22': 'Since the problem says "for every natural number n" and natural numbers usually include 0, we\'ll use the first interpretation:',
+                'MH.lesson_Y2Alg_seqArith1.solution4b23': '<strong>First term: U₀ = 0.25, 5th term: U₄ = 3.25, 100th term: U₉₉ = 74.5</strong>',
+                
+                'MH.lesson_Y2Alg_seqArith1.question4c': 'c) Determine the expression of Uₚ₊₁, U₂ₙ and U₃ₖ₊₂.',
+                'MH.lesson_Y2Alg_seqArith1.solution4c1': 'We have the general formula: Uₙ = (3n + 1)/4',
+                'MH.lesson_Y2Alg_seqArith1.solution4c2': 'We need to substitute different expressions for n:',
+                'MH.lesson_Y2Alg_seqArith1.solution4c3': '<strong>For Uₚ₊₁:</strong> Here, n = p+1',
+                'MH.lesson_Y2Alg_seqArith1.solution4c4': 'Uₚ₊₁ = [3(p+1) + 1] / 4 = [3p + 3 + 1] / 4 = (3p + 4) / 4',
+                'MH.lesson_Y2Alg_seqArith1.solution4c5': '<strong>For U₂ₙ:</strong> Here, n = 2n (be careful: the n in U₂ₙ is different from the n in our formula)',
+                'MH.lesson_Y2Alg_seqArith1.solution4c6': 'U₂ₙ = [3(2n) + 1] / 4 = (6n + 1) / 4',
+                'MH.lesson_Y2Alg_seqArith1.solution4c7': '<strong>For U₃ₖ₊₂:</strong> Here, n = 3k+2',
+                'MH.lesson_Y2Alg_seqArith1.solution4c8': 'U₃ₖ₊₂ = [3(3k+2) + 1] / 4 = [9k + 6 + 1] / 4 = (9k + 7) / 4',
+                'MH.lesson_Y2Alg_seqArith1.solution4c9': '<strong>Summary:</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4c10': 'Uₚ₊₁ = (3p + 4)/4',
+                'MH.lesson_Y2Alg_seqArith1.solution4c11': 'U₂ₙ = (6n + 1)/4',
+                'MH.lesson_Y2Alg_seqArith1.solution4c12': 'U₃ₖ₊₂ = (9k + 7)/4',
+                
+                // Summary
+                'MH.lesson_Y2Alg_seqArith1.summaryTitle': 'Lesson Summary',
+                'MH.lesson_Y2Alg_seqArith1.keyConceptsTitle': 'Key Concepts Learned',
+                'MH.lesson_Y2Alg_seqArith1.concept1': 'A sequence is an ordered list of numbers that follows a specific pattern',
+                'MH.lesson_Y2Alg_seqArith1.concept2': 'We can find patterns by looking at differences between terms, ratios, or other relationships',
+                'MH.lesson_Y2Alg_seqArith1.concept3': 'Triangular numbers follow the formula Tₙ = n(n+1)/2',
+                'MH.lesson_Y2Alg_seqArith1.concept4': 'A sequence is formally defined as a function that assigns a real number to each natural number',
+                'MH.lesson_Y2Alg_seqArith1.concept5': 'The general term Uₙ gives us a formula to find any term in the sequence',
+                'MH.lesson_Y2Alg_seqArith1.typesSequencesTitle': 'Types of Sequences Encountered',
+                'MH.lesson_Y2Alg_seqArith1.type1': '<strong>Arithmetic sequences:</strong> Each term differs from the previous by a constant (like 5, 3, 1, -1, -3, ... with difference -2)',
+                'MH.lesson_Y2Alg_seqArith1.type2': '<strong>Fibonacci-like sequences:</strong> Each term is the sum of the two preceding terms (like 1, 2, 3, 5, 8, 13, ...)',
+                'MH.lesson_Y2Alg_seqArith1.type3': '<strong>Square numbers:</strong> Each term is a perfect square (like 1, 4, 9, 16, 25, ...)',
+                'MH.lesson_Y2Alg_seqArith1.type4': '<strong>Triangular numbers:</strong> Each term represents dots arranged in a triangle (1, 3, 6, 10, 15, ...)',
+                'MH.lesson_Y2Alg_seqArith1.nextLessonTitle': 'Next Steps',
+                'MH.lesson_Y2Alg_seqArith1.finalThought': 'In this lesson, we learned to recognize patterns in sequences and work with their general terms. In the next lesson, we will focus specifically on arithmetic sequences, learn how to find their general term, and solve problems involving these important sequences.',
+                
+                // Footer
+                'MH.footer.developer': 'Developer',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Links',
+                'MH.footer.terms': 'Terms of Use',
+                'MH.footer.privacy': 'Privacy Policy'
+            },
+            'fr': {
+                // Traductions générales
+                'MH.general.homeTooltip': 'Aller à l\'accueil',
+                'MH.general.install': 'Installer l\'App',
+                'MH.general.installSuccess': 'Mathematics Hub installé avec succès!',
+                'MH.general.enableNotifications': 'Activer les notifications',
+                'MH.general.notificationEnabled': 'Notifications activées! Vous recevrez maintenant des mises à jour.',
+                'MH.general.title': 'Centre de Mathématiques',
+                'MH.general.theme': 'Thème',
+                'MH.general.language': 'Langue',
+                'MH.lesson_Y2Alg_seqArith1.showSolution': 'Afficher la Solution',
+                'MH.lesson_Y2Alg_seqArith1.hideSolution': 'Masquer la Solution',
+                'MH.lesson_Y2Alg_seqArith1.showConstruction': 'Afficher la Construction',
+                
+                // Traductions de la leçon
+                'MH.lesson_Y2Alg_seqArith1.title': 'Suites Arithmétiques : Partie I',
+                'MH.lesson_Y2Alg_seqArith1.subtitle': 'Introduction aux Modèles Numériques',
+                'MH.lesson_Y2Alg_seqArith1.introduction': 'Introduction',
+                'MH.lesson_Y2Alg_seqArith1.introText1': 'Dans cette leçon, nous allons explorer le concept de suites. Une suite est une liste ordonnée de nombres qui suit un modèle ou une règle spécifique. Comprendre les suites nous aide à reconnaître des modèles en mathématiques et dans le monde qui nous entoure.',
+                'MH.lesson_Y2Alg_seqArith1.introText2': 'Nous commencerons par identifier des modèles dans des listes de nombres données, puis nous explorerons des suites spéciales comme les nombres triangulaires, et enfin nous apprendrons la définition formelle d\'une suite.',
+                
+                // Partie I
+                'MH.lesson_Y2Alg_seqArith1.part1': 'I. Notion de suites',
+                'MH.lesson_Y2Alg_seqArith1.activity1Title': 'Activité 1',
+                'MH.lesson_Y2Alg_seqArith1.activity1Statement': 'Chacune des listes suivantes de nombres obéit à une loi. Découvrir cette loi et donner les deux termes suivants.',
+                'MH.lesson_Y2Alg_seqArith1.activity1a': 'a) 5 ; 3 ; 1 ; – 1 ; – 3 ; …',
+                'MH.lesson_Y2Alg_seqArith1.solution1a': 'Examinons les différences entre les termes consécutifs :',
+                'MH.lesson_Y2Alg_seqArith1.solution1a1': 'De 5 à 3 : 3 - 5 = -2',
+                'MH.lesson_Y2Alg_seqArith1.solution1a2': 'De 3 à 1 : 1 - 3 = -2',
+                'MH.lesson_Y2Alg_seqArith1.solution1a3': 'De 1 à -1 : -1 - 1 = -2',
+                'MH.lesson_Y2Alg_seqArith1.solution1a4': 'De -1 à -3 : -3 - (-1) = -2',
+                'MH.lesson_Y2Alg_seqArith1.solution1a5': 'Chaque terme est obtenu en soustrayant 2 au terme précédent. C\'est ce qu\'on appelle une <strong>suite arithmétique</strong> de raison -2.',
+                'MH.lesson_Y2Alg_seqArith1.solution1a6': 'Pour trouver les deux termes suivants :',
+                'MH.lesson_Y2Alg_seqArith1.solution1a7': '-3 - 2 = <strong>-5</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1a8': '-5 - 2 = <strong>-7</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1a9': 'La suite complète : 5 ; 3 ; 1 ; -1 ; -3 ; <span class="MH-number-pattern">-5 ; -7</span>',
+                
+                'MH.lesson_Y2Alg_seqArith1.activity1b': 'b) 1/4 ; 1 ; 7/4 ; 5/2 ; 13/4 ; ...',
+                'MH.lesson_Y2Alg_seqArith1.solution1b': 'Écrivons tous les termes avec dénominateur 4 pour mieux voir le modèle :',
+                'MH.lesson_Y2Alg_seqArith1.solution1b1': '1/4 = 1/4',
+                'MH.lesson_Y2Alg_seqArith1.solution1b2': '1 = 4/4',
+                'MH.lesson_Y2Alg_seqArith1.solution1b3': '7/4 = 7/4',
+                'MH.lesson_Y2Alg_seqArith1.solution1b4': '5/2 = 10/4',
+                'MH.lesson_Y2Alg_seqArith1.solution1b5': '13/4 = 13/4',
+                'MH.lesson_Y2Alg_seqArith1.solution1b6': 'Regardons maintenant les numérateurs : 1, 4, 7, 10, 13, ...',
+                'MH.lesson_Y2Alg_seqArith1.solution1b7': 'La différence entre les numérateurs consécutifs : 4-1=3, 7-4=3, 10-7=3, 13-10=3',
+                'MH.lesson_Y2Alg_seqArith1.solution1b8': 'Chaque numérateur augmente de 3. C\'est aussi une <strong>suite arithmétique</strong> de raison 3/4 (puisque nous gardons le dénominateur 4).',
+                'MH.lesson_Y2Alg_seqArith1.solution1b9': 'Pour trouver les deux termes suivants :',
+                'MH.lesson_Y2Alg_seqArith1.solution1b10': 'Numérateur suivant : 13 + 3 = 16 → 16/4 = <strong>4</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1b11': 'Numérateur suivant : 16 + 3 = 19 → 19/4 = <strong>19/4</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1b12': 'La suite complète : 1/4 ; 1 ; 7/4 ; 5/2 ; 13/4 ; <span class="MH-number-pattern">4 ; 19/4</span>',
+                
+                'MH.lesson_Y2Alg_seqArith1.activity1c': 'c) 1 ; 2 ; 3 ; 5 ; 8 ; …',
+                'MH.lesson_Y2Alg_seqArith1.solution1c': 'Examinons comment chaque terme se rapporte aux précédents :',
+                'MH.lesson_Y2Alg_seqArith1.solution1c1': '1 + 2 = 3 (le troisième terme est la somme des deux premiers)',
+                'MH.lesson_Y2Alg_seqArith1.solution1c2': '2 + 3 = 5 (le quatrième terme est la somme des deux précédents)',
+                'MH.lesson_Y2Alg_seqArith1.solution1c3': '3 + 5 = 8 (le cinquième terme est la somme des deux précédents)',
+                'MH.lesson_Y2Alg_seqArith1.solution1c4': 'C\'est une <strong>suite de type Fibonacci</strong> où chaque terme (après les deux premiers) est la somme des deux termes précédents.',
+                'MH.lesson_Y2Alg_seqArith1.solution1c5': 'Pour trouver les deux termes suivants :',
+                'MH.lesson_Y2Alg_seqArith1.solution1c6': '5 + 8 = <strong>13</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1c7': '8 + 13 = <strong>21</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1c8': 'La suite complète : 1 ; 2 ; 3 ; 5 ; 8 ; <span class="MH-number-pattern">13 ; 21</span>',
+                
+                'MH.lesson_Y2Alg_seqArith1.activity1d': 'd) 1 ; 4 ; 9 ; 16 ; 25 ;…',
+                'MH.lesson_Y2Alg_seqArith1.solution1d': 'Vérifions si ces nombres sont des carrés parfaits :',
+                'MH.lesson_Y2Alg_seqArith1.solution1d1': '1 = 1² = 1 × 1',
+                'MH.lesson_Y2Alg_seqArith1.solution1d2': '4 = 2² = 2 × 2',
+                'MH.lesson_Y2Alg_seqArith1.solution1d3': '9 = 3² = 3 × 3',
+                'MH.lesson_Y2Alg_seqArith1.solution1d4': '16 = 4² = 4 × 4',
+                'MH.lesson_Y2Alg_seqArith1.solution1d5': '25 = 5² = 5 × 5',
+                'MH.lesson_Y2Alg_seqArith1.solution1d6': 'Ce sont des <strong>nombres carrés</strong> - chaque terme est le carré de sa position dans la suite (1er terme est 1², 2ème terme est 2², etc.).',
+                'MH.lesson_Y2Alg_seqArith1.solution1d7': 'Pour trouver les deux termes suivants :',
+                'MH.lesson_Y2Alg_seqArith1.solution1d8': '6² = 6 × 6 = <strong>36</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1d9': '7² = 7 × 7 = <strong>49</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1d10': 'La suite complète : 1 ; 4 ; 9 ; 16 ; 25 ; <span class="MH-number-pattern">36 ; 49</span>',
+                
+                'MH.lesson_Y2Alg_seqArith1.activity1e': 'e) – 2 ; – 3 ; – 5 ; – 9 ; – 17 ;…',
+                'MH.lesson_Y2Alg_seqArith1.solution1e': 'Examinons les différences entre les termes consécutifs :',
+                'MH.lesson_Y2Alg_seqArith1.solution1e1': '-3 - (-2) = -1',
+                'MH.lesson_Y2Alg_seqArith1.solution1e2': '-5 - (-3) = -2',
+                'MH.lesson_Y2Alg_seqArith1.solution1e3': '-9 - (-5) = -4',
+                'MH.lesson_Y2Alg_seqArith1.solution1e4': '-17 - (-9) = -8',
+                'MH.lesson_Y2Alg_seqArith1.solution1e5': 'Les différences sont : -1, -2, -4, -8, ...',
+                'MH.lesson_Y2Alg_seqArith1.solution1e6': 'Remarquez que chaque différence est le double de la différence précédente : -2 = 2 × (-1), -4 = 2 × (-2), -8 = 2 × (-4)',
+                'MH.lesson_Y2Alg_seqArith1.solution1e7': 'Donc le modèle est : chaque terme est obtenu en soustrayant un nombre qui double à chaque fois : soustraire 1, puis 2, puis 4, puis 8, ...',
+                'MH.lesson_Y2Alg_seqArith1.solution1e8': 'Pour trouver les deux termes suivants :',
+                'MH.lesson_Y2Alg_seqArith1.solution1e9': 'Différence suivante : 2 × (-8) = -16',
+                'MH.lesson_Y2Alg_seqArith1.solution1e10': '-17 + (-16) = -17 - 16 = <strong>-33</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1e11': 'Différence suivante : 2 × (-16) = -32',
+                'MH.lesson_Y2Alg_seqArith1.solution1e12': '-33 + (-32) = -33 - 32 = <strong>-65</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1e13': 'La suite complète : -2 ; -3 ; -5 ; -9 ; -17 ; <span class="MH-number-pattern">-33 ; -65</span>',
+                
+                // Partie II
+                'MH.lesson_Y2Alg_seqArith1.part2': 'II. Les nombres triangulaires',
+                'MH.lesson_Y2Alg_seqArith1.activity2Title': 'Activité 2',
+                'MH.lesson_Y2Alg_seqArith1.activity2Statement': 'Les figures suivantes représentent les quatre premiers nombres triangulaires 1, 3, 6 et 10, notés respectivement T₁, T₂, T₃ et T₄.',
+                'MH.lesson_Y2Alg_seqArith1.activity2Statement2': 'T₁ se lit T indice 1 ou T, 1. T₂ se lit T indice 2 ou T, 2. Et plus généralement Tₙ se lit T indice n ou T, n.',
+                'MH.lesson_Y2Alg_seqArith1.diagram1Title': 'Nombres Triangulaires T₁, T₂, T₃, T₄',
+                'MH.lesson_Y2Alg_seqArith1.diagram1Instructions': 'Chaque triangle contient des points disposés en motifs triangulaires. T₁ a 1 point, T₂ a 3 points (1+2), T₃ a 6 points (1+2+3), T₄ a 10 points (1+2+3+4).',
+                'MH.lesson_Y2Alg_seqArith1.question2a': '1) a) Représenter le 5ème nombre triangulaire noté T₅ et donner sa valeur.',
+                'MH.lesson_Y2Alg_seqArith1.solution2a1': 'Pour trouver T₅, nous devons comprendre le modèle des nombres triangulaires :',
+                'MH.lesson_Y2Alg_seqArith1.solution2a2': 'T₁ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution2a3': 'T₂ = 1 + 2 = 3',
+                'MH.lesson_Y2Alg_seqArith1.solution2a4': 'T₃ = 1 + 2 + 3 = 6',
+                'MH.lesson_Y2Alg_seqArith1.solution2a5': 'T₄ = 1 + 2 + 3 + 4 = 10',
+                'MH.lesson_Y2Alg_seqArith1.solution2a6': 'Donc T₅ devrait être la somme des 5 premiers nombres naturels :',
+                'MH.lesson_Y2Alg_seqArith1.solution2a7': 'T₅ = 1 + 2 + 3 + 4 + 5',
+                'MH.lesson_Y2Alg_seqArith1.solution2a8': 'Calculons étape par étape :',
+                'MH.lesson_Y2Alg_seqArith1.solution2a9': '1 + 2 = 3',
+                'MH.lesson_Y2Alg_seqArith1.solution2a10': '3 + 3 = 6',
+                'MH.lesson_Y2Alg_seqArith1.solution2a11': '6 + 4 = 10',
+                'MH.lesson_Y2Alg_seqArith1.solution2a12': '10 + 5 = <strong>15</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution2a13': 'Donc T₅ = <strong>15</strong>. La figure aurait 5 lignes : première ligne 1 point, deuxième ligne 2 points, troisième ligne 3 points, quatrième ligne 4 points, cinquième ligne 5 points, pour un total de 15 points disposés en triangle.',
+                
+                'MH.lesson_Y2Alg_seqArith1.question2b': 'b) Même question pour T₆.',
+                'MH.lesson_Y2Alg_seqArith1.solution2b1': 'Suivant le même modèle, T₆ est la somme des 6 premiers nombres naturels :',
+                'MH.lesson_Y2Alg_seqArith1.solution2b2': 'T₆ = 1 + 2 + 3 + 4 + 5 + 6',
+                'MH.lesson_Y2Alg_seqArith1.solution2b3': 'Nous savons déjà que T₅ = 15, donc :',
+                'MH.lesson_Y2Alg_seqArith1.solution2b4': 'T₆ = T₅ + 6 = 15 + 6 = <strong>21</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution2b5': 'Donc T₆ = <strong>21</strong>. La figure aurait 6 lignes avec 1, 2, 3, 4, 5, 6 points respectivement, total 21 points.',
+                
+                'MH.lesson_Y2Alg_seqArith1.question2c': '2) Les Pythagoriciens utilisaient des diagrammes rectangulaires pour calculer les nombres triangulaires.',
+                'MH.lesson_Y2Alg_seqArith1.question2ca': 'a) Le diagramme rectangulaire ci-dessous permet de calculer T₁₂. Expliquer comment.',
+                'MH.lesson_Y2Alg_seqArith1.solution2c1': 'Les Pythagoriciens ont remarqué que si vous prenez deux arrangements triangulaires identiques et les mettez ensemble, vous obtenez un rectangle.',
+                'MH.lesson_Y2Alg_seqArith1.solution2c2': 'Par exemple, deux triangles T₄ (chacun avec 10 points) forment un rectangle 4 × 5 avec 20 points.',
+                'MH.lesson_Y2Alg_seqArith1.solution2c3': 'Donc un triangle a la moitié des points du rectangle :',
+                'MH.lesson_Y2Alg_seqArith1.solution2c4': 'Tₙ = (n × (n + 1)) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith1.solution2c5': 'Pour T₁₂, le diagramme rectangulaire serait 12 × 13 avec 156 points au total, donc T₁₂ = 156 ÷ 2 = 78.',
+                
+                'MH.lesson_Y2Alg_seqArith1.question2d': 'b) Donner les valeurs de T₂₀ , T₁₂₅ et T₂₀₀₆.',
+                'MH.lesson_Y2Alg_seqArith1.solution2d1': 'En utilisant la formule Tₙ = n × (n + 1) ÷ 2 :',
+                'MH.lesson_Y2Alg_seqArith1.solution2d2': 'T₂₀ = 20 × (20 + 1) ÷ 2 = 20 × 21 ÷ 2 = 420 ÷ 2 = <strong>210</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution2d3': 'T₁₂₅ = 125 × (125 + 1) ÷ 2 = 125 × 126 ÷ 2 = 15750 ÷ 2 = <strong>7875</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution2d4': 'T₂₀₀₆ = 2006 × (2006 + 1) ÷ 2 = 2006 × 2007 ÷ 2',
+                'MH.lesson_Y2Alg_seqArith1.solution2d5': '2006 × 2007 = 2006 × 2000 + 2006 × 7 = 4 012 000 + 14 042 = 4 026 042',
+                'MH.lesson_Y2Alg_seqArith1.solution2d6': '4 026 042 ÷ 2 = <strong>2 013 021</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution2d7': 'Donc : T₂₀ = 210, T₁₂₅ = 7 875, T₂₀₀₆ = 2 013 021',
+                
+                'MH.lesson_Y2Alg_seqArith1.question2e': 'c) Donner l\'expression du n-ième nombre triangulaire Tₙ en fonction de n.',
+                'MH.lesson_Y2Alg_seqArith1.solution2e1': 'De nos observations :',
+                'MH.lesson_Y2Alg_seqArith1.solution2e2': 'T₁ = 1 = (1 × 2) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith1.solution2e3': 'T₂ = 3 = (2 × 3) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith1.solution2e4': 'T₃ = 6 = (3 × 4) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith1.solution2e5': 'T₄ = 10 = (4 × 5) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith1.solution2e6': 'T₅ = 15 = (5 × 6) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith1.solution2e7': 'Nous pouvons voir le modèle : Tₙ = n × (n + 1) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith1.formula2e': String.raw`\[T_n = \frac{n(n+1)}{2}\]`,
+                'MH.lesson_Y2Alg_seqArith1.solution2e8': 'Cette formule fonctionne parce que lorsque vous mettez deux nombres triangulaires ensemble, vous obtenez un rectangle de dimensions n par (n+1), donc un triangle est la moitié de ce rectangle.',
+                
+                // Partie III
+                'MH.lesson_Y2Alg_seqArith1.part3': 'III. Une spirale quadratique',
+                'MH.lesson_Y2Alg_seqArith1.activity3Title': 'Activité 3',
+                'MH.lesson_Y2Alg_seqArith1.activity3Statement': 'Dans la figure ci-contre on a :',
+                'MH.lesson_Y2Alg_seqArith1.activity3a': 'Le triangle OA₁A₂ rectangle en A₁ et tel que OA₁ = A₁A₂ =1',
+                'MH.lesson_Y2Alg_seqArith1.activity3b': 'Le triangle OA₂A₃ rectangle en A₂ et tel que A₂A₃ =1',
+                'MH.lesson_Y2Alg_seqArith1.activity3c': 'Etc…',
+                'MH.lesson_Y2Alg_seqArith1.activity3d': 'On pose : a₁ = aire(OA₁A₂), a₂ = aire(OA₂A₃), …, aₙ = aire(OAnAn+1).',
+                'MH.lesson_Y2Alg_seqArith1.diagram2Title': 'Spirale Quadratique avec Triangles Rectangles',
+                'MH.lesson_Y2Alg_seqArith1.diagram2Instructions': 'Triangles OA₁A₂, OA₂A₃, OA₃A₄, etc. formant un motif en spirale. Chaque triangle a un angle droit et certains côtés égaux à 1.',
+                'MH.lesson_Y2Alg_seqArith1.question3a': 'a) Calculer a₂ , a₃ , a₄ et a₅ .',
+                'MH.lesson_Y2Alg_seqArith1.solution3a1': 'Analysons étape par étape :',
+                'MH.lesson_Y2Alg_seqArith1.solution3a2': '<strong>Étape 1 : Comprendre le modèle</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a3': 'Le triangle OA₁A₂ est rectangle en A₁ avec OA₁ = A₁A₂ = 1.',
+                'MH.lesson_Y2Alg_seqArith1.solution3a4': 'Aire d\'un triangle rectangle = (base × hauteur) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith1.solution3a5': 'Donc a₁ = aire(OA₁A₂) = (1 × 1) ÷ 2 = 0,5',
+                'MH.lesson_Y2Alg_seqArith1.solution3a6': '<strong>Étape 2 : Calculer OA₂ avec le théorème de Pythagore</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a7': 'Dans le triangle OA₁A₂ : OA₂² = OA₁² + A₁A₂² = 1² + 1² = 2',
+                'MH.lesson_Y2Alg_seqArith1.solution3a8': 'Donc OA₂ = √2',
+                'MH.lesson_Y2Alg_seqArith1.solution3a9': '<strong>Étape 3 : Triangle OA₂A₃</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a10': 'Le triangle OA₂A₃ est rectangle en A₂ avec A₂A₃ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution3a11': 'Base = OA₂ = √2, hauteur = A₂A₃ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution3a12': 'Donc a₂ = aire(OA₂A₃) = (√2 × 1) ÷ 2 = <strong>√2/2</strong> ≈ 0,7071',
+                'MH.lesson_Y2Alg_seqArith1.solution3a13': '<strong>Étape 4 : Calculer OA₃</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a14': 'Dans le triangle OA₂A₃ : OA₃² = OA₂² + A₂A₃² = (√2)² + 1² = 2 + 1 = 3',
+                'MH.lesson_Y2Alg_seqArith1.solution3a15': 'Donc OA₃ = √3',
+                'MH.lesson_Y2Alg_seqArith1.solution3a16': '<strong>Étape 5 : Triangle OA₃A₄</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a17': 'Le triangle OA₃A₄ est rectangle en A₃ avec A₃A₄ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution3a18': 'Base = OA₃ = √3, hauteur = A₃A₄ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution3a19': 'Donc a₃ = aire(OA₃A₄) = (√3 × 1) ÷ 2 = <strong>√3/2</strong> ≈ 0,8660',
+                'MH.lesson_Y2Alg_seqArith1.solution3a20': '<strong>Étape 6 : Calculer OA₄</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a21': 'Dans le triangle OA₃A₄ : OA₄² = OA₃² + A₃A₄² = (√3)² + 1² = 3 + 1 = 4',
+                'MH.lesson_Y2Alg_seqArith1.solution3a22': 'Donc OA₄ = √4 = 2',
+                'MH.lesson_Y2Alg_seqArith1.solution3a23': '<strong>Étape 7 : Triangle OA₄A₅</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a24': 'Le triangle OA₄A₅ est rectangle en A₄ avec A₄A₅ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution3a25': 'Base = OA₄ = 2, hauteur = A₄A₅ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution3a26': 'Donc a₄ = aire(OA₄A₅) = (2 × 1) ÷ 2 = <strong>1</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a27': '<strong>Étape 8 : Calculer OA₅</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a28': 'Dans le triangle OA₄A₅ : OA₅² = OA₄² + A₄A₅² = 2² + 1² = 4 + 1 = 5',
+                'MH.lesson_Y2Alg_seqArith1.solution3a29': 'Donc OA₅ = √5',
+                'MH.lesson_Y2Alg_seqArith1.solution3a30': '<strong>Étape 9 : Triangle OA₅A₆</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a31': 'Le triangle OA₅A₆ est rectangle en A₅ avec A₅A₆ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution3a32': 'Base = OA₅ = √5, hauteur = A₅A₆ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution3a33': 'Donc a₅ = aire(OA₅A₆) = (√5 × 1) ÷ 2 = <strong>√5/2</strong> ≈ 1,1180',
+                'MH.lesson_Y2Alg_seqArith1.solution3a34': '<strong>Résumé :</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a35': 'a₁ = 1/2 = 0,5',
+                'MH.lesson_Y2Alg_seqArith1.solution3a36': 'a₂ = √2/2 ≈ 0,7071',
+                'MH.lesson_Y2Alg_seqArith1.solution3a37': 'a₃ = √3/2 ≈ 0,8660',
+                'MH.lesson_Y2Alg_seqArith1.solution3a38': 'a₄ = 2/2 = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution3a39': 'a₅ = √5/2 ≈ 1,1180',
+                
+                'MH.lesson_Y2Alg_seqArith1.question3b': 'b) Conjecturer l\'expression de aₙ en fonction de n.',
+                'MH.lesson_Y2Alg_seqArith1.solution3b1': 'Regardons le modèle que nous avons trouvé :',
+                'MH.lesson_Y2Alg_seqArith1.solution3b2': 'a₁ = √1/2 (puisque √1 = 1)',
+                'MH.lesson_Y2Alg_seqArith1.solution3b3': 'a₂ = √2/2',
+                'MH.lesson_Y2Alg_seqArith1.solution3b4': 'a₃ = √3/2',
+                'MH.lesson_Y2Alg_seqArith1.solution3b5': 'a₄ = √4/2 = 2/2 = 1 (mais √4 = 2)',
+                'MH.lesson_Y2Alg_seqArith1.solution3b6': 'a₅ = √5/2',
+                'MH.lesson_Y2Alg_seqArith1.solution3b7': 'Il semble que aₙ = √n/2, mais vérifions :',
+                'MH.lesson_Y2Alg_seqArith1.solution3b8': 'Pour n=1 : √1/2 = 1/2 = 0,5 ✓',
+                'MH.lesson_Y2Alg_seqArith1.solution3b9': 'Pour n=2 : √2/2 ≈ 0,7071 ✓',
+                'MH.lesson_Y2Alg_seqArith1.solution3b10': 'Pour n=3 : √3/2 ≈ 0,8660 ✓',
+                'MH.lesson_Y2Alg_seqArith1.solution3b11': 'Pour n=4 : √4/2 = 2/2 = 1 ✓',
+                'MH.lesson_Y2Alg_seqArith1.solution3b12': 'Pour n=5 : √5/2 ≈ 1,1180 ✓',
+                'MH.lesson_Y2Alg_seqArith1.formula3b': String.raw`\[a_n = \frac{\sqrt{n}}{2}\]`,
+                'MH.lesson_Y2Alg_seqArith1.solution3b13': 'Pourquoi cela fonctionne-t-il ? Réfléchissons :',
+                'MH.lesson_Y2Alg_seqArith1.solution3b14': 'Dans le triangle OAₙAₙ₊₁ :',
+                'MH.lesson_Y2Alg_seqArith1.solution3b15': 'L\'angle droit est en Aₙ',
+                'MH.lesson_Y2Alg_seqArith1.solution3b16': 'OAₙ est la base',
+                'MH.lesson_Y2Alg_seqArith1.solution3b17': 'AₙAₙ₊₁ = 1 est la hauteur',
+                'MH.lesson_Y2Alg_seqArith1.solution3b18': 'D\'après le théorème de Pythagore dans les triangles précédents, nous avons trouvé :',
+                'MH.lesson_Y2Alg_seqArith1.solution3b19': 'OA₁² = 1 (donné)',
+                'MH.lesson_Y2Alg_seqArith1.solution3b20': 'OA₂² = OA₁² + 1² = 1 + 1 = 2',
+                'MH.lesson_Y2Alg_seqArith1.solution3b21': 'OA₃² = OA₂² + 1² = 2 + 1 = 3',
+                'MH.lesson_Y2Alg_seqArith1.solution3b22': 'OA₄² = OA₃² + 1² = 3 + 1 = 4',
+                'MH.lesson_Y2Alg_seqArith1.solution3b23': 'Donc en général : OAₙ² = n, ce qui signifie OAₙ = √n',
+                'MH.lesson_Y2Alg_seqArith1.solution3b24': 'Ensuite aire = (base × hauteur) ÷ 2 = (√n × 1) ÷ 2 = √n/2',
+                
+                // Définition
+                'MH.lesson_Y2Alg_seqArith1.definitionTitle': 'Définition d\'une suite',
+                'MH.lesson_Y2Alg_seqArith1.definition': 'Définition',
+                'MH.lesson_Y2Alg_seqArith1.definitionText': 'Soit n₀ un entier naturel. Lorsqu\'à tout entier naturel n supérieur ou égal à n₀ on associe un réel unique U(n) on dit que l\'on a défini une suite de nombres réels.',
+                'MH.lesson_Y2Alg_seqArith1.definitionText2': 'Le réel U(n) s\'appelle le terme général de la suite et se note Uₙ. La suite se note (Uₙ)ₙ ≥ n₀ ou (Uₙ).',
+                
+                // Activité 4
+                'MH.lesson_Y2Alg_seqArith1.activity4Title': 'Activité 4',
+                'MH.lesson_Y2Alg_seqArith1.activity4Statement': 'Soit la suite (Uₙ) définie pour tout entier naturel n par Uₙ = (3n+1)/4.',
+                'MH.lesson_Y2Alg_seqArith1.question4a': 'a) Calculer U₀, U₁, U₅ et U₁₀₀.',
+                'MH.lesson_Y2Alg_seqArith1.solution4a1': 'Nous utilisons la formule Uₙ = (3n + 1)/4 et substituons différentes valeurs de n :',
+                'MH.lesson_Y2Alg_seqArith1.solution4a2': '<strong>Pour U₀ (n = 0) :</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4a3': 'U₀ = (3 × 0 + 1) / 4 = (0 + 1) / 4 = 1/4 = <strong>0,25</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4a4': '<strong>Pour U₁ (n = 1) :</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4a5': 'U₁ = (3 × 1 + 1) / 4 = (3 + 1) / 4 = 4/4 = <strong>1</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4a6': '<strong>Pour U₅ (n = 5) :</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4a7': 'U₅ = (3 × 5 + 1) / 4 = (15 + 1) / 4 = 16/4 = <strong>4</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4a8': '<strong>Pour U₁₀₀ (n = 100) :</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4a9': 'U₁₀₀ = (3 × 100 + 1) / 4 = (300 + 1) / 4 = 301/4 = <strong>75,25</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4a10': '<strong>Résumé :</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4a11': 'U₀ = 0,25 ou 1/4',
+                'MH.lesson_Y2Alg_seqArith1.solution4a12': 'U₁ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution4a13': 'U₅ = 4',
+                'MH.lesson_Y2Alg_seqArith1.solution4a14': 'U₁₀₀ = 75,25 ou 301/4',
+                
+                'MH.lesson_Y2Alg_seqArith1.question4b': 'b) Déterminer le premier terme, le 5ème terme et le 100ème terme de cette suite.',
+                'MH.lesson_Y2Alg_seqArith1.solution4b1': 'Dans une suite, les termes sont généralement numérotés à partir de 0 ou 1. Puisque notre suite est définie pour tout entier naturel n (qui commence généralement à 0), nous avons :',
+                'MH.lesson_Y2Alg_seqArith1.solution4b2': '<strong>Premier terme :</strong> C\'est U₀ (quand n = 0)',
+                'MH.lesson_Y2Alg_seqArith1.solution4b3': 'Nous avons déjà calculé U₀ = 1/4 = 0,25',
+                'MH.lesson_Y2Alg_seqArith1.solution4b4': '<strong>5ème terme :</strong> Si nous comptons à partir du premier terme comme terme numéro 1, alors :',
+                'MH.lesson_Y2Alg_seqArith1.solution4b5': 'Terme 1 : U₀ = 0,25',
+                'MH.lesson_Y2Alg_seqArith1.solution4b6': 'Terme 2 : U₁ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution4b7': 'Terme 3 : U₂ = (3×2+1)/4 = (6+1)/4 = 7/4 = 1,75',
+                'MH.lesson_Y2Alg_seqArith1.solution4b8': 'Terme 4 : U₃ = (3×3+1)/4 = (9+1)/4 = 10/4 = 2,5',
+                'MH.lesson_Y2Alg_seqArith1.solution4b9': 'Terme 5 : U₄ = (3×4+1)/4 = (12+1)/4 = 13/4 = 3,25',
+                'MH.lesson_Y2Alg_seqArith1.solution4b10': 'Donc le 5ème terme est U₄ = 3,25',
+                'MH.lesson_Y2Alg_seqArith1.solution4b11': '<strong>100ème terme :</strong> Suivant le même modèle, le 100ème terme serait U₉₉ (puisque le premier terme est U₀)',
+                'MH.lesson_Y2Alg_seqArith1.solution4b12': 'U₉₉ = (3×99 + 1)/4 = (297 + 1)/4 = 298/4 = 74,5',
+                'MH.lesson_Y2Alg_seqArith1.solution4b13': 'Mais attention ! Nous devons être prudents. Parfois les suites sont indexées à partir de 1. Clarifions :',
+                'MH.lesson_Y2Alg_seqArith1.solution4b14': 'Si la suite commence à n=0 :',
+                'MH.lesson_Y2Alg_seqArith1.solution4b15': 'Premier terme = U₀ = 0,25',
+                'MH.lesson_Y2Alg_seqArith1.solution4b16': '5ème terme = U₄ = 3,25',
+                'MH.lesson_Y2Alg_seqArith1.solution4b17': '100ème terme = U₉₉ = 74,5',
+                'MH.lesson_Y2Alg_seqArith1.solution4b18': 'Si la suite commence à n=1 :',
+                'MH.lesson_Y2Alg_seqArith1.solution4b19': 'Premier terme = U₁ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution4b20': '5ème terme = U₅ = 4',
+                'MH.lesson_Y2Alg_seqArith1.solution4b21': '100ème terme = U₁₀₀ = 75,25',
+                'MH.lesson_Y2Alg_seqArith1.solution4b22': 'Puisque le problème dit "pour tout entier naturel n" et que les entiers naturels incluent généralement 0, nous utiliserons la première interprétation :',
+                'MH.lesson_Y2Alg_seqArith1.solution4b23': '<strong>Premier terme : U₀ = 0,25, 5ème terme : U₄ = 3,25, 100ème terme : U₉₉ = 74,5</strong>',
+                
+                'MH.lesson_Y2Alg_seqArith1.question4c': 'c) Déterminer l\'expression de Uₚ₊₁, U₂ₙ et U₃ₖ₊₂.',
+                'MH.lesson_Y2Alg_seqArith1.solution4c1': 'Nous avons la formule générale : Uₙ = (3n + 1)/4',
+                'MH.lesson_Y2Alg_seqArith1.solution4c2': 'Nous devons substituer différentes expressions pour n :',
+                'MH.lesson_Y2Alg_seqArith1.solution4c3': '<strong>Pour Uₚ₊₁ :</strong> Ici, n = p+1',
+                'MH.lesson_Y2Alg_seqArith1.solution4c4': 'Uₚ₊₁ = [3(p+1) + 1] / 4 = [3p + 3 + 1] / 4 = (3p + 4) / 4',
+                'MH.lesson_Y2Alg_seqArith1.solution4c5': '<strong>Pour U₂ₙ :</strong> Ici, n = 2n (attention : le n dans U₂ₙ est différent du n dans notre formule)',
+                'MH.lesson_Y2Alg_seqArith1.solution4c6': 'U₂ₙ = [3(2n) + 1] / 4 = (6n + 1) / 4',
+                'MH.lesson_Y2Alg_seqArith1.solution4c7': '<strong>Pour U₃ₖ₊₂ :</strong> Ici, n = 3k+2',
+                'MH.lesson_Y2Alg_seqArith1.solution4c8': 'U₃ₖ₊₂ = [3(3k+2) + 1] / 4 = [9k + 6 + 1] / 4 = (9k + 7) / 4',
+                'MH.lesson_Y2Alg_seqArith1.solution4c9': '<strong>Résumé :</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4c10': 'Uₚ₊₁ = (3p + 4)/4',
+                'MH.lesson_Y2Alg_seqArith1.solution4c11': 'U₂ₙ = (6n + 1)/4',
+                'MH.lesson_Y2Alg_seqArith1.solution4c12': 'U₃ₖ₊₂ = (9k + 7)/4',
+                
+                // Résumé
+                'MH.lesson_Y2Alg_seqArith1.summaryTitle': 'Résumé de la Leçon',
+                'MH.lesson_Y2Alg_seqArith1.keyConceptsTitle': 'Concepts Clés Appris',
+                'MH.lesson_Y2Alg_seqArith1.concept1': 'Une suite est une liste ordonnée de nombres qui suit un modèle spécifique',
+                'MH.lesson_Y2Alg_seqArith1.concept2': 'Nous pouvons trouver des modèles en regardant les différences entre les termes, les rapports, ou d\'autres relations',
+                'MH.lesson_Y2Alg_seqArith1.concept3': 'Les nombres triangulaires suivent la formule Tₙ = n(n+1)/2',
+                'MH.lesson_Y2Alg_seqArith1.concept4': 'Une suite est formellement définie comme une fonction qui associe un nombre réel à chaque entier naturel',
+                'MH.lesson_Y2Alg_seqArith1.concept5': 'Le terme général Uₙ nous donne une formule pour trouver n\'importe quel terme dans la suite',
+                'MH.lesson_Y2Alg_seqArith1.typesSequencesTitle': 'Types de Suites Rencontrées',
+                'MH.lesson_Y2Alg_seqArith1.type1': '<strong>Suites arithmétiques :</strong> Chaque terme diffère du précédent par une constante (comme 5, 3, 1, -1, -3, ... avec une différence de -2)',
+                'MH.lesson_Y2Alg_seqArith1.type2': '<strong>Suites de type Fibonacci :</strong> Chaque terme est la somme des deux termes précédents (comme 1, 2, 3, 5, 8, 13, ...)',
+                'MH.lesson_Y2Alg_seqArith1.type3': '<strong>Nombres carrés :</strong> Chaque terme est un carré parfait (comme 1, 4, 9, 16, 25, ...)',
+                'MH.lesson_Y2Alg_seqArith1.type4': '<strong>Nombres triangulaires :</strong> Chaque terme représente des points arrangés en triangle (1, 3, 6, 10, 15, ...)',
+                'MH.lesson_Y2Alg_seqArith1.nextLessonTitle': 'Prochaines Étapes',
+                'MH.lesson_Y2Alg_seqArith1.finalThought': 'Dans cette leçon, nous avons appris à reconnaître des modèles dans les suites et à travailler avec leurs termes généraux. Dans la prochaine leçon, nous nous concentrerons spécifiquement sur les suites arithmétiques, apprendrons comment trouver leur terme général, et résoudrons des problèmes impliquant ces suites importantes.',
+                
+                // Pied de page
+                'MH.footer.developer': 'Développeur',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Liens',
+                'MH.footer.terms': 'Conditions d\'Utilisation',
+                'MH.footer.privacy': 'Politique de Confidentialité'
+            },
+            'ar': {
+                // الترجمات العامة
+                'MH.general.homeTooltip': 'الذهاب إلى الصفحة الرئيسية',
+                'MH.general.install': 'تثبيت التطبيق',
+                'MH.general.installSuccess': 'تم تثبيت Mathematics Hub بنجاح!',
+                'MH.general.enableNotifications': 'تفعيل الإشعارات',
+                'MH.general.notificationEnabled': 'تم تفعيل الإشعارات! ستتلقى التحديثات الآن.',
+                'MH.general.title': 'مركز الرياضيات',
+                'MH.general.theme': 'السمة',
+                'MH.general.language': 'اللغة',
+                'MH.lesson_Y2Alg_seqArith1.showSolution': 'إظهار الحل',
+                'MH.lesson_Y2Alg_seqArith1.hideSolution': 'إخفاء الحل',
+                'MH.lesson_Y2Alg_seqArith1.showConstruction': 'إظهار الإنشاء',
+                
+                // ترجمات الدرس
+                'MH.lesson_Y2Alg_seqArith1.title': 'المتتاليات الحسابية: الجزء 1',
+                'MH.lesson_Y2Alg_seqArith1.subtitle': 'مقدمة في أنماط الأعداد',
+                'MH.lesson_Y2Alg_seqArith1.introduction': 'المقدمة',
+                'MH.lesson_Y2Alg_seqArith1.introText1': 'في هذا الدرس، سنستكشف مفهوم المتتاليات. المتتالية هي قائمة مرتبة من الأرقام تتبع نمطًا أو قاعدة محددة. فهم المتتاليات يساعدنا على التعرف على الأنماط في الرياضيات وفي العالم من حولنا.',
+                'MH.lesson_Y2Alg_seqArith1.introText2': 'سنبدأ بتحديد الأنماط في القوائم المعطاة من الأرقام، ثم نستكشف متتاليات خاصة مثل الأعداد المثلثية، وأخيرًا نتعلم التعريف الرسمي للمتتالية.',
+                
+                // الجزء الأول
+                'MH.lesson_Y2Alg_seqArith1.part1': 'I. مفهوم المتتاليات',
+                'MH.lesson_Y2Alg_seqArith1.activity1Title': 'النشاط 1',
+                'MH.lesson_Y2Alg_seqArith1.activity1Statement': 'كل من القوائم التالية من الأرقام تخضع لقانون. اكتشف هذا القانون وأعط الحدين التاليين.',
+                'MH.lesson_Y2Alg_seqArith1.activity1a': 'أ) 5 ؛ 3 ؛ 1 ؛ -1 ؛ -3 ؛ ...',
+                'MH.lesson_Y2Alg_seqArith1.solution1a': 'لنفحص الفروق بين الحدود المتتالية:',
+                'MH.lesson_Y2Alg_seqArith1.solution1a1': 'من 5 إلى 3: 3 - 5 = -2',
+                'MH.lesson_Y2Alg_seqArith1.solution1a2': 'من 3 إلى 1: 1 - 3 = -2',
+                'MH.lesson_Y2Alg_seqArith1.solution1a3': 'من 1 إلى -1: -1 - 1 = -2',
+                'MH.lesson_Y2Alg_seqArith1.solution1a4': 'من -1 إلى -3: -3 - (-1) = -2',
+                'MH.lesson_Y2Alg_seqArith1.solution1a5': 'يتم الحصول على كل حد بطرح 2 من الحد السابق. هذا يسمى <strong>متتالية حسابية</strong> بأساس -2.',
+                'MH.lesson_Y2Alg_seqArith1.solution1a6': 'لإيجاد الحدين التاليين:',
+                'MH.lesson_Y2Alg_seqArith1.solution1a7': '-3 - 2 = <strong>-5</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1a8': '-5 - 2 = <strong>-7</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1a9': 'المتتالية الكاملة: 5 ؛ 3 ؛ 1 ؛ -1 ؛ -3 ؛ <span class="MH-number-pattern">-5 ؛ -7</span>',
+                
+                'MH.lesson_Y2Alg_seqArith1.activity1b': 'ب) 1/4 ؛ 1 ؛ 7/4 ؛ 5/2 ؛ 13/4 ؛ ...',
+                'MH.lesson_Y2Alg_seqArith1.solution1b': 'لنكتب جميع الحدود بمقام 4 لنرى النمط بشكل أوضح:',
+                'MH.lesson_Y2Alg_seqArith1.solution1b1': '1/4 = 1/4',
+                'MH.lesson_Y2Alg_seqArith1.solution1b2': '1 = 4/4',
+                'MH.lesson_Y2Alg_seqArith1.solution1b3': '7/4 = 7/4',
+                'MH.lesson_Y2Alg_seqArith1.solution1b4': '5/2 = 10/4',
+                'MH.lesson_Y2Alg_seqArith1.solution1b5': '13/4 = 13/4',
+                'MH.lesson_Y2Alg_seqArith1.solution1b6': 'الآن انظر إلى البسوط: 1، 4، 7، 10، 13، ...',
+                'MH.lesson_Y2Alg_seqArith1.solution1b7': 'الفرق بين البسوط المتتالية: 4-1=3، 7-4=3، 10-7=3، 13-10=3',
+                'MH.lesson_Y2Alg_seqArith1.solution1b8': 'كل بسط يزيد بمقدار 3. هذه أيضًا <strong>متتالية حسابية</strong> بأساس 3/4 (بما أننا نحتفظ بالمقام 4).',
+                'MH.lesson_Y2Alg_seqArith1.solution1b9': 'لإيجاد الحدين التاليين:',
+                'MH.lesson_Y2Alg_seqArith1.solution1b10': 'البسط التالي: 13 + 3 = 16 → 16/4 = <strong>4</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1b11': 'البسط التالي: 16 + 3 = 19 → 19/4 = <strong>19/4</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1b12': 'المتتالية الكاملة: 1/4 ؛ 1 ؛ 7/4 ؛ 5/2 ؛ 13/4 ؛ <span class="MH-number-pattern">4 ؛ 19/4</span>',
+                
+                'MH.lesson_Y2Alg_seqArith1.activity1c': 'ج) 1 ؛ 2 ؛ 3 ؛ 5 ؛ 8 ؛ …',
+                'MH.lesson_Y2Alg_seqArith1.solution1c': 'لنفحص كيف يرتبط كل حد بالحدود السابقة:',
+                'MH.lesson_Y2Alg_seqArith1.solution1c1': '1 + 2 = 3 (الحد الثالث يساوي مجموع الحدين الأولين)',
+                'MH.lesson_Y2Alg_seqArith1.solution1c2': '2 + 3 = 5 (الحد الرابع يساوي مجموع الحدين السابقين)',
+                'MH.lesson_Y2Alg_seqArith1.solution1c3': '3 + 5 = 8 (الحد الخامس يساوي مجموع الحدين السابقين)',
+                'MH.lesson_Y2Alg_seqArith1.solution1c4': 'هذه <strong>متتالية شبيهة بمتتالية فيبوناتشي</strong> حيث كل حد (بعد الحدين الأولين) هو مجموع الحدين السابقين.',
+                'MH.lesson_Y2Alg_seqArith1.solution1c5': 'لإيجاد الحدين التاليين:',
+                'MH.lesson_Y2Alg_seqArith1.solution1c6': '5 + 8 = <strong>13</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1c7': '8 + 13 = <strong>21</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1c8': 'المتتالية الكاملة: 1 ؛ 2 ؛ 3 ؛ 5 ؛ 8 ؛ <span class="MH-number-pattern">13 ؛ 21</span>',
+                
+                'MH.lesson_Y2Alg_seqArith1.activity1d': 'د) 1 ؛ 4 ؛ 9 ؛ 16 ؛ 25 ؛…',
+                'MH.lesson_Y2Alg_seqArith1.solution1d': 'لنتحقق مما إذا كانت هذه الأعداد مربعات كاملة:',
+                'MH.lesson_Y2Alg_seqArith1.solution1d1': '1 = 1² = 1 × 1',
+                'MH.lesson_Y2Alg_seqArith1.solution1d2': '4 = 2² = 2 × 2',
+                'MH.lesson_Y2Alg_seqArith1.solution1d3': '9 = 3² = 3 × 3',
+                'MH.lesson_Y2Alg_seqArith1.solution1d4': '16 = 4² = 4 × 4',
+                'MH.lesson_Y2Alg_seqArith1.solution1d5': '25 = 5² = 5 × 5',
+                'MH.lesson_Y2Alg_seqArith1.solution1d6': 'هذه <strong>أعداد مربعة</strong> - كل حد هو مربع موقعه في المتتالية (الحد الأول هو 1²، الحد الثاني هو 2²، إلخ).',
+                'MH.lesson_Y2Alg_seqArith1.solution1d7': 'لإيجاد الحدين التاليين:',
+                'MH.lesson_Y2Alg_seqArith1.solution1d8': '6² = 6 × 6 = <strong>36</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1d9': '7² = 7 × 7 = <strong>49</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1d10': 'المتتالية الكاملة: 1 ؛ 4 ؛ 9 ؛ 16 ؛ 25 ؛ <span class="MH-number-pattern">36 ؛ 49</span>',
+                
+                'MH.lesson_Y2Alg_seqArith1.activity1e': 'هـ) – 2 ؛ – 3 ؛ – 5 ؛ – 9 ؛ – 17 ؛…',
+                'MH.lesson_Y2Alg_seqArith1.solution1e': 'لنفحص الفروق بين الحدود المتتالية:',
+                'MH.lesson_Y2Alg_seqArith1.solution1e1': '-3 - (-2) = -1',
+                'MH.lesson_Y2Alg_seqArith1.solution1e2': '-5 - (-3) = -2',
+                'MH.lesson_Y2Alg_seqArith1.solution1e3': '-9 - (-5) = -4',
+                'MH.lesson_Y2Alg_seqArith1.solution1e4': '-17 - (-9) = -8',
+                'MH.lesson_Y2Alg_seqArith1.solution1e5': 'الفروق هي: -1، -2، -4، -8، ...',
+                'MH.lesson_Y2Alg_seqArith1.solution1e6': 'لاحظ أن كل فرق هو ضعف الفرق السابق: -2 = 2 × (-1)، -4 = 2 × (-2)، -8 = 2 × (-4)',
+                'MH.lesson_Y2Alg_seqArith1.solution1e7': 'إذن النمط هو: يتم الحصول على كل حد بطرح عدد يتضاعف باستمرار: اطرح 1، ثم 2، ثم 4، ثم 8، ...',
+                'MH.lesson_Y2Alg_seqArith1.solution1e8': 'لإيجاد الحدين التاليين:',
+                'MH.lesson_Y2Alg_seqArith1.solution1e9': 'الفرق التالي: 2 × (-8) = -16',
+                'MH.lesson_Y2Alg_seqArith1.solution1e10': '-17 + (-16) = -17 - 16 = <strong>-33</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1e11': 'الفرق التالي: 2 × (-16) = -32',
+                'MH.lesson_Y2Alg_seqArith1.solution1e12': '-33 + (-32) = -33 - 32 = <strong>-65</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution1e13': 'المتتالية الكاملة: -2 ؛ -3 ؛ -5 ؛ -9 ؛ -17 ؛ <span class="MH-number-pattern">-33 ؛ -65</span>',
+                
+                // الجزء الثاني
+                'MH.lesson_Y2Alg_seqArith1.part2': 'II. الأعداد المثلثية',
+                'MH.lesson_Y2Alg_seqArith1.activity2Title': 'النشاط 2',
+                'MH.lesson_Y2Alg_seqArith1.activity2Statement': 'تمثل الأشكال التالية الأربعة أعداد مثلثية أولى 1، 3، 6 و 10، والمشار إليها على التوالي بـ T₁، T₂، T₃ و T₄.',
+                'MH.lesson_Y2Alg_seqArith1.activity2Statement2': 'تقرأ T₁ "T أس 1" أو "T، 1". تقرأ T₂ "T أس 2" أو "T، 2". وبشكل عام تقرأ Tₙ "T أس n" أو "T، n".',
+                'MH.lesson_Y2Alg_seqArith1.diagram1Title': 'الأعداد المثلثية T₁، T₂، T₃، T₄',
+                'MH.lesson_Y2Alg_seqArith1.diagram1Instructions': 'يحتوي كل مثلث على نقاط مرتبة بأنماط مثلثية. T₁ لديها نقطة واحدة، T₂ لديها 3 نقاط (1+2)، T₃ لديها 6 نقاط (1+2+3)، T₄ لديها 10 نقاط (1+2+3+4).',
+                'MH.lesson_Y2Alg_seqArith1.question2a': '1) أ) مثل العدد المثلثي الخامس المشار إليه بـ T₅ وأعط قيمته.',
+                'MH.lesson_Y2Alg_seqArith1.solution2a1': 'لإيجاد T₅، نحتاج إلى فهم نمط الأعداد المثلثية:',
+                'MH.lesson_Y2Alg_seqArith1.solution2a2': 'T₁ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution2a3': 'T₂ = 1 + 2 = 3',
+                'MH.lesson_Y2Alg_seqArith1.solution2a4': 'T₃ = 1 + 2 + 3 = 6',
+                'MH.lesson_Y2Alg_seqArith1.solution2a5': 'T₄ = 1 + 2 + 3 + 4 = 10',
+                'MH.lesson_Y2Alg_seqArith1.solution2a6': 'إذن T₅ يجب أن يكون مجموع الأعداد الطبيعية الخمسة الأولى:',
+                'MH.lesson_Y2Alg_seqArith1.solution2a7': 'T₅ = 1 + 2 + 3 + 4 + 5',
+                'MH.lesson_Y2Alg_seqArith1.solution2a8': 'لنحسب خطوة بخطوة:',
+                'MH.lesson_Y2Alg_seqArith1.solution2a9': '1 + 2 = 3',
+                'MH.lesson_Y2Alg_seqArith1.solution2a10': '3 + 3 = 6',
+                'MH.lesson_Y2Alg_seqArith1.solution2a11': '6 + 4 = 10',
+                'MH.lesson_Y2Alg_seqArith1.solution2a12': '10 + 5 = <strong>15</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution2a13': 'إذن T₅ = <strong>15</strong>. سيكون للشكل 5 صفوف: الصف الأول نقطة واحدة، الصف الثاني نقطتان، الصف الثالث 3 نقاط، الصف الرابع 4 نقاط، الصف الخامس 5 نقاط، مما يجعل إجمالي 15 نقطة مرتبة في مثلث.',
+                
+                'MH.lesson_Y2Alg_seqArith1.question2b': 'ب) نفس السؤال لـ T₆.',
+                'MH.lesson_Y2Alg_seqArith1.solution2b1': 'باتباع نفس النمط، T₆ هو مجموع الأعداد الطبيعية الستة الأولى:',
+                'MH.lesson_Y2Alg_seqArith1.solution2b2': 'T₆ = 1 + 2 + 3 + 4 + 5 + 6',
+                'MH.lesson_Y2Alg_seqArith1.solution2b3': 'نحن نعلم بالفعل أن T₅ = 15، إذن:',
+                'MH.lesson_Y2Alg_seqArith1.solution2b4': 'T₆ = T₅ + 6 = 15 + 6 = <strong>21</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution2b5': 'إذن T₆ = <strong>21</strong>. سيكون للشكل 6 صفوف مع 1، 2، 3، 4، 5، 6 نقاط على التوالي، إجمالي 21 نقطة.',
+                
+                'MH.lesson_Y2Alg_seqArith1.question2c': '2) استخدم الفيثاغوريون مخططات مستطيلة لحساب الأعداد المثلثية.',
+                'MH.lesson_Y2Alg_seqArith1.question2ca': 'أ) يسمح المخطط المستطيل أدناه بحساب T₁₂. اشرح كيف.',
+                'MH.lesson_Y2Alg_seqArith1.solution2c1': 'لاحظ الفيثاغوريون أنه إذا أخذت ترتيبين مثلثيين متطابقين ووضعتهما معًا، تحصل على مستطيل.',
+                'MH.lesson_Y2Alg_seqArith1.solution2c2': 'على سبيل المثال، مثلثان T₄ (كل منهما بـ 10 نقاط) يشكلان مستطيلاً 4 × 5 بـ 20 نقطة.',
+                'MH.lesson_Y2Alg_seqArith1.solution2c3': 'إذن للمثلث الواحد نصف نقاط المستطيل:',
+                'MH.lesson_Y2Alg_seqArith1.solution2c4': 'Tₙ = (n × (n + 1)) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith1.solution2c5': 'لـ T₁₂، سيكون المخطط المستطيل 12 × 13 بـ 156 نقطة إجمالاً، إذن T₁₂ = 156 ÷ 2 = 78.',
+                
+                'MH.lesson_Y2Alg_seqArith1.question2d': 'ب) أعط قيم T₂₀ ، T₁₂₅ و T₂₀₀₆.',
+                'MH.lesson_Y2Alg_seqArith1.solution2d1': 'باستخدام الصيغة Tₙ = n × (n + 1) ÷ 2:',
+                'MH.lesson_Y2Alg_seqArith1.solution2d2': 'T₂₀ = 20 × (20 + 1) ÷ 2 = 20 × 21 ÷ 2 = 420 ÷ 2 = <strong>210</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution2d3': 'T₁₂₅ = 125 × (125 + 1) ÷ 2 = 125 × 126 ÷ 2 = 15750 ÷ 2 = <strong>7875</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution2d4': 'T₂₀₀₆ = 2006 × (2006 + 1) ÷ 2 = 2006 × 2007 ÷ 2',
+                'MH.lesson_Y2Alg_seqArith1.solution2d5': '2006 × 2007 = 2006 × 2000 + 2006 × 7 = 4,012,000 + 14,042 = 4,026,042',
+                'MH.lesson_Y2Alg_seqArith1.solution2d6': '4,026,042 ÷ 2 = <strong>2,013,021</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution2d7': 'إذن: T₂₀ = 210، T₁₂₅ = 7,875، T₂₀₀₆ = 2,013,021',
+                
+                'MH.lesson_Y2Alg_seqArith1.question2e': 'ج) أعط تعبير العدد المثلثي النوني Tₙ كدالة في n.',
+                'MH.lesson_Y2Alg_seqArith1.solution2e1': 'من ملاحظاتنا:',
+                'MH.lesson_Y2Alg_seqArith1.solution2e2': 'T₁ = 1 = (1 × 2) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith1.solution2e3': 'T₂ = 3 = (2 × 3) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith1.solution2e4': 'T₃ = 6 = (3 × 4) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith1.solution2e5': 'T₄ = 10 = (4 × 5) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith1.solution2e6': 'T₅ = 15 = (5 × 6) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith1.solution2e7': 'يمكننا رؤية النمط: Tₙ = n × (n + 1) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith1.formula2e': String.raw`\[T_n = \frac{n(n+1)}{2}\]`,
+                'MH.lesson_Y2Alg_seqArith1.solution2e8': 'هذه الصيغة تعمل لأنه عندما تضع عددين مثلثيين معًا، تحصل على مستطيل بأبعاد n في (n+1)، إذن المثلث الواحد هو نصف ذلك المستطيل.',
+                
+                // الجزء الثالث
+                'MH.lesson_Y2Alg_seqArith1.part3': 'III. حلزون تربيعي',
+                'MH.lesson_Y2Alg_seqArith1.activity3Title': 'النشاط 3',
+                'MH.lesson_Y2Alg_seqArith1.activity3Statement': 'في الشكل المقابل لدينا:',
+                'MH.lesson_Y2Alg_seqArith1.activity3a': 'المثلث OA₁A₂ قائم الزاوية في A₁ بحيث OA₁ = A₁A₂ = 1',
+                'MH.lesson_Y2Alg_seqArith1.activity3b': 'المثلث OA₂A₃ قائم الزاوية في A₂ بحيث A₂A₃ = 1',
+                'MH.lesson_Y2Alg_seqArith1.activity3c': 'وهكذا...',
+                'MH.lesson_Y2Alg_seqArith1.activity3d': 'نضع: a₁ = مساحة(OA₁A₂)، a₂ = مساحة(OA₂A₃)، ...، aₙ = مساحة(OAnAn+1).',
+                'MH.lesson_Y2Alg_seqArith1.diagram2Title': 'حلزون تربيعي بمثلثات قائمة الزاوية',
+                'MH.lesson_Y2Alg_seqArith1.diagram2Instructions': 'مثلثات OA₁A₂، OA₂A₃، OA₃A₄، إلخ. تشكل نمطًا حلزونيًا. كل مثلث له زاوية قائمة وبعض الأضلاع تساوي 1.',
+                'MH.lesson_Y2Alg_seqArith1.question3a': 'أ) احسب a₂ ، a₃ ، a₄ و a₅ .',
+                'MH.lesson_Y2Alg_seqArith1.solution3a1': 'لنحلل خطوة بخطوة:',
+                'MH.lesson_Y2Alg_seqArith1.solution3a2': '<strong>الخطوة 1: فهم النمط</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a3': 'المثلث OA₁A₂ قائم الزاوية في A₁ مع OA₁ = A₁A₂ = 1.',
+                'MH.lesson_Y2Alg_seqArith1.solution3a4': 'مساحة المثلث القائم = (القاعدة × الارتفاع) ÷ 2',
+                'MH.lesson_Y2Alg_seqArith1.solution3a5': 'إذن a₁ = مساحة(OA₁A₂) = (1 × 1) ÷ 2 = 0.5',
+                'MH.lesson_Y2Alg_seqArith1.solution3a6': '<strong>الخطوة 2: احسب OA₂ باستخدام نظرية فيثاغورس</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a7': 'في المثلث OA₁A₂: OA₂² = OA₁² + A₁A₂² = 1² + 1² = 2',
+                'MH.lesson_Y2Alg_seqArith1.solution3a8': 'إذن OA₂ = √2',
+                'MH.lesson_Y2Alg_seqArith1.solution3a9': '<strong>الخطوة 3: المثلث OA₂A₃</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a10': 'المثلث OA₂A₃ قائم الزاوية في A₂ مع A₂A₃ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution3a11': 'القاعدة = OA₂ = √2، الارتفاع = A₂A₃ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution3a12': 'إذن a₂ = مساحة(OA₂A₃) = (√2 × 1) ÷ 2 = <strong>√2/2</strong> ≈ 0.7071',
+                'MH.lesson_Y2Alg_seqArith1.solution3a13': '<strong>الخطوة 4: احسب OA₃</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a14': 'في المثلث OA₂A₃: OA₃² = OA₂² + A₂A₃² = (√2)² + 1² = 2 + 1 = 3',
+                'MH.lesson_Y2Alg_seqArith1.solution3a15': 'إذن OA₃ = √3',
+                'MH.lesson_Y2Alg_seqArith1.solution3a16': '<strong>الخطوة 5: المثلث OA₃A₄</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a17': 'المثلث OA₃A₄ قائم الزاوية في A₃ مع A₃A₄ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution3a18': 'القاعدة = OA₃ = √3، الارتفاع = A₃A₄ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution3a19': 'إذن a₃ = مساحة(OA₃A₄) = (√3 × 1) ÷ 2 = <strong>√3/2</strong> ≈ 0.8660',
+                'MH.lesson_Y2Alg_seqArith1.solution3a20': '<strong>الخطوة 6: احسب OA₄</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a21': 'في المثلث OA₃A₄: OA₄² = OA₃² + A₃A₄² = (√3)² + 1² = 3 + 1 = 4',
+                'MH.lesson_Y2Alg_seqArith1.solution3a22': 'إذن OA₄ = √4 = 2',
+                'MH.lesson_Y2Alg_seqArith1.solution3a23': '<strong>الخطوة 7: المثلث OA₄A₅</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a24': 'المثلث OA₄A₅ قائم الزاوية في A₄ مع A₄A₅ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution3a25': 'القاعدة = OA₄ = 2، الارتفاع = A₄A₅ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution3a26': 'إذن a₄ = مساحة(OA₄A₅) = (2 × 1) ÷ 2 = <strong>1</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a27': '<strong>الخطوة 8: احسب OA₅</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a28': 'في المثلث OA₄A₅: OA₅² = OA₄² + A₄A₅² = 2² + 1² = 4 + 1 = 5',
+                'MH.lesson_Y2Alg_seqArith1.solution3a29': 'إذن OA₅ = √5',
+                'MH.lesson_Y2Alg_seqArith1.solution3a30': '<strong>الخطوة 9: المثلث OA₅A₆</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a31': 'المثلث OA₅A₆ قائم الزاوية في A₅ مع A₅A₆ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution3a32': 'القاعدة = OA₅ = √5، الارتفاع = A₅A₆ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution3a33': 'إذن a₅ = مساحة(OA₅A₆) = (√5 × 1) ÷ 2 = <strong>√5/2</strong> ≈ 1.1180',
+                'MH.lesson_Y2Alg_seqArith1.solution3a34': '<strong>الملخص:</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution3a35': 'a₁ = 1/2 = 0.5',
+                'MH.lesson_Y2Alg_seqArith1.solution3a36': 'a₂ = √2/2 ≈ 0.7071',
+                'MH.lesson_Y2Alg_seqArith1.solution3a37': 'a₃ = √3/2 ≈ 0.8660',
+                'MH.lesson_Y2Alg_seqArith1.solution3a38': 'a₄ = 2/2 = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution3a39': 'a₅ = √5/2 ≈ 1.1180',
+                
+                'MH.lesson_Y2Alg_seqArith1.question3b': 'ب) خمن تعبير aₙ كدالة في n.',
+                'MH.lesson_Y2Alg_seqArith1.solution3b1': 'لننظر إلى النمط الذي وجدناه:',
+                'MH.lesson_Y2Alg_seqArith1.solution3b2': 'a₁ = √1/2 (بما أن √1 = 1)',
+                'MH.lesson_Y2Alg_seqArith1.solution3b3': 'a₂ = √2/2',
+                'MH.lesson_Y2Alg_seqArith1.solution3b4': 'a₃ = √3/2',
+                'MH.lesson_Y2Alg_seqArith1.solution3b5': 'a₄ = √4/2 = 2/2 = 1 (لكن √4 = 2)',
+                'MH.lesson_Y2Alg_seqArith1.solution3b6': 'a₅ = √5/2',
+                'MH.lesson_Y2Alg_seqArith1.solution3b7': 'يبدو أن aₙ = √n/2، لكن دعنا نتحقق:',
+                'MH.lesson_Y2Alg_seqArith1.solution3b8': 'لـ n=1: √1/2 = 1/2 = 0.5 ✓',
+                'MH.lesson_Y2Alg_seqArith1.solution3b9': 'لـ n=2: √2/2 ≈ 0.7071 ✓',
+                'MH.lesson_Y2Alg_seqArith1.solution3b10': 'لـ n=3: √3/2 ≈ 0.8660 ✓',
+                'MH.lesson_Y2Alg_seqArith1.solution3b11': 'لـ n=4: √4/2 = 2/2 = 1 ✓',
+                'MH.lesson_Y2Alg_seqArith1.solution3b12': 'لـ n=5: √5/2 ≈ 1.1180 ✓',
+                'MH.lesson_Y2Alg_seqArith1.formula3b': String.raw`\[a_n = \frac{\sqrt{n}}{2}\]`,
+                'MH.lesson_Y2Alg_seqArith1.solution3b13': 'لماذا هذا يعمل؟ لنفكر في الأمر:',
+                'MH.lesson_Y2Alg_seqArith1.solution3b14': 'في المثلث OAₙAₙ₊₁:',
+                'MH.lesson_Y2Alg_seqArith1.solution3b15': 'الزاوية القائمة عند Aₙ',
+                'MH.lesson_Y2Alg_seqArith1.solution3b16': 'OAₙ هي القاعدة',
+                'MH.lesson_Y2Alg_seqArith1.solution3b17': 'AₙAₙ₊₁ = 1 هو الارتفاع',
+                'MH.lesson_Y2Alg_seqArith1.solution3b18': 'من نظرية فيثاغورس في المثلثات السابقة، وجدنا:',
+                'MH.lesson_Y2Alg_seqArith1.solution3b19': 'OA₁² = 1 (معطى)',
+                'MH.lesson_Y2Alg_seqArith1.solution3b20': 'OA₂² = OA₁² + 1² = 1 + 1 = 2',
+                'MH.lesson_Y2Alg_seqArith1.solution3b21': 'OA₃² = OA₂² + 1² = 2 + 1 = 3',
+                'MH.lesson_Y2Alg_seqArith1.solution3b22': 'OA₄² = OA₃² + 1² = 3 + 1 = 4',
+                'MH.lesson_Y2Alg_seqArith1.solution3b23': 'إذن بشكل عام: OAₙ² = n، مما يعني OAₙ = √n',
+                'MH.lesson_Y2Alg_seqArith1.solution3b24': 'ثم المساحة = (القاعدة × الارتفاع) ÷ 2 = (√n × 1) ÷ 2 = √n/2',
+                
+                // التعريف
+                'MH.lesson_Y2Alg_seqArith1.definitionTitle': 'تعريف المتتالية',
+                'MH.lesson_Y2Alg_seqArith1.definition': 'التعريف',
+                'MH.lesson_Y2Alg_seqArith1.definitionText': 'ليكن n₀ عددًا طبيعيًا. عندما نربط بكل عدد طبيعي n أكبر من أو يساوي n₀ عددًا حقيقيًا فريدًا U(n)، نقول أننا عرفنا متتالية من الأعداد الحقيقية.',
+                'MH.lesson_Y2Alg_seqArith1.definitionText2': 'العدد الحقيقي U(n) يسمى الحد العام للمتتالية ويرمز له بـ Uₙ. المتتالية ترمز بـ (Uₙ)ₙ ≥ n₀ أو ببساطة (Uₙ).',
+                
+                // النشاط 4
+                'MH.lesson_Y2Alg_seqArith1.activity4Title': 'النشاط 4',
+                'MH.lesson_Y2Alg_seqArith1.activity4Statement': 'لتكن المتتالية (Uₙ) معرفة لكل عدد طبيعي n بـ Uₙ = (3n+1)/4.',
+                'MH.lesson_Y2Alg_seqArith1.question4a': 'أ) احسب U₀، U₁، U₅ و U₁₀₀.',
+                'MH.lesson_Y2Alg_seqArith1.solution4a1': 'نستخدم الصيغة Uₙ = (3n + 1)/4 ونعوض قيم مختلفة لـ n:',
+                'MH.lesson_Y2Alg_seqArith1.solution4a2': '<strong>لـ U₀ (n = 0):</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4a3': 'U₀ = (3 × 0 + 1) / 4 = (0 + 1) / 4 = 1/4 = <strong>0.25</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4a4': '<strong>لـ U₁ (n = 1):</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4a5': 'U₁ = (3 × 1 + 1) / 4 = (3 + 1) / 4 = 4/4 = <strong>1</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4a6': '<strong>لـ U₅ (n = 5):</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4a7': 'U₅ = (3 × 5 + 1) / 4 = (15 + 1) / 4 = 16/4 = <strong>4</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4a8': '<strong>لـ U₁₀₀ (n = 100):</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4a9': 'U₁₀₀ = (3 × 100 + 1) / 4 = (300 + 1) / 4 = 301/4 = <strong>75.25</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4a10': '<strong>الملخص:</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4a11': 'U₀ = 0.25 أو 1/4',
+                'MH.lesson_Y2Alg_seqArith1.solution4a12': 'U₁ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution4a13': 'U₅ = 4',
+                'MH.lesson_Y2Alg_seqArith1.solution4a14': 'U₁₀₀ = 75.25 أو 301/4',
+                
+                'MH.lesson_Y2Alg_seqArith1.question4b': 'ب) حدد الحد الأول، الحد الخامس والحد المائة لهذه المتتالية.',
+                'MH.lesson_Y2Alg_seqArith1.solution4b1': 'في المتتالية، عادةً ما ترقم الحدود بدءًا من 0 أو 1. بما أن متتاليتنا معرفة لكل عدد طبيعي n (والذي يبدأ عادةً بـ 0)، لدينا:',
+                'MH.lesson_Y2Alg_seqArith1.solution4b2': '<strong>الحد الأول:</strong> هذا هو U₀ (عند n = 0)',
+                'MH.lesson_Y2Alg_seqArith1.solution4b3': 'لقد حسبنا بالفعل U₀ = 1/4 = 0.25',
+                'MH.lesson_Y2Alg_seqArith1.solution4b4': '<strong>الحد الخامس:</strong> إذا عدنا من الحد الأول كحد رقم 1، إذن:',
+                'MH.lesson_Y2Alg_seqArith1.solution4b5': 'الحد 1: U₀ = 0.25',
+                'MH.lesson_Y2Alg_seqArith1.solution4b6': 'الحد 2: U₁ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution4b7': 'الحد 3: U₂ = (3×2+1)/4 = (6+1)/4 = 7/4 = 1.75',
+                'MH.lesson_Y2Alg_seqArith1.solution4b8': 'الحد 4: U₃ = (3×3+1)/4 = (9+1)/4 = 10/4 = 2.5',
+                'MH.lesson_Y2Alg_seqArith1.solution4b9': 'الحد 5: U₄ = (3×4+1)/4 = (12+1)/4 = 13/4 = 3.25',
+                'MH.lesson_Y2Alg_seqArith1.solution4b10': 'إذن الحد الخامس هو U₄ = 3.25',
+                'MH.lesson_Y2Alg_seqArith1.solution4b11': '<strong>الحد المائة:</strong> باتباع نفس النمط، الحد المائة سيكون U₉₉ (بما أن الحد الأول هو U₀)',
+                'MH.lesson_Y2Alg_seqArith1.solution4b12': 'U₉₉ = (3×99 + 1)/4 = (297 + 1)/4 = 298/4 = 74.5',
+                'MH.lesson_Y2Alg_seqArith1.solution4b13': 'ولكن انتظر! نحتاج إلى أن نكون حذرين. في بعض الأحيان ترقم المتتاليات بدءًا من 1. دعنا نوضح:',
+                'MH.lesson_Y2Alg_seqArith1.solution4b14': 'إذا بدأت المتتالية عند n=0:',
+                'MH.lesson_Y2Alg_seqArith1.solution4b15': 'الحد الأول = U₀ = 0.25',
+                'MH.lesson_Y2Alg_seqArith1.solution4b16': 'الحد الخامس = U₄ = 3.25',
+                'MH.lesson_Y2Alg_seqArith1.solution4b17': 'الحد المائة = U₉₉ = 74.5',
+                'MH.lesson_Y2Alg_seqArith1.solution4b18': 'إذا بدأت المتتالية عند n=1:',
+                'MH.lesson_Y2Alg_seqArith1.solution4b19': 'الحد الأول = U₁ = 1',
+                'MH.lesson_Y2Alg_seqArith1.solution4b20': 'الحد الخامس = U₅ = 4',
+                'MH.lesson_Y2Alg_seqArith1.solution4b21': 'الحد المائة = U₁₀₀ = 75.25',
+                'MH.lesson_Y2Alg_seqArith1.solution4b22': 'بما أن المشكلة تقول "لكل عدد طبيعي n" والأعداد الطبيعية تشمل عادةً 0، سنستخدم التفسير الأول:',
+                'MH.lesson_Y2Alg_seqArith1.solution4b23': '<strong>الحد الأول: U₀ = 0.25، الحد الخامس: U₄ = 3.25، الحد المائة: U₉₉ = 74.5</strong>',
+                
+                'MH.lesson_Y2Alg_seqArith1.question4c': 'ج) حدد تعبير Uₚ₊₁، U₂ₙ و U₃ₖ₊₂.',
+                'MH.lesson_Y2Alg_seqArith1.solution4c1': 'لدينا الصيغة العامة: Uₙ = (3n + 1)/4',
+                'MH.lesson_Y2Alg_seqArith1.solution4c2': 'نحتاج إلى تعويض تعبيرات مختلفة لـ n:',
+                'MH.lesson_Y2Alg_seqArith1.solution4c3': '<strong>لـ Uₚ₊₁:</strong> هنا، n = p+1',
+                'MH.lesson_Y2Alg_seqArith1.solution4c4': 'Uₚ₊₁ = [3(p+1) + 1] / 4 = [3p + 3 + 1] / 4 = (3p + 4) / 4',
+                'MH.lesson_Y2Alg_seqArith1.solution4c5': '<strong>لـ U₂ₙ:</strong> هنا، n = 2n (انتبه: n في U₂ₙ مختلف عن n في صيغتنا)',
+                'MH.lesson_Y2Alg_seqArith1.solution4c6': 'U₂ₙ = [3(2n) + 1] / 4 = (6n + 1) / 4',
+                'MH.lesson_Y2Alg_seqArith1.solution4c7': '<strong>لـ U₃ₖ₊₂:</strong> هنا، n = 3k+2',
+                'MH.lesson_Y2Alg_seqArith1.solution4c8': 'U₃ₖ₊₂ = [3(3k+2) + 1] / 4 = [9k + 6 + 1] / 4 = (9k + 7) / 4',
+                'MH.lesson_Y2Alg_seqArith1.solution4c9': '<strong>الملخص:</strong>',
+                'MH.lesson_Y2Alg_seqArith1.solution4c10': 'Uₚ₊₁ = (3p + 4)/4',
+                'MH.lesson_Y2Alg_seqArith1.solution4c11': 'U₂ₙ = (6n + 1)/4',
+                'MH.lesson_Y2Alg_seqArith1.solution4c12': 'U₃ₖ₊₂ = (9k + 7)/4',
+                
+                // الملخص
+                'MH.lesson_Y2Alg_seqArith1.summaryTitle': 'ملخص الدرس',
+                'MH.lesson_Y2Alg_seqArith1.keyConceptsTitle': 'المفاهيم الرئيسية المكتسبة',
+                'MH.lesson_Y2Alg_seqArith1.concept1': 'المتتالية هي قائمة مرتبة من الأرقام تتبع نمطًا محددًا',
+                'MH.lesson_Y2Alg_seqArith1.concept2': 'يمكننا العثور على الأنماط من خلال النظر إلى الفروق بين الحدود، النسب، أو علاقات أخرى',
+                'MH.lesson_Y2Alg_seqArith1.concept3': 'الأعداد المثلثية تتبع الصيغة Tₙ = n(n+1)/2',
+                'MH.lesson_Y2Alg_seqArith1.concept4': 'المتتالية معرفة رسميًا كدالة تربط عددًا حقيقيًا بكل عدد طبيعي',
+                'MH.lesson_Y2Alg_seqArith1.concept5': 'الحد العام Uₙ يعطينا صيغة لإيجاد أي حد في المتتالية',
+                'MH.lesson_Y2Alg_seqArith1.typesSequencesTitle': 'أنواع المتتاليات التي واجهناها',
+                'MH.lesson_Y2Alg_seqArith1.type1': '<strong>متتاليات حسابية:</strong> كل حد يختلف عن السابق بثابت (مثل 5، 3، 1، -1، -3، ... بفرق -2)',
+                'MH.lesson_Y2Alg_seqArith1.type2': '<strong>متتاليات شبيهة بمتتالية فيبوناتشي:</strong> كل حد هو مجموع الحدين السابقين (مثل 1، 2، 3، 5، 8، 13، ...)',
+                'MH.lesson_Y2Alg_seqArith1.type3': '<strong>أعداد مربعة:</strong> كل حد هو مربع كامل (مثل 1، 4، 9، 16، 25، ...)',
+                'MH.lesson_Y2Alg_seqArith1.type4': '<strong>أعداد مثلثية:</strong> كل حد يمثل نقاط مرتبة في مثلث (1، 3، 6، 10، 15، ...)',
+                'MH.lesson_Y2Alg_seqArith1.nextLessonTitle': 'الخطوات التالية',
+                'MH.lesson_Y2Alg_seqArith1.finalThought': 'في هذا الدرس، تعلمنا التعرف على الأنماط في المتتاليات والعمل مع حدودها العامة. في الدرس القادم، سنركز تحديدًا على المتتاليات الحسابية، سنتعلم كيفية إيجاد حدها العام، ونحل مسائل تتضمن هذه المتتاليات المهمة.',
+                
+                // التذييل
+                'MH.footer.developer': 'المطور',
+                'MH.footer.version': 'الإصدار',
+                'MH.footer.links': 'الروابط',
+                'MH.footer.terms': 'شروط الاستخدام',
+                'MH.footer.privacy': 'سياسة الخصوصية'
+            }
+        };
+
+        // Merge with existing translations if they exist
+        if (typeof translations !== 'undefined') {
+            Object.keys(seqArith1Translations).forEach(lang => {
+                if (translations[lang]) {
+                    translations[lang] = {...translations[lang], ...seqArith1Translations[lang]};
+                } else {
+                    translations[lang] = seqArith1Translations[lang];
+                }
+            });
+        } else {
+            var translations = seqArith1Translations;
+        }
+
+        // Canvas drawing functions
+        function drawTriangularCanvas() {
+            const canvas = document.getElementById('triangularCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw T1, T2, T3, T4
+            const centerX = width / 2;
+            const dotSize = 6;
+            const spacing = 20;
+            
+            // T1 (1 dot)
+            const t1X = centerX - 150;
+            const t1Y = height / 2;
+            ctx.fillStyle = '#4A90E2';
+            ctx.beginPath();
+            ctx.arc(t1X, t1Y, dotSize, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 14px Arial';
+            ctx.fillText('T₁ = 1', t1X - 15, t1Y - 25);
+            
+            // T2 (3 dots in triangle)
+            const t2X = centerX - 50;
+            const t2Y = height / 2;
+            ctx.fillStyle = '#2ECC71';
+            // Row 1 (1 dot)
+            ctx.beginPath();
+            ctx.arc(t2X, t2Y - spacing, dotSize, 0, Math.PI * 2);
+            ctx.fill();
+            // Row 2 (2 dots)
+            ctx.beginPath();
+            ctx.arc(t2X - spacing/2, t2Y + spacing/2, dotSize, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(t2X + spacing/2, t2Y + spacing/2, dotSize, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.fillText('T₂ = 3', t2X - 15, t2Y - 50);
+            
+            // T3 (6 dots in triangle)
+            const t3X = centerX + 50;
+            const t3Y = height / 2;
+            ctx.fillStyle = '#E67E22';
+            // Row 1 (1 dot)
+            ctx.beginPath();
+            ctx.arc(t3X, t3Y - spacing, dotSize, 0, Math.PI * 2);
+            ctx.fill();
+            // Row 2 (2 dots)
+            ctx.beginPath();
+            ctx.arc(t3X - spacing/2, t3Y, dotSize, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(t3X + spacing/2, t3Y, dotSize, 0, Math.PI * 2);
+            ctx.fill();
+            // Row 3 (3 dots)
+            ctx.beginPath();
+            ctx.arc(t3X - spacing, t3Y + spacing, dotSize, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(t3X, t3Y + spacing, dotSize, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(t3X + spacing, t3Y + spacing, dotSize, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.fillText('T₃ = 6', t3X - 15, t3Y - 75);
+            
+            // T4 (10 dots in triangle)
+            const t4X = centerX + 150;
+            const t4Y = height / 2;
+            ctx.fillStyle = '#8E44AD';
+            // Row 1 (1 dot)
+            ctx.beginPath();
+            ctx.arc(t4X, t4Y - spacing*1.5, dotSize, 0, Math.PI * 2);
+            ctx.fill();
+            // Row 2 (2 dots)
+            ctx.beginPath();
+            ctx.arc(t4X - spacing/2, t4Y - spacing/2, dotSize, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(t4X + spacing/2, t4Y - spacing/2, dotSize, 0, Math.PI * 2);
+            ctx.fill();
+            // Row 3 (3 dots)
+            ctx.beginPath();
+            ctx.arc(t4X - spacing, t4Y + spacing/2, dotSize, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(t4X, t4Y + spacing/2, dotSize, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(t4X + spacing, t4Y + spacing/2, dotSize, 0, Math.PI * 2);
+            ctx.fill();
+            // Row 4 (4 dots)
+            ctx.beginPath();
+            ctx.arc(t4X - spacing*1.5, t4Y + spacing*1.5, dotSize, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(t4X - spacing/2, t4Y + spacing*1.5, dotSize, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(t4X + spacing/2, t4Y + spacing*1.5, dotSize, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(t4X + spacing*1.5, t4Y + spacing*1.5, dotSize, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.fillText('T₄ = 10', t4X - 15, t4Y - 100);
+            
+            // Draw connecting lines to show pattern
+            ctx.strokeStyle = '#666666';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+            ctx.beginPath();
+            ctx.moveTo(t1X + 20, t1Y);
+            ctx.lineTo(t2X - 20, t2Y);
+            ctx.moveTo(t2X + 20, t2Y);
+            ctx.lineTo(t3X - 20, t3Y);
+            ctx.moveTo(t3X + 20, t3Y);
+            ctx.lineTo(t4X - 20, t4Y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+        }
+
+        function drawSpiralCanvas() {
+            const canvas = document.getElementById('spiralCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const scale = 30;
+            
+            // Draw coordinate axes
+            ctx.strokeStyle = '#666666';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([3, 3]);
+            ctx.beginPath();
+            ctx.moveTo(centerX - 200, centerY);
+            ctx.lineTo(centerX + 200, centerY);
+            ctx.moveTo(centerX, centerY - 150);
+            ctx.lineTo(centerX, centerY + 150);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Draw O
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('O', centerX + 15, centerY + 15);
+            
+            // Draw triangle OA₁A₂
+            const A1 = {x: centerX + scale, y: centerY};
+            const A2 = {x: centerX + scale, y: centerY - scale};
+            
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(A1.x, A1.y);
+            ctx.lineTo(A2.x, A2.y);
+            ctx.closePath();
+            ctx.stroke();
+            
+            // Draw right angle at A1
+            ctx.strokeStyle = '#4A90E2';
+            ctx.lineWidth = 2;
+            const angleSize = 10;
+            ctx.beginPath();
+            ctx.moveTo(A1.x - angleSize, A1.y);
+            ctx.lineTo(A1.x, A1.y);
+            ctx.lineTo(A1.x, A1.y + angleSize);
+            ctx.stroke();
+            
+            // Label A1 and A2
+            ctx.fillStyle = '#4A90E2';
+            ctx.beginPath();
+            ctx.arc(A1.x, A1.y, 4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.fillText('A₁', A1.x + 10, A1.y + 5);
+            
+            ctx.fillStyle = '#4A90E2';
+            ctx.beginPath();
+            ctx.arc(A2.x, A2.y, 4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.fillText('A₂', A2.x + 10, A2.y - 10);
+            
+            // Show lengths OA₁ = A₁A₂ = 1
+            ctx.fillStyle = '#666666';
+            ctx.font = '12px Arial';
+            ctx.fillText('1', (centerX + A1.x)/2, (centerY + A1.y)/2 + 10);
+            ctx.fillText('1', (A1.x + A2.x)/2 + 5, (A1.y + A2.y)/2);
+            
+            // Draw triangle OA₂A₃
+            const A3 = {x: centerX + scale + Math.sqrt(2)*scale, y: centerY - scale};
+            
+            ctx.strokeStyle = '#2ECC71';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(A2.x, A2.y);
+            ctx.lineTo(A3.x, A3.y);
+            ctx.stroke();
+            
+            // Draw right angle at A2
+            ctx.strokeStyle = '#2ECC71';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            // Need to calculate perpendicular lines at A2
+            const angle = Math.atan2(A2.y - centerY, A2.x - centerX);
+            const perpAngle = angle + Math.PI/2;
+            ctx.moveTo(A2.x + angleSize*Math.cos(perpAngle), A2.y + angleSize*Math.sin(perpAngle));
+            ctx.lineTo(A2.x, A2.y);
+            ctx.lineTo(A2.x + angleSize*Math.cos(angle), A2.y + angleSize*Math.sin(angle));
+            ctx.stroke();
+            
+            // Label A3
+            ctx.fillStyle = '#2ECC71';
+            ctx.beginPath();
+            ctx.arc(A3.x, A3.y, 4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.fillText('A₃', A3.x + 10, A3.y);
+            
+            // Show length A₂A₃ = 1
+            ctx.fillStyle = '#666666';
+            ctx.fillText('1', (A2.x + A3.x)/2, (A2.y + A3.y)/2 - 10);
+            
+            // Draw triangle OA₃A₄
+            const A4 = {x: centerX + scale + Math.sqrt(2)*scale, y: centerY - scale + Math.sqrt(3)*scale};
+            
+            ctx.strokeStyle = '#E67E22';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(A3.x, A3.y);
+            ctx.lineTo(A4.x, A4.y);
+            ctx.stroke();
+            
+            // Label A4
+            ctx.fillStyle = '#E67E22';
+            ctx.beginPath();
+            ctx.arc(A4.x, A4.y, 4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#333333';
+            ctx.fillText('A₄', A4.x + 10, A4.y + 10);
+            
+            // Show length A₃A₄ = 1
+            ctx.fillStyle = '#666666';
+            ctx.fillText('1', (A3.x + A4.x)/2 - 10, (A3.y + A4.y)/2);
+            
+            // Draw areas notation
+            ctx.fillStyle = '#8E44AD';
+            ctx.font = 'bold 14px Arial';
+            ctx.fillText('a₁ = مساحة(OA₁A₂)', 20, 30);
+            ctx.fillStyle = '#2ECC71';
+            ctx.fillText('a₂ = مساحة(OA₂A₃)', 20, 55);
+            ctx.fillStyle = '#E67E22';
+            ctx.fillText('a₃ = مساحة(OA₃A₄)', 20, 80);
+            ctx.fillStyle = '#3498DB';
+            ctx.fillText('a₄ = مساحة(OA₄A₅)', 20, 105);
+            
+            // Draw spiral pattern indicator
+            ctx.strokeStyle = '#666666';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+            ctx.beginPath();
+            ctx.moveTo(A1.x, A1.y);
+            ctx.lineTo(A2.x, A2.y);
+            ctx.lineTo(A3.x, A3.y);
+            ctx.lineTo(A4.x, A4.y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Draw "etc." to indicate continuation
+            ctx.fillStyle = '#333333';
+            ctx.font = 'italic 14px Arial';
+            ctx.fillText('... والمزيد', A4.x + 30, A4.y + 30);
+        }
+
+        // Solution toggle function
+        function toggleSolution(problemNumber) {
+            const solution = document.getElementById(`solution${problemNumber}`);
+            const button = solution.previousElementSibling;
+            const currentLang = MHThemeManager ? MHThemeManager.getCurrentLanguage() : 'en';
+            
+            if (solution.style.display === 'block' || solution.style.display === '') {
+                solution.style.display = 'none';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y2Alg_seqArith1.showSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Alg_seqArith1.showSolution'];
+                } else {
+                    button.textContent = 'Show Solution';
+                }
+            } else {
+                solution.style.display = 'block';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y2Alg_seqArith1.hideSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Alg_seqArith1.hideSolution'];
+                } else {
+                    button.textContent = 'Hide Solution';
+                }
+                // Re-render KaTeX for newly visible equations
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(solution, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\(', right: '\\)', display: false},
+                            {left: '\\[', right: '\\]', display: true}
+                        ],
+                        throwOnError: false
+                    });
+                }
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize KaTeX auto-render
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+            
+            // Draw canvases
+            drawTriangularCanvas();
+            drawSpiralCanvas();
+            
+            // Initialize solutions as hidden and set button text
+            const currentLang = MHThemeManager ? MHThemeManager.getCurrentLanguage() : 'en';
+            for (let i = 1; i <= 15; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                const button = solution ? solution.previousElementSibling : null;
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+                // Set initial button text
+                if (button && translations[currentLang] && translations[currentLang]['MH.lesson_Y2Alg_seqArith1.showSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y2Alg_seqArith1.showSolution'];
+                }
+            }
+            
+            // Redraw canvases when theme changes
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    setTimeout(() => {
+                        drawTriangularCanvas();
+                        drawSpiralCanvas();
+                    }, 100);
+                });
+            }
+        });
+    </script>
+    
+    <!-- Add the service worker registration script -->
+    <script>
+        // Register service worker with better error handling
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                })
+                .catch(function(error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+            });
+        }
+    </script>
+    
+    <!-- Add noscript fallback -->
+    <noscript>
+        <style>
+            .MH-header-controls { display: none; }
+            .MH-solution { display: block; }
+            .MH-canvas { border: 2px solid #ccc; background-color: #f9f9f9; }
+        </style>
+        <div class="MH-warning">
+            JavaScript is recommended for the full experience, but content is still accessible.
+        </div>
+    </noscript>
+</body>
+</html>

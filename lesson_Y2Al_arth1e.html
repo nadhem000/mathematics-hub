@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lesson: Arithmetic - Summary and Applications</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#4A90E2" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#8E44AD" media="(prefers-color-scheme: dark)">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#4A90E2">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    
+    <style>
+        /* Page-specific color palette - Blue + Purple Theme */
+        :root {
+            --primary: #4A90E2;        /* Cornflower Blue */
+            --primary-light: #7BAAF7;  /* Light Blue */
+            --primary-dark: #357ABD;   /* Darker Blue */
+            --secondary: #8E44AD;      /* Dark Purple */
+            --secondary-light: #AF7AC5; /* Light Purple */
+            --secondary-dark: #6C3483;  /* Darker Purple */
+            --accent: #E67E22;
+            --warning: #E74C3C;
+            --info: #2ECC71;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #FFFFFF;
+            --surface: #F8F9FA;
+            --border: #E9ECEF;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        [data-theme="dark"] {
+            --primary: #357ABD;
+            --primary-light: #4A90E2;
+            --primary-dark: #2C3E50;
+            --secondary: #6C3483;
+            --secondary-light: #8E44AD;
+            --secondary-dark: #4A235A;
+            --accent: #D35400;
+            --warning: #C0392B;
+            --info: #27AE60;
+            --text: #FFFFFF;
+            --text-light: #CCCCCC;
+            --background: #121212;
+            --surface: #1E1E1E;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        /* KaTeX styling */
+        .katex { 
+            font-size: 1.1em; 
+        }
+        
+        .katex-display { 
+            margin: 1em 0; 
+            text-align: center;
+        }
+        
+        .katex-display > .katex { 
+            display: inline-block;
+            text-align: center;
+        }
+
+        /* Equation styling */
+        .MH-equation {
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            margin: 0.5em 0;
+            padding: 0;
+            display: inline-block;
+            direction: ltr !important;
+            unicode-bidi: isolate;
+        }
+        
+        [dir="rtl"] .MH-equation {
+            text-align: left;
+            unicode-bidi: plaintext;
+        }
+
+        /* Summary rules styling */
+        .MH-rule-card {
+            background-color: var(--surface);
+            border-left: 4px solid var(--primary);
+            padding: 1em;
+            margin: 1em 0;
+            border-radius: 4px;
+        }
+        
+        .MH-rule-title {
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 0.5em;
+        }
+        
+        .MH-rule-list {
+            margin-left: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        
+        .MH-rule-list li {
+            margin-bottom: 0.25em;
+        }
+        
+        /* Diamond symbol */
+        .MH-diamond {
+            color: var(--secondary);
+            font-weight: bold;
+            margin-right: 0.5em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🌙</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>▼</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                        </div>
+                    </div>
+                    <!-- Notification Button -->
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+                        <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y2Al_arth1e.title">Arithmetic: Part 5</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y2Al_arth1e.subtitle">Summary and Applications</h2>
+        
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_arth1e.introduction">Introduction</h2>
+            <p data-i18n="MH.lesson_Y2Al_arth1e.introText1">In this final lesson of the arithmetic series, we will summarize all divisibility criteria learned so far and apply them to solve complex problems. This comprehensive review will help consolidate your understanding of divisibility rules and their practical applications.</p>
+            <p data-i18n="MH.lesson_Y2Al_arth1e.introText2">We will explore challenging problems that require the combined use of multiple divisibility criteria, developing problem-solving strategies and mathematical reasoning skills.</p>
+        </section>
+
+        <!-- Summary of Divisibility Rules -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_arth1e.summaryTitle">Summary of Divisibility Rules</h2>
+            
+            <!-- Divisibility by 2 and 5 -->
+            <div class="MH-rule-card">
+                <h3 class="MH-rule-title" data-i18n="MH.lesson_Y2Al_arth1e.divisibilityBy2And5Title">Divisibility by 2 and 5</h3>
+                <ul class="MH-rule-list">
+                    <li data-i18n="MH.lesson_Y2Al_arth1e.divBy2And5Rule1"><span class="MH-diamond">♦</span> An integer is divisible by 2 (respectively by 5) if and only if its units digit is divisible by 2 (respectively by 5).</li>
+                    <li data-i18n="MH.lesson_Y2Al_arth1e.divBy2And5Rule2"><span class="MH-diamond">♦</span> The remainder of the Euclidean division of an integer by 2 (respectively by 5) is equal to the remainder of the Euclidean division of its units digit by 2 (respectively by 5).</li>
+                </ul>
+            </div>
+            
+            <!-- Divisibility by 4 and 25 -->
+            <div class="MH-rule-card">
+                <h3 class="MH-rule-title" data-i18n="MH.lesson_Y2Al_arth1e.divisibilityBy4And25Title">Divisibility by 4 and 25</h3>
+                <ul class="MH-rule-list">
+                    <li data-i18n="MH.lesson_Y2Al_arth1e.divBy4And25Rule1"><span class="MH-diamond">♦</span> An integer is divisible by 4 (respectively by 25) if and only if the number formed by its last two digits is divisible by 4 (respectively by 25).</li>
+                    <li data-i18n="MH.lesson_Y2Al_arth1e.divBy4And25Rule2"><span class="MH-diamond">♦</span> The remainder of the Euclidean division of an integer by 4 (respectively by 25) is equal to the remainder of the Euclidean division by 4 (respectively by 25) of the number formed by its last two digits.</li>
+                </ul>
+            </div>
+            
+            <!-- Divisibility by 3 and 9 -->
+            <div class="MH-rule-card">
+                <h3 class="MH-rule-title" data-i18n="MH.lesson_Y2Al_arth1e.divisibilityBy3And9Title">Divisibility by 3 and 9</h3>
+                <ul class="MH-rule-list">
+                    <li data-i18n="MH.lesson_Y2Al_arth1e.divBy3And9Rule1"><span class="MH-diamond">♦</span> An integer is divisible by 3 (respectively by 9) if and only if the sum of its digits is divisible by 3 (respectively by 9).</li>
+                    <li data-i18n="MH.lesson_Y2Al_arth1e.divBy3And9Rule2"><span class="MH-diamond">♦</span> The remainder of the Euclidean division of an integer by 3 (respectively by 9) is equal to the remainder of the Euclidean division of the sum of its digits by 3 (respectively by 9).</li>
+                </ul>
+            </div>
+            
+            <!-- Divisibility by 8 -->
+            <div class="MH-rule-card">
+                <h3 class="MH-rule-title" data-i18n="MH.lesson_Y2Al_arth1e.divisibilityBy8Title">Divisibility by 8</h3>
+                <ul class="MH-rule-list">
+                    <li data-i18n="MH.lesson_Y2Al_arth1e.divBy8Rule1"><span class="MH-diamond">♦</span> An integer, greater than or equal to 100, is divisible by 8 if and only if the number formed by its last three digits is divisible by 8.</li>
+                    <li data-i18n="MH.lesson_Y2Al_arth1e.divBy8Rule2"><span class="MH-diamond">♦</span> The remainder of the Euclidean division of an integer by 8 is equal to the remainder of the Euclidean division by 8 of the number formed by its last three digits.</li>
+                </ul>
+            </div>
+            
+            <!-- Divisibility by 11 -->
+            <div class="MH-rule-card">
+                <h3 class="MH-rule-title" data-i18n="MH.lesson_Y2Al_arth1e.divisibilityBy11Title">Divisibility by 11</h3>
+                <p data-i18n="MH.lesson_Y2Al_arth1e.divBy11Intro">Let \(n\) be a natural integer. Let \(S_1\) be the sum of its digits in odd positions (from right to left) and \(S_2\) be the sum of its digits in even positions. Let \(d = S_1 - S_2\).</p>
+                
+                <div class="MH-case">
+                    <h4 data-i18n="MH.lesson_Y2Al_arth1e.case1Title">Case 1: \(d \geq 0\)</h4>
+                    <ul class="MH-rule-list">
+                        <li data-i18n="MH.lesson_Y2Al_arth1e.divBy11Case1Rule1"><span class="MH-diamond">♦</span> \(n\) is divisible by 11 if and only if \(d\) is divisible by 11.</li>
+                        <li data-i18n="MH.lesson_Y2Al_arth1e.divBy11Case1Rule2"><span class="MH-diamond">♦</span> The remainder of the Euclidean division of \(n\) by 11 is equal to the remainder of the Euclidean division of \(d\) by 11.</li>
+                    </ul>
+                </div>
+                
+                <div class="MH-case">
+                    <h4 data-i18n="MH.lesson_Y2Al_arth1e.case2Title">Case 2: \(d < 0\)</h4>
+                    <ul class="MH-rule-list">
+                        <li data-i18n="MH.lesson_Y2Al_arth1e.divBy11Case2Rule1"><span class="MH-diamond">♦</span> Let \(p\) be the smallest natural integer such that \(d + 11p\) is positive or zero.</li>
+                        <li data-i18n="MH.lesson_Y2Al_arth1e.divBy11Case2Rule2"><span class="MH-diamond">♦</span> \(n\) is divisible by 11 if and only if \(d + 11p\) is divisible by 11.</li>
+                        <li data-i18n="MH.lesson_Y2Al_arth1e.divBy11Case2Rule3"><span class="MH-diamond">♦</span> The remainder of the Euclidean division of \(n\) by 11 is \(d + 11p\).</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Applications Exercises -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_arth1e.applicationsTitle">Applications</h2>
+            
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1e.applicationsInstructionsTitle">Instructions</h3>
+                <p data-i18n="MH.lesson_Y2Al_arth1e.applicationsInstructionsText">Solve these challenging exercises by applying the divisibility criteria summarized above. These problems require creative thinking and the combined use of multiple rules.</p>
+            </div>
+            
+            <!-- Exercise 1 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1e.exercise1Title">Exercise 1: Cubic Boxes Problem</h3>
+                <p data-i18n="MH.lesson_Y2Al_arth1e.exercise1Question">The dimensions of a rectangular box are 120 cm, 200 cm, and 180 cm. We want to create cubic boxes with the same edge length \(a\) (where \(a\) is an integer) that completely fill the rectangular box. What should be the edge length \(a\) to use the minimum number of boxes?</p>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1e.showSolution" onclick="toggleSolution(1)">Show Solution</button>
+                <div class="MH-solution" id="solution1">
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise1Solution1">To completely fill the rectangular box with identical cubes, the edge length \(a\) must divide all three dimensions of the box.</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise1Solution.equation1">So \(a\) must be a common divisor of 120, 200, and 180.</div>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise1Solution2">To use the minimum number of boxes, we need to maximize the volume of each cube, which means we need the largest possible \(a\).</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise1Solution.equation2">Therefore, \(a\) must be the greatest common divisor (GCD) of 120, 200, and 180.</div>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise1Solution3">Let's find the GCD:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise1Solution.equation3">Prime factorization: \(120 = 2^3 \times 3 \times 5\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise1Solution.equation4">\(200 = 2^3 \times 5^2\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise1Solution.equation5">\(180 = 2^2 \times 3^2 \times 5\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise1Solution.equation6">The common factors are: \(2^2\) and \(5^1\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise1Solution.equation7">GCD = \(2^2 \times 5 = 4 \times 5 = 20\)</div>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise1Solution4">Therefore, \(a = 20\) cm.</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise1Solution5">Number of boxes: \(\frac{120}{20} \times \frac{200}{20} \times \frac{180}{20} = 6 \times 10 \times 9 = 540\) boxes.</p>
+                </div>
+            </div>
+            
+            <!-- Exercise 2 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1e.exercise2Title">Exercise 2: Four-Digit Number with Consecutive Digits</h3>
+                <p data-i18n="MH.lesson_Y2Al_arth1e.exercise2Question">Let \(n\) be a natural integer with 4 digits such that:</p>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Al_arth1e.exercise2Condition1">\(n\) is divisible by 9</li>
+                    <li data-i18n="MH.lesson_Y2Al_arth1e.exercise2Condition2">The digits of \(n\) are consecutive and arranged in increasing order from left to right.</li>
+                </ul>
+                <p data-i18n="MH.lesson_Y2Al_arth1e.exercise2Question2">Find \(n\).</p>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1e.showSolution" onclick="toggleSolution(2)">Show Solution</button>
+                <div class="MH-solution" id="solution2">
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise2Solution1">Let the digits be \(a, a+1, a+2, a+3\) where \(a\) is a digit from 0 to 6 (since we need 4 consecutive digits).</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise2Solution2">The number is: \(1000a + 100(a+1) + 10(a+2) + (a+3) = 1111a + 123\)</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise2Solution.equation1">Sum of digits: \(a + (a+1) + (a+2) + (a+3) = 4a + 6\)</div>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise2Solution3">For divisibility by 9, the sum of digits must be divisible by 9:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise2Solution.equation2">\(4a + 6\) must be divisible by 9</div>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise2Solution4">Since \(a\) is a digit from 0 to 6, let's check possible values:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise2Solution.equation3">For \(a = 0\): \(4(0) + 6 = 6\) (not divisible by 9)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise2Solution.equation4">For \(a = 1\): \(4(1) + 6 = 10\) (not divisible by 9)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise2Solution.equation5">For \(a = 2\): \(4(2) + 6 = 14\) (not divisible by 9)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise2Solution.equation6">For \(a = 3\): \(4(3) + 6 = 18\) (divisible by 9 ✓)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise2Solution.equation7">For \(a = 4\): \(4(4) + 6 = 22\) (not divisible by 9)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise2Solution.equation8">For \(a = 5\): \(4(5) + 6 = 26\) (not divisible by 9)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise2Solution.equation9">For \(a = 6\): \(4(6) + 6 = 30\) (not divisible by 9)</div>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise2Solution5">Only \(a = 3\) works.</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise2Solution.equation10">The digits are: 3, 4, 5, 6</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise2Solution.equation11">The number is: \(3456\)</div>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise2Solution6">Check: \(3456 \div 9 = 384\) ✓</p>
+                </div>
+            </div>
+            
+            <!-- Exercise 3 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1e.exercise3Title">Exercise 3: Integer Quotient</h3>
+                <p data-i18n="MH.lesson_Y2Al_arth1e.exercise3Question">Find all natural integers \(n\) such that \(\frac{n+25}{n+4}\) is an integer.</p>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1e.showSolution" onclick="toggleSolution(3)">Show Solution</button>
+                <div class="MH-solution" id="solution3">
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise3Solution1">We need \(\frac{n+25}{n+4}\) to be an integer.</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise3Solution.equation1">Let \(k = \frac{n+25}{n+4}\) where \(k\) is an integer.</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise3Solution.equation2">Then \(n+25 = k(n+4)\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise3Solution.equation3">\(n+25 = kn + 4k\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise3Solution.equation4">\(n - kn = 4k - 25\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise3Solution.equation5">\(n(1-k) = 4k - 25\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise3Solution.equation6">\(n = \frac{4k - 25}{1-k}\) (for \(k \neq 1\))</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise3Solution.equation8">\(n = \frac{4k - 25}{1-k} = -\frac{4k - 25}{k-1} = -\frac{4k - 4 - 21}{k-1} = -\frac{4(k-1) - 21}{k-1} = -4 + \frac{21}{k-1}\)</div>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise3Solution5">So \(n = -4 + \frac{21}{k-1}\)</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise3Solution6">For \(n\) to be a natural number, \(\frac{21}{k-1}\) must be an integer and \(n \geq 0\).</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise3Solution7">The divisors of 21 are: \(\pm 1, \pm 3, \pm 7, \pm 21\).</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise3Solution8">Let \(d = k-1\). Then \(d\) must divide 21.</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise3Solution9">Case by case:</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise3Solution.equation9">If \(d = 1\): \(k = 2\), \(n = -4 + 21 = 17\) ✓</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise3Solution.equation10">If \(d = 3\): \(k = 4\), \(n = -4 + 7 = 3\) ✓</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise3Solution.equation11">If \(d = 7\): \(k = 8\), \(n = -4 + 3 = -1\) ✗ (not natural)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise3Solution.equation12">If \(d = 21\): \(k = 22\), \(n = -4 + 1 = -3\) ✗</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise3Solution.equation13">Negative divisors give negative \(n\) values.</div>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise3Solution10">Therefore, the natural numbers \(n\) are: 3 and 17.</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise3Solution11">Check: For \(n = 3\): \(\frac{3+25}{3+4} = \frac{28}{7} = 4\) ✓</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise3Solution12">For \(n = 17\): \(\frac{17+25}{17+4} = \frac{42}{21} = 2\) ✓</p>
+                </div>
+            </div>
+            
+            <!-- Exercise 4 -->
+            <div class="MH-step">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1e.exercise4Title">Exercise 4: Divisible Difference</h3>
+                <p data-i18n="MH.lesson_Y2Al_arth1e.exercise4Question">Determine the values of the natural integer \(p\) such that \(p - 1\) divides \(p + 11\).</p>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y2Al_arth1e.showSolution" onclick="toggleSolution(4)">Show Solution</button>
+                <div class="MH-solution" id="solution4">
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution1">We need \(p - 1\) to divide \(p + 11\), which means \(\frac{p+11}{p-1}\) must be an integer.</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution.equation1">Let \(k = \frac{p+11}{p-1}\) where \(k\) is an integer.</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution.equation2">Then \(p+11 = k(p-1)\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution.equation3">\(p+11 = kp - k\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution.equation4">\(p - kp = -k - 11\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution.equation5">\(p(1-k) = -k - 11\)</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution.equation6">\(p = \frac{-k - 11}{1-k} = \frac{k+11}{k-1}\) (for \(k \neq 1\))</div>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution2">Rewrite: \(p = \frac{k+11}{k-1} = \frac{k-1+12}{k-1} = 1 + \frac{12}{k-1}\)</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution3">For \(p\) to be a natural number, \(\frac{12}{k-1}\) must be an integer and \(p \geq 0\).</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution4">The divisors of 12 are: \(\pm 1, \pm 2, \pm 3, \pm 4, \pm 6, \pm 12\).</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution5">Let \(d = k-1\). Then \(d\) must divide 12.</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution6">Case by case (only considering positive divisors for positive \(p\)):</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution.equation7">If \(d = 1\): \(k = 2\), \(p = 1 + 12 = 13\) ✓</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution.equation8">If \(d = 2\): \(k = 3\), \(p = 1 + 6 = 7\) ✓</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution.equation9">If \(d = 3\): \(k = 4\), \(p = 1 + 4 = 5\) ✓</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution.equation10">If \(d = 4\): \(k = 5\), \(p = 1 + 3 = 4\) ✓</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution.equation11">If \(d = 6\): \(k = 7\), \(p = 1 + 2 = 3\) ✓</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution.equation12">If \(d = 12\): \(k = 13\), \(p = 1 + 1 = 2\) ✓</div>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution7">Also consider negative divisors that give positive \(p\):</p>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution.equation13">If \(d = -1\): \(k = 0\), \(p = 1 - 12 = -11\) ✗</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution.equation14">If \(d = -2\): \(k = -1\), \(p = 1 - 6 = -5\) ✗</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution.equation15">If \(d = -3\): \(k = -2\), \(p = 1 - 4 = -3\) ✗</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution.equation16">If \(d = -4\): \(k = -3\), \(p = 1 - 3 = -2\) ✗</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution.equation17">If \(d = -6\): \(k = -5\), \(p = 1 - 2 = -1\) ✗</div>
+                    <div class="MH-equation" data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution.equation18">If \(d = -12\): \(k = -11\), \(p = 1 - 1 = 0\) ✗ (0 is not usually considered a natural number in this context)</div>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution8">Therefore, the natural numbers \(p\) are: 2, 3, 4, 5, 7, 13.</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution9">Check: For \(p = 2\): \(p-1 = 1\), \(p+11 = 13\), 1 divides 13 ✓</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution10">For \(p = 3\): \(3-1 = 2\), \(3+11 = 14\), 2 divides 14 ✓</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution11">For \(p = 4\): \(4-1 = 3\), \(4+11 = 15\), 3 divides 15 ✓</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution12">For \(p = 5\): \(5-1 = 4\), \(5+11 = 16\), 4 divides 16 ✓</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution13">For \(p = 7\): \(7-1 = 6\), \(7+11 = 18\), 6 divides 18 ✓</p>
+                    <p data-i18n="MH.lesson_Y2Al_arth1e.exercise4Solution14">For \(p = 13\): \(13-1 = 12\), \(13+11 = 24\), 12 divides 24 ✓</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Conclusion -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y2Al_arth1e.conclusionTitle">Conclusion</h2>
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y2Al_arth1e.keyConceptsTitle">Key Concepts Mastered</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y2Al_arth1e.concept1">Comprehensive understanding of all divisibility criteria (2, 5, 4, 25, 3, 9, 8, 11)</li>
+                    <li data-i18n="MH.lesson_Y2Al_arth1e.concept2">Application of divisibility rules to solve complex real-world problems</li>
+                    <li data-i18n="MH.lesson_Y2Al_arth1e.concept3">Problem-solving strategies involving divisibility and number theory</li>
+                    <li data-i18n="MH.lesson_Y2Al_arth1e.concept4">Mathematical reasoning and proof techniques</li>
+                    <li data-i18n="MH.lesson_Y2Al_arth1e.concept5">Synthesis of multiple mathematical concepts in problem-solving</li>
+                </ul>
+            </div>
+            <p data-i18n="MH.lesson_Y2Al_arth1e.finalThought">This lesson concludes our series on arithmetic and divisibility criteria. You have now mastered a comprehensive set of tools for analyzing number properties and solving complex mathematical problems. Remember that mathematical proficiency comes not just from knowing rules, but from understanding when and how to apply them creatively to solve challenging problems.</p>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Developer</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.0.1</div>
+            </div>
+            
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Links</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Terms of Use</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+    
+    <script>
+        // ARITHMETIC LESSON TRANSLATIONS
+        const arithmeticTranslations = {
+            'en': {
+        // General translations
+        'MH.general.homeTooltip': 'Go to Homepage',
+        'MH.general.install': 'Install App',
+        'MH.general.installSuccess': 'Mathematics Hub installed successfully!',
+        'MH.general.enableNotifications': 'Enable Notifications',
+        'MH.general.notificationEnabled': 'Notifications enabled! You will now receive updates.',
+        'MH.general.title': 'Mathematics Hub',
+        'MH.general.theme': 'Theme',
+        'MH.general.language': 'Language',
+        
+        // Arithmetic lesson specific translations
+        'MH.lesson_Y2Al_arth1e.title': 'Arithmetic: Part 5',
+        'MH.lesson_Y2Al_arth1e.subtitle': 'Summary and Applications',
+        'MH.lesson_Y2Al_arth1e.introduction': 'Introduction',
+        'MH.lesson_Y2Al_arth1e.introText1': 'In this final lesson of the arithmetic series, we will summarize all divisibility criteria learned so far and apply them to solve complex problems. This comprehensive review will help consolidate your understanding of divisibility rules and their practical applications.',
+        'MH.lesson_Y2Al_arth1e.introText2': 'We will explore challenging problems that require the combined use of multiple divisibility criteria, developing problem-solving strategies and mathematical reasoning skills.',
+        
+        // Summary
+        'MH.lesson_Y2Al_arth1e.summaryTitle': 'Summary of Divisibility Rules',
+        'MH.lesson_Y2Al_arth1e.divisibilityBy2And5Title': 'Divisibility by 2 and 5',
+        'MH.lesson_Y2Al_arth1e.divBy2And5Rule1': String.raw`<span class="MH-diamond">♦</span> An integer is divisible by 2 (respectively by 5) if and only if its units digit is divisible by 2 (respectively by 5).`,
+        'MH.lesson_Y2Al_arth1e.divBy2And5Rule2': String.raw`<span class="MH-diamond">♦</span> The remainder of the Euclidean division of an integer by 2 (respectively by 5) is equal to the remainder of the Euclidean division of its units digit by 2 (respectively by 5).`,
+        
+        'MH.lesson_Y2Al_arth1e.divisibilityBy4And25Title': 'Divisibility by 4 and 25',
+        'MH.lesson_Y2Al_arth1e.divBy4And25Rule1': String.raw`<span class="MH-diamond">♦</span> An integer is divisible by 4 (respectively by 25) if and only if the number formed by its last two digits is divisible by 4 (respectively by 25).`,
+        'MH.lesson_Y2Al_arth1e.divBy4And25Rule2': String.raw`<span class="MH-diamond">♦</span> The remainder of the Euclidean division of an integer by 4 (respectively by 25) is equal to the remainder of the Euclidean division by 4 (respectively by 25) of the number formed by its last two digits.`,
+        
+        'MH.lesson_Y2Al_arth1e.divisibilityBy3And9Title': 'Divisibility by 3 and 9',
+        'MH.lesson_Y2Al_arth1e.divBy3And9Rule1': String.raw`<span class="MH-diamond">♦</span> An integer is divisible by 3 (respectively by 9) if and only if the sum of its digits is divisible by 3 (respectively by 9).`,
+        'MH.lesson_Y2Al_arth1e.divBy3And9Rule2': String.raw`<span class="MH-diamond">♦</span> The remainder of the Euclidean division of an integer by 3 (respectively by 9) is equal to the remainder of the Euclidean division of the sum of its digits by 3 (respectively by 9).`,
+        
+        'MH.lesson_Y2Al_arth1e.divisibilityBy8Title': 'Divisibility by 8',
+        'MH.lesson_Y2Al_arth1e.divBy8Rule1': String.raw`<span class="MH-diamond">♦</span> An integer, greater than or equal to 100, is divisible by 8 if and only if the number formed by its last three digits is divisible by 8.`,
+        'MH.lesson_Y2Al_arth1e.divBy8Rule2': String.raw`<span class="MH-diamond">♦</span> The remainder of the Euclidean division of an integer by 8 is equal to the remainder of the Euclidean division by 8 of the number formed by its last three digits.`,
+        
+        'MH.lesson_Y2Al_arth1e.divisibilityBy11Title': 'Divisibility by 11',
+        'MH.lesson_Y2Al_arth1e.divBy11Intro': String.raw`Let \(n\) be a natural integer. Let \(S_1\) be the sum of its digits in odd positions (from right to left) and \(S_2\) be the sum of its digits in even positions. Let \(d = S_1 - S_2\).`,
+        'MH.lesson_Y2Al_arth1e.case1Title': String.raw`Case 1: \(d \geq 0\)`,
+        'MH.lesson_Y2Al_arth1e.divBy11Case1Rule1': String.raw`<span class="MH-diamond">♦</span> \(n\) is divisible by 11 if and only if \(d\) is divisible by 11.`,
+        'MH.lesson_Y2Al_arth1e.divBy11Case1Rule2': String.raw`<span class="MH-diamond">♦</span> The remainder of the Euclidean division of \(n\) by 11 is equal to the remainder of the Euclidean division of \(d\) by 11.`,
+        'MH.lesson_Y2Al_arth1e.case2Title': String.raw`Case 2: \(d < 0\)`,
+        'MH.lesson_Y2Al_arth1e.divBy11Case2Rule1': String.raw`<span class="MH-diamond">♦</span> Let \(p\) be the smallest natural integer such that \(d + 11p\) is positive or zero.`,
+        'MH.lesson_Y2Al_arth1e.divBy11Case2Rule2': String.raw`<span class="MH-diamond">♦</span> \(n\) is divisible by 11 if and only if \(d + 11p\) is divisible by 11.`,
+        'MH.lesson_Y2Al_arth1e.divBy11Case2Rule3': String.raw`<span class="MH-diamond">♦</span> The remainder of the Euclidean division of \(n\) by 11 is \(d + 11p\).`,
+        
+        // Applications
+        'MH.lesson_Y2Al_arth1e.applicationsTitle': 'Applications',
+        'MH.lesson_Y2Al_arth1e.applicationsInstructionsTitle': 'Instructions',
+        'MH.lesson_Y2Al_arth1e.applicationsInstructionsText': 'Solve these challenging exercises by applying the divisibility criteria summarized above. These problems require creative thinking and the combined use of multiple rules.',
+        
+        // Exercise 1
+        'MH.lesson_Y2Al_arth1e.exercise1Title': 'Exercise 1: Cubic Boxes Problem',
+        'MH.lesson_Y2Al_arth1e.exercise1Question': 'The dimensions of a rectangular box are 120 cm, 200 cm, and 180 cm. We want to create cubic boxes with the same edge length \(a\) (where \(a\) is an integer) that completely fill the rectangular box. What should be the edge length \(a\) to use the minimum number of boxes?',
+        'MH.lesson_Y2Al_arth1e.exercise1Solution1': 'To completely fill the rectangular box with identical cubes, the edge length \(a\) must divide all three dimensions of the box.',
+        'MH.lesson_Y2Al_arth1e.exercise1Solution.equation1': String.raw`So \(a\) must be a common divisor of 120, 200, and 180.`,
+        'MH.lesson_Y2Al_arth1e.exercise1Solution2': 'To use the minimum number of boxes, we need to maximize the volume of each cube, which means we need the largest possible \(a\).',
+        'MH.lesson_Y2Al_arth1e.exercise1Solution.equation2': String.raw`Therefore, \(a\) must be the greatest common divisor (GCD) of 120, 200, and 180.`,
+        'MH.lesson_Y2Al_arth1e.exercise1Solution3': 'Let\'s find the GCD:',
+        'MH.lesson_Y2Al_arth1e.exercise1Solution.equation3': String.raw`Prime factorization: \(120 = 2^3 \times 3 \times 5\)`,
+        'MH.lesson_Y2Al_arth1e.exercise1Solution.equation4': String.raw`\(200 = 2^3 \times 5^2\)`,
+        'MH.lesson_Y2Al_arth1e.exercise1Solution.equation5': String.raw`\(180 = 2^2 \times 3^2 \times 5\)`,
+        'MH.lesson_Y2Al_arth1e.exercise1Solution.equation6': String.raw`The common factors are: \(2^2\) and \(5^1\)`,
+        'MH.lesson_Y2Al_arth1e.exercise1Solution.equation7': String.raw`GCD = \(2^2 \times 5 = 4 \times 5 = 20\)`,
+        'MH.lesson_Y2Al_arth1e.exercise1Solution4': String.raw`Therefore, \(a = 20\) cm.`,
+        'MH.lesson_Y2Al_arth1e.exercise1Solution5': String.raw`Number of boxes: \(\frac{120}{20} \times \frac{200}{20} \times \frac{180}{20} = 6 \times 10 \times 9 = 540\) boxes.`,
+        
+        // Exercise 2
+        'MH.lesson_Y2Al_arth1e.exercise2Title': 'Exercise 2: Four-Digit Number with Consecutive Digits',
+        'MH.lesson_Y2Al_arth1e.exercise2Question': 'Let \(n\) be a natural integer with 4 digits such that:',
+        'MH.lesson_Y2Al_arth1e.exercise2Condition1': String.raw`\(n\) is divisible by 9`,
+        'MH.lesson_Y2Al_arth1e.exercise2Condition2': 'The digits of \(n\) are consecutive and arranged in increasing order from left to right.',
+        'MH.lesson_Y2Al_arth1e.exercise2Question2': 'Find \(n\).',
+        'MH.lesson_Y2Al_arth1e.exercise2Solution1': String.raw`Let the digits be \(a, a+1, a+2, a+3\) where \(a\) is a digit from 0 to 6 (since we need 4 consecutive digits).`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution2': String.raw`The number is: \(1000a + 100(a+1) + 10(a+2) + (a+3) = 1111a + 123\)`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation1': String.raw`Sum of digits: \(a + (a+1) + (a+2) + (a+3) = 4a + 6\)`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution3': 'For divisibility by 9, the sum of digits must be divisible by 9:',
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation2': String.raw`\(4a + 6\) must be divisible by 9`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution4': 'Since \(a\) is a digit from 0 to 6, let\'s check possible values:',
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation3': String.raw`For \(a = 0\): \(4(0) + 6 = 6\) (not divisible by 9)`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation4': String.raw`For \(a = 1\): \(4(1) + 6 = 10\) (not divisible by 9)`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation5': String.raw`For \(a = 2\): \(4(2) + 6 = 14\) (not divisible by 9)`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation6': String.raw`For \(a = 3\): \(4(3) + 6 = 18\) (divisible by 9 ✓)`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation7': String.raw`For \(a = 4\): \(4(4) + 6 = 22\) (not divisible by 9)`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation8': String.raw`For \(a = 5\): \(4(5) + 6 = 26\) (not divisible by 9)`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation9': String.raw`For \(a = 6\): \(4(6) + 6 = 30\) (not divisible by 9)`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution5': 'Only \(a = 3\) works.',
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation10': 'The digits are: 3, 4, 5, 6',
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation11': 'The number is: \(3456\)',
+        'MH.lesson_Y2Al_arth1e.exercise2Solution6': String.raw`Check: \(3456 \div 9 = 384\) ✓`,
+        
+        // Exercise 3
+        'MH.lesson_Y2Al_arth1e.exercise3Title': 'Exercise 3: Integer Quotient',
+        'MH.lesson_Y2Al_arth1e.exercise3Question': String.raw`Find all natural integers \(n\) such that \(\frac{n+25}{n+4}\) is an integer.`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution1': String.raw`We need \(\frac{n+25}{n+4}\) to be an integer.`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation1': String.raw`Let \(k = \frac{n+25}{n+4}\) where \(k\) is an integer.`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation2': String.raw`Then \(n+25 = k(n+4)\)`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation3': String.raw`\(n+25 = kn + 4k\)`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation4': String.raw`\(n - kn = 4k - 25\)`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation5': String.raw`\(n(1-k) = 4k - 25\)`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation6': String.raw`\(n = \frac{4k - 25}{1-k}\) (for \(k \neq 1\))`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution2': 'Since \(n\) is a natural number, the numerator must be divisible by the denominator and the result must be non-negative.',
+        'MH.lesson_Y2Al_arth1e.exercise3Solution3': String.raw`Let\'s rewrite: \(n = \frac{4k - 25}{1-k} = \frac{4k - 4 - 21}{1-k} = \frac{4(k-1) - 21}{1-k} = -4 + \frac{21}{k-1}\)`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation7': String.raw`Actually: \(n = \frac{4k - 25}{1-k} = -\frac{4k - 25}{k-1} = -\frac{4(k-1) + 21}{k-1} = -4 - \frac{21}{k-1}\)`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution4': 'Wait, let\'s recalculate carefully:',
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation8': String.raw`\(n = \frac{4k - 25}{1-k} = -\frac{4k - 25}{k-1} = -\frac{4k - 4 - 21}{k-1} = -\frac{4(k-1) - 21}{k-1} = -4 + \frac{21}{k-1}\)`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution5': String.raw`So \(n = -4 + \frac{21}{k-1}\)`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution6': String.raw`For \(n\) to be a natural number, \(\frac{21}{k-1}\) must be an integer and \(n \geq 0\).`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution7': String.raw`The divisors of 21 are: \(\pm 1, \pm 3, \pm 7, \pm 21\).`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution8': String.raw`Let \(d = k-1\). Then \(d\) must divide 21.`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution9': 'Case by case:',
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation9': String.raw`If \(d = 1\): \(k = 2\), \(n = -4 + 21 = 17\) ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation10': String.raw`If \(d = 3\): \(k = 4\), \(n = -4 + 7 = 3\) ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation11': String.raw`If \(d = 7\): \(k = 8\), \(n = -4 + 3 = -1\) ✗ (not natural)`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation12': String.raw`If \(d = 21\): \(k = 22\), \(n = -4 + 1 = -3\) ✗`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation13': 'Negative divisors give negative \(n\) values.',
+        'MH.lesson_Y2Al_arth1e.exercise3Solution10': 'Therefore, the natural numbers \(n\) are: 3 and 17.',
+        'MH.lesson_Y2Al_arth1e.exercise3Solution11': String.raw`Check: For \(n = 3\): \(\frac{3+25}{3+4} = \frac{28}{7} = 4\) ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution12': String.raw`For \(n = 17\): \(\frac{17+25}{17+4} = \frac{42}{21} = 2\) ✓`,
+        
+        // Exercise 4
+        'MH.lesson_Y2Al_arth1e.exercise4Title': 'Exercise 4: Divisible Difference',
+        'MH.lesson_Y2Al_arth1e.exercise4Question': String.raw`Determine the values of the natural integer \(p\) such that \(p - 1\) divides \(p + 11\).`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution1': String.raw`We need \(p - 1\) to divide \(p + 11\), which means \(\frac{p+11}{p-1}\) must be an integer.`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation1': String.raw`Let \(k = \frac{p+11}{p-1}\) where \(k\) is an integer.`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation2': String.raw`Then \(p+11 = k(p-1)\)`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation3': String.raw`\(p+11 = kp - k\)`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation4': String.raw`\(p - kp = -k - 11\)`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation5': String.raw`\(p(1-k) = -k - 11\)`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation6': String.raw`\(p = \frac{-k - 11}{1-k} = \frac{k+11}{k-1}\) (for \(k \neq 1\))`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution2': String.raw`Rewrite: \(p = \frac{k+11}{k-1} = \frac{k-1+12}{k-1} = 1 + \frac{12}{k-1}\)`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution3': String.raw`For \(p\) to be a natural number, \(\frac{12}{k-1}\) must be an integer and \(p \geq 0\).`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution4': String.raw`The divisors of 12 are: \(\pm 1, \pm 2, \pm 3, \pm 4, \pm 6, \pm 12\).`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution5': String.raw`Let \(d = k-1\). Then \(d\) must divide 12.`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution6': 'Case by case (only considering positive divisors for positive \(p\)):',
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation7': String.raw`If \(d = 1\): \(k = 2\), \(p = 1 + 12 = 13\) ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation8': String.raw`If \(d = 2\): \(k = 3\), \(p = 1 + 6 = 7\) ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation9': String.raw`If \(d = 3\): \(k = 4\), \(p = 1 + 4 = 5\) ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation10': String.raw`If \(d = 4\): \(k = 5\), \(p = 1 + 3 = 4\) ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation11': String.raw`If \(d = 6\): \(k = 7\), \(p = 1 + 2 = 3\) ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation12': String.raw`If \(d = 12\): \(k = 13\), \(p = 1 + 1 = 2\) ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution7': 'Also consider negative divisors that give positive \(p\):',
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation13': String.raw`If \(d = -1\): \(k = 0\), \(p = 1 - 12 = -11\) ✗`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation14': String.raw`If \(d = -2\): \(k = -1\), \(p = 1 - 6 = -5\) ✗`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation15': String.raw`If \(d = -3\): \(k = -2\), \(p = 1 - 4 = -3\) ✗`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation16': String.raw`If \(d = -4\): \(k = -3\), \(p = 1 - 3 = -2\) ✗`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation17': String.raw`If \(d = -6\): \(k = -5\), \(p = 1 - 2 = -1\) ✗`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation18': String.raw`If \(d = -12\): \(k = -11\), \(p = 1 - 1 = 0\) ✗ (0 is not usually considered a natural number in this context)`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution8': 'Therefore, the natural numbers \(p\) are: 2, 3, 4, 5, 7, 13.',
+        'MH.lesson_Y2Al_arth1e.exercise4Solution9': String.raw`Check: For \(p = 2\): \(p-1 = 1\), \(p+11 = 13\), 1 divides 13 ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution10': String.raw`For \(p = 3\): \(3-1 = 2\), \(3+11 = 14\), 2 divides 14 ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution11': String.raw`For \(p = 4\): \(4-1 = 3\), \(4+11 = 15\), 3 divides 15 ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution12': String.raw`For \(p = 5\): \(5-1 = 4\), \(5+11 = 16\), 4 divides 16 ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution13': String.raw`For \(p = 7\): \(7-1 = 6\), \(7+11 = 18\), 6 divides 18 ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution14': String.raw`For \(p = 13\): \(13-1 = 12\), \(13+11 = 24\), 12 divides 24 ✓`,
+        
+        // Conclusion
+        'MH.lesson_Y2Al_arth1e.conclusionTitle': 'Conclusion',
+        'MH.lesson_Y2Al_arth1e.keyConceptsTitle': 'Key Concepts Mastered',
+        'MH.lesson_Y2Al_arth1e.concept1': 'Comprehensive understanding of all divisibility criteria (2, 5, 4, 25, 3, 9, 8, 11)',
+        'MH.lesson_Y2Al_arth1e.concept2': 'Application of divisibility rules to solve complex real-world problems',
+        'MH.lesson_Y2Al_arth1e.concept3': 'Problem-solving strategies involving divisibility and number theory',
+        'MH.lesson_Y2Al_arth1e.concept4': 'Mathematical reasoning and proof techniques',
+        'MH.lesson_Y2Al_arth1e.concept5': 'Synthesis of multiple mathematical concepts in problem-solving',
+        'MH.lesson_Y2Al_arth1e.finalThought': 'This lesson concludes our series on arithmetic and divisibility criteria. You have now mastered a comprehensive set of tools for analyzing number properties and solving complex mathematical problems. Remember that mathematical proficiency comes not just from knowing rules, but from understanding when and how to apply them creatively to solve challenging problems.',
+        
+        // Solution buttons
+        'MH.lesson_Y2Al_arth1e.showSolution': 'Show Solution',
+        'MH.lesson_Y2Al_arth1e.hideSolution': 'Hide Solution',
+        
+        // Footer
+        'MH.footer.developer': 'Developer',
+        'MH.footer.version': 'Version',
+        'MH.footer.links': 'Links',
+        'MH.footer.terms': 'Terms of Use',
+        'MH.footer.privacy': 'Privacy Policy'
+            },
+            'ar': {
+        // General translations
+        'MH.general.homeTooltip': 'الذهاب إلى الصفحة الرئيسية',
+        'MH.general.install': 'تثبيت التطبيق',
+        'MH.general.installSuccess': 'تم تثبيت Mathematics Hub بنجاح!',
+        'MH.general.enableNotifications': 'تمكين الإشعارات',
+        'MH.general.notificationEnabled': 'تم تمكين الإشعارات! سوف تتلقى التحديثات الآن.',
+        'MH.general.title': 'مركز الرياضيات',
+        'MH.general.theme': 'السمة',
+        'MH.general.language': 'اللغة',
+        
+        // Arithmetic lesson specific translations
+        'MH.lesson_Y2Al_arth1e.title': 'الحساب: الجزء 5',
+        'MH.lesson_Y2Al_arth1e.subtitle': 'الملخص والتطبيقات',
+        'MH.lesson_Y2Al_arth1e.introduction': 'مقدمة',
+        'MH.lesson_Y2Al_arth1e.introText1': 'في هذا الدرس الأخير من سلسلة الحساب، سنلخص جميع معايير القسمة التي تعلمناها حتى الآن ونطبقها لحل المشكلات المعقدة. سيساعد هذا الاستعراض الشامل في توحيد فهمك لقواعد القسمة وتطبيقاتها العملية.',
+        'MH.lesson_Y2Al_arth1e.introText2': 'سنستكشف مشكلات صعبة تتطلب الاستخدام المشترك لمعايير قسمة متعددة، مما يطور استراتيجيات حل المشكلات ومهارات التفكير الرياضي.',
+        
+        // Summary
+        'MH.lesson_Y2Al_arth1e.summaryTitle': 'ملخص قواعد القسمة',
+        'MH.lesson_Y2Al_arth1e.divisibilityBy2And5Title': 'القسمة على 2 و 5',
+        'MH.lesson_Y2Al_arth1e.divBy2And5Rule1': '<span class="MH-diamond">♦</span> العدد الصحيح يقبل القسمة على 2 (على التوالي على 5) إذا وفقط إذا كان رقم وحداته يقبل القسمة على 2 (على التوالي على 5).',
+        'MH.lesson_Y2Al_arth1e.divBy2And5Rule2': '<span class="MH-diamond">♦</span> باقي القسمة الإقليدية لعدد صحيح على 2 (على التوالي على 5) يساوي باقي القسمة الإقليدية لرقم وحداته على 2 (على التوالي على 5).',
+        
+        'MH.lesson_Y2Al_arth1e.divisibilityBy4And25Title': 'القسمة على 4 و 25',
+        'MH.lesson_Y2Al_arth1e.divBy4And25Rule1': '<span class="MH-diamond">♦</span> العدد الصحيح يقبل القسمة على 4 (على التوالي على 25) إذا وفقط إذا كان العدد المكون من آخر رقمين له يقبل القسمة على 4 (على التوالي على 25).',
+        'MH.lesson_Y2Al_arth1e.divBy4And25Rule2': '<span class="MH-diamond">♦</span> باقي القسمة الإقليدية لعدد صحيح على 4 (على التوالي على 25) يساوي باقي القسمة الإقليدية على 4 (على التوالي على 25) للعدد المكون من آخر رقمين له.',
+        
+        'MH.lesson_Y2Al_arth1e.divisibilityBy3And9Title': 'القسمة على 3 و 9',
+        'MH.lesson_Y2Al_arth1e.divBy3And9Rule1': '<span class="MH-diamond">♦</span> العدد الصحيح يقبل القسمة على 3 (على التوالي على 9) إذا وفقط إذا كان مجموع أرقامه يقبل القسمة على 3 (على التوالي على 9).',
+        'MH.lesson_Y2Al_arth1e.divBy3And9Rule2': '<span class="MH-diamond">♦</span> باقي القسمة الإقليدية لعدد صحيح على 3 (على التوالي على 9) يساوي باقي القسمة الإقليدية لمجموع أرقامه على 3 (على التوالي على 9).',
+        
+        'MH.lesson_Y2Al_arth1e.divisibilityBy8Title': 'القسمة على 8',
+        'MH.lesson_Y2Al_arth1e.divBy8Rule1': '<span class="MH-diamond">♦</span> العدد الصحيح، الأكبر من أو يساوي 100، يقبل القسمة على 8 إذا وفقط إذا كان العدد المكون من آخر ثلاثة أرقام له يقبل القسمة على 8.',
+        'MH.lesson_Y2Al_arth1e.divBy8Rule2': '<span class="MH-diamond">♦</span> باقي القسمة الإقليدية لعدد صحيح على 8 يساوي باقي القسمة الإقليدية على 8 للعدد المكون من آخر ثلاثة أرقام له.',
+        
+        'MH.lesson_Y2Al_arth1e.divisibilityBy11Title': 'القسمة على 11',
+        'MH.lesson_Y2Al_arth1e.divBy11Intro': String.raw`ليكن \(n\) عددا صحيحا طبيعيا. ليكن \(S_1\) مجموع أرقامه في المواضع الفردية (من اليمين إلى اليسار) و \(S_2\) مجموع أرقامه في المواضع الزوجية. ليكن \(d = S_1 - S_2\).`,
+        'MH.lesson_Y2Al_arth1e.case1Title': String.raw`الحالة 1: \(d \geq 0\)`,
+        'MH.lesson_Y2Al_arth1e.divBy11Case1Rule1': String.raw`<span class="MH-diamond">♦</span> \(n\) يقبل القسمة على 11 إذا وفقط إذا كان \(d\) يقبل القسمة على 11.`,
+        'MH.lesson_Y2Al_arth1e.divBy11Case1Rule2': String.raw`<span class="MH-diamond">♦</span> باقي القسمة الإقليدية لـ \(n\) على 11 يساوي باقي القسمة الإقليدية لـ \(d\) على 11.`,
+        'MH.lesson_Y2Al_arth1e.case2Title': String.raw`الحالة 2: \(d < 0\)`,
+        'MH.lesson_Y2Al_arth1e.divBy11Case2Rule1': String.raw`<span class="MH-diamond">♦</span> ليكن \(p\) أصغر عدد صحيح طبيعي بحيث \(d + 11p\) موجب أو صفر.`,
+        'MH.lesson_Y2Al_arth1e.divBy11Case2Rule2': String.raw`<span class="MH-diamond">♦</span> \(n\) يقبل القسمة على 11 إذا وفقط إذا كان \(d + 11p\) يقبل القسمة على 11.`,
+        'MH.lesson_Y2Al_arth1e.divBy11Case2Rule3': String.raw`<span class="MH-diamond">♦</span> باقي القسمة الإقليدية لـ \(n\) على 11 هو \(d + 11p\).`,
+        
+        // Applications
+        'MH.lesson_Y2Al_arth1e.applicationsTitle': 'التطبيقات',
+        'MH.lesson_Y2Al_arth1e.applicationsInstructionsTitle': 'التعليمات',
+        'MH.lesson_Y2Al_arth1e.applicationsInstructionsText': 'حل هذه التمارين الصعبة بتطبيق معايير القسمة الملخصة أعلاه. تتطلب هذه المشكلات تفكيرًا إبداعيًا واستخدامًا مشتركًا لقواعد متعددة.',
+        
+        // Exercise 1
+        'MH.lesson_Y2Al_arth1e.exercise1Title': 'التمرين 1: مشكلة الصناديق المكعبة',
+        'MH.lesson_Y2Al_arth1e.exercise1Question': 'أبعاد صندوق مستطيل هي 120 سم، 200 سم، و 180 سم. نريد إنشاء صناديق مكعبة بنفس طول الحرف \(a\) (حيث \(a\) عدد صحيح) تملأ الصندوق المستطيل بالكامل. ما يجب أن يكون طول الحرف \(a\) لاستخدام الحد الأدنى من الصناديق؟',
+        'MH.lesson_Y2Al_arth1e.exercise1Solution1': 'لملء الصندوق المستطيل تمامًا بمكعبات متطابقة، يجب أن يقسم طول الحرف \(a\) الأبعاد الثلاثة للصندوق.',
+        'MH.lesson_Y2Al_arth1e.exercise1Solution.equation1': String.raw`لذا يجب أن يكون \(a\) قاسمًا مشتركًا لـ 120، 200، و 180.`,
+        'MH.lesson_Y2Al_arth1e.exercise1Solution2': 'لاستخدام الحد الأدنى من الصناديق، نحتاج إلى زيادة حجم كل مكعب إلى أقصى حد، مما يعني أننا نحتاج إلى أكبر \(a\) ممكن.',
+        'MH.lesson_Y2Al_arth1e.exercise1Solution.equation2': String.raw`لذلك، يجب أن يكون \(a\) هو القاسم المشترك الأكبر (GCD) لـ 120، 200، و 180.`,
+        'MH.lesson_Y2Al_arth1e.exercise1Solution3': 'لنجد القاسم المشترك الأكبر:',
+        'MH.lesson_Y2Al_arth1e.exercise1Solution.equation3': String.raw`التحليل إلى عوامل أولية: \(120 = 2^3 \times 3 \times 5\)`,
+        'MH.lesson_Y2Al_arth1e.exercise1Solution.equation4': String.raw`\(200 = 2^3 \times 5^2\)`,
+        'MH.lesson_Y2Al_arth1e.exercise1Solution.equation5': String.raw`\(180 = 2^2 \times 3^2 \times 5\)`,
+        'MH.lesson_Y2Al_arth1e.exercise1Solution.equation6': String.raw`العوامل المشتركة هي: \(2^2\) و \(5^1\)`,
+        'MH.lesson_Y2Al_arth1e.exercise1Solution.equation7': String.raw`القاسم المشترك الأكبر = \(2^2 \times 5 = 4 \times 5 = 20\)`,
+        'MH.lesson_Y2Al_arth1e.exercise1Solution4': String.raw`لذلك، \(a = 20\) سم.`,
+        'MH.lesson_Y2Al_arth1e.exercise1Solution5': String.raw`عدد الصناديق: \(\frac{120}{20} \times \frac{200}{20} \times \frac{180}{20} = 6 \times 10 \times 9 = 540\) صندوقًا.`,
+        
+        // Exercise 2
+        'MH.lesson_Y2Al_arth1e.exercise2Title': 'التمرين 2: عدد مكون من أربعة أرقام متتالية',
+        'MH.lesson_Y2Al_arth1e.exercise2Question': 'ليكن \(n\) عددًا طبيعيًا مكونًا من 4 أرقام بحيث:',
+        'MH.lesson_Y2Al_arth1e.exercise2Condition1': String.raw`\(n\) يقبل القسمة على 9`,
+        'MH.lesson_Y2Al_arth1e.exercise2Condition2': 'أرقام \(n\) متتالية ومرتبة بترتيب تصاعدي من اليسار إلى اليمين.',
+        'MH.lesson_Y2Al_arth1e.exercise2Question2': 'أوجد \(n\).',
+        'MH.lesson_Y2Al_arth1e.exercise2Solution1': String.raw`لتكن الأرقام \(a, a+1, a+2, a+3\) حيث \(a\) رقم من 0 إلى 6 (بما أننا نحتاج إلى 4 أرقام متتالية).`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution2': String.raw`العدد هو: \(1000a + 100(a+1) + 10(a+2) + (a+3) = 1111a + 123\)`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation1': String.raw`مجموع الأرقام: \(a + (a+1) + (a+2) + (a+3) = 4a + 6\)`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution3': 'للقسمة على 9، يجب أن يكون مجموع الأرقام قابلاً للقسمة على 9:',
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation2': String.raw`يجب أن يكون \(4a + 6\) قابلاً للقسمة على 9`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution4': 'بما أن \(a\) رقم من 0 إلى 6، دعنا نتحقق من القيم الممكنة:',
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation3': String.raw`لـ \(a = 0\): \(4(0) + 6 = 6\) (غير قابل للقسمة على 9)`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation4': String.raw`لـ \(a = 1\): \(4(1) + 6 = 10\) (غير قابل للقسمة على 9)`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation5': String.raw`لـ \(a = 2\): \(4(2) + 6 = 14\) (غير قابل للقسمة على 9)`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation6': String.raw`لـ \(a = 3\): \(4(3) + 6 = 18\) (قابل للقسمة على 9 ✓)`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation7': String.raw`لـ \(a = 4\): \(4(4) + 6 = 22\) (غير قابل للقسمة على 9)`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation8': String.raw`لـ \(a = 5\): \(4(5) + 6 = 26\) (غير قابل للقسمة على 9)`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation9': String.raw`لـ \(a = 6\): \(4(6) + 6 = 30\) (غير قابل للقسمة على 9)`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution5': 'فقط \(a = 3\) يعمل.',
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation10': 'الأرقام هي: 3، 4، 5، 6',
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation11': 'العدد هو: \(3456\)',
+        'MH.lesson_Y2Al_arth1e.exercise2Solution6': String.raw`التحقق: \(3456 \div 9 = 384\) ✓`,
+        
+        // Exercise 3
+        'MH.lesson_Y2Al_arth1e.exercise3Title': 'التمرين 3: ناتج صحيح',
+        'MH.lesson_Y2Al_arth1e.exercise3Question': String.raw`أوجد جميع الأعداد الطبيعية \(n\) بحيث \(\frac{n+25}{n+4}\) يكون عددًا صحيحًا.`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution1': String.raw`نحتاج إلى أن يكون \(\frac{n+25}{n+4}\) عددًا صحيحًا.`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation1': String.raw`ليكن \(k = \frac{n+25}{n+4}\) حيث \(k\) عدد صحيح.`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation2': String.raw`إذن \(n+25 = k(n+4)\)`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation3': String.raw`\(n+25 = kn + 4k\)`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation4': String.raw`\(n - kn = 4k - 25\)`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation5': String.raw`\(n(1-k) = 4k - 25\)`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation6': String.raw`\(n = \frac{4k - 25}{1-k}\) (لـ \(k \neq 1\))`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution2': 'بما أن \(n\) عدد طبيعي، يجب أن يكون البسط قابلاً للقسمة على المقام ويجب أن تكون النتيجة غير سالبة.',
+        'MH.lesson_Y2Al_arth1e.exercise3Solution3': String.raw`دعنا نعيد الكتابة: \(n = \frac{4k - 25}{1-k} = \frac{4k - 4 - 21}{1-k} = \frac{4(k-1) - 21}{1-k} = -4 + \frac{21}{k-1}\)`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation7': String.raw`في الواقع: \(n = \frac{4k - 25}{1-k} = -\frac{4k - 25}{k-1} = -\frac{4(k-1) + 21}{k-1} = -4 - \frac{21}{k-1}\)`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution4': 'انتظر، دعنا نحسب بعناية:',
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation8': String.raw`\(n = \frac{4k - 25}{1-k} = -\frac{4k - 25}{k-1} = -\frac{4k - 4 - 21}{k-1} = -\frac{4(k-1) - 21}{k-1} = -4 + \frac{21}{k-1}\)`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution5': String.raw`إذن \(n = -4 + \frac{21}{k-1}\)`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution6': String.raw`لكي يكون \(n\) عددًا طبيعيًا، يجب أن يكون \(\frac{21}{k-1}\) عددًا صحيحًا و \(n \geq 0\).`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution7': String.raw`قواسم العدد 21 هي: \(\pm 1, \pm 3, \pm 7, \pm 21\).`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution8': String.raw`ليكن \(d = k-1\). إذن يجب أن يقسم \(d\) العدد 21.`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution9': 'حالة بحالة:',
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation9': String.raw`إذا كان \(d = 1\): \(k = 2\)، \(n = -4 + 21 = 17\) ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation10': String.raw`إذا كان \(d = 3\): \(k = 4\)، \(n = -4 + 7 = 3\) ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation11': String.raw`إذا كان \(d = 7\): \(k = 8\)، \(n = -4 + 3 = -1\) ✗ (ليس طبيعيًا)`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation12': String.raw`إذا كان \(d = 21\): \(k = 22\)، \(n = -4 + 1 = -3\) ✗`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation13': 'القواسم السالبة تعطي قيم \(n\) سالبة.',
+        'MH.lesson_Y2Al_arth1e.exercise3Solution10': 'لذلك، الأعداد الطبيعية \(n\) هي: 3 و 17.',
+        'MH.lesson_Y2Al_arth1e.exercise3Solution11': String.raw`التحقق: لـ \(n = 3\): \(\frac{3+25}{3+4} = \frac{28}{7} = 4\) ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution12': String.raw`لـ \(n = 17\): \(\frac{17+25}{17+4} = \frac{42}{21} = 2\) ✓`,
+        
+        // Exercise 4
+        'MH.lesson_Y2Al_arth1e.exercise4Title': 'التمرين 4: الفرق القابل للقسمة',
+        'MH.lesson_Y2Al_arth1e.exercise4Question': String.raw`حدد قيم العدد الطبيعي \(p\) بحيث \(p - 1\) يقسم \(p + 11\).`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution1': String.raw`نحتاج إلى أن يقسم \(p - 1\) العدد \(p + 11\)، مما يعني أن \(\frac{p+11}{p-1}\) يجب أن يكون عددًا صحيحًا.`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation1': String.raw`ليكن \(k = \frac{p+11}{p-1}\) حيث \(k\) عدد صحيح.`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation2': String.raw`إذن \(p+11 = k(p-1)\)`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation3': String.raw`\(p+11 = kp - k\)`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation4': String.raw`\(p - kp = -k - 11\)`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation5': String.raw`\(p(1-k) = -k - 11\)`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation6': String.raw`\(p = \frac{-k - 11}{1-k} = \frac{k+11}{k-1}\) (لـ \(k \neq 1\))`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution2': String.raw`أعد الكتابة: \(p = \frac{k+11}{k-1} = \frac{k-1+12}{k-1} = 1 + \frac{12}{k-1}\)`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution3': String.raw`لكي يكون \(p\) عددًا طبيعيًا، يجب أن يكون \(\frac{12}{k-1}\) عددًا صحيحًا و \(p \geq 0\).`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution4': String.raw`قواسم العدد 12 هي: \(\pm 1, \pm 2, \pm 3, \pm 4, \pm 6, \pm 12\).`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution5': String.raw`ليكن \(d = k-1\). إذن يجب أن يقسم \(d\) العدد 12.`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution6': 'حالة بحالة (نظر فقط للقواسم الموجبة لـ \(p\) الموجب):',
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation7': String.raw`إذا كان \(d = 1\): \(k = 2\)، \(p = 1 + 12 = 13\) ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation8': String.raw`إذا كان \(d = 2\): \(k = 3\)، \(p = 1 + 6 = 7\) ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation9': String.raw`إذا كان \(d = 3\): \(k = 4\)، \(p = 1 + 4 = 5\) ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation10': String.raw`إذا كان \(d = 4\): \(k = 5\)، \(p = 1 + 3 = 4\) ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation11': String.raw`إذا كان \(d = 6\): \(k = 7\)، \(p = 1 + 2 = 3\) ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation12': String.raw`إذا كان \(d = 12\): \(k = 13\)، \(p = 1 + 1 = 2\) ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution7': 'فكر أيضًا في القواسم السالبة التي تعطي \(p\) موجبًا:',
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation13': String.raw`إذا كان \(d = -1\): \(k = 0\)، \(p = 1 - 12 = -11\) ✗`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation14': String.raw`إذا كان \(d = -2\): \(k = -1\)، \(p = 1 - 6 = -5\) ✗`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation15': String.raw`إذا كان \(d = -3\): \(k = -2\)، \(p = 1 - 4 = -3\) ✗`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation16': String.raw`إذا كان \(d = -4\): \(k = -3\)، \(p = 1 - 3 = -2\) ✗`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation17': String.raw`إذا كان \(d = -6\): \(k = -5\)، \(p = 1 - 2 = -1\) ✗`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation18': String.raw`إذا كان \(d = -12\): \(k = -11\)، \(p = 1 - 1 = 0\) ✗ (عادة لا يعتبر 0 عددًا طبيعيًا في هذا السياق)`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution8': 'لذلك، الأعداد الطبيعية \(p\) هي: 2، 3، 4، 5، 7، 13.',
+        'MH.lesson_Y2Al_arth1e.exercise4Solution9': String.raw`التحقق: لـ \(p = 2\): \(p-1 = 1\)، \(p+11 = 13\)، 1 يقسم 13 ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution10': String.raw`لـ \(p = 3\): \(3-1 = 2\)، \(3+11 = 14\)، 2 يقسم 14 ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution11': String.raw`لـ \(p = 4\): \(4-1 = 3\)، \(4+11 = 15\)، 3 يقسم 15 ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution12': String.raw`لـ \(p = 5\): \(5-1 = 4\)، \(5+11 = 16\)، 4 يقسم 16 ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution13': String.raw`لـ \(p = 7\): \(7-1 = 6\)، \(7+11 = 18\)، 6 يقسم 18 ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution14': String.raw`لـ \(p = 13\): \(13-1 = 12\)، \(13+11 = 24\)، 12 يقسم 24 ✓`,
+        
+        // Conclusion
+        'MH.lesson_Y2Al_arth1e.conclusionTitle': 'الخلاصة',
+        'MH.lesson_Y2Al_arth1e.keyConceptsTitle': 'المفاهيم الرئيسية التي تم إتقانها',
+        'MH.lesson_Y2Al_arth1e.concept1': 'فهم شامل لجميع معايير القسمة (2، 5، 4، 25، 3، 9، 8، 11)',
+        'MH.lesson_Y2Al_arth1e.concept2': 'تطبيق قواعد القسمة لحل مشاكل العالم الحقيقي المعقدة',
+        'MH.lesson_Y2Al_arth1e.concept3': 'استراتيجيات حل المشكلات التي تتضمن القسمة ونظرية الأعداد',
+        'MH.lesson_Y2Al_arth1e.concept4': 'تقنيات التفكير الرياضي والإثبات',
+        'MH.lesson_Y2Al_arth1e.concept5': 'دمج مفاهيم رياضية متعددة في حل المشكلات',
+        'MH.lesson_Y2Al_arth1e.finalThought': 'يختتم هذا الدرس سلسلتنا عن الحساب ومعايير القسمة. لقد أتقنت الآن مجموعة شاملة من الأدوات لتحليل خصائص الأعداد وحل المشكلات الرياضية المعقدة. تذكر أن الكفاءة الرياضية لا تأتي فقط من معرفة القواعد، ولكن من فهم متى وكيفية تطبيقها بشكل إبداعي لحل المشكلات الصعبة.',
+        
+        // Solution buttons
+        'MH.lesson_Y2Al_arth1e.showSolution': 'إظهار الحل',
+        'MH.lesson_Y2Al_arth1e.hideSolution': 'إخفاء الحل',
+        
+        // Footer
+        'MH.footer.developer': 'المطور',
+        'MH.footer.version': 'الإصدار',
+        'MH.footer.links': 'الروابط',
+        'MH.footer.terms': 'شروط الاستخدام',
+        'MH.footer.privacy': 'سياسة الخصوصية'
+    },
+    'fr': {
+        // General translations
+        'MH.general.homeTooltip': 'Aller à la page d\'accueil',
+        'MH.general.install': 'Installer l\'application',
+        'MH.general.installSuccess': 'Mathematics Hub installé avec succès!',
+        'MH.general.enableNotifications': 'Activer les notifications',
+        'MH.general.notificationEnabled': 'Notifications activées! Vous recevrez maintenant des mises à jour.',
+        'MH.general.title': 'Mathematics Hub',
+        'MH.general.theme': 'Thème',
+        'MH.general.language': 'Langue',
+        
+        // Arithmetic lesson specific translations
+        'MH.lesson_Y2Al_arth1e.title': 'Arithmétique: Partie 5',
+        'MH.lesson_Y2Al_arth1e.subtitle': 'Résumé et Applications',
+        'MH.lesson_Y2Al_arth1e.introduction': 'Introduction',
+        'MH.lesson_Y2Al_arth1e.introText1': 'Dans cette dernière leçon de la série d\'arithmétique, nous résumerons tous les critères de divisibilité appris jusqu\'à présent et les appliquerons pour résoudre des problèmes complexes. Cette revue complète aidera à consolider votre compréhension des règles de divisibilité et de leurs applications pratiques.',
+        'MH.lesson_Y2Al_arth1e.introText2': 'Nous explorerons des problèmes difficiles qui nécessitent l\'utilisation combinée de multiples critères de divisibilité, développant des stratégies de résolution de problèmes et des compétences de raisonnement mathématique.',
+        
+        // Summary
+        'MH.lesson_Y2Al_arth1e.summaryTitle': 'Résumé des règles de divisibilité',
+        'MH.lesson_Y2Al_arth1e.divisibilityBy2And5Title': 'Divisibilité par 2 et 5',
+        'MH.lesson_Y2Al_arth1e.divBy2And5Rule1': '<span class="MH-diamond">♦</span> Un entier est divisible par 2 (respectivement par 5) si et seulement si son chiffre des unités est divisible par 2 (respectivement par 5).',
+        'MH.lesson_Y2Al_arth1e.divBy2And5Rule2': '<span class="MH-diamond">♦</span> Le reste de la division euclidienne d\'un entier par 2 (respectivement par 5) est égal au reste de la division euclidienne de son chiffre des unités par 2 (respectivement par 5).',
+        
+        'MH.lesson_Y2Al_arth1e.divisibilityBy4And25Title': 'Divisibilité par 4 et 25',
+        'MH.lesson_Y2Al_arth1e.divBy4And25Rule1': '<span class="MH-diamond">♦</span> Un entier est divisible par 4 (respectivement par 25) si et seulement si le nombre formé par ses deux derniers chiffres est divisible par 4 (respectivement par 25).',
+        'MH.lesson_Y2Al_arth1e.divBy4And25Rule2': '<span class="MH-diamond">♦</span> Le reste de la division euclidienne d\'un entier par 4 (respectivement par 25) est égal au reste de la division euclidienne par 4 (respectivement par 25) du nombre formé par ses deux derniers chiffres.',
+        
+        'MH.lesson_Y2Al_arth1e.divisibilityBy3And9Title': 'Divisibilité par 3 et 9',
+        'MH.lesson_Y2Al_arth1e.divBy3And9Rule1': '<span class="MH-diamond">♦</span> Un entier est divisible par 3 (respectivement par 9) si et seulement si la somme de ses chiffres est divisible par 3 (respectivement par 9).',
+        'MH.lesson_Y2Al_arth1e.divBy3And9Rule2': '<span class="MH-diamond">♦</span> Le reste de la division euclidienne d\'un entier par 3 (respectivement par 9) est égal au reste de la division euclidienne de la somme de ses chiffres par 3 (respectivement par 9).',
+        
+        'MH.lesson_Y2Al_arth1e.divisibilityBy8Title': 'Divisibilité par 8',
+        'MH.lesson_Y2Al_arth1e.divBy8Rule1': '<span class="MH-diamond">♦</span> Un entier, supérieur ou égal à 100, est divisible par 8 si et seulement si le nombre formé par ses trois derniers chiffres est divisible par 8.',
+        'MH.lesson_Y2Al_arth1e.divBy8Rule2': '<span class="MH-diamond">♦</span> Le reste de la division euclidienne d\'un entier par 8 est égal au reste de la division euclidienne par 8 du nombre formé par ses trois derniers chiffres.',
+        
+        'MH.lesson_Y2Al_arth1e.divisibilityBy11Title': 'Divisibilité par 11',
+        'MH.lesson_Y2Al_arth1e.divBy11Intro': String.raw`Soit \(n\) un entier naturel. Soit \(S_1\) la somme de ses chiffres de rang impairs (de droite à gauche) et \(S_2\) la somme de ses chiffres de rang pairs. Soit \(d = S_1 - S_2\).`,
+        'MH.lesson_Y2Al_arth1e.case1Title': String.raw`Cas 1: \(d \geq 0\)`,
+        'MH.lesson_Y2Al_arth1e.divBy11Case1Rule1': String.raw`<span class="MH-diamond">♦</span> \(n\) est divisible par 11 si et seulement si \(d\) est divisible par 11.`,
+        'MH.lesson_Y2Al_arth1e.divBy11Case1Rule2': String.raw`<span class="MH-diamond">♦</span> Le reste de la division euclidienne de \(n\) par 11 est égal au reste de la division euclidienne de \(d\) par 11.`,
+        'MH.lesson_Y2Al_arth1e.case2Title': String.raw`Cas 2: \(d < 0\)`,
+        'MH.lesson_Y2Al_arth1e.divBy11Case2Rule1': String.raw`<span class="MH-diamond">♦</span> Soit \(p\) le plus petit entier naturel tel que \(d + 11p\) soit positif ou nul.`,
+        'MH.lesson_Y2Al_arth1e.divBy11Case2Rule2': String.raw`<span class="MH-diamond">♦</span> \(n\) est divisible par 11 si et seulement si \(d + 11p\) est divisible par 11.`,
+        'MH.lesson_Y2Al_arth1e.divBy11Case2Rule3': String.raw`<span class="MH-diamond">♦</span> Le reste de la division euclidienne de \(n\) par 11 est \(d + 11p\).`,
+        
+        // Applications
+        'MH.lesson_Y2Al_arth1e.applicationsTitle': 'Applications',
+        'MH.lesson_Y2Al_arth1e.applicationsInstructionsTitle': 'Instructions',
+        'MH.lesson_Y2Al_arth1e.applicationsInstructionsText': 'Résolvez ces exercices difficiles en appliquant les critères de divisibilité résumés ci-dessus. Ces problèmes nécessitent une pensée créative et l\'utilisation combinée de plusieurs règles.',
+        
+        // Exercise 1
+        'MH.lesson_Y2Al_arth1e.exercise1Title': 'Exercice 1: Problème des boîtes cubiques',
+        'MH.lesson_Y2Al_arth1e.exercise1Question': 'Les dimensions d\'une boîte rectangulaire sont 120 cm, 200 cm et 180 cm. On veut créer des boîtes cubiques avec la même longueur d\'arête \(a\) (où \(a\) est un entier) qui remplissent complètement la boîte rectangulaire. Quelle doit être la longueur d\'arête \(a\) pour utiliser le minimum de boîtes?',
+        'MH.lesson_Y2Al_arth1e.exercise1Solution1': 'Pour remplir complètement la boîte rectangulaire avec des cubes identiques, la longueur d\'arête \(a\) doit diviser les trois dimensions de la boîte.',
+        'MH.lesson_Y2Al_arth1e.exercise1Solution.equation1': String.raw`Donc \(a\) doit être un diviseur commun de 120, 200 et 180.`,
+        'MH.lesson_Y2Al_arth1e.exercise1Solution2': 'Pour utiliser le minimum de boîtes, nous devons maximiser le volume de chaque cube, ce qui signifie que nous avons besoin du plus grand \(a\) possible.',
+        'MH.lesson_Y2Al_arth1e.exercise1Solution.equation2': String.raw`Par conséquent, \(a\) doit être le plus grand commun diviseur (PGCD) de 120, 200 et 180.`,
+        'MH.lesson_Y2Al_arth1e.exercise1Solution3': 'Trouvons le PGCD:',
+        'MH.lesson_Y2Al_arth1e.exercise1Solution.equation3': String.raw`Factorisation en nombres premiers: \(120 = 2^3 \times 3 \times 5\)`,
+        'MH.lesson_Y2Al_arth1e.exercise1Solution.equation4': String.raw`\(200 = 2^3 \times 5^2\)`,
+        'MH.lesson_Y2Al_arth1e.exercise1Solution.equation5': String.raw`\(180 = 2^2 \times 3^2 \times 5\)`,
+        'MH.lesson_Y2Al_arth1e.exercise1Solution.equation6': String.raw`Les facteurs communs sont: \(2^2\) et \(5^1\)`,
+        'MH.lesson_Y2Al_arth1e.exercise1Solution.equation7': String.raw`PGCD = \(2^2 \times 5 = 4 \times 5 = 20\)`,
+        'MH.lesson_Y2Al_arth1e.exercise1Solution4': String.raw`Par conséquent, \(a = 20\) cm.`,
+        'MH.lesson_Y2Al_arth1e.exercise1Solution5': String.raw`Nombre de boîtes: \(\frac{120}{20} \times \frac{200}{20} \times \frac{180}{20} = 6 \times 10 \times 9 = 540\) boîtes.`,
+        
+        // Exercise 2
+        'MH.lesson_Y2Al_arth1e.exercise2Title': 'Exercice 2: Nombre à quatre chiffres consécutifs',
+        'MH.lesson_Y2Al_arth1e.exercise2Question': 'Soit \(n\) un entier naturel à 4 chiffres tel que:',
+        'MH.lesson_Y2Al_arth1e.exercise2Condition1': String.raw`\(n\) est divisible par 9`,
+        'MH.lesson_Y2Al_arth1e.exercise2Condition2': 'Les chiffres de \(n\) sont consécutifs et classés par ordre croissant de gauche à droite.',
+        'MH.lesson_Y2Al_arth1e.exercise2Question2': 'Trouver \(n\).',
+        'MH.lesson_Y2Al_arth1e.exercise2Solution1': String.raw`Soient les chiffres \(a, a+1, a+2, a+3\) où \(a\) est un chiffre de 0 à 6 (puisque nous avons besoin de 4 chiffres consécutifs).`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution2': String.raw`Le nombre est: \(1000a + 100(a+1) + 10(a+2) + (a+3) = 1111a + 123\)`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation1': String.raw`Somme des chiffres: \(a + (a+1) + (a+2) + (a+3) = 4a + 6\)`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution3': 'Pour la divisibilité par 9, la somme des chiffres doit être divisible par 9:',
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation2': String.raw`\(4a + 6\) doit être divisible par 9`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution4': 'Puisque \(a\) est un chiffre de 0 à 6, vérifions les valeurs possibles:',
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation3': String.raw`Pour \(a = 0\): \(4(0) + 6 = 6\) (non divisible par 9)`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation4': String.raw`Pour \(a = 1\): \(4(1) + 6 = 10\) (non divisible par 9)`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation5': String.raw`Pour \(a = 2\): \(4(2) + 6 = 14\) (non divisible par 9)`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation6': String.raw`Pour \(a = 3\): \(4(3) + 6 = 18\) (divisible par 9 ✓)`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation7': String.raw`Pour \(a = 4\): \(4(4) + 6 = 22\) (non divisible par 9)`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation8': String.raw`Pour \(a = 5\): \(4(5) + 6 = 26\) (non divisible par 9)`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation9': String.raw`Pour \(a = 6\): \(4(6) + 6 = 30\) (non divisible par 9)`,
+        'MH.lesson_Y2Al_arth1e.exercise2Solution5': 'Seulement \(a = 3\) fonctionne.',
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation10': 'Les chiffres sont: 3, 4, 5, 6',
+        'MH.lesson_Y2Al_arth1e.exercise2Solution.equation11': 'Le nombre est: \(3456\)',
+        'MH.lesson_Y2Al_arth1e.exercise2Solution6': String.raw`Vérification: \(3456 \div 9 = 384\) ✓`,
+        
+        // Exercise 3
+        'MH.lesson_Y2Al_arth1e.exercise3Title': 'Exercice 3: Quotient entier',
+        'MH.lesson_Y2Al_arth1e.exercise3Question': String.raw`Trouver tous les entiers naturels \(n\) tels que \(\frac{n+25}{n+4}\) soit un entier.`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution1': String.raw`Nous avons besoin que \(\frac{n+25}{n+4}\) soit un entier.`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation1': String.raw`Soit \(k = \frac{n+25}{n+4}\) où \(k\) est un entier.`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation2': String.raw`Alors \(n+25 = k(n+4)\)`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation3': String.raw`\(n+25 = kn + 4k\)`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation4': String.raw`\(n - kn = 4k - 25\)`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation5': String.raw`\(n(1-k) = 4k - 25\)`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation6': String.raw`\(n = \frac{4k - 25}{1-k}\) (pour \(k \neq 1\))`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution2': 'Puisque \(n\) est un nombre naturel, le numérateur doit être divisible par le dénominateur et le résultat doit être non négatif.',
+        'MH.lesson_Y2Al_arth1e.exercise3Solution3': String.raw`Réécrivons: \(n = \frac{4k - 25}{1-k} = \frac{4k - 4 - 21}{1-k} = \frac{4(k-1) - 21}{1-k} = -4 + \frac{21}{k-1}\)`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation7': String.raw`En fait: \(n = \frac{4k - 25}{1-k} = -\frac{4k - 25}{k-1} = -\frac{4(k-1) + 21}{k-1} = -4 - \frac{21}{k-1}\)`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution4': 'Attendez, recalculons soigneusement:',
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation8': String.raw`\(n = \frac{4k - 25}{1-k} = -\frac{4k - 25}{k-1} = -\frac{4k - 4 - 21}{k-1} = -\frac{4(k-1) - 21}{k-1} = -4 + \frac{21}{k-1}\)`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution5': String.raw`Donc \(n = -4 + \frac{21}{k-1}\)`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution6': String.raw`Pour que \(n\) soit un nombre naturel, \(\frac{21}{k-1}\) doit être un entier et \(n \geq 0\).`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution7': String.raw`Les diviseurs de 21 sont: \(\pm 1, \pm 3, \pm 7, \pm 21\).`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution8': String.raw`Soit \(d = k-1\). Alors \(d\) doit diviser 21.`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution9': 'Cas par cas:',
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation9': String.raw`Si \(d = 1\): \(k = 2\), \(n = -4 + 21 = 17\) ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation10': String.raw`Si \(d = 3\): \(k = 4\), \(n = -4 + 7 = 3\) ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation11': String.raw`Si \(d = 7\): \(k = 8\), \(n = -4 + 3 = -1\) ✗ (pas naturel)`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation12': String.raw`Si \(d = 21\): \(k = 22\), \(n = -4 + 1 = -3\) ✗`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution.equation13': 'Les diviseurs négatifs donnent des valeurs \(n\) négatives.',
+        'MH.lesson_Y2Al_arth1e.exercise3Solution10': 'Par conséquent, les nombres naturels \(n\) sont: 3 et 17.',
+        'MH.lesson_Y2Al_arth1e.exercise3Solution11': String.raw`Vérification: Pour \(n = 3\): \(\frac{3+25}{3+4} = \frac{28}{7} = 4\) ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise3Solution12': String.raw`Pour \(n = 17\): \(\frac{17+25}{17+4} = \frac{42}{21} = 2\) ✓`,
+        
+        // Exercise 4
+        'MH.lesson_Y2Al_arth1e.exercise4Title': 'Exercice 4: Différence divisible',
+        'MH.lesson_Y2Al_arth1e.exercise4Question': String.raw`Déterminer les valeurs de l\'entier naturel \(p\) telles que \(p - 1\) divise \(p + 11\).`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution1': String.raw`Nous avons besoin que \(p - 1\) divise \(p + 11\), ce qui signifie que \(\frac{p+11}{p-1}\) doit être un entier.`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation1': String.raw`Soit \(k = \frac{p+11}{p-1}\) où \(k\) est un entier.`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation2': String.raw`Alors \(p+11 = k(p-1)\)`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation3': String.raw`\(p+11 = kp - k\)`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation4': String.raw`\(p - kp = -k - 11\)`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation5': String.raw`\(p(1-k) = -k - 11\)`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation6': String.raw`\(p = \frac{-k - 11}{1-k} = \frac{k+11}{k-1}\) (pour \(k \neq 1\))`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution2': String.raw`Réécrivons: \(p = \frac{k+11}{k-1} = \frac{k-1+12}{k-1} = 1 + \frac{12}{k-1}\)`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution3': String.raw`Pour que \(p\) soit un nombre naturel, \(\frac{12}{k-1}\) doit être un entier et \(p \geq 0\).`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution4': String.raw`Les diviseurs de 12 sont: \(\pm 1, \pm 2, \pm 3, \pm 4, \pm 6, \pm 12\).`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution5': String.raw`Soit \(d = k-1\). Alors \(d\) doit diviser 12.`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution6': 'Cas par cas (en ne considérant que les diviseurs positifs pour \(p\) positif):',
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation7': String.raw`Si \(d = 1\): \(k = 2\), \(p = 1 + 12 = 13\) ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation8': String.raw`Si \(d = 2\): \(k = 3\), \(p = 1 + 6 = 7\) ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation9': String.raw`Si \(d = 3\): \(k = 4\), \(p = 1 + 4 = 5\) ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation10': String.raw`Si \(d = 4\): \(k = 5\), \(p = 1 + 3 = 4\) ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation11': String.raw`Si \(d = 6\): \(k = 7\), \(p = 1 + 2 = 3\) ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation12': String.raw`Si \(d = 12\): \(k = 13\), \(p = 1 + 1 = 2\) ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution7': 'Considérons également les diviseurs négatifs qui donnent \(p\) positif:',
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation13': String.raw`Si \(d = -1\): \(k = 0\), \(p = 1 - 12 = -11\) ✗`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation14': String.raw`Si \(d = -2\): \(k = -1\), \(p = 1 - 6 = -5\) ✗`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation15': String.raw`Si \(d = -3\): \(k = -2\), \(p = 1 - 4 = -3\) ✗`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation16': String.raw`Si \(d = -4\): \(k = -3\), \(p = 1 - 3 = -2\) ✗`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation17': String.raw`Si \(d = -6\): \(k = -5\), \(p = 1 - 2 = -1\) ✗`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution.equation18': String.raw`Si \(d = -12\): \(k = -11\), \(p = 1 - 1 = 0\) ✗ (0 n\'est généralement pas considéré comme un nombre naturel dans ce contexte)`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution8': 'Par conséquent, les nombres naturels \(p\) sont: 2, 3, 4, 5, 7, 13.',
+        'MH.lesson_Y2Al_arth1e.exercise4Solution9': String.raw`Vérification: Pour \(p = 2\): \(p-1 = 1\), \(p+11 = 13\), 1 divise 13 ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution10': String.raw`Pour \(p = 3\): \(3-1 = 2\), \(3+11 = 14\), 2 divise 14 ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution11': String.raw`Pour \(p = 4\): \(4-1 = 3\), \(4+11 = 15\), 3 divise 15 ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution12': String.raw`Pour \(p = 5\): \(5-1 = 4\), \(5+11 = 16\), 4 divise 16 ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution13': String.raw`Pour \(p = 7\): \(7-1 = 6\), \(7+11 = 18\), 6 divise 18 ✓`,
+        'MH.lesson_Y2Al_arth1e.exercise4Solution14': String.raw`Pour \(p = 13\): \(13-1 = 12\), \(13+11 = 24\), 12 divise 24 ✓`,
+        
+        // Conclusion
+        'MH.lesson_Y2Al_arth1e.conclusionTitle': 'Conclusion',
+        'MH.lesson_Y2Al_arth1e.keyConceptsTitle': 'Concepts Clés Maîtrisés',
+        'MH.lesson_Y2Al_arth1e.concept1': 'Compréhension complète de tous les critères de divisibilité (2, 5, 4, 25, 3, 9, 8, 11)',
+        'MH.lesson_Y2Al_arth1e.concept2': 'Application des règles de divisibilité pour résoudre des problèmes complexes du monde réel',
+        'MH.lesson_Y2Al_arth1e.concept3': 'Stratégies de résolution de problèmes impliquant la divisibilité et la théorie des nombres',
+        'MH.lesson_Y2Al_arth1e.concept4': 'Techniques de raisonnement mathématique et de preuve',
+        'MH.lesson_Y2Al_arth1e.concept5': 'Synthèse de multiples concepts mathématiques dans la résolution de problèmes',
+        'MH.lesson_Y2Al_arth1e.finalThought': 'Cette leçon conclut notre série sur l\'arithmétique et les critères de divisibilité. Vous avez maintenant maîtrisé un ensemble complet d\'outils pour analyser les propriétés des nombres et résoudre des problèmes mathématiques complexes. Rappelez-vous que la compétence mathématique ne vient pas seulement de la connaissance des règles, mais de la compréhension de quand et comment les appliquer de manière créative pour résoudre des problèmes difficiles.',
+        
+        // Solution buttons
+        'MH.lesson_Y2Al_arth1e.showSolution': 'Afficher la Solution',
+        'MH.lesson_Y2Al_arth1e.hideSolution': 'Masquer la Solution',
+        
+        // Footer
+        'MH.footer.developer': 'Développeur',
+        'MH.footer.version': 'Version',
+        'MH.footer.links': 'Liens',
+        'MH.footer.terms': 'Conditions d\'Utilisation',
+        'MH.footer.privacy': 'Politique de Confidentialité'
+    }
+        };
+
+        // Merge with existing translations if they exist
+        if (typeof translations !== 'undefined') {
+            Object.keys(arithmeticTranslations).forEach(lang => {
+                if (translations[lang]) {
+                    translations[lang] = {...translations[lang], ...arithmeticTranslations[lang]};
+                } else {
+                    translations[lang] = arithmeticTranslations[lang];
+                }
+            });
+        } else {
+            var translations = arithmeticTranslations;
+        }
+
+        // Solution toggle function
+        function toggleSolution(problemNumber) {
+            const solution = document.getElementById(`solution${problemNumber}`);
+            const button = solution.previousElementSibling;
+            
+            if (solution.style.display === 'block') {
+                solution.style.display = 'none';
+                button.setAttribute('data-i18n', 'MH.lesson_Y2Al_arth1e.showSolution');
+                button.textContent = translations[MHThemeManager.getCurrentLanguage()]['MH.lesson_Y2Al_arth1e.showSolution'];
+            } else {
+                solution.style.display = 'block';
+                button.setAttribute('data-i18n', 'MH.lesson_Y2Al_arth1e.hideSolution');
+                button.textContent = translations[MHThemeManager.getCurrentLanguage()]['MH.lesson_Y2Al_arth1e.hideSolution'];
+                
+                // Re-render KaTeX for newly visible equations
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(solution, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\(', right: '\\)', display: false},
+                            {left: '\\[', right: '\\]', display: true}
+                        ],
+                        throwOnError: false,
+                        strict: false
+                    });
+                }
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize KaTeX auto-render
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+
+            // Initialize solutions as hidden
+            for (let i = 1; i <= 4; i++) {
+                const solution = document.getElementById(`solution${i}`);
+                if (solution) {
+                    solution.style.display = 'none';
+                }
+            }
+        });
+    </script>
+
+<!-- Add the service worker registration script -->
+<script>
+    // Register service worker with better error handling
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch(function(error) {
+                console.log('Service Worker registration failed:', error);
+            });
+        });
+    }
+</script>
+
+<!-- Add noscript fallback -->
+<noscript>
+    <style>
+        .MH-header-controls { display: none; }
+        .MH-solution { display: block; }
+    </style>
+    <div class="MH-warning">
+        JavaScript is recommended for the full experience, but content is still accessible.
+    </div>
+</noscript>
+</body>
+</html>

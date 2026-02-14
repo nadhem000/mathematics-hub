@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathématiques : Fonctions affines – Partie I</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#4A90E2" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#8E44AD" media="(prefers-color-scheme: dark)">
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#4A90E2">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    <style>
+        /* Page-specific color palette - Orange + Teal theme */
+        :root {
+            --primary: #F39C12;        /* Orange */
+            --primary-light: #F7B731;  /* Light orange */
+            --primary-dark: #E67E22;   /* Dark orange */
+            --secondary: #1ABC9C;      /* Teal */
+            --secondary-light: #48C9B0; /* Light teal */
+            --secondary-dark: #16A085;  /* Dark teal */
+            --accent: #9B59B6;
+            --warning: #E74C3C;
+            --info: #3498DB;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #FFFFFF;
+            --surface: #F8F9FA;
+            --border: #E9ECEF;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        [data-theme="dark"] {
+            --primary: #E67E22;
+            --primary-light: #F39C12;
+            --primary-dark: #D35400;
+            --secondary: #16A085;
+            --secondary-light: #1ABC9C;
+            --secondary-dark: #0E6655;
+            --accent: #8E44AD;
+            --warning: #C0392B;
+            --info: #2980B9;
+            --text: #FFFFFF;
+            --text-light: #CCCCCC;
+            --background: #121212;
+            --surface: #1E1E1E;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+        /* KaTeX styling */
+        .katex { 
+            font-size: 1.1em; 
+        }
+        .katex-display { 
+            margin: 1em 0; 
+            text-align: center;
+        }
+        /* Equation styling */
+        .MH-equation {
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            margin: 0.5em 0;
+            padding: 0;
+            display: inline-block;
+        }
+        [dir="rtl"] .MH-equation {
+            text-align: left;
+        }
+        /* Canvas container styling */
+        .MH-canvas-container {
+            margin: 2em 0;
+            text-align: center;
+            position: relative;
+        }
+        .MH-canvas {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background-color: var(--surface);
+            max-width: 100%;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+        .MH-canvas-title {
+            font-weight: bold;
+            margin-bottom: 0.5em;
+            color: var(--primary);
+        }
+        .MH-canvas-instructions {
+            font-size: 0.9em;
+            color: var(--text-light);
+            margin-top: 0.5em;
+            font-style: italic;
+        }
+        /* Sequence specific styling (reused) */
+        .MH-sequence-item {
+            margin: 0.5em 0;
+            padding: 0.5em;
+            background-color: var(--surface);
+            border-left: 4px solid var(--secondary);
+            border-radius: 4px;
+        }
+        .MH-sequence-step {
+            margin: 0.5em 0;
+            padding-left: 1em;
+            border-left: 2px solid var(--primary-light);
+        }
+        .MH-number-pattern {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            color: var(--warning);
+            background-color: rgba(231, 76, 60, 0.1);
+            padding: 0.2em 0.5em;
+            border-radius: 4px;
+        }
+        .MH-formula-box {
+            background-color: rgba(26, 188, 156, 0.1);
+            border: 2px solid var(--secondary);
+            border-radius: 8px;
+            padding: 1.5em;
+            margin: 1em 0;
+        }
+        /* Exercise numbering */
+        .MH-exercise-number {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--secondary);
+            margin: 1.5em 0 0.5em 0;
+            border-bottom: 2px solid var(--secondary-light);
+            padding-bottom: 0.3em;
+        }
+        /* Table styling */
+        .MH-table {
+            display: inline-block;
+            border-collapse: collapse;
+            margin: 1em 0;
+            background-color: var(--surface);
+        }
+        .MH-table td {
+            border: 1px solid var(--border);
+            padding: 0.5em 1em;
+            text-align: center;
+        }
+        .MH-table th {
+            background-color: var(--primary-light);
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 0.5em 1em;
+            text-align: center;
+        }
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .MH-canvas {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🎨</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>🌐</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                        </div>
+                    </div>
+                    <!-- Notification Button -->
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+                        <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y1Alg_fonAff1.title">Fonctions affines : Partie I</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y1Alg_fonAff1.subtitle">Introduction aux fonctions linéaires et affines</h2>
+        
+        <!-- ============ I. FONCTION AFFINE ============ -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y1Alg_fonAff1.part1">I. Fonction affine</div>
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonAff1.activity1Title">Activité 1</h3>
+                <p data-i18n="MH.lesson_Y1Alg_fonAff1.activity1Statement">Six ans après sa création, une entreprise étudie l’évolution de ses bénéfices. Les résultats sont consignés dans le tableau ci-dessous. On désigne par <strong>t</strong> l’année, comptée à partir de la date de création et par <strong>h(t)</strong> le pourcentage des bénéfices par rapport au chiffre d’affaires.</p>
+            </div>
+            <!-- Tableau des bénéfices -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y1Alg_fonAff1.table1Title">Tableau des pourcentages h(t)</div>
+                <table class="MH-table">
+                    <tr><th>t (année)</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+                    <tr><th>h(t) (%)</th><td>10,5</td><td>11</td><td>11,5</td><td>12</td><td>12,5</td><td>13</td></tr>
+                </table>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y1Alg_fonAff1.table1Example">Exemple : la première année (t = 1), les bénéfices h(1) représentent 10,5% du chiffre d’affaires.</div>
+            </div>
+
+            <!-- Question 1 -->
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff1.q1">1) Quel est le pourcentage des bénéfices la deuxième année ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonAff1.showSolution" onclick="toggleSolution(1)">Voir la solution</button>
+                    <div class="MH-solution" id="solution1">
+                        <p data-i18n="MH.lesson_Y1Alg_fonAff1.sol1">La deuxième année correspond à t = 2. Dans le tableau, lorsque t = 2, h(2) = 11. <br><strong>Réponse : 11%</strong></p>
+                    </div>
+                </div>
+            </div>
+            <!-- Question 2 -->
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff1.q2">2) Le tableau ci-dessus traduit-il une situation de proportionnalité ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonAff1.showSolution" onclick="toggleSolution(2)">Voir la solution</button>
+                    <div class="MH-solution" id="solution2">
+                        <p data-i18n="MH.lesson_Y1Alg_fonAff1.sol2">Une situation de proportionnalité signifie que le quotient h(t)/t est constant. Calculons :</p>
+                        <div class="MH-sequence-step">
+                            <p>t=1 : 10,5/1 = 10,5</p>
+                            <p>t=2 : 11/2 = 5,5</p>
+                            <p>t=3 : 11,5/3 ≈ 3,83</p>
+                            <p>Les quotients ne sont pas égaux. <strong>Ce n'est pas une situation de proportionnalité.</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Question 3 -->
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff1.q3">3) Quel est l’accroissement du pourcentage des bénéfices entre deux années successives ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonAff1.showSolution" onclick="toggleSolution(3)">Voir la solution</button>
+                    <div class="MH-solution" id="solution3">
+                        <p data-i18n="MH.lesson_Y1Alg_fonAff1.sol3">L'accroissement est la différence h(t+1) – h(t) :</p>
+                        <div class="MH-sequence-step">
+                            <p>t=1→2 : 11 – 10,5 = 0,5</p>
+                            <p>t=2→3 : 11,5 – 11 = 0,5</p>
+                            <p>t=3→4 : 12 – 11,5 = 0,5</p>
+                            <p>t=4→5 : 12,5 – 12 = 0,5</p>
+                            <p>t=5→6 : 13 – 12,5 = 0,5</p>
+                        </div>
+                        <p><strong data-i18n="MH.lesson_Y1Alg_fonAff1.sol3b">L'accroissement est constant et vaut 0,5 point de pourcentage par an.</strong></p>
+                    </div>
+                </div>
+            </div>
+            <!-- Question 4 : points et repère -->
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff1.q4a">4) a) Pour chaque valeur t du tableau, placer le point (t, h(t)) dans un repère.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonAff1.showSolution" onclick="toggleSolution(4)">Voir la solution</button>
+                    <div class="MH-solution" id="solution4">
+                        <p data-i18n="MH.lesson_Y1Alg_fonAff1.sol4a">Les coordonnées des points sont : (1 ; 10,5), (2 ; 11), (3 ; 11,5), (4 ; 12), (5 ; 12,5), (6 ; 13).</p>
+                        <p data-i18n="MH.lesson_Y1Alg_fonAff1.sol4a2">Le graphique est tracé ci-dessous (canvas interactif).</p>
+                    </div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff1.q4b">b) Que remarque-t-on ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonAff1.showSolution" onclick="toggleSolution(5)">Voir la solution</button>
+                    <div class="MH-solution" id="solution5">
+                        <p data-i18n="MH.lesson_Y1Alg_fonAff1.sol4b">Tous les points sont alignés. Ils semblent appartenir à une même droite.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Canvas pour les points (t, h(t)) -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y1Alg_fonAff1.canvas1Title">Points (t ; h(t)) et droite d'ajustement</div>
+                <canvas id="benefitsCanvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y1Alg_fonAff1.canvas1Instructions">Chaque point représente une année. On observe un alignement parfait.</div>
+            </div>
+            <!-- Question 5 : modèle mathématique -->
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff1.q5">5) On cherche une expression de h(t) en fonction de t.</h4>
+                    <p data-i18n="MH.lesson_Y1Alg_fonAff1.q5a">a) Compléter le tableau : h(t) – 10</p>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonAff1.showSolution" onclick="toggleSolution(6)">Voir la solution</button>
+                    <div class="MH-solution" id="solution6">
+                        <table class="MH-table">
+                            <tr><th>t</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+                            <tr><th>h(t)-10</th><td>0,5</td><td>1</td><td>1,5</td><td>2</td><td>2,5</td><td>3</td></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff1.q5b">b) Ce tableau traduit-il une proportionnalité ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonAff1.showSolution" onclick="toggleSolution(7)">Voir la solution</button>
+                    <div class="MH-solution" id="solution7">
+                        <p data-i18n="MH.lesson_Y1Alg_fonAff1.sol5b">Calculons le quotient (h(t)-10)/t :</p>
+                        <div class="MH-sequence-step">
+                            <p>t=1 : 0,5/1 = 0,5</p>
+                            <p>t=2 : 1/2 = 0,5</p>
+                            <p>t=3 : 1,5/3 = 0,5</p>
+                            <p>t=4 : 2/4 = 0,5</p>
+                            <p>t=5 : 2,5/5 = 0,5</p>
+                            <p>t=6 : 3/6 = 0,5</p>
+                        </div>
+                        <p><strong data-i18n="MH.lesson_Y1Alg_fonAff1.sol5b2">Oui, c'est une situation de proportionnalité. Le coefficient est 0,5.</strong></p>
+                    </div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff1.q5c">c) Écrire h(t)-10 en fonction de t.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonAff1.showSolution" onclick="toggleSolution(8)">Voir la solution</button>
+                    <div class="MH-solution" id="solution8">
+                        <p data-i18n="MH.lesson_Y1Alg_fonAff1.sol5c">Puisque (h(t)-10) est proportionnel à t avec un coefficient 0,5 :</p>
+                        <div class="MH-formula-box">
+                            \[ h(t)-10 = 0,5\,t \]
+                        </div>
+                    </div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff1.q5d">d) En déduire h(t) en fonction de t.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonAff1.showSolution" onclick="toggleSolution(9)">Voir la solution</button>
+                    <div class="MH-solution" id="solution9">
+                        <p data-i18n="MH.lesson_Y1Alg_fonAff1.sol5d">On ajoute 10 des deux côtés :</p>
+                        <div class="MH-formula-box">
+                            \[ h(t) = 0,5\,t + 10 \]
+                        </div>
+                        <p><strong data-i18n="MH.lesson_Y1Alg_fonAff1.sol5d2">Vérification :</strong> pour t=1, 0,5×1+10 = 10,5 ; t=2 → 11 ; … t=6 → 13. C'est correct.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Synthèse : définition fonction affine -->
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonAff1.defTitle">✏️ Définition – Fonction affine</h3>
+                <p data-i18n="MH.lesson_Y1Alg_fonAff1.defText1">Soient <strong>a</strong> et <strong>b</strong> deux réels. Lorsqu’à chaque réel <strong>x</strong> on associe le réel <strong>ax + b</strong>, on définit une <strong>fonction affine</strong> f. On note :</p>
+                <div class="MH-formula-box">
+                    \[ f : x \mapsto a x + b \]
+                </div>
+                <ul>
+                    <li data-i18n="MH.lesson_Y1Alg_fonAff1.defLi1"><strong>f(x)</strong> est l’<strong>image</strong> de x par f.</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonAff1.defLi2"><strong>x</strong> est un <strong>antécédent</strong> de f(x).</li>
+                </ul>
+                <p data-i18n="MH.lesson_Y1Alg_fonAff1.examples">Exemples :</p>
+                <ul>
+                    <li>\( h(x)=0,5x+10 \) est affine avec a = 0,5 et b = 10.</li>
+                    <li>\( f(x)=8x-15 \) est affine (a = 8, b = -15).</li>
+                    <li>\( g(x)=5 \) est affine (a = 0, b = 5).</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ============ II. TAUX D'ACCROISSEMENT ============ -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y1Alg_fonAff1.part2">II. Taux d’accroissement</div>
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonAff1.activity2Title">Activité 2</h3>
+                <p data-i18n="MH.lesson_Y1Alg_fonAff1.activity2Statement">On considère une fonction affine h définie par \( h(x)=ax+b \) (a et b réels).</p>
+            </div>
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff1.q2_1">1) Calculer le quotient \(\frac{h(x)-h(x')}{x-x'}\) où x ≠ x'. Que remarque-t-on ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonAff1.showSolution" onclick="toggleSolution(10)">Voir la solution</button>
+                    <div class="MH-solution" id="solution10">
+                        <div class="MH-sequence-step">
+                            <p>\( h(x) = ax+b \) et \( h(x') = ax'+b \).</p>
+                            <p>\( h(x)-h(x') = (ax+b)-(ax'+b) = a(x-x') \).</p>
+                            <p>Donc \(\frac{h(x)-h(x')}{x-x'} = \frac{a(x-x')}{x-x'} = a\).</p>
+                        </div>
+                        <p data-i18n="MH.lesson_Y1Alg_fonAff1.sol2_1"><strong>Le quotient est constant, égal au coefficient a.</strong> C’est le taux d’accroissement ou la pente de la droite.</p>
+                    </div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff1.q2_2">2) Que vaut h(0) ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonAff1.showSolution" onclick="toggleSolution(11)">Voir la solution</button>
+                    <div class="MH-solution" id="solution11">
+                        <p>\( h(0) = a \times 0 + b = b \).</p>
+                        <p data-i18n="MH.lesson_Y1Alg_fonAff1.sol2_2"><strong>b est l’ordonnée à l’origine</strong> (valeur de la fonction en 0).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ III. REPRÉSENTATION GRAPHIQUE ============ -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y1Alg_fonAff1.part3">III. Représentation graphique d’une fonction affine</div>
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonAff1.activity3Title">Activité 3</h3>
+                <p data-i18n="MH.lesson_Y1Alg_fonAff1.activity3Statement">On considère la fonction affine f définie par \( f(x) = -2x + 4 \).</p>
+            </div>
+            <!-- Tableau à compléter -->
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff1.q3_1">1) Compléter le tableau des valeurs.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonAff1.showSolution" onclick="toggleSolution(12)">Voir la solution</button>
+                    <div class="MH-solution" id="solution12">
+                        <table class="MH-table">
+                            <tr><th>x</th><td>-1</td><td>-0,5</td><td>0</td><td>2</td><td>3</td></tr>
+                            <tr><th>f(x)</th><td>-2(-1)+4 = 2+4 = <strong>6</strong></td><td>-2(-0,5)+4 = 1+4 = <strong>5</strong></td><td>4</td><td>-2(2)+4 = -4+4 = <strong>0</strong></td><td>-2(3)+4 = -6+4 = <strong>-2</strong></td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- Placement des points et droite -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y1Alg_fonAff1.canvas2Title">Représentation de f(x) = -2x + 4</div>
+                <canvas id="affineCanvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y1Alg_fonAff1.canvas2Instructions">Points du tableau et droite D passant par A(0,4) et B(2,0).</div>
+            </div>
+            <!-- Questions 2,3,4 -->
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff1.q3_2a">2) a) Placer les points (x, f(x)).</h4>
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff1.q3_2b">b) Que remarque-t-on ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonAff1.showSolution" onclick="toggleSolution(13)">Voir la solution</button>
+                    <div class="MH-solution" id="solution13">
+                        <p data-i18n="MH.lesson_Y1Alg_fonAff1.sol3_2">Les points sont alignés. Ils semblent tous appartenir à une même droite.</p>
+                    </div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff1.q3_3a">3) a) Tracer la droite D passant par A(0,4) et B(2,0).</h4>
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff1.q3_3b">b) Conjecture sur les points (x, f(x)).</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonAff1.showSolution" onclick="toggleSolution(14)">Voir la solution</button>
+                    <div class="MH-solution" id="solution14">
+                        <p data-i18n="MH.lesson_Y1Alg_fonAff1.sol3_3">La droite D passe par tous les points du tableau. On conjecture que la représentation graphique de f est la droite D.</p>
+                    </div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff1.q3_4a">4) a) Point E d'abscisse -2 sur D → ordonnée ?</h4>
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff1.q3_4b">b) Point F d'ordonnée -4 sur D → abscisse ?</h4>
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff1.q3_4c">c) G(3,2) est-il sur D ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonAff1.showSolution" onclick="toggleSolution(15)">Voir la solution</button>
+                    <div class="MH-solution" id="solution15">
+                        <div class="MH-sequence-step">
+                            <p><strong>a)</strong> Équation de D : y = -2x+4. Pour x = -2, y = -2(-2)+4 = 4+4 = 8. E(-2;8).</p>
+                            <p><strong>b)</strong> y = -4 ⇒ -4 = -2x+4 ⇒ -2x = -8 ⇒ x = 4. F(4;-4).</p>
+                            <p><strong>c)</strong> G(3;2) : f(3) = -2(3)+4 = -6+4 = -2 ≠ 2. G n'est pas sur D.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Retenue -->
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonAff1.retTitle">📌 À retenir</h3>
+                <p data-i18n="MH.lesson_Y1Alg_fonAff1.retText">Dans un repère (O, I, J), l’ensemble des points M(x ; f(x)) est appelé la <strong>représentation graphique</strong> de la fonction f. Pour une fonction affine, cette représentation est une droite.</p>
+            </div>
+        </section>
+
+        <!-- ============ RÉSUMÉ DE LA LEÇON ============ -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Alg_fonAff1.summaryTitle">Résumé de la leçon</h2>
+            <div class="MH-important">
+                <ul>
+                    <li data-i18n="MH.lesson_Y1Alg_fonAff1.summary1">Une fonction affine s'écrit \(f(x)=ax+b\).</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonAff1.summary2">Son taux d'accroissement \(\frac{f(x)-f(x')}{x-x'}\) est constant et égal à a.</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonAff1.summary3">Sa représentation graphique est une droite. a est la pente, b l'ordonnée à l'origine.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Développeur</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.1.0</div>
+            </div>
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Liens</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Conditions d'utilisation</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Politique de confidentialité</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+    
+    <script>
+        // ============================================
+        // TRADUCTIONS : FONCTIONS AFFINES PARTIE I
+        // ============================================
+        const fonAff1Translations = {
+            'fr': {
+                // Général
+                'MH.general.homeTooltip': 'Aller à l\'accueil',
+                'MH.general.install': 'Installer l\'application',
+                'MH.general.installSuccess': 'Mathematics Hub installé avec succès !',
+                'MH.general.enableNotifications': 'Activer les notifications',
+                'MH.general.notificationEnabled': 'Notifications activées ! Vous recevrez des mises à jour.',
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Thème',
+                'MH.general.language': 'Langue',
+                'MH.lesson_Y1Alg_fonAff1.showSolution': 'Voir la solution',
+                'MH.lesson_Y1Alg_fonAff1.hideSolution': 'Cacher la solution',
+                // Titres
+                'MH.lesson_Y1Alg_fonAff1.title': 'Fonctions affines : Partie I',
+                'MH.lesson_Y1Alg_fonAff1.subtitle': 'Introduction aux fonctions linéaires et affines',
+                'MH.lesson_Y1Alg_fonAff1.part1': 'I. Fonction affine',
+                'MH.lesson_Y1Alg_fonAff1.part2': 'II. Taux d’accroissement',
+                'MH.lesson_Y1Alg_fonAff1.part3': 'III. Représentation graphique',
+                // Activité 1
+                'MH.lesson_Y1Alg_fonAff1.activity1Title': 'Activité 1',
+                'MH.lesson_Y1Alg_fonAff1.activity1Statement': 'Six ans après sa création, une entreprise étudie l’évolution de ses bénéfices. Les résultats sont consignés dans le tableau ci-dessous. On désigne par t l’année, comptée à partir de la date de création et par h(t) le pourcentage des bénéfices par rapport au chiffre d’affaires.',
+                'MH.lesson_Y1Alg_fonAff1.table1Title': 'Tableau des pourcentages h(t)',
+                'MH.lesson_Y1Alg_fonAff1.table1Example': 'Exemple : la première année (t = 1), les bénéfices h(1) représentent 10,5% du chiffre d’affaires.',
+                'MH.lesson_Y1Alg_fonAff1.q1': '1) Quel est le pourcentage des bénéfices la deuxième année ?',
+                'MH.lesson_Y1Alg_fonAff1.sol1': 'La deuxième année correspond à t = 2. Dans le tableau, lorsque t = 2, h(2) = 11. Réponse : 11%',
+                'MH.lesson_Y1Alg_fonAff1.q2': '2) Le tableau ci-dessus traduit-il une situation de proportionnalité ?',
+                'MH.lesson_Y1Alg_fonAff1.sol2': 'Une situation de proportionnalité signifie que le quotient h(t)/t est constant. Calculons : t=1 : 10,5/1 = 10,5 ; t=2 : 11/2 = 5,5 ; t=3 : 11,5/3 ≈ 3,83 ; Les quotients ne sont pas égaux. Ce n\'est pas une situation de proportionnalité.',
+                'MH.lesson_Y1Alg_fonAff1.q3': '3) Quel est l’accroissement du pourcentage des bénéfices entre deux années successives ?',
+                'MH.lesson_Y1Alg_fonAff1.sol3': 'L\'accroissement est la différence h(t+1) – h(t) : t=1→2 : 0,5 ; t=2→3 : 0,5 ; t=3→4 : 0,5 ; t=4→5 : 0,5 ; t=5→6 : 0,5.',
+                'MH.lesson_Y1Alg_fonAff1.sol3b': 'L\'accroissement est constant et vaut 0,5 point de pourcentage par an.',
+                'MH.lesson_Y1Alg_fonAff1.q4a': '4) a) Pour chaque valeur t du tableau, placer le point (t, h(t)) dans un repère.',
+                'MH.lesson_Y1Alg_fonAff1.sol4a': 'Les coordonnées des points sont : (1 ; 10,5), (2 ; 11), (3 ; 11,5), (4 ; 12), (5 ; 12,5), (6 ; 13).',
+                'MH.lesson_Y1Alg_fonAff1.sol4a2': 'Le graphique est tracé ci-dessous (canvas interactif).',
+                'MH.lesson_Y1Alg_fonAff1.q4b': 'b) Que remarque-t-on ?',
+                'MH.lesson_Y1Alg_fonAff1.sol4b': 'Tous les points sont alignés. Ils semblent appartenir à une même droite.',
+                'MH.lesson_Y1Alg_fonAff1.canvas1Title': 'Points (t ; h(t)) et droite d\'ajustement',
+                'MH.lesson_Y1Alg_fonAff1.canvas1Instructions': 'Chaque point représente une année. On observe un alignement parfait.',
+                'MH.lesson_Y1Alg_fonAff1.q5': '5) On cherche une expression de h(t) en fonction de t.',
+                'MH.lesson_Y1Alg_fonAff1.q5a': 'a) Compléter le tableau : h(t) – 10',
+                'MH.lesson_Y1Alg_fonAff1.q5b': 'b) Ce tableau traduit-il une proportionnalité ?',
+                'MH.lesson_Y1Alg_fonAff1.sol5b': 'Calculons le quotient (h(t)-10)/t : pour t=1 : 0,5 ; t=2 : 0,5 ; t=3 : 0,5 ; t=4 : 0,5 ; t=5 : 0,5 ; t=6 : 0,5.',
+                'MH.lesson_Y1Alg_fonAff1.sol5b2': 'Oui, c\'est une situation de proportionnalité. Le coefficient est 0,5.',
+                'MH.lesson_Y1Alg_fonAff1.q5c': 'c) Écrire h(t)-10 en fonction de t.',
+                'MH.lesson_Y1Alg_fonAff1.sol5c': 'Puisque (h(t)-10) est proportionnel à t avec un coefficient 0,5 : h(t)-10 = 0,5 t',
+                'MH.lesson_Y1Alg_fonAff1.q5d': 'd) En déduire h(t) en fonction de t.',
+                'MH.lesson_Y1Alg_fonAff1.sol5d': 'On ajoute 10 des deux côtés : h(t) = 0,5 t + 10',
+                'MH.lesson_Y1Alg_fonAff1.sol5d2': 'Vérification : pour t=1, 0,5×1+10 = 10,5 ; t=2 → 11 ; … t=6 → 13. C\'est correct.',
+                // Définition
+                'MH.lesson_Y1Alg_fonAff1.defTitle': '✏️ Définition – Fonction affine',
+                'MH.lesson_Y1Alg_fonAff1.defText1': 'Soient a et b deux réels. Lorsqu’à chaque réel x on associe le réel ax + b, on définit une fonction affine f. On note :',
+                'MH.lesson_Y1Alg_fonAff1.defLi1': 'f(x) est l’image de x par f.',
+                'MH.lesson_Y1Alg_fonAff1.defLi2': 'x est un antécédent de f(x).',
+                'MH.lesson_Y1Alg_fonAff1.examples': 'Exemples :',
+                // Activité 2
+                'MH.lesson_Y1Alg_fonAff1.activity2Title': 'Activité 2',
+                'MH.lesson_Y1Alg_fonAff1.activity2Statement': 'On considère une fonction affine h définie par h(x)=ax+b (a et b réels).',
+                'MH.lesson_Y1Alg_fonAff1.q2_1': '1) Calculer le quotient (h(x)-h(x\'))/(x-x\') où x ≠ x\'. Que remarque-t-on ?',
+                'MH.lesson_Y1Alg_fonAff1.sol2_1': 'Le quotient est constant, égal au coefficient a. C’est le taux d’accroissement ou la pente de la droite.',
+                'MH.lesson_Y1Alg_fonAff1.q2_2': '2) Que vaut h(0) ?',
+                'MH.lesson_Y1Alg_fonAff1.sol2_2': 'b est l’ordonnée à l’origine (valeur de la fonction en 0).',
+                // Activité 3
+                'MH.lesson_Y1Alg_fonAff1.activity3Title': 'Activité 3',
+                'MH.lesson_Y1Alg_fonAff1.activity3Statement': 'On considère la fonction affine f définie par f(x) = -2x + 4.',
+                'MH.lesson_Y1Alg_fonAff1.q3_1': '1) Compléter le tableau des valeurs.',
+                'MH.lesson_Y1Alg_fonAff1.canvas2Title': 'Représentation de f(x) = -2x + 4',
+                'MH.lesson_Y1Alg_fonAff1.canvas2Instructions': 'Points du tableau et droite D passant par A(0,4) et B(2,0).',
+                'MH.lesson_Y1Alg_fonAff1.q3_2a': '2) a) Placer les points (x, f(x)).',
+                'MH.lesson_Y1Alg_fonAff1.q3_2b': 'b) Que remarque-t-on ?',
+                'MH.lesson_Y1Alg_fonAff1.sol3_2': 'Les points sont alignés. Ils semblent tous appartenir à une même droite.',
+                'MH.lesson_Y1Alg_fonAff1.q3_3a': '3) a) Tracer la droite D passant par A(0,4) et B(2,0).',
+                'MH.lesson_Y1Alg_fonAff1.q3_3b': 'b) Que peut-on conjecturer quant aux points (x, f(x)) ?',
+                'MH.lesson_Y1Alg_fonAff1.sol3_3': 'La droite D passe par tous les points du tableau. On conjecture que la représentation graphique de f est la droite D.',
+                'MH.lesson_Y1Alg_fonAff1.q3_4a': '4) a) Placer sur la droite D le point E d\'abscisse -2 et lire son ordonnée.',
+                'MH.lesson_Y1Alg_fonAff1.q3_4b': 'b) Placer sur la droite D le point F d\'ordonnée -4 et lire son abscisse.',
+                'MH.lesson_Y1Alg_fonAff1.q3_4c': 'c) Placer le point G (3,2). Le point G est-il sur la droite D ?',
+                'MH.lesson_Y1Alg_fonAff1.retTitle': '📌 À retenir',
+                'MH.lesson_Y1Alg_fonAff1.retText': 'Dans un repère (O, I, J), l’ensemble des points M(x ; f(x)) est appelé la représentation graphique de la fonction f. Pour une fonction affine, cette représentation est une droite.',
+                // Résumé
+                'MH.lesson_Y1Alg_fonAff1.summaryTitle': 'Résumé de la leçon',
+                'MH.lesson_Y1Alg_fonAff1.summary1': 'Une fonction affine s\'écrit f(x)=ax+b.',
+                'MH.lesson_Y1Alg_fonAff1.summary2': 'Son taux d\'accroissement (f(x)-f(x\'))/(x-x\') est constant et égal à a.',
+                'MH.lesson_Y1Alg_fonAff1.summary3': 'Sa représentation graphique est une droite. a est la pente, b l\'ordonnée à l\'origine.',
+                // Footer
+                'MH.footer.developer': 'Développeur',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Liens',
+                'MH.footer.terms': 'Conditions d\'utilisation',
+                'MH.footer.privacy': 'Politique de confidentialité'
+            },
+            'en': {
+                // (English translations - concise but complete)
+                'MH.general.homeTooltip': 'Go to Homepage',
+                'MH.general.install': 'Install App',
+                'MH.general.installSuccess': 'Mathematics Hub installed successfully!',
+                'MH.general.enableNotifications': 'Enable Notifications',
+                'MH.general.notificationEnabled': 'Notifications enabled! You will now receive updates.',
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Theme',
+                'MH.general.language': 'Language',
+                'MH.lesson_Y1Alg_fonAff1.showSolution': 'Show Solution',
+                'MH.lesson_Y1Alg_fonAff1.hideSolution': 'Hide Solution',
+                'MH.lesson_Y1Alg_fonAff1.title': 'Affine Functions: Part I',
+                'MH.lesson_Y1Alg_fonAff1.subtitle': 'Introduction to Linear and Affine Functions',
+                'MH.lesson_Y1Alg_fonAff1.part1': 'I. Affine Function',
+                'MH.lesson_Y1Alg_fonAff1.part2': 'II. Rate of Change',
+                'MH.lesson_Y1Alg_fonAff1.part3': 'III. Graphical Representation',
+                'MH.lesson_Y1Alg_fonAff1.activity1Title': 'Activity 1',
+                'MH.lesson_Y1Alg_fonAff1.activity1Statement': 'Six years after its creation, a company studies the evolution of its profits. The results are shown in the table below. Let t be the year (since creation) and h(t) the profit percentage relative to turnover.',
+                'MH.lesson_Y1Alg_fonAff1.table1Title': 'Table of percentages h(t)',
+                'MH.lesson_Y1Alg_fonAff1.table1Example': 'Example: the first year (t = 1), profit h(1) is 10.5% of turnover.',
+                'MH.lesson_Y1Alg_fonAff1.q1': '1) What is the profit percentage in the second year?',
+                'MH.lesson_Y1Alg_fonAff1.sol1': 'Second year: t = 2, h(2) = 11. Answer: 11%',
+                'MH.lesson_Y1Alg_fonAff1.q2': '2) Is the table a proportional situation?',
+                'MH.lesson_Y1Alg_fonAff1.sol2': 'Proportionality would require h(t)/t constant. t=1: 10.5 ; t=2: 5.5 ; t=3: ≈3.83 → Not constant. Not proportional.',
+                'MH.lesson_Y1Alg_fonAff1.q3': '3) What is the yearly increase of the profit percentage?',
+                'MH.lesson_Y1Alg_fonAff1.sol3': 'Difference h(t+1)-h(t): always 0.5.',
+                'MH.lesson_Y1Alg_fonAff1.sol3b': 'The increase is constant: 0.5 percentage point per year.',
+                'MH.lesson_Y1Alg_fonAff1.q4a': '4) a) For each t, plot the point (t, h(t)) in a coordinate system.',
+                'MH.lesson_Y1Alg_fonAff1.sol4a': 'Coordinates: (1,10.5), (2,11), (3,11.5), (4,12), (5,12.5), (6,13).',
+                'MH.lesson_Y1Alg_fonAff1.sol4a2': 'Graph is drawn below (interactive canvas).',
+                'MH.lesson_Y1Alg_fonAff1.q4b': 'b) What do you notice?',
+                'MH.lesson_Y1Alg_fonAff1.sol4b': 'All points are aligned. They lie on the same straight line.',
+                'MH.lesson_Y1Alg_fonAff1.canvas1Title': 'Points (t; h(t)) and fitted line',
+                'MH.lesson_Y1Alg_fonAff1.canvas1Instructions': 'Each point represents a year. Perfect alignment is observed.',
+                'MH.lesson_Y1Alg_fonAff1.q5': '5) Find an expression for h(t) in terms of t.',
+                'MH.lesson_Y1Alg_fonAff1.q5a': 'a) Complete the table: h(t) – 10',
+                'MH.lesson_Y1Alg_fonAff1.q5b': 'b) Is this table a proportional situation?',
+                'MH.lesson_Y1Alg_fonAff1.sol5b': 'Compute (h(t)-10)/t: all values are 0.5.',
+                'MH.lesson_Y1Alg_fonAff1.sol5b2': 'Yes, proportional. Coefficient = 0.5.',
+                'MH.lesson_Y1Alg_fonAff1.q5c': 'c) Write h(t)-10 as a function of t.',
+                'MH.lesson_Y1Alg_fonAff1.sol5c': 'h(t)-10 = 0.5 t',
+                'MH.lesson_Y1Alg_fonAff1.q5d': 'd) Deduce h(t) as a function of t.',
+                'MH.lesson_Y1Alg_fonAff1.sol5d': 'h(t) = 0.5 t + 10',
+                'MH.lesson_Y1Alg_fonAff1.sol5d2': 'Check: t=1 → 10.5 ; t=6 → 13.',
+                'MH.lesson_Y1Alg_fonAff1.defTitle': '✏️ Definition – Affine function',
+                'MH.lesson_Y1Alg_fonAff1.defText1': 'Let a and b be real numbers. When to each real x we associate the real ax + b, we define an affine function f. We write:',
+                'MH.lesson_Y1Alg_fonAff1.defLi1': 'f(x) is the image of x under f.',
+                'MH.lesson_Y1Alg_fonAff1.defLi2': 'x is a preimage of f(x).',
+                'MH.lesson_Y1Alg_fonAff1.examples': 'Examples:',
+                'MH.lesson_Y1Alg_fonAff1.activity2Title': 'Activity 2',
+                'MH.lesson_Y1Alg_fonAff1.activity2Statement': 'Consider an affine function h defined by h(x)=ax+b (a,b real).',
+                'MH.lesson_Y1Alg_fonAff1.q2_1': '1) Compute (h(x)-h(x\'))/(x-x\') with x≠x\'. What do you notice?',
+                'MH.lesson_Y1Alg_fonAff1.sol2_1': 'The quotient is constant, equal to a. It is the rate of change (slope).',
+                'MH.lesson_Y1Alg_fonAff1.q2_2': '2) What is h(0)?',
+                'MH.lesson_Y1Alg_fonAff1.sol2_2': 'h(0)=b, the y-intercept.',
+                'MH.lesson_Y1Alg_fonAff1.activity3Title': 'Activity 3',
+                'MH.lesson_Y1Alg_fonAff1.activity3Statement': 'Consider the affine function f defined by f(x) = -2x + 4.',
+                'MH.lesson_Y1Alg_fonAff1.q3_1': '1) Complete the table of values.',
+                'MH.lesson_Y1Alg_fonAff1.canvas2Title': 'Graph of f(x) = -2x + 4',
+                'MH.lesson_Y1Alg_fonAff1.canvas2Instructions': 'Points from the table and line D through A(0,4) and B(2,0).',
+                'MH.lesson_Y1Alg_fonAff1.q3_2a': '2) a) Plot the points (x, f(x)).',
+                'MH.lesson_Y1Alg_fonAff1.q3_2b': 'b) What do you notice?',
+                'MH.lesson_Y1Alg_fonAff1.sol3_2': 'The points are collinear; they lie on the same line.',
+                'MH.lesson_Y1Alg_fonAff1.q3_3a': '3) a) Draw line D through A(0,4) and B(2,0).',
+                'MH.lesson_Y1Alg_fonAff1.q3_3b': 'b) Conjecture about the points (x, f(x)).',
+                'MH.lesson_Y1Alg_fonAff1.sol3_3': 'Line D passes through all plotted points. Conjecture: the graph of f is line D.',
+                'MH.lesson_Y1Alg_fonAff1.q3_4a': '4) a) On line D, find point E with x = -2 and read its y-coordinate.',
+                'MH.lesson_Y1Alg_fonAff1.q3_4b': 'b) On line D, find point F with y = -4 and read its x-coordinate.',
+                'MH.lesson_Y1Alg_fonAff1.q3_4c': 'c) Plot point G(3,2). Is G on line D?',
+                'MH.lesson_Y1Alg_fonAff1.retTitle': '📌 Remember',
+                'MH.lesson_Y1Alg_fonAff1.retText': 'In a coordinate system (O,I,J), the set of points M(x; f(x)) is called the graph of f. For an affine function, this graph is a straight line.',
+                'MH.lesson_Y1Alg_fonAff1.summaryTitle': 'Lesson summary',
+                'MH.lesson_Y1Alg_fonAff1.summary1': 'An affine function is written f(x)=ax+b.',
+                'MH.lesson_Y1Alg_fonAff1.summary2': 'Its rate of change (f(x)-f(x\'))/(x-x\') is constant and equals a.',
+                'MH.lesson_Y1Alg_fonAff1.summary3': 'Its graph is a line. a is the slope, b is the y-intercept.',
+                'MH.footer.developer': 'Developer',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Links',
+                'MH.footer.terms': 'Terms of Use',
+                'MH.footer.privacy': 'Privacy Policy'
+            },
+            'ar': {
+                // العربية
+                'MH.general.homeTooltip': 'الذهاب إلى الصفحة الرئيسية',
+                'MH.general.install': 'تثبيت التطبيق',
+                'MH.general.installSuccess': 'تم تثبيت Mathematics Hub بنجاح!',
+                'MH.general.enableNotifications': 'تفعيل الإشعارات',
+                'MH.general.notificationEnabled': 'تم تفعيل الإشعارات! ستصلك التحديثات الآن.',
+                'MH.general.title': 'مركز الرياضيات',
+                'MH.general.theme': 'المظهر',
+                'MH.general.language': 'اللغة',
+                'MH.lesson_Y1Alg_fonAff1.showSolution': 'عرض الحل',
+                'MH.lesson_Y1Alg_fonAff1.hideSolution': 'إخفاء الحل',
+                'MH.lesson_Y1Alg_fonAff1.title': 'الدوال التآلفية: الجزء الأول',
+                'MH.lesson_Y1Alg_fonAff1.subtitle': 'مقدمة إلى الدوال الخطية والتآلفية',
+                'MH.lesson_Y1Alg_fonAff1.part1': 'I. الدالة التآلفية',
+                'MH.lesson_Y1Alg_fonAff1.part2': 'II. معامل التغير',
+                'MH.lesson_Y1Alg_fonAff1.part3': 'III. التمثيل البياني',
+                'MH.lesson_Y1Alg_fonAff1.activity1Title': 'النشاط 1',
+                'MH.lesson_Y1Alg_fonAff1.activity1Statement': 'بعد ست سنوات من إنشائها، تدرس شركة تطور أرباحها. النتائج موضحة في الجدول أدناه. نرمز بـ t للسنة (منذ التأسيس) و h(t) للنسبة المئوية للأرباح مقارنة بحجم الأعمال.',
+                'MH.lesson_Y1Alg_fonAff1.table1Title': 'جدول النسب المئوية h(t)',
+                'MH.lesson_Y1Alg_fonAff1.table1Example': 'مثال: السنة الأولى (t = 1) الربح h(1) يمثل 10.5% من حجم الأعمال.',
+                'MH.lesson_Y1Alg_fonAff1.q1': '1) ما هي النسبة المئوية للأرباح في السنة الثانية؟',
+                'MH.lesson_Y1Alg_fonAff1.sol1': 'السنة الثانية: t = 2، h(2) = 11. الإجابة: 11%',
+                'MH.lesson_Y1Alg_fonAff1.q2': '2) هل يعبر الجدول عن تناسبية؟',
+                'MH.lesson_Y1Alg_fonAff1.sol2': 'التناسبية تعني ثبات القسمة h(t)/t. t=1: 10.5 ; t=2: 5.5 ; t=3: ≈3.83 → ليست متساوية. إذن ليست تناسبية.',
+                'MH.lesson_Y1Alg_fonAff1.q3': '3) ما مقدار الزيادة السنوية في النسبة المئوية للأرباح؟',
+                'MH.lesson_Y1Alg_fonAff1.sol3': 'الفرق h(t+1)-h(t): دائمًا 0.5.',
+                'MH.lesson_Y1Alg_fonAff1.sol3b': 'الزيادة ثابتة وتساوي 0.5 نقطة مئوية سنويًا.',
+                'MH.lesson_Y1Alg_fonAff1.q4a': '4) أ) لكل قيمة t في الجدول، ضع النقطة (t, h(t)) في معلم.',
+                'MH.lesson_Y1Alg_fonAff1.sol4a': 'إحداثيات النقاط: (1;10.5)، (2;11)، (3;11.5)، (4;12)، (5;12.5)، (6;13).',
+                'MH.lesson_Y1Alg_fonAff1.sol4a2': 'الرسم البياني موضح أدناه (لوحة تفاعلية).',
+                'MH.lesson_Y1Alg_fonAff1.q4b': 'ب) ماذا تلاحظ؟',
+                'MH.lesson_Y1Alg_fonAff1.sol4b': 'جميع النقاط على استقامة واحدة. تبدو أنها تنتمي إلى نفس الخط المستقيم.',
+                'MH.lesson_Y1Alg_fonAff1.canvas1Title': 'النقاط (t ; h(t)) والخط المقارب',
+                'MH.lesson_Y1Alg_fonAff1.canvas1Instructions': 'كل نقطة تمثل سنة. نلاحظ استقامة تامة.',
+                'MH.lesson_Y1Alg_fonAff1.q5': '5) نبحث عن عبارة h(t) بدلالة t.',
+                'MH.lesson_Y1Alg_fonAff1.q5a': 'أ) أكمل الجدول: h(t) – 10',
+                'MH.lesson_Y1Alg_fonAff1.q5b': 'ب) هل هذا الجدول يعبر عن تناسبية؟',
+                'MH.lesson_Y1Alg_fonAff1.sol5b': 'نحسب (h(t)-10)/t: t=1: 0.5 ; t=2: 0.5 ; t=3: 0.5 ; t=4: 0.5 ; t=5: 0.5 ; t=6: 0.5.',
+                'MH.lesson_Y1Alg_fonAff1.sol5b2': 'نعم، تناسبية. معامل التناسب 0.5.',
+                'MH.lesson_Y1Alg_fonAff1.q5c': 'ج) اكتب h(t)-10 بدلالة t.',
+                'MH.lesson_Y1Alg_fonAff1.sol5c': 'h(t)-10 = 0.5 t',
+                'MH.lesson_Y1Alg_fonAff1.q5d': 'د) استنتج h(t) بدلالة t.',
+                'MH.lesson_Y1Alg_fonAff1.sol5d': 'h(t) = 0.5 t + 10',
+                'MH.lesson_Y1Alg_fonAff1.sol5d2': 'تحقق: t=1 → 10.5 ; t=6 → 13.',
+                'MH.lesson_Y1Alg_fonAff1.defTitle': '✏️ تعريف – الدالة التآلفية',
+                'MH.lesson_Y1Alg_fonAff1.defText1': 'ليكن a و b عددين حقيقيين. عندما نربط كل عدد حقيقي x بالعدد ax + b، نعرف دالة تآلفية f. نكتب:',
+                'MH.lesson_Y1Alg_fonAff1.defLi1': 'f(x) هي صورة x بواسطة f.',
+                'MH.lesson_Y1Alg_fonAff1.defLi2': 'x هو سابق لـ f(x).',
+                'MH.lesson_Y1Alg_fonAff1.examples': 'أمثلة:',
+                'MH.lesson_Y1Alg_fonAff1.activity2Title': 'النشاط 2',
+                'MH.lesson_Y1Alg_fonAff1.activity2Statement': 'نعتبر دالة تآلفية h معرفة بـ h(x)=ax+b (a,b حقيقيان).',
+                'MH.lesson_Y1Alg_fonAff1.q2_1': '1) احسب (h(x)-h(x\'))/(x-x\') حيث x≠x\'. ماذا تلاحظ؟',
+                'MH.lesson_Y1Alg_fonAff1.sol2_1': 'ناتج القسمة ثابت ويساوي a. هذا هو معامل التغير (الميل).',
+                'MH.lesson_Y1Alg_fonAff1.q2_2': '2) ما قيمة h(0)؟',
+                'MH.lesson_Y1Alg_fonAff1.sol2_2': 'h(0)=b، وهي التقاطع مع المحور y.',
+                'MH.lesson_Y1Alg_fonAff1.activity3Title': 'النشاط 3',
+                'MH.lesson_Y1Alg_fonAff1.activity3Statement': 'نعتبر الدالة التآلفية f المعرفة بـ f(x) = -2x + 4.',
+                'MH.lesson_Y1Alg_fonAff1.q3_1': '1) أكمل جدول القيم.',
+                'MH.lesson_Y1Alg_fonAff1.canvas2Title': 'تمثيل f(x) = -2x + 4',
+                'MH.lesson_Y1Alg_fonAff1.canvas2Instructions': 'نقاط الجدول والخط D المار بـ A(0,4) و B(2,0).',
+                'MH.lesson_Y1Alg_fonAff1.q3_2a': '2) أ) ضع النقاط (x, f(x)).',
+                'MH.lesson_Y1Alg_fonAff1.q3_2b': 'ب) ماذا تلاحظ؟',
+                'MH.lesson_Y1Alg_fonAff1.sol3_2': 'النقاط على استقامة واحدة. تبدو أنها تنتمي لنفس الخط.',
+                'MH.lesson_Y1Alg_fonAff1.q3_3a': '3) أ) ارسم الخط D المار بـ A(0,4) و B(2,0).',
+                'MH.lesson_Y1Alg_fonAff1.q3_3b': 'ب) ماذا تخمن بخصوص النقاط (x, f(x))؟',
+                'MH.lesson_Y1Alg_fonAff1.sol3_3': 'الخط D يمر بجميع النقاط. التخمين: التمثيل البياني لـ f هو الخط D.',
+                'MH.lesson_Y1Alg_fonAff1.q3_4a': '4) أ) على الخط D، حدد النقطة E التي أفصولها -2 واقرأ ترتيبتها.',
+                'MH.lesson_Y1Alg_fonAff1.q3_4b': 'ب) على الخط D، حدد النقطة F التي ترتيبتها -4 واقرأ أفصولها.',
+                'MH.lesson_Y1Alg_fonAff1.q3_4c': 'ج) ضع النقطة G(3,2). هل G تنتمي إلى الخط D؟',
+                'MH.lesson_Y1Alg_fonAff1.retTitle': '📌 تذكر',
+                'MH.lesson_Y1Alg_fonAff1.retText': 'في معلم (O,I,J)، مجموعة النقط M(x; f(x)) تسمى التمثيل البياني للدالة f. بالنسبة للدالة التآلفية، هذا التمثيل هو خط مستقيم.',
+                'MH.lesson_Y1Alg_fonAff1.summaryTitle': 'ملخص الدرس',
+                'MH.lesson_Y1Alg_fonAff1.summary1': 'الدالة التآلفية تكتب f(x)=ax+b.',
+                'MH.lesson_Y1Alg_fonAff1.summary2': 'معامل تغيرها (f(x)-f(x\'))/(x-x\') ثابت ويساوي a.',
+                'MH.lesson_Y1Alg_fonAff1.summary3': 'تمثيلها البياني خط مستقيم. a هو الميل، b هو التقاطع مع المحور y.',
+                'MH.footer.developer': 'المطور',
+                'MH.footer.version': 'الإصدار',
+                'MH.footer.links': 'روابط',
+                'MH.footer.terms': 'شروط الاستخدام',
+                'MH.footer.privacy': 'سياسة الخصوصية'
+            }
+        };
+
+        // Merge with global translations
+        if (typeof translations !== 'undefined') {
+            for (let lang in fonAff1Translations) {
+                if (translations[lang]) {
+                    translations[lang] = {...translations[lang], ...fonAff1Translations[lang]};
+                } else {
+                    translations[lang] = fonAff1Translations[lang];
+                }
+            }
+        } else {
+            var translations = fonAff1Translations;
+        }
+
+        // ============================================
+        // CANVAS DRAWING FUNCTIONS
+        // ============================================
+        function drawBenefitsCanvas() {
+            const canvas = document.getElementById('benefitsCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            
+            // Margins
+            const padLeft = 60, padRight = 30, padTop = 30, padBottom = 50;
+            const graphW = w - padLeft - padRight;
+            const graphH = h - padTop - padBottom;
+            
+            // Échelle : t de 0 à 7, h(t) de 9 à 14
+            const tMin = 0, tMax = 7, hMin = 9, hMax = 14;
+            
+            // Axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 1;
+            // axe X
+            ctx.beginPath();
+            ctx.moveTo(padLeft, h - padBottom);
+            ctx.lineTo(w - padRight, h - padBottom);
+            ctx.stroke();
+            // axe Y
+            ctx.beginPath();
+            ctx.moveTo(padLeft, padTop);
+            ctx.lineTo(padLeft, h - padBottom);
+            ctx.stroke();
+            
+            // Graduations et labels
+            ctx.fillStyle = '#333';
+            ctx.font = '12px Arial';
+            for (let t = 1; t <= 6; t++) {
+                let x = padLeft + (t - tMin) / (tMax - tMin) * graphW;
+                ctx.fillText(t, x - 5, h - padBottom + 20);
+            }
+            for (let y = 10; y <= 13; y++) {
+                let yPos = h - padBottom - (y - hMin) / (hMax - hMin) * graphH;
+                ctx.fillText(y + '%', padLeft - 35, yPos + 5);
+            }
+            
+            // Points et ligne
+            ctx.fillStyle = '#F39C12';
+            ctx.strokeStyle = '#F39C12';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            const points = [
+                {t:1, val:10.5}, {t:2, val:11}, {t:3, val:11.5},
+                {t:4, val:12}, {t:5, val:12.5}, {t:6, val:13}
+            ];
+            for (let i = 0; i < points.length; i++) {
+                let x = padLeft + (points[i].t - tMin) / (tMax - tMin) * graphW;
+                let y = h - padBottom - (points[i].val - hMin) / (hMax - hMin) * graphH;
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+                ctx.fillStyle = '#E67E22';
+                ctx.beginPath();
+                ctx.arc(x, y, 5, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+            ctx.strokeStyle = '#F39C12';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // Titre des axes
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 14px Arial';
+            ctx.fillText('t (année)', w/2 - 30, h - 10);
+            ctx.save();
+            ctx.translate(15, h/2);
+            ctx.rotate(-Math.PI/2);
+            ctx.fillText('h(t) (%)', 0, 0);
+            ctx.restore();
+        }
+
+        function drawAffineCanvas() {
+            const canvas = document.getElementById('affineCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            
+            // Repère
+            const pad = 50;
+            const graphW = w - 2 * pad;
+            const graphH = h - 2 * pad;
+            const xMin = -3, xMax = 5, yMin = -5, yMax = 9;
+            
+            // axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(pad, h - pad);
+            ctx.lineTo(w - pad, h - pad);
+            ctx.moveTo(pad, pad);
+            ctx.lineTo(pad, h - pad);
+            ctx.stroke();
+            
+            // graduations
+            ctx.fillStyle = '#333';
+            ctx.font = '12px Arial';
+            for (let x = -2; x <= 4; x++) {
+                let cx = pad + (x - xMin) / (xMax - xMin) * graphW;
+                ctx.fillText(x, cx - 5, h - pad + 20);
+            }
+            for (let y = -4; y <= 8; y+=2) {
+                let cy = h - pad - (y - yMin) / (yMax - yMin) * graphH;
+                ctx.fillText(y, pad - 30, cy + 5);
+            }
+            
+            // droite D : y = -2x+4
+            ctx.strokeStyle = '#1ABC9C';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            let x1 = -2, y1 = -2*(-2)+4;   // y1 will be 8
+let x2 = 4, y2 = -2*4+4;       // y2 will be -4
+            let cx1 = pad + (x1 - xMin) / (xMax - xMin) * graphW;
+            let cy1 = h - pad - (y1 - yMin) / (yMax - yMin) * graphH;
+            let cx2 = pad + (x2 - xMin) / (xMax - xMin) * graphW;
+            let cy2 = h - pad - (y2 - yMin) / (yMax - yMin) * graphH;
+            ctx.moveTo(cx1, cy1);
+            ctx.lineTo(cx2, cy2);
+            ctx.stroke();
+            
+            // Points du tableau
+            const pts = [
+                {x:-1, y:6}, {x:-0.5, y:5}, {x:0, y:4}, {x:2, y:0}, {x:3, y:-2}
+            ];
+            ctx.fillStyle = '#F39C12';
+            pts.forEach(p => {
+                let cx = pad + (p.x - xMin) / (xMax - xMin) * graphW;
+                let cy = h - pad - (p.y - yMin) / (yMax - yMin) * graphH;
+                ctx.beginPath();
+                ctx.arc(cx, cy, 5, 0, 2*Math.PI);
+                ctx.fill();
+            });
+            
+            // Points A et B
+            ctx.fillStyle = '#E74C3C';
+            let ax = pad + (0 - xMin) / (xMax - xMin) * graphW;
+            let ay = h - pad - (4 - yMin) / (yMax - yMin) * graphH;
+            ctx.beginPath(); ctx.arc(ax, ay, 6, 0, 2*Math.PI); ctx.fill();
+            ctx.fillStyle = '#E74C3C';
+            let bx = pad + (2 - xMin) / (xMax - xMin) * graphW;
+            let by = h - pad - (0 - yMin) / (yMax - yMin) * graphH;
+            ctx.beginPath(); ctx.arc(bx, by, 6, 0, 2*Math.PI); ctx.fill();
+            
+            // Labels
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 14px Arial';
+            ctx.fillText('A', ax+10, ay-10);
+            ctx.fillText('B', bx+10, by-10);
+            ctx.fillStyle = '#333';
+            ctx.font = 'italic 12px Arial';
+            ctx.fillText('f(x) = -2x + 4', w-150, 40);
+        }
+
+        // Solution toggle function (identique à l'original)
+        function toggleSolution(problemNumber) {
+            const solution = document.getElementById(`solution${problemNumber}`);
+            if (!solution) return;
+            const button = solution.previousElementSibling;
+            const currentLang = (typeof MHThemeManager !== 'undefined' && MHThemeManager.getCurrentLanguage) ? MHThemeManager.getCurrentLanguage() : 'fr';
+            
+            if (solution.style.display === 'block' || solution.style.display === '') {
+                solution.style.display = 'none';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y1Alg_fonAff1.showSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y1Alg_fonAff1.showSolution'];
+                } else {
+                    button.textContent = 'Voir la solution';
+                }
+            } else {
+                solution.style.display = 'block';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y1Alg_fonAff1.hideSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y1Alg_fonAff1.hideSolution'];
+                } else {
+                    button.textContent = 'Cacher la solution';
+                }
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(solution, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\(', right: '\\)', display: false},
+                            {left: '\\[', right: '\\]', display: true}
+                        ],
+                        throwOnError: false
+                    });
+                }
+            }
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            // KaTeX auto-render
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+            
+            // Dessin des canvases
+            drawBenefitsCanvas();
+            drawAffineCanvas();
+            
+            // Cacher toutes les solutions au départ
+            const currentLang = (typeof MHThemeManager !== 'undefined' && MHThemeManager.getCurrentLanguage) ? MHThemeManager.getCurrentLanguage() : 'fr';
+            for (let i = 1; i <= 15; i++) {
+                const sol = document.getElementById(`solution${i}`);
+                const btn = sol ? sol.previousElementSibling : null;
+                if (sol) sol.style.display = 'none';
+                if (btn && translations[currentLang] && translations[currentLang]['MH.lesson_Y1Alg_fonAff1.showSolution']) {
+                    btn.textContent = translations[currentLang]['MH.lesson_Y1Alg_fonAff1.showSolution'];
+                }
+            }
+            
+            // Redessiner au changement de thème
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    setTimeout(() => {
+                        drawBenefitsCanvas();
+                        drawAffineCanvas();
+                    }, 100);
+                });
+            }
+        });
+    </script>
+
+    <!-- Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').catch(e => console.log('SW registration failed', e));
+            });
+        }
+    </script>
+    <noscript>
+        <style>
+            .MH-header-controls { display: none; }
+            .MH-solution { display: block; }
+        </style>
+        <div class="MH-warning">JavaScript est recommandé pour une expérience complète, mais le contenu reste accessible.</div>
+    </noscript>
+</body>
+</html>

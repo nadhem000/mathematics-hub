@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathématiques : Fonctions affines – Partie II</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#4A90E2" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#8E44AD" media="(prefers-color-scheme: dark)">
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#4A90E2">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    <style>
+        /* Page-specific color palette - Purple + Green theme (fresh for part II) */
+        :root {
+            --primary: #8E44AD;        /* Purple */
+            --primary-light: #A569BD;
+            --primary-dark: #6C3483;
+            --secondary: #2ECC71;      /* Green */
+            --secondary-light: #58D68D;
+            --secondary-dark: #28B463;
+            --accent: #F39C12;
+            --warning: #E74C3C;
+            --info: #3498DB;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #FFFFFF;
+            --surface: #F8F9FA;
+            --border: #E9ECEF;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        [data-theme="dark"] {
+            --primary: #A569BD;
+            --primary-light: #BB8FCE;
+            --primary-dark: #6C3483;
+            --secondary: #28B463;
+            --secondary-light: #2ECC71;
+            --secondary-dark: #1D8348;
+            --accent: #F39C12;
+            --warning: #C0392B;
+            --info: #2980B9;
+            --text: #FFFFFF;
+            --text-light: #CCCCCC;
+            --background: #121212;
+            --surface: #1E1E1E;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+        /* KaTeX styling */
+        .katex { 
+            font-size: 1.1em; 
+        }
+        .katex-display { 
+            margin: 1em 0; 
+            text-align: center;
+        }
+        /* Equation styling */
+        .MH-equation {
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            margin: 0.5em 0;
+            padding: 0;
+            display: inline-block;
+        }
+        [dir="rtl"] .MH-equation {
+            text-align: left;
+        }
+        /* Canvas container styling */
+        .MH-canvas-container {
+            margin: 2em 0;
+            text-align: center;
+            position: relative;
+        }
+        .MH-canvas {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background-color: var(--surface);
+            max-width: 100%;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+        .MH-canvas-title {
+            font-weight: bold;
+            margin-bottom: 0.5em;
+            color: var(--primary);
+        }
+        .MH-canvas-instructions {
+            font-size: 0.9em;
+            color: var(--text-light);
+            margin-top: 0.5em;
+            font-style: italic;
+        }
+        /* Sequence specific styling */
+        .MH-sequence-item {
+            margin: 0.5em 0;
+            padding: 0.5em;
+            background-color: var(--surface);
+            border-left: 4px solid var(--secondary);
+            border-radius: 4px;
+        }
+        .MH-sequence-step {
+            margin: 0.5em 0;
+            padding-left: 1em;
+            border-left: 2px solid var(--primary-light);
+        }
+        .MH-number-pattern {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            color: var(--warning);
+            background-color: rgba(231, 76, 60, 0.1);
+            padding: 0.2em 0.5em;
+            border-radius: 4px;
+        }
+        .MH-formula-box {
+            background-color: rgba(46, 204, 113, 0.1);
+            border: 2px solid var(--secondary);
+            border-radius: 8px;
+            padding: 1.5em;
+            margin: 1em 0;
+        }
+        /* Exercise numbering */
+        .MH-exercise-number {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--secondary);
+            margin: 1.5em 0 0.5em 0;
+            border-bottom: 2px solid var(--secondary-light);
+            padding-bottom: 0.3em;
+        }
+        /* Table styling */
+        .MH-table {
+            display: inline-block;
+            border-collapse: collapse;
+            margin: 1em 0;
+            background-color: var(--surface);
+        }
+        .MH-table td {
+            border: 1px solid var(--border);
+            padding: 0.5em 1em;
+            text-align: center;
+        }
+        .MH-table th {
+            background-color: var(--primary-light);
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 0.5em 1em;
+            text-align: center;
+        }
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .MH-canvas {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+        /* Style for colored segments on canvas */
+        .highlight-abscisse { stroke: #E74C3C; stroke-width: 4; }
+        .highlight-ordonnee { stroke: #3498DB; stroke-width: 4; }
+        .highlight-celsius { stroke: #E67E22; stroke-width: 4; }
+        .highlight-fahrenheit { stroke: #1ABC9C; stroke-width: 4; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🎨</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>🌐</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                        </div>
+                    </div>
+                    <!-- Notification Button -->
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+                        <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y1Alg_fonAff2.title">Fonctions affines : Partie II</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y1Alg_fonAff2.subtitle">Lecture graphique et compléments</h2>
+        
+        <!-- ============ IV. LECTURE GRAPHIQUE ============ -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y1Alg_fonAff2.part4">IV. Lecture graphique</div>
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonAff2.activity1Title">Activité 1</h3>
+                <p data-i18n="MH.lesson_Y1Alg_fonAff2.activity1Statement">Dans le repère suivant, la droite D représente la fonction affine h définie par \( h(x) = 2x - 3 \).</p>
+            </div>
+            <!-- Canvas for the line D (base) -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y1Alg_fonAff2.canvas1Title">Droite D : h(x) = 2x - 3</div>
+                <canvas id="hLineCanvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y1Alg_fonAff2.canvas1Instructions">La droite passe par les points (0, -3) et (1.5, 0).</div>
+            </div>
+
+            <!-- Question 1 -->
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff2.q1a">1) a) Quelles sont les coordonnées des points d’intersection de la droite D et l’axe des abscisses ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonAff2.showSolution" onclick="toggleSolution(101)">Voir la solution</button>
+                    <div class="MH-solution" id="solution101">
+                        <p><strong data-i18n="MH.lesson_Y1Alg_fonAff2.sol1a">Avec l’axe des abscisses (y = 0) :</strong><br>
+                        On résout \( 2x - 3 = 0 \) → \( 2x = 3 \) → \( x = \frac{3}{2} = 1,5 \).<br>
+                        Le point est \( \left( \frac{3}{2}, 0 \right) \).<br>
+                        <span data-i18n="MH.lesson_Y1Alg_fonAff2.sol1a2">📌 Pour bien comprendre : l’axe des abscisses est l’axe horizontal. Tout point sur cet axe a une ordonnée égale à 0. On remplace donc h(x) par 0 dans l’équation.</span></p>
+                    </div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff2.q1b">1) b) Quelles sont les coordonnées des points d’intersection de la droite D et l’axe des ordonnées ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonAff2.showSolution" onclick="toggleSolution(102)">Voir la solution</button>
+                    <div class="MH-solution" id="solution102">
+                        <p><strong data-i18n="MH.lesson_Y1Alg_fonAff2.sol1b">Avec l’axe des ordonnées (x = 0) :</strong><br>
+                        On calcule \( h(0) = 2 \times 0 - 3 = -3 \).<br>
+                        Le point est \( (0, -3) \).<br>
+                        <span data-i18n="MH.lesson_Y1Alg_fonAff2.sol1b2">📌 L’axe des ordonnées est l’axe vertical. Pour x = 0, la valeur de h est directement l’ordonnée à l’origine, ici b = -3.</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 2 : abscisse ≥ 3/2 -->
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff2.q2a">2) a) Colorer les points de D dont l’abscisse est supérieure ou égale à \( \frac{3}{2} \).</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonAff2.showSolution" onclick="toggleSolution(103)">Voir la solution</button>
+                    <div class="MH-solution" id="solution103">
+                        <p data-i18n="MH.lesson_Y1Alg_fonAff2.sol2a">Les points dont l’abscisse est ≥ 1,5 sont sur la demi‑droite qui commence au point (1,5 ; 0) et se prolonge vers la droite. Sur le graphique ci‑dessous, cette partie est colorée en rouge.</p>
+                        <!-- Canvas with highlighted segment for x ≥ 1.5 -->
+                        <canvas id="hLineAbscisseCanvas" width="600" height="300" class="MH-canvas"></canvas>
+                        <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y1Alg_fonAff2.sol2a_inst">Tous ces points ont une ordonnée ≥ 0.</div>
+                    </div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff2.q2b">2) b) Quel est l’ensemble des ordonnées de ces points ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonAff2.showSolution" onclick="toggleSolution(104)">Voir la solution</button>
+                    <div class="MH-solution" id="solution104">
+                        <p data-i18n="MH.lesson_Y1Alg_fonAff2.sol2b">Pour \( x \ge 1,5 \), l’ordonnée \( y = 2x - 3 \ge 2 \times 1,5 - 3 = 0 \).<br>
+                        Donc les ordonnées appartiennent à l’intervalle \( [0, +\infty[ \).<br>
+                        <span data-i18n="MH.lesson_Y1Alg_fonAff2.sol2b2">✅ On écrit : l’ensemble des ordonnées est [0 ; +∞[.</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 3 : ordonnée ≤ 1 -->
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff2.q3a">3) a) Colorer les points de D dont l’ordonnée est inférieure ou égale à 1.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonAff2.showSolution" onclick="toggleSolution(105)">Voir la solution</button>
+                    <div class="MH-solution" id="solution105">
+                        <p data-i18n="MH.lesson_Y1Alg_fonAff2.sol3a">On cherche \( 2x - 3 \le 1 \) → \( 2x \le 4 \) → \( x \le 2 \).<br>
+                        Les points dont l’ordonnée est ≤ 1 sont ceux d’abscisse ≤ 2. Sur le graphique, on colore la demi‑droite qui commence au point (2,1) et va vers la gauche (en bleu).</p>
+                        <canvas id="hLineOrdonneeCanvas" width="600" height="300" class="MH-canvas"></canvas>
+                        <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y1Alg_fonAff2.sol3a_inst">Tous ces points ont une abscisse ≤ 2.</div>
+                    </div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff2.q3b">3) b) A quel intervalle appartiennent les abscisses de ces points ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonAff2.showSolution" onclick="toggleSolution(106)">Voir la solution</button>
+                    <div class="MH-solution" id="solution106">
+                        <p data-i18n="MH.lesson_Y1Alg_fonAff2.sol3b">D’après le calcul précédent, \( x \le 2 \).<br>
+                        Les abscisses appartiennent à l’intervalle \( ]-\infty, 2] \).<br>
+                        <span data-i18n="MH.lesson_Y1Alg_fonAff2.sol3b2">📝 On note : ]–∞ ; 2].</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Synthèse : Définition complète et représentation graphique -->
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonAff2.synthTitle">📘 Synthèse – Fonction affine</h3>
+                <p data-i18n="MH.lesson_Y1Alg_fonAff2.synthText1">Soient <strong>a</strong> et <strong>b</strong> deux réels. Lorsqu’à chaque réel <strong>x</strong> on associe le réel <strong>ax + b</strong>, on définit une <strong>fonction affine</strong> f. On note :</p>
+                <div class="MH-formula-box">
+                    \[ f : x \mapsto a x + b \]
+                </div>
+                <ul>
+                    <li data-i18n="MH.lesson_Y1Alg_fonAff2.synthLi1">On a \( f(0) = b \) et pour tous réels distincts \( x, x' \), \( a = \dfrac{f(x)-f(x')}{x-x'} \).</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonAff2.synthLi2"><strong>b</strong> est l’<strong>ordonnée à l’origine</strong>, <strong>a</strong> est le <strong>coefficient directeur</strong> (ou pente).</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonAff2.synthLi3">Si <strong>b = 0</strong>, f est une fonction <strong>linéaire</strong> (proportionnalité).</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonAff2.synthLi4">Si <strong>a = 0</strong>, f est une fonction <strong>constante</strong> (f(x) = b pour tout x).</li>
+                </ul>
+                <p data-i18n="MH.lesson_Y1Alg_fonAff2.graphTitle">📈 Représentation graphique</p>
+                <p data-i18n="MH.lesson_Y1Alg_fonAff2.graphText">Dans un repère (O, I, J), la représentation graphique d’une fonction affine est une <strong>droite</strong>. Son équation est \( y = ax + b \).</p>
+                <ul>
+                    <li data-i18n="MH.lesson_Y1Alg_fonAff2.graphLi1">Le point de coordonnées \((0, b)\) appartient à cette droite.</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonAff2.graphLi2">Si \( a = 0 \) et \( b = 0 \), la droite est l’axe des abscisses (OI).</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonAff2.graphLi3">Si \( a = 0 \) et \( b \neq 0 \), la droite est parallèle à l’axe des abscisses et passe par \((0, b)\).</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ============ V. EXERCICES ============ -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y1Alg_fonAff2.part5">V. Exercices</div>
+            
+            <!-- Exercice 1 : déterminer f à partir de deux images -->
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonAff2.ex1Title">Exercice 1</h3>
+                <p data-i18n="MH.lesson_Y1Alg_fonAff2.ex1Statement">Soit f une fonction affine telle que \( f(2) = 3 \) et \( f(4) = 1 \). Déterminer f.</p>
+            </div>
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff2.ex1Strategy">Stratégie de résolution (très détaillée)</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonAff2.showSolution" onclick="toggleSolution(107)">Voir la solution</button>
+                    <div class="MH-solution" id="solution107">
+                        <div class="MH-sequence-step">
+                            <p><span data-i18n="MH.lesson_Y1Alg_fonAff2.ex1Step1">1️⃣ On écrit la forme générale :</span> \( f(x) = a x + b \).</p>
+                            <p><span data-i18n="MH.lesson_Y1Alg_fonAff2.ex1Step2">2️⃣ Calcul du coefficient directeur a :</span><br>
+                            On utilise la formule \( a = \dfrac{f(4)-f(2)}{4-2} = \dfrac{1-3}{2} = \dfrac{-2}{2} = -1 \).<br>
+                            <span data-i18n="MH.lesson_Y1Alg_fonAff2.ex1Step2b">(On prend deux points distincts : (2 ; 3) et (4 ; 1). La pente est la différence des images divisée par la différence des abscisses.)</span></p>
+                            <p><span data-i18n="MH.lesson_Y1Alg_fonAff2.ex1Step3">3️⃣ Calcul de l’ordonnée à l’origine b :</span><br>
+                            On sait que \( f(2) = a \times 2 + b = 3 \). On remplace a par -1 :<br>
+                            \( -1 \times 2 + b = 3 \) → \( -2 + b = 3 \) → \( b = 3 + 2 = 5 \).</p>
+                            <p><span data-i18n="MH.lesson_Y1Alg_fonAff2.ex1Step4">4️⃣ Conclusion :</span><br>
+                            \( f(x) = -x + 5 \).</p>
+                            <p><span data-i18n="MH.lesson_Y1Alg_fonAff2.ex1Check">✅ Vérification :</span> \( f(2) = -2+5=3 \), \( f(4) = -4+5=1 \).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercice 2 : droite passant par A(3,0) et B(0,-2) -->
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonAff2.ex2Title">Exercice 2</h3>
+                <p data-i18n="MH.lesson_Y1Alg_fonAff2.ex2Statement">Le plan est muni d’un repère (O, I, J). On considère la fonction affine g dont la représentation graphique est la droite D qui coupe l’axe des abscisses au point A(3, 0) et coupe l’axe des ordonnées au point B(0, -2). Déterminer g.</p>
+            </div>
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff2.ex2Strategy">Stratégie de résolution (pas à pas)</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonAff2.showSolution" onclick="toggleSolution(108)">Voir la solution</button>
+                    <div class="MH-solution" id="solution108">
+                        <div class="MH-sequence-step">
+                            <p><span data-i18n="MH.lesson_Y1Alg_fonAff2.ex2Step1">1️⃣ Ordonnée à l’origine :</span><br>
+                            Le point B(0, -2) est sur l’axe des ordonnées, donc \( g(0) = b = -2 \).<br>
+                            Ainsi \( g(x) = a x - 2 \).</p>
+                            <p><span data-i18n="MH.lesson_Y1Alg_fonAff2.ex2Step2">2️⃣ Utilisation du point A(3, 0) :</span><br>
+                            \( g(3) = a \times 3 - 2 = 0 \) → \( 3a = 2 \) → \( a = \dfrac{2}{3} \).</p>
+                            <p><span data-i18n="MH.lesson_Y1Alg_fonAff2.ex2Step3">3️⃣ Conclusion :</span><br>
+                            \( g(x) = \dfrac{2}{3}x - 2 \).</p>
+                            <p><span data-i18n="MH.lesson_Y1Alg_fonAff2.ex2Check">🔍 Vérification :</span> Pour x = 3, \( \frac{2}{3} \times 3 - 2 = 2-2=0 \), OK.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercice 3 : Température °C → °F -->
+<div class="MH-important">
+    <h3 data-i18n="MH.lesson_Y1Alg_fonAff2.ex3Title">Exercice 3 – Mesure de température</h3>
+    
+    <!-- First paragraph (translatable) -->
+    <p data-i18n="MH.lesson_Y1Alg_fonAff2.ex3Statement">En Angleterre, l’unité de mesure de la température est le Fahrenheit (°F).<br>
+    On sait que la mesure en °F est une fonction affine de la mesure en degré Celsius (°C), que l’eau gèle à 32°F et bout à 212°F.</p>
+    
+    <!-- Numbered items – now each <li> has its own data-i18n key -->
+    <ol style="margin-top: 0.5em; padding-left: 1.5em;">
+        <li data-i18n="MH.lesson_Y1Alg_fonAff2.ex3Item1">Si \(x\) désigne une mesure exprimée en °C, donner la mesure \(F(x)\) en °F. (F est la fonction affine).</li>
+        <li data-i18n="MH.lesson_Y1Alg_fonAff2.ex3Item2">Tracer la représentation graphique D de F dans un repère (O, I, J).</li>
+        <li data-i18n="MH.lesson_Y1Alg_fonAff2.ex3Item3">Colorer la partie de la droite D qui correspond à une mesure en °C supérieure ou égale à 0,5.</li>
+        <li data-i18n="MH.lesson_Y1Alg_fonAff2.ex3Item4">Colorer la partie de la droite D qui correspond à une mesure en °F inférieure ou égale à 20.</li>
+    </ol>
+</div>
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff2.ex3Q1">Question 1 : Expression de F(x)</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonAff2.showSolution" onclick="toggleSolution(109)">Voir la solution</button>
+                    <div class="MH-solution" id="solution109">
+                        <div class="MH-sequence-step">
+                            <p><span data-i18n="MH.lesson_Y1Alg_fonAff2.ex3Step1">🔹 On pose F(x) = a x + b.</span></p>
+                            <p><span data-i18n="MH.lesson_Y1Alg_fonAff2.ex3Step2">🔹 Données :</span> 0°C → 32°F  (gel) et 100°C → 212°F (ébullition).</p>
+                            <p><span data-i18n="MH.lesson_Y1Alg_fonAff2.ex3Step3">🔹 Ordonnée à l’origine b :</span> \( F(0) = 32 \) → b = 32.</p>
+                            <p><span data-i18n="MH.lesson_Y1Alg_fonAff2.ex3Step4">🔹 Coefficient a :</span> \( a = \dfrac{F(100)-F(0)}{100-0} = \dfrac{212-32}{100} = \dfrac{180}{100} = 1,8 \).</p>
+                            <p><span data-i18n="MH.lesson_Y1Alg_fonAff2.ex3Step5">🔹 Donc :</span> \( F(x) = 1,8x + 32 \).</p>
+                            <p><span data-i18n="MH.lesson_Y1Alg_fonAff2.ex3Check">🧪 Vérification :</span> 0 → 32, 100 → 1,8×100+32=212.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff2.ex3Q2">Question 2 : Tracé de la droite</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonAff2.showSolution" onclick="toggleSolution(110)">Voir la solution</button>
+                    <div class="MH-solution" id="solution110">
+                        <p data-i18n="MH.lesson_Y1Alg_fonAff2.ex3Sol2">Le graphique est présenté ci‑dessous (axe horizontal : °C, axe vertical : °F). La droite passe par (0,32) et (100,212).</p>
+                        <canvas id="fahrenheitCanvas" width="600" height="400" class="MH-canvas"></canvas>
+                    </div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff2.ex3Q3">Question 3 : °C ≥ 0,5</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonAff2.showSolution" onclick="toggleSolution(111)">Voir la solution</button>
+                    <div class="MH-solution" id="solution111">
+                        <p data-i18n="MH.lesson_Y1Alg_fonAff2.ex3Sol3">On colorie la demi‑droite pour \( x \ge 0,5 \). L’ordonnée correspondante est \( y \ge 1,8×0,5+32 = 32,9 \).</p>
+                        <canvas id="fahrenheitCelsiusCanvas" width="600" height="400" class="MH-canvas"></canvas>
+                    </div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonAff2.ex3Q4">Question 4 : °F ≤ 20</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonAff2.showSolution" onclick="toggleSolution(112)">Voir la solution</button>
+                    <div class="MH-solution" id="solution112">
+                        <p data-i18n="MH.lesson_Y1Alg_fonAff2.ex3Sol4">On résout \( 1,8x + 32 \le 20 \) → \( 1,8x \le -12 \) → \( x \le -\frac{12}{1,8} \approx -6,67 \).<br>
+                        On colorie la demi‑droite pour \( x \le -6,67 \) (à gauche du point correspondant).</p>
+                        <canvas id="fahrenheitFahrenheitCanvas" width="600" height="400" class="MH-canvas"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ RÉSUMÉ DE LA LEÇON ============ -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Alg_fonAff2.summaryTitle">Résumé de la leçon</h2>
+            <div class="MH-important">
+                <ul>
+                    <li data-i18n="MH.lesson_Y1Alg_fonAff2.summary1">Une fonction affine s’écrit \( f(x)=ax+b \).</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonAff2.summary2">Son taux d’accroissement est constant : \( a = \dfrac{f(x)-f(x')}{x-x'} \).</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonAff2.summary3">Graphique : une droite d’équation \( y=ax+b \). b est l’ordonnée à l’origine, a la pente.</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonAff2.summary4">Lecture graphique : l’intersection avec l’axe des ordonnées donne b, avec l’axe des abscisses donne la solution de \( ax+b=0 \).</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Développeur</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.2.0</div>
+            </div>
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Liens</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Conditions d'utilisation</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Politique de confidentialité</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+    
+    <script>
+        // ============================================
+        // TRADUCTIONS : FONCTIONS AFFINES PARTIE II
+        // ============================================
+        const fonAff2Translations = {
+            'fr': {
+                // Général
+                'MH.general.homeTooltip': 'Aller à l\'accueil',
+                'MH.general.install': 'Installer l\'application',
+                'MH.general.installSuccess': 'Mathematics Hub installé avec succès !',
+                'MH.general.enableNotifications': 'Activer les notifications',
+                'MH.general.notificationEnabled': 'Notifications activées ! Vous recevrez des mises à jour.',
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Thème',
+                'MH.general.language': 'Langue',
+                'MH.lesson_Y1Alg_fonAff2.showSolution': 'Voir la solution',
+                'MH.lesson_Y1Alg_fonAff2.hideSolution': 'Cacher la solution',
+                // Titres
+                'MH.lesson_Y1Alg_fonAff2.title': 'Fonctions affines : Partie II',
+                'MH.lesson_Y1Alg_fonAff2.subtitle': 'Lecture graphique et compléments',
+                'MH.lesson_Y1Alg_fonAff2.part4': 'IV. Lecture graphique',
+                'MH.lesson_Y1Alg_fonAff2.part5': 'V. Exercices',
+                // Activité 1
+                'MH.lesson_Y1Alg_fonAff2.activity1Title': 'Activité 1',
+                'MH.lesson_Y1Alg_fonAff2.activity1Statement': 'Dans le repère suivant, la droite D représente la fonction affine h définie par \( h(x) = 2x - 3 \).',
+                'MH.lesson_Y1Alg_fonAff2.canvas1Title': 'Droite D : h(x) = 2x - 3',
+                'MH.lesson_Y1Alg_fonAff2.canvas1Instructions': 'La droite passe par les points (0, -3) et (1.5, 0).',
+                'MH.lesson_Y1Alg_fonAff2.q1a': '1) a) Quelles sont les coordonnées des points d’intersection de la droite D et l’axe des abscisses ?',
+                'MH.lesson_Y1Alg_fonAff2.sol1a': 'Avec l’axe des abscisses (y = 0) : on résout 2x – 3 = 0 → x = 3/2 = 1,5. Le point est (1,5 ; 0).',
+                'MH.lesson_Y1Alg_fonAff2.sol1a2': '📌 Pour bien comprendre : l’axe des abscisses est l’axe horizontal. Tout point sur cet axe a une ordonnée égale à 0. On remplace donc h(x) par 0 dans l’équation.',
+                'MH.lesson_Y1Alg_fonAff2.q1b': '1) b) Quelles sont les coordonnées des points d’intersection de la droite D et l’axe des ordonnées ?',
+                'MH.lesson_Y1Alg_fonAff2.sol1b': 'Avec l’axe des ordonnées (x = 0) : h(0) = 2×0 – 3 = -3. Le point est (0, -3).',
+                'MH.lesson_Y1Alg_fonAff2.sol1b2': '📌 L’axe des ordonnées est l’axe vertical. Pour x = 0, la valeur de h est directement l’ordonnée à l’origine, ici b = -3.',
+                'MH.lesson_Y1Alg_fonAff2.q2a': '2) a) Colorer les points de D dont l’abscisse est supérieure ou égale à \( \\frac{3}{2} \).',
+                'MH.lesson_Y1Alg_fonAff2.sol2a': 'Les points dont l’abscisse est ≥ 1,5 sont sur la demi‑droite qui commence au point (1,5 ; 0) et se prolonge vers la droite. Sur le graphique ci‑dessous, cette partie est colorée en rouge.',
+                'MH.lesson_Y1Alg_fonAff2.sol2a_inst': 'Tous ces points ont une ordonnée ≥ 0.',
+                'MH.lesson_Y1Alg_fonAff2.q2b': '2) b) Quel est l’ensemble des ordonnées de ces points ?',
+                'MH.lesson_Y1Alg_fonAff2.sol2b': 'Pour x ≥ 1,5, l’ordonnée y = 2x – 3 ≥ 2×1,5 – 3 = 0. Donc les ordonnées appartiennent à l’intervalle [0 ; +∞[.',
+                'MH.lesson_Y1Alg_fonAff2.sol2b2': '✅ On écrit : l’ensemble des ordonnées est [0 ; +∞[.',
+                'MH.lesson_Y1Alg_fonAff2.q3a': '3) a) Colorer les points de D dont l’ordonnée est inférieure ou égale à 1.',
+                'MH.lesson_Y1Alg_fonAff2.sol3a': 'On cherche 2x – 3 ≤ 1 → 2x ≤ 4 → x ≤ 2. Les points dont l’ordonnée est ≤ 1 sont ceux d’abscisse ≤ 2. Sur le graphique, on colore la demi‑droite qui commence au point (2,1) et va vers la gauche (en bleu).',
+                'MH.lesson_Y1Alg_fonAff2.sol3a_inst': 'Tous ces points ont une abscisse ≤ 2.',
+                'MH.lesson_Y1Alg_fonAff2.q3b': '3) b) A quel intervalle appartiennent les abscisses de ces points ?',
+                'MH.lesson_Y1Alg_fonAff2.sol3b': 'D’après le calcul précédent, x ≤ 2. Les abscisses appartiennent à l’intervalle ]–∞ ; 2].',
+                'MH.lesson_Y1Alg_fonAff2.sol3b2': '📝 On note : ]–∞ ; 2].',
+                // Synthèse
+                'MH.lesson_Y1Alg_fonAff2.synthTitle': '📘 Synthèse – Fonction affine',
+                'MH.lesson_Y1Alg_fonAff2.synthText1': 'Soient a et b deux réels. Lorsqu’à chaque réel x on associe le réel ax + b, on définit une fonction affine f. On note :',
+                'MH.lesson_Y1Alg_fonAff2.synthLi1': 'On a f(0) = b et pour tous réels distincts x, x\', a = (f(x)-f(x\'))/(x-x\').',
+                'MH.lesson_Y1Alg_fonAff2.synthLi2': 'b est l’ordonnée à l’origine, a est le coefficient directeur (ou pente).',
+                'MH.lesson_Y1Alg_fonAff2.synthLi3': 'Si b = 0, f est une fonction linéaire (proportionnalité).',
+                'MH.lesson_Y1Alg_fonAff2.synthLi4': 'Si a = 0, f est une fonction constante (f(x) = b pour tout x).',
+                'MH.lesson_Y1Alg_fonAff2.graphTitle': '📈 Représentation graphique',
+                'MH.lesson_Y1Alg_fonAff2.graphText': 'Dans un repère (O, I, J), la représentation graphique d’une fonction affine est une droite. Son équation est y = ax + b.',
+                'MH.lesson_Y1Alg_fonAff2.graphLi1': 'Le point de coordonnées (0, b) appartient à cette droite.',
+                'MH.lesson_Y1Alg_fonAff2.graphLi2': 'Si a = 0 et b = 0, la droite est l’axe des abscisses (OI).',
+                'MH.lesson_Y1Alg_fonAff2.graphLi3': 'Si a = 0 et b ≠ 0, la droite est parallèle à l’axe des abscisses et passe par (0, b).',
+                // Exercice 1
+                'MH.lesson_Y1Alg_fonAff2.ex1Title': 'Exercice 1',
+                'MH.lesson_Y1Alg_fonAff2.ex1Statement': 'Soit f une fonction affine telle que f(2) = 3 et f(4) = 1. Déterminer f.',
+                'MH.lesson_Y1Alg_fonAff2.ex1Strategy': 'Stratégie de résolution (très détaillée)',
+                'MH.lesson_Y1Alg_fonAff2.ex1Step1': '1️⃣ On écrit la forme générale :',
+                'MH.lesson_Y1Alg_fonAff2.ex1Step2': '2️⃣ Calcul du coefficient directeur a :',
+                'MH.lesson_Y1Alg_fonAff2.ex1Step2b': '(On prend deux points distincts : (2 ; 3) et (4 ; 1). La pente est la différence des images divisée par la différence des abscisses.)',
+                'MH.lesson_Y1Alg_fonAff2.ex1Step3': '3️⃣ Calcul de l’ordonnée à l’origine b :',
+                'MH.lesson_Y1Alg_fonAff2.ex1Step4': '4️⃣ Conclusion :',
+                'MH.lesson_Y1Alg_fonAff2.ex1Check': '✅ Vérification :',
+                // Exercice 2
+                'MH.lesson_Y1Alg_fonAff2.ex2Title': 'Exercice 2',
+                'MH.lesson_Y1Alg_fonAff2.ex2Statement': 'Le plan est muni d’un repère (O, I, J). On considère la fonction affine g dont la représentation graphique est la droite D qui coupe l’axe des abscisses au point A(3, 0) et coupe l’axe des ordonnées au point B(0, -2). Déterminer g.',
+                'MH.lesson_Y1Alg_fonAff2.ex2Strategy': 'Stratégie de résolution (pas à pas)',
+                'MH.lesson_Y1Alg_fonAff2.ex2Step1': '1️⃣ Ordonnée à l’origine :',
+                'MH.lesson_Y1Alg_fonAff2.ex2Step2': '2️⃣ Utilisation du point A(3, 0) :',
+                'MH.lesson_Y1Alg_fonAff2.ex2Step3': '3️⃣ Conclusion :',
+                'MH.lesson_Y1Alg_fonAff2.ex2Check': '🔍 Vérification :',
+                // Exercice 3
+                'MH.lesson_Y1Alg_fonAff2.ex3Title': 'Exercice 3 – Mesure de température',
+                'MH.lesson_Y1Alg_fonAff2.ex3Statement': 'En Angleterre, l’unité de mesure de la température est le Fahrenheit (°F). On sait que la mesure en °F est une fonction affine de la mesure en degré Celsius (°C), que l’eau gèle à 32°F et bout à 212°F.',
+'MH.lesson_Y1Alg_fonAff2.ex3Item1': '1- Si \\(x\\) désigne une mesure exprimée en °C, donner la mesure \\(F(x)\\) en °F. (F est la fonction affine).',
+'MH.lesson_Y1Alg_fonAff2.ex3Item2': '2- Tracer la représentation graphique D de F dans un repère (O, I, J).',
+'MH.lesson_Y1Alg_fonAff2.ex3Item3': '3- Colorer la partie de la droite D qui correspond à une mesure en °C supérieure ou égale à 0,5.',
+'MH.lesson_Y1Alg_fonAff2.ex3Item4': '4- Colorer la partie de la droite D qui correspond à une mesure en °F inférieure ou égale à 20.',
+                'MH.lesson_Y1Alg_fonAff2.ex3Q1': 'Question 1 : Expression de F(x)',
+                'MH.lesson_Y1Alg_fonAff2.ex3Q2': 'Question 2 : Tracé de la droite',
+                'MH.lesson_Y1Alg_fonAff2.ex3Q3': 'Question 3 : °C ≥ 0,5',
+                'MH.lesson_Y1Alg_fonAff2.ex3Q4': 'Question 4 : °F ≤ 20',
+                'MH.lesson_Y1Alg_fonAff2.ex3Step1': '🔹 On pose F(x) = a x + b.',
+                'MH.lesson_Y1Alg_fonAff2.ex3Step2': '🔹 Données :',
+                'MH.lesson_Y1Alg_fonAff2.ex3Step3': '🔹 Ordonnée à l’origine b :',
+                'MH.lesson_Y1Alg_fonAff2.ex3Step4': '🔹 Coefficient a :',
+                'MH.lesson_Y1Alg_fonAff2.ex3Step5': '🔹 Donc :',
+                'MH.lesson_Y1Alg_fonAff2.ex3Check': '🧪 Vérification :',
+                'MH.lesson_Y1Alg_fonAff2.ex3Sol2': 'Le graphique est présenté ci‑dessous (axe horizontal : °C, axe vertical : °F). La droite passe par (0,32) et (100,212).',
+                'MH.lesson_Y1Alg_fonAff2.ex3Sol3': 'On colorie la demi‑droite pour x ≥ 0,5. L’ordonnée correspondante est y ≥ 1,8×0,5+32 = 32,9.',
+                'MH.lesson_Y1Alg_fonAff2.ex3Sol4': 'On résout 1,8x + 32 ≤ 20 → 1,8x ≤ -12 → x ≤ -12/1,8 ≈ -6,67. On colorie la demi‑droite pour x ≤ -6,67 (à gauche du point correspondant).',
+                // Résumé
+                'MH.lesson_Y1Alg_fonAff2.summaryTitle': 'Résumé de la leçon',
+                'MH.lesson_Y1Alg_fonAff2.summary1': 'Une fonction affine s’écrit f(x)=ax+b.',
+                'MH.lesson_Y1Alg_fonAff2.summary2': 'Son taux d’accroissement est constant : a = (f(x)-f(x\'))/(x-x\').',
+                'MH.lesson_Y1Alg_fonAff2.summary3': 'Graphique : une droite d’équation y=ax+b. b est l’ordonnée à l’origine, a la pente.',
+                'MH.lesson_Y1Alg_fonAff2.summary4': 'Lecture graphique : l’intersection avec l’axe des ordonnées donne b, avec l’axe des abscisses donne la solution de ax+b=0.',
+                // Footer (repris de part1)
+                'MH.footer.developer': 'Développeur',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Liens',
+                'MH.footer.terms': 'Conditions d\'utilisation',
+                'MH.footer.privacy': 'Politique de confidentialité'
+            },
+            'en': {
+                // (English translations – similar structure, concise)
+                'MH.general.homeTooltip': 'Go to Homepage',
+                'MH.general.install': 'Install App',
+                'MH.general.installSuccess': 'Mathematics Hub installed successfully!',
+                'MH.general.enableNotifications': 'Enable Notifications',
+                'MH.general.notificationEnabled': 'Notifications enabled! You will now receive updates.',
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Theme',
+                'MH.general.language': 'Language',
+                'MH.lesson_Y1Alg_fonAff2.showSolution': 'Show Solution',
+                'MH.lesson_Y1Alg_fonAff2.hideSolution': 'Hide Solution',
+                'MH.lesson_Y1Alg_fonAff2.title': 'Affine Functions: Part II',
+                'MH.lesson_Y1Alg_fonAff2.subtitle': 'Graphical reading and complements',
+                'MH.lesson_Y1Alg_fonAff2.part4': 'IV. Graphical reading',
+                'MH.lesson_Y1Alg_fonAff2.part5': 'V. Exercises',
+                'MH.lesson_Y1Alg_fonAff2.activity1Title': 'Activity 1',
+                'MH.lesson_Y1Alg_fonAff2.activity1Statement': 'In the coordinate system below, line D represents the affine function h defined by \( h(x) = 2x - 3 \).',
+                'MH.lesson_Y1Alg_fonAff2.canvas1Title': 'Line D: h(x) = 2x - 3',
+                'MH.lesson_Y1Alg_fonAff2.canvas1Instructions': 'The line passes through (0, -3) and (1.5, 0).',
+                'MH.lesson_Y1Alg_fonAff2.q1a': '1) a) What are the coordinates of the intersection points of line D with the x‑axis?',
+                'MH.lesson_Y1Alg_fonAff2.sol1a': 'With the x‑axis (y = 0): solve 2x – 3 = 0 → x = 3/2 = 1.5. The point is (1.5, 0).',
+                'MH.lesson_Y1Alg_fonAff2.sol1a2': '📌 The x‑axis is horizontal. Every point on it has y = 0. So we set h(x)=0.',
+                'MH.lesson_Y1Alg_fonAff2.q1b': '1) b) What are the coordinates of the intersection points of line D with the y‑axis?',
+                'MH.lesson_Y1Alg_fonAff2.sol1b': 'With the y‑axis (x = 0): h(0) = 2×0 – 3 = -3. The point is (0, -3).',
+                'MH.lesson_Y1Alg_fonAff2.sol1b2': '📌 The y‑axis is vertical. For x = 0, h(0) is the y‑intercept b = -3.',
+                'MH.lesson_Y1Alg_fonAff2.q2a': '2) a) Colour the points on D whose x‑coordinate is greater than or equal to \( \\frac{3}{2} \).',
+                'MH.lesson_Y1Alg_fonAff2.sol2a': 'Points with x ≥ 1.5 are on the half‑line starting at (1.5, 0) and going right. In the graph below, this part is coloured red.',
+                'MH.lesson_Y1Alg_fonAff2.sol2a_inst': 'All these points have y ≥ 0.',
+                'MH.lesson_Y1Alg_fonAff2.q2b': '2) b) What is the set of the y‑coordinates of these points?',
+                'MH.lesson_Y1Alg_fonAff2.sol2b': 'For x ≥ 1.5, y = 2x – 3 ≥ 2×1.5 – 3 = 0. So the y‑coordinates belong to [0, +∞[.',
+                'MH.lesson_Y1Alg_fonAff2.sol2b2': '✅ Answer: [0, +∞).',
+                'MH.lesson_Y1Alg_fonAff2.q3a': '3) a) Colour the points on D whose y‑coordinate is less than or equal to 1.',
+                'MH.lesson_Y1Alg_fonAff2.sol3a': 'Solve 2x – 3 ≤ 1 → 2x ≤ 4 → x ≤ 2. Points with y ≤ 1 are those with x ≤ 2. Colour the half‑line starting at (2,1) going left (blue).',
+                'MH.lesson_Y1Alg_fonAff2.sol3a_inst': 'All these points have x ≤ 2.',
+                'MH.lesson_Y1Alg_fonAff2.q3b': '3) b) To which interval do the x‑coordinates of these points belong?',
+                'MH.lesson_Y1Alg_fonAff2.sol3b': 'From the calculation, x ≤ 2. So the x‑coordinates belong to ]–∞, 2].',
+                'MH.lesson_Y1Alg_fonAff2.sol3b2': '📝 Notation: ]–∞, 2].',
+                'MH.lesson_Y1Alg_fonAff2.synthTitle': '📘 Summary – Affine function',
+                'MH.lesson_Y1Alg_fonAff2.synthText1': 'Let a and b be real numbers. When to each real x we associate the real ax + b, we define an affine function f. We write:',
+                'MH.lesson_Y1Alg_fonAff2.synthLi1': 'We have f(0) = b and for any distinct reals x, x\', a = (f(x)-f(x\'))/(x-x\').',
+                'MH.lesson_Y1Alg_fonAff2.synthLi2': 'b is the y‑intercept, a is the slope.',
+                'MH.lesson_Y1Alg_fonAff2.synthLi3': 'If b = 0, f is a linear function (proportionality).',
+                'MH.lesson_Y1Alg_fonAff2.synthLi4': 'If a = 0, f is a constant function (f(x) = b for all x).',
+                'MH.lesson_Y1Alg_fonAff2.graphTitle': '📈 Graph',
+                'MH.lesson_Y1Alg_fonAff2.graphText': 'In a coordinate system (O, I, J), the graph of an affine function is a straight line. Its equation is y = ax + b.',
+                'MH.lesson_Y1Alg_fonAff2.graphLi1': 'The point (0, b) lies on this line.',
+                'MH.lesson_Y1Alg_fonAff2.graphLi2': 'If a = 0 and b = 0, the line is the x‑axis (OI).',
+                'MH.lesson_Y1Alg_fonAff2.graphLi3': 'If a = 0 and b ≠ 0, the line is parallel to the x‑axis and passes through (0, b).',
+                'MH.lesson_Y1Alg_fonAff2.ex1Title': 'Exercise 1',
+                'MH.lesson_Y1Alg_fonAff2.ex1Statement': 'Let f be an affine function such that f(2) = 3 and f(4) = 1. Determine f.',
+                'MH.lesson_Y1Alg_fonAff2.ex1Strategy': 'Solution strategy (very detailed)',
+                'MH.lesson_Y1Alg_fonAff2.ex1Step1': '1️⃣ Write the general form:',
+                'MH.lesson_Y1Alg_fonAff2.ex1Step2': '2️⃣ Compute the slope a:',
+                'MH.lesson_Y1Alg_fonAff2.ex1Step2b': '(Use two distinct points: (2,3) and (4,1). The slope is the difference of the images divided by the difference of the x‑values.)',
+                'MH.lesson_Y1Alg_fonAff2.ex1Step3': '3️⃣ Compute the y‑intercept b:',
+                'MH.lesson_Y1Alg_fonAff2.ex1Step4': '4️⃣ Conclusion:',
+                'MH.lesson_Y1Alg_fonAff2.ex1Check': '✅ Check:',
+                'MH.lesson_Y1Alg_fonAff2.ex2Title': 'Exercise 2',
+                'MH.lesson_Y1Alg_fonAff2.ex2Statement': 'We consider an affine function g whose graph is the line D intersecting the x‑axis at A(3,0) and the y‑axis at B(0,-2). Determine g.',
+                'MH.lesson_Y1Alg_fonAff2.ex2Strategy': 'Step‑by‑step strategy',
+                'MH.lesson_Y1Alg_fonAff2.ex2Step1': '1️⃣ y‑intercept:',
+                'MH.lesson_Y1Alg_fonAff2.ex2Step2': '2️⃣ Use point A(3,0):',
+                'MH.lesson_Y1Alg_fonAff2.ex2Step3': '3️⃣ Conclusion:',
+                'MH.lesson_Y1Alg_fonAff2.ex2Check': '🔍 Check:',
+                'MH.lesson_Y1Alg_fonAff2.ex3Title': 'Exercise 3 – Temperature conversion',
+                'MH.lesson_Y1Alg_fonAff2.ex3Statement': 'In England, temperature is measured in Fahrenheit (°F). The measure in °F is an affine function of the measure in Celsius (°C); water freezes at 32°F and boils at 212°F.',
+'MH.lesson_Y1Alg_fonAff2.ex3Item1': '1- If \\(x\\) denotes a temperature in °C, give the expression \\(F(x)\\) in °F. (F is the affine function).',
+'MH.lesson_Y1Alg_fonAff2.ex3Item2': '2- Draw the graph D of F in a coordinate system (O, I, J).',
+'MH.lesson_Y1Alg_fonAff2.ex3Item3': '3- Colour the part of line D that corresponds to a temperature in °C greater than or equal to 0.5.',
+'MH.lesson_Y1Alg_fonAff2.ex3Item4': '4- Colour the part of line D that corresponds to a temperature in °F less than or equal to 20.',
+                'MH.lesson_Y1Alg_fonAff2.ex3Q1': 'Question 1: Expression of F(x)',
+                'MH.lesson_Y1Alg_fonAff2.ex3Q2': 'Question 2: Draw the line',
+                'MH.lesson_Y1Alg_fonAff2.ex3Q3': 'Question 3: °C ≥ 0.5',
+                'MH.lesson_Y1Alg_fonAff2.ex3Q4': 'Question 4: °F ≤ 20',
+                'MH.lesson_Y1Alg_fonAff2.ex3Step1': '🔹 Write F(x) = a x + b.',
+                'MH.lesson_Y1Alg_fonAff2.ex3Step2': '🔹 Given:',
+                'MH.lesson_Y1Alg_fonAff2.ex3Step3': '🔹 y‑intercept b:',
+                'MH.lesson_Y1Alg_fonAff2.ex3Step4': '🔹 Slope a:',
+                'MH.lesson_Y1Alg_fonAff2.ex3Step5': '🔹 Hence:',
+                'MH.lesson_Y1Alg_fonAff2.ex3Check': '🧪 Check:',
+                'MH.lesson_Y1Alg_fonAff2.ex3Sol2': 'The graph is shown below (horizontal axis: °C, vertical axis: °F). The line passes through (0,32) and (100,212).',
+                'MH.lesson_Y1Alg_fonAff2.ex3Sol3': 'Colour the half‑line for x ≥ 0.5. The corresponding y is y ≥ 1.8×0.5+32 = 32.9.',
+                'MH.lesson_Y1Alg_fonAff2.ex3Sol4': 'Solve 1.8x + 32 ≤ 20 → 1.8x ≤ -12 → x ≤ -12/1.8 ≈ -6.67. Colour the half‑line for x ≤ -6.67 (to the left of that point).',
+                'MH.lesson_Y1Alg_fonAff2.summaryTitle': 'Lesson summary',
+                'MH.lesson_Y1Alg_fonAff2.summary1': 'An affine function is written f(x)=ax+b.',
+                'MH.lesson_Y1Alg_fonAff2.summary2': 'Its rate of change is constant: a = (f(x)-f(x\'))/(x-x\').',
+                'MH.lesson_Y1Alg_fonAff2.summary3': 'Graph: a line with equation y=ax+b. b is the y‑intercept, a is the slope.',
+                'MH.lesson_Y1Alg_fonAff2.summary4': 'Graphical reading: intersection with y‑axis gives b, with x‑axis gives the solution of ax+b=0.',
+                'MH.footer.developer': 'Developer',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Links',
+                'MH.footer.terms': 'Terms of Use',
+                'MH.footer.privacy': 'Privacy Policy'
+            },
+            'ar': {
+                // العربية (traductions simplifiées mais complètes)
+                'MH.general.homeTooltip': 'الذهاب إلى الصفحة الرئيسية',
+                'MH.general.install': 'تثبيت التطبيق',
+                'MH.general.installSuccess': 'تم تثبيت Mathematics Hub بنجاح!',
+                'MH.general.enableNotifications': 'تفعيل الإشعارات',
+                'MH.general.notificationEnabled': 'تم تفعيل الإشعارات! ستصلك التحديثات الآن.',
+                'MH.general.title': 'مركز الرياضيات',
+                'MH.general.theme': 'المظهر',
+                'MH.general.language': 'اللغة',
+                'MH.lesson_Y1Alg_fonAff2.showSolution': 'عرض الحل',
+                'MH.lesson_Y1Alg_fonAff2.hideSolution': 'إخفاء الحل',
+                'MH.lesson_Y1Alg_fonAff2.title': 'الدوال التآلفية: الجزء الثاني',
+                'MH.lesson_Y1Alg_fonAff2.subtitle': 'القراءة البيانية والتكميلات',
+                'MH.lesson_Y1Alg_fonAff2.part4': 'رابعاً. القراءة البيانية',
+                'MH.lesson_Y1Alg_fonAff2.part5': 'خامساً. تمارين',
+                'MH.lesson_Y1Alg_fonAff2.activity1Title': 'النشاط 1',
+                'MH.lesson_Y1Alg_fonAff2.activity1Statement': 'في المعلم التالي، المستقيم D يمثل الدالة التآلفية h حيث \( h(x) = 2x - 3 \).',
+                'MH.lesson_Y1Alg_fonAff2.canvas1Title': 'المستقيم D: h(x) = 2x - 3',
+                'MH.lesson_Y1Alg_fonAff2.canvas1Instructions': 'يمر المستقيم بالنقطتين (0, -3) و (1.5, 0).',
+                'MH.lesson_Y1Alg_fonAff2.q1a': '1) أ) ما هما إحداثيات نقطتي تقاطع المستقيم D مع محور الفواصل؟',
+                'MH.lesson_Y1Alg_fonAff2.sol1a': 'مع محور الفواصل (y = 0): نحل 2x – 3 = 0 ← x = 3/2 = 1.5. النقطة (1.5, 0).',
+                'MH.lesson_Y1Alg_fonAff2.sol1a2': '📌 محور الفواصل أفقي. كل نقطة عليه ترتيبها y = 0. نضع h(x)=0.',
+                'MH.lesson_Y1Alg_fonAff2.q1b': '1) ب) ما هما إحداثيات نقطتي تقاطع المستقيم D مع محور التراتيب؟',
+                'MH.lesson_Y1Alg_fonAff2.sol1b': 'مع محور التراتيب (x = 0): h(0) = 2×0 – 3 = -3. النقطة (0, -3).',
+                'MH.lesson_Y1Alg_fonAff2.sol1b2': '📌 محور التراتيب عمودي. لما x = 0، h(0) هو التقاطع مع محور y (b = -3).',
+                'MH.lesson_Y1Alg_fonAff2.q2a': '2) أ) لون النقاط من D التي أفصولها أكبر أو يساوي \( \\frac{3}{2} \).',
+                'MH.lesson_Y1Alg_fonAff2.sol2a': 'النقاط ذات x ≥ 1.5 هي نصف المستقيم الذي يبدأ من (1.5, 0) ويتجه يميناً. في الرسم أدناه، هذا الجزء ملون بالأحمر.',
+                'MH.lesson_Y1Alg_fonAff2.sol2a_inst': 'كل هذه النقاط ترتيبها y ≥ 0.',
+                'MH.lesson_Y1Alg_fonAff2.q2b': '2) ب) ما مجموعة تراتيب هذه النقاط؟',
+                'MH.lesson_Y1Alg_fonAff2.sol2b': 'لـ x ≥ 1.5، y = 2x – 3 ≥ 2×1.5 – 3 = 0. إذاً التراتيب تنتمي إلى [0 ; +∞[.',
+                'MH.lesson_Y1Alg_fonAff2.sol2b2': '✅ الجواب: [0 ; +∞[.',
+                'MH.lesson_Y1Alg_fonAff2.q3a': '3) أ) لون النقاط من D التي ترتيبها أصغر أو يساوي 1.',
+                'MH.lesson_Y1Alg_fonAff2.sol3a': 'نحل 2x – 3 ≤ 1 ← 2x ≤ 4 ← x ≤ 2. النقاط ذات y ≤ 1 هي تلك ذات x ≤ 2. لون نصف المستقيم الذي يبدأ من (2,1) ويتجه يساراً (بالأزرق).',
+                'MH.lesson_Y1Alg_fonAff2.sol3a_inst': 'كل هذه النقاط أفصولها x ≤ 2.',
+                'MH.lesson_Y1Alg_fonAff2.q3b': '3) ب) إلى أي مجال تنتمي أفاصيل هذه النقاط؟',
+                'MH.lesson_Y1Alg_fonAff2.sol3b': 'من الحساب، x ≤ 2. إذاً الأفاصيل تنتمي إلى ]–∞ ; 2].',
+                'MH.lesson_Y1Alg_fonAff2.sol3b2': '📝 نكتب: ]–∞ ; 2].',
+                'MH.lesson_Y1Alg_fonAff2.synthTitle': '📘 ملخص – الدالة التآلفية',
+                'MH.lesson_Y1Alg_fonAff2.synthText1': 'ليكن a و b عددين حقيقيين. عندما نربط كل عدد حقيقي x بالعدد ax + b، نعرف دالة تآلفية f. نكتب:',
+                'MH.lesson_Y1Alg_fonAff2.synthLi1': 'لدينا f(0) = b ولأي عددين حقيقيين مختلفين x, x\'، a = (f(x)-f(x\'))/(x-x\').',
+                'MH.lesson_Y1Alg_fonAff2.synthLi2': 'b هو التقاطع مع المحور y (الترتيب عند الأصل)، a هو الميل.',
+                'MH.lesson_Y1Alg_fonAff2.synthLi3': 'إذا كان b = 0، f دالة خطية (تناسبية).',
+                'MH.lesson_Y1Alg_fonAff2.synthLi4': 'إذا كان a = 0، f دالة ثابتة (f(x) = b لكل x).',
+                'MH.lesson_Y1Alg_fonAff2.graphTitle': '📈 التمثيل البياني',
+                'MH.lesson_Y1Alg_fonAff2.graphText': 'في معلم (O, I, J)، التمثيل البياني لدالة تآلفية هو مستقيم. معادلته y = ax + b.',
+                'MH.lesson_Y1Alg_fonAff2.graphLi1': 'النقطة (0, b) تنتمي إلى هذا المستقيم.',
+                'MH.lesson_Y1Alg_fonAff2.graphLi2': 'إذا كان a = 0 و b = 0، المستقيم هو محور الفواصل (OI).',
+                'MH.lesson_Y1Alg_fonAff2.graphLi3': 'إذا كان a = 0 و b ≠ 0، المستقيم موازٍ لمحور الفواصل ويمر بالنقطة (0, b).',
+                'MH.lesson_Y1Alg_fonAff2.ex1Title': 'تمرين 1',
+                'MH.lesson_Y1Alg_fonAff2.ex1Statement': 'لتكن f دالة تآلفية بحيث f(2) = 3 و f(4) = 1. عين f.',
+                'MH.lesson_Y1Alg_fonAff2.ex1Strategy': 'إستراتيجية الحل (مفصلة جداً)',
+                'MH.lesson_Y1Alg_fonAff2.ex1Step1': '1️⃣ نكتب الصيغة العامة:',
+                'MH.lesson_Y1Alg_fonAff2.ex1Step2': '2️⃣ حساب الميل a:',
+                'MH.lesson_Y1Alg_fonAff2.ex1Step2b': '(نستخدم نقطتين مختلفتين: (2,3) و (4,1). الميل = فرق الصور ÷ فرق الفواصل.)',
+                'MH.lesson_Y1Alg_fonAff2.ex1Step3': '3️⃣ حساب التقاطع مع المحور y (b):',
+                'MH.lesson_Y1Alg_fonAff2.ex1Step4': '4️⃣ النتيجة:',
+                'MH.lesson_Y1Alg_fonAff2.ex1Check': '✅ التحقق:',
+                'MH.lesson_Y1Alg_fonAff2.ex2Title': 'تمرين 2',
+                'MH.lesson_Y1Alg_fonAff2.ex2Statement': 'نعتبر دالة تآلفية g تمثيلها البياني المستقيم D الذي يقطع محور الفواصل في A(3,0) ومحور التراتيب في B(0,-2). عين g.',
+                'MH.lesson_Y1Alg_fonAff2.ex2Strategy': 'إستراتيجية خطوة بخطوة',
+                'MH.lesson_Y1Alg_fonAff2.ex2Step1': '1️⃣ التقاطع مع محور التراتيب:',
+                'MH.lesson_Y1Alg_fonAff2.ex2Step2': '2️⃣ استخدام النقطة A(3,0):',
+                'MH.lesson_Y1Alg_fonAff2.ex2Step3': '3️⃣ النتيجة:',
+                'MH.lesson_Y1Alg_fonAff2.ex2Check': '🔍 التحقق:',
+                'MH.lesson_Y1Alg_fonAff2.ex3Title': 'تمرين 3 – قياس درجة الحرارة',
+                'MH.lesson_Y1Alg_fonAff2.ex3Statement': 'في إنجلترا، وحدة قياس درجة الحرارة هي الفهرنهايت (°F). القياس بـ°F هو دالة تآلفية للقياس بـ°C؛ الماء يتجمد عند 32°F ويغلي عند 212°F.',
+'MH.lesson_Y1Alg_fonAff2.ex3Item1': '١- إذا كان \\(x\\) يمثل درجة الحرارة بالسيليسيوس (°C)، أعط العبارة \\(F(x)\\) بالفهرنهايت (°F). (F دالة تآلفية).',
+'MH.lesson_Y1Alg_fonAff2.ex3Item2': '٢- مثل المستقيم D للدالة F في معلم (O, I, J).',
+'MH.lesson_Y1Alg_fonAff2.ex3Item3': '٣- لون الجزء من المستقيم D الموافق لدرجة حرارة ≥ 0.5 °C.',
+'MH.lesson_Y1Alg_fonAff2.ex3Item4': '٤- لون الجزء من المستقيم D الموافق لدرجة حرارة ≤ 20 °F.',
+                'MH.lesson_Y1Alg_fonAff2.ex3Q1': 'السؤال 1: عبارة F(x)',
+                'MH.lesson_Y1Alg_fonAff2.ex3Q2': 'السؤال 2: تمثيل المستقيم',
+                'MH.lesson_Y1Alg_fonAff2.ex3Q3': 'السؤال 3: °C ≥ 0.5',
+                'MH.lesson_Y1Alg_fonAff2.ex3Q4': 'السؤال 4: °F ≤ 20',
+                'MH.lesson_Y1Alg_fonAff2.ex3Step1': '🔹 نكتب F(x) = a x + b.',
+                'MH.lesson_Y1Alg_fonAff2.ex3Step2': '🔹 المعطيات:',
+                'MH.lesson_Y1Alg_fonAff2.ex3Step3': '🔹 التقاطع مع المحور y b:',
+                'MH.lesson_Y1Alg_fonAff2.ex3Step4': '🔹 الميل a:',
+                'MH.lesson_Y1Alg_fonAff2.ex3Step5': '🔹 إذن:',
+                'MH.lesson_Y1Alg_fonAff2.ex3Check': '🧪 التحقق:',
+                'MH.lesson_Y1Alg_fonAff2.ex3Sol2': 'الرسم البياني أدناه (المحور الأفقي: °C، المحور العمودي: °F). يمر المستقيم بالنقطتين (0,32) و (100,212).',
+                'MH.lesson_Y1Alg_fonAff2.ex3Sol3': 'نلون نصف المستقيم لـ x ≥ 0.5. الترتيب الموافق هو y ≥ 1.8×0.5+32 = 32.9.',
+                'MH.lesson_Y1Alg_fonAff2.ex3Sol4': 'نحل 1.8x + 32 ≤ 20 ← 1.8x ≤ -12 ← x ≤ -12/1.8 ≈ -6.67. نلون نصف المستقيم لـ x ≤ -6.67 (يسار تلك النقطة).',
+                'MH.lesson_Y1Alg_fonAff2.summaryTitle': 'ملخص الدرس',
+                'MH.lesson_Y1Alg_fonAff2.summary1': 'الدالة التآلفية تكتب f(x)=ax+b.',
+                'MH.lesson_Y1Alg_fonAff2.summary2': 'معامل تغيرها ثابت: a = (f(x)-f(x\'))/(x-x\').',
+                'MH.lesson_Y1Alg_fonAff2.summary3': 'التمثيل البياني: مستقيم معادلته y=ax+b. b هو التقاطع مع المحور y، a هو الميل.',
+                'MH.lesson_Y1Alg_fonAff2.summary4': 'القراءة البيانية: التقاطع مع محور التراتيب يعطي b، ومع محور الفواصل يعطي حل ax+b=0.',
+                'MH.footer.developer': 'المطور',
+                'MH.footer.version': 'الإصدار',
+                'MH.footer.links': 'روابط',
+                'MH.footer.terms': 'شروط الاستخدام',
+                'MH.footer.privacy': 'سياسة الخصوصية'
+            }
+        };
+
+        // Merge with global translations
+        if (typeof translations !== 'undefined') {
+            for (let lang in fonAff2Translations) {
+                if (translations[lang]) {
+                    translations[lang] = {...translations[lang], ...fonAff2Translations[lang]};
+                } else {
+                    translations[lang] = fonAff2Translations[lang];
+                }
+            }
+        } else {
+            var translations = fonAff2Translations;
+        }
+
+        // ============================================
+        // CANVAS DRAWING FUNCTIONS
+        // ============================================
+        function drawHLineBase() {
+            const canvas = document.getElementById('hLineCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            const pad = 50;
+            const graphW = w - 2 * pad;
+            const graphH = h - 2 * pad;
+            const xMin = -1, xMax = 5, yMin = -5, yMax = 7;
+
+            // axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(pad, h - pad);
+            ctx.lineTo(w - pad, h - pad);
+            ctx.moveTo(pad, pad);
+            ctx.lineTo(pad, h - pad);
+            ctx.stroke();
+
+            // graduations
+            ctx.fillStyle = '#333';
+            ctx.font = '12px Arial';
+            for (let x = 0; x <= 4; x++) {
+                let cx = pad + (x - xMin) / (xMax - xMin) * graphW;
+                ctx.fillText(x, cx - 5, h - pad + 20);
+            }
+            for (let y = -4; y <= 6; y+=2) {
+                let cy = h - pad - (y - yMin) / (yMax - yMin) * graphH;
+                ctx.fillText(y, pad - 30, cy + 5);
+            }
+
+            // line D: y = 2x - 3
+            ctx.strokeStyle = '#8E44AD';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            let x1 = -0.5, y1 = 2 * x1 - 3;
+            let x2 = 4.5, y2 = 2 * x2 - 3;
+            let cx1 = pad + (x1 - xMin) / (xMax - xMin) * graphW;
+            let cy1 = h - pad - (y1 - yMin) / (yMax - yMin) * graphH;
+            let cx2 = pad + (x2 - xMin) / (xMax - xMin) * graphW;
+            let cy2 = h - pad - (y2 - yMin) / (yMax - yMin) * graphH;
+            ctx.moveTo(cx1, cy1);
+            ctx.lineTo(cx2, cy2);
+            ctx.stroke();
+
+            // points (0,-3) and (1.5,0)
+            ctx.fillStyle = '#E74C3C';
+            let px0 = pad + (0 - xMin) / (xMax - xMin) * graphW;
+            let py0 = h - pad - (-3 - yMin) / (yMax - yMin) * graphH;
+            ctx.beginPath(); ctx.arc(px0, py0, 5, 0, 2*Math.PI); ctx.fill();
+            ctx.fillStyle = '#E74C3C';
+            let px15 = pad + (1.5 - xMin) / (xMax - xMin) * graphW;
+            let py15 = h - pad - (0 - yMin) / (yMax - yMin) * graphH;
+            ctx.beginPath(); ctx.arc(px15, py15, 5, 0, 2*Math.PI); ctx.fill();
+
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 14px Arial';
+            ctx.fillText('D', w - 80, 40);
+        }
+
+        function drawHLineAbscisse() {
+            const canvas = document.getElementById('hLineAbscisseCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            const pad = 50;
+            const graphW = w - 2 * pad;
+            const graphH = h - 2 * pad;
+            const xMin = -1, xMax = 5, yMin = -5, yMax = 7;
+
+            // axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(pad, h - pad);
+            ctx.lineTo(w - pad, h - pad);
+            ctx.moveTo(pad, pad);
+            ctx.lineTo(pad, h - pad);
+            ctx.stroke();
+
+            // line D full (grey)
+            ctx.strokeStyle = '#CCCCCC';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            let x1 = -0.5, y1 = 2 * x1 - 3;
+            let x2 = 4.5, y2 = 2 * x2 - 3;
+            let cx1 = pad + (x1 - xMin) / (xMax - xMin) * graphW;
+            let cy1 = h - pad - (y1 - yMin) / (yMax - yMin) * graphH;
+            let cx2 = pad + (x2 - xMin) / (xMax - xMin) * graphW;
+            let cy2 = h - pad - (y2 - yMin) / (yMax - yMin) * graphH;
+            ctx.moveTo(cx1, cy1);
+            ctx.lineTo(cx2, cy2);
+            ctx.stroke();
+
+            // highlight for x >= 1.5
+            ctx.strokeStyle = '#E74C3C';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            let xStart = 1.5, yStart = 0;
+            let xEnd = 4.5, yEnd = 2 * 4.5 - 3;
+            let cxStart = pad + (xStart - xMin) / (xMax - xMin) * graphW;
+            let cyStart = h - pad - (yStart - yMin) / (yMax - yMin) * graphH;
+            let cxEnd = pad + (xEnd - xMin) / (xMax - xMin) * graphW;
+            let cyEnd = h - pad - (yEnd - yMin) / (yMax - yMin) * graphH;
+            ctx.moveTo(cxStart, cyStart);
+            ctx.lineTo(cxEnd, cyEnd);
+            ctx.stroke();
+
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 14px Arial';
+            ctx.fillText('x ≥ 1,5', w - 120, 30);
+        }
+
+        function drawHLineOrdonnee() {
+            const canvas = document.getElementById('hLineOrdonneeCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            const pad = 50;
+            const graphW = w - 2 * pad;
+            const graphH = h - 2 * pad;
+            const xMin = -1, xMax = 5, yMin = -5, yMax = 7;
+
+            // axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(pad, h - pad);
+            ctx.lineTo(w - pad, h - pad);
+            ctx.moveTo(pad, pad);
+            ctx.lineTo(pad, h - pad);
+            ctx.stroke();
+
+            // line D full (grey)
+            ctx.strokeStyle = '#CCCCCC';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            let x1 = -0.5, y1 = 2 * x1 - 3;
+            let x2 = 4.5, y2 = 2 * x2 - 3;
+            let cx1 = pad + (x1 - xMin) / (xMax - xMin) * graphW;
+            let cy1 = h - pad - (y1 - yMin) / (yMax - yMin) * graphH;
+            let cx2 = pad + (x2 - xMin) / (xMax - xMin) * graphW;
+            let cy2 = h - pad - (y2 - yMin) / (yMax - yMin) * graphH;
+            ctx.moveTo(cx1, cy1);
+            ctx.lineTo(cx2, cy2);
+            ctx.stroke();
+
+            // highlight for y <= 1  (x <= 2)
+            ctx.strokeStyle = '#3498DB';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            let xStart = -0.5, yStart = 2 * (-0.5) - 3;
+            let xEnd = 2, yEnd = 1;
+            let cxStart = pad + (xStart - xMin) / (xMax - xMin) * graphW;
+            let cyStart = h - pad - (yStart - yMin) / (yMax - yMin) * graphH;
+            let cxEnd = pad + (xEnd - xMin) / (xMax - xMin) * graphW;
+            let cyEnd = h - pad - (yEnd - yMin) / (yMax - yMin) * graphH;
+            ctx.moveTo(cxStart, cyStart);
+            ctx.lineTo(cxEnd, cyEnd);
+            ctx.stroke();
+
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 14px Arial';
+            ctx.fillText('y ≤ 1', w - 120, 30);
+        }
+
+        function drawFahrenheitBase() {
+            const canvas = document.getElementById('fahrenheitCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            const pad = 50;
+            const graphW = w - 2 * pad;
+            const graphH = h - 2 * pad;
+            const xMin = -20, xMax = 120, yMin = -20, yMax = 240;
+
+            // axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(pad, h - pad);
+            ctx.lineTo(w - pad, h - pad);
+            ctx.moveTo(pad, pad);
+            ctx.lineTo(pad, h - pad);
+            ctx.stroke();
+
+            // labels
+            ctx.fillStyle = '#333';
+            ctx.font = '12px Arial';
+            ctx.fillText('°C', w - 30, h - pad - 10);
+            ctx.fillText('°F', 20, 30);
+
+            // line F(x)=1.8x+32
+            ctx.strokeStyle = '#2ECC71';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            let x1 = -10, y1 = 1.8 * x1 + 32;
+            let x2 = 110, y2 = 1.8 * x2 + 32;
+            let cx1 = pad + (x1 - xMin) / (xMax - xMin) * graphW;
+            let cy1 = h - pad - (y1 - yMin) / (yMax - yMin) * graphH;
+            let cx2 = pad + (x2 - xMin) / (xMax - xMin) * graphW;
+            let cy2 = h - pad - (y2 - yMin) / (yMax - yMin) * graphH;
+            ctx.moveTo(cx1, cy1);
+            ctx.lineTo(cx2, cy2);
+            ctx.stroke();
+
+            // points (0,32) and (100,212)
+            ctx.fillStyle = '#E74C3C';
+            let px0 = pad + (0 - xMin) / (xMax - xMin) * graphW;
+            let py0 = h - pad - (32 - yMin) / (yMax - yMin) * graphH;
+            ctx.beginPath(); ctx.arc(px0, py0, 5, 0, 2*Math.PI); ctx.fill();
+            ctx.fillStyle = '#E74C3C';
+            let px100 = pad + (100 - xMin) / (xMax - xMin) * graphW;
+            let py100 = h - pad - (212 - yMin) / (yMax - yMin) * graphH;
+            ctx.beginPath(); ctx.arc(px100, py100, 5, 0, 2*Math.PI); ctx.fill();
+
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 14px Arial';
+            ctx.fillText('F(x)=1,8x+32', w - 200, 40);
+        }
+
+        function drawFahrenheitCelsius() {
+            const canvas = document.getElementById('fahrenheitCelsiusCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            const pad = 50;
+            const graphW = w - 2 * pad;
+            const graphH = h - 2 * pad;
+            const xMin = -20, xMax = 120, yMin = -20, yMax = 240;
+
+            // axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(pad, h - pad);
+            ctx.lineTo(w - pad, h - pad);
+            ctx.moveTo(pad, pad);
+            ctx.lineTo(pad, h - pad);
+            ctx.stroke();
+
+            // full line (grey)
+            ctx.strokeStyle = '#CCCCCC';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            let x1 = -10, y1 = 1.8 * x1 + 32;
+            let x2 = 110, y2 = 1.8 * x2 + 32;
+            let cx1 = pad + (x1 - xMin) / (xMax - xMin) * graphW;
+            let cy1 = h - pad - (y1 - yMin) / (yMax - yMin) * graphH;
+            let cx2 = pad + (x2 - xMin) / (xMax - xMin) * graphW;
+            let cy2 = h - pad - (y2 - yMin) / (yMax - yMin) * graphH;
+            ctx.moveTo(cx1, cy1);
+            ctx.lineTo(cx2, cy2);
+            ctx.stroke();
+
+            // highlight x >= 0.5
+            ctx.strokeStyle = '#E67E22';
+            ctx.lineWidth = 4;
+            let xStart = 0.5, yStart = 1.8 * 0.5 + 32;
+            let xEnd = 110, yEnd = 1.8 * 110 + 32;
+            let cxStart = pad + (xStart - xMin) / (xMax - xMin) * graphW;
+            let cyStart = h - pad - (yStart - yMin) / (yMax - yMin) * graphH;
+            let cxEnd = pad + (xEnd - xMin) / (xMax - xMin) * graphW;
+            let cyEnd = h - pad - (yEnd - yMin) / (yMax - yMin) * graphH;
+            ctx.beginPath();
+            ctx.moveTo(cxStart, cyStart);
+            ctx.lineTo(cxEnd, cyEnd);
+            ctx.stroke();
+
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 14px Arial';
+            ctx.fillText('°C ≥ 0,5', w - 150, 40);
+        }
+
+        function drawFahrenheitFahrenheit() {
+            const canvas = document.getElementById('fahrenheitFahrenheitCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            const pad = 50;
+            const graphW = w - 2 * pad;
+            const graphH = h - 2 * pad;
+            const xMin = -20, xMax = 120, yMin = -20, yMax = 240;
+
+            // axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(pad, h - pad);
+            ctx.lineTo(w - pad, h - pad);
+            ctx.moveTo(pad, pad);
+            ctx.lineTo(pad, h - pad);
+            ctx.stroke();
+
+            // full line (grey)
+            ctx.strokeStyle = '#CCCCCC';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            let x1 = -10, y1 = 1.8 * x1 + 32;
+            let x2 = 110, y2 = 1.8 * x2 + 32;
+            let cx1 = pad + (x1 - xMin) / (xMax - xMin) * graphW;
+            let cy1 = h - pad - (y1 - yMin) / (yMax - yMin) * graphH;
+            let cx2 = pad + (x2 - xMin) / (xMax - xMin) * graphW;
+            let cy2 = h - pad - (y2 - yMin) / (yMax - yMin) * graphH;
+            ctx.moveTo(cx1, cy1);
+            ctx.lineTo(cx2, cy2);
+            ctx.stroke();
+
+            // highlight y <= 20  => x <= -6.666...
+            ctx.strokeStyle = '#1ABC9C';
+            ctx.lineWidth = 4;
+            let xStart = -20, yStart = 1.8 * (-20) + 32;
+            let xEnd = -6.6667, yEnd = 20;
+            let cxStart = pad + (xStart - xMin) / (xMax - xMin) * graphW;
+            let cyStart = h - pad - (yStart - yMin) / (yMax - yMin) * graphH;
+            let cxEnd = pad + (xEnd - xMin) / (xMax - xMin) * graphW;
+            let cyEnd = h - pad - (yEnd - yMin) / (yMax - yMin) * graphH;
+            ctx.beginPath();
+            ctx.moveTo(cxStart, cyStart);
+            ctx.lineTo(cxEnd, cyEnd);
+            ctx.stroke();
+
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 14px Arial';
+            ctx.fillText('°F ≤ 20', w - 150, 40);
+        }
+
+        // Solution toggle function (identical to part I)
+        function toggleSolution(problemNumber) {
+            const solution = document.getElementById(`solution${problemNumber}`);
+            if (!solution) return;
+            const button = solution.previousElementSibling;
+            const currentLang = (typeof MHThemeManager !== 'undefined' && MHThemeManager.getCurrentLanguage) ? MHThemeManager.getCurrentLanguage() : 'fr';
+            
+            if (solution.style.display === 'block' || solution.style.display === '') {
+                solution.style.display = 'none';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y1Alg_fonAff2.showSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y1Alg_fonAff2.showSolution'];
+                } else {
+                    button.textContent = 'Voir la solution';
+                }
+            } else {
+                solution.style.display = 'block';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y1Alg_fonAff2.hideSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y1Alg_fonAff2.hideSolution'];
+                } else {
+                    button.textContent = 'Cacher la solution';
+                }
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(solution, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\(', right: '\\)', display: false},
+                            {left: '\\[', right: '\\]', display: true}
+                        ],
+                        throwOnError: false
+                    });
+                }
+            }
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            // KaTeX auto-render
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+            
+            // Dessin des canvases
+            drawHLineBase();
+            drawHLineAbscisse();
+            drawHLineOrdonnee();
+            drawFahrenheitBase();
+            drawFahrenheitCelsius();
+            drawFahrenheitFahrenheit();
+            
+            // Cacher toutes les solutions au départ
+            const currentLang = (typeof MHThemeManager !== 'undefined' && MHThemeManager.getCurrentLanguage) ? MHThemeManager.getCurrentLanguage() : 'fr';
+            for (let i = 101; i <= 112; i++) {
+                const sol = document.getElementById(`solution${i}`);
+                const btn = sol ? sol.previousElementSibling : null;
+                if (sol) sol.style.display = 'none';
+                if (btn && translations[currentLang] && translations[currentLang]['MH.lesson_Y1Alg_fonAff2.showSolution']) {
+                    btn.textContent = translations[currentLang]['MH.lesson_Y1Alg_fonAff2.showSolution'];
+                }
+            }
+            
+            // Redessiner au changement de thème
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    setTimeout(() => {
+                        drawHLineBase();
+                        drawHLineAbscisse();
+                        drawHLineOrdonnee();
+                        drawFahrenheitBase();
+                        drawFahrenheitCelsius();
+                        drawFahrenheitFahrenheit();
+                    }, 100);
+                });
+            }
+        });
+    </script>
+
+    <!-- Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').catch(e => console.log('SW registration failed', e));
+            });
+        }
+    </script>
+    <noscript>
+        <style>
+            .MH-header-controls { display: none; }
+            .MH-solution { display: block; }
+        </style>
+        <div class="MH-warning">JavaScript est recommandé pour une expérience complète, mais le contenu reste accessible.</div>
+    </noscript>
+</body>
+</html>

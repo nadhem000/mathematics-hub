@@ -70,6 +70,28 @@ window.translations_en = {
 "MH.index.algebra.second.3d": "Arithmetic IV: Divisibility Criteria by 11",
 "MH.index.algebra.second.3e": "Arithmetic V: Summary and Applications",
     'MH.index.algebra.second.4': 'Arithmetic Sequences',
+    // --------------------------------------------
+// 1st Year Algebra – Affine Functions (5 parts)
+// --------------------------------------------
+"MH.index.algebra.first.7a": "Part I: Introduction to Linear and Affine Functions",
+"MH.index.algebra.first.7b": "Part II: Graphical reading and complements",
+"MH.index.algebra.first.7c": "Part III: Inequalities, Systems and Applications",
+"MH.index.algebra.first.7d": "Part IV: Deepening – squares, square roots and first‑degree equations",
+"MH.index.algebra.first.7e": "Part V: Deepening – squares, cubes, square roots → affine",
+
+// --------------------------------------------
+// 2nd Year Algebra – Arithmetic (part 5)
+// --------------------------------------------
+"MH.index.algebra.second.3e": "Part 5: Summary and Applications",
+
+// --------------------------------------------
+// 2nd Year Algebra – Arithmetic Sequences (5 parts)
+// --------------------------------------------
+"MH.index.algebra.second.4a": "Part I: Introduction to Number Patterns",
+"MH.index.algebra.second.4b": "Part II: Definition, General Term, Graphical Representation, and Sum of Terms",
+"MH.index.algebra.second.4c": "Part III: More Practice with Sequences, Recognizing Arithmetic Sequences, and Advanced Applications",
+"MH.index.algebra.second.4d": "Part IV: Summary and Practical Problems",
+"MH.index.algebra.second.4e": "Part V: Exercises and Applications",,
     'MH.index.algebra.second.5': 'Geometric Sequences',
     'MH.index.algebra.second.6': 'Statistics',
     'MH.index.algebra.second.7': 'General Functions',
@@ -96,11 +118,12 @@ window.translations_en = {
 "MH.index.geometry.second.3e": "Translations V: Locus Problems and Constructions",
 "MH.index.geometry.second.3f": "Translations VI: Translation Exercises",
     'MH.index.geometry.second.4': 'Homotheties',
-"MH.index.geometry.second.4a": "Homothety I: Introduction and Definition",
-"MH.index.geometry.second.4b": "Homothety II: Basic Properties",
-"MH.index.geometry.second.4c": "Homothety III: Advanced Properties",
-"MH.index.geometry.second.4d": "Homothety IV: Image of Figures",
-"MH.index.geometry.second.4e": "Homothety V: Applications and Exercises",
+"MH.index.geometry.second.4a": "Homothety I: Scaling Transformations and Their Properties",
+"MH.index.geometry.second.4b": "Homothety II: Properties and Applications - Core Transformations",
+"MH.index.geometry.second.4c": "Homothety III: Construction - Alignment - Preservation properties",
+"MH.index.geometry.second.4d": "Homothety IV: Circles - Tangents - Applications",
+"MH.index.geometry.second.4e": "Homothety V: Euler Line, Euler Circle, and Locus Problems",
+"MH.index.geometry.second.4f": "Homothety VI: Advanced Exercises and Applications",
     'MH.index.geometry.second.5': 'Rotations',
     'MH.index.geometry.second.6': 'Trigonometry and Measurement of Magnitude',
     'MH.index.geometry.second.7': 'Analytic Geometry',

@@ -70,6 +70,28 @@ window.translations_fr = {
 "MH.index.algebra.second.3d": "Arithmétique IV: Critères de divisibilité par 11",
 "MH.index.algebra.second.3e": "Arithmétique V: Résumé et Applications",
     'MH.index.algebra.second.4': 'Suites Arithmétiques',
+    // --------------------------------------------
+// 1ère Année Algèbre – Fonctions affines (5 parties)
+// --------------------------------------------
+"MH.index.algebra.first.7a": "Partie I : Introduction aux fonctions linéaires et affines",
+"MH.index.algebra.first.7b": "Partie II : Lecture graphique et compléments",
+"MH.index.algebra.first.7c": "Partie III : Inéquations, systèmes et applications",
+"MH.index.algebra.first.7d": "Partie IV : Approfondissement – carrés, racines carrées et équations du premier degré",
+"MH.index.algebra.first.7e": "Partie V : Approfondissement – carrés, cubes, racines carrées → fonctions affines",
+
+// --------------------------------------------
+// 2ème Année Algèbre – Arithmétique (partie 5)
+// --------------------------------------------
+"MH.index.algebra.second.3e": "Partie 5 : Synthèse et applications",
+
+// --------------------------------------------
+// 2ème Année Algèbre – Suites arithmétiques (5 parties)
+// --------------------------------------------
+"MH.index.algebra.second.4a": "Partie I : Introduction aux suites numériques",
+"MH.index.algebra.second.4b": "Partie II : Définition, terme général, représentation graphique et somme des termes",
+"MH.index.algebra.second.4c": "Partie III : Exercices supplémentaires, reconnaissance des suites arithmétiques et applications avancées",
+"MH.index.algebra.second.4d": "Partie IV : Synthèse et problèmes pratiques",
+"MH.index.algebra.second.4e": "Partie V : Exercices et applications",,
     'MH.index.algebra.second.5': 'Suites Géométriques',
     'MH.index.algebra.second.6': 'Statistiques',
     'MH.index.algebra.second.7': 'Fonctions Générales',
@@ -96,11 +118,12 @@ window.translations_fr = {
 "MH.index.geometry.second.3e": "Translations V : Problèmes de lieu et constructions",
 "MH.index.geometry.second.3f": "Translations VI: Applications sur les translation",
     'MH.index.geometry.second.4': 'Homothéties',
-"MH.index.geometry.second.4a": "Homothéties I : Introduction et définition",
-"MH.index.geometry.second.4b": "Homothéties II : Propriétés de base",
-"MH.index.geometry.second.4c": "Homothéties III : Propriétés avancées",
-"MH.index.geometry.second.4d": "Homothéties IV : Image des figures",
-"MH.index.geometry.second.4e": "Homothéties V : Applications et exercices",
+"MH.index.geometry.second.4a": "Homothéties I : Transformations d\'Homothétie et leurs Propriétés",
+"MH.index.geometry.second.4b": "Homothéties II : Propriétés et Transformations Fondamentales",
+"MH.index.geometry.second.4c": "Homothéties III : Construction - Alignement - Propriétés de conservation",
+"MH.index.geometry.second.4d": "Homothéties IV : Cercles - Tangentes - Applications",
+"MH.index.geometry.second.4e": "Homothéties V : Ligne d\'Euler, Cercle d\'Euler et Problèmes de Lieux",
+"MH.index.geometry.second.4f": "Homothéties VI : Exercices AvancÃ©s et Applications",
     'MH.index.geometry.second.5': 'Rotations',
     'MH.index.geometry.second.6': 'Trigonométrie et Mesure de Grandeur',
     'MH.index.geometry.second.7': 'Géométrie Analytique',
