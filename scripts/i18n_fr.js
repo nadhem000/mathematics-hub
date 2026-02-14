@@ -91,7 +91,7 @@ window.translations_fr = {
 "MH.index.algebra.second.4b": "Partie II : Définition, terme général, représentation graphique et somme des termes",
 "MH.index.algebra.second.4c": "Partie III : Exercices supplémentaires, reconnaissance des suites arithmétiques et applications avancées",
 "MH.index.algebra.second.4d": "Partie IV : Synthèse et problèmes pratiques",
-"MH.index.algebra.second.4e": "Partie V : Exercices et applications",,
+"MH.index.algebra.second.4e": "Partie V : Exercices et applications",
     'MH.index.algebra.second.5': 'Suites Géométriques',
     'MH.index.algebra.second.6': 'Statistiques',
     'MH.index.algebra.second.7': 'Fonctions Générales',
@@ -3175,4 +3175,5 @@ window.translations_fr = {
 'MH.lesson_Y2Al_arth1b.solution10_part2': "Donc 2<sup>4</sup> - 1 est divisible par 5. Vérifier les valeurs plus petites: 2<sup>1</sup>-1=1, 2<sup>2</sup>-1=3, 2<sup>3</sup>-1=7, aucun n'est divisible par 5.",
 'MH.lesson_Y2Al_arth1b.showSolution': 'Afficher la solution',
 'MH.lesson_Y2Al_arth1b.hideSolution': 'Cacher la solution'
+
 };
