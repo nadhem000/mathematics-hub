@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathématiques : Fonctions linéaires – Partie I</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#3498DB" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#5DADE2" media="(prefers-color-scheme: dark)">
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#3498DB">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    <style>
+        /* Page-specific color palette - Blue / Light blue (fresh for linear functions) */
+        :root {
+            --primary: #3498DB;        /* Bright blue */
+            --primary-light: #5DADE2;  /* Lighter blue */
+            --primary-dark: #2E86C1;   /* Darker blue */
+            --secondary: #2ECC71;      /* Green */
+            --secondary-light: #58D68D;
+            --secondary-dark: #28B463;
+            --accent: #F39C12;
+            --warning: #E74C3C;
+            --info: #3498DB;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #FFFFFF;
+            --surface: #F8F9FA;
+            --border: #E9ECEF;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        [data-theme="dark"] {
+            --primary: #5DADE2;
+            --primary-light: #85C1E9;
+            --primary-dark: #3498DB;
+            --secondary: #28B463;
+            --secondary-light: #2ECC71;
+            --secondary-dark: #1D8348;
+            --accent: #F39C12;
+            --warning: #C0392B;
+            --info: #2980B9;
+            --text: #FFFFFF;
+            --text-light: #CCCCCC;
+            --background: #121212;
+            --surface: #1E1E1E;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+        /* KaTeX styling */
+        .katex { 
+            font-size: 1.1em; 
+        }
+        .katex-display { 
+            margin: 1em 0; 
+            text-align: center;
+        }
+        /* Equation styling */
+        .MH-equation {
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            margin: 0.5em 0;
+            padding: 0;
+            display: inline-block;
+        }
+        [dir="rtl"] .MH-equation {
+            text-align: left;
+        }
+        /* Canvas container styling */
+        .MH-canvas-container {
+            margin: 2em 0;
+            text-align: center;
+            position: relative;
+        }
+        .MH-canvas {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background-color: var(--surface);
+            max-width: 100%;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+        .MH-canvas-title {
+            font-weight: bold;
+            margin-bottom: 0.5em;
+            color: var(--primary);
+        }
+        .MH-canvas-instructions {
+            font-size: 0.9em;
+            color: var(--text-light);
+            margin-top: 0.5em;
+            font-style: italic;
+        }
+        /* Sequence specific styling */
+        .MH-sequence-item {
+            margin: 0.5em 0;
+            padding: 0.5em;
+            background-color: var(--surface);
+            border-left: 4px solid var(--secondary);
+            border-radius: 4px;
+        }
+        .MH-sequence-step {
+            margin: 0.5em 0;
+            padding-left: 1em;
+            border-left: 2px solid var(--primary-light);
+        }
+        .MH-number-pattern {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            color: var(--warning);
+            background-color: rgba(231, 76, 60, 0.1);
+            padding: 0.2em 0.5em;
+            border-radius: 4px;
+        }
+        .MH-formula-box {
+            background-color: rgba(46, 204, 113, 0.1);
+            border: 2px solid var(--secondary);
+            border-radius: 8px;
+            padding: 1.5em;
+            margin: 1em 0;
+        }
+        /* Exercise numbering */
+        .MH-exercise-number {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--secondary);
+            margin: 1.5em 0 0.5em 0;
+            border-bottom: 2px solid var(--secondary-light);
+            padding-bottom: 0.3em;
+        }
+        /* Table styling */
+        .MH-table {
+            display: inline-block;
+            border-collapse: collapse;
+            margin: 1em 0;
+            background-color: var(--surface);
+        }
+        .MH-table td, .MH-table th {
+            border: 1px solid var(--border);
+            padding: 0.5em 1em;
+            text-align: center;
+        }
+        .MH-table th {
+            background-color: var(--primary-light);
+            color: var(--text);
+        }
+        /* Blank cell for incomplete table */
+        .MH-blank {
+            color: var(--text-light);
+            font-style: italic;
+        }
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .MH-canvas {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+        /* Style for points and line on canvas */
+        .point-spring { fill: #E74C3C; stroke: #C0392B; }
+        .point-linear { fill: #F39C12; stroke: #E67E22; }
+        .line-spring { stroke: #3498DB; stroke-width: 2; }
+        .line-linear { stroke: #2ECC71; stroke-width: 2; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <!-- Column 1: Icon -->
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            <!-- Column 2: Title -->
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            <!-- Column 3: Options -->
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span>
+                        <span>🎨</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span>
+                            <span>🌐</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                        </div>
+                    </div>
+                    <!-- Notification Button -->
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span>
+                        <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y1Alg_fonLin1.title">Fonctions linéaires : Partie I</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y1Alg_fonLin1.subtitle">Introduction aux fonctions linéaires</h2>
+        
+        <!-- ============ I. FONCTION LINÉAIRE ============ -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y1Alg_fonLin1.part1">I. Fonction linéaire</div>
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonLin1.activity1Title">Activité 1 – Ressort et masse</h3>
+                <p data-i18n="MH.lesson_Y1Alg_fonLin1.activity1Statement">
+                    On sait que l’allongement d’un ressort et la masse suspendue à son extrémité sont des grandeurs proportionnelles.
+                </p>
+            </div>
+            <!-- Tableau à compléter -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y1Alg_fonLin1.table1Title">Tableau masse – allongement (à compléter)</div>
+                <table class="MH-table">
+                    <tr>
+                        <th data-i18n="MH.lesson_Y1Alg_fonLin1.massLabel">Masse (g)</th>
+                        <td>0</td><td>1</td><td>3</td><td>6</td><td>9</td><td class="MH-blank">…</td><td>15</td>
+                    </tr>
+                    <tr>
+                        <th data-i18n="MH.lesson_Y1Alg_fonLin1.extensionLabel">Allongement (cm)</th>
+                        <td>0</td><td>0,5</td><td class="MH-blank">…</td><td class="MH-blank">…</td><td class="MH-blank">…</td><td>6</td><td class="MH-blank">…</td>
+                    </tr>
+                </table>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y1Alg_fonLin1.table1Instructions">
+                    Indice : le coefficient de proportionnalité est le même pour toutes les colonnes.
+                </div>
+            </div>
+
+            <!-- Question 1 : compléter le tableau -->
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin1.q1">1) Recopier et compléter le tableau ci-dessus.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin1.showSolution" onclick="toggleSolution(1)">Voir la solution</button>
+                    <div class="MH-solution" id="solution1">
+                        <p><strong data-i18n="MH.lesson_Y1Alg_fonLin1.sol1Title">Tableau complété :</strong></p>
+                        <table class="MH-table">
+                            <tr><th>Masse (g)</th><td>0</td><td>1</td><td>3</td><td>6</td><td>9</td><td><strong>12</strong></td><td>15</td></tr>
+                            <tr><th>Allongement (cm)</th><td>0</td><td>0,5</td><td><strong>1,5</strong></td><td><strong>3</strong></td><td><strong>4,5</strong></td><td>6</td><td><strong>7,5</strong></td></tr>
+                        </table>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y1Alg_fonLin1.sol1Explain1">🔍 Explication : On sait que l’allongement est proportionnel à la masse. On cherche le coefficient de proportionnalité.</p>
+                            <p data-i18n="MH.lesson_Y1Alg_fonLin1.sol1Explain2">📌 Pour 1 g → 0,5 cm. Donc le coefficient est 0,5 cm/g.</p>
+                            <p data-i18n="MH.lesson_Y1Alg_fonLin1.sol1Explain3">✅ Pour 3 g : 3 × 0,5 = 1,5 cm. &nbsp; 6 g : 6 × 0,5 = 3 cm. &nbsp; 9 g : 9 × 0,5 = 4,5 cm.</p>
+                            <p data-i18n="MH.lesson_Y1Alg_fonLin1.sol1Explain4">🧮 On lit que pour 6 cm d’allongement, la masse est 12 g (car 12 × 0,5 = 6).</p>
+                            <p data-i18n="MH.lesson_Y1Alg_fonLin1.sol1Explain5">🔹 Pour 15 g : 15 × 0,5 = 7,5 cm.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Question 2 : coefficient de proportionnalité -->
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin1.q2">2) Calculer le coefficient de proportionnalité a.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin1.showSolution" onclick="toggleSolution(2)">Voir la solution</button>
+                    <div class="MH-solution" id="solution2">
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y1Alg_fonLin1.sol2Step1">On prend une colonne où les deux valeurs sont connues : masse = 1 g, allongement = 0,5 cm.</p>
+                            <p>\( a = \dfrac{\text{allongement}}{\text{masse}} = \dfrac{0,5}{1} = 0,5 \).</p>
+                            <p data-i18n="MH.lesson_Y1Alg_fonLin1.sol2Step2">📐 On peut vérifier avec une autre colonne : 6 cm pour 12 g → \( 6 \div 12 = 0,5 \).</p>
+                        </div>
+                        <p><strong data-i18n="MH.lesson_Y1Alg_fonLin1.sol2Answer">Le coefficient de proportionnalité est a = 0,5.</strong></p>
+                    </div>
+                </div>
+                <!-- Question 3 : expression de f(x) -->
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin1.q3">3) On désigne par x la masse (en grammes). Exprimer en fonction de x l’allongement f(x) (en cm) du ressort.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin1.showSolution" onclick="toggleSolution(3)">Voir la solution</button>
+                    <div class="MH-solution" id="solution3">
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y1Alg_fonLin1.sol3Step1">📘 L’allongement est proportionnel à la masse avec le coefficient a = 0,5.</p>
+                            <p data-i18n="MH.lesson_Y1Alg_fonLin1.sol3Step2">Donc f(x) = a × x = 0,5 x.</p>
+                        </div>
+                        <div class="MH-formula-box">
+                            \[ f(x) = 0,5\,x \]
+                        </div>
+                        <p data-i18n="MH.lesson_Y1Alg_fonLin1.sol3Check">✅ Vérification : si x = 1, f(1) = 0,5 ; si x = 12, f(12) = 6 ; si x = 15, f(15) = 7,5.</p>
+                    </div>
+                </div>
+                <!-- Question 4 : masse 24 g -->
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin1.q4">4) Pour une masse de 24 g, quel est l’allongement correspondant ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin1.showSolution" onclick="toggleSolution(4)">Voir la solution</button>
+                    <div class="MH-solution" id="solution4">
+                        <p data-i18n="MH.lesson_Y1Alg_fonLin1.sol4">On utilise f(x) = 0,5 x. Avec x = 24 : f(24) = 0,5 × 24 = 12.</p>
+                        <p><strong data-i18n="MH.lesson_Y1Alg_fonLin1.sol4Answer">L’allongement est de 12 cm.</strong></p>
+                    </div>
+                </div>
+                <!-- Question 5 : masse pour allongement 5 cm -->
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin1.q5">5) Quelle est la masse qui donne un allongement de 5 cm ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin1.showSolution" onclick="toggleSolution(5)">Voir la solution</button>
+                    <div class="MH-solution" id="solution5">
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y1Alg_fonLin1.sol5Step1">On cherche x tel que f(x) = 5.</p>
+                            <p>\( 0,5\,x = 5 \) → \( x = \dfrac{5}{0,5} = 10 \).</p>
+                        </div>
+                        <p><strong data-i18n="MH.lesson_Y1Alg_fonLin1.sol5Answer">La masse est 10 g.</strong></p>
+                    </div>
+                </div>
+                <!-- Question 6 : comparaison des allongements -->
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin1.q6">6) Que représente l’allongement dû à la masse 9 g par rapport aux allongements dus aux masses 3 g et 6 g ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin1.showSolution" onclick="toggleSolution(6)">Voir la solution</button>
+                    <div class="MH-solution" id="solution6">
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y1Alg_fonLin1.sol6Step1">🔹 Allongement pour 3 g : f(3) = 1,5 cm.</p>
+                            <p data-i18n="MH.lesson_Y1Alg_fonLin1.sol6Step2">🔹 Allongement pour 6 g : f(6) = 3 cm.</p>
+                            <p data-i18n="MH.lesson_Y1Alg_fonLin1.sol6Step3">🔹 Allongement pour 9 g : f(9) = 4,5 cm.</p>
+                            <p data-i18n="MH.lesson_Y1Alg_fonLin1.sol6Step4">📌 On remarque que 9 = 3 + 6 et que f(9) = 4,5 = 1,5 + 3 = f(3) + f(6).</p>
+                            <p data-i18n="MH.lesson_Y1Alg_fonLin1.sol6Conclusion"><strong>L’allongement total est la somme des allongements. Cela montre que la relation est linéaire (proportionnelle).</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Graphique de l'activité 1 (ressort) -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y1Alg_fonLin1.springCanvasTitle">Allongement en fonction de la masse</div>
+                <canvas id="springCanvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y1Alg_fonLin1.springCanvasInstructions">
+                    Les points sont alignés sur une droite passant par l’origine. C’est une fonction linéaire.
+                </div>
+            </div>
+
+            <!-- Synthèse : définition fonction linéaire -->
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonLin1.synthTitle">📘 Synthèse – Fonction linéaire</h3>
+                <p data-i18n="MH.lesson_Y1Alg_fonLin1.synthText1">
+                    Soit <strong>a</strong> un réel. Lorsqu’à chaque réel <strong>x</strong> on associe le réel <strong>a x</strong>, on définit une <strong>fonction linéaire</strong> f. On note :
+                </p>
+                <div class="MH-formula-box">
+                    \[ f : x \mapsto a x \]
+                </div>
+                <ul>
+                    <li data-i18n="MH.lesson_Y1Alg_fonLin1.synthLi1"><strong>f(x)</strong> est l’<strong>image</strong> de x par f.</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonLin1.synthLi2"><strong>x</strong> est un <strong>antécédent</strong> de f(x).</li>
+                </ul>
+                <p data-i18n="MH.lesson_Y1Alg_fonLin1.examples">Exemples :</p>
+                <ul>
+                    <li data-i18n="MH.lesson_Y1Alg_fonLin1.example1">\( f(x) = 0,5x \) est linéaire (coefficient 0,5).</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonLin1.example2">\( g(x) = -3x \) est linéaire (coefficient –3).</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonLin1.example3">\( h(x) = 0x = 0 \) est la fonction nulle.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ============ II. REPRÉSENTATION GRAPHIQUE ============ -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y1Alg_fonLin1.part2">II. Représentation graphique d’une fonction linéaire</div>
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonLin1.activity2Title">Activité 2 – Fonction f(x) = 2x</h3>
+                <p data-i18n="MH.lesson_Y1Alg_fonLin1.activity2Statement">On considère la fonction linéaire f définie par \( f(x) = 2x \).</p>
+            </div>
+
+            <!-- Tableau à compléter -->
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin1.q2_1">1) Recopier et compléter le tableau ci-dessous.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin1.showSolution" onclick="toggleSolution(7)">Voir la solution</button>
+                    <div class="MH-solution" id="solution7">
+                        <table class="MH-table">
+                            <tr><th>x</th><td>-3</td><td>-1,5</td><td>0</td><td>1</td><td>4</td></tr>
+                            <tr><th>f(x)</th><td><strong>-6</strong></td><td><strong>-3</strong></td><td><strong>0</strong></td><td><strong>2</strong></td><td><strong>8</strong></td></tr>
+                        </table>
+                        <div class="MH-sequence-step">
+                            <p data-i18n="MH.lesson_Y1Alg_fonLin1.sol2_1Explain">📌 Calculs : f(-3)=2×(-3)=-6 ; f(-1,5)=2×(-1,5)=-3 ; f(0)=0 ; f(1)=2 ; f(4)=8.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canvas pour f(x)=2x -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y1Alg_fonLin1.linearCanvasTitle">Représentation de f(x) = 2x</div>
+                <canvas id="linearCanvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y1Alg_fonLin1.linearCanvasInstructions">
+                    La droite passe par l’origine (0,0) et par le point A(1,2).
+                </div>
+            </div>
+
+            <!-- Questions 2,3,4 -->
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin1.q2_2a">2) a) Pour chaque valeur x du tableau, placer le point de coordonnées (x, f(x)).</h4>
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin1.q2_2b">b) Que remarque-t-on ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin1.showSolution" onclick="toggleSolution(8)">Voir la solution</button>
+                    <div class="MH-solution" id="solution8">
+                        <p data-i18n="MH.lesson_Y1Alg_fonLin1.sol2_2">Les points sont alignés. Ils semblent tous appartenir à une même droite qui passe par l’origine du repère.</p>
+                    </div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin1.q2_3a">3) a) Tracer la droite D passant par O(0,0) et A(1,2).</h4>
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin1.q2_3b">b) Que peut-on conjecturer quant aux points (x, f(x)) ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin1.showSolution" onclick="toggleSolution(9)">Voir la solution</button>
+                    <div class="MH-solution" id="solution9">
+                        <p data-i18n="MH.lesson_Y1Alg_fonLin1.sol2_3">La droite D passe par tous les points du tableau. On conjecture que la représentation graphique de la fonction f est la droite D.</p>
+                    </div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin1.q2_4a">4) a) Placer le point E sur D d’abscisse 3 et lire son ordonnée.</h4>
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin1.q2_4b">b) Placer le point F sur D d’ordonnée –4 et lire son abscisse.</h4>
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin1.q2_4c">c) Placer le point G (5, 2). Le point G est-il sur la droite D ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin1.showSolution" onclick="toggleSolution(10)">Voir la solution</button>
+                    <div class="MH-solution" id="solution10">
+                        <div class="MH-sequence-step">
+                            <p><strong data-i18n="MH.lesson_Y1Alg_fonLin1.sol2_4a">a)</strong> Équation de D : y = 2x. Pour x = 3, y = 2×3 = 6. E(3;6).</p>
+                            <p><strong data-i18n="MH.lesson_Y1Alg_fonLin1.sol2_4b">b)</strong> y = –4 ⇒ –4 = 2x ⇒ x = –2. F(–2;–4).</p>
+                            <p><strong data-i18n="MH.lesson_Y1Alg_fonLin1.sol2_4c">c)</strong> G(5;2) : f(5) = 2×5 = 10 ≠ 2. Donc G n’est pas sur D.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Synthèse : représentation graphique -->
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonLin1.graphSynthTitle">📈 À retenir – Représentation graphique</h3>
+                <p data-i18n="MH.lesson_Y1Alg_fonLin1.graphSynthText">
+                    Dans un repère (O, I, J), l’ensemble des points M(x ; f(x)) est appelé la <strong>représentation graphique</strong> de la fonction f.<br>
+                    Pour une <strong>fonction linéaire</strong> \(f(x)=ax\), cette représentation est une <strong>droite qui passe par l’origine</strong> du repère.<br>
+                    Le nombre a est appelé <strong>coefficient directeur</strong> (ou pente) de la droite.
+                </p>
+            </div>
+        </section>
+
+        <!-- ============ RÉSUMÉ DE LA LEÇON ============ -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Alg_fonLin1.summaryTitle">Résumé de la leçon</h2>
+            <div class="MH-important">
+                <ul>
+                    <li data-i18n="MH.lesson_Y1Alg_fonLin1.summary1">Une fonction linéaire s’écrit \(f(x) = a x\) où a est un nombre réel (coefficient).</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonLin1.summary2">Son taux d’accroissement est constant : \(\frac{f(x)-f(x')}{x-x'} = a\).</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonLin1.summary3">Sa représentation graphique est une droite qui passe par l’origine (0,0).</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonLin1.summary4">Le coefficient a est la pente de la droite : si a > 0, la droite monte ; si a < 0, elle descend.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.developer">Développeur</div>
+                <div class="MH-footer-text">Mejri Ziad</div>
+            </div>
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.version">Version</div>
+                <div class="MH-footer-text">v0.3.0</div>
+            </div>
+            <div class="MH-footer-column">
+                <div class="MH-footer-title" data-i18n="MH.footer.links">Liens</div>
+                <div class="MH-footer-links">
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Conditions d'utilisation</a>
+                    <a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Politique de confidentialité</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+
+    <script>
+        // ============================================
+        // TRADUCTIONS : FONCTIONS LINÉAIRES PARTIE I
+        // ============================================
+        const fonLin1Translations = {
+            'fr': {
+                // Général
+                'MH.general.homeTooltip': 'Aller à l\'accueil',
+                'MH.general.install': 'Installer l\'application',
+                'MH.general.installSuccess': 'Mathematics Hub installé avec succès !',
+                'MH.general.enableNotifications': 'Activer les notifications',
+                'MH.general.notificationEnabled': 'Notifications activées ! Vous recevrez des mises à jour.',
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Thème',
+                'MH.general.language': 'Langue',
+                'MH.lesson_Y1Alg_fonLin1.showSolution': 'Voir la solution',
+                'MH.lesson_Y1Alg_fonLin1.hideSolution': 'Cacher la solution',
+                // Titres
+                'MH.lesson_Y1Alg_fonLin1.title': 'Fonctions linéaires : Partie I',
+                'MH.lesson_Y1Alg_fonLin1.subtitle': 'Introduction aux fonctions linéaires',
+                'MH.lesson_Y1Alg_fonLin1.part1': 'I. Fonction linéaire',
+                'MH.lesson_Y1Alg_fonLin1.part2': 'II. Représentation graphique',
+                // Activité 1 – Ressort
+                'MH.lesson_Y1Alg_fonLin1.activity1Title': 'Activité 1 – Ressort et masse',
+                'MH.lesson_Y1Alg_fonLin1.activity1Statement': 'On sait que l’allongement d’un ressort et la masse suspendue à son extrémité sont des grandeurs proportionnelles.',
+                'MH.lesson_Y1Alg_fonLin1.table1Title': 'Tableau masse – allongement (à compléter)',
+                'MH.lesson_Y1Alg_fonLin1.massLabel': 'Masse (g)',
+                'MH.lesson_Y1Alg_fonLin1.extensionLabel': 'Allongement (cm)',
+                'MH.lesson_Y1Alg_fonLin1.table1Instructions': 'Indice : le coefficient de proportionnalité est le même pour toutes les colonnes.',
+                'MH.lesson_Y1Alg_fonLin1.q1': '1) Recopier et compléter le tableau ci-dessus.',
+                'MH.lesson_Y1Alg_fonLin1.sol1Title': 'Tableau complété :',
+                'MH.lesson_Y1Alg_fonLin1.sol1Explain1': '🔍 Explication : On sait que l’allongement est proportionnel à la masse. On cherche le coefficient de proportionnalité.',
+                'MH.lesson_Y1Alg_fonLin1.sol1Explain2': '📌 Pour 1 g → 0,5 cm. Donc le coefficient est 0,5 cm/g.',
+                'MH.lesson_Y1Alg_fonLin1.sol1Explain3': '✅ Pour 3 g : 3 × 0,5 = 1,5 cm.   6 g : 6 × 0,5 = 3 cm.   9 g : 9 × 0,5 = 4,5 cm.',
+                'MH.lesson_Y1Alg_fonLin1.sol1Explain4': '🧮 On lit que pour 6 cm d’allongement, la masse est 12 g (car 12 × 0,5 = 6).',
+                'MH.lesson_Y1Alg_fonLin1.sol1Explain5': '🔹 Pour 15 g : 15 × 0,5 = 7,5 cm.',
+                'MH.lesson_Y1Alg_fonLin1.q2': '2) Calculer le coefficient de proportionnalité a.',
+                'MH.lesson_Y1Alg_fonLin1.sol2Step1': 'On prend une colonne où les deux valeurs sont connues : masse = 1 g, allongement = 0,5 cm.',
+                'MH.lesson_Y1Alg_fonLin1.sol2Step2': '📐 On peut vérifier avec une autre colonne : 6 cm pour 12 g → 6 ÷ 12 = 0,5.',
+                'MH.lesson_Y1Alg_fonLin1.sol2Answer': 'Le coefficient de proportionnalité est a = 0,5.',
+                'MH.lesson_Y1Alg_fonLin1.q3': '3) On désigne par x la masse (en grammes). Exprimer en fonction de x l’allongement f(x) (en cm) du ressort.',
+                'MH.lesson_Y1Alg_fonLin1.sol3Step1': '📘 L’allongement est proportionnel à la masse avec le coefficient a = 0,5.',
+                'MH.lesson_Y1Alg_fonLin1.sol3Step2': 'Donc f(x) = a × x = 0,5 x.',
+                'MH.lesson_Y1Alg_fonLin1.sol3Check': '✅ Vérification : si x = 1, f(1) = 0,5 ; si x = 12, f(12) = 6 ; si x = 15, f(15) = 7,5.',
+                'MH.lesson_Y1Alg_fonLin1.q4': '4) Pour une masse de 24 g, quel est l’allongement correspondant ?',
+                'MH.lesson_Y1Alg_fonLin1.sol4': 'On utilise f(x) = 0,5 x. Avec x = 24 : f(24) = 0,5 × 24 = 12.',
+                'MH.lesson_Y1Alg_fonLin1.sol4Answer': 'L’allongement est de 12 cm.',
+                'MH.lesson_Y1Alg_fonLin1.q5': '5) Quelle est la masse qui donne un allongement de 5 cm ?',
+                'MH.lesson_Y1Alg_fonLin1.sol5Step1': 'On cherche x tel que f(x) = 5.',
+                'MH.lesson_Y1Alg_fonLin1.sol5Answer': 'La masse est 10 g.',
+                'MH.lesson_Y1Alg_fonLin1.q6': '6) Que représente l’allongement dû à la masse 9 g par rapport aux allongements dus aux masses 3 g et 6 g ?',
+                'MH.lesson_Y1Alg_fonLin1.sol6Step1': '🔹 Allongement pour 3 g : f(3) = 1,5 cm.',
+                'MH.lesson_Y1Alg_fonLin1.sol6Step2': '🔹 Allongement pour 6 g : f(6) = 3 cm.',
+                'MH.lesson_Y1Alg_fonLin1.sol6Step3': '🔹 Allongement pour 9 g : f(9) = 4,5 cm.',
+                'MH.lesson_Y1Alg_fonLin1.sol6Step4': '📌 On remarque que 9 = 3 + 6 et que f(9) = 4,5 = 1,5 + 3 = f(3) + f(6).',
+                'MH.lesson_Y1Alg_fonLin1.sol6Conclusion': 'L’allongement total est la somme des allongements. Cela montre que la relation est linéaire (proportionnelle).',
+                'MH.lesson_Y1Alg_fonLin1.springCanvasTitle': 'Allongement en fonction de la masse',
+                'MH.lesson_Y1Alg_fonLin1.springCanvasInstructions': 'Les points sont alignés sur une droite passant par l’origine. C’est une fonction linéaire.',
+                // Synthèse fonction linéaire
+                'MH.lesson_Y1Alg_fonLin1.synthTitle': '📘 Synthèse – Fonction linéaire',
+                'MH.lesson_Y1Alg_fonLin1.synthText1': 'Soit a un réel. Lorsqu’à chaque réel x on associe le réel a x, on définit une fonction linéaire f. On note :',
+                'MH.lesson_Y1Alg_fonLin1.synthLi1': 'f(x) est l’image de x par f.',
+                'MH.lesson_Y1Alg_fonLin1.synthLi2': 'x est un antécédent de f(x).',
+                'MH.lesson_Y1Alg_fonLin1.examples': 'Exemples :',
+                'MH.lesson_Y1Alg_fonLin1.example1': 'f(x) = 0,5x est linéaire (coefficient 0,5).',
+                'MH.lesson_Y1Alg_fonLin1.example2': 'g(x) = -3x est linéaire (coefficient –3).',
+                'MH.lesson_Y1Alg_fonLin1.example3': 'h(x) = 0x = 0 est la fonction nulle.',
+                // Activité 2 – f(x)=2x
+                'MH.lesson_Y1Alg_fonLin1.activity2Title': 'Activité 2 – Fonction f(x) = 2x',
+                'MH.lesson_Y1Alg_fonLin1.activity2Statement': 'On considère la fonction linéaire f définie par f(x) = 2x.',
+                'MH.lesson_Y1Alg_fonLin1.q2_1': '1) Recopier et compléter le tableau ci-dessous.',
+                'MH.lesson_Y1Alg_fonLin1.sol2_1Explain': '📌 Calculs : f(-3)=2×(-3)=-6 ; f(-1,5)=2×(-1,5)=-3 ; f(0)=0 ; f(1)=2 ; f(4)=8.',
+                'MH.lesson_Y1Alg_fonLin1.linearCanvasTitle': 'Représentation de f(x) = 2x',
+                'MH.lesson_Y1Alg_fonLin1.linearCanvasInstructions': 'La droite passe par l’origine (0,0) et par le point A(1,2).',
+                'MH.lesson_Y1Alg_fonLin1.q2_2a': '2) a) Pour chaque valeur x du tableau, placer le point de coordonnées (x, f(x)).',
+                'MH.lesson_Y1Alg_fonLin1.q2_2b': 'b) Que remarque-t-on ?',
+                'MH.lesson_Y1Alg_fonLin1.sol2_2': 'Les points sont alignés. Ils semblent tous appartenir à une même droite qui passe par l’origine du repère.',
+                'MH.lesson_Y1Alg_fonLin1.q2_3a': '3) a) Tracer la droite D passant par O(0,0) et A(1,2).',
+                'MH.lesson_Y1Alg_fonLin1.q2_3b': 'b) Que peut-on conjecturer quant aux points (x, f(x)) ?',
+                'MH.lesson_Y1Alg_fonLin1.sol2_3': 'La droite D passe par tous les points du tableau. On conjecture que la représentation graphique de la fonction f est la droite D.',
+                'MH.lesson_Y1Alg_fonLin1.q2_4a': '4) a) Placer le point E sur D d’abscisse 3 et lire son ordonnée.',
+                'MH.lesson_Y1Alg_fonLin1.q2_4b': 'b) Placer le point F sur D d’ordonnée –4 et lire son abscisse.',
+                'MH.lesson_Y1Alg_fonLin1.q2_4c': 'c) Placer le point G (5, 2). Le point G est-il sur la droite D ?',
+                'MH.lesson_Y1Alg_fonLin1.sol2_4a': 'a) Équation de D : y = 2x. Pour x = 3, y = 2×3 = 6. E(3;6).',
+                'MH.lesson_Y1Alg_fonLin1.sol2_4b': 'b) y = –4 ⇒ –4 = 2x ⇒ x = –2. F(–2;–4).',
+                'MH.lesson_Y1Alg_fonLin1.sol2_4c': 'c) G(5;2) : f(5) = 2×5 = 10 ≠ 2. Donc G n’est pas sur D.',
+                // Synthèse graphique
+                'MH.lesson_Y1Alg_fonLin1.graphSynthTitle': '📈 À retenir – Représentation graphique',
+                'MH.lesson_Y1Alg_fonLin1.graphSynthText': 'Dans un repère (O, I, J), l’ensemble des points M(x ; f(x)) est appelé la représentation graphique de la fonction f. Pour une fonction linéaire f(x)=ax, cette représentation est une droite qui passe par l’origine du repère. Le nombre a est appelé coefficient directeur (ou pente) de la droite.',
+                // Résumé
+                'MH.lesson_Y1Alg_fonLin1.summaryTitle': 'Résumé de la leçon',
+                'MH.lesson_Y1Alg_fonLin1.summary1': 'Une fonction linéaire s’écrit f(x) = a x où a est un nombre réel (coefficient).',
+                'MH.lesson_Y1Alg_fonLin1.summary2': 'Son taux d’accroissement est constant : (f(x)-f(x\'))/(x-x\') = a.',
+                'MH.lesson_Y1Alg_fonLin1.summary3': 'Sa représentation graphique est une droite qui passe par l’origine (0,0).',
+                'MH.lesson_Y1Alg_fonLin1.summary4': 'Le coefficient a est la pente de la droite : si a > 0, la droite monte ; si a < 0, elle descend.',
+                // Footer (repris)
+                'MH.footer.developer': 'Développeur',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Liens',
+                'MH.footer.terms': 'Conditions d\'utilisation',
+                'MH.footer.privacy': 'Politique de confidentialité'
+            },
+            'en': {
+                // English translations – concise but complete, following same keys
+                'MH.general.homeTooltip': 'Go to Homepage',
+                'MH.general.install': 'Install App',
+                'MH.general.installSuccess': 'Mathematics Hub installed successfully!',
+                'MH.general.enableNotifications': 'Enable Notifications',
+                'MH.general.notificationEnabled': 'Notifications enabled! You will now receive updates.',
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Theme',
+                'MH.general.language': 'Language',
+                'MH.lesson_Y1Alg_fonLin1.showSolution': 'Show Solution',
+                'MH.lesson_Y1Alg_fonLin1.hideSolution': 'Hide Solution',
+                'MH.lesson_Y1Alg_fonLin1.title': 'Linear Functions: Part I',
+                'MH.lesson_Y1Alg_fonLin1.subtitle': 'Introduction to Linear Functions',
+                'MH.lesson_Y1Alg_fonLin1.part1': 'I. Linear Function',
+                'MH.lesson_Y1Alg_fonLin1.part2': 'II. Graphical Representation',
+                'MH.lesson_Y1Alg_fonLin1.activity1Title': 'Activity 1 – Spring and Mass',
+                'MH.lesson_Y1Alg_fonLin1.activity1Statement': 'It is known that the extension of a spring and the mass hung on it are proportional quantities.',
+                'MH.lesson_Y1Alg_fonLin1.table1Title': 'Mass – extension table (to complete)',
+                'MH.lesson_Y1Alg_fonLin1.massLabel': 'Mass (g)',
+                'MH.lesson_Y1Alg_fonLin1.extensionLabel': 'Extension (cm)',
+                'MH.lesson_Y1Alg_fonLin1.table1Instructions': 'Hint: the proportionality coefficient is the same for all columns.',
+                'MH.lesson_Y1Alg_fonLin1.q1': '1) Copy and complete the table above.',
+                'MH.lesson_Y1Alg_fonLin1.sol1Title': 'Completed table:',
+                'MH.lesson_Y1Alg_fonLin1.sol1Explain1': '🔍 Explanation: Extension is proportional to mass. We find the proportionality coefficient.',
+                'MH.lesson_Y1Alg_fonLin1.sol1Explain2': '📌 For 1 g → 0.5 cm. So coefficient = 0.5 cm/g.',
+                'MH.lesson_Y1Alg_fonLin1.sol1Explain3': '✅ For 3 g: 3 × 0.5 = 1.5 cm.   6 g: 6 × 0.5 = 3 cm.   9 g: 9 × 0.5 = 4.5 cm.',
+                'MH.lesson_Y1Alg_fonLin1.sol1Explain4': '🧮 For 6 cm extension, mass is 12 g (since 12 × 0.5 = 6).',
+                'MH.lesson_Y1Alg_fonLin1.sol1Explain5': '🔹 For 15 g: 15 × 0.5 = 7.5 cm.',
+                'MH.lesson_Y1Alg_fonLin1.q2': '2) Calculate the proportionality coefficient a.',
+                'MH.lesson_Y1Alg_fonLin1.sol2Step1': 'Take a column with both known: mass = 1 g, extension = 0.5 cm.',
+                'MH.lesson_Y1Alg_fonLin1.sol2Step2': '📐 Check with another: 6 cm for 12 g → 6 ÷ 12 = 0.5.',
+                'MH.lesson_Y1Alg_fonLin1.sol2Answer': 'The proportionality coefficient is a = 0.5.',
+                'MH.lesson_Y1Alg_fonLin1.q3': '3) Let x be the mass (in grams). Express the extension f(x) (in cm) as a function of x.',
+                'MH.lesson_Y1Alg_fonLin1.sol3Step1': '📘 Extension is proportional to mass with coefficient a = 0.5.',
+                'MH.lesson_Y1Alg_fonLin1.sol3Step2': 'Thus f(x) = a × x = 0.5 x.',
+                'MH.lesson_Y1Alg_fonLin1.sol3Check': '✅ Check: if x = 1, f(1) = 0.5; x = 12, f(12) = 6; x = 15, f(15) = 7.5.',
+                'MH.lesson_Y1Alg_fonLin1.q4': '4) For a mass of 24 g, what is the corresponding extension?',
+                'MH.lesson_Y1Alg_fonLin1.sol4': 'Using f(x) = 0.5 x. With x = 24: f(24) = 0.5 × 24 = 12.',
+                'MH.lesson_Y1Alg_fonLin1.sol4Answer': 'Extension = 12 cm.',
+                'MH.lesson_Y1Alg_fonLin1.q5': '5) What mass gives an extension of 5 cm?',
+                'MH.lesson_Y1Alg_fonLin1.sol5Step1': 'Find x such that f(x) = 5.',
+                'MH.lesson_Y1Alg_fonLin1.sol5Answer': 'Mass = 10 g.',
+                'MH.lesson_Y1Alg_fonLin1.q6': '6) What does the extension for 9 g represent compared to the extensions for 3 g and 6 g?',
+                'MH.lesson_Y1Alg_fonLin1.sol6Step1': '🔹 Extension for 3 g: f(3) = 1.5 cm.',
+                'MH.lesson_Y1Alg_fonLin1.sol6Step2': '🔹 Extension for 6 g: f(6) = 3 cm.',
+                'MH.lesson_Y1Alg_fonLin1.sol6Step3': '🔹 Extension for 9 g: f(9) = 4.5 cm.',
+                'MH.lesson_Y1Alg_fonLin1.sol6Step4': '📌 Notice 9 = 3 + 6 and f(9) = 4.5 = 1.5 + 3 = f(3) + f(6).',
+                'MH.lesson_Y1Alg_fonLin1.sol6Conclusion': 'The total extension is the sum of the extensions. This shows the relationship is linear (proportional).',
+                'MH.lesson_Y1Alg_fonLin1.springCanvasTitle': 'Extension as a function of mass',
+                'MH.lesson_Y1Alg_fonLin1.springCanvasInstructions': 'The points lie on a straight line through the origin. This is a linear function.',
+                'MH.lesson_Y1Alg_fonLin1.synthTitle': '📘 Summary – Linear function',
+                'MH.lesson_Y1Alg_fonLin1.synthText1': 'Let a be a real number. When to each real x we associate the real a x, we define a linear function f. We write:',
+                'MH.lesson_Y1Alg_fonLin1.synthLi1': 'f(x) is the image of x under f.',
+                'MH.lesson_Y1Alg_fonLin1.synthLi2': 'x is a preimage of f(x).',
+                'MH.lesson_Y1Alg_fonLin1.examples': 'Examples:',
+                'MH.lesson_Y1Alg_fonLin1.example1': 'f(x) = 0.5x is linear (coefficient 0.5).',
+                'MH.lesson_Y1Alg_fonLin1.example2': 'g(x) = -3x is linear (coefficient –3).',
+                'MH.lesson_Y1Alg_fonLin1.example3': 'h(x) = 0x = 0 is the zero function.',
+                'MH.lesson_Y1Alg_fonLin1.activity2Title': 'Activity 2 – Function f(x) = 2x',
+                'MH.lesson_Y1Alg_fonLin1.activity2Statement': 'Consider the linear function f defined by f(x) = 2x.',
+                'MH.lesson_Y1Alg_fonLin1.q2_1': '1) Copy and complete the table below.',
+                'MH.lesson_Y1Alg_fonLin1.sol2_1Explain': '📌 Calculations: f(-3)=2×(-3)=-6; f(-1.5)=2×(-1.5)=-3; f(0)=0; f(1)=2; f(4)=8.',
+                'MH.lesson_Y1Alg_fonLin1.linearCanvasTitle': 'Graph of f(x) = 2x',
+                'MH.lesson_Y1Alg_fonLin1.linearCanvasInstructions': 'The line passes through the origin (0,0) and point A(1,2).',
+                'MH.lesson_Y1Alg_fonLin1.q2_2a': '2) a) For each x in the table, plot the point (x, f(x)).',
+                'MH.lesson_Y1Alg_fonLin1.q2_2b': 'b) What do you notice?',
+                'MH.lesson_Y1Alg_fonLin1.sol2_2': 'The points are collinear. They all seem to lie on a straight line passing through the origin.',
+                'MH.lesson_Y1Alg_fonLin1.q2_3a': '3) a) Draw line D through O(0,0) and A(1,2).',
+                'MH.lesson_Y1Alg_fonLin1.q2_3b': 'b) What can you conjecture about the points (x, f(x))?',
+                'MH.lesson_Y1Alg_fonLin1.sol2_3': 'Line D passes through all the points in the table. Conjecture: the graph of f is line D.',
+                'MH.lesson_Y1Alg_fonLin1.q2_4a': '4) a) On line D, place point E with x-coordinate 3 and read its y-coordinate.',
+                'MH.lesson_Y1Alg_fonLin1.q2_4b': 'b) On line D, place point F with y-coordinate –4 and read its x-coordinate.',
+                'MH.lesson_Y1Alg_fonLin1.q2_4c': 'c) Plot point G(5, 2). Is G on line D?',
+                'MH.lesson_Y1Alg_fonLin1.sol2_4a': 'a) Equation of D: y = 2x. For x = 3, y = 2×3 = 6. E(3;6).',
+                'MH.lesson_Y1Alg_fonLin1.sol2_4b': 'b) y = –4 ⇒ –4 = 2x ⇒ x = –2. F(–2;–4).',
+                'MH.lesson_Y1Alg_fonLin1.sol2_4c': 'c) G(5;2): f(5) = 2×5 = 10 ≠ 2. So G is not on D.',
+                'MH.lesson_Y1Alg_fonLin1.graphSynthTitle': '📈 Remember – Graphical representation',
+                'MH.lesson_Y1Alg_fonLin1.graphSynthText': 'In a coordinate system (O,I,J), the set of points M(x; f(x)) is called the graph of f. For a linear function f(x)=ax, this graph is a straight line passing through the origin. The number a is called the slope (or gradient) of the line.',
+                'MH.lesson_Y1Alg_fonLin1.summaryTitle': 'Lesson summary',
+                'MH.lesson_Y1Alg_fonLin1.summary1': 'A linear function is written f(x) = a x where a is a real number (coefficient).',
+                'MH.lesson_Y1Alg_fonLin1.summary2': 'Its rate of change is constant: (f(x)-f(x\'))/(x-x\') = a.',
+                'MH.lesson_Y1Alg_fonLin1.summary3': 'Its graph is a straight line through the origin (0,0).',
+                'MH.lesson_Y1Alg_fonLin1.summary4': 'The coefficient a is the slope: if a > 0, the line goes up; if a < 0, it goes down.',
+                'MH.footer.developer': 'Developer',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Links',
+                'MH.footer.terms': 'Terms of Use',
+                'MH.footer.privacy': 'Privacy Policy'
+            },
+            'ar': {
+                // Arabic translations (simplified, right-to-left will be handled by CSS)
+                'MH.general.homeTooltip': 'الذهاب إلى الصفحة الرئيسية',
+                'MH.general.install': 'تثبيت التطبيق',
+                'MH.general.installSuccess': 'تم تثبيت Mathematics Hub بنجاح!',
+                'MH.general.enableNotifications': 'تفعيل الإشعارات',
+                'MH.general.notificationEnabled': 'تم تفعيل الإشعارات! ستصلك التحديثات الآن.',
+                'MH.general.title': 'مركز الرياضيات',
+                'MH.general.theme': 'المظهر',
+                'MH.general.language': 'اللغة',
+                'MH.lesson_Y1Alg_fonLin1.showSolution': 'عرض الحل',
+                'MH.lesson_Y1Alg_fonLin1.hideSolution': 'إخفاء الحل',
+                'MH.lesson_Y1Alg_fonLin1.title': 'الدوال الخطية: الجزء الأول',
+                'MH.lesson_Y1Alg_fonLin1.subtitle': 'مقدمة إلى الدوال الخطية',
+                'MH.lesson_Y1Alg_fonLin1.part1': 'I. الدالة الخطية',
+                'MH.lesson_Y1Alg_fonLin1.part2': 'II. التمثيل البياني',
+                'MH.lesson_Y1Alg_fonLin1.activity1Title': 'النشاط 1 – النابض والكتلة',
+                'MH.lesson_Y1Alg_fonLin1.activity1Statement': 'من المعروف أن استطالة نابض والكتلة المعلقة به هما كميتان متناسبتان.',
+                'MH.lesson_Y1Alg_fonLin1.table1Title': 'جدول الكتلة – الاستطالة (لإكمال)',
+                'MH.lesson_Y1Alg_fonLin1.massLabel': 'الكتلة (غ)',
+                'MH.lesson_Y1Alg_fonLin1.extensionLabel': 'الاستطالة (سم)',
+                'MH.lesson_Y1Alg_fonLin1.table1Instructions': 'تلميح: معامل التناسب هو نفسه لجميع الأعمدة.',
+                'MH.lesson_Y1Alg_fonLin1.q1': '1) انسخ وأكمل الجدول أعلاه.',
+                'MH.lesson_Y1Alg_fonLin1.sol1Title': 'الجدول مكتملاً:',
+                'MH.lesson_Y1Alg_fonLin1.sol1Explain1': '🔍 تفسير: الاستطالة تتناسب مع الكتلة. نبحث عن معامل التناسب.',
+                'MH.lesson_Y1Alg_fonLin1.sol1Explain2': '📌 1 غ → 0.5 سم. إذن المعامل = 0.5 سم/غ.',
+                'MH.lesson_Y1Alg_fonLin1.sol1Explain3': '✅ 3 غ: 3 × 0.5 = 1.5 سم.   6 غ: 6 × 0.5 = 3 سم.   9 غ: 9 × 0.5 = 4.5 سم.',
+                'MH.lesson_Y1Alg_fonLin1.sol1Explain4': '🧮 استطالة 6 سم تقابل كتلة 12 غ (12 × 0.5 = 6).',
+                'MH.lesson_Y1Alg_fonLin1.sol1Explain5': '🔹 15 غ: 15 × 0.5 = 7.5 سم.',
+                'MH.lesson_Y1Alg_fonLin1.q2': '2) احسب معامل التناسب a.',
+                'MH.lesson_Y1Alg_fonLin1.sol2Step1': 'نأخذ عموداً تكون فيه القيمتان معروفتين: الكتلة = 1 غ، الاستطالة = 0.5 سم.',
+                'MH.lesson_Y1Alg_fonLin1.sol2Step2': '📐 تحقق بعمود آخر: 6 سم لـ 12 غ → 6 ÷ 12 = 0.5.',
+                'MH.lesson_Y1Alg_fonLin1.sol2Answer': 'معامل التناسب هو a = 0.5.',
+                'MH.lesson_Y1Alg_fonLin1.q3': '3) نرمز بـ x للكتلة (بالغرام). عبر عن الاستطالة f(x) (بالسم) بدلالة x.',
+                'MH.lesson_Y1Alg_fonLin1.sol3Step1': '📘 الاستطالة تتناسب مع الكتلة بمعامل a = 0.5.',
+                'MH.lesson_Y1Alg_fonLin1.sol3Step2': 'إذن f(x) = a × x = 0.5 x.',
+                'MH.lesson_Y1Alg_fonLin1.sol3Check': '✅ تحقق: إذا x = 1، f(1) = 0.5؛ x = 12، f(12) = 6؛ x = 15، f(15) = 7.5.',
+                'MH.lesson_Y1Alg_fonLin1.q4': '4) ما هي الاستطالة الموافقة لكتلة 24 غ؟',
+                'MH.lesson_Y1Alg_fonLin1.sol4': 'نستخدم f(x) = 0.5 x. مع x = 24: f(24) = 0.5 × 24 = 12.',
+                'MH.lesson_Y1Alg_fonLin1.sol4Answer': 'الاستطالة = 12 سم.',
+                'MH.lesson_Y1Alg_fonLin1.q5': '5) ما الكتلة التي تعطي استطالة 5 سم؟',
+                'MH.lesson_Y1Alg_fonLin1.sol5Step1': 'نبحث عن x حيث f(x) = 5.',
+                'MH.lesson_Y1Alg_fonLin1.sol5Answer': 'الكتلة = 10 غ.',
+                'MH.lesson_Y1Alg_fonLin1.q6': '6) ماذا تمثل الاستطالة لكتلة 9 غ مقارنة بالاستطالتين لكتلتين 3 غ و 6 غ؟',
+                'MH.lesson_Y1Alg_fonLin1.sol6Step1': '🔹 الاستطالة لـ 3 غ: f(3) = 1.5 سم.',
+                'MH.lesson_Y1Alg_fonLin1.sol6Step2': '🔹 الاستطالة لـ 6 غ: f(6) = 3 سم.',
+                'MH.lesson_Y1Alg_fonLin1.sol6Step3': '🔹 الاستطالة لـ 9 غ: f(9) = 4.5 سم.',
+                'MH.lesson_Y1Alg_fonLin1.sol6Step4': '📌 نلاحظ أن 9 = 3 + 6 و f(9) = 4.5 = 1.5 + 3 = f(3) + f(6).',
+                'MH.lesson_Y1Alg_fonLin1.sol6Conclusion': 'الاستطالة الكلية هي مجموع الاستطالتين. هذا يبين أن العلاقة خطية (تناسبية).',
+                'MH.lesson_Y1Alg_fonLin1.springCanvasTitle': 'الاستطالة بدلالة الكتلة',
+                'MH.lesson_Y1Alg_fonLin1.springCanvasInstructions': 'النقاط على استقامة واحدة تمر بالأصل. هذه دالة خطية.',
+                'MH.lesson_Y1Alg_fonLin1.synthTitle': '📘 ملخص – الدالة الخطية',
+                'MH.lesson_Y1Alg_fonLin1.synthText1': 'ليكن a عدداً حقيقياً. عندما نربط كل عدد حقيقي x بالعدد a x، نعرف دالة خطية f. نكتب:',
+                'MH.lesson_Y1Alg_fonLin1.synthLi1': 'f(x) هي صورة x بواسطة f.',
+                'MH.lesson_Y1Alg_fonLin1.synthLi2': 'x هو سابق لـ f(x).',
+                'MH.lesson_Y1Alg_fonLin1.examples': 'أمثلة:',
+                'MH.lesson_Y1Alg_fonLin1.example1': 'f(x) = 0.5x خطية (معامل 0.5).',
+                'MH.lesson_Y1Alg_fonLin1.example2': 'g(x) = -3x خطية (معامل –3).',
+                'MH.lesson_Y1Alg_fonLin1.example3': 'h(x) = 0x = 0 هي الدالة الصفرية.',
+                'MH.lesson_Y1Alg_fonLin1.activity2Title': 'النشاط 2 – الدالة f(x) = 2x',
+                'MH.lesson_Y1Alg_fonLin1.activity2Statement': 'نعتبر الدالة الخطية f المعرفة بـ f(x) = 2x.',
+                'MH.lesson_Y1Alg_fonLin1.q2_1': '1) انسخ وأكمل الجدول أدناه.',
+                'MH.lesson_Y1Alg_fonLin1.sol2_1Explain': '📌 الحسابات: f(-3)=2×(-3)=-6; f(-1.5)=2×(-1.5)=-3; f(0)=0; f(1)=2; f(4)=8.',
+                'MH.lesson_Y1Alg_fonLin1.linearCanvasTitle': 'تمثيل f(x) = 2x',
+                'MH.lesson_Y1Alg_fonLin1.linearCanvasInstructions': 'يمر المستقيم بالأصل (0,0) والنقطة A(1,2).',
+                'MH.lesson_Y1Alg_fonLin1.q2_2a': '2) أ) لكل قيمة x في الجدول، ضع النقطة (x, f(x)).',
+                'MH.lesson_Y1Alg_fonLin1.q2_2b': 'ب) ماذا تلاحظ؟',
+                'MH.lesson_Y1Alg_fonLin1.sol2_2': 'النقاط على استقامة واحدة. تبدو جميعها تنتمي إلى نفس المستقيم المار بالأصل.',
+                'MH.lesson_Y1Alg_fonLin1.q2_3a': '3) أ) ارسم المستقيم D المار بـ O(0,0) و A(1,2).',
+                'MH.lesson_Y1Alg_fonLin1.q2_3b': 'ب) ماذا تخمن بخصوص النقاط (x, f(x))؟',
+                'MH.lesson_Y1Alg_fonLin1.sol2_3': 'المستقيم D يمر بجميع نقاط الجدول. التخمين: التمثيل البياني لـ f هو المستقيم D.',
+                'MH.lesson_Y1Alg_fonLin1.q2_4a': '4) أ) على المستقيم D، حدد النقطة E التي أفصولها 3 واقرأ ترتيبتها.',
+                'MH.lesson_Y1Alg_fonLin1.q2_4b': 'ب) على المستقيم D، حدد النقطة F التي ترتيبتها -4 واقرأ أفصولها.',
+                'MH.lesson_Y1Alg_fonLin1.q2_4c': 'ج) ضع النقطة G(5, 2). هل G تنتمي إلى المستقيم D؟',
+                'MH.lesson_Y1Alg_fonLin1.sol2_4a': 'أ) معادلة D: y = 2x. لـ x = 3، y = 2×3 = 6. E(3;6).',
+                'MH.lesson_Y1Alg_fonLin1.sol2_4b': 'ب) y = –4 ⇒ –4 = 2x ⇒ x = –2. F(–2;–4).',
+                'MH.lesson_Y1Alg_fonLin1.sol2_4c': 'ج) G(5;2): f(5) = 2×5 = 10 ≠ 2. إذن G ليس على D.',
+                'MH.lesson_Y1Alg_fonLin1.graphSynthTitle': '📈 تذكر – التمثيل البياني',
+                'MH.lesson_Y1Alg_fonLin1.graphSynthText': 'في معلم (O,I,J)، مجموعة النقط M(x; f(x)) تسمى التمثيل البياني للدالة f. بالنسبة للدالة الخطية f(x)=ax، هذا التمثيل هو مستقيم يمر بالأصل. العدد a يسمى الميل (أو معامل التوجيه).',
+                'MH.lesson_Y1Alg_fonLin1.summaryTitle': 'ملخص الدرس',
+                'MH.lesson_Y1Alg_fonLin1.summary1': 'الدالة الخطية تكتب f(x) = a x حيث a عدد حقيقي (المعامل).',
+                'MH.lesson_Y1Alg_fonLin1.summary2': 'معامل تغيرها ثابت: (f(x)-f(x\'))/(x-x\') = a.',
+                'MH.lesson_Y1Alg_fonLin1.summary3': 'تمثيلها البياني مستقيم يمر بالأصل (0,0).',
+                'MH.lesson_Y1Alg_fonLin1.summary4': 'المعامل a هو الميل: إذا a > 0، المستقيم يصعد؛ إذا a < 0، المستقيم ينزل.',
+                'MH.footer.developer': 'المطور',
+                'MH.footer.version': 'الإصدار',
+                'MH.footer.links': 'روابط',
+                'MH.footer.terms': 'شروط الاستخدام',
+                'MH.footer.privacy': 'سياسة الخصوصية'
+            }
+        };
+
+        // Merge with global translations
+        if (typeof translations !== 'undefined') {
+            for (let lang in fonLin1Translations) {
+                if (translations[lang]) {
+                    translations[lang] = {...translations[lang], ...fonLin1Translations[lang]};
+                } else {
+                    translations[lang] = fonLin1Translations[lang];
+                }
+            }
+        } else {
+            var translations = fonLin1Translations;
+        }
+
+        // ============================================
+        // CANVAS DRAWING FUNCTIONS
+        // ============================================
+        function drawSpringCanvas() {
+            const canvas = document.getElementById('springCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            const pad = 50;
+            const graphW = w - 2 * pad;
+            const graphH = h - 2 * pad;
+            const xMin = -1, xMax = 17, yMin = -1, yMax = 9;
+
+            // axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(pad, h - pad);
+            ctx.lineTo(w - pad, h - pad);
+            ctx.moveTo(pad, pad);
+            ctx.lineTo(pad, h - pad);
+            ctx.stroke();
+
+            // graduations
+            ctx.fillStyle = '#333';
+            ctx.font = '12px Arial';
+            for (let x = 0; x <= 16; x+=2) {
+                let cx = pad + (x - xMin) / (xMax - xMin) * graphW;
+                ctx.fillText(x, cx - 8, h - pad + 20);
+            }
+            for (let y = 0; y <= 8; y+=2) {
+                let cy = h - pad - (y - yMin) / (yMax - yMin) * graphH;
+                ctx.fillText(y, pad - 30, cy + 5);
+            }
+
+            // points (mass, extension)
+            const points = [
+                {x:0, y:0}, {x:1, y:0.5}, {x:3, y:1.5}, {x:6, y:3},
+                {x:9, y:4.5}, {x:12, y:6}, {x:15, y:7.5}
+            ];
+            ctx.fillStyle = '#E74C3C';
+            points.forEach(p => {
+                let cx = pad + (p.x - xMin) / (xMax - xMin) * graphW;
+                let cy = h - pad - (p.y - yMin) / (yMax - yMin) * graphH;
+                ctx.beginPath();
+                ctx.arc(cx, cy, 5, 0, 2*Math.PI);
+                ctx.fill();
+            });
+
+            // line f(x)=0.5x
+            ctx.strokeStyle = '#3498DB';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            let x1 = 0, y1 = 0;
+            let x2 = 16, y2 = 0.5 * 16;
+            let cx1 = pad + (x1 - xMin) / (xMax - xMin) * graphW;
+            let cy1 = h - pad - (y1 - yMin) / (yMax - yMin) * graphH;
+            let cx2 = pad + (x2 - xMin) / (xMax - xMin) * graphW;
+            let cy2 = h - pad - (y2 - yMin) / (yMax - yMin) * graphH;
+            ctx.moveTo(cx1, cy1);
+            ctx.lineTo(cx2, cy2);
+            ctx.stroke();
+
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 14px Arial';
+            ctx.fillText('f(x) = 0,5x', w - 150, 40);
+        }
+
+        function drawLinearCanvas() {
+            const canvas = document.getElementById('linearCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            const pad = 50;
+            const graphW = w - 2 * pad;
+            const graphH = h - 2 * pad;
+            const xMin = -4, xMax = 5, yMin = -7, yMax = 9;
+
+            // axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(pad, h - pad);
+            ctx.lineTo(w - pad, h - pad);
+            ctx.moveTo(pad, pad);
+            ctx.lineTo(pad, h - pad);
+            ctx.stroke();
+
+            // graduations
+            ctx.fillStyle = '#333';
+            ctx.font = '12px Arial';
+            for (let x = -3; x <= 4; x++) {
+                let cx = pad + (x - xMin) / (xMax - xMin) * graphW;
+                ctx.fillText(x, cx - 8, h - pad + 20);
+            }
+            for (let y = -6; y <= 8; y+=2) {
+                let cy = h - pad - (y - yMin) / (yMax - yMin) * graphH;
+                ctx.fillText(y, pad - 30, cy + 5);
+            }
+
+            // points from table
+            const points = [
+                {x:-3, y:-6}, {x:-1.5, y:-3}, {x:0, y:0}, {x:1, y:2}, {x:4, y:8}
+            ];
+            ctx.fillStyle = '#F39C12';
+            points.forEach(p => {
+                let cx = pad + (p.x - xMin) / (xMax - xMin) * graphW;
+                let cy = h - pad - (p.y - yMin) / (yMax - yMin) * graphH;
+                ctx.beginPath();
+                ctx.arc(cx, cy, 5, 0, 2*Math.PI);
+                ctx.fill();
+            });
+
+            // line D: y = 2x
+            ctx.strokeStyle = '#2ECC71';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            let x1 = -3.5, y1 = 2 * x1;
+            let x2 = 4.5, y2 = 2 * x2;
+            let cx1 = pad + (x1 - xMin) / (xMax - xMin) * graphW;
+            let cy1 = h - pad - (y1 - yMin) / (yMax - yMin) * graphH;
+            let cx2 = pad + (x2 - xMin) / (xMax - xMin) * graphW;
+            let cy2 = h - pad - (y2 - yMin) / (yMax - yMin) * graphH;
+            ctx.moveTo(cx1, cy1);
+            ctx.lineTo(cx2, cy2);
+            ctx.stroke();
+
+            // point A(1,2) in red
+            ctx.fillStyle = '#E74C3C';
+            let ax = pad + (1 - xMin) / (xMax - xMin) * graphW;
+            let ay = h - pad - (2 - yMin) / (yMax - yMin) * graphH;
+            ctx.beginPath(); ctx.arc(ax, ay, 6, 0, 2*Math.PI); ctx.fill();
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 14px Arial';
+            ctx.fillText('A', ax+10, ay-10);
+            ctx.font = 'italic 12px Arial';
+            ctx.fillText('D : y = 2x', w-150, 40);
+        }
+
+        // Solution toggle function (identical to provided files)
+        function toggleSolution(problemNumber) {
+            const solution = document.getElementById(`solution${problemNumber}`);
+            if (!solution) return;
+            const button = solution.previousElementSibling;
+            const currentLang = (typeof MHThemeManager !== 'undefined' && MHThemeManager.getCurrentLanguage) ? MHThemeManager.getCurrentLanguage() : 'fr';
+            
+            if (solution.style.display === 'block' || solution.style.display === '') {
+                solution.style.display = 'none';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y1Alg_fonLin1.showSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y1Alg_fonLin1.showSolution'];
+                } else {
+                    button.textContent = 'Voir la solution';
+                }
+            } else {
+                solution.style.display = 'block';
+                if (translations[currentLang] && translations[currentLang]['MH.lesson_Y1Alg_fonLin1.hideSolution']) {
+                    button.textContent = translations[currentLang]['MH.lesson_Y1Alg_fonLin1.hideSolution'];
+                } else {
+                    button.textContent = 'Cacher la solution';
+                }
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(solution, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\(', right: '\\)', display: false},
+                            {left: '\\[', right: '\\]', display: true}
+                        ],
+                        throwOnError: false
+                    });
+                }
+            }
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            // KaTeX auto-render
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+            
+            // Draw canvases
+            drawSpringCanvas();
+            drawLinearCanvas();
+            
+            // Hide all solutions initially
+            const currentLang = (typeof MHThemeManager !== 'undefined' && MHThemeManager.getCurrentLanguage) ? MHThemeManager.getCurrentLanguage() : 'fr';
+            for (let i = 1; i <= 10; i++) {
+                const sol = document.getElementById(`solution${i}`);
+                const btn = sol ? sol.previousElementSibling : null;
+                if (sol) sol.style.display = 'none';
+                if (btn && translations[currentLang] && translations[currentLang]['MH.lesson_Y1Alg_fonLin1.showSolution']) {
+                    btn.textContent = translations[currentLang]['MH.lesson_Y1Alg_fonLin1.showSolution'];
+                }
+            }
+            
+            // Redraw on theme toggle
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    setTimeout(() => {
+                        drawSpringCanvas();
+                        drawLinearCanvas();
+                    }, 100);
+                });
+            }
+        });
+    </script>
+
+    <!-- Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').catch(e => console.log('SW registration failed', e));
+            });
+        }
+    </script>
+    <noscript>
+        <style>
+            .MH-header-controls { display: none; }
+            .MH-solution { display: block; }
+        </style>
+        <div class="MH-warning">JavaScript est recommandé pour une expérience complète, mais le contenu reste accessible.</div>
+    </noscript>
+</body>
+</html>

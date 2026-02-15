@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathématiques : Fonctions linéaires – Partie IV</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#3498DB" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#5DADE2" media="(prefers-color-scheme: dark)">
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#3498DB">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    <style>
+        /* reuse same palette */
+        :root {
+            --primary: #3498DB;        --primary-light: #5DADE2;  --primary-dark: #2E86C1;
+            --secondary: #2ECC71;      --secondary-light: #58D68D; --secondary-dark: #28B463;
+            --accent: #F39C12;          --warning: #E74C3C;        --info: #3498DB;
+            --text: #333333;            --text-light: #666666;     --background: #FFFFFF;
+            --surface: #F8F9FA;          --border: #E9ECEF;        --shadow: rgba(0,0,0,0.1);
+        }
+        [data-theme="dark"] {
+            --primary: #5DADE2;         --primary-light: #85C1E9;  --primary-dark: #3498DB;
+            --secondary: #28B463;        --secondary-light: #2ECC71; --secondary-dark: #1D8348;
+            --accent: #F39C12;            --warning: #C0392B;        --info: #2980B9;
+            --text: #FFFFFF;              --text-light: #CCCCCC;     --background: #121212;
+            --surface: #1E1E1E;            --border: #333333;        --shadow: rgba(0,0,0,0.3);
+        }
+        .katex { font-size: 1.1em; }
+        .MH-equation { font-family: inherit; font-size: inherit; color: inherit; margin: 0.5em 0; padding: 0; display: inline-block; }
+        .MH-canvas-container { margin: 2em 0; text-align: center; position: relative; }
+        .MH-canvas { border: 2px solid var(--border); border-radius: 8px; background-color: var(--surface); max-width: 100%; box-shadow: 0 4px 6px var(--shadow); }
+        .MH-canvas-title { font-weight: bold; margin-bottom: 0.5em; color: var(--primary); }
+        .MH-canvas-instructions { font-size: 0.9em; color: var(--text-light); margin-top: 0.5em; font-style: italic; }
+        .MH-sequence-item { margin: 0.5em 0; padding: 0.5em; background-color: var(--surface); border-left: 4px solid var(--secondary); border-radius: 4px; }
+        .MH-sequence-step { margin: 0.5em 0; padding-left: 1em; border-left: 2px solid var(--primary-light); }
+        .MH-formula-box { background-color: rgba(46, 204, 113, 0.1); border: 2px solid var(--secondary); border-radius: 8px; padding: 1.5em; margin: 1em 0; }
+        .MH-exercise-number { font-size: 1.2em; font-weight: bold; color: var(--secondary); margin: 1.5em 0 0.5em 0; border-bottom: 2px solid var(--secondary-light); padding-bottom: 0.3em; }
+        .MH-table { display: inline-block; border-collapse: collapse; margin: 1em 0; background-color: var(--surface); }
+        .MH-table td, .MH-table th { border: 1px solid var(--border); padding: 0.5em 1em; text-align: center; }
+        .MH-table th { background-color: var(--primary-light); color: var(--text); }
+        .MH-blank { color: var(--text-light); font-style: italic; }
+        .MH-solution { display: none; margin-top: 1em; padding: 1em; background-color: var(--surface); border-radius: 8px; border-left: 4px solid var(--primary); }
+        .MH-solution-btn { background-color: var(--primary); color: white; border: none; padding: 0.3em 1em; border-radius: 20px; cursor: pointer; margin: 0.5em 0; }
+        .MH-solution-btn:hover { background-color: var(--primary-dark); }
+        .point-red { fill: #E74C3C; stroke: #C0392B; }
+        .point-blue { fill: #3498DB; stroke: #2E86C1; }
+        .line-ex3 { stroke: #2ECC71; stroke-width: 3; }
+        .line-area { stroke: #F39C12; stroke-width: 3; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span> <span>🎨</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span> <span>🌐</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                        </div>
+                    </div>
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span> <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y1Alg_fonLin4.title">Fonctions linéaires : Partie IV</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y1Alg_fonLin4.subtitle">Exercices approfondis</h2>
+
+        <!-- ============ VI. EXERCICES APPROFONDIS ============ -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y1Alg_fonLin4.part6">VI. Exercices approfondis</div>
+
+            <!-- Exercice 1 – Premières manipulations -->
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonLin4.ex1_title">Exercice 1 – Premières manipulations</h3>
+            </div>
+            <div class="MH-step">
+                <!-- Q1a -->
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin4.ex1_q1a">a) Soit f(x) = 3x. Calculer f(2), f(5) et f(0,5).</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin4.showSolution" onclick="toggleSolution(1)">Voir la solution</button>
+                    <div class="MH-solution" id="solution1"><span data-i18n="MH.lesson_Y1Alg_fonLin4.ex1_q1a_sol"></span></div>
+                </div>
+                <!-- Q1b -->
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin4.ex1_q1b">b) Calculer f(3²) et f(√16).</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin4.showSolution" onclick="toggleSolution(2)">Voir la solution</button>
+                    <div class="MH-solution" id="solution2"><span data-i18n="MH.lesson_Y1Alg_fonLin4.ex1_q1b_sol"></span></div>
+                </div>
+                <!-- Q1c -->
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin4.ex1_q1c">c) Déterminer le nombre x tel que f(x) = 21.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin4.showSolution" onclick="toggleSolution(3)">Voir la solution</button>
+                    <div class="MH-solution" id="solution3"><span data-i18n="MH.lesson_Y1Alg_fonLin4.ex1_q1c_sol"></span></div>
+                </div>
+                <!-- Q1d -->
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin4.ex1_q1d">d) Déterminer le nombre x tel que f(x) = 49.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin4.showSolution" onclick="toggleSolution(4)">Voir la solution</button>
+                    <div class="MH-solution" id="solution4"><span data-i18n="MH.lesson_Y1Alg_fonLin4.ex1_q1d_sol"></span></div>
+                </div>
+                <!-- Canvas pour f(x)=3x -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y1Alg_fonLin4.canvas1_title">Représentation de f(x) = 3x</div>
+                    <canvas id="funcCanvas4" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y1Alg_fonLin4.canvas1_inst">La droite passe par l’origine et par le point A(1 ; 3).</div>
+                </div>
+            </div>
+
+            <!-- Exercice 2 – Trouver le coefficient -->
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonLin4.ex2_title">Exercice 2 – Trouver le coefficient</h3>
+            </div>
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin4.ex2_q2a">a) Une fonction linéaire h vérifie h(3) = 12. Déterminer son coefficient a.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin4.showSolution" onclick="toggleSolution(5)">Voir la solution</button>
+                    <div class="MH-solution" id="solution5"><span data-i18n="MH.lesson_Y1Alg_fonLin4.ex2_q2a_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin4.ex2_q2b">b) Donner l’expression de h(x).</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin4.showSolution" onclick="toggleSolution(6)">Voir la solution</button>
+                    <div class="MH-solution" id="solution6"><span data-i18n="MH.lesson_Y1Alg_fonLin4.ex2_q2b_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin4.ex2_q2c">c) Calculer h(2²) et h(√25).</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin4.showSolution" onclick="toggleSolution(7)">Voir la solution</button>
+                    <div class="MH-solution" id="solution7"><span data-i18n="MH.lesson_Y1Alg_fonLin4.ex2_q2c_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin4.ex2_q2d">d) Trouver le nombre t tel que h(t) = 36.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin4.showSolution" onclick="toggleSolution(8)">Voir la solution</button>
+                    <div class="MH-solution" id="solution8"><span data-i18n="MH.lesson_Y1Alg_fonLin4.ex2_q2d_sol"></span></div>
+                </div>
+            </div>
+
+            <!-- Exercice 3 – Avec des carrés et racines -->
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonLin4.ex3_title">Exercice 3 – Avec des carrés et racines</h3>
+            </div>
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin4.ex3_q3a">a) Soit g une fonction linéaire telle que g(4) = 10. Déterminer g(x).</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin4.showSolution" onclick="toggleSolution(9)">Voir la solution</button>
+                    <div class="MH-solution" id="solution9"><span data-i18n="MH.lesson_Y1Alg_fonLin4.ex3_q3a_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin4.ex3_q3b">b) Calculer g(√2) (valeur exacte puis approchée au centième).</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin4.showSolution" onclick="toggleSolution(10)">Voir la solution</button>
+                    <div class="MH-solution" id="solution10"><span data-i18n="MH.lesson_Y1Alg_fonLin4.ex3_q3b_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin4.ex3_q3c">c) Résoudre g(x) = 15.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin4.showSolution" onclick="toggleSolution(11)">Voir la solution</button>
+                    <div class="MH-solution" id="solution11"><span data-i18n="MH.lesson_Y1Alg_fonLin4.ex3_q3c_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin4.ex3_q3d">d) Résoudre g(x²) = 20 (x > 0).</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin4.showSolution" onclick="toggleSolution(12)">Voir la solution</button>
+                    <div class="MH-solution" id="solution12"><span data-i18n="MH.lesson_Y1Alg_fonLin4.ex3_q3d_sol"></span></div>
+                </div>
+            </div>
+
+            <!-- Exercice 4 – Périmètre et aire d’un carré -->
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonLin4.ex4_title">Exercice 4 – Périmètre et aire d’un carré</h3>
+            </div>
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin4.ex4_q4a">a) Le périmètre d’un carré est donné par P = 4c (c = côté). Exprimer la fonction linéaire f qui donne le périmètre en fonction du côté.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin4.showSolution" onclick="toggleSolution(13)">Voir la solution</button>
+                    <div class="MH-solution" id="solution13"><span data-i18n="MH.lesson_Y1Alg_fonLin4.ex4_q4a_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin4.ex4_q4b">b) Calculer f(3) et f(7).</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin4.showSolution" onclick="toggleSolution(14)">Voir la solution</button>
+                    <div class="MH-solution" id="solution14"><span data-i18n="MH.lesson_Y1Alg_fonLin4.ex4_q4b_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin4.ex4_q4c">c) Si le périmètre est 30 cm, quelle est la longueur du côté ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin4.showSolution" onclick="toggleSolution(15)">Voir la solution</button>
+                    <div class="MH-solution" id="solution15"><span data-i18n="MH.lesson_Y1Alg_fonLin4.ex4_q4c_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin4.ex4_q4d">d) En déduire l’aire du carré.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin4.showSolution" onclick="toggleSolution(16)">Voir la solution</button>
+                    <div class="MH-solution" id="solution16"><span data-i18n="MH.lesson_Y1Alg_fonLin4.ex4_q4d_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin4.ex4_q4e">e) Soit g la fonction linéaire qui donne le côté en fonction du périmètre (c = P/4). Calculer g(20).</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin4.showSolution" onclick="toggleSolution(17)">Voir la solution</button>
+                    <div class="MH-solution" id="solution17"><span data-i18n="MH.lesson_Y1Alg_fonLin4.ex4_q4e_sol"></span></div>
+                </div>
+            </div>
+
+            <!-- Exercice 5 – Équations variées -->
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonLin4.ex5_title">Exercice 5 – Équations variées</h3>
+                <p data-i18n="MH.lesson_Y1Alg_fonLin4.ex5_stmt">Résoudre les équations suivantes (x est un nombre positif).</p>
+            </div>
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin4.ex5_q5a">a) 5x = 35</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin4.showSolution" onclick="toggleSolution(18)">Voir la solution</button>
+                    <div class="MH-solution" id="solution18"><span data-i18n="MH.lesson_Y1Alg_fonLin4.ex5_q5a_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin4.ex5_q5b">b) 7x = 49</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin4.showSolution" onclick="toggleSolution(19)">Voir la solution</button>
+                    <div class="MH-solution" id="solution19"><span data-i18n="MH.lesson_Y1Alg_fonLin4.ex5_q5b_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin4.ex5_q5c">c) 3x² = 27</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin4.showSolution" onclick="toggleSolution(20)">Voir la solution</button>
+                    <div class="MH-solution" id="solution20"><span data-i18n="MH.lesson_Y1Alg_fonLin4.ex5_q5c_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin4.ex5_q5d">d) 2√x = 8</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin4.showSolution" onclick="toggleSolution(21)">Voir la solution</button>
+                    <div class="MH-solution" id="solution21"><span data-i18n="MH.lesson_Y1Alg_fonLin4.ex5_q5d_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin4.ex5_q5e">e) 4x³ = 32</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin4.showSolution" onclick="toggleSolution(22)">Voir la solution</button>
+                    <div class="MH-solution" id="solution22"><span data-i18n="MH.lesson_Y1Alg_fonLin4.ex5_q5e_sol"></span></div>
+                </div>
+            </div>
+
+            <!-- Petit résumé -->
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonLin4.remember">📌 À retenir</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y1Alg_fonLin4.rem1">Une fonction linéaire est de la forme \(f(x)=ax\).</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonLin4.rem2">Pour trouver le coefficient \(a\), on utilise une valeur donnée : \(a = \frac{f(x)}{x}\).</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonLin4.rem3">Avec des carrés ou des racines, on se ramène toujours à une équation de type \(ax = b\) après avoir simplifié.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column"><div class="MH-footer-title" data-i18n="MH.footer.developer">Développeur</div><div class="MH-footer-text">Mejri Ziad</div></div>
+            <div class="MH-footer-column"><div class="MH-footer-title" data-i18n="MH.footer.version">Version</div><div class="MH-footer-text">v0.6.0</div></div>
+            <div class="MH-footer-column"><div class="MH-footer-title" data-i18n="MH.footer.links">Liens</div><div class="MH-footer-links"><a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Conditions d'utilisation</a><a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Politique de confidentialité</a></div></div>
+        </div>
+    </footer>
+
+    <!-- scripts -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+
+    <script>
+        // ============================================
+        // TRADUCTIONS COMPLÈTES – Partie IV (avec String.raw pour les solutions)
+        // ============================================
+        const fonLin4Translations = {
+            'fr': {
+                // Général
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Thème',
+                'MH.general.language': 'Langue',
+                'MH.general.enableNotifications': 'Activer les notifications',
+                'MH.lesson_Y1Alg_fonLin4.showSolution': 'Voir la solution',
+                'MH.lesson_Y1Alg_fonLin4.hideSolution': 'Cacher la solution',
+
+                // Titres
+                'MH.lesson_Y1Alg_fonLin4.title': 'Fonctions linéaires : Partie IV',
+                'MH.lesson_Y1Alg_fonLin4.subtitle': 'Exercices approfondis',
+                'MH.lesson_Y1Alg_fonLin4.part6': 'VI. Exercices approfondis',
+
+                // Exercice 1
+                'MH.lesson_Y1Alg_fonLin4.ex1_title': 'Exercice 1 – Premières manipulations',
+                'MH.lesson_Y1Alg_fonLin4.ex1_q1a': 'a) Soit f(x) = 3x. Calculer f(2), f(5) et f(0,5).',
+                'MH.lesson_Y1Alg_fonLin4.ex1_q1b': 'b) Calculer f(3²) et f(√16).',
+                'MH.lesson_Y1Alg_fonLin4.ex1_q1c': 'c) Déterminer le nombre x tel que f(x) = 21.',
+                'MH.lesson_Y1Alg_fonLin4.ex1_q1d': 'd) Déterminer le nombre x tel que f(x) = 49.',
+                'MH.lesson_Y1Alg_fonLin4.ex1_q1a_sol': String.raw`<div class="MH-sequence-step"><p><strong>Réponse :</strong> f(2)=6, f(5)=15, f(0,5)=1,5.</p><p>🔍 <strong>Explication :</strong> f(x)=3x. Il suffit de multiplier chaque valeur par 3.</p><ul><li>f(2)=3×2=6</li><li>f(5)=3×5=15</li><li>f(0,5)=3×0,5=1,5</li></ul><p>📌 On obtient directement les images.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex1_q1b_sol': String.raw`<div class="MH-sequence-step"><p><strong>Réponse :</strong> f(3²)=27, f(√16)=12.</p><p>🔍 <strong>Explication :</strong> D'abord on simplifie : 3² = 9, √16 = 4. Ensuite on applique f.</p><ul><li>f(9)=3×9=27</li><li>f(4)=3×4=12</li></ul><p>📌 Il faut d'abord calculer la puissance ou la racine.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex1_q1c_sol': String.raw`<div class="MH-sequence-step"><p><strong>Réponse :</strong> x = 7.</p><p>🔍 <strong>Explication :</strong> On résout 3x = 21. Pour isoler x, on divise par 3 : x = 21/3 = 7.</p><p>📌 Vérification : 3×7=21, c'est correct.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex1_q1d_sol': String.raw`<div class="MH-sequence-step"><p><strong>Réponse :</strong> x = 49/3 ≈ 16,333.</p><p>🔍 <strong>Explication :</strong> On a 3x = 49. Donc x = 49/3. On peut laisser sous forme fractionnaire ou donner une valeur décimale.</p><p>📌 49/3 ≈ 16,333 car 3×16,333 = 48,999 ≈ 49.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.canvas1_title': 'Représentation de f(x) = 3x',
+                'MH.lesson_Y1Alg_fonLin4.canvas1_inst': 'La droite passe par l’origine et par le point A(1 ; 3).',
+
+                // Exercice 2
+                'MH.lesson_Y1Alg_fonLin4.ex2_title': 'Exercice 2 – Trouver le coefficient',
+                'MH.lesson_Y1Alg_fonLin4.ex2_q2a': 'a) Une fonction linéaire h vérifie h(3) = 12. Déterminer son coefficient a.',
+                'MH.lesson_Y1Alg_fonLin4.ex2_q2b': 'b) Donner l’expression de h(x).',
+                'MH.lesson_Y1Alg_fonLin4.ex2_q2c': 'c) Calculer h(2²) et h(√25).',
+                'MH.lesson_Y1Alg_fonLin4.ex2_q2d': 'd) Trouver le nombre t tel que h(t) = 36.',
+                'MH.lesson_Y1Alg_fonLin4.ex2_q2a_sol': String.raw`<div class="MH-sequence-step"><p><strong>Réponse :</strong> a = 4.</p><p>🔍 <strong>Explication :</strong> Pour une fonction linéaire, h(x)=a x. On sait que h(3)=12, donc a×3 = 12. On divise par 3 : a = 12/3 = 4.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex2_q2b_sol': String.raw`<div class="MH-sequence-step"><p><strong>Réponse :</strong> h(x) = 4x.</p><p>🔍 <strong>Explication :</strong> On remplace a par 4 dans l'expression générale.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex2_q2c_sol': String.raw`<div class="MH-sequence-step"><p><strong>Réponse :</strong> h(2²)=16, h(√25)=20.</p><p>🔍 <strong>Explication :</strong> 2²=4, donc h(4)=4×4=16. √25=5, donc h(5)=4×5=20.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex2_q2d_sol': String.raw`<div class="MH-sequence-step"><p><strong>Réponse :</strong> t = 9.</p><p>🔍 <strong>Explication :</strong> On résout 4t = 36. t = 36/4 = 9.</p></div>`,
+
+                // Exercice 3
+                'MH.lesson_Y1Alg_fonLin4.ex3_title': 'Exercice 3 – Avec des carrés et racines',
+                'MH.lesson_Y1Alg_fonLin4.ex3_q3a': 'a) Soit g une fonction linéaire telle que g(4) = 10. Déterminer g(x).',
+                'MH.lesson_Y1Alg_fonLin4.ex3_q3b': 'b) Calculer g(√2) (valeur exacte puis approchée au centième).',
+                'MH.lesson_Y1Alg_fonLin4.ex3_q3c': 'c) Résoudre g(x) = 15.',
+                'MH.lesson_Y1Alg_fonLin4.ex3_q3d': 'd) Résoudre g(x²) = 20 (x > 0).',
+                'MH.lesson_Y1Alg_fonLin4.ex3_q3a_sol': String.raw`<div class="MH-sequence-step"><p><strong>Réponse :</strong> g(x) = 2,5 x.</p><p>🔍 <strong>Explication :</strong> g(4)=10 ⇒ a×4=10 ⇒ a=10/4=2,5.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex3_q3b_sol': String.raw`<div class="MH-sequence-step"><p><strong>Réponse :</strong> g(√2) = 2,5√2 ≈ 3,54.</p><p>🔍 <strong>Explication :</strong> On remplace x par √2 : 2,5 × √2. Valeur exacte 2,5√2. Approximation : √2≈1,4142, donc 2,5×1,4142=3,5355 ≈ 3,54 (au centième).</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex3_q3c_sol': String.raw`<div class="MH-sequence-step"><p><strong>Réponse :</strong> x = 6.</p><p>🔍 <strong>Explication :</strong> 2,5x = 15 ⇒ x = 15/2,5 = 6. (15 ÷ 2,5 = 6)</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex3_q3d_sol': String.raw`<div class="MH-sequence-step"><p><strong>Réponse :</strong> x = √8 = 2√2 ≈ 2,828.</p><p>🔍 <strong>Explication :</strong> g(x²)=2,5 × x² = 20 ⇒ x² = 20/2,5 = 8. Comme x>0, x = √8 = 2√2 ≈ 2,828.</p></div>`,
+
+                // Exercice 4
+                'MH.lesson_Y1Alg_fonLin4.ex4_title': 'Exercice 4 – Périmètre et aire d’un carré',
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4a': 'a) Le périmètre d’un carré est donné par P = 4c (c = côté). Exprimer la fonction linéaire f qui donne le périmètre en fonction du côté.',
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4b': 'b) Calculer f(3) et f(7).',
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4c': 'c) Si le périmètre est 30 cm, quelle est la longueur du côté ?',
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4d': 'd) En déduire l’aire du carré.',
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4e': 'e) Soit g la fonction linéaire qui donne le côté en fonction du périmètre (c = P/4). Calculer g(20).',
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4a_sol': String.raw`<div class="MH-sequence-step"><p><strong>Réponse :</strong> f(c) = 4c.</p><p>🔍 <strong>Explication :</strong> C'est directement donné par l'énoncé. f est linéaire car elle s'écrit 4 × c.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4b_sol': String.raw`<div class="MH-sequence-step"><p><strong>Réponse :</strong> f(3)=12, f(7)=28.</p><p>🔍 <strong>Explication :</strong> f(3)=4×3=12, f(7)=4×7=28.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4c_sol': String.raw`<div class="MH-sequence-step"><p><strong>Réponse :</strong> c = 7,5 cm.</p><p>🔍 <strong>Explication :</strong> On a 4c = 30 ⇒ c = 30/4 = 7,5 cm.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4d_sol': String.raw`<div class="MH-sequence-step"><p><strong>Réponse :</strong> Aire = 56,25 cm².</p><p>🔍 <strong>Explication :</strong> Aire d'un carré = c² = (7,5)² = 56,25 cm².</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4e_sol': String.raw`<div class="MH-sequence-step"><p><strong>Réponse :</strong> g(20) = 5.</p><p>🔍 <strong>Explication :</strong> g(P) = P/4, donc g(20) = 20/4 = 5.</p></div>`,
+
+                // Exercice 5
+                'MH.lesson_Y1Alg_fonLin4.ex5_title': 'Exercice 5 – Équations variées',
+                'MH.lesson_Y1Alg_fonLin4.ex5_stmt': 'Résoudre les équations suivantes (x est un nombre positif).',
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5a': 'a) 5x = 35',
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5b': 'b) 7x = 49',
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5c': 'c) 3x² = 27',
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5d': 'd) 2√x = 8',
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5e': 'e) 4x³ = 32',
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5a_sol': String.raw`<div class="MH-sequence-step"><p><strong>Réponse :</strong> x = 7.</p><p>🔍 <strong>Explication :</strong> 5x=35 ⇒ x=35/5=7.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5b_sol': String.raw`<div class="MH-sequence-step"><p><strong>Réponse :</strong> x = 7.</p><p>🔍 <strong>Explication :</strong> 7x=49 ⇒ x=49/7=7.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5c_sol': String.raw`<div class="MH-sequence-step"><p><strong>Réponse :</strong> x = 3.</p><p>🔍 <strong>Explication :</strong> 3x² = 27 ⇒ x² = 27/3 = 9. Comme x>0, x = √9 = 3.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5d_sol': String.raw`<div class="MH-sequence-step"><p><strong>Réponse :</strong> x = 16.</p><p>🔍 <strong>Explication :</strong> 2√x = 8 ⇒ √x = 8/2 = 4. Donc x = 4² = 16.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5e_sol': String.raw`<div class="MH-sequence-step"><p><strong>Réponse :</strong> x = 2.</p><p>🔍 <strong>Explication :</strong> 4x³ = 32 ⇒ x³ = 32/4 = 8. Donc x = ∛8 = 2.</p></div>`,
+
+                // Résumé
+                'MH.lesson_Y1Alg_fonLin4.remember': '📌 À retenir',
+                'MH.lesson_Y1Alg_fonLin4.rem1': 'Une fonction linéaire est de la forme \\(f(x)=ax\\).',
+                'MH.lesson_Y1Alg_fonLin4.rem2': 'Pour trouver le coefficient \\(a\\), on utilise une valeur donnée : \\(a = \\frac{f(x)}{x}\\).',
+                'MH.lesson_Y1Alg_fonLin4.rem3': 'Avec des carrés ou des racines, on se ramène toujours à une équation de type \\(ax = b\\) après avoir simplifié.',
+
+                // Footer
+                'MH.footer.developer': 'Développeur',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Liens',
+                'MH.footer.terms': "Conditions d'utilisation",
+                'MH.footer.privacy': 'Politique de confidentialité'
+            },
+            'en': {
+                // General
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Theme',
+                'MH.general.language': 'Language',
+                'MH.general.enableNotifications': 'Enable notifications',
+                'MH.lesson_Y1Alg_fonLin4.showSolution': 'Show solution',
+                'MH.lesson_Y1Alg_fonLin4.hideSolution': 'Hide solution',
+
+                // Titles
+                'MH.lesson_Y1Alg_fonLin4.title': 'Linear functions: Part IV',
+                'MH.lesson_Y1Alg_fonLin4.subtitle': 'Advanced exercises',
+                'MH.lesson_Y1Alg_fonLin4.part6': 'VI. Advanced exercises',
+
+                // Exercise 1
+                'MH.lesson_Y1Alg_fonLin4.ex1_title': 'Exercise 1 – First steps',
+                'MH.lesson_Y1Alg_fonLin4.ex1_q1a': 'a) Let f(x) = 3x. Compute f(2), f(5) and f(0.5).',
+                'MH.lesson_Y1Alg_fonLin4.ex1_q1b': 'b) Compute f(3²) and f(√16).',
+                'MH.lesson_Y1Alg_fonLin4.ex1_q1c': 'c) Find the number x such that f(x) = 21.',
+                'MH.lesson_Y1Alg_fonLin4.ex1_q1d': 'd) Find the number x such that f(x) = 49.',
+                'MH.lesson_Y1Alg_fonLin4.ex1_q1a_sol': String.raw`<div class="MH-sequence-step"><p><strong>Answer:</strong> f(2)=6, f(5)=15, f(0.5)=1.5.</p><p>🔍 <strong>Explanation:</strong> f(x)=3x. Just multiply each value by 3.</p><ul><li>f(2)=3×2=6</li><li>f(5)=3×5=15</li><li>f(0.5)=3×0.5=1.5</li></ul></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex1_q1b_sol': String.raw`<div class="MH-sequence-step"><p><strong>Answer:</strong> f(3²)=27, f(√16)=12.</p><p>🔍 <strong>Explanation:</strong> First simplify: 3²=9, √16=4. Then apply f.</p><ul><li>f(9)=3×9=27</li><li>f(4)=3×4=12</li></ul></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex1_q1c_sol': String.raw`<div class="MH-sequence-step"><p><strong>Answer:</strong> x = 7.</p><p>🔍 <strong>Explanation:</strong> Solve 3x = 21 ⇒ x = 21/3 = 7.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex1_q1d_sol': String.raw`<div class="MH-sequence-step"><p><strong>Answer:</strong> x = 49/3 ≈ 16.333.</p><p>🔍 <strong>Explanation:</strong> 3x = 49 ⇒ x = 49/3.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.canvas1_title': 'Graph of f(x) = 3x',
+                'MH.lesson_Y1Alg_fonLin4.canvas1_inst': 'The line passes through the origin and point A(1 ; 3).',
+
+                // Exercise 2
+                'MH.lesson_Y1Alg_fonLin4.ex2_title': 'Exercise 2 – Finding the coefficient',
+                'MH.lesson_Y1Alg_fonLin4.ex2_q2a': 'a) A linear function h satisfies h(3) = 12. Find its coefficient a.',
+                'MH.lesson_Y1Alg_fonLin4.ex2_q2b': 'b) Write the expression of h(x).',
+                'MH.lesson_Y1Alg_fonLin4.ex2_q2c': 'c) Compute h(2²) and h(√25).',
+                'MH.lesson_Y1Alg_fonLin4.ex2_q2d': 'd) Find the number t such that h(t) = 36.',
+                'MH.lesson_Y1Alg_fonLin4.ex2_q2a_sol': String.raw`<div class="MH-sequence-step"><p><strong>Answer:</strong> a = 4.</p><p>🔍 <strong>Explanation:</strong> h(x)=a x, h(3)=12 ⇒ a×3=12 ⇒ a=12/3=4.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex2_q2b_sol': String.raw`<div class="MH-sequence-step"><p><strong>Answer:</strong> h(x)=4x.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex2_q2c_sol': String.raw`<div class="MH-sequence-step"><p><strong>Answer:</strong> h(2²)=16, h(√25)=20.</p><p>🔍 <strong>Explanation:</strong> 2²=4 ⇒ 4×4=16; √25=5 ⇒ 4×5=20.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex2_q2d_sol': String.raw`<div class="MH-sequence-step"><p><strong>Answer:</strong> t = 9.</p><p>🔍 <strong>Explanation:</strong> 4t = 36 ⇒ t=36/4=9.</p></div>`,
+
+                // Exercise 3
+                'MH.lesson_Y1Alg_fonLin4.ex3_title': 'Exercise 3 – Squares and roots',
+                'MH.lesson_Y1Alg_fonLin4.ex3_q3a': 'a) Let g be a linear function such that g(4) = 10. Determine g(x).',
+                'MH.lesson_Y1Alg_fonLin4.ex3_q3b': 'b) Compute g(√2) (exact value then approximate to hundredths).',
+                'MH.lesson_Y1Alg_fonLin4.ex3_q3c': 'c) Solve g(x) = 15.',
+                'MH.lesson_Y1Alg_fonLin4.ex3_q3d': 'd) Solve g(x²) = 20 (x > 0).',
+                'MH.lesson_Y1Alg_fonLin4.ex3_q3a_sol': String.raw`<div class="MH-sequence-step"><p><strong>Answer:</strong> g(x)=2.5 x.</p><p>🔍 <strong>Explanation:</strong> g(4)=10 ⇒ a×4=10 ⇒ a=10/4=2.5.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex3_q3b_sol': String.raw`<div class="MH-sequence-step"><p><strong>Answer:</strong> g(√2)=2.5√2 ≈ 3.54.</p><p>🔍 <strong>Explanation:</strong> 2.5×√2, √2≈1.4142 ⇒ 2.5×1.4142=3.5355≈3.54.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex3_q3c_sol': String.raw`<div class="MH-sequence-step"><p><strong>Answer:</strong> x = 6.</p><p>🔍 <strong>Explanation:</strong> 2.5x=15 ⇒ x=15/2.5=6.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex3_q3d_sol': String.raw`<div class="MH-sequence-step"><p><strong>Answer:</strong> x = √8 = 2√2 ≈ 2.828.</p><p>🔍 <strong>Explanation:</strong> 2.5×x²=20 ⇒ x²=8 ⇒ x=√8 (positive).</p></div>`,
+
+                // Exercise 4
+                'MH.lesson_Y1Alg_fonLin4.ex4_title': 'Exercise 4 – Perimeter and area of a square',
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4a': 'a) The perimeter of a square is P = 4c (c = side). Write the linear function f that gives the perimeter as a function of the side.',
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4b': 'b) Compute f(3) and f(7).',
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4c': 'c) If the perimeter is 30 cm, what is the side length?',
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4d': 'd) Deduce the area of the square.',
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4e': 'e) Let g be the linear function that gives the side as a function of the perimeter (c = P/4). Compute g(20).',
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4a_sol': String.raw`<div class="MH-sequence-step"><p><strong>Answer:</strong> f(c)=4c.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4b_sol': String.raw`<div class="MH-sequence-step"><p><strong>Answer:</strong> f(3)=12, f(7)=28.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4c_sol': String.raw`<div class="MH-sequence-step"><p><strong>Answer:</strong> c = 7.5 cm.</p><p>🔍 <strong>Explanation:</strong> 4c=30 ⇒ c=30/4=7.5.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4d_sol': String.raw`<div class="MH-sequence-step"><p><strong>Answer:</strong> Area = 56.25 cm².</p><p>🔍 <strong>Explanation:</strong> c² = (7.5)² = 56.25.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4e_sol': String.raw`<div class="MH-sequence-step"><p><strong>Answer:</strong> g(20)=5.</p><p>🔍 <strong>Explanation:</strong> g(P)=P/4 ⇒ 20/4=5.</p></div>`,
+
+                // Exercise 5
+                'MH.lesson_Y1Alg_fonLin4.ex5_title': 'Exercise 5 – Various equations',
+                'MH.lesson_Y1Alg_fonLin4.ex5_stmt': 'Solve the following equations (x is positive).',
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5a': 'a) 5x = 35',
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5b': 'b) 7x = 49',
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5c': 'c) 3x² = 27',
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5d': 'd) 2√x = 8',
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5e': 'e) 4x³ = 32',
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5a_sol': String.raw`<div class="MH-sequence-step"><p><strong>Answer:</strong> x=7.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5b_sol': String.raw`<div class="MH-sequence-step"><p><strong>Answer:</strong> x=7.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5c_sol': String.raw`<div class="MH-sequence-step"><p><strong>Answer:</strong> x=3.</p><p>🔍 <strong>Explanation:</strong> x²=9 ⇒ x=3 (positive).</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5d_sol': String.raw`<div class="MH-sequence-step"><p><strong>Answer:</strong> x=16.</p><p>🔍 <strong>Explanation:</strong> √x=4 ⇒ x=16.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5e_sol': String.raw`<div class="MH-sequence-step"><p><strong>Answer:</strong> x=2.</p><p>🔍 <strong>Explanation:</strong> x³=8 ⇒ x=2.</p></div>`,
+
+                // Summary
+                'MH.lesson_Y1Alg_fonLin4.remember': '📌 Remember',
+                'MH.lesson_Y1Alg_fonLin4.rem1': 'A linear function is of the form \\(f(x)=ax\\).',
+                'MH.lesson_Y1Alg_fonLin4.rem2': 'To find the coefficient \\(a\\), use a given value: \\(a = \\frac{f(x)}{x}\\).',
+                'MH.lesson_Y1Alg_fonLin4.rem3': 'With squares or roots, we always end up with an equation like \\(ax = b\\) after simplification.',
+
+                // Footer
+                'MH.footer.developer': 'Developer',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Links',
+                'MH.footer.terms': 'Terms of use',
+                'MH.footer.privacy': 'Privacy policy'
+            },
+            'ar': {
+                // General
+                'MH.general.title': 'مركز الرياضيات',
+                'MH.general.theme': 'المظهر',
+                'MH.general.language': 'اللغة',
+                'MH.general.enableNotifications': 'تفعيل الإشعارات',
+                'MH.lesson_Y1Alg_fonLin4.showSolution': 'عرض الحل',
+                'MH.lesson_Y1Alg_fonLin4.hideSolution': 'إخفاء الحل',
+
+                // Titles
+                'MH.lesson_Y1Alg_fonLin4.title': 'الدوال الخطية: الجزء الرابع',
+                'MH.lesson_Y1Alg_fonLin4.subtitle': 'تمارين متقدمة',
+                'MH.lesson_Y1Alg_fonLin4.part6': 'سادساً. تمارين متقدمة',
+
+                // Exercise 1
+                'MH.lesson_Y1Alg_fonLin4.ex1_title': 'تمرين 1 – خطوات أولى',
+                'MH.lesson_Y1Alg_fonLin4.ex1_q1a': 'أ) لتكن f(x) = 3x. احسب f(2)، f(5) و f(0.5).',
+                'MH.lesson_Y1Alg_fonLin4.ex1_q1b': 'ب) احسب f(3²) و f(√16).',
+                'MH.lesson_Y1Alg_fonLin4.ex1_q1c': 'ج) أوجد العدد x بحيث f(x) = 21.',
+                'MH.lesson_Y1Alg_fonLin4.ex1_q1d': 'د) أوجد العدد x بحيث f(x) = 49.',
+                'MH.lesson_Y1Alg_fonLin4.ex1_q1a_sol': String.raw`<div class="MH-sequence-step"><p><strong>الجواب:</strong> f(2)=6، f(5)=15، f(0.5)=1.5.</p><p>🔍 <strong>التفسير:</strong> f(x)=3x. نضرب كل قيمة في 3.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex1_q1b_sol': String.raw`<div class="MH-sequence-step"><p><strong>الجواب:</strong> f(3²)=27، f(√16)=12.</p><p>🔍 <strong>التفسير:</strong> 3²=9، √16=4، ثم نطبق f.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex1_q1c_sol': String.raw`<div class="MH-sequence-step"><p><strong>الجواب:</strong> x = 7.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex1_q1d_sol': String.raw`<div class="MH-sequence-step"><p><strong>الجواب:</strong> x = 49/3 ≈ 16.333.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.canvas1_title': 'تمثيل الدالة f(x) = 3x',
+                'MH.lesson_Y1Alg_fonLin4.canvas1_inst': 'المستقيم يمر عبر الأصل والنقطة A(1 ; 3).',
+
+                // Exercise 2
+                'MH.lesson_Y1Alg_fonLin4.ex2_title': 'تمرين 2 – إيجاد المعامل',
+                'MH.lesson_Y1Alg_fonLin4.ex2_q2a': 'أ) دالة خطية h تحقق h(3) = 12. أوجد معاملها a.',
+                'MH.lesson_Y1Alg_fonLin4.ex2_q2b': 'ب) اكتب عبارة h(x).',
+                'MH.lesson_Y1Alg_fonLin4.ex2_q2c': 'ج) احسب h(2²) و h(√25).',
+                'MH.lesson_Y1Alg_fonLin4.ex2_q2d': 'د) أوجد العدد t بحيث h(t) = 36.',
+                'MH.lesson_Y1Alg_fonLin4.ex2_q2a_sol': String.raw`<div class="MH-sequence-step"><p><strong>الجواب:</strong> a = 4.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex2_q2b_sol': String.raw`<div class="MH-sequence-step"><p><strong>الجواب:</strong> h(x)=4x.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex2_q2c_sol': String.raw`<div class="MH-sequence-step"><p><strong>الجواب:</strong> h(2²)=16، h(√25)=20.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex2_q2d_sol': String.raw`<div class="MH-sequence-step"><p><strong>الجواب:</strong> t = 9.</p></div>`,
+
+                // Exercise 3
+                'MH.lesson_Y1Alg_fonLin4.ex3_title': 'تمرين 3 – مربعات وجذور',
+                'MH.lesson_Y1Alg_fonLin4.ex3_q3a': 'أ) لتكن g دالة خطية بحيث g(4) = 10. أوجد g(x).',
+                'MH.lesson_Y1Alg_fonLin4.ex3_q3b': 'ب) احسب g(√2) (قيمة مضبوطة ثم تقريبية لأقرب جزء من مئة).',
+                'MH.lesson_Y1Alg_fonLin4.ex3_q3c': 'ج) حل g(x) = 15.',
+                'MH.lesson_Y1Alg_fonLin4.ex3_q3d': 'د) حل g(x²) = 20 (x > 0).',
+                'MH.lesson_Y1Alg_fonLin4.ex3_q3a_sol': String.raw`<div class="MH-sequence-step"><p><strong>الجواب:</strong> g(x)=2.5 x.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex3_q3b_sol': String.raw`<div class="MH-sequence-step"><p><strong>الجواب:</strong> g(√2)=2.5√2 ≈ 3.54.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex3_q3c_sol': String.raw`<div class="MH-sequence-step"><p><strong>الجواب:</strong> x = 6.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex3_q3d_sol': String.raw`<div class="MH-sequence-step"><p><strong>الجواب:</strong> x = √8 = 2√2 ≈ 2.828.</p></div>`,
+
+                // Exercise 4
+                'MH.lesson_Y1Alg_fonLin4.ex4_title': 'تمرين 4 – محيط ومساحة مربع',
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4a': 'أ) محيط مربع هو P = 4c (c = طول الضلع). عبر عن الدالة الخطية f التي تعطي المحيط بدلالة الضلع.',
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4b': 'ب) احسب f(3) و f(7).',
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4c': 'ج) إذا كان المحيط 30 سم، فما طول الضلع؟',
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4d': 'د) استنتج مساحة المربع.',
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4e': 'هـ) لتكن g الدالة الخطية التي تعطي الضلع بدلالة المحيط (c = P/4). احسب g(20).',
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4a_sol': String.raw`<div class="MH-sequence-step"><p><strong>الجواب:</strong> f(c)=4c.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4b_sol': String.raw`<div class="MH-sequence-step"><p><strong>الجواب:</strong> f(3)=12، f(7)=28.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4c_sol': String.raw`<div class="MH-sequence-step"><p><strong>الجواب:</strong> c = 7.5 سم.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4d_sol': String.raw`<div class="MH-sequence-step"><p><strong>الجواب:</strong> المساحة = 56.25 سم².</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex4_q4e_sol': String.raw`<div class="MH-sequence-step"><p><strong>الجواب:</strong> g(20)=5.</p></div>`,
+
+                // Exercise 5
+                'MH.lesson_Y1Alg_fonLin4.ex5_title': 'تمرين 5 – معادلات متنوعة',
+                'MH.lesson_Y1Alg_fonLin4.ex5_stmt': 'حل المعادلات التالية (x عدد موجب).',
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5a': 'أ) 5x = 35',
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5b': 'ب) 7x = 49',
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5c': 'ج) 3x² = 27',
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5d': 'د) 2√x = 8',
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5e': 'هـ) 4x³ = 32',
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5a_sol': String.raw`<div class="MH-sequence-step"><p><strong>الجواب:</strong> x=7.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5b_sol': String.raw`<div class="MH-sequence-step"><p><strong>الجواب:</strong> x=7.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5c_sol': String.raw`<div class="MH-sequence-step"><p><strong>الجواب:</strong> x=3.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5d_sol': String.raw`<div class="MH-sequence-step"><p><strong>الجواب:</strong> x=16.</p></div>`,
+                'MH.lesson_Y1Alg_fonLin4.ex5_q5e_sol': String.raw`<div class="MH-sequence-step"><p><strong>الجواب:</strong> x=2.</p></div>`,
+
+                // Summary
+                'MH.lesson_Y1Alg_fonLin4.remember': '📌 تذكر',
+                'MH.lesson_Y1Alg_fonLin4.rem1': 'الدالة الخطية تكتب \\(f(x)=ax\\).',
+                'MH.lesson_Y1Alg_fonLin4.rem2': 'لإيجاد المعامل \\(a\\) نستخدم قيمة معطاة: \\(a = \\frac{f(x)}{x}\\).',
+                'MH.lesson_Y1Alg_fonLin4.rem3': 'مع المربعات أو الجذور نصل دائماً إلى معادلة من النوع \\(ax = b\\) بعد التبسيط.',
+
+                // Footer
+                'MH.footer.developer': 'المطور',
+                'MH.footer.version': 'الإصدار',
+                'MH.footer.links': 'روابط',
+                'MH.footer.terms': 'شروط الاستخدام',
+                'MH.footer.privacy': 'سياسة الخصوصية'
+            }
+        };
+
+        // Merge with global translations
+        if (typeof translations !== 'undefined') {
+            for (let lang in fonLin4Translations) {
+                translations[lang] = {...translations[lang], ...fonLin4Translations[lang]};
+            }
+        } else { var translations = fonLin4Translations; }
+
+        // ========== CANVAS DRAWING FUNCTIONS ==========
+        function drawFuncCanvas4() {
+            const canvas = document.getElementById('funcCanvas4');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height;
+            ctx.clearRect(0,0,w,h);
+            const pad = 50, gw = w-2*pad, gh = h-2*pad;
+            const xMin = -2, xMax = 5, yMin = -5, yMax = 15;
+            // axes
+            ctx.strokeStyle = '#666'; ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(pad, h-pad); ctx.lineTo(w-pad, h-pad); ctx.moveTo(pad, pad); ctx.lineTo(pad, h-pad); ctx.stroke();
+            // graduations
+            ctx.fillStyle = '#333'; ctx.font = '12px Arial';
+            for (let x = -1; x <= 4; x++) {
+                let cx = pad + (x - xMin) / (xMax - xMin) * gw;
+                ctx.fillText(x, cx-8, h-pad+20);
+            }
+            for (let y = -5; y <= 15; y+=5) {
+                let cy = h-pad - (y - yMin) / (yMax - yMin) * gh;
+                ctx.fillText(y, pad-35, cy+5);
+            }
+            // line f(x)=3x
+            ctx.strokeStyle = '#3498DB'; ctx.lineWidth = 3;
+            ctx.beginPath();
+            let x1 = -1.5, y1 = 3 * x1;
+            let x2 = 4.5, y2 = 3 * x2;
+            let cx1 = pad + (x1 - xMin) / (xMax - xMin) * gw;
+            let cy1 = h-pad - (y1 - yMin) / (yMax - yMin) * gh;
+            let cx2 = pad + (x2 - xMin) / (xMax - xMin) * gw;
+            let cy2 = h-pad - (y2 - yMin) / (yMax - yMin) * gh;
+            ctx.moveTo(cx1, cy1); ctx.lineTo(cx2, cy2); ctx.stroke();
+            // point A(1,3)
+            ctx.fillStyle = '#E74C3C';
+            let ax = pad + (1 - xMin) / (xMax - xMin) * gw;
+            let ay = h-pad - (3 - yMin) / (yMax - yMin) * gh;
+            ctx.beginPath(); ctx.arc(ax, ay, 5, 0, 2*Math.PI); ctx.fill();
+            ctx.fillStyle = '#333'; ctx.font = 'bold 14px Arial';
+            ctx.fillText('A(1;3)', ax+10, ay-10);
+            ctx.fillStyle = '#333'; ctx.font = 'italic 14px Arial';
+            ctx.fillText('f(x)=3x', w-150, 60);
+        }
+
+        // Toggle solution function (global)
+        function toggleSolution(id) {
+            const sol = document.getElementById(`solution${id}`);
+            if (!sol) return;
+            const btn = sol.previousElementSibling;
+            const currentLang = (typeof MHThemeManager !== 'undefined' && MHThemeManager.getCurrentLanguage) ? MHThemeManager.getCurrentLanguage() : 'fr';
+            if (sol.style.display === 'block') {
+                sol.style.display = 'none';
+                btn.textContent = translations[currentLang]?.['MH.lesson_Y1Alg_fonLin4.showSolution'] || 'Voir la solution';
+            } else {
+                sol.style.display = 'block';
+                btn.textContent = translations[currentLang]?.['MH.lesson_Y1Alg_fonLin4.hideSolution'] || 'Cacher la solution';
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(sol, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)'},{left:'\\[',right:'\\]'}]});
+                }
+            }
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)'},{left:'\\[',right:'\\]'}]});
+            }
+            drawFuncCanvas4();
+            // Hide all solutions initially (IDs 1 to 22)
+            for (let i=1; i<=22; i++) {
+                const sol = document.getElementById(`solution${i}`);
+                if (sol) {
+                    sol.style.display = 'none';
+                    const btn = sol.previousElementSibling;
+                    if (btn) btn.textContent = translations['fr']['MH.lesson_Y1Alg_fonLin4.showSolution'];
+                }
+            }
+            // Redraw on theme toggle
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    setTimeout(() => { drawFuncCanvas4(); }, 100);
+                });
+            }
+        });
+
+        // Service worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').catch(e => console.log('SW failed', e));
+            });
+        }
+    </script>
+    <noscript>
+        <style> .MH-solution { display: block; } </style>
+    </noscript>
+</body>
+</html>

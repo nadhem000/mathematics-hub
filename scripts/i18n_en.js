@@ -46,6 +46,11 @@ window.translations_en = {
 	'MH.index.algebra.first.5c': '1st Degree Equations III: Graphical Method',
 	'MH.index.algebra.first.5d': '1st Degree Inequations',
     'MH.index.algebra.first.6': 'Linear Functions',
+"MH.index.algebra.first.6a": "Part I: Introduction to Linear Functions",
+"MH.index.algebra.first.6b": "Part II: Graphical reading and applications",
+"MH.index.algebra.first.6c": "Part III: Exercises and applications",
+"MH.index.algebra.first.6d": "Part IV: Advanced exercises",
+"MH.index.algebra.first.6e": "Part V: Advanced exercises",
     'MH.index.algebra.first.7': 'Affine Functions',
     'MH.index.algebra.first.8': 'System of Two Equations with Two Unknowns',
     'MH.index.algebra.first.9': 'Information Exploitation',
@@ -91,7 +96,7 @@ window.translations_en = {
 "MH.index.algebra.second.4b": "Part II: Definition, General Term, Graphical Representation, and Sum of Terms",
 "MH.index.algebra.second.4c": "Part III: More Practice with Sequences, Recognizing Arithmetic Sequences, and Advanced Applications",
 "MH.index.algebra.second.4d": "Part IV: Summary and Practical Problems",
-"MH.index.algebra.second.4e": "Part V: Exercises and Applications",
+"MH.index.algebra.second.4e": "Part V: Exercises and Applications",,
     'MH.index.algebra.second.5': 'Geometric Sequences',
     'MH.index.algebra.second.6': 'Statistics',
     'MH.index.algebra.second.7': 'General Functions',
@@ -3208,5 +3213,4 @@ window.translations_en = {
 'MH.lesson_Y2Al_arth1b.solution10_part2': "So 2<sup>4</sup> - 1 is divisible by 5. Check smaller values: 2<sup>1</sup>-1=1, 2<sup>2</sup>-1=3, 2<sup>3</sup>-1=7, none divisible by 5.",
 'MH.lesson_Y2Al_arth1b.showSolution': 'Show Solution',
 'MH.lesson_Y2Al_arth1b.hideSolution': 'Hide Solution'
-
 };

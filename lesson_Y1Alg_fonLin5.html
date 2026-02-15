@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathématiques : Fonctions linéaires – Partie V</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#3498DB" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#5DADE2" media="(prefers-color-scheme: dark)">
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#3498DB">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    <style>
+        /* reuse same palette */
+        :root {
+            --primary: #3498DB;        --primary-light: #5DADE2;  --primary-dark: #2E86C1;
+            --secondary: #2ECC71;      --secondary-light: #58D68D; --secondary-dark: #28B463;
+            --accent: #F39C12;          --warning: #E74C3C;        --info: #3498DB;
+            --text: #333333;            --text-light: #666666;     --background: #FFFFFF;
+            --surface: #F8F9FA;          --border: #E9ECEF;        --shadow: rgba(0,0,0,0.1);
+        }
+        [data-theme="dark"] {
+            --primary: #5DADE2;         --primary-light: #85C1E9;  --primary-dark: #3498DB;
+            --secondary: #28B463;        --secondary-light: #2ECC71; --secondary-dark: #1D8348;
+            --accent: #F39C12;            --warning: #C0392B;        --info: #2980B9;
+            --text: #FFFFFF;              --text-light: #CCCCCC;     --background: #121212;
+            --surface: #1E1E1E;            --border: #333333;        --shadow: rgba(0,0,0,0.3);
+        }
+        .katex { font-size: 1.1em; }
+        .MH-equation { font-family: inherit; font-size: inherit; color: inherit; margin: 0.5em 0; padding: 0; display: inline-block; }
+        .MH-canvas-container { margin: 2em 0; text-align: center; position: relative; }
+        .MH-canvas { border: 2px solid var(--border); border-radius: 8px; background-color: var(--surface); max-width: 100%; box-shadow: 0 4px 6px var(--shadow); }
+        .MH-canvas-title { font-weight: bold; margin-bottom: 0.5em; color: var(--primary); }
+        .MH-canvas-instructions { font-size: 0.9em; color: var(--text-light); margin-top: 0.5em; font-style: italic; }
+        .MH-sequence-item { margin: 0.5em 0; padding: 0.5em; background-color: var(--surface); border-left: 4px solid var(--secondary); border-radius: 4px; }
+        .MH-sequence-step { margin: 0.5em 0; padding-left: 1em; border-left: 2px solid var(--primary-light); }
+        .MH-formula-box { background-color: rgba(46, 204, 113, 0.1); border: 2px solid var(--secondary); border-radius: 8px; padding: 1.5em; margin: 1em 0; }
+        .MH-exercise-number { font-size: 1.2em; font-weight: bold; color: var(--secondary); margin: 1.5em 0 0.5em 0; border-bottom: 2px solid var(--secondary-light); padding-bottom: 0.3em; }
+        .MH-table { display: inline-block; border-collapse: collapse; margin: 1em 0; background-color: var(--surface); }
+        .MH-table td, .MH-table th { border: 1px solid var(--border); padding: 0.5em 1em; text-align: center; }
+        .MH-table th { background-color: var(--primary-light); color: var(--text); }
+        .MH-blank { color: var(--text-light); font-style: italic; }
+        .MH-solution { display: none; margin-top: 1em; padding: 1em; background-color: var(--surface); border-radius: 8px; border-left: 4px solid var(--primary); }
+        .MH-solution-btn { background-color: var(--primary); color: white; border: none; padding: 0.3em 1em; border-radius: 20px; cursor: pointer; margin: 0.5em 0; }
+        .MH-solution-btn:hover { background-color: var(--primary-dark); }
+        .point-red { fill: #E74C3C; stroke: #C0392B; }
+        .point-blue { fill: #3498DB; stroke: #2E86C1; }
+        .line-ex3 { stroke: #2ECC71; stroke-width: 3; }
+        .line-area { stroke: #F39C12; stroke-width: 3; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span> <span>🎨</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span> <span>🌐</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                        </div>
+                    </div>
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span> <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y1Alg_fonLin5.title">Fonctions linéaires : Partie V</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y1Alg_fonLin5.subtitle">Exercices de synthèse</h2>
+
+        <!-- ============ VII. EXERCICES DE SYNTHÈSE ============ -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y1Alg_fonLin5.part7">VII. Exercices de synthèse</div>
+
+            <!-- Exercice 1 – Premiers calculs avec puissances et racines -->
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonLin5.ex1_title">Exercice 1 – Premiers calculs avec puissances et racines</h3>
+            </div>
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin5.ex1_q1a">a) Soit f(x) = 5x. Calculer f(2²), f(√9) et f(3³).</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin5.showSolution" onclick="toggleSolution(1)">Voir la solution</button>
+                    <div class="MH-solution" id="solution1"><span data-i18n="MH.lesson_Y1Alg_fonLin5.ex1_q1a_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin5.ex1_q1b">b) Soit g(x) = 2,5x. Calculer g(4²), g(√16) et g(2³).</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin5.showSolution" onclick="toggleSolution(2)">Voir la solution</button>
+                    <div class="MH-solution" id="solution2"><span data-i18n="MH.lesson_Y1Alg_fonLin5.ex1_q1b_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin5.ex1_q1c">c) Soit h(x) = 0,5x. Calculer h(6²), h(√25) et h(10³).</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin5.showSolution" onclick="toggleSolution(3)">Voir la solution</button>
+                    <div class="MH-solution" id="solution3"><span data-i18n="MH.lesson_Y1Alg_fonLin5.ex1_q1c_sol"></span></div>
+                </div>
+            </div>
+
+            <!-- Exercice 2 – Trouver le coefficient puis calculer -->
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonLin5.ex2_title">Exercice 2 – Déterminer une fonction linéaire</h3>
+            </div>
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin5.ex2_q2a">a) Une fonction linéaire f vérifie f(5) = 20. Déterminer son coefficient a. Donner f(x).</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin5.showSolution" onclick="toggleSolution(4)">Voir la solution</button>
+                    <div class="MH-solution" id="solution4"><span data-i18n="MH.lesson_Y1Alg_fonLin5.ex2_q2a_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin5.ex2_q2b">b) Calculer f(2²) et f(√25).</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin5.showSolution" onclick="toggleSolution(5)">Voir la solution</button>
+                    <div class="MH-solution" id="solution5"><span data-i18n="MH.lesson_Y1Alg_fonLin5.ex2_q2b_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin5.ex2_q2c">c) Résoudre f(x²) = 80. (x > 0)</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin5.showSolution" onclick="toggleSolution(6)">Voir la solution</button>
+                    <div class="MH-solution" id="solution6"><span data-i18n="MH.lesson_Y1Alg_fonLin5.ex2_q2c_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin5.ex2_q2d">d) Résoudre f(√x) = 12. (x > 0)</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin5.showSolution" onclick="toggleSolution(7)">Voir la solution</button>
+                    <div class="MH-solution" id="solution7"><span data-i18n="MH.lesson_Y1Alg_fonLin5.ex2_q2d_sol"></span></div>
+                </div>
+            </div>
+
+            <!-- Exercice 3 – Avec des cubes et racines cubiques -->
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonLin5.ex3_title">Exercice 3 – Cubes et racines cubiques</h3>
+            </div>
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin5.ex3_q3a">a) Soit g une fonction linéaire telle que g(2) = 5. Déterminer g(x).</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin5.showSolution" onclick="toggleSolution(8)">Voir la solution</button>
+                    <div class="MH-solution" id="solution8"><span data-i18n="MH.lesson_Y1Alg_fonLin5.ex3_q3a_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin5.ex3_q3b">b) Calculer g(3²) et g(2³).</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin5.showSolution" onclick="toggleSolution(9)">Voir la solution</button>
+                    <div class="MH-solution" id="solution9"><span data-i18n="MH.lesson_Y1Alg_fonLin5.ex3_q3b_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin5.ex3_q3c">c) Résoudre g(x³) = 40.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin5.showSolution" onclick="toggleSolution(10)">Voir la solution</button>
+                    <div class="MH-solution" id="solution10"><span data-i18n="MH.lesson_Y1Alg_fonLin5.ex3_q3c_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin5.ex3_q3d">d) Résoudre g(∛x) = 7,5. (∛x = racine cubique de x)</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin5.showSolution" onclick="toggleSolution(11)">Voir la solution</button>
+                    <div class="MH-solution" id="solution11"><span data-i18n="MH.lesson_Y1Alg_fonLin5.ex3_q3d_sol"></span></div>
+                </div>
+            </div>
+
+            <!-- Exercice 4 – Problème concret : carré et volume d'un cube -->
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonLin5.ex4_title">Exercice 4 – Carré et cube</h3>
+            </div>
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin5.ex4_q4a">a) Le périmètre d'un carré est donné par P = 4c (c = côté). Exprimer la fonction linéaire f qui donne le périmètre en fonction du côté.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin5.showSolution" onclick="toggleSolution(12)">Voir la solution</button>
+                    <div class="MH-solution" id="solution12"><span data-i18n="MH.lesson_Y1Alg_fonLin5.ex4_q4a_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin5.ex4_q4b">b) Calculer le côté d'un carré dont le périmètre est 42 cm. En déduire son aire.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin5.showSolution" onclick="toggleSolution(13)">Voir la solution</button>
+                    <div class="MH-solution" id="solution13"><span data-i18n="MH.lesson_Y1Alg_fonLin5.ex4_q4b_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin5.ex4_q4c">c) Le volume d'un cube est V = c³ (c = arête). Si on note g la fonction linéaire qui donne l'arête en fonction du volume (c = ∛V), est-ce une fonction linéaire ? Pourquoi ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin5.showSolution" onclick="toggleSolution(14)">Voir la solution</button>
+                    <div class="MH-solution" id="solution14"><span data-i18n="MH.lesson_Y1Alg_fonLin5.ex4_q4c_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin5.ex4_q4d">d) Calculer l'arête d'un cube de volume 64 cm³.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin5.showSolution" onclick="toggleSolution(15)">Voir la solution</button>
+                    <div class="MH-solution" id="solution15"><span data-i18n="MH.lesson_Y1Alg_fonLin5.ex4_q4d_sol"></span></div>
+                </div>
+            </div>
+
+            <!-- Exercice 5 – Équations variées avec puissances -->
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonLin5.ex5_title">Exercice 5 – Équations variées</h3>
+                <p data-i18n="MH.lesson_Y1Alg_fonLin5.ex5_stmt">Résoudre les équations suivantes (x est un nombre positif).</p>
+            </div>
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin5.ex5_q5a">a) 4x = 36</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin5.showSolution" onclick="toggleSolution(16)">Voir la solution</button>
+                    <div class="MH-solution" id="solution16"><span data-i18n="MH.lesson_Y1Alg_fonLin5.ex5_q5a_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin5.ex5_q5b">b) 3x² = 48</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin5.showSolution" onclick="toggleSolution(17)">Voir la solution</button>
+                    <div class="MH-solution" id="solution17"><span data-i18n="MH.lesson_Y1Alg_fonLin5.ex5_q5b_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin5.ex5_q5c">c) 5√x = 30</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin5.showSolution" onclick="toggleSolution(18)">Voir la solution</button>
+                    <div class="MH-solution" id="solution18"><span data-i18n="MH.lesson_Y1Alg_fonLin5.ex5_q5c_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin5.ex5_q5d">d) 2x³ = 54</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin5.showSolution" onclick="toggleSolution(19)">Voir la solution</button>
+                    <div class="MH-solution" id="solution19"><span data-i18n="MH.lesson_Y1Alg_fonLin5.ex5_q5d_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin5.ex5_q5e">e) 4∛x = 20 (∛x = racine cubique de x)</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin5.showSolution" onclick="toggleSolution(20)">Voir la solution</button>
+                    <div class="MH-solution" id="solution20"><span data-i18n="MH.lesson_Y1Alg_fonLin5.ex5_q5e_sol"></span></div>
+                </div>
+            </div>
+
+            <!-- Petit résumé -->
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonLin5.remember">📌 À retenir</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y1Alg_fonLin5.rem1">Une fonction linéaire est toujours de la forme \(f(x)=ax\).</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonLin5.rem2">Quand on applique une fonction linéaire à une expression comme \(x^2\) ou \(\sqrt{x}\), on calcule d'abord cette expression, puis on multiplie par \(a\).</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonLin5.rem3">Pour résoudre \(a \times (x^n) = b\), on isole \(x^n\) puis on prend la racine \(n\)-ième (ou l'exposant inverse).</li>
+                </ul>
+            </div>
+
+            <!-- Canvas pour représenter une fonction linéaire (exemple) -->
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y1Alg_fonLin5.canvas_title">Exemple : f(x) = 4x</div>
+                <canvas id="funcCanvas5" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y1Alg_fonLin5.canvas_inst">La droite passe par l'origine et par le point A(1 ; 4).</div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column"><div class="MH-footer-title" data-i18n="MH.footer.developer">Développeur</div><div class="MH-footer-text">Mejri Ziad</div></div>
+            <div class="MH-footer-column"><div class="MH-footer-title" data-i18n="MH.footer.version">Version</div><div class="MH-footer-text">v0.7.0</div></div>
+            <div class="MH-footer-column"><div class="MH-footer-title" data-i18n="MH.footer.links">Liens</div><div class="MH-footer-links"><a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Conditions d'utilisation</a><a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Politique de confidentialité</a></div></div>
+        </div>
+    </footer>
+
+    <!-- scripts -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+
+    <script>
+        // ============================================
+        // TRADUCTIONS COMPLÈTES – Partie V (avec String.raw pour les solutions, sans div)
+        // ============================================
+        const fonLin5Translations = {
+            'fr': {
+                // Général
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Thème',
+                'MH.general.language': 'Langue',
+                'MH.general.enableNotifications': 'Activer les notifications',
+                'MH.lesson_Y1Alg_fonLin5.showSolution': 'Voir la solution',
+                'MH.lesson_Y1Alg_fonLin5.hideSolution': 'Cacher la solution',
+
+                // Titres
+                'MH.lesson_Y1Alg_fonLin5.title': 'Fonctions linéaires : Partie V',
+                'MH.lesson_Y1Alg_fonLin5.subtitle': 'Exercices de synthèse',
+                'MH.lesson_Y1Alg_fonLin5.part7': 'VII. Exercices de synthèse',
+
+                // Exercice 1
+                'MH.lesson_Y1Alg_fonLin5.ex1_title': 'Exercice 1 – Premiers calculs avec puissances et racines',
+                'MH.lesson_Y1Alg_fonLin5.ex1_q1a': 'a) Soit f(x) = 5x. Calculer f(2²), f(√9) et f(3³).',
+                'MH.lesson_Y1Alg_fonLin5.ex1_q1b': 'b) Soit g(x) = 2,5x. Calculer g(4²), g(√16) et g(2³).',
+                'MH.lesson_Y1Alg_fonLin5.ex1_q1c': 'c) Soit h(x) = 0,5x. Calculer h(6²), h(√25) et h(10³).',
+                'MH.lesson_Y1Alg_fonLin5.ex1_q1a_sol': String.raw`<p><strong>Réponse :</strong> f(2²)=20, f(√9)=15, f(3³)=135.</p><p>🔍 <strong>Explication :</strong> f(x)=5x. On calcule d'abord les expressions :</p><ul><li>2² = 4, donc f(4)=5×4=20.</li><li>√9 = 3, donc f(3)=5×3=15.</li><li>3³ = 27, donc f(27)=5×27=135.</li></ul><p>📌 Il faut toujours simplifier la puissance ou la racine avant de multiplier par le coefficient.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex1_q1b_sol': String.raw`<p><strong>Réponse :</strong> g(4²)=40, g(√16)=10, g(2³)=20.</p><p>🔍 <strong>Explication :</strong> g(x)=2,5x.</p><ul><li>4² = 16, g(16)=2,5×16=40.</li><li>√16 = 4, g(4)=2,5×4=10.</li><li>2³ = 8, g(8)=2,5×8=20.</li></ul>`,
+                'MH.lesson_Y1Alg_fonLin5.ex1_q1c_sol': String.raw`<p><strong>Réponse :</strong> h(6²)=18, h(√25)=2,5, h(10³)=500.</p><p>🔍 <strong>Explication :</strong> h(x)=0,5x.</p><ul><li>6² = 36, h(36)=0,5×36=18.</li><li>√25 = 5, h(5)=0,5×5=2,5.</li><li>10³ = 1000, h(1000)=0,5×1000=500.</li></ul>`,
+
+                // Exercice 2
+                'MH.lesson_Y1Alg_fonLin5.ex2_title': 'Exercice 2 – Déterminer une fonction linéaire',
+                'MH.lesson_Y1Alg_fonLin5.ex2_q2a': 'a) Une fonction linéaire f vérifie f(5) = 20. Déterminer son coefficient a. Donner f(x).',
+                'MH.lesson_Y1Alg_fonLin5.ex2_q2b': 'b) Calculer f(2²) et f(√25).',
+                'MH.lesson_Y1Alg_fonLin5.ex2_q2c': 'c) Résoudre f(x²) = 80. (x > 0)',
+                'MH.lesson_Y1Alg_fonLin5.ex2_q2d': 'd) Résoudre f(√x) = 12. (x > 0)',
+                'MH.lesson_Y1Alg_fonLin5.ex2_q2a_sol': String.raw`<p><strong>Réponse :</strong> a = 4, f(x) = 4x.</p><p>🔍 <strong>Explication :</strong> f est linéaire, donc f(x)=a x. On sait que f(5)=20, donc a×5=20. Pour trouver a, on divise par 5 : a = 20/5 = 4. Ainsi f(x)=4x.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex2_q2b_sol': String.raw`<p><strong>Réponse :</strong> f(2²)=16, f(√25)=20.</p><p>🔍 <strong>Explication :</strong> f(x)=4x. D'abord 2²=4, donc f(4)=4×4=16. √25=5, donc f(5)=4×5=20.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex2_q2c_sol': String.raw`<p><strong>Réponse :</strong> x = √20 = 2√5 ≈ 4,47.</p><p>🔍 <strong>Explication :</strong> f(x²) = 4 × (x²) = 80. Donc 4x² = 80. On divise par 4 : x² = 20. Comme x > 0, x = √20 = √(4×5) = 2√5. Valeur approchée : √5 ≈ 2,236, donc 2×2,236 = 4,472.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex2_q2d_sol': String.raw`<p><strong>Réponse :</strong> x = 9.</p><p>🔍 <strong>Explication :</strong> f(√x) = 4 × √x = 12. Donc √x = 12/4 = 3. Alors x = 3² = 9.</p>`,
+
+                // Exercice 3
+                'MH.lesson_Y1Alg_fonLin5.ex3_title': 'Exercice 3 – Cubes et racines cubiques',
+                'MH.lesson_Y1Alg_fonLin5.ex3_q3a': 'a) Soit g une fonction linéaire telle que g(2) = 5. Déterminer g(x).',
+                'MH.lesson_Y1Alg_fonLin5.ex3_q3b': 'b) Calculer g(3²) et g(2³).',
+                'MH.lesson_Y1Alg_fonLin5.ex3_q3c': 'c) Résoudre g(x³) = 40.',
+                'MH.lesson_Y1Alg_fonLin5.ex3_q3d': 'd) Résoudre g(∛x) = 7,5. (∛x = racine cubique de x)',
+                'MH.lesson_Y1Alg_fonLin5.ex3_q3a_sol': String.raw`<p><strong>Réponse :</strong> a = 2,5, g(x) = 2,5x.</p><p>🔍 <strong>Explication :</strong> g(2)=5 ⇒ a×2=5 ⇒ a=5/2=2,5. Donc g(x)=2,5x.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex3_q3b_sol': String.raw`<p><strong>Réponse :</strong> g(3²)=22,5, g(2³)=20.</p><p>🔍 <strong>Explication :</strong> 3²=9, g(9)=2,5×9=22,5. 2³=8, g(8)=2,5×8=20.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex3_q3c_sol': String.raw`<p><strong>Réponse :</strong> x = ∛16 = 2∛2 ≈ 2,52.</p><p>🔍 <strong>Explication :</strong> g(x³) = 2,5 × x³ = 40. Donc x³ = 40/2,5 = 16. Alors x = ∛16. On peut écrire 16 = 8×2, donc ∛16 = ∛8 × ∛2 = 2∛2. Valeur approchée : ∛2 ≈ 1,26, donc 2×1,26 = 2,52.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex3_q3d_sol': String.raw`<p><strong>Réponse :</strong> x = 27.</p><p>🔍 <strong>Explication :</strong> g(∛x) = 2,5 × ∛x = 7,5. Donc ∛x = 7,5/2,5 = 3. Alors x = 3³ = 27.</p>`,
+
+                // Exercice 4
+                'MH.lesson_Y1Alg_fonLin5.ex4_title': 'Exercice 4 – Carré et cube',
+                'MH.lesson_Y1Alg_fonLin5.ex4_q4a': 'a) Le périmètre d\'un carré est donné par P = 4c (c = côté). Exprimer la fonction linéaire f qui donne le périmètre en fonction du côté.',
+                'MH.lesson_Y1Alg_fonLin5.ex4_q4b': 'b) Calculer le côté d\'un carré dont le périmètre est 42 cm. En déduire son aire.',
+                'MH.lesson_Y1Alg_fonLin5.ex4_q4c': 'c) Le volume d\'un cube est V = c³ (c = arête). Si on note g la fonction linéaire qui donne l\'arête en fonction du volume (c = ∛V), est-ce une fonction linéaire ? Pourquoi ?',
+                'MH.lesson_Y1Alg_fonLin5.ex4_q4d': 'd) Calculer l\'arête d\'un cube de volume 64 cm³.',
+                'MH.lesson_Y1Alg_fonLin5.ex4_q4a_sol': String.raw`<p><strong>Réponse :</strong> f(c) = 4c.</p><p>🔍 <strong>Explication :</strong> C'est donné directement par la formule. f est linéaire car elle est de la forme a×c avec a=4.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex4_q4b_sol': String.raw`<p><strong>Réponse :</strong> côté = 10,5 cm, aire = 110,25 cm².</p><p>🔍 <strong>Explication :</strong> On a P = 4c = 42, donc c = 42/4 = 10,5 cm. L'aire du carré est c² = (10,5)² = 110,25 cm².</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex4_q4c_sol': String.raw`<p><strong>Réponse :</strong> Non, ce n'est pas une fonction linéaire.</p><p>🔍 <strong>Explication :</strong> La fonction qui donne l'arête en fonction du volume est c = ∛V, c'est-à-dire c = V^{1/3}. Ce n'est pas de la forme a×V car l'exposant n'est pas 1. La représentation graphique n'est pas une droite passant par l'origine (sauf si on transforme les axes).</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex4_q4d_sol': String.raw`<p><strong>Réponse :</strong> arête = 4 cm.</p><p>🔍 <strong>Explication :</strong> V = c³ = 64, donc c = ∛64 = 4 car 4×4×4 = 64.</p>`,
+
+                // Exercice 5
+                'MH.lesson_Y1Alg_fonLin5.ex5_title': 'Exercice 5 – Équations variées',
+                'MH.lesson_Y1Alg_fonLin5.ex5_stmt': 'Résoudre les équations suivantes (x est un nombre positif).',
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5a': 'a) 4x = 36',
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5b': 'b) 3x² = 48',
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5c': 'c) 5√x = 30',
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5d': 'd) 2x³ = 54',
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5e': 'e) 4∛x = 20 (∛x = racine cubique de x)',
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5a_sol': String.raw`<p><strong>Réponse :</strong> x = 9.</p><p>🔍 <strong>Explication :</strong> 4x = 36 ⇒ x = 36/4 = 9.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5b_sol': String.raw`<p><strong>Réponse :</strong> x = 4.</p><p>🔍 <strong>Explication :</strong> 3x² = 48 ⇒ x² = 48/3 = 16. Comme x > 0, x = √16 = 4.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5c_sol': String.raw`<p><strong>Réponse :</strong> x = 36.</p><p>🔍 <strong>Explication :</strong> 5√x = 30 ⇒ √x = 30/5 = 6. Donc x = 6² = 36.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5d_sol': String.raw`<p><strong>Réponse :</strong> x = 3.</p><p>🔍 <strong>Explication :</strong> 2x³ = 54 ⇒ x³ = 54/2 = 27. Donc x = ∛27 = 3.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5e_sol': String.raw`<p><strong>Réponse :</strong> x = 125.</p><p>🔍 <strong>Explication :</strong> 4∛x = 20 ⇒ ∛x = 20/4 = 5. Donc x = 5³ = 125.</p>`,
+
+                // Résumé
+                'MH.lesson_Y1Alg_fonLin5.remember': '📌 À retenir',
+                'MH.lesson_Y1Alg_fonLin5.rem1': 'Une fonction linéaire est toujours de la forme \\(f(x)=ax\\).',
+                'MH.lesson_Y1Alg_fonLin5.rem2': 'Quand on applique une fonction linéaire à une expression comme \\(x^2\\) ou \\(\\sqrt{x}\\), on calcule d\'abord cette expression, puis on multiplie par \\(a\\).',
+                'MH.lesson_Y1Alg_fonLin5.rem3': 'Pour résoudre \\(a \\times (x^n) = b\\), on isole \\(x^n\\) puis on prend la racine \\(n\\)-ième (ou l\'exposant inverse).',
+
+                // Canvas
+                'MH.lesson_Y1Alg_fonLin5.canvas_title': 'Exemple : f(x) = 4x',
+                'MH.lesson_Y1Alg_fonLin5.canvas_inst': 'La droite passe par l\'origine et par le point A(1 ; 4).',
+
+                // Footer
+                'MH.footer.developer': 'Développeur',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Liens',
+                'MH.footer.terms': 'Conditions d\'utilisation',
+                'MH.footer.privacy': 'Politique de confidentialité'
+            },
+            'en': {
+                // General
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Theme',
+                'MH.general.language': 'Language',
+                'MH.general.enableNotifications': 'Enable notifications',
+                'MH.lesson_Y1Alg_fonLin5.showSolution': 'Show solution',
+                'MH.lesson_Y1Alg_fonLin5.hideSolution': 'Hide solution',
+
+                // Titles
+                'MH.lesson_Y1Alg_fonLin5.title': 'Linear functions: Part V',
+                'MH.lesson_Y1Alg_fonLin5.subtitle': 'Synthesis exercises',
+                'MH.lesson_Y1Alg_fonLin5.part7': 'VII. Synthesis exercises',
+
+                // Exercise 1
+                'MH.lesson_Y1Alg_fonLin5.ex1_title': 'Exercise 1 – First calculations with powers and roots',
+                'MH.lesson_Y1Alg_fonLin5.ex1_q1a': 'a) Let f(x) = 5x. Compute f(2²), f(√9) and f(3³).',
+                'MH.lesson_Y1Alg_fonLin5.ex1_q1b': 'b) Let g(x) = 2.5x. Compute g(4²), g(√16) and g(2³).',
+                'MH.lesson_Y1Alg_fonLin5.ex1_q1c': 'c) Let h(x) = 0.5x. Compute h(6²), h(√25) and h(10³).',
+                'MH.lesson_Y1Alg_fonLin5.ex1_q1a_sol': String.raw`<p><strong>Answer:</strong> f(2²)=20, f(√9)=15, f(3³)=135.</p><p>🔍 <strong>Explanation:</strong> f(x)=5x. First simplify:</p><ul><li>2² = 4, so f(4)=5×4=20.</li><li>√9 = 3, so f(3)=5×3=15.</li><li>3³ = 27, so f(27)=5×27=135.</li></ul>`,
+                'MH.lesson_Y1Alg_fonLin5.ex1_q1b_sol': String.raw`<p><strong>Answer:</strong> g(4²)=40, g(√16)=10, g(2³)=20.</p><p>🔍 <strong>Explanation:</strong> g(x)=2.5x.</p><ul><li>4² = 16, g(16)=2.5×16=40.</li><li>√16 = 4, g(4)=2.5×4=10.</li><li>2³ = 8, g(8)=2.5×8=20.</li></ul>`,
+                'MH.lesson_Y1Alg_fonLin5.ex1_q1c_sol': String.raw`<p><strong>Answer:</strong> h(6²)=18, h(√25)=2.5, h(10³)=500.</p><p>🔍 <strong>Explanation:</strong> h(x)=0.5x.</p><ul><li>6² = 36, h(36)=0.5×36=18.</li><li>√25 = 5, h(5)=0.5×5=2.5.</li><li>10³ = 1000, h(1000)=0.5×1000=500.</li></ul>`,
+
+                // Exercise 2
+                'MH.lesson_Y1Alg_fonLin5.ex2_title': 'Exercise 2 – Determining a linear function',
+                'MH.lesson_Y1Alg_fonLin5.ex2_q2a': 'a) A linear function f satisfies f(5) = 20. Find its coefficient a. Give f(x).',
+                'MH.lesson_Y1Alg_fonLin5.ex2_q2b': 'b) Compute f(2²) and f(√25).',
+                'MH.lesson_Y1Alg_fonLin5.ex2_q2c': 'c) Solve f(x²) = 80. (x > 0)',
+                'MH.lesson_Y1Alg_fonLin5.ex2_q2d': 'd) Solve f(√x) = 12. (x > 0)',
+                'MH.lesson_Y1Alg_fonLin5.ex2_q2a_sol': String.raw`<p><strong>Answer:</strong> a = 4, f(x) = 4x.</p><p>🔍 <strong>Explanation:</strong> f(x)=a x. f(5)=20 ⇒ a×5=20 ⇒ a=20/5=4.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex2_q2b_sol': String.raw`<p><strong>Answer:</strong> f(2²)=16, f(√25)=20.</p><p>🔍 <strong>Explanation:</strong> f(x)=4x. 2²=4 → 4×4=16; √25=5 → 4×5=20.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex2_q2c_sol': String.raw`<p><strong>Answer:</strong> x = √20 = 2√5 ≈ 4.47.</p><p>🔍 <strong>Explanation:</strong> f(x²)=4x² = 80 ⇒ x² = 20 ⇒ x = √20 (positive).</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex2_q2d_sol': String.raw`<p><strong>Answer:</strong> x = 9.</p><p>🔍 <strong>Explanation:</strong> f(√x)=4√x = 12 ⇒ √x = 3 ⇒ x = 9.</p>`,
+
+                // Exercise 3
+                'MH.lesson_Y1Alg_fonLin5.ex3_title': 'Exercise 3 – Cubes and cube roots',
+                'MH.lesson_Y1Alg_fonLin5.ex3_q3a': 'a) Let g be a linear function such that g(2) = 5. Determine g(x).',
+                'MH.lesson_Y1Alg_fonLin5.ex3_q3b': 'b) Compute g(3²) and g(2³).',
+                'MH.lesson_Y1Alg_fonLin5.ex3_q3c': 'c) Solve g(x³) = 40.',
+                'MH.lesson_Y1Alg_fonLin5.ex3_q3d': 'd) Solve g(∛x) = 7.5. (∛x = cube root of x)',
+                'MH.lesson_Y1Alg_fonLin5.ex3_q3a_sol': String.raw`<p><strong>Answer:</strong> a = 2.5, g(x) = 2.5x.</p><p>🔍 <strong>Explanation:</strong> g(2)=5 ⇒ a×2=5 ⇒ a=2.5.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex3_q3b_sol': String.raw`<p><strong>Answer:</strong> g(3²)=22.5, g(2³)=20.</p><p>🔍 <strong>Explanation:</strong> 3²=9 → 2.5×9=22.5; 2³=8 → 2.5×8=20.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex3_q3c_sol': String.raw`<p><strong>Answer:</strong> x = ∛16 = 2∛2 ≈ 2.52.</p><p>🔍 <strong>Explanation:</strong> 2.5 x³ = 40 ⇒ x³ = 16 ⇒ x = ∛16.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex3_q3d_sol': String.raw`<p><strong>Answer:</strong> x = 27.</p><p>🔍 <strong>Explanation:</strong> 2.5 ∛x = 7.5 ⇒ ∛x = 3 ⇒ x = 27.</p>`,
+
+                // Exercise 4
+                'MH.lesson_Y1Alg_fonLin5.ex4_title': 'Exercise 4 – Square and cube',
+                'MH.lesson_Y1Alg_fonLin5.ex4_q4a': 'a) The perimeter of a square is P = 4c (c = side). Write the linear function f that gives the perimeter as a function of the side.',
+                'MH.lesson_Y1Alg_fonLin5.ex4_q4b': 'b) Find the side of a square whose perimeter is 42 cm. Deduce its area.',
+                'MH.lesson_Y1Alg_fonLin5.ex4_q4c': 'c) The volume of a cube is V = c³ (c = edge). If we denote by g the linear function that gives the edge as a function of the volume (c = ∛V), is it a linear function? Why?',
+                'MH.lesson_Y1Alg_fonLin5.ex4_q4d': 'd) Find the edge of a cube with volume 64 cm³.',
+                'MH.lesson_Y1Alg_fonLin5.ex4_q4a_sol': String.raw`<p><strong>Answer:</strong> f(c) = 4c.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex4_q4b_sol': String.raw`<p><strong>Answer:</strong> side = 10.5 cm, area = 110.25 cm².</p><p>🔍 <strong>Explanation:</strong> 4c = 42 ⇒ c = 10.5; area = c² = 110.25.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex4_q4c_sol': String.raw`<p><strong>Answer:</strong> No, it is not linear.</p><p>🔍 <strong>Explanation:</strong> c = ∛V = V^{1/3} is not of the form a×V.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex4_q4d_sol': String.raw`<p><strong>Answer:</strong> edge = 4 cm.</p><p>🔍 <strong>Explanation:</strong> c³ = 64 ⇒ c = ∛64 = 4.</p>`,
+
+                // Exercise 5
+                'MH.lesson_Y1Alg_fonLin5.ex5_title': 'Exercise 5 – Various equations',
+                'MH.lesson_Y1Alg_fonLin5.ex5_stmt': 'Solve the following equations (x is positive).',
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5a': 'a) 4x = 36',
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5b': 'b) 3x² = 48',
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5c': 'c) 5√x = 30',
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5d': 'd) 2x³ = 54',
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5e': 'e) 4∛x = 20 (∛x = cube root of x)',
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5a_sol': String.raw`<p><strong>Answer:</strong> x = 9.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5b_sol': String.raw`<p><strong>Answer:</strong> x = 4.</p><p>🔍 <strong>Explanation:</strong> x² = 16 ⇒ x = 4.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5c_sol': String.raw`<p><strong>Answer:</strong> x = 36.</p><p>🔍 <strong>Explanation:</strong> √x = 6 ⇒ x = 36.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5d_sol': String.raw`<p><strong>Answer:</strong> x = 3.</p><p>🔍 <strong>Explanation:</strong> x³ = 27 ⇒ x = 3.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5e_sol': String.raw`<p><strong>Answer:</strong> x = 125.</p><p>🔍 <strong>Explanation:</strong> ∛x = 5 ⇒ x = 125.</p>`,
+
+                // Summary
+                'MH.lesson_Y1Alg_fonLin5.remember': '📌 Remember',
+                'MH.lesson_Y1Alg_fonLin5.rem1': 'A linear function is always of the form \\(f(x)=ax\\).',
+                'MH.lesson_Y1Alg_fonLin5.rem2': 'When applying a linear function to an expression like \\(x^2\\) or \\(\\sqrt{x}\\), first compute that expression, then multiply by \\(a\\).',
+                'MH.lesson_Y1Alg_fonLin5.rem3': 'To solve \\(a \\times (x^n) = b\\), isolate \\(x^n\\) then take the \\(n\\)-th root (or inverse exponent).',
+
+                // Canvas
+                'MH.lesson_Y1Alg_fonLin5.canvas_title': 'Example: f(x) = 4x',
+                'MH.lesson_Y1Alg_fonLin5.canvas_inst': 'The line passes through the origin and point A(1 ; 4).',
+
+                // Footer
+                'MH.footer.developer': 'Developer',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Links',
+                'MH.footer.terms': 'Terms of use',
+                'MH.footer.privacy': 'Privacy policy'
+            },
+            'ar': {
+                // General
+                'MH.general.title': 'مركز الرياضيات',
+                'MH.general.theme': 'المظهر',
+                'MH.general.language': 'اللغة',
+                'MH.general.enableNotifications': 'تفعيل الإشعارات',
+                'MH.lesson_Y1Alg_fonLin5.showSolution': 'عرض الحل',
+                'MH.lesson_Y1Alg_fonLin5.hideSolution': 'إخفاء الحل',
+
+                // Titles
+                'MH.lesson_Y1Alg_fonLin5.title': 'الدوال الخطية: الجزء الخامس',
+                'MH.lesson_Y1Alg_fonLin5.subtitle': 'تمارين تركيبية',
+                'MH.lesson_Y1Alg_fonLin5.part7': 'سابعاً. تمارين تركيبية',
+
+                // Exercise 1
+                'MH.lesson_Y1Alg_fonLin5.ex1_title': 'تمرين 1 – حسابات أولى مع القوى والجذور',
+                'MH.lesson_Y1Alg_fonLin5.ex1_q1a': 'أ) لتكن f(x) = 5x. احسب f(2²)، f(√9) و f(3³).',
+                'MH.lesson_Y1Alg_fonLin5.ex1_q1b': 'ب) لتكن g(x) = 2.5x. احسب g(4²)، g(√16) و g(2³).',
+                'MH.lesson_Y1Alg_fonLin5.ex1_q1c': 'ج) لتكن h(x) = 0.5x. احسب h(6²)، h(√25) و h(10³).',
+                'MH.lesson_Y1Alg_fonLin5.ex1_q1a_sol': String.raw`<p><strong>الجواب:</strong> f(2²)=20، f(√9)=15، f(3³)=135.</p><p>🔍 <strong>التفسير:</strong> f(x)=5x. نبسط أولاً:</p><ul><li>2² = 4، إذن f(4)=5×4=20.</li><li>√9 = 3، إذن f(3)=5×3=15.</li><li>3³ = 27، إذن f(27)=5×27=135.</li></ul>`,
+                'MH.lesson_Y1Alg_fonLin5.ex1_q1b_sol': String.raw`<p><strong>الجواب:</strong> g(4²)=40، g(√16)=10، g(2³)=20.</p><p>🔍 <strong>التفسير:</strong> g(x)=2.5x.</p><ul><li>4² = 16، g(16)=2.5×16=40.</li><li>√16 = 4، g(4)=2.5×4=10.</li><li>2³ = 8، g(8)=2.5×8=20.</li></ul>`,
+                'MH.lesson_Y1Alg_fonLin5.ex1_q1c_sol': String.raw`<p><strong>الجواب:</strong> h(6²)=18، h(√25)=2.5، h(10³)=500.</p><p>🔍 <strong>التفسير:</strong> h(x)=0.5x.</p><ul><li>6² = 36، h(36)=0.5×36=18.</li><li>√25 = 5، h(5)=0.5×5=2.5.</li><li>10³ = 1000، h(1000)=0.5×1000=500.</li></ul>`,
+
+                // Exercise 2
+                'MH.lesson_Y1Alg_fonLin5.ex2_title': 'تمرين 2 – تحديد دالة خطية',
+                'MH.lesson_Y1Alg_fonLin5.ex2_q2a': 'أ) دالة خطية f تحقق f(5) = 20. أوجد معاملها a. أعط f(x).',
+                'MH.lesson_Y1Alg_fonLin5.ex2_q2b': 'ب) احسب f(2²) و f(√25).',
+                'MH.lesson_Y1Alg_fonLin5.ex2_q2c': 'ج) حل f(x²) = 80. (x > 0)',
+                'MH.lesson_Y1Alg_fonLin5.ex2_q2d': 'د) حل f(√x) = 12. (x > 0)',
+                'MH.lesson_Y1Alg_fonLin5.ex2_q2a_sol': String.raw`<p><strong>الجواب:</strong> a = 4، f(x) = 4x.</p><p>🔍 <strong>التفسير:</strong> f(x)=a x. f(5)=20 ⇒ a×5=20 ⇒ a=20/5=4.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex2_q2b_sol': String.raw`<p><strong>الجواب:</strong> f(2²)=16، f(√25)=20.</p><p>🔍 <strong>التفسير:</strong> f(x)=4x. 2²=4 → 4×4=16؛ √25=5 → 4×5=20.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex2_q2c_sol': String.raw`<p><strong>الجواب:</strong> x = √20 = 2√5 ≈ 4.47.</p><p>🔍 <strong>التفسير:</strong> f(x²)=4x² = 80 ⇒ x² = 20 ⇒ x = √20.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex2_q2d_sol': String.raw`<p><strong>الجواب:</strong> x = 9.</p><p>🔍 <strong>التفسير:</strong> f(√x)=4√x = 12 ⇒ √x = 3 ⇒ x = 9.</p>`,
+
+                // Exercise 3
+                'MH.lesson_Y1Alg_fonLin5.ex3_title': 'تمرين 3 – مكعبات وجذور تكعيبية',
+                'MH.lesson_Y1Alg_fonLin5.ex3_q3a': 'أ) لتكن g دالة خطية بحيث g(2) = 5. أوجد g(x).',
+                'MH.lesson_Y1Alg_fonLin5.ex3_q3b': 'ب) احسب g(3²) و g(2³).',
+                'MH.lesson_Y1Alg_fonLin5.ex3_q3c': 'ج) حل g(x³) = 40.',
+                'MH.lesson_Y1Alg_fonLin5.ex3_q3d': 'د) حل g(∛x) = 7.5. (∛x = الجذر التكعيبي لـ x)',
+                'MH.lesson_Y1Alg_fonLin5.ex3_q3a_sol': String.raw`<p><strong>الجواب:</strong> a = 2.5، g(x) = 2.5x.</p><p>🔍 <strong>التفسير:</strong> g(2)=5 ⇒ a×2=5 ⇒ a=2.5.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex3_q3b_sol': String.raw`<p><strong>الجواب:</strong> g(3²)=22.5، g(2³)=20.</p><p>🔍 <strong>التفسير:</strong> 3²=9 → 2.5×9=22.5؛ 2³=8 → 2.5×8=20.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex3_q3c_sol': String.raw`<p><strong>الجواب:</strong> x = ∛16 = 2∛2 ≈ 2.52.</p><p>🔍 <strong>التفسير:</strong> 2.5 x³ = 40 ⇒ x³ = 16 ⇒ x = ∛16.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex3_q3d_sol': String.raw`<p><strong>الجواب:</strong> x = 27.</p><p>🔍 <strong>التفسير:</strong> 2.5 ∛x = 7.5 ⇒ ∛x = 3 ⇒ x = 27.</p>`,
+
+                // Exercise 4
+                'MH.lesson_Y1Alg_fonLin5.ex4_title': 'تمرين 4 – مربع ومكعب',
+                'MH.lesson_Y1Alg_fonLin5.ex4_q4a': 'أ) محيط مربع هو P = 4c (c = طول الضلع). عبر عن الدالة الخطية f التي تعطي المحيط بدلالة الضلع.',
+                'MH.lesson_Y1Alg_fonLin5.ex4_q4b': 'ب) احسب طول ضلع مربع محيطه 42 سم. استنتج مساحته.',
+                'MH.lesson_Y1Alg_fonLin5.ex4_q4c': 'ج) حجم مكعب هو V = c³ (c = طول الحرف). إذا رمزنا بـ g للدالة الخطية التي تعطي الحرف بدلالة الحجم (c = ∛V)، هل هي دالة خطية؟ لماذا؟',
+                'MH.lesson_Y1Alg_fonLin5.ex4_q4d': 'د) احسب طول حرف مكعب حجمه 64 سم³.',
+                'MH.lesson_Y1Alg_fonLin5.ex4_q4a_sol': String.raw`<p><strong>الجواب:</strong> f(c) = 4c.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex4_q4b_sol': String.raw`<p><strong>الجواب:</strong> طول الضلع = 10.5 سم، المساحة = 110.25 سم².</p><p>🔍 <strong>التفسير:</strong> 4c = 42 ⇒ c = 10.5؛ المساحة = c² = 110.25.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex4_q4c_sol': String.raw`<p><strong>الجواب:</strong> لا، ليست خطية.</p><p>🔍 <strong>التفسير:</strong> c = ∛V = V^{1/3} ليست على الشكل a×V.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex4_q4d_sol': String.raw`<p><strong>الجواب:</strong> طول الحرف = 4 سم.</p><p>🔍 <strong>التفسير:</strong> c³ = 64 ⇒ c = ∛64 = 4.</p>`,
+
+                // Exercise 5
+                'MH.lesson_Y1Alg_fonLin5.ex5_title': 'تمرين 5 – معادلات متنوعة',
+                'MH.lesson_Y1Alg_fonLin5.ex5_stmt': 'حل المعادلات التالية (x عدد موجب).',
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5a': 'أ) 4x = 36',
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5b': 'ب) 3x² = 48',
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5c': 'ج) 5√x = 30',
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5d': 'د) 2x³ = 54',
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5e': 'هـ) 4∛x = 20 (∛x = الجذر التكعيبي لـ x)',
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5a_sol': String.raw`<p><strong>الجواب:</strong> x = 9.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5b_sol': String.raw`<p><strong>الجواب:</strong> x = 4.</p><p>🔍 <strong>التفسير:</strong> x² = 16 ⇒ x = 4.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5c_sol': String.raw`<p><strong>الجواب:</strong> x = 36.</p><p>🔍 <strong>التفسير:</strong> √x = 6 ⇒ x = 36.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5d_sol': String.raw`<p><strong>الجواب:</strong> x = 3.</p><p>🔍 <strong>التفسير:</strong> x³ = 27 ⇒ x = 3.</p>`,
+                'MH.lesson_Y1Alg_fonLin5.ex5_q5e_sol': String.raw`<p><strong>الجواب:</strong> x = 125.</p><p>🔍 <strong>التفسير:</strong> ∛x = 5 ⇒ x = 125.</p>`,
+
+                // Summary
+                'MH.lesson_Y1Alg_fonLin5.remember': '📌 تذكر',
+                'MH.lesson_Y1Alg_fonLin5.rem1': 'تكتب الدالة الخطية دائماً \\(f(x)=ax\\).',
+                'MH.lesson_Y1Alg_fonLin5.rem2': 'عند تطبيق دالة خطية على عبارة مثل \\(x^2\\) أو \\(\\sqrt{x}\\)، نحسب أولاً تلك العبارة ثم نضرب في \\(a\\).',
+                'MH.lesson_Y1Alg_fonLin5.rem3': 'لحل \\(a \\times (x^n) = b\\)، نعزل \\(x^n\\) ثم نأخذ الجذر \\(n\\)-th (أو الأس العكسي).',
+
+                // Canvas
+                'MH.lesson_Y1Alg_fonLin5.canvas_title': 'مثال: f(x) = 4x',
+                'MH.lesson_Y1Alg_fonLin5.canvas_inst': 'المستقيم يمر عبر الأصل والنقطة A(1 ; 4).',
+
+                // Footer
+                'MH.footer.developer': 'المطور',
+                'MH.footer.version': 'الإصدار',
+                'MH.footer.links': 'روابط',
+                'MH.footer.terms': 'شروط الاستخدام',
+                'MH.footer.privacy': 'سياسة الخصوصية'
+            }
+        };
+
+        // Merge with global translations
+        if (typeof translations !== 'undefined') {
+            for (let lang in fonLin5Translations) {
+                translations[lang] = {...translations[lang], ...fonLin5Translations[lang]};
+            }
+        } else { var translations = fonLin5Translations; }
+
+        // ========== CANVAS DRAWING FUNCTIONS ==========
+        function drawFuncCanvas5() {
+            const canvas = document.getElementById('funcCanvas5');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height;
+            ctx.clearRect(0,0,w,h);
+            const pad = 50, gw = w-2*pad, gh = h-2*pad;
+            const xMin = -2, xMax = 5, yMin = -5, yMax = 20;
+            // axes
+            ctx.strokeStyle = '#666'; ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(pad, h-pad); ctx.lineTo(w-pad, h-pad); ctx.moveTo(pad, pad); ctx.lineTo(pad, h-pad); ctx.stroke();
+            // graduations
+            ctx.fillStyle = '#333'; ctx.font = '12px Arial';
+            for (let x = -1; x <= 4; x++) {
+                let cx = pad + (x - xMin) / (xMax - xMin) * gw;
+                ctx.fillText(x, cx-8, h-pad+20);
+            }
+            for (let y = -5; y <= 20; y+=5) {
+                let cy = h-pad - (y - yMin) / (yMax - yMin) * gh;
+                ctx.fillText(y, pad-35, cy+5);
+            }
+            // line f(x)=4x
+            ctx.strokeStyle = '#3498DB'; ctx.lineWidth = 3;
+            ctx.beginPath();
+            let x1 = -1.5, y1 = 4 * x1;
+            let x2 = 4.5, y2 = 4 * x2;
+            let cx1 = pad + (x1 - xMin) / (xMax - xMin) * gw;
+            let cy1 = h-pad - (y1 - yMin) / (yMax - yMin) * gh;
+            let cx2 = pad + (x2 - xMin) / (xMax - xMin) * gw;
+            let cy2 = h-pad - (y2 - yMin) / (yMax - yMin) * gh;
+            ctx.moveTo(cx1, cy1); ctx.lineTo(cx2, cy2); ctx.stroke();
+            // point A(1,4)
+            ctx.fillStyle = '#E74C3C';
+            let ax = pad + (1 - xMin) / (xMax - xMin) * gw;
+            let ay = h-pad - (4 - yMin) / (yMax - yMin) * gh;
+            ctx.beginPath(); ctx.arc(ax, ay, 5, 0, 2*Math.PI); ctx.fill();
+            ctx.fillStyle = '#333'; ctx.font = 'bold 14px Arial';
+            ctx.fillText('A(1;4)', ax+10, ay-10);
+            ctx.fillStyle = '#333'; ctx.font = 'italic 14px Arial';
+            ctx.fillText('f(x)=4x', w-150, 60);
+        }
+
+        // Toggle solution function (global)
+        function toggleSolution(id) {
+            const sol = document.getElementById(`solution${id}`);
+            if (!sol) return;
+            const btn = sol.previousElementSibling;
+            const currentLang = (typeof MHThemeManager !== 'undefined' && MHThemeManager.getCurrentLanguage) ? MHThemeManager.getCurrentLanguage() : 'fr';
+            if (sol.style.display === 'block') {
+                sol.style.display = 'none';
+                btn.textContent = translations[currentLang]?.['MH.lesson_Y1Alg_fonLin5.showSolution'] || 'Voir la solution';
+            } else {
+                sol.style.display = 'block';
+                btn.textContent = translations[currentLang]?.['MH.lesson_Y1Alg_fonLin5.hideSolution'] || 'Cacher la solution';
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(sol, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)'},{left:'\\[',right:'\\]'}]});
+                }
+            }
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)'},{left:'\\[',right:'\\]'}]});
+            }
+            drawFuncCanvas5();
+            // Hide all solutions initially (IDs 1 to 20)
+            for (let i=1; i<=20; i++) {
+                const sol = document.getElementById(`solution${i}`);
+                if (sol) {
+                    sol.style.display = 'none';
+                    const btn = sol.previousElementSibling;
+                    if (btn) btn.textContent = translations['fr']['MH.lesson_Y1Alg_fonLin5.showSolution'];
+                }
+            }
+            // Redraw on theme toggle
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    setTimeout(() => { drawFuncCanvas5(); }, 100);
+                });
+            }
+        });
+
+        // Service worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').catch(e => console.log('SW failed', e));
+            });
+        }
+    </script>
+    <noscript>
+        <style> .MH-solution { display: block; } </style>
+    </noscript>
+</body>
+</html>

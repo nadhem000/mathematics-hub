@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathématiques : Fonctions linéaires – Partie II</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#3498DB" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#5DADE2" media="(prefers-color-scheme: dark)">
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#3498DB">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    <style>
+        /* reuse same palette – blue/green */
+        :root {
+            --primary: #3498DB;        --primary-light: #5DADE2;  --primary-dark: #2E86C1;
+            --secondary: #2ECC71;      --secondary-light: #58D68D; --secondary-dark: #28B463;
+            --accent: #F39C12;          --warning: #E74C3C;        --info: #3498DB;
+            --text: #333333;            --text-light: #666666;     --background: #FFFFFF;
+            --surface: #F8F9FA;          --border: #E9ECEF;        --shadow: rgba(0,0,0,0.1);
+        }
+        [data-theme="dark"] {
+            --primary: #5DADE2;         --primary-light: #85C1E9;  --primary-dark: #3498DB;
+            --secondary: #28B463;        --secondary-light: #2ECC71; --secondary-dark: #1D8348;
+            --accent: #F39C12;            --warning: #C0392B;        --info: #2980B9;
+            --text: #FFFFFF;              --text-light: #CCCCCC;     --background: #121212;
+            --surface: #1E1E1E;            --border: #333333;        --shadow: rgba(0,0,0,0.3);
+        }
+        .katex { font-size: 1.1em; }
+        .MH-equation { font-family: inherit; font-size: inherit; color: inherit; margin: 0.5em 0; padding: 0; display: inline-block; }
+        .MH-canvas-container { margin: 2em 0; text-align: center; position: relative; }
+        .MH-canvas { border: 2px solid var(--border); border-radius: 8px; background-color: var(--surface); max-width: 100%; box-shadow: 0 4px 6px var(--shadow); }
+        .MH-canvas-title { font-weight: bold; margin-bottom: 0.5em; color: var(--primary); }
+        .MH-canvas-instructions { font-size: 0.9em; color: var(--text-light); margin-top: 0.5em; font-style: italic; }
+        .MH-sequence-item { margin: 0.5em 0; padding: 0.5em; background-color: var(--surface); border-left: 4px solid var(--secondary); border-radius: 4px; }
+        .MH-sequence-step { margin: 0.5em 0; padding-left: 1em; border-left: 2px solid var(--primary-light); }
+        .MH-formula-box { background-color: rgba(46, 204, 113, 0.1); border: 2px solid var(--secondary); border-radius: 8px; padding: 1.5em; margin: 1em 0; }
+        .MH-exercise-number { font-size: 1.2em; font-weight: bold; color: var(--secondary); margin: 1.5em 0 0.5em 0; border-bottom: 2px solid var(--secondary-light); padding-bottom: 0.3em; }
+        .MH-table { display: inline-block; border-collapse: collapse; margin: 1em 0; background-color: var(--surface); }
+        .MH-table td, .MH-table th { border: 1px solid var(--border); padding: 0.5em 1em; text-align: center; }
+        .MH-table th { background-color: var(--primary-light); color: var(--text); }
+        .MH-blank { color: var(--text-light); font-style: italic; }
+        .MH-solution { display: none; margin-top: 1em; padding: 1em; background-color: var(--surface); border-radius: 8px; border-left: 4px solid var(--primary); }
+        .MH-solution-btn { background-color: var(--primary); color: white; border: none; padding: 0.3em 1em; border-radius: 20px; cursor: pointer; margin: 0.5em 0; }
+        .MH-solution-btn:hover { background-color: var(--primary-dark); }
+        .point-red { fill: #E74C3C; stroke: #C0392B; }
+        .point-blue { fill: #3498DB; stroke: #2E86C1; }
+        .line-car { stroke: #2ECC71; stroke-width: 3; }
+        .line-moto { stroke: #F39C12; stroke-width: 3; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span> <span>🎨</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span> <span>🌐</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                        </div>
+                    </div>
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span> <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y1Alg_fonLin2.title">Fonctions linéaires : Partie II</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y1Alg_fonLin2.subtitle">Lecture graphique et applications</h2>
+
+        <!-- ============ III. LECTURE GRAPHIQUE ============ -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y1Alg_fonLin2.part3">III. Lecture graphique</div>
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonLin2.act1Title">Activité 1 – Automobiliste et motard</h3>
+                <p data-i18n="MH.lesson_Y1Alg_fonLin2.act1Stmt">
+                    Un automobiliste et un motard quittent à 8 heures Tabarka pour se rendre à Kasserine (240 km). Vitesse constante.
+                    Automobiliste : 3 h ; motard : 2 h 40 min.
+                </p>
+            </div>
+            <!-- questions 1..6 -->
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin2.q1">1) Calculer la vitesse de chacun.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin2.showSolution" onclick="toggleSolution(1)">Voir la solution</button>
+                    <div class="MH-solution" id="solution1"><span data-i18n="MH.lesson_Y1Alg_fonLin2.sol1"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin2.q2">2) Exprimer la distance d(t) parcourue par l’automobiliste en fonction du temps t (en heures).</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin2.showSolution" onclick="toggleSolution(2)">Voir la solution</button>
+                    <div class="MH-solution" id="solution2"><span data-i18n="MH.lesson_Y1Alg_fonLin2.sol2"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin2.q3">3) Exprimer la distance d’(t) parcourue par le motard.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin2.showSolution" onclick="toggleSolution(3)">Voir la solution</button>
+                    <div class="MH-solution" id="solution3"><span data-i18n="MH.lesson_Y1Alg_fonLin2.sol3"></span></div>
+                </div>
+                <!-- Graphique -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y1Alg_fonLin2.canvasTitle1">Distances parcourues en fonction du temps</div>
+                    <canvas id="distanceCanvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y1Alg_fonLin2.canvasInst1">
+                        Droites passant par l’origine : pente = vitesse.
+                    </div>
+                </div>
+                <!-- 4) représenter graphiquement (déjà fait dans canvas) mais on garde la question -->
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin2.q4">4) Représenter graphiquement d et d’ (voir le graphique ci-dessus).</h4>
+                </div>
+                <!-- 5) questions a et b -->
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin2.q5a">5a) À 8h45, ont-ils traversé Jendouba (65 km) ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin2.showSolution" onclick="toggleSolution(4)">Voir la solution</button>
+                    <div class="MH-solution" id="solution4"><span data-i18n="MH.lesson_Y1Alg_fonLin2.sol4"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin2.q5b">5b) Quand le motard arrive à Kasserine (240 km), quelle distance reste-t-il à l’automobiliste ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin2.showSolution" onclick="toggleSolution(5)">Voir la solution</button>
+                    <div class="MH-solution" id="solution5"><span data-i18n="MH.lesson_Y1Alg_fonLin2.sol5"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin2.q6">6) Vérifier par le calcul les résultats de la question 5.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin2.showSolution" onclick="toggleSolution(6)">Voir la solution</button>
+                    <div class="MH-solution" id="solution6"><span data-i18n="MH.lesson_Y1Alg_fonLin2.sol6"></span></div>
+                </div>
+            </div>
+
+            <!-- Retenir : synthèse -->
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonLin2.retTitle">📘 Retenir – Fonction linéaire</h3>
+                <p data-i18n="MH.lesson_Y1Alg_fonLin2.ret1">◊ Soit a un réel. Lorsqu’à chaque réel x on associe a x, on définit une <strong>fonction linéaire</strong> f. On note \( f : x \mapsto a x \).</p>
+                <ul>
+                    <li data-i18n="MH.lesson_Y1Alg_fonLin2.retLi1">f(x) est l’image de x ; x est un antécédent.</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonLin2.retLi2">\( f(0)=0\) et \( f(1)=a\).</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonLin2.retLi3">Propriété : \( f(x+x') = f(x)+f(x') \).</li>
+                </ul>
+                <p data-i18n="MH.lesson_Y1Alg_fonLin2.ret2">◊ Sa représentation graphique est une <strong>droite passant par l’origine</strong> d’équation \( y = a x \). Le coefficient a est la pente.</p>
+            </div>
+        </section>
+
+        <!-- ============ IV. APPLICATIONS ============ -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y1Alg_fonLin2.part4">IV. Applications</div>
+
+            <!-- Situation 1 : coefficients sur graphique -->
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonLin2.sit1Title">Situation 1 – Lire des coefficients sur un graphique</h3>
+                <p data-i18n="MH.lesson_Y1Alg_fonLin2.sit1Stmt">Dans le repère (O,I,J) les droites D1, D2, D3 représentent des fonctions linéaires f1, f2, f3. Donner le coefficient de chacune.</p>
+            </div>
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y1Alg_fonLin2.linesCanvasTitle">Droites D1, D2, D3</div>
+                <canvas id="linesCanvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y1Alg_fonLin2.sit1CanvasInst">Lire les coordonnées d’un point (autre que O) pour trouver a = y/x.</div>
+            </div>
+            <div class="MH-sequence-item">
+                <h4 data-i18n="MH.lesson_Y1Alg_fonLin2.sit1Q">Déterminer a₁, a₂, a₃.</h4>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin2.showSolution" onclick="toggleSolution(7)">Voir la solution</button>
+                <div class="MH-solution" id="solution7"><span data-i18n="MH.lesson_Y1Alg_fonLin2.sol7"></span></div>
+            </div>
+
+            <!-- Situation 2 : pourcentages -->
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonLin2.sit2Title">Situation 2 – Pourcentages</h3>
+                <p data-i18n="MH.lesson_Y1Alg_fonLin2.sit2Stmt">1) Baisse de 20% ; 2) Augmentation de 8% ; 3) Baisse 10% puis augmentation 10%.</p>
+            </div>
+            <div class="MH-sequence-item">
+                <h4 data-i18n="MH.lesson_Y1Alg_fonLin2.sit2Q1">1) Fonction linéaire pour une baisse de 20%.</h4>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin2.showSolution" onclick="toggleSolution(8)">Voir la solution</button>
+                <div class="MH-solution" id="solution8"><span data-i18n="MH.lesson_Y1Alg_fonLin2.sol8"></span></div>
+            </div>
+            <div class="MH-sequence-item">
+                <h4 data-i18n="MH.lesson_Y1Alg_fonLin2.sit2Q2">2) Augmentation de 8%.</h4>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin2.showSolution" onclick="toggleSolution(9)">Voir la solution</button>
+                <div class="MH-solution" id="solution9"><span data-i18n="MH.lesson_Y1Alg_fonLin2.sol9"></span></div>
+            </div>
+            <div class="MH-sequence-item">
+                <h4 data-i18n="MH.lesson_Y1Alg_fonLin2.sit2Q3">3) Baisse 10% puis augmentation 10%.</h4>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin2.showSolution" onclick="toggleSolution(10)">Voir la solution</button>
+                <div class="MH-solution" id="solution10"><span data-i18n="MH.lesson_Y1Alg_fonLin2.sol10"></span></div>
+            </div>
+
+            <!-- Situation 3 : deux fournisseurs -->
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonLin2.sit3Title">Situation 3 – Meilleure offre</h3>
+                <p data-i18n="MH.lesson_Y1Alg_fonLin2.sit3Stmt">Fournisseur A : réduction 10%. Fournisseur B : d’abord –5% puis –4% supplémentaire. Même prix initial. Quelle offre est meilleure ?</p>
+            </div>
+            <div class="MH-sequence-item">
+                <h4 data-i18n="MH.lesson_Y1Alg_fonLin2.sit3Q">Comparer les prix finaux.</h4>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin2.showSolution" onclick="toggleSolution(11)">Voir la solution</button>
+                <div class="MH-solution" id="solution11"><span data-i18n="MH.lesson_Y1Alg_fonLin2.sol11"></span></div>
+            </div>
+
+            <!-- Situation 4 : construction de segments -->
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonLin2.sit4Title">Situation 4 – Construire un segment de longueur donnée</h3>
+                <p data-i18n="MH.lesson_Y1Alg_fonLin2.sit4Stmt">On donne a et b (a>0, b>0). Construire un segment de longueur 1/b et un segment de longueur a·b en utilisant un graphique.</p>
+            </div>
+            <div class="MH-sequence-item">
+                <h4 data-i18n="MH.lesson_Y1Alg_fonLin2.sit4Q1">1) Construire 1/b.</h4>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin2.showSolution" onclick="toggleSolution(12)">Voir la solution</button>
+                <div class="MH-solution" id="solution12"><span data-i18n="MH.lesson_Y1Alg_fonLin2.sol12"></span></div>
+            </div>
+            <div class="MH-sequence-item">
+                <h4 data-i18n="MH.lesson_Y1Alg_fonLin2.sit4Q2">2) Construire a·b.</h4>
+                <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin2.showSolution" onclick="toggleSolution(13)">Voir la solution</button>
+                <div class="MH-solution" id="solution13"><span data-i18n="MH.lesson_Y1Alg_fonLin2.sol13"></span></div>
+            </div>
+            <div class="MH-canvas-container">
+                <div class="MH-canvas-title" data-i18n="MH.lesson_Y1Alg_fonLin2.constructCanvasTitle">Construction de 1/b et a·b (exemple a=2, b=3)</div>
+                <canvas id="constructCanvas" width="600" height="400" class="MH-canvas"></canvas>
+                <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y1Alg_fonLin2.sit4CanvasInst">Droite y=2x : point (1,2) ; pour b=3, f(3)=6 ; pour 1/b : droite y=3x donne abscisse 1/3 ≈ 0.333.</div>
+            </div>
+        </section>
+
+        <!-- Résumé de la leçon -->
+        <section class="MH-section">
+            <h2 class="MH-section-title" data-i18n="MH.lesson_Y1Alg_fonLin2.summaryTitle">Résumé de la leçon</h2>
+            <div class="MH-important">
+                <ul>
+                    <li data-i18n="MH.lesson_Y1Alg_fonLin2.summary1">Une fonction linéaire modélise une situation de proportionnalité : \(f(x)=ax\).</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonLin2.summary2">Sa droite passe par l’origine ; la pente a se lit comme « montée » pour une unité en x.</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonLin2.summary3">Graphiquement, on peut lire des images et des antécédents.</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonLin2.summary4">Les pourcentages d’augmentation/réduction se traduisent par des coefficients (1 ± t/100).</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column"><div class="MH-footer-title" data-i18n="MH.footer.developer">Développeur</div><div class="MH-footer-text">Mejri Ziad</div></div>
+            <div class="MH-footer-column"><div class="MH-footer-title" data-i18n="MH.footer.version">Version</div><div class="MH-footer-text">v0.4.0</div></div>
+            <div class="MH-footer-column"><div class="MH-footer-title" data-i18n="MH.footer.links">Liens</div><div class="MH-footer-links"><a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Conditions d'utilisation</a><a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Politique de confidentialité</a></div></div>
+        </div>
+    </footer>
+
+    <!-- scripts -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+
+    <script>
+        // ============================================
+        // TRADUCTIONS COMPLÈTES : FONCTIONS LINÉAIRES PARTIE II
+        // inclut tous les textes des solutions et instructions
+        // ============================================
+        const fonLin2Translations = {
+            'fr': {
+                // Général
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Thème',
+                'MH.general.language': 'Langue',
+                'MH.general.enableNotifications': 'Activer les notifications',
+                // Leçon
+                'MH.lesson_Y1Alg_fonLin2.showSolution': 'Voir la solution',
+                'MH.lesson_Y1Alg_fonLin2.hideSolution': 'Cacher la solution',
+                'MH.lesson_Y1Alg_fonLin2.title': 'Fonctions linéaires : Partie II',
+                'MH.lesson_Y1Alg_fonLin2.subtitle': 'Lecture graphique et applications',
+                'MH.lesson_Y1Alg_fonLin2.part3': 'III. Lecture graphique',
+                'MH.lesson_Y1Alg_fonLin2.act1Title': 'Activité 1 – Automobiliste et motard',
+                'MH.lesson_Y1Alg_fonLin2.act1Stmt': 'Un automobiliste et un motard quittent à 8h Tabarka pour Kasserine (240 km). Vitesse constante. Auto : 3h, moto : 2h40.',
+                'MH.lesson_Y1Alg_fonLin2.q1': '1) Calculer la vitesse de chacun.',
+                'MH.lesson_Y1Alg_fonLin2.q2': '2) Exprimer d(t) pour l’automobiliste.',
+                'MH.lesson_Y1Alg_fonLin2.q3': '3) Exprimer d’(t) pour le motard.',
+                'MH.lesson_Y1Alg_fonLin2.q4': '4) Représenter graphiquement (voir ci-dessus).',
+                'MH.lesson_Y1Alg_fonLin2.q5a': '5a) À 8h45, ont-ils traversé Jendouba (65 km) ?',
+                'MH.lesson_Y1Alg_fonLin2.q5b': '5b) Quand le motard arrive, reste auto ?',
+                'MH.lesson_Y1Alg_fonLin2.q6': '6) Vérifier par calcul.',
+                'MH.lesson_Y1Alg_fonLin2.answer': 'Réponse :',
+                'MH.lesson_Y1Alg_fonLin2.canvasTitle1': 'Distances parcourues en fonction du temps',
+                'MH.lesson_Y1Alg_fonLin2.canvasInst1': 'Droites passant par l’origine : pente = vitesse.',
+                'MH.lesson_Y1Alg_fonLin2.linesCanvasTitle': 'Droites D1, D2, D3',
+                'MH.lesson_Y1Alg_fonLin2.constructCanvasTitle': 'Construction de 1/b et a·b (exemple a=2, b=3)',
+                'MH.lesson_Y1Alg_fonLin2.retTitle': '📘 Retenir – Fonction linéaire',
+                'MH.lesson_Y1Alg_fonLin2.ret1': '◊ Soit a un réel. Lorsqu’à chaque réel x on associe a x, on définit une fonction linéaire f. On note f : x ↦ a x.',
+                'MH.lesson_Y1Alg_fonLin2.retLi1': 'f(x) est l’image de x ; x est un antécédent.',
+                'MH.lesson_Y1Alg_fonLin2.retLi2': 'f(0)=0 et f(1)=a.',
+                'MH.lesson_Y1Alg_fonLin2.retLi3': 'Propriété : f(x+x\') = f(x)+f(x\').',
+                'MH.lesson_Y1Alg_fonLin2.ret2': '◊ Sa représentation graphique est une droite passant par l’origine d’équation y = a x. Le coefficient a est la pente.',
+                'MH.lesson_Y1Alg_fonLin2.part4': 'IV. Applications',
+                'MH.lesson_Y1Alg_fonLin2.sit1Title': 'Situation 1 – Lire des coefficients',
+                'MH.lesson_Y1Alg_fonLin2.sit1Stmt': 'Dans le repère, les droites D1, D2, D3 représentent des fonctions linéaires f1, f2, f3. Donner le coefficient de chacune.',
+                'MH.lesson_Y1Alg_fonLin2.sit1CanvasInst': 'Lire les coordonnées d’un point (autre que O) pour trouver a = y/x.',
+                'MH.lesson_Y1Alg_fonLin2.sit1Q': 'Déterminer a₁, a₂, a₃.',
+                'MH.lesson_Y1Alg_fonLin2.sit2Title': 'Situation 2 – Pourcentages',
+                'MH.lesson_Y1Alg_fonLin2.sit2Stmt': '1) Baisse 20% ; 2) Augmentation 8% ; 3) Baisse 10% puis augmentation 10%.',
+                'MH.lesson_Y1Alg_fonLin2.sit2Q1': '1) Baisse 20%',
+                'MH.lesson_Y1Alg_fonLin2.sit2Q2': '2) Augmentation 8%',
+                'MH.lesson_Y1Alg_fonLin2.sit2Q3': '3) Baisse 10% puis +10%',
+                'MH.lesson_Y1Alg_fonLin2.sit3Title': 'Situation 3 – Meilleure offre',
+                'MH.lesson_Y1Alg_fonLin2.sit3Stmt': 'Fournisseur A : –10%. B : –5% puis –4% supplémentaire. Meilleure offre ?',
+                'MH.lesson_Y1Alg_fonLin2.sit3Q': 'Comparer les prix finaux.',
+                'MH.lesson_Y1Alg_fonLin2.sit4Title': 'Situation 4 – Construire 1/b et a·b',
+                'MH.lesson_Y1Alg_fonLin2.sit4Stmt': 'Construire un segment de longueur 1/b et un segment de longueur a·b en utilisant un graphique.',
+                'MH.lesson_Y1Alg_fonLin2.sit4Q1': '1) Construire 1/b',
+                'MH.lesson_Y1Alg_fonLin2.sit4Q2': '2) Construire a·b',
+                'MH.lesson_Y1Alg_fonLin2.sit4CanvasInst': 'Droite y=2x : point (1,2) ; pour b=3, f(3)=6 ; pour 1/b : droite y=3x donne abscisse 1/3 ≈ 0.333.',
+                'MH.lesson_Y1Alg_fonLin2.summaryTitle': 'Résumé',
+                'MH.lesson_Y1Alg_fonLin2.summary1': 'Une fonction linéaire modélise une proportionnalité : f(x)=ax.',
+                'MH.lesson_Y1Alg_fonLin2.summary2': 'Sa droite passe par l’origine ; la pente a se lit comme « montée » pour une unité en x.',
+                'MH.lesson_Y1Alg_fonLin2.summary3': 'Graphiquement, on peut lire images et antécédents.',
+                'MH.lesson_Y1Alg_fonLin2.summary4': 'Pourcentages → coefficient (1 ± t/100).',
+                // Solutions (contenu complet)
+                'MH.lesson_Y1Alg_fonLin2.sol1': '<div class="MH-sequence-step"><p>🔹 <strong>Automobiliste :</strong> distance = 240 km, temps = 3 h. Vitesse = distance / temps = \\( \\frac{240}{3} = 80\\) km/h.</p><p>🔹 <strong>Motard :</strong> temps = 2 h 40 min = \\(2 + \\frac{40}{60} = 2 + \\frac{2}{3} = \\frac{8}{3}\\) h. Vitesse = \\(240 \\div \\frac{8}{3} = 240 \\times \\frac{3}{8} = 90\\) km/h.</p></div><p><strong>Réponse :</strong> 80 km/h et 90 km/h.</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol2': '<p>La vitesse est constante (80 km/h) et à t=0 (8h00) distance = 0. Donc la distance est proportionnelle au temps :</p><div class="MH-formula-box">\\( d(t) = 80 \\times t \\)</div><p>avec t en heures. (Exemple : à t = 3 h, d = 240 km.)</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol3': '<p>Vitesse motard = 90 km/h, donc :</p><div class="MH-formula-box">\\( d\'(t) = 90 \\times t \\)</div>',
+                'MH.lesson_Y1Alg_fonLin2.sol4': '<p><strong>Lecture graphique :</strong> 8h45 = 8 + 45/60 = 8,75 h. Temps écoulé depuis 8h00 : t = 0,75 h.</p><p>Sur la droite de l’automobiliste (bleue) à t=0,75, l’ordonnée ≈ 60 km (car 80×0,75 = 60). Pour le motard (orange) : 90×0,75 = 67,5 km.</p><p>Jendouba est à 65 km. L’automobiliste n’a parcouru que 60 km → pas encore. Le motard a parcouru 67,5 km → il a dépassé Jendouba.</p><p><strong>Réponse :</strong> seul le motard a dépassé Jendouba.</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol5': '<p>Temps du motard pour 240 km : \\( t = 240 / 90 = \\frac{8}{3} \\approx 2,667\\) h = 2h40.</p><p>À cet instant, l’automobiliste a parcouru \\( d = 80 \\times \\frac{8}{3} = \\frac{640}{3} \\approx 213,33\\) km.</p><p>Il reste : \\( 240 - 213,33 = 26,67\\) km.</p><p><strong>Graphiquement :</strong> on lit l’ordonnée de la droite bleue à t = 2h40 (verticale) : environ 213 km, reste 27 km.</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol6': '<p><strong>5a :</strong> t = 0,75 h. Auto : 80×0,75 = 60 km (<65). Moto : 90×0,75 = 67,5 km (>65). ✅</p><p><strong>5b :</strong> t motard = 240/90 = 8/3 h. Auto : 80×(8/3)=640/3 ≈ 213,33 km ; reste 240−213,33 = 26,67 km. ✅</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol7': '<p><strong>Méthode :</strong> On choisit un point facile sur chaque droite (avec x entier).</p><ul><li>D₁ passe par (1, 0,5) → a₁ = 0,5/1 = 0,5.</li><li>D₂ passe par (1, 2) → a₂ = 2.</li><li>D₃ passe par (2, -1) (ou (1, -0,5)) → a₃ = -0,5.</li></ul><p>Donc \\( f_1(x)=0,5x,\\; f_2(x)=2x,\\; f_3(x)=-0,5x \\).</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol8': '<p>Prix initial = x. Baisse de 20% → on garde 80% = 0,8. Donc prix final = 0,8 x.</p><p>Fonction linéaire : \\( f(x) = 0,8x \\) (coefficient 0,8).</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol9': '<p>Augmenter de 8% → multiplier par \\(1 + \\frac{8}{100} = 1,08\\).</p><p>\\( g(x) = 1,08x \\).</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol10': '<p>Étape 1 : baisse 10% → \\( p_1 = 0,9x\\).</p><p>Étape 2 : augmentation de 10% sur \\(p_1\\) → \\( p_2 = 1,08 \\times p_1 = 1,08 \\times 0,9x = 0,99x\\).</p><p>Soit \\( h(x) = 0,99x \\). C’est une baisse finale de 1% (car 0,99 = 1 - 0,01).</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol11': '<p>Soit x le prix initial.</p><p><strong>Fournisseur A :</strong> –10% → facteur = 0,9 → \\( p_A = 0,9x\\).</p><p><strong>Fournisseur B :</strong> –5% → facteur 0,95 ; puis –4% (sur le prix déjà réduit) → facteur 0,96. Total : \\( p_B = 0,95 \\times 0,96 \\times x = 0,912x\\).</p><p>Comparaison : 0,9 < 0,912 ? Non, 0,9 est plus petit que 0,912. Donc le fournisseur A offre un prix final plus bas (meilleure réduction).</p><p><strong>Conclusion :</strong> l’offre A est meilleure pour l’entreprise.</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol12': '<p><strong>Principe :</strong> On utilise la droite représentant \\( f(x)=a x\\).</p><p>Plaçons A(1, a). La droite (OA) a pour équation y = a x.</p><p><strong>Pour 1/b :</strong> On cherche l’antécédent de 1. Il faut résoudre \\( a x = 1 \\) ⇒ \\( x = 1/a\\). Mais nous voulons 1/b, pas 1/a. Il faut donc adapter.</p><p><strong>Méthode générale :</strong> Si on veut construire 1/b, on peut utiliser la droite de coefficient b (c’est-à-dire y = b x). Alors l’antécédent de 1 est 1/b. Donc il suffit de tracer la droite passant par O et (1, b). Son intersection avec la droite horizontale y=1 donne un point dont l’abscisse est 1/b.</p><p>Ici on a un repère orthonormé (OI = OJ = 1). On place B(1, b). La droite (OB) coupe la droite d’équation y=1 en un point C. L’abscisse de C = 1/b. On reporte cette longueur sur l’axe des x.</p><p>Voir illustration : (le canvas ci-dessous montre le principe avec a=2, b=3 par exemple).</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol13': '<p>Avec la droite de coefficient a (passant par (1,a)). L’image de b par f est a·b. On place sur l’axe des x le point d’abscisse b, on monte verticalement jusqu’à la droite, on lit l’ordonnée = a·b.</p><p>Construction : sur l’axe horizontal, prendre le point d’abscisse b. Tracer la verticale qui coupe la droite (OA) en M. La longueur OM verticale (ou la projection sur l’axe des y) donne a·b.</p>',
+                // Footer
+                'MH.footer.developer': 'Développeur',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Liens',
+                'MH.footer.terms': 'Conditions d\'utilisation',
+                'MH.footer.privacy': 'Politique de confidentialité'
+            },
+            'en': {
+                // General
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Theme',
+                'MH.general.language': 'Language',
+                'MH.general.enableNotifications': 'Enable Notifications',
+                // Lesson
+                'MH.lesson_Y1Alg_fonLin2.showSolution': 'Show solution',
+                'MH.lesson_Y1Alg_fonLin2.hideSolution': 'Hide solution',
+                'MH.lesson_Y1Alg_fonLin2.title': 'Linear functions: Part II',
+                'MH.lesson_Y1Alg_fonLin2.subtitle': 'Graphical reading and applications',
+                'MH.lesson_Y1Alg_fonLin2.part3': 'III. Graphical reading',
+                'MH.lesson_Y1Alg_fonLin2.act1Title': 'Activity 1 – Car and motorcyclist',
+                'MH.lesson_Y1Alg_fonLin2.act1Stmt': 'A car and a motorcycle leave at 8:00 from Tabarka to Kasserine (240 km). Constant speed. Car: 3h, motorcycle: 2h40.',
+                'MH.lesson_Y1Alg_fonLin2.q1': '1) Calculate each speed.',
+                'MH.lesson_Y1Alg_fonLin2.q2': '2) Express d(t) for the car.',
+                'MH.lesson_Y1Alg_fonLin2.q3': '3) Express d’(t) for the motorcycle.',
+                'MH.lesson_Y1Alg_fonLin2.q4': '4) Draw the graph (see above).',
+                'MH.lesson_Y1Alg_fonLin2.q5a': '5a) At 8:45, did they cross Jendouba (65 km)?',
+                'MH.lesson_Y1Alg_fonLin2.q5b': '5b) When the motorcycle arrives, how far for the car?',
+                'MH.lesson_Y1Alg_fonLin2.q6': '6) Check by calculation.',
+                'MH.lesson_Y1Alg_fonLin2.answer': 'Answer:',
+                'MH.lesson_Y1Alg_fonLin2.canvasTitle1': 'Distances traveled as a function of time',
+                'MH.lesson_Y1Alg_fonLin2.canvasInst1': 'Lines through the origin: slope = speed.',
+                'MH.lesson_Y1Alg_fonLin2.linesCanvasTitle': 'Lines D1, D2, D3',
+                'MH.lesson_Y1Alg_fonLin2.constructCanvasTitle': 'Construction of 1/b and a·b (example a=2, b=3)',
+                'MH.lesson_Y1Alg_fonLin2.retTitle': '📘 Remember – Linear function',
+                'MH.lesson_Y1Alg_fonLin2.ret1': '◊ Let a be a real number. When to each real x we associate a x, we define a linear function f. Notation: f: x ↦ a x.',
+                'MH.lesson_Y1Alg_fonLin2.retLi1': 'f(x) is the image of x; x is a preimage.',
+                'MH.lesson_Y1Alg_fonLin2.retLi2': 'f(0)=0 and f(1)=a.',
+                'MH.lesson_Y1Alg_fonLin2.retLi3': 'Property: f(x+x\') = f(x)+f(x\').',
+                'MH.lesson_Y1Alg_fonLin2.ret2': '◊ Its graph is a straight line through the origin with equation y = a x. a is the slope.',
+                'MH.lesson_Y1Alg_fonLin2.part4': 'IV. Applications',
+                'MH.lesson_Y1Alg_fonLin2.sit1Title': 'Situation 1 – Reading coefficients',
+                'MH.lesson_Y1Alg_fonLin2.sit1Stmt': 'In the coordinate system, lines D1, D2, D3 represent linear functions f1, f2, f3. Give each coefficient.',
+                'MH.lesson_Y1Alg_fonLin2.sit1CanvasInst': 'Read the coordinates of a point (other than O) to find a = y/x.',
+                'MH.lesson_Y1Alg_fonLin2.sit1Q': 'Find a₁, a₂, a₃.',
+                'MH.lesson_Y1Alg_fonLin2.sit2Title': 'Situation 2 – Percentages',
+                'MH.lesson_Y1Alg_fonLin2.sit2Stmt': '1) 20% decrease; 2) 8% increase; 3) 10% decrease then 10% increase.',
+                'MH.lesson_Y1Alg_fonLin2.sit2Q1': '1) 20% decrease',
+                'MH.lesson_Y1Alg_fonLin2.sit2Q2': '2) 8% increase',
+                'MH.lesson_Y1Alg_fonLin2.sit2Q3': '3) 10% down then 10% up',
+                'MH.lesson_Y1Alg_fonLin2.sit3Title': 'Situation 3 – Best offer',
+                'MH.lesson_Y1Alg_fonLin2.sit3Stmt': 'Supplier A: –10%. B: –5% then extra –4%. Best?',
+                'MH.lesson_Y1Alg_fonLin2.sit3Q': 'Compare final prices.',
+                'MH.lesson_Y1Alg_fonLin2.sit4Title': 'Situation 4 – Construct 1/b and a·b',
+                'MH.lesson_Y1Alg_fonLin2.sit4Stmt': 'Construct segments of length 1/b and a·b using a graph.',
+                'MH.lesson_Y1Alg_fonLin2.sit4Q1': '1) Build 1/b',
+                'MH.lesson_Y1Alg_fonLin2.sit4Q2': '2) Build a·b',
+                'MH.lesson_Y1Alg_fonLin2.sit4CanvasInst': 'Line y=2x: point (1,2); for b=3, f(3)=6; for 1/b: line y=3x gives x-coordinate 1/3 ≈ 0.333.',
+                'MH.lesson_Y1Alg_fonLin2.summaryTitle': 'Summary',
+                'MH.lesson_Y1Alg_fonLin2.summary1': 'A linear function models proportionality: f(x)=ax.',
+                'MH.lesson_Y1Alg_fonLin2.summary2': 'Its line goes through origin; slope a = rise for one unit in x.',
+                'MH.lesson_Y1Alg_fonLin2.summary3': 'Graphically we can read images and antecedents.',
+                'MH.lesson_Y1Alg_fonLin2.summary4': 'Percentages → coefficient (1 ± t/100).',
+                // Solutions (full content)
+                'MH.lesson_Y1Alg_fonLin2.sol1': '<div class="MH-sequence-step"><p>🔹 <strong>Car:</strong> distance = 240 km, time = 3 h. Speed = distance / time = \\( \\frac{240}{3} = 80\\) km/h.</p><p>🔹 <strong>Motorcycle:</strong> time = 2 h 40 min = \\(2 + \\frac{40}{60} = 2 + \\frac{2}{3} = \\frac{8}{3}\\) h. Speed = \\(240 \\div \\frac{8}{3} = 240 \\times \\frac{3}{8} = 90\\) km/h.</p></div><p><strong>Answer:</strong> 80 km/h and 90 km/h.</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol2': '<p>The speed is constant (80 km/h) and at t=0 (8:00) distance = 0. So distance is proportional to time:</p><div class="MH-formula-box">\\( d(t) = 80 \\times t \\)</div><p>with t in hours. (Example: at t = 3 h, d = 240 km.)</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol3': '<p>Motorcycle speed = 90 km/h, so:</p><div class="MH-formula-box">\\( d\'(t) = 90 \\times t \\)</div>',
+                'MH.lesson_Y1Alg_fonLin2.sol4': '<p><strong>Graphical reading:</strong> 8:45 = 8 + 45/60 = 8.75 h. Time elapsed since 8:00: t = 0.75 h.</p><p>On the car’s line (blue) at t=0.75, the y-coordinate ≈ 60 km (since 80×0.75 = 60). For the motorcycle (orange): 90×0.75 = 67.5 km.</p><p>Jendouba is at 65 km. The car has only gone 60 km → not yet. The motorcycle has gone 67.5 km → it has passed Jendouba.</p><p><strong>Answer:</strong> only the motorcycle passed Jendouba.</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol5': '<p>Motorcycle time for 240 km: \\( t = 240 / 90 = \\frac{8}{3} \\approx 2.667\\) h = 2h40.</p><p>At that moment, the car has traveled \\( d = 80 \\times \\frac{8}{3} = \\frac{640}{3} \\approx 213.33\\) km.</p><p>Remaining: \\( 240 - 213.33 = 26.67\\) km.</p><p><strong>Graphically:</strong> read the y-coordinate of the blue line at t = 2h40 (vertical): about 213 km, remaining 27 km.</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol6': '<p><strong>5a:</strong> t = 0.75 h. Car: 80×0.75 = 60 km (<65). Motorcycle: 90×0.75 = 67.5 km (>65). ✅</p><p><strong>5b:</strong> motorcycle time = 240/90 = 8/3 h. Car: 80×(8/3)=640/3 ≈ 213.33 km; remaining 240−213.33 = 26.67 km. ✅</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol7': '<p><strong>Method:</strong> Choose an easy point on each line (with integer x).</p><ul><li>D₁ goes through (1, 0.5) → a₁ = 0.5/1 = 0.5.</li><li>D₂ goes through (1, 2) → a₂ = 2.</li><li>D₃ goes through (2, -1) (or (1, -0.5)) → a₃ = -0.5.</li></ul><p>Thus \\( f_1(x)=0.5x,\\; f_2(x)=2x,\\; f_3(x)=-0.5x \\).</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol8': '<p>Initial price = x. 20% decrease → keep 80% = 0.8. So final price = 0.8 x.</p><p>Linear function: \\( f(x) = 0.8x \\) (coefficient 0.8).</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol9': '<p>Increase by 8% → multiply by \\(1 + \\frac{8}{100} = 1.08\\).</p><p>\\( g(x) = 1.08x \\).</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol10': '<p>Step 1: 10% decrease → \\( p_1 = 0.9x\\).</p><p>Step 2: 10% increase on \\(p_1\\) → \\( p_2 = 1.10 \\times p_1 = 1.10 \\times 0.9x = 0.99x\\).</p><p>So \\( h(x) = 0.99x \\). This is a final decrease of 1% (since 0.99 = 1 - 0.01).</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol11': '<p>Let x be the initial price.</p><p><strong>Supplier A:</strong> –10% → factor = 0.9 → \\( p_A = 0.9x\\).</p><p><strong>Supplier B:</strong> –5% → factor 0.95; then –4% (on the already reduced price) → factor 0.96. Total: \\( p_B = 0.95 \\times 0.96 \\times x = 0.912x\\).</p><p>Comparison: 0.9 < 0.912? No, 0.9 is smaller than 0.912. So supplier A gives a lower final price (better reduction).</p><p><strong>Conclusion:</strong> offer A is better for the company.</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol12': '<p><strong>Principle:</strong> Use the line representing \\( f(x)=a x\\).</p><p>Place A(1, a). The line (OA) has equation y = a x.</p><p><strong>For 1/b:</strong> We want the preimage of 1. Solve \\( a x = 1 \\) ⇒ \\( x = 1/a\\). But we want 1/b, not 1/a. So we adapt.</p><p><strong>General method:</strong> To construct 1/b, use the line with coefficient b (i.e., y = b x). Then the preimage of 1 is 1/b. So just draw the line through O and (1, b). Its intersection with the horizontal line y=1 gives a point whose x-coordinate is 1/b.</p><p>Here we have an orthonormal coordinate system (OI = OJ = 1). Place B(1, b). The line (OB) meets the line y=1 at point C. The x-coordinate of C = 1/b. Transfer this length to the x-axis.</p><p>See illustration: (the canvas below shows the principle with a=2, b=3 for example).</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol13': '<p>With the line of coefficient a (through (1,a)). The image of b under f is a·b. On the x‑axis, take the point with abscissa b, go vertically up to the line, read the y‑coordinate = a·b.</p><p>Construction: on the horizontal axis, take the point with abscissa b. Draw the vertical line that meets line (OA) at M. The vertical length OM (or the projection on the y‑axis) gives a·b.</p>',
+                // Footer
+                'MH.footer.developer': 'Developer',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Links',
+                'MH.footer.terms': 'Terms of use',
+                'MH.footer.privacy': 'Privacy policy'
+            },
+            'ar': {
+                // عام
+                'MH.general.title': 'مركز الرياضيات',
+                'MH.general.theme': 'المظهر',
+                'MH.general.language': 'اللغة',
+                'MH.general.enableNotifications': 'تفعيل الإشعارات',
+                // الدرس
+                'MH.lesson_Y1Alg_fonLin2.showSolution': 'عرض الحل',
+                'MH.lesson_Y1Alg_fonLin2.hideSolution': 'إخفاء الحل',
+                'MH.lesson_Y1Alg_fonLin2.title': 'الدوال الخطية: الجزء الثاني',
+                'MH.lesson_Y1Alg_fonLin2.subtitle': 'القراءة البيانية والتطبيقات',
+                'MH.lesson_Y1Alg_fonLin2.part3': 'ثالثا. القراءة البيانية',
+                'MH.lesson_Y1Alg_fonLin2.act1Title': 'النشاط 1 – سيارة ودراجة نارية',
+                'MH.lesson_Y1Alg_fonLin2.act1Stmt': 'تغادر سيارة ودراجة نارية الساعة 8 صباحا من طبرقة إلى القصرين (240 كم). سرعة ثابتة. السيارة: 3 ساعات، الدراجة: ساعتان و40 دقيقة.',
+                'MH.lesson_Y1Alg_fonLin2.q1': '1) احسب سرعة كل منهما.',
+                'MH.lesson_Y1Alg_fonLin2.q2': '2) عبر عن المسافة d(t) للسيارة بدلالة الزمن t.',
+                'MH.lesson_Y1Alg_fonLin2.q3': '3) عبر عن المسافة d\'(t) للدراجة.',
+                'MH.lesson_Y1Alg_fonLin2.q4': '4) مثل بيانيا (انظر أعلاه).',
+                'MH.lesson_Y1Alg_fonLin2.q5a': '5أ) الساعة 8:45، هل عبروا جندوبة (65 كم)؟',
+                'MH.lesson_Y1Alg_fonLin2.q5b': '5ب) عندما تصل الدراجة، كم تبقى للسيارة؟',
+                'MH.lesson_Y1Alg_fonLin2.q6': '6) تحقق بالحساب.',
+                'MH.lesson_Y1Alg_fonLin2.answer': 'الإجابة:',
+                'MH.lesson_Y1Alg_fonLin2.canvasTitle1': 'المسافات المقطوعة بدلالة الزمن',
+                'MH.lesson_Y1Alg_fonLin2.canvasInst1': 'مستقيمات تمر عبر الأصل: الميل = السرعة.',
+                'MH.lesson_Y1Alg_fonLin2.linesCanvasTitle': 'المستقيمات D1، D2، D3',
+                'MH.lesson_Y1Alg_fonLin2.constructCanvasTitle': 'إنشاء 1/b و a·b (مثال a=2، b=3)',
+                'MH.lesson_Y1Alg_fonLin2.retTitle': '📘 تذكر – الدالة الخطية',
+                'MH.lesson_Y1Alg_fonLin2.ret1': '◊ ليكن a عددا حقيقيا. عندما نربط كل عدد حقيقي x بـ a x، نعرف دالة خطية f. نكتب f : x ↦ a x.',
+                'MH.lesson_Y1Alg_fonLin2.retLi1': 'f(x) هي صورة x؛ x هو سابق.',
+                'MH.lesson_Y1Alg_fonLin2.retLi2': 'f(0)=0 و f(1)=a.',
+                'MH.lesson_Y1Alg_fonLin2.retLi3': 'خاصية: f(x+x\') = f(x)+f(x\').',
+                'MH.lesson_Y1Alg_fonLin2.ret2': '◊ تمثيلها البياني هو مستقيم يمر عبر الأصل معادلته y = a x. a هو الميل.',
+                'MH.lesson_Y1Alg_fonLin2.part4': 'رابعا. التطبيقات',
+                'MH.lesson_Y1Alg_fonLin2.sit1Title': 'الوضعية 1 – قراءة المعاملات',
+                'MH.lesson_Y1Alg_fonLin2.sit1Stmt': 'في المعلم، المستقيمات D1، D2، D3 تمثل دوال خطية f1، f2، f3. أعط معامل كل منها.',
+                'MH.lesson_Y1Alg_fonLin2.sit1CanvasInst': 'اقرأ إحداثيات نقطة (غير O) لتجد a = y/x.',
+                'MH.lesson_Y1Alg_fonLin2.sit1Q': 'حدد a₁، a₂، a₃.',
+                'MH.lesson_Y1Alg_fonLin2.sit2Title': 'الوضعية 2 – النسب المئوية',
+                'MH.lesson_Y1Alg_fonLin2.sit2Stmt': '1) تخفيض 20%؛ 2) زيادة 8%؛ 3) تخفيض 10% ثم زيادة 10%.',
+                'MH.lesson_Y1Alg_fonLin2.sit2Q1': '1) تخفيض 20%',
+                'MH.lesson_Y1Alg_fonLin2.sit2Q2': '2) زيادة 8%',
+                'MH.lesson_Y1Alg_fonLin2.sit2Q3': '3) تخفيض 10% ثم زيادة 10%',
+                'MH.lesson_Y1Alg_fonLin2.sit3Title': 'الوضعية 3 – أفضل عرض',
+                'MH.lesson_Y1Alg_fonLin2.sit3Stmt': 'المورد أ: تخفيض 10%. ب: تخفيض 5% ثم 4% إضافية. أفضل عرض؟',
+                'MH.lesson_Y1Alg_fonLin2.sit3Q': 'قارن الأسعار النهائية.',
+                'MH.lesson_Y1Alg_fonLin2.sit4Title': 'الوضعية 4 – إنشاء 1/b و a·b',
+                'MH.lesson_Y1Alg_fonLin2.sit4Stmt': 'أنشئ قطعة طولها 1/b وقطعة طولها a·b باستخدام بيان.',
+                'MH.lesson_Y1Alg_fonLin2.sit4Q1': '1) أنشئ 1/b',
+                'MH.lesson_Y1Alg_fonLin2.sit4Q2': '2) أنشئ a·b',
+                'MH.lesson_Y1Alg_fonLin2.sit4CanvasInst': 'المستقيم y=2x: النقطة (1,2)؛ من أجل b=3، f(3)=6؛ من أجل 1/b: المستقيم y=3x يعطي الإحداثي 1/3 ≈ 0.333.',
+                'MH.lesson_Y1Alg_fonLin2.summaryTitle': 'ملخص',
+                'MH.lesson_Y1Alg_fonLin2.summary1': 'الدالة الخطية تمثل التناسب: f(x)=ax.',
+                'MH.lesson_Y1Alg_fonLin2.summary2': 'يمر تمثيلها البياني عبر الأصل؛ الميل a = الارتفاع لكل وحدة في x.',
+                'MH.lesson_Y1Alg_fonLin2.summary3': 'بيانيا يمكن قراءة الصور والسوابق.',
+                'MH.lesson_Y1Alg_fonLin2.summary4': 'النسب المئوية → المعامل (1 ± t/100).',
+                // الحلول (المحتوى الكامل)
+                'MH.lesson_Y1Alg_fonLin2.sol1': '<div class="MH-sequence-step"><p>🔹 <strong>السيارة:</strong> المسافة = 240 كم، الزمن = 3 س. السرعة = المسافة / الزمن = \\( \\frac{240}{3} = 80\\) كم/س.</p><p>🔹 <strong>الدراجة:</strong> الزمن = 2 س 40 د = \\(2 + \\frac{40}{60} = 2 + \\frac{2}{3} = \\frac{8}{3}\\) س. السرعة = \\(240 \\div \\frac{8}{3} = 240 \\times \\frac{3}{8} = 90\\) كم/س.</p></div><p><strong>الإجابة:</strong> 80 كم/س و 90 كم/س.</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol2': '<p>السرعة ثابتة (80 كم/س) وعند t=0 (8:00) المسافة = 0. إذن المسافة تتناسب مع الزمن:</p><div class="MH-formula-box">\\( d(t) = 80 \\times t \\)</div><p>حيث t بالساعات. (مثال: عند t = 3 س، d = 240 كم.)</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol3': '<p>سرعة الدراجة = 90 كم/س، إذن:</p><div class="MH-formula-box">\\( d\'(t) = 90 \\times t \\)</div>',
+                'MH.lesson_Y1Alg_fonLin2.sol4': '<p><strong>القراءة البيانية:</strong> 8:45 = 8 + 45/60 = 8.75 س. الزمن المنقضي منذ 8:00: t = 0.75 س.</p><p>على مستقيم السيارة (الأزرق) عند t=0.75، الإحداثي ≈ 60 كم (لأن 80×0.75 = 60). للدراجة (البرتقالي): 90×0.75 = 67.5 كم.</p><p>جندوبة على بعد 65 كم. السيارة قطعت 60 كم فقط → لم تعبر بعد. الدراجة قطعت 67.5 كم → تجاوزت جندوبة.</p><p><strong>الإجابة:</strong> الدراجة فقط تجاوزت جندوبة.</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol5': '<p>زمن الدراجة لـ 240 كم: \\( t = 240 / 90 = \\frac{8}{3} \\approx 2.667\\) س = 2س40د.</p><p>عند تلك اللحظة، قطعت السيارة \\( d = 80 \\times \\frac{8}{3} = \\frac{640}{3} \\approx 213.33\\) كم.</p><p>المتبقي: \\( 240 - 213.33 = 26.67\\) كم.</p><p><strong>بيانيا:</strong> نقرأ الإحداثي على المستقيم الأزرق عند t = 2س40 (عمودي): حوالي 213 كم، المتبقي 27 كم.</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol6': '<p><strong>5أ:</strong> t = 0.75 س. السيارة: 80×0.75 = 60 كم (<65). الدراجة: 90×0.75 = 67.5 كم (>65). ✅</p><p><strong>5ب:</strong> زمن الدراجة = 240/90 = 8/3 س. السيارة: 80×(8/3)=640/3 ≈ 213.33 كم؛ المتبقي 240−213.33 = 26.67 كم. ✅</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol7': '<p><strong>الطريقة:</strong> نختار نقطة سهلة على كل مستقيم (بـ x صحيح).</p><ul><li>D₁ يمر عبر (1, 0.5) → a₁ = 0.5/1 = 0.5.</li><li>D₂ يمر عبر (1, 2) → a₂ = 2.</li><li>D₃ يمر عبر (2, -1) (أو (1, -0.5)) → a₃ = -0.5.</li></ul><p>إذن \\( f_1(x)=0.5x,\\; f_2(x)=2x,\\; f_3(x)=-0.5x \\).</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol8': '<p>السعر الأصلي = x. تخفيض 20% → نحتفظ بـ 80% = 0.8. إذن السعر النهائي = 0.8 x.</p><p>الدالة الخطية: \\( f(x) = 0.8x \\) (المعامل 0.8).</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol9': '<p>زيادة 8% → نضرب في \\(1 + \\frac{8}{100} = 1.08\\).</p><p>\\( g(x) = 1.08x \\).</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol10': '<p>الخطوة 1: تخفيض 10% → \\( p_1 = 0.9x\\).</p><p>الخطوة 2: زيادة 10% على \\(p_1\\) → \\( p_2 = 1.10 \\times p_1 = 1.10 \\times 0.9x = 0.99x\\).</p><p>إذن \\( h(x) = 0.99x \\). هذا تخفيض نهائي بنسبة 1% (لأن 0.99 = 1 - 0.01).</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol11': '<p>ليكن x السعر الأصلي.</p><p><strong>المورد أ:</strong> –10% → المعامل = 0.9 → \\( p_A = 0.9x\\).</p><p><strong>المورد ب:</strong> –5% → معامل 0.95؛ ثم –4% (على السعر المخفض) → معامل 0.96. المجموع: \\( p_B = 0.95 \\times 0.96 \\times x = 0.912x\\).</p><p>المقارنة: 0.9 < 0.912؟ لا، 0.9 أصغر من 0.912. إذن المورد أ يعطي سعرا نهائيا أقل (تخفيض أفضل).</p><p><strong>الاستنتاج:</strong> العرض أ أفضل للشركة.</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol12': '<p><strong>المبدأ:</strong> نستخدم المستقيم الممثل للدالة \\( f(x)=a x\\).</p><p>نضع A(1, a). المستقيم (OA) معادلته y = a x.</p><p><strong>من أجل 1/b:</strong> نريد السابق للعدد 1. نحل \\( a x = 1 \\) ⇒ \\( x = 1/a\\). لكننا نريد 1/b وليس 1/a. لذا نكيِّف.</p><p><strong>طريقة عامة:</strong> لإنشاء 1/b، استخدم المستقيم ذا المعامل b (أي y = b x). عندها السابق للعدد 1 هو 1/b. لذا يكفي رسم المستقيم المار بـ O و (1, b). تقاطعه مع المستقيم الأفقي y=1 يعطي نقطة إحداثيها x = 1/b.</p><p>هنا لدينا معلم متعامد (OI = OJ = 1). نضع B(1, b). المستقيم (OB) يقطع المستقيم y=1 في النقطة C. الإحداثي x للنقطة C = 1/b. ننقل هذا الطول على محور x.</p><p>انظر الرسم التوضيحي: (اللوحة أدناه تظهر المبدأ مع a=2, b=3 على سبيل المثال).</p>',
+                'MH.lesson_Y1Alg_fonLin2.sol13': '<p>مع المستقيم ذي المعامل a (المار بـ (1,a)). صورة b بالدالة f هي a·b. نضع على محور x النقطة ذات الإحداثي b، نرتفع عموديا إلى المستقيم، نقرأ الإحداثي y = a·b.</p><p>الإنشاء: على المحور الأفقي، خذ النقطة ذات الإحداثي b. ارسم العمودي الذي يقطع المستقيم (OA) في M. الطول العمودي OM (أو الإسقاط على محور y) يعطي a·b.</p>',
+                // التذييل
+                'MH.footer.developer': 'المطور',
+                'MH.footer.version': 'الإصدار',
+                'MH.footer.links': 'روابط',
+                'MH.footer.terms': 'شروط الاستخدام',
+                'MH.footer.privacy': 'سياسة الخصوصية'
+            }
+        };
+        if (typeof translations !== 'undefined') {
+            for (let lang in fonLin2Translations) {
+                translations[lang] = {...translations[lang], ...fonLin2Translations[lang]};
+            }
+        } else { var translations = fonLin2Translations; }
+
+        // Canvas functions (unchanged)
+        function drawDistanceCanvas() {
+            const canvas = document.getElementById('distanceCanvas');
+            if (!canvas) return; const ctx = canvas.getContext('2d'); const w=600, h=400; ctx.clearRect(0,0,w,h);
+            const pad=50, gw=w-2*pad, gh=h-2*pad, xMin=0, xMax=3.5, yMin=0, yMax=270;
+            ctx.strokeStyle='#666'; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(pad, h-pad); ctx.lineTo(w-pad, h-pad); ctx.moveTo(pad, pad); ctx.lineTo(pad, h-pad); ctx.stroke();
+            ctx.fillStyle='#333'; ctx.font='12px Arial';
+            for (let t=0; t<=3; t+=0.5) { let cx = pad + (t-xMin)/(xMax-xMin)*gw; ctx.fillText(t.toFixed(1), cx-8, h-pad+20); }
+            for (let d=0; d<=240; d+=60) { let cy = h-pad - (d-yMin)/(yMax-yMin)*gh; ctx.fillText(d, pad-40, cy+5); }
+            ctx.beginPath(); ctx.strokeStyle='#2ECC71'; ctx.lineWidth=3;
+            let x1=0, y1=0, x2=3, y2=80*3; let cx1,cy1,cx2,cy2;
+            cx1=pad+(x1-xMin)/(xMax-xMin)*gw; cy1=h-pad-(y1-yMin)/(yMax-yMin)*gh;
+            cx2=pad+(x2-xMin)/(xMax-xMin)*gw; cy2=h-pad-(y2-yMin)/(yMax-yMin)*gh;
+            ctx.moveTo(cx1,cy1); ctx.lineTo(cx2,cy2); ctx.stroke();
+            ctx.beginPath(); ctx.strokeStyle='#F39C12'; ctx.lineWidth=3;
+            y2=90*3; cx2=pad+(x2-xMin)/(xMax-xMin)*gw; cy2=h-pad-(y2-yMin)/(yMax-yMin)*gh;
+            ctx.moveTo(cx1,cy1); ctx.lineTo(cx2,cy2); ctx.stroke();
+            ctx.fillStyle='#333'; ctx.font='bold 14px Arial'; ctx.fillText('auto (80 km/h)', 400, 80); ctx.fillText('moto (90 km/h)', 400, 120);
+        }
+
+        function drawLinesCanvas() {
+            const canvas = document.getElementById('linesCanvas');
+            if (!canvas) return; const ctx = canvas.getContext('2d'); const w=600, h=400; ctx.clearRect(0,0,w,h);
+            const pad=50, gw=w-2*pad, gh=h-2*pad, xMin=-3, xMax=3, yMin=-3, yMax=3;
+            const x0 = pad + (0 - xMin) / (xMax - xMin) * gw;
+            const y0 = h - pad - (0 - yMin) / (yMax - yMin) * gh;
+            ctx.strokeStyle='#666'; ctx.lineWidth=1;
+            ctx.beginPath(); ctx.moveTo(pad, y0); ctx.lineTo(w-pad, y0); ctx.moveTo(x0, pad); ctx.lineTo(x0, h-pad); ctx.stroke();
+            ctx.fillStyle='#333'; ctx.font='12px Arial';
+            for (let i = -2; i <= 2; i++) { if (i === 0) continue;
+                let cx = pad + (i - xMin) / (xMax - xMin) * gw;
+                ctx.beginPath(); ctx.moveTo(cx, y0-5); ctx.lineTo(cx, y0+5); ctx.stroke();
+                ctx.fillText(i, cx-8, y0+15);
+            }
+            for (let i = -2; i <= 2; i++) { if (i === 0) continue;
+                let cy = h - pad - (i - yMin) / (yMax - yMin) * gh;
+                ctx.beginPath(); ctx.moveTo(x0-5, cy); ctx.lineTo(x0+5, cy); ctx.stroke();
+                ctx.fillText(i, x0-25, cy+5);
+            }
+            ctx.fillText('0', x0-15, y0-5);
+            ctx.lineWidth=2;
+            const slopes = [0.5, 2, -0.5];
+            const colors = ['#3498DB', '#E74C3C', '#2ECC71'];
+            for (let idx = 0; idx < slopes.length; idx++) {
+                let slope = slopes[idx];
+                ctx.strokeStyle = colors[idx];
+                ctx.beginPath();
+                let x1 = -2.5, y1 = slope * x1;
+                let x2 = 2.5, y2 = slope * x2;
+                let cx1 = pad + (x1 - xMin) / (xMax - xMin) * gw;
+                let cy1 = h - pad - (y1 - yMin) / (yMax - yMin) * gh;
+                let cx2 = pad + (x2 - xMin) / (xMax - xMin) * gw;
+                let cy2 = h - pad - (y2 - yMin) / (yMax - yMin) * gh;
+                ctx.moveTo(cx1, cy1);
+                ctx.lineTo(cx2, cy2);
+                ctx.stroke();
+            }
+            ctx.fillStyle = '#E74C3C';
+            let ax = pad + (1 - xMin) / (xMax - xMin) * gw;
+            let ay = h - pad - (2 - yMin) / (yMax - yMin) * gh;
+            ctx.beginPath(); ctx.arc(ax, ay, 5, 0, 2*Math.PI); ctx.fill();
+            ctx.fillStyle = '#333'; ctx.font = 'bold 14px Arial';
+            ctx.fillText('D1', 200, 150);
+            ctx.fillText('D2', 350, 80);
+            ctx.fillText('D3', 450, 300);
+        }
+
+        function drawConstructCanvas() {
+            const canvas = document.getElementById('constructCanvas');
+            if (!canvas) return; const ctx = canvas.getContext('2d'); const w=600, h=400; ctx.clearRect(0,0,w,h);
+            const pad=50, gw=w-2*pad, gh=h-2*pad, xMin=0, xMax=4, yMin=0, yMax=8;
+            ctx.strokeStyle='#666'; ctx.beginPath(); ctx.moveTo(pad, h-pad); ctx.lineTo(w-pad, h-pad); ctx.moveTo(pad, pad); ctx.lineTo(pad, h-pad); ctx.stroke();
+            for (let i=0; i<=4; i++) { let cx=pad+(i-xMin)/(xMax-xMin)*gw; ctx.fillText(i, cx-8, h-pad+20); }
+            for (let i=0; i<=8; i+=2) { let cy=h-pad-(i-yMin)/(yMax-yMin)*gh; ctx.fillText(i, pad-30, cy+5); }
+            ctx.strokeStyle='#2ECC71'; ctx.lineWidth=3; ctx.beginPath();
+            let x1=0, y1=0, x2=3.5, y2=7; let cx1=pad+(x1-xMin)/(xMax-xMin)*gw, cy1=h-pad-(y1-yMin)/(yMax-yMin)*gh;
+            let cx2=pad+(x2-xMin)/(xMax-xMin)*gw, cy2=h-pad-(y2-yMin)/(yMax-yMin)*gh;
+            ctx.moveTo(cx1,cy1); ctx.lineTo(cx2,cy2); ctx.stroke();
+            ctx.fillStyle='#E74C3C'; let ax=pad+(1-xMin)/(xMax-xMin)*gw, ay=h-pad-(2-yMin)/(yMax-yMin)*gh; ctx.beginPath(); ctx.arc(ax,ay,5,0,2*Math.PI); ctx.fill(); ctx.fillStyle='#000'; ctx.fillText('A(1,2)', ax+10, ay-10);
+            let bx=pad+(3-xMin)/(xMax-xMin)*gw, by=h-pad-(6-yMin)/(yMax-yMin)*gh; ctx.strokeStyle='#F39C12'; ctx.beginPath(); ctx.moveTo(bx, h-pad); ctx.lineTo(bx, by); ctx.stroke(); ctx.fillText('b=3', bx-20, h-pad-20);
+            ctx.strokeStyle='#3498DB'; ctx.setLineDash([5,3]); ctx.beginPath();
+            let x3=0, y3=0, x4=1.2, y4=3.6; let cx3=pad+(x3-xMin)/(xMax-xMin)*gw, cy3=h-pad-(y3-yMin)/(yMax-yMin)*gh;
+            let cx4=pad+(x4-xMin)/(xMax-xMin)*gw, cy4=h-pad-(y4-yMin)/(yMax-yMin)*gh;
+            ctx.moveTo(cx3,cy3); ctx.lineTo(cx4,cy4); ctx.stroke(); ctx.setLineDash([]);
+            ctx.strokeStyle='#E74C3C'; ctx.beginPath(); ctx.moveTo(pad, h-pad-(1-yMin)/(yMax-yMin)*gh); ctx.lineTo(w-pad, h-pad-(1-yMin)/(yMax-yMin)*gh); ctx.stroke();
+            ctx.fillStyle='#000'; ctx.fillText('y=1', 20, h-pad-(1-yMin)/(yMax-yMin)*gh-5);
+            let ix=pad+(0.333-xMin)/(xMax-xMin)*gw, iy=h-pad-(1-yMin)/(yMax-yMin)*gh; ctx.fillStyle='#E74C3C'; ctx.beginPath(); ctx.arc(ix,iy,5,0,2*Math.PI); ctx.fill(); ctx.fillText('1/b', ix+10, iy-10);
+        }
+
+        function toggleSolution(id) {
+            const sol = document.getElementById(`solution${id}`); if (!sol) return;
+            const btn = sol.previousElementSibling;
+            const currentLang = (typeof MHThemeManager !== 'undefined' && MHThemeManager.getCurrentLanguage) ? MHThemeManager.getCurrentLanguage() : 'fr';
+            if (sol.style.display === 'block') {
+                sol.style.display = 'none';
+                btn.textContent = translations[currentLang]?.['MH.lesson_Y1Alg_fonLin2.showSolution'] || 'Voir la solution';
+            } else {
+                sol.style.display = 'block';
+                btn.textContent = translations[currentLang]?.['MH.lesson_Y1Alg_fonLin2.hideSolution'] || 'Cacher la solution';
+                // Render math inside the solution (the span's content is already set by translation)
+                if (typeof renderMathInElement !== 'undefined') renderMathInElement(sol, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)'},{left:'\\[',right:'\\]'}]});
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof renderMathInElement !== 'undefined') renderMathInElement(document.body, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)'},{left:'\\[',right:'\\]'}]});
+            drawDistanceCanvas(); drawLinesCanvas(); drawConstructCanvas();
+            for (let i=1; i<=13; i++) {
+                const sol = document.getElementById(`solution${i}`); if (sol) { sol.style.display = 'none'; const btn = sol.previousElementSibling; if (btn) btn.textContent = translations['fr']['MH.lesson_Y1Alg_fonLin2.showSolution']; }
+            }
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) themeToggle.addEventListener('click', function() { setTimeout(() => { drawDistanceCanvas(); drawLinesCanvas(); drawConstructCanvas(); }, 100); });
+        });
+    </script>
+    <script> if ('serviceWorker' in navigator) { window.addEventListener('load', function() { navigator.serviceWorker.register('/sw.js').catch(e => console.log('SW failed', e)); }); } </script>
+    <noscript> <style> .MH-solution { display: block; } </style> </noscript>
+</body>
+</html>

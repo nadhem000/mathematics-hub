@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathématiques : Fonctions linéaires – Partie III</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#3498DB" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#5DADE2" media="(prefers-color-scheme: dark)">
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mathematics Hub">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#3498DB">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="styles/katex.min.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+    <style>
+        /* reuse same palette */
+        :root {
+            --primary: #3498DB;        --primary-light: #5DADE2;  --primary-dark: #2E86C1;
+            --secondary: #2ECC71;      --secondary-light: #58D68D; --secondary-dark: #28B463;
+            --accent: #F39C12;          --warning: #E74C3C;        --info: #3498DB;
+            --text: #333333;            --text-light: #666666;     --background: #FFFFFF;
+            --surface: #F8F9FA;          --border: #E9ECEF;        --shadow: rgba(0,0,0,0.1);
+        }
+        [data-theme="dark"] {
+            --primary: #5DADE2;         --primary-light: #85C1E9;  --primary-dark: #3498DB;
+            --secondary: #28B463;        --secondary-light: #2ECC71; --secondary-dark: #1D8348;
+            --accent: #F39C12;            --warning: #C0392B;        --info: #2980B9;
+            --text: #FFFFFF;              --text-light: #CCCCCC;     --background: #121212;
+            --surface: #1E1E1E;            --border: #333333;        --shadow: rgba(0,0,0,0.3);
+        }
+        .katex { font-size: 1.1em; }
+        .MH-equation { font-family: inherit; font-size: inherit; color: inherit; margin: 0.5em 0; padding: 0; display: inline-block; }
+        .MH-canvas-container { margin: 2em 0; text-align: center; position: relative; }
+        .MH-canvas { border: 2px solid var(--border); border-radius: 8px; background-color: var(--surface); max-width: 100%; box-shadow: 0 4px 6px var(--shadow); }
+        .MH-canvas-title { font-weight: bold; margin-bottom: 0.5em; color: var(--primary); }
+        .MH-canvas-instructions { font-size: 0.9em; color: var(--text-light); margin-top: 0.5em; font-style: italic; }
+        .MH-sequence-item { margin: 0.5em 0; padding: 0.5em; background-color: var(--surface); border-left: 4px solid var(--secondary); border-radius: 4px; }
+        .MH-sequence-step { margin: 0.5em 0; padding-left: 1em; border-left: 2px solid var(--primary-light); }
+        .MH-formula-box { background-color: rgba(46, 204, 113, 0.1); border: 2px solid var(--secondary); border-radius: 8px; padding: 1.5em; margin: 1em 0; }
+        .MH-exercise-number { font-size: 1.2em; font-weight: bold; color: var(--secondary); margin: 1.5em 0 0.5em 0; border-bottom: 2px solid var(--secondary-light); padding-bottom: 0.3em; }
+        .MH-table { display: inline-block; border-collapse: collapse; margin: 1em 0; background-color: var(--surface); }
+        .MH-table td, .MH-table th { border: 1px solid var(--border); padding: 0.5em 1em; text-align: center; }
+        .MH-table th { background-color: var(--primary-light); color: var(--text); }
+        .MH-blank { color: var(--text-light); font-style: italic; }
+        .MH-solution { display: none; margin-top: 1em; padding: 1em; background-color: var(--surface); border-radius: 8px; border-left: 4px solid var(--primary); }
+        .MH-solution-btn { background-color: var(--primary); color: white; border: none; padding: 0.3em 1em; border-radius: 20px; cursor: pointer; margin: 0.5em 0; }
+        .MH-solution-btn:hover { background-color: var(--primary-dark); }
+        .point-red { fill: #E74C3C; stroke: #C0392B; }
+        .point-blue { fill: #3498DB; stroke: #2E86C1; }
+        .line-ex3 { stroke: #2ECC71; stroke-width: 3; }
+        .line-area { stroke: #F39C12; stroke-width: 3; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="MH-header-grid">
+            <div class="MH-header-column MH-header-icon">
+                <a href="index.html" class="MH-logo-link" data-tooltip>
+                    <img src="assets/icons/icon-96x96.png" alt="Mathematics Hub Logo" class="MH-logo-image">
+                </a>
+            </div>
+            <div class="MH-header-column MH-header-title">
+                <div class="MH-logo" data-i18n="MH.general.title">Mathematics Hub</div>
+            </div>
+            <div class="MH-header-column MH-header-options">
+                <div class="MH-header-controls">
+                    <button class="MH-theme-toggle" id="themeToggle">
+                        <span data-i18n="MH.general.theme">Theme</span> <span>🎨</span>
+                    </button>
+                    <div class="MH-language-selector">
+                        <button class="MH-language-btn" id="languageBtn">
+                            <span data-i18n="MH.general.language">Language</span> <span>🌐</span>
+                        </button>
+                        <div class="MH-language-dropdown" id="languageDropdown">
+                            <a href="#" class="MH-language-option" data-lang="fr">Français</a>
+                            <a href="#" class="MH-language-option" data-lang="en">English</a>
+                            <a href="#" class="MH-language-option" data-lang="ar">العربية</a>
+                        </div>
+                    </div>
+                    <button class="MH-notification-btn" id="notificationBtn" style="display: none;">
+                        <span data-i18n="MH.general.enableNotifications">Enable Notifications</span> <span>🔔</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main id="main-content" class="MH-container" tabindex="-1">
+        <h1 class="MH-lesson-title" data-i18n="MH.lesson_Y1Alg_fonLin3.title">Fonctions linéaires : Partie III</h1>
+        <h2 class="MH-lesson-subtitle" data-i18n="MH.lesson_Y1Alg_fonLin3.subtitle">Exercices et applications</h2>
+
+        <!-- ============ V. EXERCICES ET APPLICATIONS ============ -->
+        <section class="MH-section">
+            <div class="MH-exercise-number" data-i18n="MH.lesson_Y1Alg_fonLin3.part5">V. Exercices et applications</div>
+
+            <!-- Exercice 1 -->
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonLin3.ex1_title">Exercice 1 – Questions sur l’existence</h3>
+            </div>
+            <div class="MH-step">
+                <!-- Q1 -->
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin3.ex1_q1">1) Peut-on trouver une fonction linéaire f vérifiant f(0) = -1 ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin3.showSolution" onclick="toggleSolution(1)">Voir la solution</button>
+                    <div class="MH-solution" id="solution1"><span data-i18n="MH.lesson_Y1Alg_fonLin3.ex1_q1_sol"></span></div>
+                </div>
+                <!-- Q2 -->
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin3.ex1_q2">2) Peut-on trouver une fonction linéaire g vérifiant g(2) = 0 ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin3.showSolution" onclick="toggleSolution(2)">Voir la solution</button>
+                    <div class="MH-solution" id="solution2"><span data-i18n="MH.lesson_Y1Alg_fonLin3.ex1_q2_sol"></span></div>
+                </div>
+                <!-- Q3 -->
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin3.ex1_q3">3) Peut-on trouver une fonction linéaire h vérifiant h(3) = 1 et h(-6) = -2 ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin3.showSolution" onclick="toggleSolution(3)">Voir la solution</button>
+                    <div class="MH-solution" id="solution3"><span data-i18n="MH.lesson_Y1Alg_fonLin3.ex1_q3_sol"></span></div>
+                </div>
+                <!-- Q4 -->
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin3.ex1_q4">4) Peut-on trouver une fonction linéaire k vérifiant k(2) = k(-2) = 4 ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin3.showSolution" onclick="toggleSolution(4)">Voir la solution</button>
+                    <div class="MH-solution" id="solution4"><span data-i18n="MH.lesson_Y1Alg_fonLin3.ex1_q4_sol"></span></div>
+                </div>
+                <!-- Représentation graphique f(x)=1.2x -->
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin3.ex1_graph">Représenter dans un repère (O, I, J) la représentation graphique de la fonction linéaire définie par f(x) = 1,2 x.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin3.showSolution" onclick="toggleSolution(5)">Voir la solution</button>
+                    <div class="MH-solution" id="solution5"><span data-i18n="MH.lesson_Y1Alg_fonLin3.ex1_graph_sol"></span></div>
+                </div>
+                <!-- Canvas for f(x)=1.2x -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y1Alg_fonLin3.canvas1_title">Représentation de f(x) = 1,2 x</div>
+                    <canvas id="funcCanvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y1Alg_fonLin3.canvas1_inst">La droite passe par l’origine et par le point A(1 ; 1,2).</div>
+                </div>
+            </div>
+
+            <!-- Exercice 2 – Triangle -->
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonLin3.ex2_title">Exercice 2 – Aire d’un triangle</h3>
+                <p data-i18n="MH.lesson_Y1Alg_fonLin3.ex2_stmt">1) Représenter graphiquement l’aire du triangle ABN en fonction de la hauteur NH, sachant que AB = 5 cm.</p>
+                <p data-i18n="MH.lesson_Y1Alg_fonLin3.ex2_lire">2) Lire graphiquement.</p>
+            </div>
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin3.ex2_q2a">a) L’aire d’un triangle tel que NH = 4 cm.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin3.showSolution" onclick="toggleSolution(6)">Voir la solution</button>
+                    <div class="MH-solution" id="solution6"><span data-i18n="MH.lesson_Y1Alg_fonLin3.ex2_q2a_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin3.ex2_q2b">b) L’aire d’un triangle tel que NH = 3,5 cm.</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin3.showSolution" onclick="toggleSolution(7)">Voir la solution</button>
+                    <div class="MH-solution" id="solution7"><span data-i18n="MH.lesson_Y1Alg_fonLin3.ex2_q2b_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin3.ex2_q2c">c) La hauteur NH d’un triangle d’aire 20 cm².</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin3.showSolution" onclick="toggleSolution(8)">Voir la solution</button>
+                    <div class="MH-solution" id="solution8"><span data-i18n="MH.lesson_Y1Alg_fonLin3.ex2_q2c_sol"></span></div>
+                </div>
+                <!-- Canvas for triangle area -->
+                <div class="MH-canvas-container">
+                    <div class="MH-canvas-title" data-i18n="MH.lesson_Y1Alg_fonLin3.canvas2_title">Aire du triangle en fonction de la hauteur NH</div>
+                    <canvas id="areaCanvas" width="600" height="400" class="MH-canvas"></canvas>
+                    <div class="MH-canvas-instructions" data-i18n="MH.lesson_Y1Alg_fonLin3.canvas2_inst">Aire = 2,5 × NH (droite passant par l’origine).</div>
+                </div>
+            </div>
+
+            <!-- Exercice 3 – Cylindre -->
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonLin3.ex3_title">Exercice 3 – Volume d’un cylindre</h3>
+                <p data-i18n="MH.lesson_Y1Alg_fonLin3.ex3_stmt">Le volume d’un cylindre est 1 litre.</p>
+            </div>
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin3.ex3_q1">1) On a triplé le rayon de la base.</h4>
+                    <h5 data-i18n="MH.lesson_Y1Alg_fonLin3.ex3_q1a">a) Qu’est devenu son volume ?</h5>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin3.showSolution" onclick="toggleSolution(9)">Voir la solution</button>
+                    <div class="MH-solution" id="solution9"><span data-i18n="MH.lesson_Y1Alg_fonLin3.ex3_q1a_sol"></span></div>
+                    <h5 data-i18n="MH.lesson_Y1Alg_fonLin3.ex3_q1b">b) Qu’est devenue sa surface latérale ?</h5>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin3.showSolution" onclick="toggleSolution(10)">Voir la solution</button>
+                    <div class="MH-solution" id="solution10"><span data-i18n="MH.lesson_Y1Alg_fonLin3.ex3_q1b_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin3.ex3_q2">2) On a quadruplé sa hauteur.</h4>
+                    <h5 data-i18n="MH.lesson_Y1Alg_fonLin3.ex3_q2a">a) Qu’est devenu son volume ?</h5>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin3.showSolution" onclick="toggleSolution(11)">Voir la solution</button>
+                    <div class="MH-solution" id="solution11"><span data-i18n="MH.lesson_Y1Alg_fonLin3.ex3_q2a_sol"></span></div>
+                    <h5 data-i18n="MH.lesson_Y1Alg_fonLin3.ex3_q2b">b) Qu’est devenue sa surface latérale ?</h5>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin3.showSolution" onclick="toggleSolution(12)">Voir la solution</button>
+                    <div class="MH-solution" id="solution12"><span data-i18n="MH.lesson_Y1Alg_fonLin3.ex3_q2b_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin3.ex3_q3">3) Que retenir ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin3.showSolution" onclick="toggleSolution(13)">Voir la solution</button>
+                    <div class="MH-solution" id="solution13"><span data-i18n="MH.lesson_Y1Alg_fonLin3.ex3_q3_sol"></span></div>
+                </div>
+            </div>
+
+            <!-- Exercice 4 – Cercle -->
+            <div class="MH-important">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonLin3.ex4_title">Exercice 4 – Cercle et disque</h3>
+            </div>
+            <div class="MH-step">
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin3.ex4_q1">1) Le périmètre d’un cercle varie-t-il linéairement en fonction de son rayon ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin3.showSolution" onclick="toggleSolution(14)">Voir la solution</button>
+                    <div class="MH-solution" id="solution14"><span data-i18n="MH.lesson_Y1Alg_fonLin3.ex4_q1_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin3.ex4_q2">2) Un cercle de rayon R km a un périmètre égal à 1 500 000 km.</h4>
+                    <h5 data-i18n="MH.lesson_Y1Alg_fonLin3.ex4_q2a">a) De combien augmente ce périmètre si on augmente le rayon de 1 km ?</h5>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin3.showSolution" onclick="toggleSolution(15)">Voir la solution</button>
+                    <div class="MH-solution" id="solution15"><span data-i18n="MH.lesson_Y1Alg_fonLin3.ex4_q2a_sol"></span></div>
+                    <h5 data-i18n="MH.lesson_Y1Alg_fonLin3.ex4_q2b">b) De combien diminue ce périmètre si on diminue le rayon de 2 km ?</h5>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin3.showSolution" onclick="toggleSolution(16)">Voir la solution</button>
+                    <div class="MH-solution" id="solution16"><span data-i18n="MH.lesson_Y1Alg_fonLin3.ex4_q2b_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin3.ex4_q3">3) L’aire d’un disque varie-t-elle linéairement en fonction de son rayon ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin3.showSolution" onclick="toggleSolution(17)">Voir la solution</button>
+                    <div class="MH-solution" id="solution17"><span data-i18n="MH.lesson_Y1Alg_fonLin3.ex4_q3_sol"></span></div>
+                </div>
+                <div class="MH-sequence-item">
+                    <h4 data-i18n="MH.lesson_Y1Alg_fonLin3.ex4_q4">4) L’aire d’un triangle est-elle une fonction linéaire de sa base ?</h4>
+                    <button class="MH-solution-btn" data-i18n="MH.lesson_Y1Alg_fonLin3.showSolution" onclick="toggleSolution(18)">Voir la solution</button>
+                    <div class="MH-solution" id="solution18"><span data-i18n="MH.lesson_Y1Alg_fonLin3.ex4_q4_sol"></span></div>
+                </div>
+            </div>
+
+            <!-- Petit résumé -->
+            <div class="MH-definition">
+                <h3 data-i18n="MH.lesson_Y1Alg_fonLin3.remember">📌 À retenir</h3>
+                <ul>
+                    <li data-i18n="MH.lesson_Y1Alg_fonLin3.rem1">Une fonction linéaire s’écrit \(f(x)=ax\) et sa droite passe par l’origine.</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonLin3.rem2">Pour qu’une fonction linéaire existe, il faut que \(f(0)=0\) et que le coefficient \(a\) soit unique.</li>
+                    <li data-i18n="MH.lesson_Y1Alg_fonLin3.rem3">Beaucoup de grandeurs physiques (périmètre, aire avec hauteur fixe) sont linéaires ; d’autres (volume, aire d’un disque) ne le sont pas.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="MH-footer-content">
+            <div class="MH-footer-column"><div class="MH-footer-title" data-i18n="MH.footer.developer">Développeur</div><div class="MH-footer-text">Mejri Ziad</div></div>
+            <div class="MH-footer-column"><div class="MH-footer-title" data-i18n="MH.footer.version">Version</div><div class="MH-footer-text">v0.5.0</div></div>
+            <div class="MH-footer-column"><div class="MH-footer-title" data-i18n="MH.footer.links">Liens</div><div class="MH-footer-links"><a href="#" class="MH-footer-link" data-i18n="MH.footer.terms">Conditions d'utilisation</a><a href="#" class="MH-footer-link" data-i18n="MH.footer.privacy">Politique de confidentialité</a></div></div>
+        </div>
+    </footer>
+
+    <!-- scripts -->
+    <script src="scripts/katex.min.js"></script>
+    <script src="scripts/auto-render.min.js"></script>
+    <script src="scripts/geometry.js"></script>
+    <script src="scripts/translation2.js"></script>
+
+    <script>
+        // ============================================
+        // TRADUCTIONS COMPLÈTES – Version corrigée (sans String.raw, HTML intégré)
+        // ============================================
+        const fonLin3Translations = {
+            'fr': {
+                // Général
+                'MH.general.title': 'Mathematics Hub',
+                'MH.general.theme': 'Thème',
+                'MH.general.language': 'Langue',
+                'MH.general.enableNotifications': 'Activer les notifications',
+                'MH.lesson_Y1Alg_fonLin3.showSolution': 'Voir la solution',
+                'MH.lesson_Y1Alg_fonLin3.hideSolution': 'Cacher la solution',
+                // Titres
+                'MH.lesson_Y1Alg_fonLin3.title': 'Fonctions linéaires : Partie III',
+                'MH.lesson_Y1Alg_fonLin3.subtitle': 'Exercices et applications',
+                'MH.lesson_Y1Alg_fonLin3.part5': 'V. Exercices et applications',
+                // Exercice 1
+                'MH.lesson_Y1Alg_fonLin3.ex1_title': 'Exercice 1 – Questions sur l’existence',
+                'MH.lesson_Y1Alg_fonLin3.ex1_q1': '1) Peut-on trouver une fonction linéaire f vérifiant f(0) = -1 ?',
+                'MH.lesson_Y1Alg_fonLin3.ex1_q2': '2) Peut-on trouver une fonction linéaire g vérifiant g(2) = 0 ?',
+                'MH.lesson_Y1Alg_fonLin3.ex1_q3': '3) Peut-on trouver une fonction linéaire h vérifiant h(3) = 1 et h(-6) = -2 ?',
+                'MH.lesson_Y1Alg_fonLin3.ex1_q4': '4) Peut-on trouver une fonction linéaire k vérifiant k(2) = k(-2) = 4 ?',
+                'MH.lesson_Y1Alg_fonLin3.ex1_graph': 'Représenter dans un repère (O, I, J) la représentation graphique de la fonction linéaire définie par f(x) = 1,2 x.',
+                // Solutions Exercice 1 (contenu HTML complet – plus de String.raw)
+                'MH.lesson_Y1Alg_fonLin3.ex1_q1_sol': '<div class="MH-sequence-step"><p><strong>Réponse :</strong> Non, on ne peut pas.</p><p>🔍 <strong>Explication :</strong> Une fonction linéaire s\'écrit \\(f(x)=a x\\). Pour \\(x=0\\), on a \\(f(0)=a \\times 0 = 0\\). Donc <strong>toute fonction linéaire vérifie toujours \\(f(0)=0\\)</strong>. Ici on demande \\(f(0)=-1\\), ce qui est impossible.</p><p>📌 <strong>Conclusion :</strong> Il n\'existe pas de fonction linéaire telle que \\(f(0) = -1\\).</p></div>',
+                'MH.lesson_Y1Alg_fonLin3.ex1_q2_sol': '<div class="MH-sequence-step"><p><strong>Réponse :</strong> Oui, on peut.</p><p>🔍 <strong>Explication :</strong> On cherche \\(g(x)=a x\\) avec \\(g(2)=0\\). Cela donne \\(a \\times 2 = 0\\), donc \\(a = 0\\). La fonction \\(g(x)=0\\) (fonction nulle) est bien une fonction linéaire (coefficient 0).</p><p>📌 <strong>Vérification :</strong> \\(g(2)=0 \\times 2 = 0\\).</p></div>',
+                'MH.lesson_Y1Alg_fonLin3.ex1_q3_sol': '<div class="MH-sequence-step"><p><strong>Réponse :</strong> Oui, on peut.</p><p>🔍 <strong>Explication :</strong> On cherche \\(h(x)=a x\\) tel que \\(h(3)=1\\) et \\(h(-6)=-2\\).</p><p>De \\(h(3)=1\\) on tire \\(a \\times 3 = 1\\) donc \\(a = \\frac{1}{3}\\).</p><p>Vérifions avec l\'autre condition : \\(h(-6) = \\frac{1}{3} \\times (-6) = -2\\). C\'est exactement la valeur demandée. Donc la fonction \\(h(x)=\\frac{1}{3}x\\) convient.</p><p>📌 <strong>Remarque :</strong> Les deux conditions donnent le même coefficient, donc la fonction existe.</p></div>',
+                'MH.lesson_Y1Alg_fonLin3.ex1_q4_sol': '<div class="MH-sequence-step"><p><strong>Réponse :</strong> Non, on ne peut pas.</p><p>🔍 <strong>Explication :</strong> On cherche \\(k(x)=a x\\) tel que \\(k(2)=4\\) et \\(k(-2)=4\\).</p><p>De \\(k(2)=4\\) on a \\(a \\times 2 = 4\\) donc \\(a = 2\\).</p><p>Alors \\(k(-2)=2 \\times (-2) = -4\\), mais on veut \\(k(-2)=4\\). Les deux conditions sont contradictoires. Il n\'existe pas de nombre \\(a\\) qui donne à la fois 4 pour \\(x=2\\) et pour \\(x=-2\\).</p><p>📌 <strong>Conclusion :</strong> Aucune fonction linéaire ne vérifie ces deux égalités.</p></div>',
+                'MH.lesson_Y1Alg_fonLin3.ex1_graph_sol': '<div class="MH-sequence-step"><p><strong>Construction :</strong> La fonction est \\(f(x)=1,2 x\\). C\'est une droite passant par l\'origine. Il suffit de trouver un deuxième point, par exemple pour \\(x=1\\), \\(f(1)=1,2\\). On place \\(A(1;1,2)\\). On trace la droite (OA).</p><p>📐 <strong>Sur le graphique ci-contre :</strong> la droite bleue représente \\(f\\). On peut aussi prendre \\(x=5\\) pour vérifier : \\(f(5)=6\\).</p><p>✅ La droite passe par (0,0) et (1,1,2).</p></div>',
+                // Canvas labels
+                'MH.lesson_Y1Alg_fonLin3.canvas1_title': 'Représentation de f(x) = 1,2 x',
+                'MH.lesson_Y1Alg_fonLin3.canvas1_inst': 'La droite passe par l’origine et par le point A(1 ; 1,2).',
+                // Exercice 2
+                'MH.lesson_Y1Alg_fonLin3.ex2_title': 'Exercice 2 – Aire d’un triangle',
+                'MH.lesson_Y1Alg_fonLin3.ex2_stmt': '1) Représenter graphiquement l’aire du triangle ABN en fonction de la hauteur NH, sachant que AB = 5 cm.',
+                'MH.lesson_Y1Alg_fonLin3.ex2_lire': '2) Lire graphiquement.',
+                'MH.lesson_Y1Alg_fonLin3.ex2_q2a': 'a) L’aire d’un triangle tel que NH = 4 cm.',
+                'MH.lesson_Y1Alg_fonLin3.ex2_q2b': 'b) L’aire d’un triangle tel que NH = 3,5 cm.',
+                'MH.lesson_Y1Alg_fonLin3.ex2_q2c': 'c) La hauteur NH d’un triangle d’aire 20 cm².',
+                'MH.lesson_Y1Alg_fonLin3.ex2_q2a_sol': '<div class="MH-sequence-step"><p><strong>Réponse :</strong> 10 cm².</p><p>🔍 <strong>Explication :</strong> L\'aire d\'un triangle est \\( \\frac{1}{2} \\times \\text{base} \\times \\text{hauteur}\\). Ici base AB = 5 cm, hauteur NH. Donc aire = \\( \\frac{1}{2} \\times 5 \\times NH = 2,5 \\times NH\\).</p><p>Pour NH = 4 cm, aire = \\(2,5 \\times 4 = 10\\) cm².</p><p>📌 <strong>Lecture graphique :</strong> Sur la droite, à l\'abscisse 4, l\'ordonnée est 10.</p></div>',
+                'MH.lesson_Y1Alg_fonLin3.ex2_q2b_sol': '<div class="MH-sequence-step"><p><strong>Réponse :</strong> 8,75 cm².</p><p>🔍 <strong>Explication :</strong> Avec NH = 3,5 cm, aire = \\(2,5 \\times 3,5 = 8,75\\) cm².</p><p>📌 On peut aussi lire sur le graphique : l\'abscisse 3,5 donne une ordonnée entre 8 et 9, exactement 8,75.</p></div>',
+                'MH.lesson_Y1Alg_fonLin3.ex2_q2c_sol': '<div class="MH-sequence-step"><p><strong>Réponse :</strong> NH = 8 cm.</p><p>🔍 <strong>Explication :</strong> On cherche NH tel que aire = 20 cm². On a l\'équation \\(2,5 \\times NH = 20\\). Donc \\(NH = \\frac{20}{2,5} = 8\\) cm.</p><p>📌 Sur le graphique, on lit l\'abscisse du point dont l\'ordonnée est 20 : c\'est 8.</p></div>',
+                'MH.lesson_Y1Alg_fonLin3.canvas2_title': 'Aire du triangle en fonction de la hauteur NH',
+                'MH.lesson_Y1Alg_fonLin3.canvas2_inst': 'Aire = 2,5 × NH (droite passant par l’origine).',
+                // Exercice 3
+                'MH.lesson_Y1Alg_fonLin3.ex3_title': 'Exercice 3 – Volume d’un cylindre',
+                'MH.lesson_Y1Alg_fonLin3.ex3_stmt': 'Le volume d’un cylindre est 1 litre.',
+                'MH.lesson_Y1Alg_fonLin3.ex3_q1': '1) On a triplé le rayon de la base.',
+                'MH.lesson_Y1Alg_fonLin3.ex3_q1a': 'a) Qu’est devenu son volume ?',
+                'MH.lesson_Y1Alg_fonLin3.ex3_q1b': 'b) Qu’est devenue sa surface latérale ?',
+                'MH.lesson_Y1Alg_fonLin3.ex3_q2': '2) On a quadruplé sa hauteur.',
+                'MH.lesson_Y1Alg_fonLin3.ex3_q2a': 'a) Qu’est devenu son volume ?',
+                'MH.lesson_Y1Alg_fonLin3.ex3_q2b': 'b) Qu’est devenue sa surface latérale ?',
+                'MH.lesson_Y1Alg_fonLin3.ex3_q3': '3) Que retenir ?',
+                'MH.lesson_Y1Alg_fonLin3.ex3_q1a_sol': '<div class="MH-sequence-step"><p><strong>Réponse :</strong> Le volume devient 9 litres.</p><p>🔍 <strong>Explication :</strong> Volume initial \\(V = \\pi r^2 h\\). Si on triple le rayon, nouveau rayon \\(r\' = 3r\\). Le nouveau volume \\(V\' = \\pi (3r)^2 h = \\pi \\times 9r^2 h = 9 \\times \\pi r^2 h = 9V\\). Comme \\(V=1\\) litre, \\(V\' = 9\\) litres.</p><p>📌 Le volume est multiplié par \\(3^2 = 9\\).</p></div>',
+                'MH.lesson_Y1Alg_fonLin3.ex3_q1b_sol': '<div class="MH-sequence-step"><p><strong>Réponse :</strong> La surface latérale devient 3 fois la surface initiale.</p><p>🔍 <strong>Explication :</strong> Surface latérale \\(S = 2\\pi r h\\). Avec \\(r\' = 3r\\), \\(S\' = 2\\pi (3r) h = 3 \\times (2\\pi r h) = 3S\\).</p><p>📌 Elle est multipliée par 3.</p></div>',
+                'MH.lesson_Y1Alg_fonLin3.ex3_q2a_sol': '<div class="MH-sequence-step"><p><strong>Réponse :</strong> Le volume devient 4 litres.</p><p>🔍 <strong>Explication :</strong> On quadruple la hauteur : \\(h\' = 4h\\). Volume \\(V\' = \\pi r^2 (4h) = 4 \\times \\pi r^2 h = 4V = 4\\) litres.</p><p>📌 Multiplié par 4.</p></div>',
+                'MH.lesson_Y1Alg_fonLin3.ex3_q2b_sol': '<div class="MH-sequence-step"><p><strong>Réponse :</strong> La surface latérale devient 4 fois la surface initiale.</p><p>🔍 <strong>Explication :</strong> \\(S\' = 2\\pi r (4h) = 4 \\times (2\\pi r h) = 4S\\).</p><p>📌 Multipliée par 4.</p></div>',
+                'MH.lesson_Y1Alg_fonLin3.ex3_q3_sol': '<div class="MH-sequence-step"><p><strong>Ce qu\'il faut retenir :</strong></p><ul><li>Le volume d\'un cylindre est proportionnel au carré du rayon et à la hauteur. Il n\'est pas linéaire par rapport au rayon seul (car c\'est \\(r^2\\)).</li><li>La surface latérale est proportionnelle au rayon et à la hauteur. C\'est une fonction linéaire de \\(r\\) si \\(h\\) est fixe, et linéaire de \\(h\\) si \\(r\\) est fixe.</li><li>Multiplier le rayon par \\(k\\) multiplie le volume par \\(k^2\\) et la surface latérale par \\(k\\).</li><li>Multiplier la hauteur par \\(k\\) multiplie le volume et la surface latérale par \\(k\\).</li></ul></div>',
+                // Exercice 4
+                'MH.lesson_Y1Alg_fonLin3.ex4_title': 'Exercice 4 – Cercle et disque',
+                'MH.lesson_Y1Alg_fonLin3.ex4_q1': '1) Le périmètre d’un cercle varie-t-il linéairement en fonction de son rayon ?',
+                'MH.lesson_Y1Alg_fonLin3.ex4_q1_sol': '<div class="MH-sequence-step"><p><strong>Réponse :</strong> Oui.</p><p>🔍 <strong>Explication :</strong> Le périmètre (circonférence) d\'un cercle est \\(P = 2\\pi R\\). C\'est de la forme \\(P = a \\times R\\) avec \\(a = 2\\pi\\) (constante). C\'est donc une fonction linéaire de \\(R\\) (coefficient \\(2\\pi\\)). Sa représentation graphique est une droite passant par l\'origine.</p></div>',
+                'MH.lesson_Y1Alg_fonLin3.ex4_q2': '2) Un cercle de rayon R km a un périmètre égal à 1 500 000 km.',
+                'MH.lesson_Y1Alg_fonLin3.ex4_q2a': 'a) De combien augmente ce périmètre si on augmente le rayon de 1 km ?',
+                'MH.lesson_Y1Alg_fonLin3.ex4_q2a_sol': '<div class="MH-sequence-step"><p><strong>Réponse :</strong> Il augmente de \\(2\\pi\\) km, soit environ 6,2832 km.</p><p>🔍 <strong>Explication :</strong> Puisque \\(P = 2\\pi R\\), quand \\(R\\) augmente de 1, \\(P\\) augmente de \\(2\\pi \\times 1 = 2\\pi\\). La valeur exacte est \\(2\\pi\\) km, indépendante de \\(R\\).</p></div>',
+                'MH.lesson_Y1Alg_fonLin3.ex4_q2b': 'b) De combien diminue ce périmètre si on diminue le rayon de 2 km ?',
+                'MH.lesson_Y1Alg_fonLin3.ex4_q2b_sol': '<div class="MH-sequence-step"><p><strong>Réponse :</strong> Il diminue de \\(4\\pi\\) km (environ 12,5664 km).</p><p>🔍 <strong>Explication :</strong> Une diminution de 2 km du rayon correspond à une variation \\(\\Delta R = -2\\). La variation du périmètre est \\(\\Delta P = 2\\pi \\times (-2) = -4\\pi\\). Donc le périmètre diminue de \\(4\\pi\\) km.</p></div>',
+                'MH.lesson_Y1Alg_fonLin3.ex4_q3': '3) L’aire d’un disque varie-t-elle linéairement en fonction de son rayon ?',
+                'MH.lesson_Y1Alg_fonLin3.ex4_q3_sol': '<div class="MH-sequence-step"><p><strong>Réponse :</strong> Non.</p><p>🔍 <strong>Explication :</strong> L\'aire d\'un disque est \\(A = \\pi R^2\\). Ce n\'est pas de la forme \\(a \\times R\\) car \\(R\\) est au carré. Ce n\'est donc pas une fonction linéaire (c\'est une fonction quadratique). La représentation graphique n\'est pas une droite.</p></div>',
+                'MH.lesson_Y1Alg_fonLin3.ex4_q4': '4) L’aire d’un triangle est-elle une fonction linéaire de sa base ?',
+                'MH.lesson_Y1Alg_fonLin3.ex4_q4_sol': '<div class="MH-sequence-step"><p><strong>Réponse :</strong> Cela dépend si la hauteur est fixe ou non.</p><p>🔍 <strong>Explication :</strong> L\'aire d\'un triangle est \\(A = \\frac{1}{2} \\times \\text{base} \\times \\text{hauteur}\\).</p><ul><li>Si la hauteur est constante (par exemple toujours la même), alors \\(A\\) est proportionnelle à la base : \\(A = k \\times \\text{base}\\) avec \\(k = \\frac{1}{2} \\times \\text{hauteur}\\). Dans ce cas, c\'est une fonction linéaire de la base.</li><li>Si la hauteur varie, alors l\'aire n\'est pas simplement une fonction linéaire de la base seule (elle dépend aussi de la hauteur).</li></ul><p>📌 <strong>Conclusion :</strong> On peut dire que l\'aire est une fonction linéaire de la base <em>à hauteur constante</em>.</p></div>',
+                // Résumé
+                'MH.lesson_Y1Alg_fonLin3.remember': '📌 À retenir',
+                'MH.lesson_Y1Alg_fonLin3.rem1': 'Une fonction linéaire s’écrit \\(f(x)=ax\\) et sa droite passe par l’origine.',
+                'MH.lesson_Y1Alg_fonLin3.rem2': 'Pour qu’une fonction linéaire existe, il faut que \\(f(0)=0\\) et que le coefficient \\(a\\) soit unique.',
+                'MH.lesson_Y1Alg_fonLin3.rem3': 'Beaucoup de grandeurs physiques (périmètre, aire avec hauteur fixe) sont linéaires ; d’autres (volume, aire d’un disque) ne le sont pas.',
+                // Footer
+                'MH.footer.developer': 'Développeur',
+                'MH.footer.version': 'Version',
+                'MH.footer.links': 'Liens',
+                'MH.footer.terms': 'Conditions d\'utilisation',
+                'MH.footer.privacy': 'Politique de confidentialité'
+            },
+            'en': {
+    // General
+    'MH.general.title': 'Mathematics Hub',
+    'MH.general.theme': 'Theme',
+    'MH.general.language': 'Language',
+    'MH.general.enableNotifications': 'Enable notifications',
+    'MH.lesson_Y1Alg_fonLin3.showSolution': 'Show solution',
+    'MH.lesson_Y1Alg_fonLin3.hideSolution': 'Hide solution',
+
+    // Lesson titles
+    'MH.lesson_Y1Alg_fonLin3.title': 'Linear functions: Part III',
+    'MH.lesson_Y1Alg_fonLin3.subtitle': 'Exercises and applications',
+    'MH.lesson_Y1Alg_fonLin3.part5': 'V. Exercises and applications',
+
+    // Exercise 1
+    'MH.lesson_Y1Alg_fonLin3.ex1_title': 'Exercise 1 – Existence questions',
+    'MH.lesson_Y1Alg_fonLin3.ex1_q1': '1) Can we find a linear function f such that f(0) = -1?',
+    'MH.lesson_Y1Alg_fonLin3.ex1_q2': '2) Can we find a linear function g such that g(2) = 0?',
+    'MH.lesson_Y1Alg_fonLin3.ex1_q3': '3) Can we find a linear function h such that h(3) = 1 and h(-6) = -2?',
+    'MH.lesson_Y1Alg_fonLin3.ex1_q4': '4) Can we find a linear function k such that k(2) = k(-2) = 4?',
+    'MH.lesson_Y1Alg_fonLin3.ex1_graph': 'In a coordinate system (O, I, J), draw the graph of the linear function f(x) = 1.2 x.',
+
+    // Solutions Exercise 1
+    'MH.lesson_Y1Alg_fonLin3.ex1_q1_sol': '<div class="MH-sequence-step"><p><strong>Answer:</strong> No, we cannot.</p><p>🔍 <strong>Explanation:</strong> A linear function is written \\(f(x)=a x\\). For \\(x=0\\), we have \\(f(0)=a \\times 0 = 0\\). So <strong>every linear function always satisfies \\(f(0)=0\\)</strong>. Here we ask for \\(f(0)=-1\\), which is impossible.</p><p>📌 <strong>Conclusion:</strong> There is no linear function with \\(f(0) = -1\\).</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex1_q2_sol': '<div class="MH-sequence-step"><p><strong>Answer:</strong> Yes, we can.</p><p>🔍 <strong>Explanation:</strong> We look for \\(g(x)=a x\\) with \\(g(2)=0\\). This gives \\(a \\times 2 = 0\\), so \\(a = 0\\). The function \\(g(x)=0\\) (zero function) is indeed a linear function (coefficient 0).</p><p>📌 <strong>Check:</strong> \\(g(2)=0 \\times 2 = 0\\).</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex1_q3_sol': '<div class="MH-sequence-step"><p><strong>Answer:</strong> Yes, we can.</p><p>🔍 <strong>Explanation:</strong> We look for \\(h(x)=a x\\) such that \\(h(3)=1\\) and \\(h(-6)=-2\\).</p><p>From \\(h(3)=1\\) we get \\(a \\times 3 = 1\\) so \\(a = \\frac{1}{3}\\).</p><p>Check with the other condition: \\(h(-6) = \\frac{1}{3} \\times (-6) = -2\\). This matches exactly. Hence the function \\(h(x)=\\frac{1}{3}x\\) works.</p><p>📌 <strong>Note:</strong> Both conditions give the same coefficient, so the function exists.</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex1_q4_sol': '<div class="MH-sequence-step"><p><strong>Answer:</strong> No, we cannot.</p><p>🔍 <strong>Explanation:</strong> We look for \\(k(x)=a x\\) such that \\(k(2)=4\\) and \\(k(-2)=4\\).</p><p>From \\(k(2)=4\\) we have \\(a \\times 2 = 4\\) so \\(a = 2\\).</p><p>Then \\(k(-2)=2 \\times (-2) = -4\\), but we need \\(k(-2)=4\\). The two conditions contradict each other. There is no number \\(a\\) that gives both 4 for \\(x=2\\) and for \\(x=-2\\).</p><p>📌 <strong>Conclusion:</strong> No linear function satisfies both equalities.</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex1_graph_sol': '<div class="MH-sequence-step"><p><strong>Construction:</strong> The function is \\(f(x)=1.2 x\\). It is a line through the origin. We only need a second point, e.g. for \\(x=1\\), \\(f(1)=1.2\\). Plot \\(A(1;1.2)\\) and draw the line (OA).</p><p>📐 <strong>On the graph:</strong> the blue line represents \\(f\\). You can also take \\(x=5\\) to check: \\(f(5)=6\\).</p><p>✅ The line passes through (0,0) and (1,1.2).</p></div>',
+
+    // Canvas 1
+    'MH.lesson_Y1Alg_fonLin3.canvas1_title': 'Graph of f(x) = 1.2 x',
+    'MH.lesson_Y1Alg_fonLin3.canvas1_inst': 'The line passes through the origin and point A(1 ; 1.2).',
+
+    // Exercise 2
+    'MH.lesson_Y1Alg_fonLin3.ex2_title': 'Exercise 2 – Area of a triangle',
+    'MH.lesson_Y1Alg_fonLin3.ex2_stmt': '1) Graph the area of triangle ABN as a function of the height NH, given that AB = 5 cm.',
+    'MH.lesson_Y1Alg_fonLin3.ex2_lire': '2) Read from the graph.',
+    'MH.lesson_Y1Alg_fonLin3.ex2_q2a': 'a) The area of a triangle with NH = 4 cm.',
+    'MH.lesson_Y1Alg_fonLin3.ex2_q2b': 'b) The area of a triangle with NH = 3.5 cm.',
+    'MH.lesson_Y1Alg_fonLin3.ex2_q2c': 'c) The height NH of a triangle with area 20 cm².',
+
+    // Solutions Exercise 2
+    'MH.lesson_Y1Alg_fonLin3.ex2_q2a_sol': '<div class="MH-sequence-step"><p><strong>Answer:</strong> 10 cm².</p><p>🔍 <strong>Explanation:</strong> The area of a triangle is \\( \\frac{1}{2} \\times \\text{base} \\times \\text{height}\\). Here base AB = 5 cm, height NH. So area = \\( \\frac{1}{2} \\times 5 \\times NH = 2.5 \\times NH\\).</p><p>For NH = 4 cm, area = \\(2.5 \\times 4 = 10\\) cm².</p><p>📌 <strong>Graph reading:</strong> On the line, at abscissa 4, the ordinate is 10.</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex2_q2b_sol': '<div class="MH-sequence-step"><p><strong>Answer:</strong> 8.75 cm².</p><p>🔍 <strong>Explanation:</strong> With NH = 3.5 cm, area = \\(2.5 \\times 3.5 = 8.75\\) cm².</p><p>📌 You can also read from the graph: abscissa 3.5 gives an ordinate between 8 and 9, exactly 8.75.</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex2_q2c_sol': '<div class="MH-sequence-step"><p><strong>Answer:</strong> NH = 8 cm.</p><p>🔍 <strong>Explanation:</strong> We need NH such that area = 20 cm². Equation: \\(2.5 \\times NH = 20\\). Hence \\(NH = \\frac{20}{2.5} = 8\\) cm.</p><p>📌 On the graph, read the abscissa of the point with ordinate 20: it is 8.</p></div>',
+
+    // Canvas 2
+    'MH.lesson_Y1Alg_fonLin3.canvas2_title': 'Triangle area as a function of height NH',
+    'MH.lesson_Y1Alg_fonLin3.canvas2_inst': 'Area = 2.5 × NH (line through the origin).',
+
+    // Exercise 3
+    'MH.lesson_Y1Alg_fonLin3.ex3_title': 'Exercise 3 – Volume of a cylinder',
+    'MH.lesson_Y1Alg_fonLin3.ex3_stmt': 'The volume of a cylinder is 1 litre.',
+    'MH.lesson_Y1Alg_fonLin3.ex3_q1': '1) The radius of the base is tripled.',
+    'MH.lesson_Y1Alg_fonLin3.ex3_q1a': 'a) What happens to its volume?',
+    'MH.lesson_Y1Alg_fonLin3.ex3_q1b': 'b) What happens to its lateral surface area?',
+    'MH.lesson_Y1Alg_fonLin3.ex3_q2': '2) Its height is quadrupled.',
+    'MH.lesson_Y1Alg_fonLin3.ex3_q2a': 'a) What happens to its volume?',
+    'MH.lesson_Y1Alg_fonLin3.ex3_q2b': 'b) What happens to its lateral surface area?',
+    'MH.lesson_Y1Alg_fonLin3.ex3_q3': '3) What to remember?',
+
+    // Solutions Exercise 3
+    'MH.lesson_Y1Alg_fonLin3.ex3_q1a_sol': '<div class="MH-sequence-step"><p><strong>Answer:</strong> The volume becomes 9 litres.</p><p>🔍 <strong>Explanation:</strong> Initial volume \\(V = \\pi r^2 h\\). If the radius is tripled, new radius \\(r\' = 3r\\). New volume \\(V\' = \\pi (3r)^2 h = \\pi \\times 9r^2 h = 9 \\times \\pi r^2 h = 9V\\). Since \\(V=1\\) litre, \\(V\' = 9\\) litres.</p><p>📌 Volume is multiplied by \\(3^2 = 9\\).</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex3_q1b_sol': '<div class="MH-sequence-step"><p><strong>Answer:</strong> The lateral surface area becomes 3 times the initial area.</p><p>🔍 <strong>Explanation:</strong> Lateral surface area \\(S = 2\\pi r h\\). With \\(r\' = 3r\\), \\(S\' = 2\\pi (3r) h = 3 \\times (2\\pi r h) = 3S\\).</p><p>📌 It is multiplied by 3.</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex3_q2a_sol': '<div class="MH-sequence-step"><p><strong>Answer:</strong> The volume becomes 4 litres.</p><p>🔍 <strong>Explanation:</strong> Height is quadrupled: \\(h\' = 4h\\). Volume \\(V\' = \\pi r^2 (4h) = 4 \\times \\pi r^2 h = 4V = 4\\) litres.</p><p>📌 Multiplied by 4.</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex3_q2b_sol': '<div class="MH-sequence-step"><p><strong>Answer:</strong> The lateral surface area becomes 4 times the initial area.</p><p>🔍 <strong>Explanation:</strong> \\(S\' = 2\\pi r (4h) = 4 \\times (2\\pi r h) = 4S\\).</p><p>📌 Multiplied by 4.</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex3_q3_sol': '<div class="MH-sequence-step"><p><strong>Key takeaways:</strong></p><ul><li>The volume of a cylinder is proportional to the square of the radius and to the height. It is not linear with respect to the radius alone (because of \\(r^2\\)).</li><li>The lateral surface area is proportional to the radius and to the height. It is a linear function of \\(r\\) if \\(h\\) is fixed, and linear in \\(h\\) if \\(r\\) is fixed.</li><li>Multiplying the radius by \\(k\\) multiplies the volume by \\(k^2\\) and the lateral surface area by \\(k\\).</li><li>Multiplying the height by \\(k\\) multiplies both volume and lateral surface area by \\(k\\).</li></ul></div>',
+
+    // Exercise 4
+    'MH.lesson_Y1Alg_fonLin3.ex4_title': 'Exercise 4 – Circle and disk',
+    'MH.lesson_Y1Alg_fonLin3.ex4_q1': '1) Does the perimeter of a circle vary linearly with its radius?',
+    'MH.lesson_Y1Alg_fonLin3.ex4_q1_sol': '<div class="MH-sequence-step"><p><strong>Answer:</strong> Yes.</p><p>🔍 <strong>Explanation:</strong> The perimeter (circumference) of a circle is \\(P = 2\\pi R\\). It is of the form \\(P = a \\times R\\) with \\(a = 2\\pi\\) (constant). Hence it is a linear function of \\(R\\) (coefficient \\(2\\pi\\)). Its graph is a straight line through the origin.</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex4_q2': '2) A circle of radius R km has a perimeter of 1 500 000 km.',
+    'MH.lesson_Y1Alg_fonLin3.ex4_q2a': 'a) How much does this perimeter increase if the radius is increased by 1 km?',
+    'MH.lesson_Y1Alg_fonLin3.ex4_q2a_sol': '<div class="MH-sequence-step"><p><strong>Answer:</strong> It increases by \\(2\\pi\\) km, approximately 6.2832 km.</p><p>🔍 <strong>Explanation:</strong> Since \\(P = 2\\pi R\\), when \\(R\\) increases by 1, \\(P\\) increases by \\(2\\pi \\times 1 = 2\\pi\\). The exact value is \\(2\\pi\\) km, independent of \\(R\\).</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex4_q2b': 'b) How much does this perimeter decrease if the radius is decreased by 2 km?',
+    'MH.lesson_Y1Alg_fonLin3.ex4_q2b_sol': '<div class="MH-sequence-step"><p><strong>Answer:</strong> It decreases by \\(4\\pi\\) km (about 12.5664 km).</p><p>🔍 <strong>Explanation:</strong> A decrease of 2 km in radius corresponds to \\(\\Delta R = -2\\). The change in perimeter is \\(\\Delta P = 2\\pi \\times (-2) = -4\\pi\\). So the perimeter decreases by \\(4\\pi\\) km.</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex4_q3': '3) Does the area of a disk vary linearly with its radius?',
+    'MH.lesson_Y1Alg_fonLin3.ex4_q3_sol': '<div class="MH-sequence-step"><p><strong>Answer:</strong> No.</p><p>🔍 <strong>Explanation:</strong> The area of a disk is \\(A = \\pi R^2\\). This is not of the form \\(a \\times R\\) because \\(R\\) is squared. Therefore it is not a linear function (it is a quadratic function). Its graph is not a straight line.</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex4_q4': '4) Is the area of a triangle a linear function of its base?',
+    'MH.lesson_Y1Alg_fonLin3.ex4_q4_sol': '<div class="MH-sequence-step"><p><strong>Answer:</strong> It depends on whether the height is fixed or not.</p><p>🔍 <strong>Explanation:</strong> The area of a triangle is \\(A = \\frac{1}{2} \\times \\text{base} \\times \\text{height}\\).</p><ul><li>If the height is constant (always the same), then \\(A\\) is proportional to the base: \\(A = k \\times \\text{base}\\) with \\(k = \\frac{1}{2} \\times \\text{height}\\). In this case it is a linear function of the base.</li><li>If the height varies, then the area is not simply a linear function of the base alone (it also depends on the height).</li></ul><p>📌 <strong>Conclusion:</strong> We can say that area is a linear function of the base <em>when the height is fixed</em>.</p></div>',
+
+    // Summary
+    'MH.lesson_Y1Alg_fonLin3.remember': '📌 Remember',
+    'MH.lesson_Y1Alg_fonLin3.rem1': 'A linear function is written \\(f(x)=ax\\) and its line passes through the origin.',
+    'MH.lesson_Y1Alg_fonLin3.rem2': 'For a linear function to exist, we must have \\(f(0)=0\\) and the coefficient \\(a\\) must be unique.',
+    'MH.lesson_Y1Alg_fonLin3.rem3': 'Many physical quantities (perimeter, area with fixed height) are linear; others (volume, area of a disk) are not.',
+
+    // Footer
+    'MH.footer.developer': 'Developer',
+    'MH.footer.version': 'Version',
+    'MH.footer.links': 'Links',
+    'MH.footer.terms': 'Terms of use',
+    'MH.footer.privacy': 'Privacy policy'
+},
+            'ar': {
+    // General
+    'MH.general.title': 'مركز الرياضيات',
+    'MH.general.theme': 'المظهر',
+    'MH.general.language': 'اللغة',
+    'MH.general.enableNotifications': 'تفعيل الإشعارات',
+    'MH.lesson_Y1Alg_fonLin3.showSolution': 'عرض الحل',
+    'MH.lesson_Y1Alg_fonLin3.hideSolution': 'إخفاء الحل',
+
+    // Lesson titles
+    'MH.lesson_Y1Alg_fonLin3.title': 'الدوال الخطية: الجزء الثالث',
+    'MH.lesson_Y1Alg_fonLin3.subtitle': 'تمارين وتطبيقات',
+    'MH.lesson_Y1Alg_fonLin3.part5': 'خامساً. تمارين وتطبيقات',
+
+    // Exercise 1
+    'MH.lesson_Y1Alg_fonLin3.ex1_title': 'تمرين 1 – أسئلة حول الوجود',
+    'MH.lesson_Y1Alg_fonLin3.ex1_q1': '1) هل يمكن إيجاد دالة خطية f تحقق f(0) = -1 ؟',
+    'MH.lesson_Y1Alg_fonLin3.ex1_q2': '2) هل يمكن إيجاد دالة خطية g تحقق g(2) = 0 ؟',
+    'MH.lesson_Y1Alg_fonLin3.ex1_q3': '3) هل يمكن إيجاد دالة خطية h تحقق h(3) = 1 و h(-6) = -2 ؟',
+    'MH.lesson_Y1Alg_fonLin3.ex1_q4': '4) هل يمكن إيجاد دالة خطية k تحقق k(2) = k(-2) = 4 ؟',
+    'MH.lesson_Y1Alg_fonLin3.ex1_graph': 'مثل في معلم (O, I, J) التمثيل البياني للدالة الخطية f(x) = 1.2 x.',
+
+    // Solutions Exercise 1
+    'MH.lesson_Y1Alg_fonLin3.ex1_q1_sol': '<div class="MH-sequence-step"><p><strong>الجواب:</strong> لا، لا يمكن.</p><p>🔍 <strong>التفسير:</strong> الدالة الخطية تكتب \\(f(x)=a x\\). من أجل \\(x=0\\)، لدينا \\(f(0)=a \\times 0 = 0\\). إذن <strong>كل دالة خطية تحقق دائماً \\(f(0)=0\\)</strong>. هنا نطلب \\(f(0)=-1\\)، وهذا مستحيل.</p><p>📌 <strong>الخلاصة:</strong> لا توجد دالة خطية تحقق \\(f(0) = -1\\).</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex1_q2_sol': '<div class="MH-sequence-step"><p><strong>الجواب:</strong> نعم، يمكن.</p><p>🔍 <strong>التفسير:</strong> نبحث عن \\(g(x)=a x\\) بحيث \\(g(2)=0\\). هذا يعطي \\(a \\times 2 = 0\\)، إذن \\(a = 0\\). الدالة \\(g(x)=0\\) (الدالة الصفرية) هي بالفعل دالة خطية (معاملها 0).</p><p>📌 <strong>التحقق:</strong> \\(g(2)=0 \\times 2 = 0\\).</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex1_q3_sol': '<div class="MH-sequence-step"><p><strong>الجواب:</strong> نعم، يمكن.</p><p>🔍 <strong>التفسير:</strong> نبحث عن \\(h(x)=a x\\) بحيث \\(h(3)=1\\) و \\(h(-6)=-2\\).</p><p>من \\(h(3)=1\\) نحصل على \\(a \\times 3 = 1\\) وبالتالي \\(a = \\frac{1}{3}\\).</p><p>التحقق مع الشرط الآخر: \\(h(-6) = \\frac{1}{3} \\times (-6) = -2\\). وهذا يطابق المطلوب تماماً. إذن الدالة \\(h(x)=\\frac{1}{3}x\\) صالحة.</p><p>📌 <strong>ملاحظة:</strong> كلا الشرطين يعطيان نفس المعامل، لذا توجد الدالة.</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex1_q4_sol': '<div class="MH-sequence-step"><p><strong>الجواب:</strong> لا، لا يمكن.</p><p>🔍 <strong>التفسير:</strong> نبحث عن \\(k(x)=a x\\) بحيث \\(k(2)=4\\) و \\(k(-2)=4\\).</p><p>من \\(k(2)=4\\) نجد \\(a \\times 2 = 4\\) إذن \\(a = 2\\).</p><p>عندئذ \\(k(-2)=2 \\times (-2) = -4\\)، بينما نريد \\(k(-2)=4\\). الشرطان متناقضان. لا يوجد عدد \\(a\\) يعطي كلا من 4 لـ \\(x=2\\) ولـ \\(x=-2\\).</p><p>📌 <strong>الخلاصة:</strong> لا توجد دالة خطية تحقق هاتين المتساويتين.</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex1_graph_sol': '<div class="MH-sequence-step"><p><strong>الإنشاء:</strong> الدالة هي \\(f(x)=1.2 x\\). إنها مستقيم يمر عبر الأصل. نحتاج فقط إلى نقطة ثانية، مثلاً لـ \\(x=1\\)، \\(f(1)=1.2\\). نضع النقطة \\(A(1;1.2)\\) ونرسم المستقيم (OA).</p><p>📐 <strong>على الرسم البياني:</strong> الخط الأزرق يمثل \\(f\\). يمكنك أيضاً أخذ \\(x=5\\) للتحقق: \\(f(5)=6\\).</p><p>✅ المستقيم يمر عبر (0,0) و (1,1.2).</p></div>',
+
+    // Canvas 1
+    'MH.lesson_Y1Alg_fonLin3.canvas1_title': 'تمثيل الدالة f(x) = 1.2 x',
+    'MH.lesson_Y1Alg_fonLin3.canvas1_inst': 'المستقيم يمر عبر الأصل والنقطة A(1 ; 1.2).',
+
+    // Exercise 2
+    'MH.lesson_Y1Alg_fonLin3.ex2_title': 'تمرين 2 – مساحة مثلث',
+    'MH.lesson_Y1Alg_fonLin3.ex2_stmt': '1) مثل بيانياً مساحة المثلث ABN بدلالة الارتفاع NH، علماً أن AB = 5 سم.',
+    'MH.lesson_Y1Alg_fonLin3.ex2_lire': '2) اقرأ من الرسم البياني.',
+    'MH.lesson_Y1Alg_fonLin3.ex2_q2a': 'أ) مساحة مثلث حيث NH = 4 سم.',
+    'MH.lesson_Y1Alg_fonLin3.ex2_q2b': 'ب) مساحة مثلث حيث NH = 3.5 سم.',
+    'MH.lesson_Y1Alg_fonLin3.ex2_q2c': 'ج) الارتفاع NH لمثلث مساحته 20 سم².',
+
+    // Solutions Exercise 2
+    'MH.lesson_Y1Alg_fonLin3.ex2_q2a_sol': '<div class="MH-sequence-step"><p><strong>الجواب:</strong> 10 سم².</p><p>🔍 <strong>التفسير:</strong> مساحة المثلث هي \\( \\frac{1}{2} \\times \\text{القاعدة} \\times \\text{الارتفاع}\\). هنا القاعدة AB = 5 سم، الارتفاع NH. إذن المساحة = \\( \\frac{1}{2} \\times 5 \\times NH = 2.5 \\times NH\\).</p><p>بالنسبة NH = 4 سم، المساحة = \\(2.5 \\times 4 = 10\\) سم².</p><p>📌 <strong>القراءة من الرسم:</strong> على المستقيم، عند الإحداثي السيني 4، الترتيب هو 10.</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex2_q2b_sol': '<div class="MH-sequence-step"><p><strong>الجواب:</strong> 8.75 سم².</p><p>🔍 <strong>التفسير:</strong> مع NH = 3.5 سم، المساحة = \\(2.5 \\times 3.5 = 8.75\\) سم².</p><p>📌 يمكنك أيضاً القراءة من الرسم: الإحداثي السيني 3.5 يعطي ترتيباً بين 8 و 9، بالضبط 8.75.</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex2_q2c_sol': '<div class="MH-sequence-step"><p><strong>الجواب:</strong> NH = 8 سم.</p><p>🔍 <strong>التفسير:</strong> نريد NH بحيث المساحة = 20 سم². المعادلة: \\(2.5 \\times NH = 20\\). إذن \\(NH = \\frac{20}{2.5} = 8\\) سم.</p><p>📌 على الرسم، اقرأ الإحداثي السيني للنقطة التي ترتيبها 20: إنه 8.</p></div>',
+
+    // Canvas 2
+    'MH.lesson_Y1Alg_fonLin3.canvas2_title': 'مساحة المثلث بدلالة الارتفاع NH',
+    'MH.lesson_Y1Alg_fonLin3.canvas2_inst': 'المساحة = 2.5 × NH (مستقيم يمر عبر الأصل).',
+
+    // Exercise 3
+    'MH.lesson_Y1Alg_fonLin3.ex3_title': 'تمرين 3 – حجم أسطوانة',
+    'MH.lesson_Y1Alg_fonLin3.ex3_stmt': 'حجم أسطوانة هو 1 لتر.',
+    'MH.lesson_Y1Alg_fonLin3.ex3_q1': '1) تمت مضاعفة نصف قطر القاعدة ثلاث مرات.',
+    'MH.lesson_Y1Alg_fonLin3.ex3_q1a': 'أ) ماذا يصبح حجمها؟',
+    'MH.lesson_Y1Alg_fonLin3.ex3_q1b': 'ب) ماذا تصبح مساحتها الجانبية؟',
+    'MH.lesson_Y1Alg_fonLin3.ex3_q2': '2) تمت مضاعفة ارتفاعها أربع مرات.',
+    'MH.lesson_Y1Alg_fonLin3.ex3_q2a': 'أ) ماذا يصبح حجمها؟',
+    'MH.lesson_Y1Alg_fonLin3.ex3_q2b': 'ب) ماذا تصبح مساحتها الجانبية؟',
+    'MH.lesson_Y1Alg_fonLin3.ex3_q3': '3) ماذا نستنتج؟',
+
+    // Solutions Exercise 3
+    'MH.lesson_Y1Alg_fonLin3.ex3_q1a_sol': '<div class="MH-sequence-step"><p><strong>الجواب:</strong> يصبح الحجم 9 لترات.</p><p>🔍 <strong>التفسير:</strong> الحجم الأصلي \\(V = \\pi r^2 h\\). إذا تم تثليف نصف القطر، نصف القطر الجديد \\(r\' = 3r\\). الحجم الجديد \\(V\' = \\pi (3r)^2 h = \\pi \\times 9r^2 h = 9 \\times \\pi r^2 h = 9V\\). بما أن \\(V=1\\) لتر، \\(V\' = 9\\) لترات.</p><p>📌 الحجم يُضرب في \\(3^2 = 9\\).</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex3_q1b_sol': '<div class="MH-sequence-step"><p><strong>الجواب:</strong> المساحة الجانبية تصبح 3 أضعاف المساحة الأصلية.</p><p>🔍 <strong>التفسير:</strong> المساحة الجانبية \\(S = 2\\pi r h\\). مع \\(r\' = 3r\\)، \\(S\' = 2\\pi (3r) h = 3 \\times (2\\pi r h) = 3S\\).</p><p>📌 تُضرب في 3.</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex3_q2a_sol': '<div class="MH-sequence-step"><p><strong>الجواب:</strong> يصبح الحجم 4 لترات.</p><p>🔍 <strong>التفسير:</strong> تمت مضاعفة الارتفاع أربع مرات: \\(h\' = 4h\\). الحجم \\(V\' = \\pi r^2 (4h) = 4 \\times \\pi r^2 h = 4V = 4\\) لترات.</p><p>📌 يُضرب في 4.</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex3_q2b_sol': '<div class="MH-sequence-step"><p><strong>الجواب:</strong> المساحة الجانبية تصبح 4 أضعاف المساحة الأصلية.</p><p>🔍 <strong>التفسير:</strong> \\(S\' = 2\\pi r (4h) = 4 \\times (2\\pi r h) = 4S\\).</p><p>📌 تُضرب في 4.</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex3_q3_sol': '<div class="MH-sequence-step"><p><strong>النقاط الرئيسية:</strong></p><ul><li>حجم الأسطوانة يتناسب مع مربع نصف القطر ومع الارتفاع. إنه ليس خطياً بالنسبة لنصف القطر وحده (بسبب \\(r^2\\)).</li><li>المساحة الجانبية تتناسب مع نصف القطر ومع الارتفاع. إنها دالة خطية في \\(r\\) إذا كان \\(h\\) ثابتاً، وخطية في \\(h\\) إذا كان \\(r\\) ثابتاً.</li><li>ضرب نصف القطر في \\(k\\) يضرب الحجم في \\(k^2\\) والمساحة الجانبية في \\(k\\).</li><li>ضرب الارتفاع في \\(k\\) يضرب كلاً من الحجم والمساحة الجانبية في \\(k\\).</li></ul></div>',
+
+    // Exercise 4
+    'MH.lesson_Y1Alg_fonLin3.ex4_title': 'تمرين 4 – دائرة وقرص',
+    'MH.lesson_Y1Alg_fonLin3.ex4_q1': '1) هل يتغير محيط الدائرة خطياً بدلالة نصف قطرها؟',
+    'MH.lesson_Y1Alg_fonLin3.ex4_q1_sol': '<div class="MH-sequence-step"><p><strong>الجواب:</strong> نعم.</p><p>🔍 <strong>التفسير:</strong> محيط الدائرة هو \\(P = 2\\pi R\\). إنه على الشكل \\(P = a \\times R\\) حيث \\(a = 2\\pi\\) (ثابت). لذا فهو دالة خطية في \\(R\\) (معامل \\(2\\pi\\)). تمثيله البياني مستقيم يمر عبر الأصل.</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex4_q2': '2) دائرة نصف قطرها R كم محيطها يساوي 1 500 000 كم.',
+    'MH.lesson_Y1Alg_fonLin3.ex4_q2a': 'أ) بماذا يزيد هذا المحيط إذا زدنا نصف القطر بمقدار 1 كم؟',
+    'MH.lesson_Y1Alg_fonLin3.ex4_q2a_sol': '<div class="MH-sequence-step"><p><strong>الجواب:</strong> يزيد بمقدار \\(2\\pi\\) كم، أي حوالي 6.2832 كم.</p><p>🔍 <strong>التفسير:</strong> بما أن \\(P = 2\\pi R\\)، عندما يزيد \\(R\\) بمقدار 1، يزيد \\(P\\) بمقدار \\(2\\pi \\times 1 = 2\\pi\\). القيمة الدقيقة هي \\(2\\pi\\) كم، مستقلة عن \\(R\\).</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex4_q2b': 'ب) بماذا ينقص هذا المحيط إذا نقصنا نصف القطر بمقدار 2 كم؟',
+    'MH.lesson_Y1Alg_fonLin3.ex4_q2b_sol': '<div class="MH-sequence-step"><p><strong>الجواب:</strong> ينقص بمقدار \\(4\\pi\\) كم (حوالي 12.5664 كم).</p><p>🔍 <strong>التفسير:</strong> نقص نصف القطر بمقدار 2 كم يقابل \\(\\Delta R = -2\\). التغير في المحيط هو \\(\\Delta P = 2\\pi \\times (-2) = -4\\pi\\). إذن المحيط ينقص بمقدار \\(4\\pi\\) كم.</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex4_q3': '3) هل تتغير مساحة القرص خطياً بدلالة نصف قطره؟',
+    'MH.lesson_Y1Alg_fonLin3.ex4_q3_sol': '<div class="MH-sequence-step"><p><strong>الجواب:</strong> لا.</p><p>🔍 <strong>التفسير:</strong> مساحة القرص هي \\(A = \\pi R^2\\). هذا ليس على الشكل \\(a \\times R\\) لأن \\(R\\) مربع. لذا فهي ليست دالة خطية (إنها دالة تربيعية). تمثيلها البياني ليس مستقيماً.</p></div>',
+    'MH.lesson_Y1Alg_fonLin3.ex4_q4': '4) هل مساحة المثلث دالة خطية في قاعدته؟',
+    'MH.lesson_Y1Alg_fonLin3.ex4_q4_sol': '<div class="MH-sequence-step"><p><strong>الجواب:</strong> يعتمد على ما إذا كان الارتفاع ثابتاً أم لا.</p><p>🔍 <strong>التفسير:</strong> مساحة المثلث هي \\(A = \\frac{1}{2} \\times \\text{القاعدة} \\times \\text{الارتفاع}\\).</p><ul><li>إذا كان الارتفاع ثابتاً (دائماً نفس القيمة)، فإن \\(A\\) تتناسب مع القاعدة: \\(A = k \\times \\text{القاعدة}\\) حيث \\(k = \\frac{1}{2} \\times \\text{الارتفاع}\\). في هذه الحالة هي دالة خطية في القاعدة.</li><li>إذا كان الارتفاع متغيراً، فإن المساحة ليست ببساطة دالة خطية في القاعدة وحدها (تعتمد أيضاً على الارتفاع).</li></ul><p>📌 <strong>الخلاصة:</strong> يمكن القول إن المساحة دالة خطية في القاعدة <em>عند ثبات الارتفاع</em>.</p></div>',
+
+    // Summary
+    'MH.lesson_Y1Alg_fonLin3.remember': '📌 تذكر',
+    'MH.lesson_Y1Alg_fonLin3.rem1': 'تكتب الدالة الخطية \\(f(x)=ax\\) ويمر مستقيمها عبر الأصل.',
+    'MH.lesson_Y1Alg_fonLin3.rem2': 'لكي توجد دالة خطية، يجب أن يكون \\(f(0)=0\\) وأن يكون المعامل \\(a\\) وحيداً.',
+    'MH.lesson_Y1Alg_fonLin3.rem3': 'العديد من الكميات الفيزيائية (المحيط، المساحة مع ارتفاع ثابت) تكون خطية؛ وأخرى (الحجم، مساحة القرص) ليست كذلك.',
+
+    // Footer
+    'MH.footer.developer': 'المطور',
+    'MH.footer.version': 'الإصدار',
+    'MH.footer.links': 'روابط',
+    'MH.footer.terms': 'شروط الاستخدام',
+    'MH.footer.privacy': 'سياسة الخصوصية'
+}
+        };
+
+        // Merge with global translations
+        if (typeof translations !== 'undefined') {
+            for (let lang in fonLin3Translations) {
+                translations[lang] = {...translations[lang], ...fonLin3Translations[lang]};
+            }
+        } else { var translations = fonLin3Translations; }
+
+        // ========== CANVAS DRAWING FUNCTIONS ==========
+        function drawFuncCanvas() {
+            const canvas = document.getElementById('funcCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height;
+            ctx.clearRect(0,0,w,h);
+            const pad = 50, gw = w-2*pad, gh = h-2*pad;
+            const xMin = -2, xMax = 5, yMin = -3, yMax = 7;
+            // axes
+            ctx.strokeStyle = '#666'; ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(pad, h-pad); ctx.lineTo(w-pad, h-pad); ctx.moveTo(pad, pad); ctx.lineTo(pad, h-pad); ctx.stroke();
+            // graduations
+            ctx.fillStyle = '#333'; ctx.font = '12px Arial';
+            for (let x = -1; x <= 4; x++) {
+                let cx = pad + (x - xMin) / (xMax - xMin) * gw;
+                ctx.fillText(x, cx-8, h-pad+20);
+            }
+            for (let y = -2; y <= 6; y+=2) {
+                let cy = h-pad - (y - yMin) / (yMax - yMin) * gh;
+                ctx.fillText(y, pad-30, cy+5);
+            }
+            // line f(x)=1.2x
+            ctx.strokeStyle = '#3498DB'; ctx.lineWidth = 3;
+            ctx.beginPath();
+            let x1 = -1.5, y1 = 1.2 * x1;
+            let x2 = 4.5, y2 = 1.2 * x2;
+            let cx1 = pad + (x1 - xMin) / (xMax - xMin) * gw;
+            let cy1 = h-pad - (y1 - yMin) / (yMax - yMin) * gh;
+            let cx2 = pad + (x2 - xMin) / (xMax - xMin) * gw;
+            let cy2 = h-pad - (y2 - yMin) / (yMax - yMin) * gh;
+            ctx.moveTo(cx1, cy1); ctx.lineTo(cx2, cy2); ctx.stroke();
+            // point A(1,1.2)
+            ctx.fillStyle = '#E74C3C';
+            let ax = pad + (1 - xMin) / (xMax - xMin) * gw;
+            let ay = h-pad - (1.2 - yMin) / (yMax - yMin) * gh;
+            ctx.beginPath(); ctx.arc(ax, ay, 5, 0, 2*Math.PI); ctx.fill();
+            ctx.fillStyle = '#333'; ctx.font = 'bold 14px Arial';
+            ctx.fillText('A(1;1,2)', ax+10, ay-10);
+            ctx.fillStyle = '#333'; ctx.font = 'italic 14px Arial';
+            ctx.fillText('f(x)=1,2x', w-150, 60);
+        }
+
+        function drawAreaCanvas() {
+            const canvas = document.getElementById('areaCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height;
+            ctx.clearRect(0,0,w,h);
+            const pad = 50, gw = w-2*pad, gh = h-2*pad;
+            const xMin = 0, xMax = 10, yMin = 0, yMax = 26;
+            // axes
+            ctx.strokeStyle = '#666'; ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(pad, h-pad); ctx.lineTo(w-pad, h-pad); ctx.moveTo(pad, pad); ctx.lineTo(pad, h-pad); ctx.stroke();
+            // graduations
+            ctx.fillStyle = '#333'; ctx.font = '12px Arial';
+            for (let x = 0; x <= 10; x+=2) {
+                let cx = pad + (x - xMin) / (xMax - xMin) * gw;
+                ctx.fillText(x, cx-8, h-pad+20);
+            }
+            for (let y = 0; y <= 25; y+=5) {
+                let cy = h-pad - (y - yMin) / (yMax - yMin) * gh;
+                ctx.fillText(y, pad-35, cy+5);
+            }
+            // line area = 2.5 * NH
+            ctx.strokeStyle = '#F39C12'; ctx.lineWidth = 3;
+            ctx.beginPath();
+            let x1 = 0, y1 = 0;
+            let x2 = 9, y2 = 2.5 * 9;
+            let cx1 = pad + (x1 - xMin) / (xMax - xMin) * gw;
+            let cy1 = h-pad - (y1 - yMin) / (yMax - yMin) * gh;
+            let cx2 = pad + (x2 - xMin) / (xMax - xMin) * gw;
+            let cy2 = h-pad - (y2 - yMin) / (yMax - yMin) * gh;
+            ctx.moveTo(cx1, cy1); ctx.lineTo(cx2, cy2); ctx.stroke();
+            // highlight points for NH=4, NH=3.5, area=20
+            ctx.fillStyle = '#E74C3C';
+            let p1x = pad + (4 - xMin) / (xMax - xMin) * gw;
+            let p1y = h-pad - (10 - yMin) / (yMax - yMin) * gh;
+            ctx.beginPath(); ctx.arc(p1x, p1y, 5, 0, 2*Math.PI); ctx.fill();
+            ctx.fillStyle = '#2ECC71';
+            let p2x = pad + (3.5 - xMin) / (xMax - xMin) * gw;
+            let p2y = h-pad - (8.75 - yMin) / (yMax - yMin) * gh;
+            ctx.beginPath(); ctx.arc(p2x, p2y, 5, 0, 2*Math.PI); ctx.fill();
+            ctx.fillStyle = '#3498DB';
+            let p3y = h-pad - (20 - yMin) / (yMax - yMin) * gh;
+            let p3x = pad + (8 - xMin) / (xMax - xMin) * gw;
+            ctx.beginPath(); ctx.arc(p3x, p3y, 5, 0, 2*Math.PI); ctx.fill();
+            // labels
+            ctx.fillStyle = '#333'; ctx.font = 'bold 14px Arial';
+            ctx.fillText('Aire = 2,5 × NH', w-200, 50);
+        }
+
+        // Toggle solution function (global)
+        function toggleSolution(id) {
+            const sol = document.getElementById(`solution${id}`);
+            if (!sol) return;
+            const btn = sol.previousElementSibling;
+            const currentLang = (typeof MHThemeManager !== 'undefined' && MHThemeManager.getCurrentLanguage) ? MHThemeManager.getCurrentLanguage() : 'fr';
+            if (sol.style.display === 'block') {
+                sol.style.display = 'none';
+                btn.textContent = translations[currentLang]?.['MH.lesson_Y1Alg_fonLin3.showSolution'] || 'Voir la solution';
+            } else {
+                sol.style.display = 'block';
+                btn.textContent = translations[currentLang]?.['MH.lesson_Y1Alg_fonLin3.hideSolution'] || 'Cacher la solution';
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(sol, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)'},{left:'\\[',right:'\\]'}]});
+                }
+            }
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)'},{left:'\\[',right:'\\]'}]});
+            }
+            drawFuncCanvas();
+            drawAreaCanvas();
+            // Hide all solutions initially
+            for (let i=1; i<=18; i++) {
+                const sol = document.getElementById(`solution${i}`);
+                if (sol) {
+                    sol.style.display = 'none';
+                    const btn = sol.previousElementSibling;
+                    if (btn) btn.textContent = translations['fr']['MH.lesson_Y1Alg_fonLin3.showSolution'];
+                }
+            }
+            // Redraw on theme toggle
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    setTimeout(() => { drawFuncCanvas(); drawAreaCanvas(); }, 100);
+                });
+            }
+        });
+
+        // Service worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').catch(e => console.log('SW failed', e));
+            });
+        }
+    </script>
+    <noscript>
+        <style> .MH-solution { display: block; } </style>
+    </noscript>
+</body>
+</html>

@@ -1,5 +1,5 @@
 // Service Worker for Mathematics Hub - Enhanced Version
-const CACHE_NAME = 'math-hub-v1.3.0';
+const CACHE_NAME = 'math-hub-v1.3.1';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -449,5 +449,4 @@ self.addEventListener('error', event => {
 
 self.addEventListener('unhandledrejection', event => {
   console.error('Service Worker unhandled rejection:', event.reason);
-
 });
