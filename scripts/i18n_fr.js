@@ -96,7 +96,7 @@ window.translations_fr = {
 "MH.index.algebra.second.4b": "Partie II : Définition, terme général, représentation graphique et somme des termes",
 "MH.index.algebra.second.4c": "Partie III : Exercices supplémentaires, reconnaissance des suites arithmétiques et applications avancées",
 "MH.index.algebra.second.4d": "Partie IV : Synthèse et problèmes pratiques",
-"MH.index.algebra.second.4e": "Partie V : Exercices et applications",,
+"MH.index.algebra.second.4e": "Partie V : Exercices et applications",
     'MH.index.algebra.second.5': 'Suites Géométriques',
     'MH.index.algebra.second.6': 'Statistiques',
     'MH.index.algebra.second.7': 'Fonctions Générales',

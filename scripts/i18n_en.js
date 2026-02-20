@@ -96,7 +96,7 @@ window.translations_en = {
 "MH.index.algebra.second.4b": "Part II: Definition, General Term, Graphical Representation, and Sum of Terms",
 "MH.index.algebra.second.4c": "Part III: More Practice with Sequences, Recognizing Arithmetic Sequences, and Advanced Applications",
 "MH.index.algebra.second.4d": "Part IV: Summary and Practical Problems",
-"MH.index.algebra.second.4e": "Part V: Exercises and Applications",,
+"MH.index.algebra.second.4e": "Part V: Exercises and Applications",
     'MH.index.algebra.second.5': 'Geometric Sequences',
     'MH.index.algebra.second.6': 'Statistics',
     'MH.index.algebra.second.7': 'General Functions',
